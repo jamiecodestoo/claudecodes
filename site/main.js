@@ -105,17 +105,30 @@
   let startTop = 0;
   /* keep exactly 40% of the slider in the first viewport */
   const hero = document.querySelector(".hero");
+  const frame = document.getElementById("cmpFrame");
   const fitFold = () => {
     redesign.style.marginTop = ""; hero.style.paddingTop = "";
+    redesign.style.setProperty("--sp", 0);
     const base = parseFloat(getComputedStyle(redesign).marginTop) || 0;
     const pad = parseFloat(getComputedStyle(hero).paddingTop) || 0;
-    const top = redesign.getBoundingClientRect().top + scrollY;
-    const frameH = redesign.offsetHeight * 0.84;
-    const want = innerHeight - frameH * 0.4;
-    let margin = Math.max(20, base + want - top);
-    /* never leave a big empty gap: past 56px, push the hero text down instead */
-    if (margin > 56) { hero.style.paddingTop = pad + Math.min(110, margin - 56) + "px"; margin = 56; }
-    redesign.style.marginTop = margin + "px";
+    /* first fold ends just below the "Browse homes" button of the redesigned site */
+    const btn = redesign.querySelector(".g-btn").getBoundingClientRect();
+    const btnBottom = btn.bottom + scrollY;
+    const want = innerHeight - Math.max(20, innerHeight * 0.035);
+    let margin = base + (want - btnBottom);
+    const MIN = 72, MAX = 140;
+    if (margin > MAX) { hero.style.paddingTop = pad + Math.min(90, margin - MAX) + "px"; margin = MAX; }
+    redesign.style.marginTop = Math.max(MIN, margin) + "px";
+    /* still too tall? start the slider a little smaller so the fold ends at the button */
+    let s0 = 0.84;
+    redesign.style.setProperty("--s0", s0);
+    for (let i = 0; i < 4; i++) {
+      const top = frame.getBoundingClientRect().top + scrollY;
+      const bottom = redesign.querySelector(".g-btn").getBoundingClientRect().bottom + scrollY;
+      if (bottom <= want + 1) break;
+      s0 = clamp(s0 * (want - top) / (bottom - top), 0.5, 0.84);
+      redesign.style.setProperty("--s0", s0.toFixed(4));
+    }
   };
   const measure = () => { fitFold(); startTop = redesign.getBoundingClientRect().top + scrollY; };
   const expand = () => {

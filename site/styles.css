@@ -567,7 +567,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .comet-lit { fill: none; stroke: url(#cometHead); stroke: #D9F65A; stroke-width: 3; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(217, 246, 90, .9)); }
 #cometTail circle { fill: #D9F65A; }
 .redesign { margin-top: 32px; perspective: 1600px; }
-.cmp-frame { transform-origin: 50% 0; transform: rotateX(calc(16deg * (1 - var(--sp, 0)))) scale(calc(.84 + .16 * var(--sp, 0))); will-change: transform; }
+.cmp-frame { transform-origin: 50% 0; transform: rotateX(calc(16deg * (1 - var(--sp, 0)))) scale(calc(var(--s0, .84) + (1 - var(--s0, .84)) * var(--sp, 0))); will-change: transform; }
 .float-art.art-orb { transform: translate(calc(var(--px) + 120px * (1 - var(--sp, 0))), calc(var(--py) + 80px * (1 - var(--sp, 0)))) rotate(var(--r)); }
 .float-art.art-bars { transform: translate(calc(var(--px) - 120px * (1 - var(--sp, 0))), var(--py)) rotate(var(--r)); }
 .redesign.reveal { transform: none; }
@@ -644,7 +644,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ============ Round 5 refinements ============ */
 /* Hero sits lower in the first fold */
-.hero { padding-top: clamp(88px, calc(40vh - 180px), 190px); }
+.hero { padding-top: clamp(84px, calc(22vh - 70px), 130px); }
 
 /* Calmer 72h stage */
 .stage { height: 520px; }
