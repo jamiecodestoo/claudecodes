@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Halo Studio</title>
+<title>DesignMe</title>
 <meta name="description" content="Your best website, designed and launched in 72 hours.">
 <meta name="theme-color" content="#F6F6F3">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%279%27 fill=%27%2315171C%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%277%27 fill=%27%23D9F65A%27/%3E%3C/svg%3E">
@@ -15,11 +15,12 @@
 <div class="canvas-bg" aria-hidden="true"></div>
 
 <header class="nav">
-  <a href="#top" class="logo"><span class="logo-mark"></span>Halo</a>
+  <a href="#top" class="logo"><span class="logo-mark"></span>DesignMe</a>
   <nav class="nav-links">
     <a href="#process">Process</a>
+    <a href="#xray">Thinking</a>
     <a href="#work">Work</a>
-    <a href="#love">Clients</a>
+    <a href="#shape">Build yours</a>
   </nav>
   <a href="#book" class="btn btn-sm"><span class="btn-label" data-text="Book a call">Book a call</span></a>
 </header>
@@ -47,44 +48,75 @@
       <span><b>120+ founders</b> launched with us</span>
     </div>
 
-    <!-- Centre illustration -->
-    <div class="stage reveal" id="stage">
-      <div class="art-card art-orb shine-card depth" data-depth="18">
-        <div class="orb"></div>
-        <div class="art-label"><small>Day 1</small>Design</div>
-      </div>
+    <!-- Live redesign slider -->
+    <div class="redesign reveal" id="redesign">
+      <div class="float-art art-card art-orb shine-card depth" data-depth="18"><div class="orb"></div></div>
+      <div class="float-art art-card art-bars shine-card depth" data-depth="24"><div class="bars"><i></i><i></i><i></i><i></i><i></i></div></div>
 
-      <div class="art-card art-bars shine-card depth" data-depth="22">
-        <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="art-label"><small>Day 3</small>Launch</div>
-      </div>
+      <div class="cmp-frame">
+        <div class="cmp-bar"><i></i><i></i><i></i><span>verdehomes.com</span><em class="cmp-status" id="cmpStatus">Redesigning…</em></div>
+        <div class="cmp-screen" id="cmp" style="--pos: 6%">
 
-      <div class="dial depth" data-depth="6">
-        <div class="dial-glow"></div>
-        <svg class="dial-svg" viewBox="0 0 440 440" aria-hidden="true">
-          <g id="ticks"></g>
-          <circle class="dial-track" cx="220" cy="220" r="176"/>
-          <circle class="dial-marker" cx="220" cy="220" r="176"/>
-          <circle class="dial-arc" cx="220" cy="220" r="176"/>
-          <g class="dial-nodes">
-            <circle cx="220" cy="44" r="7"/>
-            <circle cx="372.4" cy="308" r="7"/>
-            <circle cx="67.6" cy="308" r="7"/>
-          </g>
-        </svg>
-        <div class="dial-center">
-          <div class="dial-num"><span id="hours">0</span><small>h</small></div>
-          <div class="dial-phase" id="phase">Design</div>
+          <!-- BEFORE: the old site -->
+          <div class="bad" aria-hidden="true">
+            <div class="bad-top">★ VERDE HOMES REAL ESTATE ★</div>
+            <div class="bad-marq"><span>*** WELCOME TO OUR WEBSITE *** CALL NOW FOR THE BEST DEALS IN TOWN *** NEW LISTINGS EVERY WEEK *** WELCOME TO OUR WEBSITE *** CALL NOW FOR THE BEST DEALS IN TOWN ***</span></div>
+            <div class="bad-nav"><u>Home</u> | <u>About Us</u> | <u>Listings</u> | <u>Contact Us</u> | <u>Guestbook</u></div>
+            <div class="bad-body">
+              <div class="bad-side">
+                <b>MENU</b>
+                <u>Hot Deals!!</u><u>Our Agents</u><u>Mortgage Calc</u><u>Links</u>
+                <div class="bad-counter">Visitors: <span>000481</span></div>
+              </div>
+              <div class="bad-main">
+                <h3>Welcome to our Website!!!</h3>
+                <p>We are the BEST real estate agency in the city since 1998. We have many houses and apartments for sale and for rent. Please browse our listings and CALL US TODAY for more information about any property you like!!</p>
+                <div class="bad-row">
+                  <div class="bad-img">[ image loading ]</div>
+                  <div class="bad-img">[ image loading ]</div>
+                  <div class="bad-img">[ image loading ]</div>
+                </div>
+                <div class="bad-btns"><span class="bad-btn">Click Here</span><span class="bad-new">NEW!</span></div>
+              </div>
+            </div>
+            <div class="bad-foot">Best viewed in Internet Explorer at 800 x 600 · Copyright 2009</div>
+          </div>
+
+          <!-- AFTER: the DesignMe redesign -->
+          <div class="good" aria-hidden="true">
+            <div class="g-nav"><b><i></i>Verde</b><span>Buy</span><span>Rent</span><span>Journal</span><em>Book a viewing</em></div>
+            <div class="g-hero">
+              <small>Homes in Lisbon</small>
+              <h3>Find a home that <span class="g-mark">feels like you.</span></h3>
+              <p>Hand picked homes, honest pricing and an agent who actually calls back.</p>
+              <div class="g-search"><span>Location</span><span>Budget</span><em>Search</em></div>
+            </div>
+            <div class="g-art"><div class="orb"></div><div class="g-chip"><b>€420k</b> · 3 bed · Alfama</div></div>
+            <div class="g-cards">
+              <div style="--t:#DCEFFF"><i></i><b>Príncipe Real</b><span>€610k</span></div>
+              <div style="--t:#EEE8FF"><i></i><b>Campo de Ourique</b><span>€485k</span></div>
+              <div style="--t:#FBEFD9"><i></i><b>Belém</b><span>€720k</span></div>
+            </div>
+          </div>
+
+          <div class="cmp-tag tag-after">After</div>
+          <div class="cmp-tag tag-before">Before</div>
+
+          <div class="cmp-handle" id="cmpHandle" role="slider" tabindex="0" aria-label="Drag to redesign" aria-valuemin="0" aria-valuemax="100" aria-valuenow="6">
+            <span class="knob"><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
+            <span class="knob-hint">Drag to redesign</span>
+          </div>
+
+          <div class="cmp-stamp" id="cmpStamp">Redesigned in 72h ✓</div>
+          <div class="collab c2" id="designCursor"><svg viewBox="0 0 16 16"><path d="M1 1l5.5 14 2-6 6-2z"/></svg><span>DesignMe</span></div>
         </div>
       </div>
 
-      <div class="milestone m1" data-at="6"><span class="tick"></span>Brief approved</div>
-      <div class="milestone m2" data-at="24"><span class="tick"></span>Design signed off</div>
-      <div class="milestone m3" data-at="48"><span class="tick"></span>Build shipped</div>
-      <div class="milestone m4" data-at="72"><span class="tick"></span>Site is live</div>
-
-      <div class="collab c1"><svg viewBox="0 0 16 16"><path d="M1 1l5.5 14 2-6 6-2z"/></svg><span>You</span></div>
-      <div class="collab c2"><svg viewBox="0 0 16 16"><path d="M1 1l5.5 14 2-6 6-2z"/></svg><span>Halo</span></div>
+      <div class="metrics">
+        <div class="metric"><small>Load time</small><b id="mLoad">6.2s</b><i><span id="bLoad"></span></i></div>
+        <div class="metric"><small>Conversion</small><b id="mConv">0.8%</b><i><span id="bConv"></span></i></div>
+        <div class="metric"><small>Mobile score</small><b id="mMob">38</b><i><span id="bMob"></span></i></div>
+      </div>
     </div>
   </section>
 
@@ -110,6 +142,46 @@
         <h3 class="title">Launch</h3>
         <p class="body">Go live, then we start bringing you leads.</p>
       </article>
+    </div>
+  </section>
+
+  <!-- X-RAY -->
+  <section class="section" id="xray">
+    <p class="overline reveal">Design X-ray</p>
+    <h2 class="headline reveal">See the <span class="marker">thinking.</span></h2>
+    <p class="hint reveal">Move across the site to see the decisions behind every pixel</p>
+
+    <div class="xray reveal" id="xrayBox">
+      <!-- Polished layer -->
+      <div class="xs xs-polished">
+        <div class="xs-nav"><b><i></i>Solace</b><span>Treatments</span><span>Team</span><span>Prices</span><em>Book a visit</em></div>
+        <div class="xs-h">Care that fits <br>your life.</div>
+        <div class="xs-p">Same week appointments with doctors who listen. Book in under a minute.</div>
+        <div class="xs-btn">Book a visit</div>
+        <div class="xs-art"><div class="rings"><i></i><i></i><i></i></div></div>
+        <div class="xs-stats"><div><b>4.9</b><span>patient rating</span></div><div><b>48h</b><span>average wait</span></div><div><b>12</b><span>specialists</span></div></div>
+      </div>
+
+      <!-- Blueprint layer, revealed through the lens -->
+      <div class="xs xs-blue" id="xrayBlue">
+        <div class="bp-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="xs-nav"><b><i></i>Solace</b><span>Treatments</span><span>Team</span><span>Prices</span><em>Book a visit</em></div>
+        <div class="xs-h">Care that fits <br>your life.</div>
+        <div class="xs-p">Same week appointments with doctors who listen. Book in under a minute.</div>
+        <div class="xs-btn">Book a visit</div>
+        <div class="xs-art"><div class="bp-circle"></div><div class="bp-circle s2"></div></div>
+        <div class="xs-stats"><div><b>4.9</b><span>patient rating</span></div><div><b>48h</b><span>average wait</span></div><div><b>12</b><span>specialists</span></div></div>
+
+        <div class="an an-type">SF Pro Display · 57/64 · Semibold</div>
+        <div class="an an-space"><span>96</span></div>
+        <div class="an an-cta">One clear action, above the fold</div>
+        <div class="an an-contrast">Contrast 7.4 : 1</div>
+        <div class="an an-shape">Round shapes read calm and safe</div>
+        <div class="an an-proof">Proof beats promises</div>
+        <div class="an an-nav">Nav repeats the main action</div>
+      </div>
+
+      <div class="lens" id="lens"><span>X-ray</span></div>
     </div>
   </section>
 
@@ -140,6 +212,65 @@
         </div>
         <div class="work-meta"><span>Legal</span><b>Live in 72h</b></div>
       </a>
+    </div>
+  </section>
+
+  <!-- SHAPE YOUR SITE -->
+  <section class="section" id="shape">
+    <p class="overline reveal">Try it now</p>
+    <h2 class="headline reveal">Shape your site in <span class="marker">ten seconds.</span></h2>
+
+    <div class="cfg reveal">
+      <div class="cfg-controls">
+        <div class="seg" id="segIndustry" role="radiogroup" aria-label="Industry">
+          <button data-v="home" class="on">Real estate</button>
+          <button data-v="clinic">Clinic</button>
+          <button data-v="law">Law firm</button>
+          <button data-v="cafe">Café</button>
+          <button data-v="saas">SaaS</button>
+          <span class="seg-pill"></span>
+        </div>
+        <div class="seg" id="segMood" role="radiogroup" aria-label="Mood">
+          <button data-v="calm" class="on">Calm</button>
+          <button data-v="bold">Bold</button>
+          <button data-v="playful">Playful</button>
+          <span class="seg-pill"></span>
+        </div>
+        <button class="shuffle" id="shuffle" aria-label="Surprise me"><svg viewBox="0 0 24 24"><path d="M3 7h3c5 0 7 10 12 10h3M3 17h3c2 0 3.5-1.5 4.7-3.4M14 7h4M18 3l3 4-3 4M18 13l3 4-3 4"/></svg>Surprise me</button>
+      </div>
+
+      <div class="pv-wrap">
+        <div class="pv" id="pv" data-mood="calm" data-ind="home">
+          <div class="pv-bar"><i></i><i></i><i></i><span id="pvUrl">verdehomes.com</span></div>
+          <div class="pv-body">
+            <div class="pv-nav"><b><i></i><span id="pvBrand">Verde</span></b><span>About</span><span>Work</span><em id="pvNavCta">Book a viewing</em></div>
+            <div class="pv-hero">
+              <div class="pv-copy">
+                <small id="pvKicker">Homes in Lisbon</small>
+                <h3 id="pvH">Find a home that feels like you.</h3>
+                <p id="pvP">Hand picked homes and an agent who actually calls back.</p>
+                <div class="pv-cta"><em id="pvCta">Browse homes</em><span>Learn more</span></div>
+              </div>
+              <div class="pv-art">
+                <div class="orb"></div>
+                <div class="rings"><i></i><i></i><i></i></div>
+                <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="sticker" id="pvSticker">New!</div>
+              </div>
+            </div>
+            <div class="pv-feats"><div><i></i><b></b><span></span></div><div><i></i><b></b><span></span></div><div><i></i><b></b><span></span></div></div>
+          </div>
+        </div>
+        <div class="pv-stamp">Live in 72h</div>
+      </div>
+
+      <div class="spec">
+        <span><i class="sw" id="specSw"></i><b id="specColor">#F6F6F3</b></span>
+        <span>Type <b id="specType">SF Pro Semibold</b></span>
+        <span>Radius <b id="specRadius">18px</b></span>
+      </div>
+
+      <a href="#book" class="btn btn-lg magnetic cfg-go"><span class="btn-label" data-text="Build this for me">Build this for me</span><span class="btn-icon"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
     </div>
   </section>
 
@@ -215,9 +346,9 @@
 </main>
 
 <footer class="foot">
-  <a href="#top" class="logo"><span class="logo-mark"></span>Halo</a>
+  <a href="#top" class="logo"><span class="logo-mark"></span>DesignMe</a>
   <div class="foot-links"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Email</a></div>
-  <small>© 2026 Halo Studio. Keep building.</small>
+  <small>© 2026 DesignMe. Keep building.</small>
 </footer>
 
 <script src="main.js"></script>
