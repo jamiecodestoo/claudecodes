@@ -4,184 +4,220 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Halo Studio</title>
-<meta name="description" content="Websites, outreach and lead systems built as one machine.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2712%27 fill=%27%239ad8ff%27/%3E%3C/svg%3E">
+<meta name="description" content="Your best website, designed and launched in 72 hours.">
+<meta name="theme-color" content="#F6F6F3">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%279%27 fill=%27%2315171C%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%277%27 fill=%27%23D9F65A%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="cursor" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
+<div class="canvas-bg" aria-hidden="true"></div>
 
 <header class="nav">
   <a href="#top" class="logo"><span class="logo-mark"></span>Halo</a>
   <nav class="nav-links">
-    <a href="#machine">The machine</a>
+    <a href="#process">Process</a>
     <a href="#work">Work</a>
-    <a href="#results">Results</a>
+    <a href="#love">Clients</a>
   </nav>
-  <a href="#book" class="btn btn-small magnetic">Book a call</a>
+  <a href="#book" class="btn btn-sm"><span class="btn-label" data-text="Book a call">Book a call</span></a>
 </header>
 
 <main id="top">
 
   <!-- HERO -->
   <section class="hero">
-    <canvas id="field" aria-hidden="true"></canvas>
-    <div class="hero-inner">
-      <p class="eyebrow reveal"><span class="pulse"></span>Taking 3 new partners this quarter</p>
-      <h1 class="hero-title split">Websites that <em>bring you</em> clients.</h1>
-      <p class="hero-sub reveal">We design your site, run your outreach and fill your calendar. One studio. One system. Built to grow.</p>
-      <div class="hero-cta reveal">
-        <a href="#book" class="btn magnetic"><span>Start your machine</span><svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a href="#work" class="link-underline">See the work</a>
-      </div>
+    <p class="chip-top reveal"><span class="live-dot"></span>Now booking October launches</p>
+
+    <h1 class="display reveal">
+      Your best website.<br>
+      Delivered in <span class="marker">72 hours.<svg class="sparks" viewBox="0 0 40 34" aria-hidden="true"><path d="M8 26 L2 10"/><path d="M18 22 L26 4"/><path d="M24 30 L38 24"/></svg></span>
+    </h1>
+
+    <p class="lead reveal">A senior designer, a clear plan and a live site in three days. No endless rounds. No agency wait.</p>
+
+    <div class="hero-cta reveal">
+      <a href="#book" class="btn btn-lg magnetic"><span class="btn-label" data-text="Book a call">Book a call</span><span class="btn-icon"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a href="#work" class="text-link">See the work</a>
     </div>
 
-    <div class="hero-visual reveal">
-      <div class="browser tilt">
-        <div class="browser-bar"><i></i><i></i><i></i><span>yourbrand.com</span></div>
-        <div class="browser-body">
-          <div class="mock-hero">
-            <div class="mock-line w60"></div>
-            <div class="mock-line w40"></div>
-            <div class="mock-btn"></div>
-          </div>
-          <div class="mock-grid">
-            <div></div><div></div><div></div>
-          </div>
-          <svg class="mock-chart" viewBox="0 0 300 90" preserveAspectRatio="none">
-            <defs><linearGradient id="g1" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#9ad8ff" stop-opacity=".45"/><stop offset="1" stop-color="#9ad8ff" stop-opacity="0"/></linearGradient></defs>
-            <path class="chart-area" d="M0 80 C40 75 60 70 90 58 S150 50 180 36 S240 20 300 8 L300 90 L0 90Z" fill="url(#g1)"/>
-            <path class="chart-line" d="M0 80 C40 75 60 70 90 58 S150 50 180 36 S240 20 300 8" fill="none" stroke="#9ad8ff" stroke-width="2"/>
-          </svg>
+    <div class="trust reveal">
+      <div class="faces"><i style="--c:#9AD8FF">S</i><i style="--c:#C9B8FF">M</i><i style="--c:#F2D7A4">A</i><i style="--c:#D9F65A">R</i></div>
+      <span><b>120+ founders</b> launched with us</span>
+    </div>
+
+    <!-- Centre illustration -->
+    <div class="stage reveal" id="stage">
+      <div class="art-card art-orb shine-card depth" data-depth="18">
+        <div class="orb"></div>
+        <div class="art-label"><small>Day 1</small>Design</div>
+      </div>
+
+      <div class="art-card art-bars shine-card depth" data-depth="22">
+        <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="art-label"><small>Day 3</small>Launch</div>
+      </div>
+
+      <div class="dial depth" data-depth="6">
+        <div class="dial-glow"></div>
+        <svg class="dial-svg" viewBox="0 0 440 440" aria-hidden="true">
+          <g id="ticks"></g>
+          <circle class="dial-track" cx="220" cy="220" r="176"/>
+          <circle class="dial-marker" cx="220" cy="220" r="176"/>
+          <circle class="dial-arc" cx="220" cy="220" r="176"/>
+          <g class="dial-nodes">
+            <circle cx="220" cy="44" r="7"/>
+            <circle cx="372.4" cy="308" r="7"/>
+            <circle cx="67.6" cy="308" r="7"/>
+          </g>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-num"><span id="hours">0</span><small>h</small></div>
+          <div class="dial-phase" id="phase">Design</div>
         </div>
       </div>
-      <div class="lead-feed" id="leadFeed" aria-live="polite"></div>
+
+      <div class="milestone m1" data-at="6"><span class="tick"></span>Brief approved</div>
+      <div class="milestone m2" data-at="24"><span class="tick"></span>Design signed off</div>
+      <div class="milestone m3" data-at="48"><span class="tick"></span>Build shipped</div>
+      <div class="milestone m4" data-at="72"><span class="tick"></span>Site is live</div>
+
+      <div class="collab c1"><svg viewBox="0 0 16 16"><path d="M1 1l5.5 14 2-6 6-2z"/></svg><span>You</span></div>
+      <div class="collab c2"><svg viewBox="0 0 16 16"><path d="M1 1l5.5 14 2-6 6-2z"/></svg><span>Halo</span></div>
     </div>
   </section>
 
-  <!-- MARQUEE -->
-  <section class="marquee" aria-label="Clients">
-    <div class="marquee-track">
-      <span>Northwind</span><span>Aurelia</span><span>Kinfolk Dental</span><span>Parallel</span><span>Mono Studio</span><span>Verde Homes</span><span>Atlas Legal</span><span>Solace Clinic</span>
-      <span>Northwind</span><span>Aurelia</span><span>Kinfolk Dental</span><span>Parallel</span><span>Mono Studio</span><span>Verde Homes</span><span>Atlas Legal</span><span>Solace Clinic</span>
-    </div>
-  </section>
+  <!-- PROCESS -->
+  <section class="section" id="process">
+    <p class="overline reveal">How it works</p>
+    <h2 class="headline reveal">Three days. <span class="marker">One launch.</span></h2>
 
-  <!-- MACHINE -->
-  <section class="machine" id="machine">
-    <div class="section-head">
-      <p class="eyebrow reveal">The machine</p>
-      <h2 class="split">Three parts. <em>One engine.</em></h2>
-    </div>
-
-    <div class="machine-wrap">
-      <div class="steps">
-        <article class="step" data-step="0">
-          <span class="step-num">01</span>
-          <h3>Design</h3>
-          <p>A site shaped around one goal: turning a visit into a conversation.</p>
-        </article>
-        <article class="step" data-step="1">
-          <span class="step-num">02</span>
-          <h3>Outreach</h3>
-          <p>Personal, researched messages to the exact people you want to work with.</p>
-        </article>
-        <article class="step" data-step="2">
-          <span class="step-num">03</span>
-          <h3>Leads</h3>
-          <p>Qualified calls land in your calendar. You just show up and close.</p>
-        </article>
-      </div>
-
-      <div class="stage">
-        <div class="stage-card">
-          <!-- panel 0: design -->
-          <div class="panel is-active" data-panel="0">
-            <div class="wire">
-              <div class="wire-nav"><b></b><span></span><span></span><span></span></div>
-              <div class="wire-hero"><div class="wl w70"></div><div class="wl w50"></div><div class="wire-btn"></div></div>
-              <div class="wire-row"><div></div><div></div></div>
-            </div>
-            <div class="swatches"><i style="--c:#0b0c10"></i><i style="--c:#9ad8ff"></i><i style="--c:#f3efe7"></i><i style="--c:#c9b8ff"></i></div>
-          </div>
-          <!-- panel 1: outreach -->
-          <div class="panel" data-panel="1">
-            <div class="msg">
-              <div class="msg-head"><span class="avatar">SR</span><div><b>Sara, Founder</b><small>Verde Homes</small></div></div>
-              <p>Loved the new listings page. Noticed buyers drop off at the enquiry step, so I sketched a faster flow for you<span class="caret"></span></p>
-            </div>
-            <div class="msg-stats"><div><b>68%</b><small>open</small></div><div><b>21%</b><small>reply</small></div><div><b>1:1</b><small>written</small></div></div>
-          </div>
-          <!-- panel 2: leads -->
-          <div class="panel" data-panel="2">
-            <div class="cal">
-              <div class="cal-head"><b>This week</b><small>7 calls booked</small></div>
-              <div class="cal-grid">
-                <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span>
-                <i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i>
-                <i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="timeline">
+      <div class="timeline-line"><span id="lineFill"></span></div>
+      <article class="day reveal">
+        <span class="day-dot">1</span>
+        <h3 class="title">Design</h3>
+        <p class="body">We map your goal and design every screen around it.</p>
+      </article>
+      <article class="day reveal">
+        <span class="day-dot">2</span>
+        <h3 class="title">Build</h3>
+        <p class="body">Pixel perfect, fast, responsive and ready for search.</p>
+      </article>
+      <article class="day reveal">
+        <span class="day-dot">3</span>
+        <h3 class="title">Launch</h3>
+        <p class="body">Go live, then we start bringing you leads.</p>
+      </article>
     </div>
   </section>
 
   <!-- WORK -->
-  <section class="work" id="work">
-    <div class="section-head row">
-      <h2 class="split">Selected <em>work</em></h2>
-      <p class="reveal muted">Every site is a sales tool first and a portfolio piece second.</p>
-    </div>
+  <section class="section" id="work">
+    <p class="overline reveal">Recent launches</p>
+    <h2 class="headline reveal">Built fast. <span class="marker">Built to last.</span></h2>
+
     <div class="work-grid">
-      <a class="card tilt reveal" href="#book" style="--a:#1a2a3a;--b:#9ad8ff">
-        <div class="card-art art-1"><div class="orb"></div><div class="art-title">Verde<br>Homes</div></div>
-        <div class="card-meta"><span>Real estate</span><b>3.4x enquiries</b></div>
+      <a href="#book" class="work-card reveal">
+        <div class="art-card art-orb shine-card tall">
+          <div class="orb"></div>
+          <div class="art-title">Verde<br>Homes</div>
+        </div>
+        <div class="work-meta"><span>Real estate</span><b>Live in 71h</b></div>
       </a>
-      <a class="card tilt reveal" href="#book" style="--a:#2a2338;--b:#c9b8ff">
-        <div class="card-art art-2"><div class="rings"><i></i><i></i><i></i></div><div class="art-title">Solace</div></div>
-        <div class="card-meta"><span>Healthcare</span><b>+142 booked calls</b></div>
+      <a href="#book" class="work-card reveal">
+        <div class="art-card art-rings shine-card tall">
+          <div class="rings"><i></i><i></i><i></i></div>
+          <div class="art-title">Solace</div>
+        </div>
+        <div class="work-meta"><span>Healthcare</span><b>Live in 68h</b></div>
       </a>
-      <a class="card tilt reveal" href="#book" style="--a:#2e2a22;--b:#f2d7a4">
-        <div class="card-art art-3"><div class="bars"><i></i><i></i><i></i><i></i><i></i></div><div class="art-title">Atlas<br>Legal</div></div>
-        <div class="card-meta"><span>Legal</span><b>2x pipeline</b></div>
+      <a href="#book" class="work-card reveal">
+        <div class="art-card art-bars shine-card tall">
+          <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="art-title">Atlas<br>Legal</div>
+        </div>
+        <div class="work-meta"><span>Legal</span><b>Live in 72h</b></div>
       </a>
     </div>
   </section>
 
-  <!-- RESULTS -->
-  <section class="results" id="results">
-    <div class="stats">
-      <div class="stat reveal"><b data-count="120" data-suffix="+">0</b><span>sites launched</span></div>
-      <div class="stat reveal"><b data-count="38" data-suffix="k">0</b><span>outreach messages sent</span></div>
-      <div class="stat reveal"><b data-count="4" data-suffix=".2x">0</b><span>average lead lift</span></div>
+  <!-- TESTIMONIALS -->
+  <section class="section" id="love">
+    <p class="overline reveal">Client love</p>
+    <h2 class="headline reveal">In their <span class="marker">words.</span></h2>
+    <p class="hint reveal">Tap a card to see the result</p>
+
+    <div class="deck" id="deck">
+      <button class="t-card" style="--tint:#E4F2FF;--acc:#4DA8E8" aria-label="Testimonial from Sara Mehta">
+        <div class="t-inner">
+          <div class="t-face t-front shine-card">
+            <div class="stars">★★★★★</div>
+            <p class="t-quote">“A messy brief became a site we are proud of. Live in three days, and enquiries doubled within a month.”</p>
+            <div class="t-person"><i style="--c:#9AD8FF">SM</i><div><b>Sara Mehta</b><small>Founder, Verde Homes</small></div></div>
+          </div>
+          <div class="t-face t-back">
+            <small>The result</small>
+            <b class="t-stat">2x</b>
+            <p>enquiries in the first month</p>
+            <span class="t-pill">Live in 71 hours</span>
+          </div>
+        </div>
+      </button>
+
+      <button class="t-card" style="--tint:#EFEAFF;--acc:#8B6FE8" aria-label="Testimonial from Maya Kapoor">
+        <div class="t-inner">
+          <div class="t-face t-front shine-card">
+            <div class="stars">★★★★★</div>
+            <p class="t-quote">“The fastest team I have worked with, and the quality never slipped. Every detail felt considered.”</p>
+            <div class="t-person"><i style="--c:#C9B8FF">MK</i><div><b>Maya Kapoor</b><small>Director, Solace Clinic</small></div></div>
+          </div>
+          <div class="t-face t-back">
+            <small>The result</small>
+            <b class="t-stat">+142</b>
+            <p>booked consultations</p>
+            <span class="t-pill">Live in 68 hours</span>
+          </div>
+        </div>
+      </button>
+
+      <button class="t-card" style="--tint:#FBF1DE;--acc:#C8963E" aria-label="Testimonial from Arjun Rao">
+        <div class="t-inner">
+          <div class="t-face t-front shine-card">
+            <div class="stars">★★★★★</div>
+            <p class="t-quote">“We pitched investors on Friday with a site that looked years ahead of us. Worth every hour.”</p>
+            <div class="t-person"><i style="--c:#F2D7A4">AR</i><div><b>Arjun Rao</b><small>CEO, Atlas Legal</small></div></div>
+          </div>
+          <div class="t-face t-back">
+            <small>The result</small>
+            <b class="t-stat">3.4x</b>
+            <p>more demo requests</p>
+            <span class="t-pill">Live in 72 hours</span>
+          </div>
+        </div>
+      </button>
     </div>
-    <blockquote class="quote reveal">
-      <p>“We stopped chasing clients. Now they find us, and our calendar has never looked better.”</p>
-      <footer><span class="avatar">MK</span>Maya Kapoor, Solace Clinic</footer>
-    </blockquote>
   </section>
 
   <!-- CTA -->
-  <section class="cta" id="book">
-    <div class="cta-glow" aria-hidden="true"></div>
-    <h2 class="split">Let's build your <em>machine.</em></h2>
-    <p class="reveal">A 20 minute call. We map your site, your market and your first 30 days.</p>
-    <form class="cta-form reveal" onsubmit="event.preventDefault(); this.classList.add('sent');">
-      <input type="email" required placeholder="you@company.com" aria-label="Email">
-      <button class="btn magnetic" type="submit"><span class="t1">Book a call</span><span class="t2">We'll be in touch ✓</span></button>
-    </form>
+  <section class="section cta" id="book">
+    <div class="cta-card shine-card">
+      <p class="overline">Ready when you are</p>
+      <h2 class="display-sm">Live by <span class="marker">Friday.<svg class="sparks" viewBox="0 0 40 34" aria-hidden="true"><path d="M8 26 L2 10"/><path d="M18 22 L26 4"/><path d="M24 30 L38 24"/></svg></span></h2>
+      <p class="lead">A free 20 minute call. We plan your site and lock your 72 hour slot.</p>
+      <form class="cta-form" id="ctaForm">
+        <input type="email" required placeholder="you@company.com" aria-label="Email">
+        <button class="btn btn-lg" type="submit"><span class="btn-label" data-text="Book a call">Book a call</span><span class="btn-done">Slot requested ✓</span></button>
+      </form>
+    </div>
   </section>
 </main>
 
 <footer class="foot">
   <a href="#top" class="logo"><span class="logo-mark"></span>Halo</a>
-  <span>© 2026 Halo Studio</span>
-  <div><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Email</a></div>
+  <div class="foot-links"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Email</a></div>
+  <small>© 2026 Halo Studio. Keep building.</small>
 </footer>
 
 <script src="main.js"></script>
