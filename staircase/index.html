@@ -20,9 +20,8 @@
   <canvas id="sky"></canvas>
   <canvas id="scene"></canvas>
   <canvas id="fore"></canvas>
-  <div class="scrim"></div>
+  <div class="veil"></div>
   <div class="grain"></div>
-  <div class="vignette"></div>
 </div>
 
 <header class="bar">
@@ -34,26 +33,31 @@
 </header>
 
 <section class="hero" id="hero">
-  <p class="eyebrow">James Chugh <span>·</span> Product &amp; UX Designer</p>
+  <p class="eyebrow ln"><span class="in">James Chugh <span>·</span> Product &amp; UX Designer</span></p>
   <h1>
     <span class="ln"><span>Every great product</span></span>
     <span class="ln"><span>is a staircase.</span></span>
     <span class="ln"><span class="hl">I design the steps.</span></span>
   </h1>
-  <p class="lede">This portfolio is one continuous climb. Every landing is a chapter of the work.</p>
-  <div class="cue"><span class="cue-line"><i></i></span>Scroll to climb</div>
 </section>
 
-<div class="landing" id="landing" aria-live="polite">
-  <span class="l-kicker" id="lKicker">Landing</span>
-  <span class="l-num" id="lNum">01</span>
-  <span class="l-elev" id="lElev">Elev. +4.20 m</span>
-</div>
+<div class="cue" id="cue"><div class="cue-in"><span class="cue-line"><i></i></span><span>Scroll to begin</span></div></div>
 
-<nav class="rail" id="rail" aria-label="Landings">
-  <div class="rail-track"><div class="rail-fill" id="railFill"></div></div>
-  <div class="rail-marker" id="railMarker"></div>
-  <ol class="rail-stops" id="railStops"></ol>
+<article class="chapter" aria-labelledby="nsutTitle">
+  <h2 id="nsutTitle" class="sr-only">NSUT</h2>
+  <div class="anno anno-k" id="annoK" data-off><span class="k">Chapter 01 · Landing +4.20 m</span></div>
+  <div class="anno anno-a" id="annoA" data-off><span class="t">Mechanical Engineering · 2021</span></div>
+  <div class="anno anno-b" id="annoB" data-off>
+    <span class="k">The beginning of my design journey</span>
+    <p>Engineering taught me how things work.<br>Curiosity made me ask who they’re for.</p>
+  </div>
+</article>
+
+<nav class="meter" id="meter" aria-label="Where you are">
+  <button class="m-stop m-top" type="button" data-k="1" aria-label="Go to Landing 01, NSUT">01</button>
+  <div class="m-rail"><div class="m-scale" id="mScale"></div><div class="m-mark" id="mMark"><span id="mRead">+0.00 m</span></div></div>
+  <button class="m-stop m-bot" type="button" data-k="0" aria-label="Go to the ground floor">G</button>
+  <span class="m-label" id="mLabel">Ground</span>
 </nav>
 
 <div id="track"></div>
