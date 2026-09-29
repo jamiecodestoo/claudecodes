@@ -103,12 +103,22 @@
   /* ============ Hero: slider expands as you scroll ============ */
   const redesign = document.getElementById("redesign");
   let startTop = 0;
-  const measure = () => { startTop = redesign.getBoundingClientRect().top + scrollY; };
+  /* keep exactly 40% of the slider in the first viewport */
+  const fitFold = () => {
+    redesign.style.marginTop = "";
+    const base = parseFloat(getComputedStyle(redesign).marginTop) || 0;
+    const top = redesign.getBoundingClientRect().top + scrollY;
+    const frameH = redesign.offsetHeight * 0.84;
+    const want = innerHeight - frameH * 0.4;
+    redesign.style.marginTop = Math.max(20, base + want - top) + "px";
+  };
+  const measure = () => { fitFold(); startTop = redesign.getBoundingClientRect().top + scrollY; };
   const expand = () => {
     const sp = clamp(scrollY / Math.max(1, startTop - 120), 0, 1);
     redesign.style.setProperty("--sp", (1 - Math.pow(1 - sp, 2)).toFixed(4));
   };
   measure(); expand();
+  document.fonts && document.fonts.ready.then(() => { measure(); expand(); });
   addEventListener("scroll", expand, { passive: true });
   addEventListener("resize", () => { measure(); expand(); });
 
@@ -253,70 +263,45 @@
   requestAnimationFrame(lensLoop);
   addEventListener("resize", () => { tr = lensR(); });
 
-  /* ============ Shape your site ============ */
-  const pv = document.getElementById("pv");
-  const copy = pv.querySelector(".pv-copy");
-  const $ = (id) => document.getElementById(id);
-  const industries = {
-    home:   { brand: "Verde",  url: "verdehomes.com",  kicker: "Homes in Lisbon",     h: "Find a home that feels like you.",   p: "Hand picked homes and an agent who actually calls back.", cta: "Browse homes",   nav: "Book a viewing", art: "orb",   acc: "#7CC4F5", tint: "#DCEFFF" },
-    clinic: { brand: "Solace", url: "solaceclinic.com", kicker: "Family clinic",      h: "Care that fits your life.",          p: "Same week appointments with doctors who listen.",          cta: "Book a visit",   nav: "Book a visit",   art: "rings", acc: "#9C86F0", tint: "#EEE8FF" },
-    law:    { brand: "Atlas",  url: "atlaslegal.com",  kicker: "Business law",        h: "Clear advice. Better outcomes.",     p: "Senior lawyers, fixed fees and answers within a day.",     cta: "Get advice",     nav: "Talk to us",     art: "bars",  acc: "#E0B25E", tint: "#FBEFD9" },
-    cafe:   { brand: "Crumb",  url: "crumbcoffee.com", kicker: "Neighbourhood café",  h: "Slow coffee for fast mornings.",     p: "Fresh pastries at seven. Your usual, remembered.",          cta: "See the menu",   nav: "Order ahead",    art: "orb",   acc: "#F29A6B", tint: "#FFE9DC" },
-    saas:   { brand: "Pulse",  url: "pulse.app",       kicker: "Analytics for teams", h: "Reports your team will actually read.", p: "Connect your tools and get one clear weekly story.",   cta: "Start free",     nav: "Sign in",        art: "bars",  acc: "#9BD24A", tint: "#EDF8D6" },
+  /* ============ Founder badge on a lanyard ============ */
+  const lanyard = document.getElementById("lanyard");
+  const badge = document.getElementById("badge");
+  const lWrap = document.getElementById("lanyardWrap");
+  let ang = 8, vel = 0, grab = false, grabOff = 0;
+  const pointerAngle = (e) => {
+    const r = lWrap.getBoundingClientRect();
+    const dx = e.clientX - (r.left + r.width / 2), dy = Math.max(40, e.clientY - r.top);
+    return -Math.atan2(dx, dy) * 180 / Math.PI;
   };
-  const moods = {
-    calm:    { type: "SF Pro Semibold", radius: "18px", bg: "#F7F6F2" },
-    bold:    { type: "SF Pro Heavy",    radius: "6px",  bg: "#111317" },
-    playful: { type: "SF Pro Rounded",  radius: "40px", bg: null },
-  };
-  let ind = "home", mood = "calm";
-
-  const applyShape = (animate = true) => {
-    const d = industries[ind], m = moods[mood];
-    pv.style.setProperty("--acc", d.acc);
-    pv.style.setProperty("--tint", d.tint);
-    pv.dataset.mood = mood;
-    pv.dataset.art = d.art;
-    $("specSw").style.setProperty("--acc", d.acc);
-    $("specColor").textContent = (m.bg || d.tint).toUpperCase();
-    $("specType").textContent = m.type;
-    $("specRadius").textContent = m.radius;
-    $("pvUrl").textContent = d.url;
-    $("pvBrand").textContent = d.brand;
-    $("pvNavCta").textContent = d.nav;
-    $("pvCta").textContent = d.cta;
-    const setText = () => { $("pvKicker").textContent = d.kicker; $("pvH").textContent = d.h; $("pvP").textContent = d.p; };
-    if (!animate) return setText();
-    copy.classList.add("swap");
-    setTimeout(() => { setText(); copy.classList.remove("swap"); }, 260);
-  };
-
-  const segs = [["segIndustry", (v) => (ind = v)], ["segMood", (v) => (mood = v)]];
-  const movePill = (seg) => {
-    const on = seg.querySelector("button.on"), pill = seg.querySelector(".seg-pill");
-    pill.style.width = on.offsetWidth + "px";
-    pill.style.transform = `translateX(${on.offsetLeft}px)`;
-  };
-  segs.forEach(([id, set]) => {
-    const seg = $(id);
-    seg.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
-      seg.querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b));
-      set(b.dataset.v); movePill(seg); applyShape();
-    }));
+  badge.addEventListener("pointerdown", (e) => {
+    grab = true; badge.classList.add("grabbing");
+    badge.setPointerCapture(e.pointerId);
+    grabOff = pointerAngle(e) - ang;
+    lWrap.querySelector(".drag-hint").style.opacity = 0;
   });
-  const pickRandom = (id, current) => {
-    const opts = [...$(id).querySelectorAll("button")].filter((b) => b.dataset.v !== current);
-    return opts[Math.floor(Math.random() * opts.length)];
-  };
-  $("shuffle").addEventListener("click", () => {
-    const a = pickRandom("segIndustry", ind), b = Math.random() < 0.75 ? pickRandom("segMood", mood) : null;
-    a.click(); if (b) b.click();
+  badge.addEventListener("pointermove", (e) => {
+    if (!grab) return;
+    const target = clamp(pointerAngle(e) - grabOff, -70, 70);
+    vel = target - ang; ang = target;
   });
-  const layoutPills = () => segs.forEach(([id]) => movePill($(id)));
-  layoutPills();
-  addEventListener("resize", layoutPills);
-  document.fonts && document.fonts.ready.then(layoutPills);
-  applyShape(false);
+  const release = () => { grab = false; badge.classList.remove("grabbing"); };
+  badge.addEventListener("pointerup", release);
+  badge.addEventListener("pointercancel", release);
+  let lastScroll = scrollY;
+  addEventListener("scroll", () => {
+    const d = scrollY - lastScroll; lastScroll = scrollY;
+    if (!grab) vel += clamp(d * 0.01, -0.6, 0.6);
+  }, { passive: true });
+  const swing = (now) => {
+    if (!grab) {
+      const breeze = Math.sin(now / 1400) * 0.004;
+      vel += -0.014 * ang - 0.045 * vel + breeze;
+      ang = clamp(ang + vel, -55, 55);
+    }
+    lanyard.style.setProperty("--a", ang.toFixed(3) + "deg");
+    requestAnimationFrame(swing);
+  };
+  if (!reduced) requestAnimationFrame(swing);
 
   /* ============ 72 hour dial (process) ============ */
   const stage = document.getElementById("stage");
