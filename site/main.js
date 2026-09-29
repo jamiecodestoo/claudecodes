@@ -63,6 +63,58 @@
     });
   });
 
+
+  /* ============ Hero: comet on a semicircle ============ */
+  const cPath = document.getElementById("cometPath");
+  const cLit = document.getElementById("cometLit");
+  const cTail = document.getElementById("cometTail");
+  const cGlow = document.getElementById("cometGlow");
+  const cCore = document.getElementById("cometCore");
+  const L = cPath.getTotalLength();
+  const TAIL = 34;
+  const tailDots = Array.from({ length: TAIL }, (_, i) => {
+    const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    c.setAttribute("r", (3.6 * (1 - i / TAIL) + 0.4).toFixed(2));
+    c.setAttribute("opacity", (0.85 * Math.pow(1 - i / TAIL, 1.6)).toFixed(3));
+    cTail.append(c);
+    return c;
+  });
+  cLit.style.strokeDasharray = `220 ${L}`;
+  const COMET = 7000, REST = 1400;
+  const cometLoop = (now) => {
+    const t = (now % (COMET + REST)) / COMET;
+    const k = Math.min(t, 1), d = easeInOut(k) * L;
+    const fade = k >= 1 ? 0 : Math.min(1, k * 8, (1 - k) * 8);
+    const p = cPath.getPointAtLength(d);
+    cGlow.setAttribute("cx", p.x); cGlow.setAttribute("cy", p.y);
+    cCore.setAttribute("cx", p.x); cCore.setAttribute("cy", p.y);
+    cGlow.style.opacity = cCore.style.opacity = fade;
+    tailDots.forEach((c, i) => {
+      const q = cPath.getPointAtLength(Math.max(0, d - i * 7));
+      c.setAttribute("cx", q.x); c.setAttribute("cy", q.y);
+    });
+    cTail.style.opacity = fade;
+    cLit.style.strokeDashoffset = -(d - 220);
+    cLit.style.opacity = fade * 0.55;
+    requestAnimationFrame(cometLoop);
+  };
+  if (!reduced) requestAnimationFrame(cometLoop);
+
+  /* ============ Hero: slider expands as you scroll ============ */
+  const redesign = document.getElementById("redesign");
+  let startTop = 0;
+  const measure = () => { startTop = redesign.getBoundingClientRect().top + scrollY; };
+  const expand = () => {
+    const sp = clamp(scrollY / Math.max(1, startTop - 120), 0, 1);
+    redesign.style.setProperty("--sp", (1 - Math.pow(1 - sp, 2)).toFixed(4));
+  };
+  measure(); expand();
+  addEventListener("scroll", expand, { passive: true });
+  addEventListener("resize", () => { measure(); expand(); });
+
+  /* ============ X-ray: blueprint mirrors the real page ============ */
+  document.getElementById("bpContent").innerHTML = document.getElementById("xrayPage").innerHTML;
+
   /* ============ Live redesign slider ============ */
   const cmp = document.getElementById("cmp");
   const handle = document.getElementById("cmpHandle");
@@ -71,12 +123,6 @@
   const tagAfter = cmp.querySelector(".tag-after");
   const tagBefore = cmp.querySelector(".tag-before");
   const dCursor = document.getElementById("designCursor");
-  const metrics = [
-    { v: document.getElementById("mLoad"), b: document.getElementById("bLoad"), from: 6.2, to: 0.9, fmt: (x) => x.toFixed(1) + "s", good: (x) => 1 - (x - 0.9) / 5.3 },
-    { v: document.getElementById("mConv"), b: document.getElementById("bConv"), from: 0.8, to: 4.6, fmt: (x) => x.toFixed(1) + "%", good: (x) => (x - 0.8) / 3.8 },
-    { v: document.getElementById("mMob"), b: document.getElementById("bMob"), from: 38, to: 99, fmt: (x) => Math.round(x), good: (x) => (x - 38) / 61 },
-  ];
-  const heat = (g) => g < 0.34 ? "#E5484D" : g < 0.7 ? "#E8A13A" : "#2FB36B";
   let pos = 6, stamped = false, touched = false;
 
   const setPos = (p) => {
@@ -84,12 +130,6 @@
     cmp.style.setProperty("--pos", pos + "%");
     handle.setAttribute("aria-valuenow", Math.round(pos));
     const t = pos / 100;
-    metrics.forEach((m) => {
-      const x = lerp(m.from, m.to, t), g = clamp(m.good(x), 0, 1);
-      m.v.textContent = m.fmt(x);
-      m.v.parentElement.style.setProperty("--mc", heat(g));
-      m.b.style.width = 8 + g * 92 + "%";
-    });
     tagAfter.style.opacity = clamp((pos - 10) / 10, 0, 1);
     tagBefore.style.opacity = clamp((90 - pos) / 10, 0, 1);
     status.textContent = pos > 97 ? "Redesigned" : pos < 3 ? "Built in 2009" : "Redesigning…";
@@ -163,7 +203,7 @@
     setTimeout(() => dCursor.classList.remove("show"), 400);
   };
   setPos(pos);
-  onView(cmp, () => setTimeout(intro, 700), 0.5);
+  onView(cmp, () => setTimeout(intro, 500), 0.75);
 
   function confetti(host) {
     const colors = ["#D9F65A", "#9AD8FF", "#C9B8FF", "#F2D7A4", "#15171C"];
@@ -278,17 +318,95 @@
   document.fonts && document.fonts.ready.then(layoutPills);
   applyShape(false);
 
-  /* ============ Process line fill ============ */
+  /* ============ 72 hour dial (process) ============ */
+  const stage = document.getElementById("stage");
   const tl = document.querySelector(".timeline");
   const fill = document.getElementById("lineFill");
   const days = tl.querySelectorAll(".day");
-  const onScroll = () => {
-    const r = tl.getBoundingClientRect();
-    const p = clamp((innerHeight * 0.7 - r.top) / (r.height + innerHeight * 0.2), 0, 1);
-    fill.style.transform = `scaleX(${p})`;
-    days.forEach((d, i) => d.classList.toggle("on", p >= i / 2 - 0.001 && p > 0.02));
+  const NS = "http://www.w3.org/2000/svg";
+  const ticksG = document.getElementById("ticks");
+  const ticks = [];
+  for (let h = 0; h < 72; h++) {
+    const a = (h / 72) * Math.PI * 2 - Math.PI / 2;
+    const major = h % 6 === 0;
+    const r1 = major ? 192 : 198, r2 = 206;
+    const l = document.createElementNS(NS, "line");
+    l.setAttribute("x1", 220 + Math.cos(a) * r1); l.setAttribute("y1", 220 + Math.sin(a) * r1);
+    l.setAttribute("x2", 220 + Math.cos(a) * r2); l.setAttribute("y2", 220 + Math.sin(a) * r2);
+    l.setAttribute("class", "tk" + (major ? " major" : ""));
+    ticksG.append(l); ticks.push(l);
+  }
+  const C = 2 * Math.PI * 176;
+  const arc = stage.querySelector(".dial-arc");
+  const marker = stage.querySelector(".dial-marker");
+  const nodes = stage.querySelectorAll(".dial-nodes circle");
+  const hoursEl = document.getElementById("hours");
+  const phaseEl = document.getElementById("phase");
+  const dial = stage.querySelector(".dial");
+  const milestones = stage.querySelectorAll(".milestone");
+  const RUN = 6400, HOLD = 2600;
+  let t0 = null, lastH = -1, running = false;
+
+  const setHour = (h) => {
+    const off = C * (1 - h / 72);
+    fill.style.transform = `scaleX(${h / 72})`;
+    arc.style.strokeDashoffset = off;
+    marker.style.strokeDashoffset = off;
+    const hi = Math.floor(h);
+    if (hi === lastH) return;
+    lastH = hi;
+    hoursEl.textContent = hi;
+    ticks.forEach((t, i) => t.classList.toggle("on", i < hi));
+    nodes.forEach((n, i) => n.classList.toggle("on", hi >= i * 24));
+    phaseEl.textContent = hi >= 72 ? "Live" : hi >= 48 ? "Launch" : hi >= 24 ? "Build" : "Design";
+    milestones.forEach((m) => m.classList.toggle("on", hi >= +m.dataset.at));
+    dial.classList.toggle("done", hi >= 72);
+    days.forEach((d, i) => d.classList.toggle("on", hi >= i * 24 + (i ? 1 : 0)));
+    if (hi === 72) burst();
   };
-  addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+  const burst = () => {
+    const colors = ["#D9F65A", "#9AD8FF", "#C9B8FF", "#F2D7A4", "#15171C"];
+    for (let i = 0; i < 22; i++) {
+      const s = document.createElement("span");
+      const a = Math.random() * Math.PI * 2, d = 170 + Math.random() * 120;
+      s.className = "burst";
+      s.style.background = colors[i % colors.length];
+      s.style.setProperty("--dx", Math.cos(a) * d + "px");
+      s.style.setProperty("--dy", Math.sin(a) * d + "px");
+      s.style.setProperty("--rot", Math.random() * 360 + "deg");
+      dial.append(s);
+      setTimeout(() => s.remove(), 1200);
+    }
+  };
+
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const loop = (now) => {
+    if (t0 === null) t0 = now;
+    const t = now - t0;
+    if (t < RUN) setHour(72 * ease(t / RUN));
+    else if (t < RUN + HOLD) setHour(72);
+    else { t0 = now; lastH = -1; }
+    requestAnimationFrame(loop);
+  };
+  if (reduced) setHour(72);
+  else new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !running) { running = true; setTimeout(() => requestAnimationFrame(loop), 900); }
+  }, { threshold: 0.3 }).observe(stage);
+
+  /* Collaborator cursors wander around the stage */
+  const cursors = stage.querySelectorAll(".collab.wander");
+  const spots = [[160, 40], [760, 90], [300, 480], [840, 440], [480, 20], [120, 380], [700, 250], [900, 150]];
+  let k = 0;
+  const wander = () => {
+    const sw = stage.clientWidth / 1080;
+    cursors.forEach((c, i) => {
+      const [x, y] = spots[(k + i * 3) % spots.length];
+      c.style.transform = `translate(${x * sw}px, ${y}px)`;
+    });
+    k++;
+  };
+  wander(); setInterval(wander, 2600);
 
   /* ============ Testimonials ============ */
   const deck = document.getElementById("deck");
