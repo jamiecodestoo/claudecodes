@@ -407,6 +407,10 @@
   onView(deck, () => deck.classList.add("fan"));
   deck.querySelectorAll(".t-card").forEach((c) => c.addEventListener("click", () => c.classList.toggle("flipped")));
 
+  /* ============ CTA: launch day is today + 72 hours ============ */
+  const launch = new Date(Date.now() + 72 * 3600 * 1000);
+  document.getElementById("liveDay").textContent = launch.toLocaleDateString("en-US", { weekday: "long" });
+
   /* ============ CTA form ============ */
   document.getElementById("ctaForm").addEventListener("submit", (e) => {
     e.preventDefault();
