@@ -393,6 +393,17 @@
   };
   wander(); setInterval(wander, 2600);
 
+  /* ============ Founder numbers count up ============ */
+  document.querySelectorAll("[data-count]").forEach((el) => onView(el, () => {
+    const end = +el.dataset.count, suf = el.dataset.suffix || "", t0 = performance.now();
+    const tick = (t) => {
+      const k = clamp((t - t0) / 1400, 0, 1);
+      el.textContent = Math.round(end * (1 - Math.pow(1 - k, 4))) + suf;
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, 0.6));
+
   /* ============ Testimonials ============ */
   const deck = document.getElementById("deck");
   onView(deck, () => deck.classList.add("fan"));

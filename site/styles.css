@@ -641,3 +641,36 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero .display { font-size: clamp(40px, min(7vw, 9.6vh), 88px); margin: clamp(14px, 2.4vh, 22px) 0 clamp(12px, 2.2vh, 20px); }
 .hero .lead { font-size: clamp(16px, min(1.5vw, 2.2vh), 20px); }
 .hero-cta { margin-top: clamp(18px, 3.3vh, 30px); }
+
+/* ============ Round 5 refinements ============ */
+/* Hero sits lower in the first fold */
+.hero { padding-top: clamp(88px, calc(40vh - 180px), 190px); }
+
+/* Calmer 72h stage */
+.stage { height: 520px; }
+.stage .art-orb { left: 40px; top: 70px; }
+.stage .art-bars { right: 40px; top: 130px; }
+
+/* Founder: experience + numbers */
+.about-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; width: min(920px, 100%); margin-top: 48px; text-align: left; }
+.about-card { padding: 28px; border-radius: 28px; background: var(--surface); box-shadow: 0 0 0 1px var(--line), var(--shadow-2); }
+.about-card.nums { transition-delay: .1s; }
+.card-label { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.xp-row { position: relative; display: flex; align-items: center; gap: 14px; padding: 14px 12px; margin: 0 -12px; border-radius: 16px; transition: background .3s, transform .4s var(--spring); }
+.xp-row + .xp-row::before { content: ""; position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: var(--line); }
+.xp-row:hover { background: #F6F6F3; transform: translateX(4px); }
+.xp-row i { flex: none; width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; background: var(--c); color: #fff; font-style: normal; font-size: 18px; font-weight: 800; letter-spacing: -.04em; box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .15); transition: transform .4s var(--spring); }
+.xp-row:hover i { transform: rotate(-8deg) scale(1.06); }
+.xp-row b { display: block; font-size: 17px; font-weight: 600; letter-spacing: -.02em; }
+.xp-row small { font-size: 14px; color: var(--muted); }
+.xp-row em { margin-left: auto; font-style: normal; padding: 4px 10px; border-radius: 99px; background: var(--lime); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.nums { display: flex; flex-direction: column; background: var(--ink); color: #fff; box-shadow: 0 0 0 1px var(--ink), var(--shadow-2); }
+.nums .card-label { color: rgba(255, 255, 255, .5); }
+.num { display: flex; align-items: center; gap: 16px; padding: 14px 0; flex: 1; }
+.num + .num { border-top: 1px solid rgba(255, 255, 255, .1); }
+.num b { min-width: 2.3em; font-size: 56px; font-weight: 700; letter-spacing: -.06em; line-height: 1; color: var(--lime); font-variant-numeric: tabular-nums; }
+.num span { font-size: 15px; line-height: 1.4; color: rgba(255, 255, 255, .72); }
+@media (max-width: 760px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .num b { font-size: 46px; }
+}
