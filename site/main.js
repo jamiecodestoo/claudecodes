@@ -104,13 +104,18 @@
   const redesign = document.getElementById("redesign");
   let startTop = 0;
   /* keep exactly 40% of the slider in the first viewport */
+  const hero = document.querySelector(".hero");
   const fitFold = () => {
-    redesign.style.marginTop = "";
+    redesign.style.marginTop = ""; hero.style.paddingTop = "";
     const base = parseFloat(getComputedStyle(redesign).marginTop) || 0;
+    const pad = parseFloat(getComputedStyle(hero).paddingTop) || 0;
     const top = redesign.getBoundingClientRect().top + scrollY;
     const frameH = redesign.offsetHeight * 0.84;
     const want = innerHeight - frameH * 0.4;
-    redesign.style.marginTop = Math.max(20, base + want - top) + "px";
+    let margin = Math.max(20, base + want - top);
+    /* never leave a big empty gap: past 56px, push the hero text down instead */
+    if (margin > 56) { hero.style.paddingTop = pad + Math.min(110, margin - 56) + "px"; margin = 56; }
+    redesign.style.marginTop = margin + "px";
   };
   const measure = () => { fitFold(); startTop = redesign.getBoundingClientRect().top + scrollY; };
   const expand = () => {
@@ -263,45 +268,36 @@
   requestAnimationFrame(lensLoop);
   addEventListener("resize", () => { tr = lensR(); });
 
-  /* ============ Founder badge on a lanyard ============ */
-  const lanyard = document.getElementById("lanyard");
-  const badge = document.getElementById("badge");
-  const lWrap = document.getElementById("lanyardWrap");
-  let ang = 8, vel = 0, grab = false, grabOff = 0;
-  const pointerAngle = (e) => {
-    const r = lWrap.getBoundingClientRect();
-    const dx = e.clientX - (r.left + r.width / 2), dy = Math.max(40, e.clientY - r.top);
-    return -Math.atan2(dx, dy) * 180 / Math.PI;
+  /* ============ Founder story: words light up as you scroll ============ */
+  const story = document.getElementById("story");
+  const units = [];
+  const splitWords = (node) => {
+    [...node.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) return frag.append(" ");
+          const w = document.createElement("span");
+          w.className = "sw"; w.textContent = part;
+          frag.append(w); units.push(w);
+        });
+        n.replaceWith(frag);
+      } else if (n.classList.contains("brand")) {
+        n.classList.add("sw"); units.push(n);
+      } else splitWords(n);
+    });
   };
-  badge.addEventListener("pointerdown", (e) => {
-    grab = true; badge.classList.add("grabbing");
-    badge.setPointerCapture(e.pointerId);
-    grabOff = pointerAngle(e) - ang;
-    lWrap.querySelector(".drag-hint").style.opacity = 0;
-  });
-  badge.addEventListener("pointermove", (e) => {
-    if (!grab) return;
-    const target = clamp(pointerAngle(e) - grabOff, -70, 70);
-    vel = target - ang; ang = target;
-  });
-  const release = () => { grab = false; badge.classList.remove("grabbing"); };
-  badge.addEventListener("pointerup", release);
-  badge.addEventListener("pointercancel", release);
-  let lastScroll = scrollY;
-  addEventListener("scroll", () => {
-    const d = scrollY - lastScroll; lastScroll = scrollY;
-    if (!grab) vel += clamp(d * 0.01, -0.6, 0.6);
-  }, { passive: true });
-  const swing = (now) => {
-    if (!grab) {
-      const breeze = Math.sin(now / 1400) * 0.004;
-      vel += -0.014 * ang - 0.045 * vel + breeze;
-      ang = clamp(ang + vel, -55, 55);
-    }
-    lanyard.style.setProperty("--a", ang.toFixed(3) + "deg");
-    requestAnimationFrame(swing);
+  splitWords(story);
+  const hls = [...story.querySelectorAll(".hl")];
+  const lightStory = () => {
+    const r = story.getBoundingClientRect();
+    const p = clamp((innerHeight * 0.82 - r.top) / (r.height + innerHeight * 0.3), 0, 1);
+    const lit = Math.round(p * units.length);
+    units.forEach((u, i) => u.classList.toggle("lit", i < lit));
+    hls.forEach((h) => { const ws = h.querySelectorAll(".sw"); h.classList.toggle("in", ws[ws.length - 1].classList.contains("lit")); });
   };
-  if (!reduced) requestAnimationFrame(swing);
+  addEventListener("scroll", lightStory, { passive: true }); lightStory();
 
   /* ============ 72 hour dial (process) ============ */
   const stage = document.getElementById("stage");
@@ -392,17 +388,6 @@
     k++;
   };
   wander(); setInterval(wander, 2600);
-
-  /* ============ Founder numbers count up ============ */
-  document.querySelectorAll("[data-count]").forEach((el) => onView(el, () => {
-    const end = +el.dataset.count, suf = el.dataset.suffix || "", t0 = performance.now();
-    const tick = (t) => {
-      const k = clamp((t - t0) / 1400, 0, 1);
-      el.textContent = Math.round(end * (1 - Math.pow(1 - k, 4))) + suf;
-      if (k < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, 0.6));
 
   /* ============ Testimonials ============ */
   const deck = document.getElementById("deck");
