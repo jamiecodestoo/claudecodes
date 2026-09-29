@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Ascent · James Chugh</title>
+<meta name="description" content="A portfolio built as one continuous staircase.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script>
+  // Apply the saved theme before first paint so there is no flash.
+  try { var t = localStorage.getItem('ascent-theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+</head>
+<body>
+<!--BODY-->
+<div class="stage" aria-hidden="true">
+  <canvas id="sky"></canvas>
+  <canvas id="scene"></canvas>
+  <canvas id="fore"></canvas>
+  <div class="scrim"></div>
+  <div class="grain"></div>
+  <div class="vignette"></div>
+</div>
+
+<header class="bar">
+  <a class="mark" href="#top" id="mark">James Chugh</a>
+  <button class="theme" id="theme" type="button" aria-label="Switch to dark mode">
+    <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+    <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M19.5 14.6A7.8 7.8 0 0 1 9.4 4.5a7.8 7.8 0 1 0 10.1 10.1z"/></svg>
+  </button>
+</header>
+
+<section class="hero" id="hero">
+  <p class="eyebrow">James Chugh <span>·</span> Product &amp; UX Designer</p>
+  <h1>
+    <span class="ln"><span>Every great product</span></span>
+    <span class="ln"><span>is a staircase.</span></span>
+    <span class="ln"><span class="hl">I design the steps.</span></span>
+  </h1>
+  <p class="lede">This portfolio is one continuous climb. Every landing is a chapter of the work.</p>
+  <div class="cue"><span class="cue-line"><i></i></span>Scroll to climb</div>
+</section>
+
+<div class="landing" id="landing" aria-live="polite">
+  <span class="l-kicker" id="lKicker">Landing</span>
+  <span class="l-num" id="lNum">01</span>
+  <span class="l-elev" id="lElev">Elev. +4.20 m</span>
+</div>
+
+<nav class="rail" id="rail" aria-label="Landings">
+  <div class="rail-track"><div class="rail-fill" id="railFill"></div></div>
+  <div class="rail-marker" id="railMarker"></div>
+  <ol class="rail-stops" id="railStops"></ol>
+</nav>
+
+<div id="track"></div>
+<!--/BODY-->
+<script src="main.js"></script>
+</body>
+</html>
