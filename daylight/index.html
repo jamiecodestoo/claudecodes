@@ -62,11 +62,18 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   background: rgba(255, 253, 247, .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: var(--shadow-sm); }
 .logo i { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; background: var(--sun); display: grid; place-items: center; font-style: normal; font-size: 13px; }
 .logo i img { width: 100%; height: 100%; object-fit: cover; }
-.nav { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); transform: translateX(-50%); transition: transform .6s var(--ease), opacity .4s var(--ease); display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 999px; box-shadow: 0 14px 30px -14px rgba(19, 35, 58, .45) !important; background: rgba(255, 253, 247, .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: var(--shadow-sm); }
-.nav a { white-space: nowrap; font-size: 14px; font-weight: 600; text-decoration: none; padding: 8px 13px; border-radius: 999px; transition: background .3s; }
-.nav a:hover { background: rgba(19, 35, 58, .07); }
-.nav a.cta { background: var(--ink); color: var(--paper); }
-.nav a.cta:hover { background: #22395a; }
+.nav { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); transform: translateX(-50%); transition: transform .7s var(--ease), opacity .4s var(--ease);
+  display: flex; align-items: center; gap: 2px; height: 64px; padding: 0 8px; box-sizing: border-box; border-radius: 999px; isolation: isolate;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .62), rgba(255, 250, 240, .42)); backdrop-filter: blur(24px) saturate(1.8); -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 0 0 1px rgba(255, 255, 255, .55), 0 0 0 1px rgba(19, 35, 58, .06), 0 24px 48px -20px rgba(19, 35, 58, .45), 0 4px 12px -6px rgba(19, 35, 58, .18) !important; }
+.nav::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: radial-gradient(120% 140% at 20% -30%, rgba(255, 255, 255, .8), transparent 55%); pointer-events: none; }
+.nav a { position: relative; z-index: 1; display: inline-flex; align-items: center; height: 48px; padding: 0 18px; white-space: nowrap; font: 600 15px/1 var(--sans); letter-spacing: -.01em; color: var(--ink-2); text-decoration: none; border-radius: 999px; transition: color .3s; }
+.nav a:hover, .nav a.on { color: var(--ink); }
+.nav .ind { position: absolute; z-index: 0; left: 0; top: 8px; height: 48px; width: 0; border-radius: 999px; background: rgba(255, 255, 255, .95); box-shadow: 0 1px 0 #fff inset, 0 6px 16px -8px rgba(19, 35, 58, .35), 0 0 0 1px rgba(19, 35, 58, .05); opacity: 0; transition: transform .55s var(--spring), width .55s var(--spring), opacity .3s; }
+.nav .ind.on { opacity: 1; }
+.nav .sep { width: 1px; height: 26px; margin: 0 6px; background: rgba(19, 35, 58, .12); }
+.nav a.cta { color: #fff; background: var(--ink); padding: 0 20px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 8px 18px -8px rgba(19, 35, 58, .6); transition: transform .4s var(--spring), background .3s; }
+.nav a.cta:hover { background: #22395a; transform: translateY(-1px); }
 .nav.away { transform: translate(-50%, 140%); opacity: 0; pointer-events: none; }
 
 /* =========================================================
@@ -558,13 +565,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .stack-head { position: absolute; z-index: 4; left: 0; right: 0; top: calc(env(safe-area-inset-top, 0px) + 9vh); padding: 0 16px; pointer-events: none; will-change: transform, opacity; }
 .stack-head .sec-head { justify-items: center; text-align: center; margin: 0; }
 .stack-head .sec-head h2 { max-width: 15ch; font-size: clamp(2.2rem, 4.8vw, 4.6rem); }
-.gift-stage { position: absolute; left: 50%; top: 58%; width: 0; height: 0; }
+.gift-stage { position: absolute; left: 50%; top: 76%; width: 0; height: 0; }
+.beam { position: absolute; left: -260px; bottom: 60px; width: 520px; height: 70vh; opacity: 0; pointer-events: none; clip-path: polygon(38% 100%, 62% 100%, 100% 0, 0 0); background: linear-gradient(0deg, rgba(255, 226, 160, .75), rgba(255, 226, 160, .18) 55%, rgba(255, 226, 160, 0)); filter: blur(6px); }
 .burst { position: absolute; left: -420px; top: -470px; width: 840px; height: 840px; border-radius: 50%; opacity: 0; pointer-events: none; background: radial-gradient(closest-side, rgba(255, 222, 160, .7), rgba(255, 222, 160, .22) 45%, transparent 72%); }
 .gift { position: absolute; left: -150px; top: -170px; width: 300px; height: 300px; transform-origin: 50% 92%; will-change: transform; }
 .gift svg { width: 100%; height: 100%; overflow: visible; }
 #lid { transform-box: fill-box; transform-origin: 20% 100%; will-change: transform; }
-.gift-cap { position: absolute; left: 0; top: 150px; margin: 0; transform: translateX(-50%); white-space: nowrap; font: italic 22px/1 var(--serif); color: var(--ink-2); opacity: 0; transition: opacity .6s var(--ease); }
-.confetti i { position: absolute; left: -7px; top: -70px; width: 14px; height: 14px; background: #E2BF7E; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); opacity: 0; will-change: transform; }
+.gift-cap { position: absolute; left: 0; top: -250px; margin: 0; transform: translate(-50%, -50%); white-space: nowrap; font: italic 22px/1 var(--serif); color: var(--ink-2); opacity: 0; transition: opacity .6s var(--ease); }
+.gift-cap.hide { opacity: 0 !important; }
+.confetti i { position: absolute; left: -6px; top: -80px; width: 12px; height: 12px; background: #E2BF7E; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); opacity: 0; scale: var(--s); }
+.gift-stage.open .confetti i { animation: sparkle 3.6s linear infinite; animation-delay: var(--d); }
+@keyframes sparkle { 0% { transform: translate(var(--x0), 0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(var(--x1), -52vh) rotate(180deg); opacity: 0; } }
 .ring { position: absolute; left: 0; top: 0; }
 .tool { position: absolute; left: 0; top: 0; width: 84px; margin: -42px 0 0 -42px; display: grid; justify-items: center; gap: 9px; opacity: 0; will-change: transform; transition: opacity .3s, filter .3s; }
 .tool .ti { width: 80px; height: 80px; border-radius: 22px; background: var(--bg); display: grid; place-items: center; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), inset 0 0 0 1px rgba(19, 35, 58, .07), 0 1px 2px rgba(19, 35, 58, .08), 0 12px 24px -12px rgba(19, 35, 58, .45); transition: transform .5s var(--spring), box-shadow .4s; }
@@ -576,14 +587,15 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 @keyframes bob2 { 50% { translate: 0 -7px; } }
 .tool.set:hover .ti, .tool.on .ti { transform: translateY(-4px) scale(1.08); box-shadow: 0 0 0 1px rgba(19, 35, 58, .06), 0 22px 36px -14px rgba(19, 35, 58, .55); }
 .ring.hov .tool.set:not(.on) { opacity: .3 !important; filter: grayscale(.6) blur(.5px); }
-.tool-tip { position: absolute; z-index: 5; left: 0; top: 0; width: 270px; box-sizing: border-box; padding: 16px 18px 18px; border-radius: 20px; background: rgba(255, 255, 255, .96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--ink); box-shadow: 0 30px 60px -24px rgba(19, 35, 58, .45), 0 0 0 1px rgba(19, 35, 58, .06);
+.tool-tip { position: absolute; z-index: 5; left: 0; top: -250px; width: 300px; box-sizing: border-box; padding: 16px 18px 18px; border-radius: 20px; background: rgba(255, 255, 255, .96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--ink); box-shadow: 0 30px 60px -24px rgba(19, 35, 58, .45), 0 0 0 1px rgba(19, 35, 58, .06);
   pointer-events: none; opacity: 0; transform: translate(-50%, 10px); transition: opacity .25s, transform .45s var(--spring); }
 .tt-h { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
 .tt-i { flex: none; width: 38px; height: 38px; border-radius: 11px; background: var(--bg); display: grid; place-items: center; box-shadow: inset 0 0 0 1px rgba(19, 35, 58, .08); }
 .tt-i svg { width: 21px; height: 21px; }
 .tt-h span:not(.tt-i) { display: block; margin-top: 3px; font: 600 11.5px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
 .tool-tip.above { transform: translate(-50%, calc(-100% + 10px)); }
-.tool-tip.in { opacity: 1; transform: translate(-50%, 0); }
+.tool-tip { transform: translate(-50%, calc(-50% + 12px)) scale(.96); }
+.tool-tip.in { opacity: 1; transform: translate(-50%, -50%); }
 .tool-tip.above.in { transform: translate(-50%, -100%); }
 .tool-tip b { display: block; font: 800 18px/1 var(--sans); letter-spacing: -.02em; }
 .tool-tip p { margin: 0; font: 400 14.5px/1.55 var(--sans); color: #2B3A4E; }
@@ -641,7 +653,11 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .ll-rev-track { position: relative; height: 220vh; }
 .ll-rev-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; place-items: center; padding: 0 clamp(16px, 6vw, 80px); box-sizing: border-box; }
 .ll-rev { margin: 0; max-width: 22ch; text-align: center; font: 400 clamp(2.2rem, 4.8vw, 4.9rem)/1.08 var(--ll-font); letter-spacing: .01em; text-transform: uppercase; color: var(--ll-ink); text-wrap: balance; }
-.ll-rev b { font-weight: 400; color: var(--ll-br); }
+.ll-rev b { font-weight: 400; color: var(--ll-br); white-space: nowrap; }
+.ll-rev .oo { position: relative; display: inline-block; width: .5em; height: .7em; margin: 0 .012em; vertical-align: -.02em; border-radius: 50%; background: radial-gradient(circle at 40% 30%, #fff, #F6EBDA); box-shadow: inset 0 0 0 .075em currentColor, 0 .04em .08em rgba(58, 38, 22, .25); animation: blink 5s infinite; }
+.ll-rev .oo + .oo { animation-delay: .04s; }
+.ll-rev .oo s { position: absolute; left: 50%; top: 50%; width: .22em; height: .26em; margin: -.13em 0 0 -.11em; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #6B4A30 0 14%, #20140B 16%); transform: translate(var(--ex, 0px), var(--ey, 0px)); transition: transform .12s linear; }
+@keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
 .ll-rev .w { opacity: .12; transition: opacity .35s linear; }
 .ll-rev .w.on { opacity: 1; }
 .ll-end { padding-block: 4vh 24vh; display: grid; justify-items: center; text-align: center; }
@@ -699,18 +715,29 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .scrap svg { width: 100%; height: auto; }
 .scrap svg * { fill: none; stroke: #13233A; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .scrap span { display: block; margin-top: 6px; text-align: center; font: italic 17px/1 var(--serif); color: var(--ink-2); }
-.ticket { width: 340px; display: flex; box-shadow: 0 20px 30px -18px rgba(60, 30, 0, .6); }
-.ticket > div { padding: 16px 18px; background: #fff; }
-.ticket .tk-l { flex: 1; border-radius: 12px 0 0 12px; border-right: 2px dashed rgba(19, 35, 58, .2); }
-.ticket .tk-r { width: 70px; border-radius: 0 12px 12px 0; background: #2A7BD1; color: #fff; text-align: center; }
-.ticket small { display: block; font: 700 10.5px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; opacity: .6; }
-.ticket b { display: block; margin: 8px 0 6px; font: 800 30px/1 var(--sans); letter-spacing: -.03em; }
-.ticket b i { font-style: normal; color: var(--coral); }
-.ticket span { font: italic 16px/1.2 var(--serif); color: var(--ink-2); }
+.ticket { width: 390px; display: flex; filter: drop-shadow(0 20px 18px rgba(60, 30, 0, .35)); }
+.ticket .tk-main { flex: 1; background: #fff; border-radius: 14px 0 0 14px; overflow: hidden; }
+.tk-top { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: #D71920; color: #fff; }
+.tk-air { font: italic 400 26px/1 var(--serif); letter-spacing: .01em; }
+.tk-top small { font: 700 10px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; opacity: .9; }
+.tk-route { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px 6px; }
+.tk-route b { display: block; font: 800 34px/1 var(--sans); letter-spacing: -.03em; color: var(--ink); }
+.tk-route span { font: 500 12px/1.4 var(--sans); color: var(--ink-2); }
+.tk-route > div:last-child { text-align: right; }
+.tk-route i { flex: 1; margin: 0 12px; height: 2px; background: repeating-linear-gradient(90deg, #D71920 0 6px, transparent 6px 11px); position: relative; }
+.tk-route i svg { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px; fill: #D71920; background: #fff; border-radius: 50%; }
+.tk-meta { display: flex; gap: 18px; padding: 6px 16px 14px; font: 700 13px/1.2 var(--sans); color: var(--ink); }
+.tk-meta small { display: block; margin-bottom: 3px; font: 600 9.5px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+.tk-stub { width: 74px; padding: 12px 10px; box-sizing: border-box; background: #FBF4E8; border-left: 2px dashed rgba(19, 35, 58, .2); border-radius: 0 14px 14px 0; display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
+.tk-stub small { font: 700 9px/1.2 var(--sans); letter-spacing: .08em; text-align: center; color: #D71920; writing-mode: vertical-rl; rotate: 180deg; }
+.tk-bar { width: 44px; height: 30px; background: repeating-linear-gradient(90deg, #13233A 0 2px, transparent 2px 4px, #13233A 4px 5px, transparent 5px 8px); }
 .mag { font: 800 64px/1 var(--sans); color: var(--mc); letter-spacing: 0; cursor: grab;
   text-shadow: 0 1px 0 color-mix(in srgb, var(--mc) 70%, #000), 0 2px 0 color-mix(in srgb, var(--mc) 70%, #000), 0 3px 0 color-mix(in srgb, var(--mc) 60%, #000), 0 4px 0 color-mix(in srgb, var(--mc) 60%, #000), 0 10px 12px rgba(40, 20, 0, .45); }
 .mag.wig { animation: wig .5s var(--ease); }
 @keyframes wig { 30% { scale: 1.15; } 60% { scale: .95; } }
+.pick { width: 120px; text-align: center; }
+.pick svg { width: 60px; height: auto; filter: drop-shadow(0 8px 8px rgba(40, 20, 0, .4)); }
+.pick span { display: block; margin-top: 6px; font: italic 17px/1.1 var(--serif); color: #FFF6E6; text-shadow: 0 1px 3px rgba(40, 20, 0, .5); }
 .ll-mag { width: 118px; text-align: center; }
 .ll-mag img { width: 104px; height: 104px; border-radius: 50%; object-fit: cover; border: 6px solid #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 14px 20px -10px rgba(40, 20, 0, .6); pointer-events: none; }
 .ll-mag span { display: block; margin-top: 6px; font: italic 18px/1 var(--serif); color: #FFF6E6; text-shadow: 0 1px 3px rgba(40, 20, 0, .5); }
@@ -793,8 +820,11 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 
 /* ---------- small screens ---------- */
 @media (max-width: 860px) {
-  .nav a { padding: 8px 11px; font-size: 13px; }
-  .nav a[data-go="life"] { display: none; }
+  .nav { height: 56px; padding: 0 6px; }
+  .nav a { height: 44px; padding: 0 11px; font-size: 13.5px; }
+  .nav .ind { top: 6px; height: 44px; }
+  .nav a[data-go="life"], .nav a[data-go="stack"], .nav a[data-go="lastlook"], .nav .sep { display: none; }
+  .nav a.cta { padding: 0 14px; }
   .hero-copy { top: calc(env(safe-area-inset-top, 0px) + 80px); }
   .hero-copy h1 { font-size: clamp(2.5rem, 11.4vw, 3.6rem); }
   .sub { font-size: 19px; }
@@ -862,7 +892,9 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .ll-stats { grid-template-columns: 1fr; gap: 28px; }
   .ll-stats li + li { border-left: 0; border-top: 1px solid rgba(58, 38, 22, .15); padding-top: 28px; }
   .gift { transform-origin: 50% 92%; left: -110px; top: -125px; width: 220px; height: 220px; }
-  .gift-cap { top: 108px; font-size: 18px; }
+  .gift-cap { top: -130px; font-size: 16px; }
+  .gift-stage { top: 80%; }
+  .tool-tip { top: -130px; }
   .tool { width: 58px; margin: -29px 0 0 -29px; gap: 6px; }
   .tool .ti { width: 58px; height: 58px; border-radius: 17px; }
   .tool .ti svg { width: 32px; height: 32px; }
@@ -891,10 +923,14 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 <header class="bar">
   <a class="logo" href="#top" data-go="top"><i><img src="v2/s/photo.webp" alt=""></i>James Chugh</a>
   <nav class="nav" aria-label="Sections">
+    <span class="ind" id="navInd" aria-hidden="true"></span>
     <a href="#journey" data-go="journey">Journey</a>
     <a href="#work" data-go="work">Work</a>
+    <a href="#stack" data-go="stack">Stack</a>
+    <a href="#lastlook" data-go="lastlook">LastLook</a>
     <a href="#life" data-go="life">About</a>
     <a href="#hello" data-go="hello">Contact</a>
+    <span class="sep" aria-hidden="true"></span>
     <a class="cta" href="https://drive.google.com/file/d/1ho8UYEMmej95uTvC35qjC7FF92gMFyoo/view?usp=sharing" target="_blank" rel="noopener">Resume ↗</a>
   </nav>
 </header>
@@ -1069,11 +1105,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <div class="sec-head">
           <p class="kicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>My stack</p>
           <h2>The tools I <span class="hl b-sun" id="stackHl">unwrap</span> every day.</h2>
-          <p>Nine tools I reach for, from the first sketch to the shipped build.</p>
+          <p>Eleven tools I reach for, from the first sketch to the shipped build.</p>
         </div>
       </div>
       <div class="gift-stage" id="giftStage">
         <div class="burst" id="burst" aria-hidden="true"></div>
+        <div class="beam" id="beam" aria-hidden="true"></div>
         <div class="confetti" id="confetti" aria-hidden="true"></div>
         <div class="gift" id="gift">
           <svg viewBox="0 0 300 300" aria-hidden="true">
@@ -1187,7 +1224,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   </div>
   <div class="ll-rev-track" id="llRevTrack">
     <div class="ll-rev-pin">
-      <p class="ll-rev" id="llRev">That’s <b>LastLook</b>. FindMy, but for everything you own. It learns what you carry to each place, notices the moment you leave, and gives you one last look before you walk out without it.</p>
+      <p class="ll-rev" id="llRev">That’s <b class="w">LastL<i class="oo"><s></s></i><i class="oo"><s></s></i>k.</b> FindMy, but for everything you own. It learns what you carry to each place, notices the moment you leave, and gives you one last look before you walk out without it.</p>
     </div>
   </div>
   <div class="ll-end wrap">
@@ -1226,24 +1263,31 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     <div class="desk" id="desk">
       <figure class="item polaroid pinned p1" style="left:3%;top:6%;--r:-5deg;--pc:#E4402A;margin:0"><img src="v2/s/photo.webp" alt="James in a backwards cap and sunglasses, smiling at sunset"><figcaption>me, probably mid-laugh</figcaption></figure>
       <div class="item about pinned p2" style="left:25%;top:4%;--r:1.5deg;--pc:#2A7BD1">
-        <p class="ab-k">About me</p>
-        <h4>Hi, I’m James.</h4>
-        <b>What I’ve done</b>
-        <ul><li>B.Tech in Mechanical Engineering at NSUT</li><li>Designed at Hindustan Times, EazyDiner and MakeMyTrip</li><li>Lifted payment success by 41% at EazyDiner</li><li>Built and shipped LastLook, solo</li></ul>
-        <b>What I do</b>
-        <ul><li>Product design at OYO, from booking to check-in</li><li>Build my own apps, in public</li><li>Share it all on Instagram and LinkedIn</li></ul>
+        <p class="ab-k">Off the clock</p>
+        <h4>Hi, I’m James. Not the work version.</h4>
+        <b>Things I can’t stop doing</b>
+        <ul><li>Drums, piano and guitar</li><li>Filming and posting on @jamieships</li><li>Flying between Delhi and Dubai</li></ul>
+        <b>When I’m not in Figma</b>
+        <ul><li>I’m usually making noise</li></ul>
       </div>
       <div class="item note taped p3" style="--sc:#FFE98A;left:59%;top:5%;--r:4deg">I play drums, piano &amp; guitar.<small>Calculated chaos</small></div>
       <div class="item scrap pinned p4" style="left:79%;top:6%;--r:-6deg;--pc:#2E9E6B" aria-hidden="true"><svg viewBox="0 0 150 120"><ellipse cx="75" cy="44" rx="56" ry="16"/><path d="M19 44v40c0 9 25 16 56 16s56-7 56-16V44"/><path d="M40 20l20 20M110 20l-20 20"/><circle cx="36" cy="17" r="4"/><circle cx="114" cy="17" r="4"/></svg><span>the loud one</span></div>
       <div class="item card-ig pinned p5" style="left:57%;top:38%;--r:-2deg;--pc:#F2B705"><h4>I make content, too.</h4><p>Design, building, career, and a few things I've learned along the way.</p><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">@jamieships ↗</a><a href="https://www.instagram.com/jameschughh" target="_blank" rel="noopener">@jameschughh ↗</a></div>
-      <div class="item note taped p6" style="--sc:#C9EBD2;left:82%;top:37%;--r:5deg;width:170px">Currently: designing at OYO.<small>Gurgaon</small></div>
-      <div class="item ticket pinned p7" style="left:26%;top:67%;--r:-3deg;--pc:#E4402A"><div class="tk-l"><small>Boarding pass</small><b>DEL <i>⇄</i> DXB</b><span>Based between India and Dubai</span></div><div class="tk-r"><small>Seat</small><b>23A</b></div></div>
+      <div class="item note taped p6" style="--sc:#C9EBD2;left:82%;top:37%;--r:5deg;width:170px">Home is two places.<small>IND / DXB</small></div>
+      <div class="item ticket pinned p7" style="left:26%;top:67%;--r:-3deg;--pc:#D71920">
+        <div class="tk-main">
+          <div class="tk-top"><span class="tk-air">Emirates</span><small>Boarding pass</small></div>
+          <div class="tk-route"><div><b>DEL</b><span>New Delhi</span></div><i><svg viewBox="0 0 24 24"><path d="M2 13l8-1 4-8h2l-2 8 6 1 2-3h2l-1 4 1 4h-2l-2-3-6 1 2 8h-2l-4-8-8-1z"/></svg></i><div><b>DXB</b><span>Dubai</span></div></div>
+          <div class="tk-meta"><span><small>Passenger</small>James Chugh</span><span><small>Seat</small>23A</span><span><small>Home</small>Both</span></div>
+        </div>
+        <div class="tk-stub"><small>DEL ⇄ DXB</small><i class="tk-bar"></i></div>
+      </div>
       <span class="item mag p8" style="left:4%;top:76%;--r:-8deg;--mc:#E4402A">J</span>
       <span class="item mag p9" style="left:8.6%;top:74%;--r:6deg;--mc:#2A7BD1">A</span>
       <span class="item mag p10" style="left:13.2%;top:77%;--r:-4deg;--mc:#F2B705">M</span>
       <span class="item mag p11" style="left:18.6%;top:75%;--r:9deg;--mc:#2E9E6B">E</span>
       <span class="item mag p12" style="left:22.6%;top:77.5%;--r:-6deg;--mc:#7B5CD6">S</span>
-      <div class="item ll-mag p13" style="left:58%;top:70%;--r:6deg"><img src="v2/s/llicon.webp" alt="LastLook app icon"><span>my first app</span></div>
+      <div class="item pick p13" style="left:60%;top:71%;--r:-12deg" aria-hidden="true"><svg viewBox="0 0 60 70"><path d="M30 68C14 52 2 36 2 20 2 8 14 2 30 2s28 6 28 18c0 16-12 32-28 48z" fill="#E4402A"/><path d="M12 14c6-5 14-7 22-6" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".5"/></svg><span>for the guitar</span></div>
       <div class="item scrap pinned p14" style="left:78%;top:63%;--r:7deg;--pc:#2A7BD1;width:130px" aria-hidden="true"><svg viewBox="0 0 120 150"><path d="M60 8v70"/><path d="M52 8h16v18H52z"/><path d="M60 78c-22 0-34 12-34 30s16 34 34 34 34-16 34-34-12-30-34-30z"/><circle cx="60" cy="104" r="10"/><path d="M50 128h20"/></svg><span>and the quiet one</span></div>
       <p class="desk-hint">it’s my board, but go ahead, move things around ;)</p>
     </div>
@@ -1731,6 +1775,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     const wins = (x, y, cols, rows, cw, ch, gx, gy, c) => { let o = ''; for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) o += `<rect x="${x + i * (cw + gx)}" y="${y + j * (ch + gy)}" width="${cw}" height="${ch}" rx="2" fill="${c}"/>`; return o; };
     const tree = (x, y, r = 16, c = '#8CC26C') => `<rect x="${x - 2}" y="${y - 6}" width="4" height="12" fill="#8B6B45"/><circle cx="${x}" cy="${y - r}" r="${r}" fill="${c}"/><circle cx="${x - r * .35}" cy="${y - r * 1.2}" r="${r * .5}" fill="#A9D48A"/>`;
     const pad = (x, y, rx = 170, ry = 58, c = '#EADFC8') => `<rect x="${x - rx}" y="${y - ry * .9}" width="${rx * 2 + 30}" height="${ry * 1.5}" rx="22" fill="${c}" stroke="#DDCFB3" stroke-width="3"/><rect x="${x - 18}" y="${y + ry * .6}" width="36" height="34" fill="#F4EEE2"/>`;
+    const logoSign = (src, cx, cy, sz, post) => `${post ? `<rect x="${cx - 2.5}" y="${cy + sz / 2}" width="5" height="${post}" fill="#6B7280"/>` : ''}<clipPath id="lc-${src}"><rect x="${cx - sz / 2}" y="${cy - sz / 2}" width="${sz}" height="${sz}" rx="${sz * .24}"/></clipPath><rect x="${cx - sz / 2 - 5}" y="${cy - sz / 2 - 5}" width="${sz + 10}" height="${sz + 10}" rx="${sz * .3}" fill="#fff" stroke="#E6DCC8" stroke-width="2"/><image href="${img(src)}" x="${cx - sz / 2}" y="${cy - sz / 2}" width="${sz}" height="${sz}" clip-path="url(#lc-${src})" preserveAspectRatio="xMidYMid slice"/>`;
     const house = (x, y, w, hh, wall, roof, win) => `<rect x="${x}" y="${y - hh}" width="${w}" height="${hh}" fill="${wall}"/><path d="M${x - 10} ${y - hh + 2}L${x + w / 2} ${y - hh - w * .42}L${x + w + 10} ${y - hh + 2}z" fill="${roof}"/>` + wins(x + 12, y - hh + 14, 2, 1, 22, 20, w - 70, 0, win) + `<rect x="${x + w / 2 - 12}" y="${y - 32}" width="24" height="32" rx="3" fill="${roof}"/>`;
     const LM = {
       jee: (x, y) => pad(x, y + 4) + tree(x - 150, y) + tree(x + 170, y - 4, 18) +
@@ -1753,20 +1798,20 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       eazydiner: (x, y) => pad(x, y + 4, 170) + tree(x - 140, y) + tree(x + 170, y, 14) +
         box(x - 100, y, 200, 70, 56, '#F6E8D6', '#E2CFB6', '#F4511E') + wins(x - 84, y - 58, 5, 1, 24, 24, 12, 0, '#F4B083') +
         `<g>${Array.from({ length: 10 }, (_, i) => `<rect x="${x - 104 + i * 21}" y="${y - 36}" width="21" height="18" fill="${i % 2 ? '#fff' : '#F4511E'}"/>`).join('')}<path d="M${x - 104} ${y - 18}q10.5 8 21 0${'q10.5 8 21 0'.repeat(9)}" fill="#F4511E"/></g>` +
-        [[-70], [0], [70]].map(([dx2]) => `<g transform="translate(${x + dx2 + 20} ${y + 36})"><rect x="-2" y="-26" width="4" height="26" fill="#6B4A2E"/><path d="M-22 -24q22 -20 44 0z" fill="${dx2 ? '#FFB38A' : '#F4511E'}"/><ellipse cx="0" cy="0" rx="14" ry="5" fill="#D8C4A4"/></g>`).join(''),
+        [[-70], [0], [70]].map(([dx2]) => `<g transform="translate(${x + dx2 + 20} ${y + 36})"><rect x="-2" y="-26" width="4" height="26" fill="#6B4A2E"/><path d="M-22 -24q22 -20 44 0z" fill="${dx2 ? '#FFB38A' : '#F4511E'}"/><ellipse cx="0" cy="0" rx="14" ry="5" fill="#D8C4A4"/></g>`).join('') + logoSign('logo-eazydiner', x, y - 138, 50, 30),
       mmt: (x, y) => pad(x, y + 4, 170) + tree(x - 150, y) +
         box(x - 90, y, 180, 140, 60, 'url(#glass)', '#B4CBE6', '#F6FAFF') + wins(x - 80, y - 128, 6, 6, 20, 14, 7, 7, '#7FAEE0') +
-        `<circle cx="${x}" cy="${y - 172}" r="26" fill="#E4262C" stroke="#fff" stroke-width="4"/><text x="${x}" y="${y - 164}" text-anchor="middle" font-family="${FONT}" font-style="italic" font-weight="800" font-size="24" fill="#fff">my</text>`,
+        logoSign('logo-mmt', x, y - 196, 54, 30),
       oyo: (x, y) => pad(x, y + 4, 170) + tree(x - 150, y) + tree(x + 175, y, 14) +
         box(x - 90, y, 180, 150, 56, '#FFFFFF', '#E9E3DA', '#F2B8AE') + wins(x - 76, y - 136, 6, 5, 18, 16, 8, 10, '#F7C9C1') +
         `<rect x="${x - 40}" y="${y - 44}" width="80" height="10" rx="3" fill="#DC402A"/><rect x="${x - 16}" y="${y - 34}" width="32" height="34" rx="3" fill="#B8321F"/>` +
-        `<path d="M${x} ${y - 172}v-20" stroke="#B8321F" stroke-width="3"/><rect x="${x - 46}" y="${y - 228}" width="92" height="38" rx="9" fill="#DC402A"/><text x="${x}" y="${y - 200}" text-anchor="middle" font-family="${FONT}" font-weight="800" font-size="25" fill="#fff" letter-spacing="1">OYO</text>`,
+        logoSign('logo-oyo', x, y - 210, 56, 38),
       prism: (x, y) => pad(x, y + 4, 180) + tree(x + 185, y, 15) + tree(x - 175, y, 13) +
         house(x - 130, y, 110, 70, '#FFFFFF', '#3F6FB5', '#BFD6EE') + house(x + 4, y, 124, 88, '#FFF4E0', '#1F7A8C', '#F8D9A8') +
         `<path d="M${x - 150} ${y - 170} C ${x - 60} ${y - 250}, ${x + 60} ${y - 250}, ${x + 150} ${y - 190}" fill="none" stroke="#1F7A8C" stroke-width="3" stroke-dasharray="4 10" stroke-linecap="round"/>` +
         `<g transform="translate(${x + 150} ${y - 190}) rotate(28) scale(1.8)"><path d="M-14 0l28 -3 6 3-6 3zM-2 -1l-6 -12h5l9 12zM-2 1l-6 12h5l9 -12zM-14 0l-4 -6h3l5 5z" fill="#1F7A8C"/></g>`,
       lastlook: (x, y) => pad(x, y + 4, 160, 58, '#EADCC6') + tree(x - 150, y) + tree(x + 180, y, 14) +
-        `<g transform="translate(${x - 44} ${y - 176})"><rect width="88" height="176" rx="18" fill="#2B2118"/><rect x="7" y="14" width="74" height="148" rx="10" fill="#F6DCB9"/><circle cx="44" cy="64" r="20" fill="#9A6A3E"/><path d="M35 64l7 7 11-13" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="17" y="100" width="54" height="9" rx="4.5" fill="#D9B98E"/><rect x="17" y="116" width="38" height="9" rx="4.5" fill="#E6CCA6"/><rect x="34" y="168" width="20" height="3" rx="1.5" fill="#6B5240"/></g>` +
+        `<g transform="translate(${x - 44} ${y - 176})"><rect width="88" height="176" rx="18" fill="#2B2118"/><rect x="7" y="14" width="74" height="148" rx="10" fill="#F6DCB9"/></g>` + logoSign('logo-lastlook', x, y - 112, 50) + `<g transform="translate(${x - 44} ${y - 176})"><rect x="17" y="100" width="54" height="9" rx="4.5" fill="#D9B98E"/><rect x="17" y="116" width="38" height="9" rx="4.5" fill="#E6CCA6"/><rect x="34" y="168" width="20" height="3" rx="1.5" fill="#6B5240"/></g>` +
         `<g transform="translate(${x + 100} ${y})"><path d="M0 0C0 0 -34 -46 -34 -74a34 34 0 0 1 68 0c0 28 -34 74 -34 74z" fill="#9A6A3E" stroke="#fff" stroke-width="5"/><circle cy="-76" r="12" fill="#fff"/></g>` +
         `<g transform="translate(${x - 110} ${y - 10}) rotate(-20)"><circle r="14" fill="none" stroke="#C9A06B" stroke-width="6"/><path d="M12 4l30 0M34 4v10M40 4v8" stroke="#C9A06B" stroke-width="6" stroke-linecap="round"/></g>`,
       creator: (x, y) => pad(x, y + 4, 140, 50, '#F8D7E3') + tree(x + 130, y, 13) +
@@ -2110,7 +2155,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   /* =========================================================
      5 · MY STACK (a gift that opens on scroll)
      ========================================================= */
-  const TOOL_ROLE = { Claude: 'Think', Vercel: 'Ship', Antigravity: 'Build', Supabase: 'Build', Figma: 'Design', ProtoPie: 'Prototype', Xcode: 'Build', Notion: 'Plan', 'Apple Music': 'Focus' };
+  const TOOL_ROLE = { Claude: 'Think', Vercel: 'Ship', Antigravity: 'Build', Supabase: 'Build', Figma: 'Design', ProtoPie: 'Prototype', Xcode: 'Build', Notion: 'Plan', 'Apple Music': 'Focus', 'Premiere Pro': 'Edit', 'After Effects': 'Motion' };
   const TOOLS = [
     { n: 'Claude', bg: '#D97757', how: 'My thinking partner. I use it to pressure-test flows, write UX copy and build faster.', icon: '<svg viewBox="0 0 24 24"><path fill="#fff" d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>' },
     { n: 'Vercel', bg: '#0B0B0B', how: 'Where my side projects go live. Push, preview, share the link.', icon: '<svg viewBox="0 0 24 24"><path fill="#fff" transform="translate(3.6 4) scale(.7)" d="m12 1.608 12 20.784H0Z"/></svg>' },
@@ -2120,13 +2165,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     { n: 'ProtoPie', bg: 'linear-gradient(145deg, #FF5FA8, #8B3DFF)', how: 'Prototypes that feel real, with real logic, so user tests aren’t guesswork.', icon: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M11 13V4a9 9 0 1 0 9 9z"/><path fill="#fff" opacity=".7" d="M13 11V2.2A9 9 0 0 1 21.8 11z"/></svg>' },
     { n: 'Xcode', bg: 'linear-gradient(160deg, #3AA0FF, #0A5BD6)', how: 'Where LastLook came to life. SwiftUI, simulators and a lot of builds.', icon: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M19.06 5.3327c.4517-.1936.7744-.2581 1.097-.1936.5163.1291.7744.5163.968.7098.1936.3872.9034.7744 1.2261.8389.2581.0645.7098-.6453 1.0325-1.2906.3227-.5808.5163-1.3552.4517-1.5488-.0645-.1936-.968-.5808-1.1616-.5808-.1291 0-.3872.1291-.8389.0645-.4517-.0645-.9034-.5808-1.1616-.968-.4517-.6453-1.097-1.0325-1.6778-1.3552-.6453-.3227-1.3552-.5163-2.065-.6453-1.0325-.2581-2.065-.4517-3.0975-.3227-.5808.0645-1.2906.1291-1.8069.3227-.0645 0-.1936.1936-.0645.1936s.5808.0645.5808.0645-.5807.1292-.5807.2583c0 .1291.0645.1291.1291.1291.0645 0 1.4842-.0645 2.065 0 .6453.1291 1.3552.4517 1.8069 1.2261.7744 1.4197.4517 2.7749.2581 3.2266-.968 2.1295-8.6472 15.2294-9.0344 16.1328-.3873.9034-.5163 1.4842.5807 2.065s1.6778.3227 2.0005-.0645c.3872-.5163 7.0339-17.1654 9.2925-18.2624zm-3.6138 8.7117h1.5488c1.0325 0 1.2261.5163 1.2261.7098.0645.5163-.1936 1.1616-1.2261 1.1616h-.968l.7744 1.2906c.4517.7744.2581 1.1616 0 1.4197-.3872.3872-1.2261.3872-1.6778-.4517l-.9034-1.5488c-.6453 1.4197-1.2906 2.9684-2.065 4.7753h4.0009c1.9359 0 3.5492-1.6133 3.5492-3.5492V6.5588c-.0645-.1291-.1936-.0645-.2581 0-.3872.4517-1.4842 2.0004-4.001 7.4856zm-9.8087 8.0019h-.3227c-2.3231 0-4.1945-1.8714-4.1945-4.1945V7.0105c0-2.3231 1.8714-4.1945 4.1945-4.1945h9.3571c-.1936-.1936-.968-.5163-1.7423-.4517-.3227 0-.968.1291-1.3552-.1291-.3872-.3227-.3227-.5163-.9034-.5163H4.9277c-2.6458 0-4.7753 2.1295-4.7753 4.7753v11.7447c0 2.6458 2.1295 4.7753 4.4527 4.7108.6452 0 .8388-.5162 1.0324-.9034zM20.4152 6.9459v10.9058c0 2.3231-1.8714 4.1945-4.1945 4.1945H11.897s-.3872 1.0325.8389 1.0325h3.8719c2.6458 0 4.7753-2.1295 4.7753-4.7753V8.8173c.0646-.9034-.7098-1.4842-.9679-1.8714zm-18.5851.0646v10.8413c0 1.9359 1.6133 3.5492 3.5492 3.5492h.5808c0-.0645.7744-1.4197 2.4522-4.2591.1936-.3872.4517-.7744.7098-1.2261H4.4114c-.5808 0-.9034-.3872-.968-.7098-.1291-.5163.1936-1.1616.9034-1.1616h2.3877l3.033-5.2916s-.7098-1.2906-.9034-1.6133c-.2582-.4517-.1291-.9034.129-1.1615.3872-.3872 1.0325-.5808 1.6778.4517l.2581.3872.2581-.3872c.5808-.8389.968-.7744 1.2906-.7098.5163.1291.8389.7098.3872 1.6133L8.864 14.0444h1.3552c.4517-.7744.9034-1.5488 1.3552-2.3877-.0645-.3227-.1291-.7098-.0645-1.0325.0645-.5163.3227-.968.6453-1.3552l.3872.6453c1.2261-2.1295 2.1295-3.9364 2.3877-4.6463.1291-.3872.3227-1.1616.1291-1.8069H5.3794c-2.0005.0001-3.5493 1.6134-3.5493 3.5494zM4.605 17.7872c0-.0645.7744-1.4197.7744-1.4197 1.2261-.3227 1.8069.4517 1.8714.5163 0 0-.8389 1.4842-1.097 1.7423s-.5808.3227-.9034.2581c-.5164-.129-.839-.6453-.6454-1.097z"/></svg>' },
     { n: 'Notion', bg: '#FFFFFF', how: 'Research notes, PRDs and the running list of ideas I’ll get to someday.', icon: '<svg viewBox="0 0 24 24"><path fill="#111" d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z"/></svg>' },
-    { n: 'Apple Music', bg: 'linear-gradient(160deg, #FF6B84, #FA233B)', how: 'Always on. Deep work doesn’t happen in silence for me.', icon: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.193.4-1.336.53-2.3 1.452-2.865 2.78-.192.448-.292.925-.363 1.408-.056.392-.088.785-.1 1.18 0 .032-.007.062-.01.093v12.223c.01.14.017.283.027.424.05.815.154 1.624.497 2.373.65 1.42 1.738 2.353 3.234 2.801.42.127.856.187 1.293.228.555.053 1.11.06 1.667.06h11.03a12.5 12.5 0 001.57-.1c.822-.106 1.596-.35 2.295-.81a5.046 5.046 0 001.88-2.207c.186-.42.293-.87.37-1.324.113-.675.138-1.358.137-2.04-.002-3.8 0-7.595-.003-11.393zm-6.423 3.99v5.712c0 .417-.058.827-.244 1.206-.29.59-.76.962-1.388 1.14-.35.1-.706.157-1.07.173-.95.045-1.773-.6-1.943-1.536a1.88 1.88 0 011.038-2.022c.323-.16.67-.25 1.018-.324.378-.082.758-.153 1.134-.24.274-.063.457-.23.51-.516a.904.904 0 00.02-.193c0-1.815 0-3.63-.002-5.443a.725.725 0 00-.026-.185c-.04-.15-.15-.243-.304-.234-.16.01-.318.035-.475.066-.76.15-1.52.303-2.28.456l-2.325.47-1.374.278c-.016.003-.032.01-.048.013-.277.077-.377.203-.39.49-.002.042 0 .086 0 .13-.002 2.602 0 5.204-.003 7.805 0 .42-.047.836-.215 1.227-.278.64-.77 1.04-1.434 1.233-.35.1-.71.16-1.075.172-.96.036-1.755-.6-1.92-1.544-.14-.812.23-1.685 1.154-2.075.357-.15.73-.232 1.108-.31.287-.06.575-.116.86-.177.383-.083.583-.323.6-.714v-.15c0-2.96 0-5.922.002-8.882 0-.123.013-.25.042-.37.07-.285.273-.448.546-.518.255-.066.515-.112.774-.165.733-.15 1.466-.296 2.2-.444l2.27-.46c.67-.134 1.34-.27 2.01-.403.22-.043.442-.088.663-.106.31-.025.523.17.554.482.008.073.012.148.012.223.002 1.91.002 3.822 0 5.732z"/></svg>' }
+    { n: 'Apple Music', bg: 'linear-gradient(160deg, #FF6B84, #FA233B)', how: 'Always on. Deep work doesn’t happen in silence for me.', icon: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.193.4-1.336.53-2.3 1.452-2.865 2.78-.192.448-.292.925-.363 1.408-.056.392-.088.785-.1 1.18 0 .032-.007.062-.01.093v12.223c.01.14.017.283.027.424.05.815.154 1.624.497 2.373.65 1.42 1.738 2.353 3.234 2.801.42.127.856.187 1.293.228.555.053 1.11.06 1.667.06h11.03a12.5 12.5 0 001.57-.1c.822-.106 1.596-.35 2.295-.81a5.046 5.046 0 001.88-2.207c.186-.42.293-.87.37-1.324.113-.675.138-1.358.137-2.04-.002-3.8 0-7.595-.003-11.393zm-6.423 3.99v5.712c0 .417-.058.827-.244 1.206-.29.59-.76.962-1.388 1.14-.35.1-.706.157-1.07.173-.95.045-1.773-.6-1.943-1.536a1.88 1.88 0 011.038-2.022c.323-.16.67-.25 1.018-.324.378-.082.758-.153 1.134-.24.274-.063.457-.23.51-.516a.904.904 0 00.02-.193c0-1.815 0-3.63-.002-5.443a.725.725 0 00-.026-.185c-.04-.15-.15-.243-.304-.234-.16.01-.318.035-.475.066-.76.15-1.52.303-2.28.456l-2.325.47-1.374.278c-.016.003-.032.01-.048.013-.277.077-.377.203-.39.49-.002.042 0 .086 0 .13-.002 2.602 0 5.204-.003 7.805 0 .42-.047.836-.215 1.227-.278.64-.77 1.04-1.434 1.233-.35.1-.71.16-1.075.172-.96.036-1.755-.6-1.92-1.544-.14-.812.23-1.685 1.154-2.075.357-.15.73-.232 1.108-.31.287-.06.575-.116.86-.177.383-.083.583-.323.6-.714v-.15c0-2.96 0-5.922.002-8.882 0-.123.013-.25.042-.37.07-.285.273-.448.546-.518.255-.066.515-.112.774-.165.733-.15 1.466-.296 2.2-.444l2.27-.46c.67-.134 1.34-.27 2.01-.403.22-.043.442-.088.663-.106.31-.025.523.17.554.482.008.073.012.148.012.223.002 1.91.002 3.822 0 5.732z"/></svg>' },
+    { n: 'Premiere Pro', bg: '#00005B', how: 'Cutting reels and build-in-public videos, one jump cut at a time.', icon: '<svg viewBox="0 0 24 24"><text x="12" y="16.6" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="12.5" letter-spacing="-.3" fill="#9999FF">Pr</text></svg>' },
+    { n: 'After Effects', bg: '#00005B', how: 'Motion studies and micro-interactions, so devs see exactly how it should feel.', icon: '<svg viewBox="0 0 24 24"><text x="12" y="16.6" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="12.5" letter-spacing="-.3" fill="#D291FF">Ae</text></svg>' }
   ];
-  const stackTrack = $('#stackTrack'), stackHead = $('#stackHead'), gift = $('#gift'), lidG = $('#lid'), gGlow = $('#gGlowEl'), burst = $('#burst'), ring = $('#ring'), toolTip = $('#toolTip'), giftCap = $('#giftCap'), confetti = $('#confetti');
+  const beam = $('#beam'), stackTrack = $('#stackTrack'), stackHead = $('#stackHead'), gift = $('#gift'), lidG = $('#lid'), gGlow = $('#gGlowEl'), burst = $('#burst'), ring = $('#ring'), toolTip = $('#toolTip'), giftCap = $('#giftCap'), confetti = $('#confetti');
   let stTop = 0, stRange = 1, RX = 420, RY = 250, tipFor = -1;
   if (!hoverable) $('#giftCapV').textContent = 'Tap';
-  const toolAng = i => (-90 + i * 40) * Math.PI / 180;
-  const toolPos = i => [Math.cos(toolAng(i)) * RX, Math.sin(toolAng(i)) * RY];
+  // two rows of an arc that rises out of the box: a wide back row and a tighter front row
+  const MOUTH = -70;
+  const toolPos = i => { if (mobile) { const row = i < 4 ? 0 : i < 8 ? 1 : 2, inRow = row < 2 ? 4 : TOOLS.length - 8, k = row < 2 ? i % 4 : i - 8; return [(k - (inRow - 1) / 2) * Math.min(86, vw * .22), -210 - (2 - row) * 100]; }
+    const a = (188 + 164 * i / (TOOLS.length - 1)) * Math.PI / 180; return [Math.cos(a) * RX, MOUTH + Math.sin(a) * RY]; };
   const toolEls = TOOLS.map((t, i) => {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'tool'; b.style.setProperty('--bg', t.bg); b.style.setProperty('--i', i);
     b.setAttribute('aria-label', `${t.n}: ${t.how}`);
@@ -2137,20 +2186,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     b.addEventListener('click', () => showTip(tipFor === i ? -1 : i));
     ring.appendChild(b); return b;
   });
-  const bits = Array.from({ length: 9 }, (_, k) => { const el = document.createElement('i'); const a = -Math.PI / 2 + (k / 8 - .5) * 2.2, d = 110 + (k * 53 % 90); el.style.scale = (.5 + (k * 37 % 10) / 14).toFixed(2);
-    el.style.setProperty('--c', ['#FFD23F', '#FF6B4A', '#4285F4', '#8CC26C', '#E1306C', '#9C7BFF'][k % 6]); confetti.appendChild(el); return { el, x: Math.cos(a) * d * 1.3, y: Math.sin(a) * d, r: (k % 2 ? 1 : -1) * 90 }; });
+  Array.from({ length: 14 }, (_, k) => { const el = document.createElement('i'); el.style.cssText = `--x0:${((k * 37) % 120) - 60}px;--x1:${((k * 71) % 260) - 130}px;--d:${(-k * .41).toFixed(2)}s;--s:${(.4 + (k * 29 % 10) / 14).toFixed(2)}`; confetti.appendChild(el); });
   function showTip(i) {
     tipFor = i; toolEls.forEach((b, k) => b.classList.toggle('on', k === i)); ring.classList.toggle('hov', i >= 0);
-    if (i < 0 || !toolEls[i].classList.contains('set')) { toolTip.classList.remove('in'); ring.classList.toggle('hov', false); return; }
-    const t = TOOLS[i], [x, y] = toolPos(i), above = y > 0 || (mobile && y > -RY * .5);
+    if (i < 0 || !toolEls[i].classList.contains('set')) { toolTip.classList.remove('in'); giftCap.classList.remove('hide'); ring.classList.toggle('hov', false); return; }
+    const t = TOOLS[i];
     $('#ttN').textContent = t.n; $('#ttP').textContent = t.how; $('#ttC').textContent = TOOL_ROLE[t.n] || ''; $('#ttI').innerHTML = t.icon; toolTip.style.setProperty('--bg', t.bg);
-    const half = (mobile ? 220 : 260) / 2 + 12;
-    toolTip.style.left = clamp(x, -vw / 2 + half, vw / 2 - half) + 'px'; toolTip.style.top = (above ? y - (mobile ? 40 : 56) : y + (mobile ? 58 : 80)) + 'px';
-    toolTip.classList.toggle('above', above); toolTip.classList.add('in');
+    toolTip.classList.add('in'); giftCap.classList.add('hide');
   }
   function layoutStack() {
     stTop = top(stackTrack); stRange = Math.max(1, stackTrack.offsetHeight - vh);
-    RX = mobile ? vw * .37 : Math.min(vw * .36, 520); RY = mobile ? Math.min(vh * .27, 240) : Math.min(vh * .3, 270);
+    RX = mobile ? vw * .44 : Math.min(vw * .42, 620); RY = mobile ? Math.min(vh * .46, 380) : Math.min(vh * .58, 480);
   }
   function frameStack(y) {
     const q = clamp((y - stTop) / stRange), now = performance.now() / 1000;
@@ -2159,15 +2205,14 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     gift.style.transform = `translate3d(0, ${((1 - rise) * vh * .5 - hop).toFixed(1)}px, 0) rotate(${rot.toFixed(2)}deg) scale(${(.82 + .18 * rise - .06 * range(q, .44, .8)).toFixed(3)})`;
     lidG.style.transform = `translate(${(open * 90).toFixed(1)}px, ${(-open * 150 + Math.sin(open * Math.PI) * -40 + ss(range(q, .44, .6)) * 110).toFixed(1)}px) rotate(${(open * 28).toFixed(1)}deg)`;
     gGlow.setAttribute('opacity', open.toFixed(3)); burst.style.opacity = (open * .95).toFixed(3); burst.style.scale = (.55 + .45 * open).toFixed(3);
-    const cf = range(q, .34, .56);
-    bits.forEach(b => { b.el.style.opacity = cf > 0 && cf < 1 ? (1 - cf) * 1.4 : 0; b.el.style.transform = `translate(${(b.x * ss(cf)).toFixed(1)}px, ${(b.y * ss(cf) - cf * 40).toFixed(1)}px) rotate(${(b.r * cf).toFixed(0)}deg)`; });
+    $('#giftStage').classList.toggle('open', open > .6); beam.style.opacity = (open * (1 - .35 * range(q, .75, 1))).toFixed(3);
     const hk = ss(range(q, .36, .5)); stackHead.style.opacity = (1 - hk).toFixed(3); stackHead.style.transform = `translate3d(0, ${(-hk * 40).toFixed(1)}px, 0)`;
-    giftCap.style.opacity = q > .8 ? 1 : 0;
+    giftCap.style.opacity = q > .78 ? 1 : 0;
     toolEls.forEach((el, i) => {
-      const s0 = .4 + i * .03, f = ss(range(q, s0, s0 + .16)), [tx, ty] = toolPos(i);
-      const cx = tx * .3, cy = Math.min(ty, 0) - RY * .85 - 60, sx = 0, sy = -60, u = 1 - f;
+      const s0 = .4 + i * .028, f = ss(range(q, s0, s0 + .17)), [tx, ty] = toolPos(i);
+      const cx = tx * .15, cy = ty - 170, sx = 0, sy = MOUTH, u = 1 - f;
       const x = u * u * sx + 2 * u * f * cx + f * f * tx, yy = u * u * sy + 2 * u * f * cy + f * f * ty;
-      el.style.transform = `translate3d(${x.toFixed(1)}px, ${yy.toFixed(1)}px, 0) scale(${(.2 + .8 * f).toFixed(3)}) rotate(${(u * -220).toFixed(0)}deg)`;
+      el.style.transform = `translate3d(${x.toFixed(1)}px, ${yy.toFixed(1)}px, 0) scale(${(.2 + .8 * f).toFixed(3)}) rotate(${(u * (i < TOOLS.length / 2 ? -90 : 90)).toFixed(0)}deg)`;
       el.style.opacity = f > 0 ? Math.min(1, f * 5).toFixed(2) : 0; el.style.pointerEvents = f > .98 ? '' : 'none';
       const set = f > .98; if (el.classList.contains('set') !== set) { el.classList.toggle('set', set); if (!set && tipFor === i) showTip(-1); }
     });
@@ -2199,7 +2244,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const cloudsFoot = $$('#cloudsFoot img');
   let dockY = 0;
   const dock = $('.bar .nav');
+  const navLinks = $$('.bar .nav a[data-go]'), navInd = $('#navInd'); let navOn = null, navTops = [];
   function frameMisc(y) {
+    if (!navTops.length) navTops = navLinks.map(a => top($('#' + a.dataset.go)));
+    let cur = null; navLinks.forEach((a, k) => { if (a.offsetParent && navTops[k] <= y + vh * .5) cur = a; });
+    if (y < vh * .5) cur = null;
+    if (cur !== navOn) { navOn = cur; navLinks.forEach(a => a.classList.toggle('on', a === cur)); navInd.classList.toggle('on', !!cur); if (cur) { navInd.style.width = cur.offsetWidth + 'px'; navInd.style.transform = `translateX(${cur.offsetLeft}px)`; } }
     const inMap = y > jTop - vh * .4 && y < jTop + jRange + vh * .3, bx = boxTrack.getBoundingClientRect(), pinned = (bx.top < vh * .3 && bx.bottom > vh * .7) || (y > stTop - vh * .2 && y < stTop + stRange) || (y > llTop - vh * .2 && y < llTop + llRange) || (y > bTop - vh * .2 && y < bTop + bRange);
     if (y > dockY + 3 && y > vh * .5) dock.dataset.dn = 1; else if (y < dockY - 3) dock.dataset.dn = '';
     dock.classList.toggle('away', !!dock.dataset.dn || inMap || pinned); dockY = y;
@@ -2225,7 +2275,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const llRevTrack = $('#llRevTrack'), llRevEl = $('#llRev');
   let llTop = 0, llRange = 1, lsTop = 0, lsRange = 1, rvTop = 0, rvRange = 1, lsG = {}, lsCapT = '', lsLastX = null, lsStride = 0;
   const llWords = [];
-  (function split(node) { [...node.childNodes].forEach(n => { if (n.nodeType === 3) { const f = document.createDocumentFragment(); n.textContent.split(/(\s+)/).forEach(tok => { if (!tok) return; if (/^\s+$/.test(tok)) { f.appendChild(document.createTextNode(tok)); return; } const w = document.createElement('span'); w.className = 'w'; w.textContent = tok; llWords.push(w); f.appendChild(w); }); n.replaceWith(f); } else split(n); }); })(llRevEl);
+  (function split(node) { [...node.childNodes].forEach(n => { if (n.nodeType === 3) { const f = document.createDocumentFragment(); n.textContent.split(/(\s+)/).forEach(tok => { if (!tok) return; if (/^\s+$/.test(tok)) { f.appendChild(document.createTextNode(tok)); return; } const w = document.createElement('span'); w.className = 'w'; w.textContent = tok; llWords.push(w); f.appendChild(w); }); n.replaceWith(f); } else if (n.classList && n.classList.contains('w')) llWords.push(n); else split(n); }); })(llRevEl);
   function layoutLL() {
     const sec = $('#lastlook'); llTop = top(sec); llRange = Math.max(1, sec.offsetHeight - vh);
     lsTop = top(lsTrack); lsRange = Math.max(1, lsTrack.offsetHeight - vh); rvTop = top(llRevTrack); rvRange = Math.max(1, llRevTrack.offsetHeight - vh);
@@ -2269,6 +2319,13 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     if (y > rvTop - vh) { const p = clamp((y - rvTop + vh * .3) / (rvRange + vh * .3)); const n = Math.round(p * 1.15 * llWords.length); llWords.forEach((w, i) => w.classList.toggle('on', i < n)); }
   }
 
+  const lookEyes = $$('#llRev .oo s');
+  addEventListener('pointermove', e => {
+    const r = llRevEl.getBoundingClientRect(); if (r.bottom < -100 || r.top > vh + 100) return;
+    lookEyes.forEach(b => { const p = b.parentElement.getBoundingClientRect(), dx = e.clientX - (p.left + p.width / 2), dy = e.clientY - (p.top + p.height / 2), a = Math.atan2(dy, dx), m = Math.min(1, Math.hypot(dx, dy) / 260) * p.width * .2;
+      b.style.setProperty('--ex', (Math.cos(a) * m).toFixed(1) + 'px'); b.style.setProperty('--ey', (Math.sin(a) * m * 1.2).toFixed(1) + 'px'); });
+  }, { passive: true });
+
   /* ---------- keycaps: they work on your keyboard too ---------- */
   const keysMat = $('#keysMat');
   addEventListener('keydown', e => {
@@ -2284,6 +2341,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   /* ---------- loop ---------- */
   function layout() {
     vw = innerWidth; vh = innerHeight; mobile = vw < 860;
+    navTops = []; navOn = undefined;
     layoutValley(); layoutStory(); layoutJourney(); layoutBrand(); layoutStack(); layoutLL(); layoutProc(); boxScale();
   }
   let last = performance.now();
