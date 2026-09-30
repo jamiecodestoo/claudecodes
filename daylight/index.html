@@ -703,7 +703,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
    6 · OFF THE CLOCK (desk)
    ========================================================= */
 .life { position: relative; padding-block: 22vh 24vh; background: var(--paper-2); overflow-x: clip; }
-.desk { position: relative; height: min(100vh, 860px); margin-top: 5vh; border-radius: 22px; border: 16px solid #9A6B3F; box-sizing: border-box;
+.desk { position: relative; height: min(118vh, 1000px); margin-top: 5vh; border-radius: 22px; border: 16px solid #9A6B3F; box-sizing: border-box;
   background: radial-gradient(circle at 30% 20%, rgba(255, 236, 200, .35), transparent 50%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .18 0 0 0 0 .06 0 0 0 1.4 -.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E"),
     linear-gradient(135deg, #D6A56D, #C38D56);
@@ -717,7 +717,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .about h4 { margin: 0 0 12px; font: 800 26px/1.05 var(--sans); letter-spacing: -.035em; }
 .about b { display: block; margin: 10px 0 2px; font: italic 400 20px/1.35 var(--serif); }
 .about ul { margin: 0; padding: 0 0 0 16px; font: 500 14.5px/28px var(--sans); color: #2B3A4E; }
-.scrap { width: 160px; padding: 16px 14px 12px; box-sizing: border-box; background: #FFFDF6; box-shadow: 0 16px 24px -16px rgba(60, 30, 0, .6); clip-path: polygon(0 3%, 12% 0, 30% 2%, 55% 0, 80% 3%, 100% 0, 98% 40%, 100% 72%, 97% 100%, 70% 97%, 42% 100%, 16% 97%, 0 100%, 2% 60%); }
+.scrap { width: 160px; padding: 16px 14px 12px; box-sizing: border-box; isolation: isolate; filter: drop-shadow(0 12px 12px rgba(60, 30, 0, .32)) drop-shadow(0 2px 2px rgba(60, 30, 0, .12)); }
+.scrap::after { content: ""; position: absolute; z-index: -1; inset: 0; background: #FFFDF6; clip-path: polygon(0 3%, 12% 0, 30% 2%, 55% 0, 80% 3%, 100% 0, 98% 40%, 100% 72%, 97% 100%, 70% 97%, 42% 100%, 16% 97%, 0 100%, 2% 60%); }
 .scrap.pinned::before { top: 4px; }
 .scrap svg { width: 100%; height: auto; }
 .scrap svg * { fill: none; stroke: #13233A; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
@@ -769,6 +770,19 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .lastlook-app { width: 150px; }
 .lastlook-app img { width: 100%; height: auto; border-radius: 34px; box-shadow: 0 20px 30px -16px rgba(60, 30, 0, .5); pointer-events: none; }
 .lastlook-app span { display: block; margin-top: 8px; text-align: center; font: italic 19px/1 var(--serif); }
+.vinyl { width: 250px; height: 200px; }
+.vn-sleeve { position: absolute; left: 0; top: 0; z-index: 1; width: 170px; height: 170px; box-sizing: border-box; padding: 16px; border-radius: 6px; color: #fff; background: linear-gradient(145deg, #FA2D48, #FC5C7D 55%, #A93DF2); box-shadow: 0 20px 26px -16px rgba(60, 30, 0, .6); display: flex; flex-direction: column; justify-content: flex-end; }
+.vn-sleeve svg { position: absolute; left: 16px; top: 16px; width: 34px; height: 34px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.vn-sleeve b { font: 800 20px/1 var(--sans); letter-spacing: -.02em; }
+.vn-sleeve small { margin-top: 4px; font: 600 12px/1 var(--sans); opacity: .85; }
+.vn-disc { position: absolute; left: 76px; top: 6px; width: 158px; height: 158px; border-radius: 50%; box-shadow: 0 16px 22px -12px rgba(0, 0, 0, .6);
+  background: radial-gradient(circle, #FC5C7D 0 17%, #1A1A1D 17.5% 19%, transparent 19.5%), conic-gradient(from 30deg, rgba(255, 255, 255, .14), transparent 12%, rgba(255, 255, 255, .1) 30%, transparent 45%, rgba(255, 255, 255, .14) 62%, transparent 75%), repeating-radial-gradient(circle, #1A1A1D 0 2px, #26262B 2px 4px);
+  animation: vnspin 3.2s linear infinite; }
+.vn-disc i { position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px; border-radius: 50%; background: var(--paper-2); }
+.vinyl:hover .vn-disc { animation-duration: 1.2s; }
+@keyframes vnspin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .vn-disc { animation: none; } }
+.vinyl > span { position: absolute; left: 0; right: 0; bottom: 0; text-align: center; font: italic 18px/1 var(--serif); color: #FFF6E6; text-shadow: 0 1px 3px rgba(40, 20, 0, .5); }
 .desk-hint { position: absolute; right: 24px; bottom: 16px; margin: 0; font: italic 19px/1 var(--serif); color: rgba(255, 244, 225, .85); text-shadow: 0 1px 3px rgba(40, 20, 0, .4); }
 
 /* =========================================================
@@ -836,8 +850,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .nw-cta:hover { transform: translateY(-3px) rotate(-1deg); box-shadow: 0 0 0 5px rgba(255, 210, 63, .45), 0 20px 34px -14px rgba(19, 35, 58, .6); }
 .nw-pen { width: 34px; height: 34px; border-radius: 50%; background: var(--sun); display: grid; place-items: center; }
 .nw-pen svg { width: 18px; height: 18px; fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.nw-rows { display: grid; gap: 26px; margin-top: 8vh; }
-.nw-row { overflow: hidden; padding: 18px 0 26px; -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+.nw-rows { display: grid; gap: 0; margin-top: 6vh; }
+.nw-row { overflow: hidden; padding: 30px 0 56px; margin-bottom: -20px; -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
 .nw-track { display: flex; gap: 24px; width: max-content; animation: nwscroll var(--dur, 70s) linear infinite; }
 .nw-row.rev .nw-track { animation-direction: reverse; }
 .nw-row:hover .nw-track, .nw-row:focus-within .nw-track { animation-play-state: paused; }
@@ -1234,14 +1248,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .desk .p1 { left: 3% !important; top: 16px !important; width: 55%; }
   .desk .p3 { left: 57% !important; top: 30px !important; width: 40%; font-size: 17px; padding: 14px; }
   .desk .p2 { left: 3% !important; top: 300px !important; width: 94%; padding-left: 40px; }
-  .desk .p5 { left: 3% !important; top: 790px !important; width: 78%; }
-  .desk .p6 { left: 56% !important; top: 1010px !important; width: 42% !important; font-size: 17px; }
-  .desk .p7 { left: 3% !important; top: 1150px !important; width: 92%; }
-  .desk .p4 { left: 60% !important; top: 1300px !important; width: 34%; }
+  .desk .p5 { left: 6% !important; top: 790px !important; }
+  .desk .p15 { left: 3% !important; top: 1020px !important; width: 50% !important; }
+  .desk .p6 { left: 56% !important; top: 1040px !important; width: 42% !important; font-size: 17px; }
+  .desk .p16 { left: 5% !important; top: 1190px !important; width: 44% !important; }
+  .desk .p17 { left: 52% !important; top: 1230px !important; width: 44% !important; font-size: 17px; padding: 14px; }
+  .desk .p7 { left: 3% !important; top: 1400px !important; width: 92%; }
+  .desk .p4 { left: 60% !important; top: 1560px !important; width: 34%; }
   .desk .p14 { display: none; }
-  .desk .mag { font-size: 44px; top: 1330px !important; }
+  .desk .mag { font-size: 44px; top: 1590px !important; }
   .desk .p8 { left: 4% !important; } .desk .p9 { left: 14% !important; } .desk .p10 { left: 24% !important; } .desk .p11 { left: 37% !important; } .desk .p12 { left: 46% !important; }
-  .desk .p13 { left: 16% !important; top: 1420px !important; }
+  .desk .p13 { left: 16% !important; top: 1680px !important; }
   .box-track { height: 190vh; }
   .box-fit { left: 50%; top: 42%; }
   .box-info { left: 16px; right: 16px; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); transform: none; width: auto; display: block; }
@@ -1257,7 +1274,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .proc-line svg { display: none; }
   .pnode, .pnode.up { position: relative; left: auto !important; top: auto !important; transform: none; width: auto; text-align: left; display: grid; grid-template-columns: 26px 1fr; gap: 4px 14px; }
   .pnode .dot, .pnode.up .dot { margin: 0; grid-row: span 2; order: 0; }
-  .desk { height: 1600px; border-width: 10px; }
+  .desk { height: 1860px; border-width: 10px; }
   .sticky { width: 10.5rem; font-size: 18px; padding: 14px; }
   .tell-box { padding-right: 0; }
   .tell { font-size: clamp(1.9rem, 8.4vw, 2.6rem); line-height: 1.3; }
@@ -1614,15 +1631,15 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <p class="ab-k">Off the clock</p>
         <h4>Hi, I’m James. Not the work version.</h4>
         <b>Things I can’t stop doing</b>
-        <ul><li>Drums, piano and guitar</li><li>Filming and posting on @jamieships</li><li>Flying between Delhi and Dubai</li></ul>
+        <ul><li>Drums, piano and guitar</li><li>Long drives, music way too loud</li><li>Lifting heavy things at the gym</li><li>Flying between Delhi and Dubai</li></ul>
         <b>When I’m not in Figma</b>
-        <ul><li>I’m usually making noise</li></ul>
+        <ul><li>Apple Music is on. Always.</li><li>Asking “but why?” about everything</li></ul>
       </div>
       <div class="item note taped p3" style="--sc:#FFE98A;left:59%;top:5%;--r:4deg">I play drums, piano &amp; guitar.<small>Calculated chaos</small></div>
       <div class="item scrap pinned p4" style="left:79%;top:6%;--r:-6deg;--pc:#2E9E6B" aria-hidden="true"><svg viewBox="0 0 150 120"><ellipse cx="75" cy="44" rx="56" ry="16"/><path d="M19 44v40c0 9 25 16 56 16s56-7 56-16V44"/><path d="M40 20l20 20M110 20l-20 20"/><circle cx="36" cy="17" r="4"/><circle cx="114" cy="17" r="4"/></svg><span>the loud one</span></div>
-      <div class="item card-ig pinned p5" style="left:57%;top:38%;--r:-2deg;--pc:#F2B705"><h4>I make content, too.</h4><p>Design, building, career, and a few things I've learned along the way.</p><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">@jamieships ↗</a><a href="https://www.instagram.com/jameschughh" target="_blank" rel="noopener">@jameschughh ↗</a></div>
-      <div class="item note taped p6" style="--sc:#C9EBD2;left:82%;top:37%;--r:5deg;width:170px">Home is two places.<small>IND / DXB</small></div>
-      <div class="item ticket pinned p7" style="left:26%;top:67%;--r:-3deg;--pc:#D71920">
+      <div class="item vinyl p5" style="left:55%;top:33%;--r:-3deg" aria-hidden="true"><div class="vn-sleeve"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><b>On repeat</b><small>Apple Music</small></div><div class="vn-disc"><i></i></div><span>my music obsession, spinning</span></div>
+      <div class="item note taped p6" style="--sc:#C9EBD2;left:80%;top:40%;--r:5deg;width:170px">Home is two places.<small>IND / DXB</small></div>
+      <div class="item ticket pinned p7" style="left:24%;top:70%;--r:-3deg;--pc:#D71920">
         <div class="tk-main">
           <div class="tk-top"><span class="tk-air">Emirates</span><small>Boarding pass</small></div>
           <div class="tk-route"><div><b>DEL</b><span>New Delhi</span></div><i><svg viewBox="0 0 24 24"><path d="M2 13l8-1 4-8h2l-2 8 6 1 2-3h2l-1 4 1 4h-2l-2-3-6 1 2 8h-2l-4-8-8-1z"/></svg></i><div><b>DXB</b><span>Dubai</span></div></div>
@@ -1630,13 +1647,16 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         </div>
         <div class="tk-stub"><small>DEL ⇄ DXB</small><i class="tk-bar"></i></div>
       </div>
-      <span class="item mag p8" style="left:4%;top:76%;--r:-8deg;--mc:#E4402A">J</span>
-      <span class="item mag p9" style="left:8.6%;top:74%;--r:6deg;--mc:#2A7BD1">A</span>
-      <span class="item mag p10" style="left:13.2%;top:77%;--r:-4deg;--mc:#F2B705">M</span>
-      <span class="item mag p11" style="left:18.6%;top:75%;--r:9deg;--mc:#2E9E6B">E</span>
-      <span class="item mag p12" style="left:22.6%;top:77.5%;--r:-6deg;--mc:#7B5CD6">S</span>
-      <div class="item pick p13" style="left:60%;top:71%;--r:-12deg" aria-hidden="true"><svg viewBox="0 0 60 70"><path d="M30 68C14 52 2 36 2 20 2 8 14 2 30 2s28 6 28 18c0 16-12 32-28 48z" fill="#E4402A"/><path d="M12 14c6-5 14-7 22-6" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".5"/></svg><span>for the guitar</span></div>
-      <div class="item scrap pinned p14" style="left:78%;top:63%;--r:7deg;--pc:#2A7BD1;width:130px" aria-hidden="true"><svg viewBox="0 0 120 150"><path d="M60 8v70"/><path d="M52 8h16v18H52z"/><path d="M60 78c-22 0-34 12-34 30s16 34 34 34 34-16 34-34-12-30-34-30z"/><circle cx="60" cy="104" r="10"/><path d="M50 128h20"/></svg><span>and the quiet one</span></div>
+      <span class="item mag p8" style="left:4%;top:80%;--r:-8deg;--mc:#E4402A">J</span>
+      <span class="item mag p9" style="left:8.6%;top:78%;--r:6deg;--mc:#2A7BD1">A</span>
+      <span class="item mag p10" style="left:13.2%;top:81%;--r:-4deg;--mc:#F2B705">M</span>
+      <span class="item mag p11" style="left:18.6%;top:79%;--r:9deg;--mc:#2E9E6B">E</span>
+      <span class="item mag p12" style="left:1%;top:90%;--r:-6deg;--mc:#7B5CD6">S</span>
+      <div class="item pick p13" style="left:58%;top:84%;--r:-12deg" aria-hidden="true"><svg viewBox="0 0 60 70"><path d="M30 68C14 52 2 36 2 20 2 8 14 2 30 2s28 6 28 18c0 16-12 32-28 48z" fill="#E4402A"/><path d="M12 14c6-5 14-7 22-6" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".5"/></svg><span>for the guitar</span></div>
+      <div class="item scrap pinned p14" style="left:62%;top:62%;--r:7deg;--pc:#2A7BD1;width:130px" aria-hidden="true"><svg viewBox="0 0 120 150"><path d="M60 8v70"/><path d="M52 8h16v18H52z"/><path d="M60 78c-22 0-34 12-34 30s16 34 34 34 34-16 34-34-12-30-34-30z"/><circle cx="60" cy="104" r="10"/><path d="M50 128h20"/></svg><span>and the quiet one</span></div>
+      <div class="item scrap pinned p15" style="left:3%;top:55%;--r:4deg;--pc:#F2B705;width:190px" aria-hidden="true"><svg viewBox="0 0 170 90"><path d="M10 62V50c0-6 4-9 10-10l22-4 18-18c4-4 8-6 14-6h36c6 0 10 2 14 6l16 18 12 3c6 1 9 5 9 11v12"/><path d="M8 62h14M54 62h62M148 62h12"/><circle cx="38" cy="64" r="14"/><circle cx="132" cy="64" r="14"/><path d="M66 36h30V20H78c-3 0-5 1-7 3zM104 36h26l-12-13c-2-2-4-3-7-3h-7z"/><path d="M2 40h8M0 50h6"/></svg><span>long drives, windows down</span></div>
+      <div class="item scrap pinned p16" style="left:40%;top:47%;--r:-5deg;--pc:#E4402A;width:170px" aria-hidden="true"><svg viewBox="0 0 160 80"><path d="M40 40h80"/><rect x="22" y="18" width="16" height="44" rx="4"/><rect x="8" y="26" width="14" height="28" rx="4"/><rect x="122" y="18" width="16" height="44" rx="4"/><rect x="138" y="26" width="14" height="28" rx="4"/></svg><span>gym, then more gym</span></div>
+      <div class="item note taped p17" style="--sc:#D9CCFF;left:79%;top:74%;--r:-4deg;width:190px">My brain has 40 tabs open.<small>Overthinker. Mostly curiosity.</small></div>
       <p class="desk-hint">it’s my board, but go ahead, move things around ;)</p>
     </div>
   </div>
