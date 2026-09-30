@@ -2,7 +2,7 @@
 <meta name="description" content="James Chugh, product designer. A painted valley of the places I've worked, and the numbers my work moved.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;600&family=Gaegu:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;600&family=Gaegu:wght@400;700&family=Anton&display=swap">
 <style>
 /* Layout: a layered painted valley you fly into; clouds carry you onto paper where the
    story draws itself; a pinned diorama walks place to place; stacked case cards; a desk
@@ -582,52 +582,77 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .tool-tip p { margin: 0; font: 400 14.5px/1.55 var(--sans); color: #2B3A4E; }
 
 /* =========================================================
-   6 · LASTLOOK
+   6 · LASTLOOK (a walk home from the gym)
    ========================================================= */
-.ll { --ll-ink: #3A2616; --ll-br: #9A6A3E; position: relative; color: var(--ll-ink); background: linear-gradient(180deg, var(--paper) 0, #F9E9D0 16%, #F4DDBB 50%, #F9E9D0 86%, var(--paper) 100%); }
-.ll-intro { padding-block: 22vh 6vh; display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(24px, 5vw, 80px); align-items: end; }
-.ll-hero { position: relative; }
-.ll-kick { display: inline-flex; align-items: center; gap: 12px; margin: 0 0 18px; padding: 6px 16px 6px 6px; border-radius: 999px; background: rgba(255, 255, 255, .6); font: 700 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ll-br); }
-.ll-kick img { width: 34px; height: 34px; border-radius: 10px; }
-.ll-title { margin: 0; font: 800 clamp(4.4rem, 13vw, 12.5rem)/.82 var(--sans); letter-spacing: -.07em; color: var(--ll-ink); }
-.ll-title em { font: italic 400 1.02em/.82 var(--serif); letter-spacing: -.03em; color: var(--ll-br); padding-left: .04em; }
-.ll-tag { margin: 22px 0 0; font: italic 400 clamp(24px, 2.4vw, 34px)/1.2 var(--serif); color: var(--ll-ink); }
-.ll-eyes { position: absolute; right: 4%; top: -8%; display: flex; gap: 8px; rotate: 8deg; }
-.ll-eyes i { position: relative; width: clamp(54px, 6vw, 86px); aspect-ratio: 1 / 1.12; border-radius: 50%; background: radial-gradient(circle at 40% 30%, #fff, #F3E9DA); box-shadow: inset 0 -6px 10px rgba(120, 80, 30, .18), 0 10px 20px -10px rgba(58, 38, 22, .5); animation: blink 5.5s infinite; }
-.ll-eyes b { position: absolute; left: 50%; top: 50%; width: 42%; height: 38%; margin: -19% 0 0 -21%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #6B4A30 0 12%, #20140B 14%); transform: translate(var(--ex, 0px), var(--ey, 0px)); transition: transform .12s linear; }
-@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.08); } }
-.ll-idea p { margin: 0; font: 400 18px/1.65 var(--sans); color: #5A4230; max-width: 34ch; }
-.ll-idea .ll-lead { margin-bottom: 16px; font: 800 clamp(22px, 2vw, 28px)/1.25 var(--sans); letter-spacing: -.03em; color: var(--ll-ink); }
-.ll-track { position: relative; height: 460vh; }
-.ll-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: clamp(20px, 4vw, 60px); padding: 0 clamp(16px, 6vw, 110px); box-sizing: border-box; }
-.ll-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; max-width: 30rem; }
-.ll-step button { display: flex; align-items: baseline; gap: 16px; width: 100%; padding: 12px 0; text-align: left; color: var(--ll-ink); opacity: .35; transition: opacity .5s var(--ease); }
-.ll-step .n { font: 700 14px/1 var(--sans); color: var(--ll-br); font-variant-numeric: tabular-nums; }
-.ll-step .t { font: 800 clamp(22px, 2.2vw, 32px)/1.1 var(--sans); letter-spacing: -.035em; }
-.ll-step p { margin: 0 0 0 34px; max-height: 0; overflow: hidden; opacity: 0; font: 400 17px/1.6 var(--sans); color: #5A4230; transition: max-height .7s var(--ease), opacity .5s var(--ease), margin .6s var(--ease); }
-.ll-step.on button { opacity: 1; }
-.ll-step.on p { max-height: 9em; opacity: 1; margin-bottom: 10px; }
-.ll-stage { position: relative; height: 100%; display: grid; place-items: center; }
-.ll-glow { position: absolute; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 250, 238, .95), rgba(255, 244, 222, 0)); }
-.ll-deck { position: relative; height: min(76vh, 700px); aspect-ratio: 472 / 1024; }
-.ll-card { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 28px; box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset, 0 40px 70px -30px rgba(58, 38, 22, .6), 0 0 0 1px rgba(58, 38, 22, .08); will-change: transform, opacity; transform-origin: 50% 90%; }
-.ll-chip { position: absolute; z-index: 20; left: 50%; top: 50%; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px 9px 10px; border-radius: 999px; background: rgba(255, 255, 255, .85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font: 700 14px/1 var(--sans); color: var(--ll-ink); white-space: nowrap;
-  box-shadow: 0 12px 24px -14px rgba(58, 38, 22, .55); transform: translate(-50%, -50%) translate(var(--x), var(--y)); animation: llfloat 6s ease-in-out infinite; animation-delay: var(--d); }
-.ll-chip svg { width: 20px; height: 20px; padding: 5px; border-radius: 50%; background: #F6DCB9; fill: none; stroke: var(--ll-br); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-@keyframes llfloat { 50% { translate: 0 -10px; } }
-.ll-outro { padding-block: 8vh 24vh; text-align: center; }
-.ll-stats { display: flex; justify-content: center; flex-wrap: wrap; gap: clamp(20px, 5vw, 80px); margin: 0; padding: 0; list-style: none; }
-.ll-stats b { display: block; font: 800 clamp(3rem, 6vw, 5.6rem)/.9 var(--sans); letter-spacing: -.06em; color: var(--ll-ink); }
-.ll-stats span { display: block; margin-top: 10px; font: italic 20px/1.2 var(--serif); color: #6E5038; max-width: 16ch; margin-inline: auto; }
-.ll-solo { margin: 5vh auto 0; font: 700 16px/1.4 var(--sans); color: var(--ll-br); }
-.ll-cta { margin-top: 26px; display: flex; justify-content: center; align-items: center; gap: 18px; flex-wrap: wrap; }
-.ll-store { display: inline-flex; align-items: center; gap: 12px; padding: 12px 24px 12px 18px; border-radius: 16px; background: #0B0B0C; color: #fff; text-decoration: none; box-shadow: 0 20px 36px -18px rgba(0, 0, 0, .7); transition: transform .4s var(--spring), box-shadow .3s; }
+.ll { --ll-font: "Anton", "Bebas Neue", Impact, sans-serif; --ll-ink: #3A2616; --ll-br: #9A6A3E; position: relative; color: var(--ll-ink); background: #F8E6CA; }
+.ls-track { position: relative; height: 520vh; }
+.ls-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: linear-gradient(180deg, var(--paper) 0%, #FCEBD2 30%, #F8DDB8 70%); }
+.ls-sky { position: absolute; inset: 0; pointer-events: none; }
+.ls-sun { position: absolute; right: 16%; top: 30%; width: clamp(80px, 9vw, 140px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, #FFE7B5 55%, rgba(255, 231, 181, 0) 72%); }
+.ls-hills { position: absolute; left: 0; right: 0; bottom: 26%; width: 100%; height: 26vh; }
+.ls-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 28%; background: linear-gradient(#BCD89D 0 10px, #E9DBC1 10px 14px, #EFE3CC 14px); }
+.ls-ground::after { content: ""; position: absolute; left: 0; right: 0; top: 46%; height: 3px; background: repeating-linear-gradient(90deg, rgba(160, 120, 70, .25) 0 40px, transparent 40px 70px); }
+.ls-head { position: absolute; z-index: 4; left: 0; right: 0; top: calc(env(safe-area-inset-top, 0px) + 9vh); text-align: center; padding: 0 16px; will-change: opacity, transform; }
+#llHl { color: var(--ll-br); }
+.ls-head h2 { margin: 0 auto; max-width: 14ch; font: 400 clamp(2.6rem, 6vw, 5.8rem)/.98 var(--ll-font); letter-spacing: .005em; text-transform: uppercase; color: var(--ll-ink); text-wrap: balance; }
+.ls-gym { position: absolute; left: 2vw; bottom: 27.4%; width: clamp(190px, 31vw, 480px); height: auto; }
+.ls-home { position: absolute; right: 3vw; bottom: 27.4%; width: clamp(160px, 24vw, 380px); height: auto; }
+#lsWin { transition: fill .8s var(--ease); }
+.ls-bench { position: absolute; left: 36vw; bottom: 24.6%; width: clamp(70px, 9vw, 140px); height: auto; }
+.ls-lamp { position: absolute; left: 58vw; bottom: 26%; width: clamp(18px, 2.2vw, 34px); height: auto; }
+.ls-tree { position: absolute; bottom: 26.6%; height: auto; }
+.ls-tree.t1 { left: 49vw; width: clamp(60px, 7.4vw, 120px); }
+.ls-tree.t2 { left: 64vw; width: clamp(70px, 9vw, 140px); }
+.ls-fence { position: absolute; bottom: 8%; height: 17%; border: 2.5px dashed rgba(66, 133, 244, .55); border-radius: 50%; background: radial-gradient(closest-side, rgba(66, 133, 244, .1), transparent); box-sizing: border-box; transition: border-color .5s, background .5s; }
+.ls-fence span { position: absolute; left: 50%; bottom: -30px; transform: translateX(-50%); font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: #3C78D8; white-space: nowrap; }
+.ls-fence.out { border-color: rgba(255, 107, 74, .7); background: radial-gradient(closest-side, rgba(255, 107, 74, .12), transparent); }
+.ls-bottle { position: absolute; left: 0; top: 0; width: clamp(12px, 1.5vw, 22px); will-change: transform; z-index: 3; }
+.ls-bottle svg { display: block; width: 100%; height: auto; }
+.ls-ping { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px; border-radius: 50%; border: 2px solid #FF6B4A; opacity: 0; }
+.ls-bottle.alert .ls-ping { animation: lsping 1.4s ease-out infinite; }
+@keyframes lsping { from { transform: scale(.4); opacity: .9; } to { transform: scale(1.6); opacity: 0; } }
+.ls-man { position: absolute; left: 0; bottom: 11%; width: clamp(56px, 7vw, 108px); z-index: 4; will-change: transform, opacity; }
+.ls-man svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ls-bzz { position: absolute; left: 70%; top: 44%; display: flex; gap: 3px; opacity: 0; transition: opacity .3s; }
+.ls-bzz i { width: 3px; height: 12px; border-radius: 2px; background: #FF6B4A; animation: bzz .25s ease-in-out infinite alternate; }
+.ls-bzz i + i { height: 18px; animation-delay: -.12s; }
+.ls-bzz.on { opacity: 1; }
+@keyframes bzz { to { transform: translateY(-3px); } }
+.ls-note { position: absolute; z-index: 6; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 7vh); width: min(420px, calc(100vw - 32px)); box-sizing: border-box; display: flex; gap: 14px; align-items: flex-start; padding: 13px 16px 14px 13px; border-radius: 24px;
+  background: rgba(255, 255, 255, .78); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); box-shadow: 0 24px 50px -22px rgba(58, 38, 22, .55), 0 0 0 1px rgba(255, 255, 255, .6) inset;
+  transform: translate(-50%, -160%); opacity: 0; transition: transform .8s var(--spring), opacity .4s; }
+.ls-note.in { transform: translate(-50%, 0); opacity: 1; }
+.ls-note img { flex: none; width: 44px; height: 44px; border-radius: 10px; }
+.ls-note p { margin: 0; }
+.ls-note .nh { display: flex; justify-content: space-between; font: 600 12px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: #6E5A48; margin-bottom: 5px; }
+.ls-note .nh span { text-transform: none; letter-spacing: 0; font-weight: 500; }
+.ls-note .nt { font: 700 16.5px/1.25 var(--sans); color: #1C1410; }
+.ls-note .nb { margin-top: 2px; font: 400 15px/1.4 var(--sans); color: #3F3328; }
+.ls-note.ok .nt::before { content: "✓ "; color: #2E9E6B; }
+.ls-cap { position: absolute; z-index: 5; left: 0; right: 0; bottom: calc(env(safe-area-inset-bottom, 0px) + 2.6%); margin: 0; text-align: center; font: 400 clamp(20px, 2.2vw, 30px)/1.1 var(--ll-font); letter-spacing: .02em; text-transform: uppercase; color: var(--ll-ink); transition: opacity .35s; }
+.ls-cap.swap { opacity: 0; }
+.ll-rev-track { position: relative; height: 220vh; }
+.ll-rev-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; place-items: center; padding: 0 clamp(16px, 6vw, 80px); box-sizing: border-box; }
+.ll-rev { margin: 0; max-width: 22ch; text-align: center; font: 400 clamp(2.2rem, 4.8vw, 4.9rem)/1.08 var(--ll-font); letter-spacing: .01em; text-transform: uppercase; color: var(--ll-ink); text-wrap: balance; }
+.ll-rev b { font-weight: 400; color: var(--ll-br); }
+.ll-rev .w { opacity: .12; transition: opacity .35s linear; }
+.ll-rev .w.on { opacity: 1; }
+.ll-end { padding-block: 4vh 24vh; display: grid; justify-items: center; text-align: center; }
+.ll-end-icon { width: 96px; height: 96px; border-radius: 24px; box-shadow: 0 20px 40px -18px rgba(58, 38, 22, .55); margin-bottom: 7vh; }
+.ll-stats { display: grid; grid-template-columns: repeat(3, 1fr); width: min(960px, 100%); margin: 0; padding: 0; list-style: none; }
+.ll-stats li { padding: 0 clamp(12px, 3vw, 40px); }
+.ll-stats li + li { border-left: 1px solid rgba(58, 38, 22, .15); }
+.ll-stats b { display: block; font: 400 clamp(3rem, 6.4vw, 5.8rem)/.95 var(--ll-font); letter-spacing: .01em; color: var(--ll-ink); }
+.ll-stats span { display: block; margin: 12px auto 0; font: 600 13px/1.4 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #6E5038; max-width: 16ch; }
+.ll-cta { margin-top: 8vh; display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
+.ll-store { display: inline-flex; align-items: center; gap: 12px; padding: 13px 26px 13px 20px; border-radius: 16px; background: #0B0B0C; color: #fff; text-decoration: none; box-shadow: 0 20px 36px -18px rgba(0, 0, 0, .7); transition: transform .4s var(--spring), box-shadow .3s; }
 .ll-store:hover { transform: translateY(-3px); box-shadow: 0 0 0 4px rgba(154, 106, 62, .3), 0 26px 40px -18px rgba(0, 0, 0, .7); }
 .ll-store svg { width: 30px; height: 30px; margin-top: -3px; }
 .ll-store span { display: grid; text-align: left; font: 700 22px/1 var(--sans); letter-spacing: -.02em; }
 .ll-store small { font: 500 11.5px/1.3 var(--sans); letter-spacing: 0; opacity: .85; }
-.ll-follow { font: 700 15px/1 var(--sans); color: var(--ll-ink); text-decoration: none; padding: 14px 18px; border-radius: 999px; background: rgba(255, 255, 255, .55); transition: background .3s; }
+.ll-follow { font: 700 15px/1 var(--sans); color: var(--ll-ink); text-decoration: none; padding: 16px 20px; border-radius: 16px; background: rgba(255, 255, 255, .6); transition: background .3s; }
 .ll-follow:hover { background: #fff; }
+.ll-solo { margin: 4vh 0 0; font: 600 15px/1.4 var(--sans); color: var(--ll-br); }
 
 .process { position: relative; padding-block: 24vh 20vh; background: var(--paper); overflow: hidden; }
 .proc-line { position: relative; margin-top: 6vh; height: 460px; }
@@ -820,19 +845,15 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .tell-box .sticky:nth-of-type(1) { top: auto !important; bottom: -30%; right: 0 !important; }
   .chips { bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); }
   .chip { padding: 6px 10px; }
-  .ll-intro { grid-template-columns: 1fr; padding-top: 16vh; }
-  .ll-eyes { right: 2%; top: -12%; }
-  .ll-pin { grid-template-columns: 1fr; grid-template-rows: 1fr auto; padding: 70px 16px calc(env(safe-area-inset-bottom, 0px) + 20px); gap: 10px; }
-  .ll-stage { order: -1; }
-  .ll-deck { height: min(50svh, 440px); }
-  .ll-card { border-radius: 20px; }
-  .ll-chip { display: none; }
-  .ll-eyes { top: -64px; right: 0; }
-  .ll-chip svg { width: 16px; height: 16px; padding: 4px; }
-  .ll-steps { gap: 0; }
-  .ll-step:not(.on) { display: none; }
-  .ll-step p { margin-left: 0; font-size: 15px; }
-  .ll-step .t { font-size: 22px; }
+  .ls-gym { width: 150px; left: -10px; }
+  .ls-home { width: 120px; right: -6px; }
+  .ls-bench { left: 36vw; width: 58px; }
+  .ls-tree.t1 { left: 52vw; } .ls-tree.t2, .ls-lamp { display: none; }
+  .ls-man { width: 44px; }
+  .ls-fence span { display: none; }
+  .ls-note { top: calc(env(safe-area-inset-top, 0px) + 72px); }
+  .ll-stats { grid-template-columns: 1fr; gap: 28px; }
+  .ll-stats li + li { border-left: 0; border-top: 1px solid rgba(58, 38, 22, .15); padding-top: 28px; }
   .gift { transform-origin: 50% 92%; left: -110px; top: -125px; width: 220px; height: 220px; }
   .gift-cap { top: 108px; font-size: 18px; }
   .tool { width: 58px; margin: -29px 0 0 -29px; gap: 6px; }
@@ -1101,39 +1122,75 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 
 <!-- 6 · LASTLOOK -->
 <section class="ll" id="lastlook" aria-label="LastLook, my app">
-  <div class="ll-intro wrap">
-    <div class="ll-hero">
-      <div class="ll-eyes" id="llEyes" aria-hidden="true"><i><b></b></i><i><b></b></i></div>
-      <p class="ll-kick"><img src="v2/s/llicon.webp" alt="">My own app · Live on iOS</p>
-      <h2 class="ll-title">Last<em>Look</em></h2>
-      <p class="ll-tag">FindMy, but for everything you own.</p>
-    </div>
-    <div class="ll-idea">
-      <p class="ll-lead">I kept leaving things behind. Keys at home, AirPods at the gym, a charger at the office.</p>
-      <p>Trackers only help with the few things that have a chip, and you only notice once you’ve already left. So I built LastLook. It learns what you carry to each place, and gives you one last look before you walk out without it.</p>
-    </div>
-  </div>
-  <div class="ll-track" id="llTrack">
-    <div class="ll-pin">
-      <ol class="ll-steps" id="llSteps"><li class="ll-step" data-i="0"><button type="button"><span class="n">01</span><span class="t">Tell it where you go.</span></button><p>Office, gym, college, your favourite café. Each place gets its own list of the things you carry there.</p></li><li class="ll-step" data-i="1"><button type="button"><span class="n">02</span><span class="t">Link your things to places.</span></button><p>Draw a radius around a spot and add what belongs there: keys, mouse, coffee mug. Mark the ones you can’t afford to lose as panic items.</p></li><li class="ll-step" data-i="2"><button type="button"><span class="n">03</span><span class="t">It notices when you leave.</span></button><p>LastLook checks you in automatically. A Live Activity shows what you’re carrying, and it nudges you before you head out the door.</p></li><li class="ll-step" data-i="3"><button type="button"><span class="n">04</span><span class="t">And finds what’s already lost.</span></button><p>For the things with Bluetooth, like AirPods, a hot-and-cold radar walks you back to them.</p></li><li class="ll-step" data-i="4"><button type="button"><span class="n">05</span><span class="t">Then learns your patterns.</span></button><p>Memory Insights turns your check-ins into patterns: what you forget most, your riskiest hours, and your streaks.</p></li></ol>
-      <div class="ll-stage">
-        <div class="ll-glow" aria-hidden="true"></div>
-        <div class="ll-deck" id="llDeck"><img class="ll-card" src="v2/s/ll1.webp" alt="LastLook screen: Tell it where you go." style="--i:0" loading="lazy"><img class="ll-card" src="v2/s/ll3.webp" alt="LastLook screen: Link your things to places." style="--i:1" loading="lazy"><img class="ll-card" src="v2/s/ll4.webp" alt="LastLook screen: It notices when you leave." style="--i:2" loading="lazy"><img class="ll-card" src="v2/s/ll2.webp" alt="LastLook screen: And finds what’s already lost." style="--i:3" loading="lazy"><img class="ll-card" src="v2/s/ll5.webp" alt="LastLook screen: Then learns your patterns." style="--i:4" loading="lazy"></div>
-        <span class="ll-chip" style="--x:-300px;--y:-200px;--d:0s"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3"/></svg>House keys</span>
-        <span class="ll-chip" style="--x:300px;--y:-130px;--d:-1.4s"><svg viewBox="0 0 24 24"><path d="M8 4a3 3 0 0 0-3 3v3a3 3 0 0 0 3 3v7h2V4z"/><path d="M16 4a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3v7h-2V4z"/></svg>AirPods Pro</span>
-        <span class="ll-chip" style="--x:-320px;--y:40px;--d:-2.2s"><svg viewBox="0 0 24 24"><path d="M9 2v5M15 2v5"/><path d="M6 7h12v4a6 6 0 0 1-12 0z"/><path d="M12 17v5"/></svg>Laptop charger</span>
-        <span class="ll-chip" style="--x:300px;--y:120px;--d:-.7s"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M16 12.5h2"/><path d="M3 9h15"/></svg>Wallet</span>
-        <span class="ll-chip" style="--x:-270px;--y:240px;--d:-3s"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="11" rx="3"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg>Lunch box</span>
+  <div class="ls-track" id="lsTrack">
+    <div class="ls-pin" id="lsPin">
+      <div class="ls-sky" aria-hidden="true"><i class="ls-sun"></i>
+        <svg class="ls-hills" viewBox="0 0 1440 300" preserveAspectRatio="none"><path d="M0 170 C 200 90, 380 120, 560 150 S 900 60, 1120 120 S 1360 110, 1440 90 V300 H0Z" fill="#F3D2A4"/><path d="M0 220 C 240 160, 460 200, 700 190 S 1100 150, 1440 185 V300 H0Z" fill="#EDC794"/></svg>
       </div>
+      <div class="ls-head" id="lsHead">
+        <h2>Ever walked out <span id="llHl">without something?</span></h2>
+      </div>
+      <div class="ls-ground" aria-hidden="true"></div>
+      <div class="ls-fence" id="lsFence" aria-hidden="true"><span>Gym zone</span></div>
+      <svg class="ls-gym" id="lsGym" viewBox="0 0 320 240" aria-hidden="true">
+        <rect x="-6" y="30" width="312" height="16" rx="3" fill="#243248"/>
+        <rect x="0" y="44" width="300" height="196" fill="#34445F"/>
+        <rect x="58" y="56" width="184" height="36" rx="8" fill="#13233A"/>
+        <text x="172" y="82" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="24" letter-spacing="6" fill="#FF7A5C">GYM</text>
+        <g transform="translate(96 74)" fill="#FF7A5C"><rect x="-14" y="-3" width="28" height="6" rx="2"/><rect x="-18" y="-9" width="6" height="18" rx="2"/><rect x="12" y="-9" width="6" height="18" rx="2"/></g>
+        <rect x="18" y="112" width="92" height="96" rx="4" fill="#F6D7A2"/><rect x="122" y="112" width="92" height="96" rx="4" fill="#F6D7A2"/>
+        <g fill="#34445F" opacity=".55"><rect x="30" y="170" width="68" height="6" rx="3"/><circle cx="36" cy="173" r="9"/><circle cx="92" cy="173" r="9"/><rect x="140" y="150" width="8" height="58"/><rect x="186" y="150" width="8" height="58"/><rect x="134" y="146" width="66" height="8" rx="3"/></g>
+        <path d="M64 112v96M168 112v96" stroke="#34445F" stroke-width="3"/>
+        <rect x="232" y="118" width="54" height="122" rx="4" fill="#1C2839"/><rect x="238" y="124" width="42" height="116" rx="3" fill="#9CC4E8"/><rect x="270" y="176" width="4" height="18" rx="2" fill="#E9EEF5"/>
+      </svg>
+      <svg class="ls-bench" id="lsBench" viewBox="0 0 120 60" aria-hidden="true"><rect x="4" y="14" width="112" height="9" rx="3" fill="#A0703F"/><rect x="4" y="27" width="112" height="7" rx="3" fill="#8B5E33"/><rect x="14" y="30" width="7" height="30" fill="#5E3E22"/><rect x="99" y="30" width="7" height="30" fill="#5E3E22"/></svg>
+      <svg class="ls-lamp" viewBox="0 0 40 200" aria-hidden="true"><rect x="18" y="30" width="5" height="170" fill="#34445F"/><path d="M6 34h28l-5-14H11z" fill="#34445F"/><ellipse cx="20" cy="36" rx="9" ry="4" fill="#FFE2A0"/></svg>
+      <svg class="ls-tree t1" viewBox="0 0 100 160" aria-hidden="true"><rect x="46" y="100" width="8" height="60" fill="#8B6B45"/><circle cx="50" cy="70" r="42" fill="#9CC97C"/><circle cx="34" cy="54" r="22" fill="#AED790"/></svg>
+      <svg class="ls-tree t2" viewBox="0 0 100 160" aria-hidden="true"><rect x="46" y="100" width="8" height="60" fill="#8B6B45"/><circle cx="50" cy="70" r="42" fill="#8FC06E"/><circle cx="34" cy="54" r="22" fill="#A6D287"/></svg>
+      <svg class="ls-home" id="lsHome" viewBox="0 0 260 230" aria-hidden="true">
+        <rect x="176" y="30" width="22" height="50" fill="#9C4A33"/>
+        <path d="M6 102 L130 16 L254 102 Z" fill="#B9553B"/><path d="M6 102 L130 16 L254 102" fill="none" stroke="#9C4A33" stroke-width="6" stroke-linejoin="round"/>
+        <rect x="24" y="100" width="212" height="130" fill="#FFF3DF"/>
+        <rect id="lsWin" x="46" y="128" width="64" height="54" rx="4" fill="#40506B"/><path d="M78 128v54M46 155h64" stroke="#FFF3DF" stroke-width="4"/>
+        <rect x="150" y="142" width="50" height="88" rx="4" fill="#7A4A2E"/><circle cx="190" cy="188" r="3" fill="#F4D18A"/>
+        <rect x="140" y="222" width="70" height="8" fill="#E3D2B6"/>
+      </svg>
+      <div class="ls-bottle" id="lsBottle" aria-hidden="true"><svg viewBox="0 0 20 44"><rect x="6" y="0" width="8" height="6" rx="2" fill="#13233A"/><rect x="3" y="6" width="14" height="38" rx="6" fill="#4DA3F0"/><rect x="5" y="14" width="3" height="22" rx="1.5" fill="#fff" opacity=".45"/></svg><i class="ls-ping"></i></div>
+      <div class="ls-man" id="lsMan" aria-hidden="true">
+        <svg viewBox="0 0 60 140">
+          <g id="lsLegB"><path d="M28 76 L27 126" stroke="#2A4266" stroke-width="10" stroke-linecap="round"/><path d="M22 130h13" stroke="#E9E4DA" stroke-width="7" stroke-linecap="round"/></g>
+          <g id="lsArmB"><path d="M30 48 L30 72" stroke="#C99570" stroke-width="7" stroke-linecap="round"/></g>
+          <path d="M17 44 Q30 36 43 44 L45 80 H15 Z" fill="#1E232B"/>
+          <path d="M20 44 L44 76" stroke="#C4462E" stroke-width="3"/>
+          <g id="lsLegF"><path d="M32 76 L33 126" stroke="#36588A" stroke-width="10" stroke-linecap="round"/><path d="M28 130h14" stroke="#F4F1EA" stroke-width="7" stroke-linecap="round"/></g>
+          <rect id="lsBag" x="36" y="68" width="21" height="17" rx="5" fill="#FF6B4A"/>
+          <circle cx="31" cy="24" r="11" fill="#E4AE84"/>
+          <path d="M20 22 A11 11 0 0 1 42 20 Z" fill="#15181D"/><path d="M21 20 H12 a3 3 0 0 0 0 5 H21 Z" fill="#15181D"/>
+          <rect x="33" y="21" width="10" height="4.5" rx="2" fill="#15181D"/>
+          <g id="lsArmF"><path d="M31 48 L33 73" stroke="#E4AE84" stroke-width="7" stroke-linecap="round"/><path d="M26 44 h10 l1 11 h-10z" fill="#1E232B"/></g>
+        </svg>
+        <span class="ls-bzz" id="lsBzz"><i></i><i></i></span>
+      </div>
+      <div class="ls-note" id="lsNote" role="status">
+        <img src="v2/s/llicon.webp" alt="">
+        <div><p class="nh"><b>LastLook</b><span>now</span></p><p class="nt" id="lsNt">Leaving the gym?</p><p class="nb" id="lsNb">Hope you’re carrying your stuff with you. Your water bottle is still on the bench.</p></div>
+      </div>
+      <p class="ls-cap" id="lsCap">Leg day, done.</p>
     </div>
   </div>
-  <div class="ll-outro wrap">
-    <ul class="ll-stats"><li><b>400+</b><span>downloads</span></li><li><b>10</b><span>paying subscribers</span></li><li><b>400K+</b><span>organic views, building it in public</span></li></ul>
-    <p class="ll-solo">Designed, built and shipped by me. Solo, start to finish.</p>
+  <div class="ll-rev-track" id="llRevTrack">
+    <div class="ll-rev-pin">
+      <p class="ll-rev" id="llRev">That’s <b>LastLook</b>. FindMy, but for everything you own. It learns what you carry to each place, notices the moment you leave, and gives you one last look before you walk out without it.</p>
+    </div>
+  </div>
+  <div class="ll-end wrap">
+    <img class="ll-end-icon" src="v2/s/llicon.webp" alt="LastLook app icon">
+    <ul class="ll-stats"><li><b>400+</b><span>downloads</span></li><li><b>10</b><span>paying subscribers</span></li><li><b>400K+</b><span>organic views, building in public</span></li></ul>
     <div class="ll-cta">
       <a class="ll-store" href="https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span><small>Download on the</small>App Store</span></a>
       <a class="ll-follow" href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Follow the build @jamieships ↗</a>
     </div>
+    <p class="ll-solo">Designed, built and shipped by me, solo.</p>
   </div>
 </section>
 
@@ -2137,26 +2194,55 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   });
   function selectMail() { const r = document.createRange(); r.selectNodeContents($('#mailText')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
 
-  /* ---------- LastLook ---------- */
-  const llTrack = $('#llTrack'), llCards = $$('.ll-card'), llSteps = $$('.ll-step'), llEyes = $$('#llEyes b');
-  let llTop = 0, llRange = 1, llOn = -1;
-  function layoutLL() { llTop = top(llTrack); llRange = Math.max(1, llTrack.offsetHeight - vh); }
-  function frameLL(y) {
-    const q = clamp((y - llTop) / llRange), n = llCards.length, t = clamp(q * 1.12 - .04) * (n - 1);
-    llCards.forEach((c, i) => {
-      const d = i - t;
-      if (d >= 0) { const k = Math.min(d, 3); c.style.transform = `translate3d(${(k * 26).toFixed(1)}px, ${(-k * 8).toFixed(1)}px, 0) scale(${(1 - k * .06).toFixed(3)}) rotate(${(k * 3).toFixed(2)}deg)`; c.style.opacity = d > 2.2 ? clamp(3 - d) : 1; c.style.filter = d > .5 ? `brightness(${(1 - Math.min(d, 2) * .06).toFixed(3)})` : ''; }
-      else { const k = ss(clamp(-d)); c.style.transform = `translate3d(${(-k * 130).toFixed(1)}%, ${(k * 40).toFixed(1)}px, 0) rotate(${(-k * 14).toFixed(2)}deg) scale(${(1 - k * .1).toFixed(3)})`; c.style.opacity = (1 - k).toFixed(3); }
-      c.style.zIndex = 10 - i;
-    });
-    const on = Math.round(t); if (on !== llOn) { llOn = on; llSteps.forEach((s, i) => s.classList.toggle('on', i === on)); }
+  /* ---------- LastLook: a walk home from the gym ---------- */
+  const lsTrack = $('#lsTrack'), lsMan = $('#lsMan'), lsBottle = $('#lsBottle'), lsNote = $('#lsNote'), lsCap = $('#lsCap'), lsHead = $('#lsHead'), lsFence = $('#lsFence'), lsBzz = $('#lsBzz'), lsWin = $('#lsWin');
+  const lsLegF = $('#lsLegF'), lsLegB = $('#lsLegB'), lsArmF = $('#lsArmF'), lsArmB = $('#lsArmB');
+  const llRevTrack = $('#llRevTrack'), llRevEl = $('#llRev');
+  let llTop = 0, llRange = 1, lsTop = 0, lsRange = 1, rvTop = 0, rvRange = 1, lsG = {}, lsCapT = '', lsLastX = null, lsStride = 0;
+  const llWords = [];
+  (function split(node) { [...node.childNodes].forEach(n => { if (n.nodeType === 3) { const f = document.createDocumentFragment(); n.textContent.split(/(\s+)/).forEach(tok => { if (!tok) return; if (/^\s+$/.test(tok)) { f.appendChild(document.createTextNode(tok)); return; } const w = document.createElement('span'); w.className = 'w'; w.textContent = tok; llWords.push(w); f.appendChild(w); }); n.replaceWith(f); } else split(n); }); })(llRevEl);
+  function layoutLL() {
+    const sec = $('#lastlook'); llTop = top(sec); llRange = Math.max(1, sec.offsetHeight - vh);
+    lsTop = top(lsTrack); lsRange = Math.max(1, lsTrack.offsetHeight - vh); rvTop = top(llRevTrack); rvRange = Math.max(1, llRevTrack.offsetHeight - vh);
+    const pin = $('#lsPin').getBoundingClientRect(), r = el => { const b = $(el).getBoundingClientRect(); return { l: b.left - pin.left, t: b.top - pin.top, w: b.width, h: b.height }; };
+    const gym = r('#lsGym'), bench = r('#lsBench'), home = r('#lsHome');
+    lsG = { door: gym.l + gym.w * .81, bench: bench.l + bench.w * .5, benchTop: bench.t + bench.h * .22, home: home.l + home.w * .67, manW: lsMan.offsetWidth };
+    lsG.fence = Math.max(lsG.bench + lsG.manW * 1.6, lsG.door + (lsG.home - lsG.door) * .42);
+    lsFence.style.left = (lsG.door - (lsG.fence - lsG.door)) + 'px'; lsFence.style.width = 2 * (lsG.fence - lsG.door) + 'px';
   }
-  llSteps.forEach((s, i) => $('button', s).addEventListener('click', () => goTo(llTop + ((i / (llCards.length - 1) + .04) / 1.12) * llRange + 2, 1.4)));
-  addEventListener('pointermove', e => {
-    const r = llEyes[0] && llEyes[0].parentElement.getBoundingClientRect(); if (!r || r.bottom < -200 || r.top > vh + 200) return;
-    llEyes.forEach(b => { const p = b.parentElement.getBoundingClientRect(), dx = e.clientX - (p.left + p.width / 2), dy = e.clientY - (p.top + p.height / 2), a = Math.atan2(dy, dx), m = Math.min(1, Math.hypot(dx, dy) / 300) * p.width * .22;
-      b.style.setProperty('--ex', (Math.cos(a) * m).toFixed(1) + 'px'); b.style.setProperty('--ey', (Math.sin(a) * m).toFixed(1) + 'px'); });
-  }, { passive: true });
+  const lsCaps = [[0, 'Leg day, done.'], [.1, 'Out the door, headphones in…'], [.22, '…and the bottle stays on the bench.'], [.3, 'Bzz. One last look.'], [.41, 'Back for the bottle.'], [.58, 'Home, with everything.'], [.9, 'That’s the whole idea.']];
+  function frameLL(y) {
+    if (y < lsTop + lsRange + vh) {
+      const q = clamp((y - lsTop) / lsRange), G = lsG, seg = (a, b) => ss(range(q, a, b));
+      let x, face = 1;
+      if (q < .3) x = G.door + (G.fence + G.manW * .4 - G.door) * seg(.1, .3);
+      else if (q < .4) x = G.fence + G.manW * .4;
+      else if (q < .52) { x = G.fence + G.manW * .4 + (G.bench + G.manW * .35 - G.fence - G.manW * .4) * seg(.4, .52); face = -1; }
+      else if (q < .58) { x = G.bench + G.manW * .35; face = q < .56 ? -1 : 1; }
+      else x = G.bench + G.manW * .35 + (G.home - G.bench - G.manW * .35) * seg(.58, .88);
+      if (q >= .35 && q < .4) face = -1;
+      if (lsLastX !== null) lsStride += Math.abs(x - lsLastX); lsLastX = x;
+      const moving = (q > .1 && q < .3) || (q > .4 && q < .52) || (q > .58 && q < .88), sw = moving ? Math.sin(lsStride * .06) : 0;
+      lsLegF.setAttribute('transform', `rotate(${(sw * 24).toFixed(1)} 30 76)`); lsLegB.setAttribute('transform', `rotate(${(-sw * 24).toFixed(1)} 30 76)`);
+      lsArmF.setAttribute('transform', `rotate(${(-sw * 18).toFixed(1)} 31 48)`); lsArmB.setAttribute('transform', `rotate(${(sw * 18).toFixed(1)} 30 48)`);
+      const bob = moving ? Math.abs(Math.cos(lsStride * .06)) * -3 : 0;
+      lsMan.style.transform = `translate3d(${(x - G.manW / 2).toFixed(1)}px, ${bob.toFixed(1)}px, 0) scaleX(${face})`;
+      lsMan.style.opacity = q < .1 ? clamp((q - .07) / .03) : q > .88 ? clamp((.93 - q) / .05) : 1;
+      // the bottle: waits on the bench, then hops into the bag
+      const hop = seg(.52, .56), bw = lsBottle.offsetWidth, bx0 = G.bench - bw / 2 + 6, by0 = G.benchTop - lsBottle.offsetHeight + 4;
+      const manBox = lsMan.getBoundingClientRect(), pin = $('#lsPin').getBoundingClientRect(), bx1 = x - bw / 2, by1 = manBox.top - pin.top + manBox.height * .5;
+      lsBottle.style.transform = `translate3d(${(bx0 + (bx1 - bx0) * hop).toFixed(1)}px, ${(by0 + (by1 - by0) * hop - Math.sin(hop * Math.PI) * 60).toFixed(1)}px, 0) rotate(${(hop * 200).toFixed(0)}deg) scale(${(1 - hop * .6).toFixed(3)})`;
+      lsBottle.style.opacity = hop >= 1 ? 0 : 1; lsBottle.classList.toggle('alert', q > .3 && q < .52);
+      const out = q > .29 && q < .52; lsFence.classList.toggle('out', out); lsBzz.classList.toggle('on', q > .3 && q < .36);
+      lsNote.classList.toggle('in', q > .3 && q < .86); const ok = q > .55; if (lsNote.classList.contains('ok') !== ok) { lsNote.classList.toggle('ok', ok);
+        $('#lsNt').textContent = ok ? 'All set.' : 'Leaving the gym?'; $('#lsNb').textContent = ok ? 'Keys, AirPods, water bottle. Everything’s with you.' : 'Hope you’re carrying your stuff with you. Your water bottle is still on the bench.'; }
+      lsWin.setAttribute('fill', q > .87 ? '#FFD37A' : '#40506B');
+      const hk = ss(range(q, .04, .12)); lsHead.style.opacity = (1 - hk).toFixed(3); lsHead.style.transform = `translate3d(0, ${(-hk * 30).toFixed(1)}px, 0)`;
+      let cap = lsCaps[0][1]; lsCaps.forEach(([at, t]) => { if (q >= at) cap = t; });
+      if (cap !== lsCapT) { lsCapT = cap; lsCap.classList.add('swap'); clearTimeout(frameLL.t); frameLL.t = setTimeout(() => { lsCap.textContent = cap; lsCap.classList.remove('swap'); }, 220); }
+    }
+    if (y > rvTop - vh) { const p = clamp((y - rvTop + vh * .3) / (rvRange + vh * .3)); const n = Math.round(p * 1.15 * llWords.length); llWords.forEach((w, i) => w.classList.toggle('on', i < n)); }
+  }
 
   /* ---------- keycaps: they work on your keyboard too ---------- */
   const keysMat = $('#keysMat');
