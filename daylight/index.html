@@ -231,7 +231,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .j-head .sec-head h2 { max-width: 18ch; font-size: clamp(2.2rem, 4.8vw, 4.6rem); }
 .j-head .kicker { margin-bottom: 6px; }
 .j-head .sec-head p:not(.kicker) { max-width: none; }
-.world3.far .mk .nm { opacity: 0 !important; }
+.world3:not(.far) .mk { opacity: 0 !important; pointer-events: none; }
+.mk { transition: opacity .5s var(--ease); }
 .world3.far .poi { opacity: 0 !important; pointer-events: none !important; }
 #spot { transition: opacity .9s var(--ease); }
 .mapview { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; }
@@ -245,7 +246,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .mk .pinhead .lg { position: absolute; left: 50%; top: 6px; width: 38px; height: 38px; margin-left: -19px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-sizing: border-box; background: #fff; }
 .mk .pinhead .ic { position: absolute; left: 50%; top: 13px; width: 24px; height: 24px; margin-left: -12px; color: #fff; }
 .mk .pinhead .ic svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.mk .nm { position: absolute; left: calc(100% + 6px); top: 14px; font: 700 14px/1 var(--sans); letter-spacing: -.01em; color: var(--ink); background: #fff; padding: 7px 11px; border-radius: 999px; white-space: nowrap;
+.mk .nm { display: none; position: absolute; left: calc(100% + 6px); top: 14px; font: 700 14px/1 var(--sans); letter-spacing: -.01em; color: var(--ink); background: #fff; padding: 7px 11px; border-radius: 999px; white-space: nowrap;
   box-shadow: 0 6px 14px -8px rgba(19, 35, 58, .45); opacity: 0; transform: translateX(-4px); transition: opacity .4s .15s, transform .6s var(--spring) .15s; }
 .mk .dot { position: absolute; left: 50%; bottom: 0; width: 12px; height: 12px; margin: 0 0 -6px -6px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px rgba(255, 255, 255, .85); opacity: .7; transition: opacity .4s; }
 .mk .halo { position: absolute; left: 50%; bottom: -14px; width: 84px; height: 28px; margin-left: -42px; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--c) 45%, transparent), transparent); opacity: 0; transition: opacity .5s; }
@@ -389,7 +390,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .sec-head p:not(.kicker) { margin: 0; font: italic 400 clamp(20px, 1.8vw, 26px)/1.3 var(--serif); color: var(--ink-2); max-width: 38ch; }
 .box-track { position: relative; height: 230vh; margin-top: -2vh; }
 .box-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
-.box-fit { position: absolute; left: 60%; top: 55%; width: 0; height: 0; perspective: 2400px; perspective-origin: 50% 25%; will-change: transform; }
+.box-fit { position: absolute; left: max(60%, calc(24rem + 36vw)); top: 55%; width: 0; height: 0; perspective: 2400px; perspective-origin: 50% 25%; will-change: transform; }
 .box3 { position: absolute; width: 660px; height: 260px; left: -330px; top: -60px; transform-style: preserve-3d; transform: rotateX(57deg) rotateZ(30deg); }
 .box3 .f { position: absolute; transform-origin: 50% 100%; backface-visibility: visible; box-sizing: border-box; }
 .box-floor { position: absolute; inset: 0; background: linear-gradient(135deg, #EAD3A8, #DDBF8C); box-shadow: inset 0 0 50px rgba(120, 80, 30, .3); }
@@ -431,7 +432,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .bi-list button { width: 100%; display: grid; grid-template-columns: 34px 1fr; align-items: baseline; gap: 0 8px; padding: 10px 12px; border-radius: 14px; text-align: left; font: 700 16px/1.2 var(--sans); color: var(--ink); transition: background .25s, transform .35s var(--spring); }
 .bi-list button b { font: 700 13px/1 var(--sans); color: var(--c); }
 .bi-list button span { grid-column: 2; font: 500 13px/1.3 var(--sans); color: var(--ink-2); }
-.bi-list button:hover, .bi-list button.on { background: #fff; box-shadow: 0 10px 24px -16px rgba(19, 35, 58, .45); transform: translateX(4px); }
+.bi-list button { position: relative; }
+.bi-list button::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 2px; background: var(--c); transform: scaleY(0); transition: transform .4s var(--spring); }
+.bi-list button:hover, .bi-list button.on { background: none; box-shadow: none !important; transform: translateX(8px); color: color-mix(in srgb, var(--c) 78%, var(--ink)); }
+.bi-list button:hover::before, .bi-list button.on::before { transform: scaleY(1); }
+.bi-list:has(button.on) button:not(.on):not(:hover) { opacity: .45; }
+.bi-list button { transition: opacity .3s, color .3s, transform .45s var(--spring); }
 .bi-list button.on { box-shadow: inset 3px 0 0 var(--c), 0 10px 24px -16px rgba(19, 35, 58, .45); }
 .box-cap { display: none !important; position: absolute; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 5vh); transform: translateX(-50%); display: flex; align-items: center; gap: 12px; font: 400 17px/1 var(--geist); color: var(--ink); white-space: nowrap; }
 .box-cap b { font-weight: 600; color: var(--c, var(--coral)); font-variant-numeric: tabular-nums; }
@@ -546,32 +552,82 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .stack-head .sec-head { justify-items: center; text-align: center; margin: 0; }
 .stack-head .sec-head h2 { max-width: 15ch; font-size: clamp(2.2rem, 4.8vw, 4.6rem); }
 .gift-stage { position: absolute; left: 50%; top: 58%; width: 0; height: 0; }
-.burst { position: absolute; left: -460px; top: -500px; width: 920px; height: 920px; border-radius: 50%; opacity: 0; pointer-events: none;
-  background: repeating-conic-gradient(from 0deg, rgba(255, 210, 63, .38) 0 6deg, transparent 6deg 15deg);
-  -webkit-mask: radial-gradient(closest-side, #000 18%, transparent 100%); mask: radial-gradient(closest-side, #000 18%, transparent 100%); animation: spin 80s linear infinite; }
+.burst { position: absolute; left: -420px; top: -470px; width: 840px; height: 840px; border-radius: 50%; opacity: 0; pointer-events: none; background: radial-gradient(closest-side, rgba(255, 222, 160, .7), rgba(255, 222, 160, .22) 45%, transparent 72%); }
 .gift { position: absolute; left: -150px; top: -170px; width: 300px; height: 300px; transform-origin: 50% 92%; will-change: transform; }
 .gift svg { width: 100%; height: 100%; overflow: visible; }
 #lid { transform-box: fill-box; transform-origin: 20% 100%; will-change: transform; }
 .gift-cap { position: absolute; left: 0; top: 150px; margin: 0; transform: translateX(-50%); white-space: nowrap; font: italic 22px/1 var(--serif); color: var(--ink-2); opacity: 0; transition: opacity .6s var(--ease); }
-.confetti i { position: absolute; left: 0; top: -60px; width: 10px; height: 16px; border-radius: 2px; background: var(--c); opacity: 0; will-change: transform; }
+.confetti i { position: absolute; left: -7px; top: -70px; width: 14px; height: 14px; background: #E2BF7E; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); opacity: 0; will-change: transform; }
 .ring { position: absolute; left: 0; top: 0; }
 .tool { position: absolute; left: 0; top: 0; width: 84px; margin: -42px 0 0 -42px; display: grid; justify-items: center; gap: 9px; opacity: 0; will-change: transform; transition: opacity .3s, filter .3s; }
-.tool .ti { width: 84px; height: 84px; border-radius: 24px; background: var(--bg); display: grid; place-items: center; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), inset 0 0 0 1px rgba(19, 35, 58, .06), 0 16px 28px -14px rgba(19, 35, 58, .6); transition: transform .5s var(--spring), box-shadow .4s; }
-.tool .ti svg { width: 46px; height: 46px; overflow: visible; }
-.tool .tn { font: 700 13.5px/1 var(--sans); color: var(--ink); background: rgba(255, 255, 255, .92); padding: 6px 10px; border-radius: 999px; box-shadow: var(--shadow-sm); white-space: nowrap; opacity: 0; transition: opacity .4s; }
+.tool .ti { width: 80px; height: 80px; border-radius: 22px; background: var(--bg); display: grid; place-items: center; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), inset 0 0 0 1px rgba(19, 35, 58, .07), 0 1px 2px rgba(19, 35, 58, .08), 0 12px 24px -12px rgba(19, 35, 58, .45); transition: transform .5s var(--spring), box-shadow .4s; }
+.tool .ti svg { width: 42px; height: 42px; overflow: visible; }
+.tool .tn { font: 600 13px/1 var(--sans); color: var(--ink-2); white-space: nowrap; opacity: 0; transition: opacity .4s, color .3s; }
+.tool.on .tn { color: var(--ink); }
 .tool.set .tn { opacity: 1; }
 .tool.set .ti { animation: bob2 4.2s ease-in-out infinite; animation-delay: calc(var(--i) * -.47s); }
 @keyframes bob2 { 50% { translate: 0 -7px; } }
-.tool.set:hover .ti, .tool.on .ti { transform: scale(1.14) rotate(-5deg); box-shadow: 0 0 0 4px #fff, 0 0 0 8px rgba(255, 210, 63, .7), 0 26px 40px -14px rgba(19, 35, 58, .6); }
+.tool.set:hover .ti, .tool.on .ti { transform: translateY(-4px) scale(1.08); box-shadow: 0 0 0 1px rgba(19, 35, 58, .06), 0 22px 36px -14px rgba(19, 35, 58, .55); }
 .ring.hov .tool.set:not(.on) { opacity: .3 !important; filter: grayscale(.6) blur(.5px); }
-.tool-tip { position: absolute; z-index: 5; left: 0; top: 0; width: 260px; box-sizing: border-box; padding: 16px 18px 18px; border-radius: 18px; background: #fff; color: var(--ink); box-shadow: 0 24px 50px -20px rgba(19, 35, 58, .5), 0 0 0 1px rgba(19, 35, 58, .05);
+.tool-tip { position: absolute; z-index: 5; left: 0; top: 0; width: 270px; box-sizing: border-box; padding: 16px 18px 18px; border-radius: 20px; background: rgba(255, 255, 255, .96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--ink); box-shadow: 0 30px 60px -24px rgba(19, 35, 58, .45), 0 0 0 1px rgba(19, 35, 58, .06);
   pointer-events: none; opacity: 0; transform: translate(-50%, 10px); transition: opacity .25s, transform .45s var(--spring); }
-.tool-tip::before { content: ""; position: absolute; left: 18px; right: 18px; top: 0; height: 4px; border-radius: 0 0 4px 4px; background: var(--bg, var(--sun)); }
+.tt-h { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.tt-i { flex: none; width: 38px; height: 38px; border-radius: 11px; background: var(--bg); display: grid; place-items: center; box-shadow: inset 0 0 0 1px rgba(19, 35, 58, .08); }
+.tt-i svg { width: 21px; height: 21px; }
+.tt-h span:not(.tt-i) { display: block; margin-top: 3px; font: 600 11.5px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
 .tool-tip.above { transform: translate(-50%, calc(-100% + 10px)); }
 .tool-tip.in { opacity: 1; transform: translate(-50%, 0); }
 .tool-tip.above.in { transform: translate(-50%, -100%); }
-.tool-tip b { display: block; margin: 4px 0 6px; font: 800 19px/1.1 var(--sans); letter-spacing: -.02em; }
-.tool-tip p { margin: 0; font: 400 15px/1.5 var(--sans); color: #2B3A4E; }
+.tool-tip b { display: block; font: 800 18px/1 var(--sans); letter-spacing: -.02em; }
+.tool-tip p { margin: 0; font: 400 14.5px/1.55 var(--sans); color: #2B3A4E; }
+
+/* =========================================================
+   6 · LASTLOOK
+   ========================================================= */
+.ll { --ll-ink: #3A2616; --ll-br: #9A6A3E; position: relative; color: var(--ll-ink); background: linear-gradient(180deg, var(--paper) 0, #F9E9D0 16%, #F4DDBB 50%, #F9E9D0 86%, var(--paper) 100%); }
+.ll-intro { padding-block: 22vh 6vh; display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(24px, 5vw, 80px); align-items: end; }
+.ll-hero { position: relative; }
+.ll-kick { display: inline-flex; align-items: center; gap: 12px; margin: 0 0 18px; padding: 6px 16px 6px 6px; border-radius: 999px; background: rgba(255, 255, 255, .6); font: 700 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ll-br); }
+.ll-kick img { width: 34px; height: 34px; border-radius: 10px; }
+.ll-title { margin: 0; font: 800 clamp(4.4rem, 13vw, 12.5rem)/.82 var(--sans); letter-spacing: -.07em; color: var(--ll-ink); }
+.ll-title em { font: italic 400 1.02em/.82 var(--serif); letter-spacing: -.03em; color: var(--ll-br); padding-left: .04em; }
+.ll-tag { margin: 22px 0 0; font: italic 400 clamp(24px, 2.4vw, 34px)/1.2 var(--serif); color: var(--ll-ink); }
+.ll-eyes { position: absolute; right: 4%; top: -8%; display: flex; gap: 8px; rotate: 8deg; }
+.ll-eyes i { position: relative; width: clamp(54px, 6vw, 86px); aspect-ratio: 1 / 1.12; border-radius: 50%; background: radial-gradient(circle at 40% 30%, #fff, #F3E9DA); box-shadow: inset 0 -6px 10px rgba(120, 80, 30, .18), 0 10px 20px -10px rgba(58, 38, 22, .5); animation: blink 5.5s infinite; }
+.ll-eyes b { position: absolute; left: 50%; top: 50%; width: 42%; height: 38%; margin: -19% 0 0 -21%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #6B4A30 0 12%, #20140B 14%); transform: translate(var(--ex, 0px), var(--ey, 0px)); transition: transform .12s linear; }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.08); } }
+.ll-idea p { margin: 0; font: 400 18px/1.65 var(--sans); color: #5A4230; max-width: 34ch; }
+.ll-idea .ll-lead { margin-bottom: 16px; font: 800 clamp(22px, 2vw, 28px)/1.25 var(--sans); letter-spacing: -.03em; color: var(--ll-ink); }
+.ll-track { position: relative; height: 460vh; }
+.ll-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: clamp(20px, 4vw, 60px); padding: 0 clamp(16px, 6vw, 110px); box-sizing: border-box; }
+.ll-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; max-width: 30rem; }
+.ll-step button { display: flex; align-items: baseline; gap: 16px; width: 100%; padding: 12px 0; text-align: left; color: var(--ll-ink); opacity: .35; transition: opacity .5s var(--ease); }
+.ll-step .n { font: 700 14px/1 var(--sans); color: var(--ll-br); font-variant-numeric: tabular-nums; }
+.ll-step .t { font: 800 clamp(22px, 2.2vw, 32px)/1.1 var(--sans); letter-spacing: -.035em; }
+.ll-step p { margin: 0 0 0 34px; max-height: 0; overflow: hidden; opacity: 0; font: 400 17px/1.6 var(--sans); color: #5A4230; transition: max-height .7s var(--ease), opacity .5s var(--ease), margin .6s var(--ease); }
+.ll-step.on button { opacity: 1; }
+.ll-step.on p { max-height: 9em; opacity: 1; margin-bottom: 10px; }
+.ll-stage { position: relative; height: 100%; display: grid; place-items: center; }
+.ll-glow { position: absolute; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 250, 238, .95), rgba(255, 244, 222, 0)); }
+.ll-deck { position: relative; height: min(76vh, 700px); aspect-ratio: 472 / 1024; }
+.ll-card { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 28px; box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset, 0 40px 70px -30px rgba(58, 38, 22, .6), 0 0 0 1px rgba(58, 38, 22, .08); will-change: transform, opacity; transform-origin: 50% 90%; }
+.ll-chip { position: absolute; z-index: 20; left: 50%; top: 50%; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px 9px 10px; border-radius: 999px; background: rgba(255, 255, 255, .85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font: 700 14px/1 var(--sans); color: var(--ll-ink); white-space: nowrap;
+  box-shadow: 0 12px 24px -14px rgba(58, 38, 22, .55); transform: translate(-50%, -50%) translate(var(--x), var(--y)); animation: llfloat 6s ease-in-out infinite; animation-delay: var(--d); }
+.ll-chip svg { width: 20px; height: 20px; padding: 5px; border-radius: 50%; background: #F6DCB9; fill: none; stroke: var(--ll-br); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+@keyframes llfloat { 50% { translate: 0 -10px; } }
+.ll-outro { padding-block: 8vh 24vh; text-align: center; }
+.ll-stats { display: flex; justify-content: center; flex-wrap: wrap; gap: clamp(20px, 5vw, 80px); margin: 0; padding: 0; list-style: none; }
+.ll-stats b { display: block; font: 800 clamp(3rem, 6vw, 5.6rem)/.9 var(--sans); letter-spacing: -.06em; color: var(--ll-ink); }
+.ll-stats span { display: block; margin-top: 10px; font: italic 20px/1.2 var(--serif); color: #6E5038; max-width: 16ch; margin-inline: auto; }
+.ll-solo { margin: 5vh auto 0; font: 700 16px/1.4 var(--sans); color: var(--ll-br); }
+.ll-cta { margin-top: 26px; display: flex; justify-content: center; align-items: center; gap: 18px; flex-wrap: wrap; }
+.ll-store { display: inline-flex; align-items: center; gap: 12px; padding: 12px 24px 12px 18px; border-radius: 16px; background: #0B0B0C; color: #fff; text-decoration: none; box-shadow: 0 20px 36px -18px rgba(0, 0, 0, .7); transition: transform .4s var(--spring), box-shadow .3s; }
+.ll-store:hover { transform: translateY(-3px); box-shadow: 0 0 0 4px rgba(154, 106, 62, .3), 0 26px 40px -18px rgba(0, 0, 0, .7); }
+.ll-store svg { width: 30px; height: 30px; margin-top: -3px; }
+.ll-store span { display: grid; text-align: left; font: 700 22px/1 var(--sans); letter-spacing: -.02em; }
+.ll-store small { font: 500 11.5px/1.3 var(--sans); letter-spacing: 0; opacity: .85; }
+.ll-follow { font: 700 15px/1 var(--sans); color: var(--ll-ink); text-decoration: none; padding: 14px 18px; border-radius: 999px; background: rgba(255, 255, 255, .55); transition: background .3s; }
+.ll-follow:hover { background: #fff; }
 
 .process { position: relative; padding-block: 24vh 20vh; background: var(--paper); overflow: hidden; }
 .proc-line { position: relative; margin-top: 6vh; height: 460px; }
@@ -592,10 +648,40 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
    6 · OFF THE CLOCK (desk)
    ========================================================= */
 .life { position: relative; padding-block: 22vh 24vh; background: var(--paper-2); overflow: hidden; }
-.desk { position: relative; height: min(96vh, 820px); margin-top: 5vh; border-radius: 40px; background:
-  radial-gradient(circle at 20% 20%, rgba(255, 255, 255, .7), transparent 40%),
-  repeating-linear-gradient(90deg, rgba(160, 110, 60, .06) 0 2px, transparent 2px 38px),
-  linear-gradient(135deg, #F2D7AE, #E8C592); box-shadow: inset 0 0 0 10px rgba(255, 255, 255, .25), var(--shadow); }
+.desk { position: relative; height: min(100vh, 860px); margin-top: 5vh; border-radius: 22px; border: 16px solid #9A6B3F; box-sizing: border-box;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 236, 200, .35), transparent 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .18 0 0 0 0 .06 0 0 0 1.4 -.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, #D6A56D, #C38D56);
+  box-shadow: inset 0 0 0 2px rgba(255, 220, 170, .25), inset 0 10px 30px rgba(60, 30, 0, .35), 0 30px 60px -30px rgba(60, 30, 0, .6); }
+.item:hover { --r: 0deg !important; z-index: 15; }
+.pinned::before { content: ""; position: absolute; z-index: 3; left: 50%; top: -9px; width: 20px; height: 20px; margin-left: -10px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .85) 0 2px, var(--pc, #E4402A) 3.5px, color-mix(in srgb, var(--pc, #E4402A) 65%, #000) 100%); box-shadow: 3px 6px 5px rgba(40, 20, 0, .4); }
+.taped::before { content: ""; position: absolute; left: 50%; top: -12px; width: 76px; height: 22px; margin-left: -38px; background: rgba(255, 255, 255, .55); transform: rotate(-4deg); box-shadow: 0 1px 2px rgba(0, 0, 0, .08); }
+.about { width: 370px; padding: 26px 26px 24px 46px; box-sizing: border-box; color: var(--ink); background: linear-gradient(90deg, transparent 32px, rgba(228, 64, 42, .35) 32px 34px, transparent 34px), repeating-linear-gradient(#FFFDF6 0 27px, rgba(42, 123, 209, .18) 27px 28px); background-color: #FFFDF6; box-shadow: 0 24px 34px -20px rgba(60, 30, 0, .6); }
+.about .ab-k { margin: 0 0 4px; font: 700 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--coral); }
+.about h4 { margin: 0 0 12px; font: 800 26px/1.05 var(--sans); letter-spacing: -.035em; }
+.about b { display: block; margin: 10px 0 2px; font: italic 400 20px/1.35 var(--serif); }
+.about ul { margin: 0; padding: 0 0 0 16px; font: 500 14.5px/28px var(--sans); color: #2B3A4E; }
+.scrap { width: 160px; padding: 16px 14px 12px; box-sizing: border-box; background: #FFFDF6; box-shadow: 0 16px 24px -16px rgba(60, 30, 0, .6); clip-path: polygon(0 3%, 12% 0, 30% 2%, 55% 0, 80% 3%, 100% 0, 98% 40%, 100% 72%, 97% 100%, 70% 97%, 42% 100%, 16% 97%, 0 100%, 2% 60%); }
+.scrap.pinned::before { top: 4px; }
+.scrap svg { width: 100%; height: auto; }
+.scrap svg * { fill: none; stroke: #13233A; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.scrap span { display: block; margin-top: 6px; text-align: center; font: italic 17px/1 var(--serif); color: var(--ink-2); }
+.ticket { width: 340px; display: flex; box-shadow: 0 20px 30px -18px rgba(60, 30, 0, .6); }
+.ticket > div { padding: 16px 18px; background: #fff; }
+.ticket .tk-l { flex: 1; border-radius: 12px 0 0 12px; border-right: 2px dashed rgba(19, 35, 58, .2); }
+.ticket .tk-r { width: 70px; border-radius: 0 12px 12px 0; background: #2A7BD1; color: #fff; text-align: center; }
+.ticket small { display: block; font: 700 10.5px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; opacity: .6; }
+.ticket b { display: block; margin: 8px 0 6px; font: 800 30px/1 var(--sans); letter-spacing: -.03em; }
+.ticket b i { font-style: normal; color: var(--coral); }
+.ticket span { font: italic 16px/1.2 var(--serif); color: var(--ink-2); }
+.mag { font: 800 64px/1 var(--sans); color: var(--mc); letter-spacing: 0; cursor: grab;
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--mc) 70%, #000), 0 2px 0 color-mix(in srgb, var(--mc) 70%, #000), 0 3px 0 color-mix(in srgb, var(--mc) 60%, #000), 0 4px 0 color-mix(in srgb, var(--mc) 60%, #000), 0 10px 12px rgba(40, 20, 0, .45); }
+.mag.wig { animation: wig .5s var(--ease); }
+@keyframes wig { 30% { scale: 1.15; } 60% { scale: .95; } }
+.ll-mag { width: 118px; text-align: center; }
+.ll-mag img { width: 104px; height: 104px; border-radius: 50%; object-fit: cover; border: 6px solid #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 14px 20px -10px rgba(40, 20, 0, .6); pointer-events: none; }
+.ll-mag span { display: block; margin-top: 6px; font: italic 18px/1 var(--serif); color: #FFF6E6; text-shadow: 0 1px 3px rgba(40, 20, 0, .5); }
 .item { position: absolute; cursor: grab; touch-action: none; user-select: none; transition: box-shadow .3s, transform .5s var(--spring); transform: rotate(var(--r, 0deg)); }
 .item.drag { cursor: grabbing; transition: none; z-index: 20 !important; }
 .polaroid { width: min(290px, 44%); padding: 12px 12px 54px; background: #fff; box-shadow: 0 26px 40px -22px rgba(60, 30, 0, .55); box-sizing: border-box; }
@@ -617,7 +703,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .lastlook-app { width: 150px; }
 .lastlook-app img { width: 100%; height: auto; border-radius: 34px; box-shadow: 0 20px 30px -16px rgba(60, 30, 0, .5); pointer-events: none; }
 .lastlook-app span { display: block; margin-top: 8px; text-align: center; font: italic 19px/1 var(--serif); }
-.desk-hint { position: absolute; right: 30px; bottom: 22px; font: italic 20px/1 var(--serif); color: rgba(70, 40, 10, .7); }
+.desk-hint { position: absolute; right: 24px; bottom: 16px; margin: 0; font: italic 19px/1 var(--serif); color: rgba(255, 244, 225, .85); text-shadow: 0 1px 3px rgba(40, 20, 0, .4); }
 
 /* =========================================================
    7 · SAY HI (sky footer)
@@ -655,7 +741,13 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .knote.dn { padding-top: 10px; }
 .knote svg { width: 34px; height: 24px; fill: none; stroke: var(--coral); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .knote #mailText { font: 700 14px/1.4 var(--sans); font-style: normal; }
-.knote #copy { margin-top: 4px; font: 700 12px/1 var(--sans); padding: 6px 10px; border-radius: 999px; background: var(--ink); color: var(--paper); }
+.mailrow { display: inline-flex; align-items: center; gap: 6px; }
+.knote #copy { width: 30px; height: 30px; display: inline-grid; place-items: center; border-radius: 9px; background: rgba(19, 35, 58, .07); color: var(--ink); transition: background .2s, transform .3s var(--spring); }
+.knote #copy:hover { background: rgba(19, 35, 58, .14); transform: scale(1.08); }
+.knote #copy svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.knote #copy .i-ok, .knote #copy.ok .i-copy { display: none; }
+.knote #copy.ok .i-ok { display: block; }
+.knote #copy.ok { background: #DDF3E4; color: #1E8A4C; }
 .links { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .links a { font-size: 14.5px; font-weight: 700; text-decoration: none; padding: 10px 16px; border-radius: 999px; background: rgba(255, 255, 255, .22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: background .3s, transform .4s var(--spring); }
 .links a:hover { background: rgba(255, 255, 255, .38); transform: translateY(-2px); }
@@ -694,15 +786,18 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .pol { width: 120px; }
   .pols { transform: scale(calc(var(--inv, 1) * .62)); }
   .sec-head h2 { font-size: clamp(2rem, 9.2vw, 3rem); }
-  .desk .item:nth-child(1) { left: 4% !important; top: 2% !important; width: 56%; }
-  .desk .item:nth-child(2) { left: 52% !important; top: 5% !important; width: 44%; font-size: 19px; }
-  .desk .item:nth-child(3) { left: 62% !important; top: 25% !important; width: 104px; }
-  .desk .item:nth-child(4) { left: 4% !important; top: 38% !important; width: 80%; }
-  .desk .item:nth-child(5) { left: 8% !important; top: 60% !important; width: 84%; }
-  .desk .item:nth-child(6) { left: 64% !important; top: 80% !important; width: 104px; }
-  .desk .item:nth-child(7) { left: 6% !important; top: 83% !important; width: 170px; }
-  .desk .item:nth-child(8) { display: none; }
-  .desk-hint { font-size: 16px; right: 16px; bottom: 10px; }
+  .desk-hint { font-size: 15px; right: 12px; bottom: 8px; }
+  .desk .p1 { left: 3% !important; top: 16px !important; width: 55%; }
+  .desk .p3 { left: 57% !important; top: 30px !important; width: 40%; font-size: 17px; padding: 14px; }
+  .desk .p2 { left: 3% !important; top: 300px !important; width: 94%; padding-left: 40px; }
+  .desk .p5 { left: 3% !important; top: 790px !important; width: 78%; }
+  .desk .p6 { left: 56% !important; top: 1010px !important; width: 42% !important; font-size: 17px; }
+  .desk .p7 { left: 3% !important; top: 1150px !important; width: 92%; }
+  .desk .p4 { left: 60% !important; top: 1300px !important; width: 34%; }
+  .desk .p14 { display: none; }
+  .desk .mag { font-size: 44px; top: 1330px !important; }
+  .desk .p8 { left: 4% !important; } .desk .p9 { left: 14% !important; } .desk .p10 { left: 24% !important; } .desk .p11 { left: 37% !important; } .desk .p12 { left: 46% !important; }
+  .desk .p13 { left: 16% !important; top: 1420px !important; }
   .box-track { height: 190vh; }
   .box-fit { left: 50%; top: 42%; }
   .box-info { left: 16px; right: 16px; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); transform: none; width: auto; }
@@ -717,7 +812,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .proc-line svg { display: none; }
   .pnode, .pnode.up { position: relative; left: auto !important; top: auto !important; transform: none; width: auto; text-align: left; display: grid; grid-template-columns: 26px 1fr; gap: 4px 14px; }
   .pnode .dot, .pnode.up .dot { margin: 0; grid-row: span 2; order: 0; }
-  .desk { height: 980px; }
+  .desk { height: 1600px; border-width: 10px; }
   .sticky { width: 10.5rem; font-size: 18px; padding: 14px; }
   .tell-box { padding-right: 0; }
   .tell { font-size: clamp(1.9rem, 8.4vw, 2.6rem); line-height: 1.3; }
@@ -725,12 +820,25 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .tell-box .sticky:nth-of-type(1) { top: auto !important; bottom: -30%; right: 0 !important; }
   .chips { bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); }
   .chip { padding: 6px 10px; }
+  .ll-intro { grid-template-columns: 1fr; padding-top: 16vh; }
+  .ll-eyes { right: 2%; top: -12%; }
+  .ll-pin { grid-template-columns: 1fr; grid-template-rows: 1fr auto; padding: 70px 16px calc(env(safe-area-inset-bottom, 0px) + 20px); gap: 10px; }
+  .ll-stage { order: -1; }
+  .ll-deck { height: min(50svh, 440px); }
+  .ll-card { border-radius: 20px; }
+  .ll-chip { display: none; }
+  .ll-eyes { top: -64px; right: 0; }
+  .ll-chip svg { width: 16px; height: 16px; padding: 4px; }
+  .ll-steps { gap: 0; }
+  .ll-step:not(.on) { display: none; }
+  .ll-step p { margin-left: 0; font-size: 15px; }
+  .ll-step .t { font-size: 22px; }
   .gift { transform-origin: 50% 92%; left: -110px; top: -125px; width: 220px; height: 220px; }
   .gift-cap { top: 108px; font-size: 18px; }
   .tool { width: 58px; margin: -29px 0 0 -29px; gap: 6px; }
   .tool .ti { width: 58px; height: 58px; border-radius: 17px; }
   .tool .ti svg { width: 32px; height: 32px; }
-  .tool .tn { font-size: 11px; padding: 4px 7px; }
+  .tool .tn { font-size: 11px; }
   .tool-tip { width: 220px; padding: 12px 14px 14px; }
   .tool-tip p { font-size: 14px; }
   .keys { grid-template-columns: repeat(2, 150px); gap: 14px 12px; }
@@ -862,7 +970,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <div class="sec-head">
           <p class="kicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>The journey</p>
           <h2>From JEE to my own app, <span class="hl b-sky" id="journeyHl">the long way round.</span></h2>
-          <p>Ten stops between 2021 and now. Scroll to walk the path.</p>
+          <p>Nine stops between 2021 and now. Scroll to walk the path.</p>
         </div>
       </div>
       <div class="compass" id="compass" aria-hidden="true">
@@ -933,7 +1041,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <div class="sec-head">
           <p class="kicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>My stack</p>
           <h2>The tools I <span class="hl b-sun" id="stackHl">unwrap</span> every day.</h2>
-          <p>Keep scrolling to open the box.</p>
+          <p>Nine tools I reach for, from the first sketch to the shipped build.</p>
         </div>
       </div>
       <div class="gift-stage" id="giftStage">
@@ -942,52 +1050,94 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <div class="gift" id="gift">
           <svg viewBox="0 0 300 300" aria-hidden="true">
             <defs>
-              <linearGradient id="gFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF7D5C"/><stop offset="1" stop-color="#F0553A"/></linearGradient>
-              <linearGradient id="gSide" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E0492F"/><stop offset="1" stop-color="#C73A24"/></linearGradient>
-              <linearGradient id="gLid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8F70"/><stop offset="1" stop-color="#FF6B4A"/></linearGradient>
-              <radialGradient id="gGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFF6C8"/><stop offset=".5" stop-color="#FFD23F" stop-opacity=".8"/><stop offset="1" stop-color="#FFD23F" stop-opacity="0"/></radialGradient>
-              <pattern id="gDots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="3" fill="#fff" opacity=".28"/><circle cx="16" cy="16" r="3" fill="#fff" opacity=".28"/></pattern>
+              <linearGradient id="gFront" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2A3B58"/><stop offset="1" stop-color="#16223A"/></linearGradient>
+              <linearGradient id="gSide" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#131D30"/><stop offset="1" stop-color="#0C1424"/></linearGradient>
+              <linearGradient id="gLid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34496C"/><stop offset="1" stop-color="#24344F"/></linearGradient>
+              <linearGradient id="gTop" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#3B5178"/><stop offset="1" stop-color="#2C3E5E"/></linearGradient>
+              <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C79B52"/><stop offset=".35" stop-color="#F4DDA6"/><stop offset=".6" stop-color="#D9B26C"/><stop offset="1" stop-color="#B98D45"/></linearGradient>
+              <linearGradient id="gGoldV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4DDA6"/><stop offset="1" stop-color="#C39650"/></linearGradient>
+              <linearGradient id="gSheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".07"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+              <radialGradient id="gGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFF4D6"/><stop offset=".45" stop-color="#FFD98C" stop-opacity=".75"/><stop offset="1" stop-color="#FFD98C" stop-opacity="0"/></radialGradient>
             </defs>
-            <ellipse cx="150" cy="286" rx="128" ry="14" fill="#13233A" opacity=".16"/>
-            <!-- inside of the box, seen when the lid is off -->
-            <path d="M40 132 L100 108 L262 108 L202 132 Z" fill="#9E2F1D"/>
-            <ellipse id="gGlowEl" cx="152" cy="118" rx="120" ry="60" fill="url(#gGlow)" opacity="0"/>
-            <!-- body -->
+            <ellipse cx="152" cy="288" rx="132" ry="11" fill="#13233A" opacity=".18"/>
+            <path d="M40 132 L100 108 L262 108 L202 132 Z" fill="#0A111D"/>
+            <ellipse id="gGlowEl" cx="152" cy="116" rx="130" ry="64" fill="url(#gGlow)" opacity="0"/>
             <path d="M202 132 L262 108 L262 256 L202 282 Z" fill="url(#gSide)"/>
             <rect x="40" y="132" width="162" height="150" fill="url(#gFront)"/>
-            <rect x="40" y="132" width="162" height="150" fill="url(#gDots)"/>
-            <rect x="106" y="132" width="30" height="150" fill="#FFD23F"/><rect x="106" y="132" width="5" height="150" fill="#FFE48A"/>
-            <path d="M226 122 L240 116 L240 264 L226 270 Z" fill="#E8B51E"/>
-            <!-- lid -->
+            <rect x="40" y="132" width="162" height="150" fill="url(#gSheen)"/>
+            <rect x="110" y="132" width="22" height="150" fill="url(#gGold)"/>
+            <path d="M226 122.4 L240 116.8 L240 264.8 L226 270.4 Z" fill="#A98040"/>
+            <path d="M40 132h162" stroke="#43587E" stroke-width="1.2"/>
             <g id="lid">
-              <path d="M30 104 L94 78 L272 78 L208 104 Z" fill="#FFA184"/>
-              <path d="M98 104 L162 78 L194 78 L130 104 Z" fill="#FFD23F"/>
-              <path d="M46 97.5 L224 97.5 L240 91 L62 91 Z" fill="#F5C530" opacity=".9"/>
-              <path d="M208 104 L272 78 L272 112 L208 140 Z" fill="#E4553A"/>
-              <rect x="30" y="104" width="178" height="36" rx="3" fill="url(#gLid)"/>
-              <rect x="102" y="104" width="34" height="36" fill="#FFD23F"/><rect x="102" y="104" width="6" height="36" fill="#FFE48A"/>
-              <path d="M234 94 L248 88 L248 122 L234 128 Z" fill="#E8B51E"/>
-              <!-- bow -->
-              <g transform="translate(146 84)">
-                <path d="M0 0 C -30 -44, -82 -30, -56 -4 C -44 8, -16 6, 0 0 Z" fill="#FFD23F" stroke="#E0A800" stroke-width="3" stroke-linejoin="round"/>
-                <path d="M0 0 C 30 -46, 84 -30, 58 -4 C 46 8, 16 6, 0 0 Z" fill="#FFD23F" stroke="#E0A800" stroke-width="3" stroke-linejoin="round"/>
-                <path d="M-6 2 C -18 18, -26 30, -30 44 L -18 40 L -10 50 C -6 34, -2 20, 2 4 Z" fill="#F5C530"/>
-                <path d="M6 2 C 18 18, 24 30, 34 42 L 21 40 L 14 50 C 8 34, 4 20, -2 4 Z" fill="#F5C530"/>
-                <ellipse cx="0" cy="0" rx="13" ry="11" fill="#FFE07A" stroke="#E0A800" stroke-width="3"/>
-                <path d="M-40 -18 C -30 -24, -20 -20, -12 -10" fill="none" stroke="#FFF1B8" stroke-width="3" stroke-linecap="round"/>
+              <path d="M30 104 L94 78 L272 78 L208 104 Z" fill="url(#gTop)"/>
+              <path d="M104 104 L168 78 L190 78 L126 104 Z" fill="url(#gGoldV)"/>
+              <path d="M46 97.5 L224 97.5 L238 91.8 L60 91.8 Z" fill="#E2BF7E"/>
+              <path d="M208 104 L272 78 L272 110 L208 136 Z" fill="#1A2740"/>
+              <path d="M232 94.2 L246 88.5 L246 120.5 L232 126.2 Z" fill="#A98040"/>
+              <rect x="30" y="104" width="178" height="32" fill="url(#gLid)"/>
+              <path d="M30 104.6h178" stroke="#5A7098" stroke-width="1.4"/>
+              <rect x="106" y="104" width="30" height="32" fill="url(#gGold)"/>
+              <g transform="translate(150 90)">
+                <path d="M0 0 C -12 -30, -58 -40, -62 -16 C -64 -2, -30 4, 0 0 Z" fill="url(#gGold)"/>
+                <path d="M-2 -1 C -16 -18, -40 -24, -48 -14" fill="none" stroke="#A98040" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+                <path d="M0 0 C 12 -30, 58 -40, 62 -16 C 64 -2, 30 4, 0 0 Z" fill="url(#gGold)"/>
+                <path d="M2 -1 C 16 -18, 40 -24, 48 -14" fill="none" stroke="#A98040" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+                <path d="M-4 3 L-24 38 L-15 33 L-11 43 L4 5 Z" fill="#C79B52"/>
+                <path d="M4 3 L22 36 L13 32 L9 42 L-4 5 Z" fill="#D9B26C"/>
+                <rect x="-9" y="-7" width="18" height="13" rx="5" fill="#F0D69C" stroke="#B98D45" stroke-width="1.5"/>
               </g>
+              <path d="M200 112 C 214 124, 222 140, 230 150" fill="none" stroke="#C79B52" stroke-width="1.4"/>
+              <g transform="translate(232 150) rotate(-14)"><path d="M0 0 H34 L42 10 L34 20 H0 Z" fill="#FBF3E3" stroke="#D9C6A1" stroke-width="1"/><circle cx="35" cy="10" r="2.4" fill="none" stroke="#C79B52" stroke-width="1.2"/><text x="14" y="15" text-anchor="middle" font-family="Instrument Serif, serif" font-style="italic" font-size="15" fill="#2A3B58">J.</text></g>
             </g>
           </svg>
         </div>
         <p class="gift-cap" id="giftCap">My stack. <span id="giftCapV">Hover</span> a tool to see how I use it.</p>
         <div class="ring" id="ring"></div>
-        <div class="tool-tip" id="toolTip" role="status"><b id="ttN"></b><p id="ttP"></p></div>
+        <div class="tool-tip" id="toolTip" role="status"><div class="tt-h"><span class="tt-i" id="ttI"></span><div><b id="ttN"></b><span id="ttC"></span></div></div><p id="ttP"></p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 6 · HOW I WORK -->
+<!-- 6 · LASTLOOK -->
+<section class="ll" id="lastlook" aria-label="LastLook, my app">
+  <div class="ll-intro wrap">
+    <div class="ll-hero">
+      <div class="ll-eyes" id="llEyes" aria-hidden="true"><i><b></b></i><i><b></b></i></div>
+      <p class="ll-kick"><img src="v2/s/llicon.webp" alt="">My own app · Live on iOS</p>
+      <h2 class="ll-title">Last<em>Look</em></h2>
+      <p class="ll-tag">FindMy, but for everything you own.</p>
+    </div>
+    <div class="ll-idea">
+      <p class="ll-lead">I kept leaving things behind. Keys at home, AirPods at the gym, a charger at the office.</p>
+      <p>Trackers only help with the few things that have a chip, and you only notice once you’ve already left. So I built LastLook. It learns what you carry to each place, and gives you one last look before you walk out without it.</p>
+    </div>
+  </div>
+  <div class="ll-track" id="llTrack">
+    <div class="ll-pin">
+      <ol class="ll-steps" id="llSteps"><li class="ll-step" data-i="0"><button type="button"><span class="n">01</span><span class="t">Tell it where you go.</span></button><p>Office, gym, college, your favourite café. Each place gets its own list of the things you carry there.</p></li><li class="ll-step" data-i="1"><button type="button"><span class="n">02</span><span class="t">Link your things to places.</span></button><p>Draw a radius around a spot and add what belongs there: keys, mouse, coffee mug. Mark the ones you can’t afford to lose as panic items.</p></li><li class="ll-step" data-i="2"><button type="button"><span class="n">03</span><span class="t">It notices when you leave.</span></button><p>LastLook checks you in automatically. A Live Activity shows what you’re carrying, and it nudges you before you head out the door.</p></li><li class="ll-step" data-i="3"><button type="button"><span class="n">04</span><span class="t">And finds what’s already lost.</span></button><p>For the things with Bluetooth, like AirPods, a hot-and-cold radar walks you back to them.</p></li><li class="ll-step" data-i="4"><button type="button"><span class="n">05</span><span class="t">Then learns your patterns.</span></button><p>Memory Insights turns your check-ins into patterns: what you forget most, your riskiest hours, and your streaks.</p></li></ol>
+      <div class="ll-stage">
+        <div class="ll-glow" aria-hidden="true"></div>
+        <div class="ll-deck" id="llDeck"><img class="ll-card" src="v2/s/ll1.webp" alt="LastLook screen: Tell it where you go." style="--i:0" loading="lazy"><img class="ll-card" src="v2/s/ll3.webp" alt="LastLook screen: Link your things to places." style="--i:1" loading="lazy"><img class="ll-card" src="v2/s/ll4.webp" alt="LastLook screen: It notices when you leave." style="--i:2" loading="lazy"><img class="ll-card" src="v2/s/ll2.webp" alt="LastLook screen: And finds what’s already lost." style="--i:3" loading="lazy"><img class="ll-card" src="v2/s/ll5.webp" alt="LastLook screen: Then learns your patterns." style="--i:4" loading="lazy"></div>
+        <span class="ll-chip" style="--x:-300px;--y:-200px;--d:0s"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3"/></svg>House keys</span>
+        <span class="ll-chip" style="--x:300px;--y:-130px;--d:-1.4s"><svg viewBox="0 0 24 24"><path d="M8 4a3 3 0 0 0-3 3v3a3 3 0 0 0 3 3v7h2V4z"/><path d="M16 4a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3v7h-2V4z"/></svg>AirPods Pro</span>
+        <span class="ll-chip" style="--x:-320px;--y:40px;--d:-2.2s"><svg viewBox="0 0 24 24"><path d="M9 2v5M15 2v5"/><path d="M6 7h12v4a6 6 0 0 1-12 0z"/><path d="M12 17v5"/></svg>Laptop charger</span>
+        <span class="ll-chip" style="--x:300px;--y:120px;--d:-.7s"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M16 12.5h2"/><path d="M3 9h15"/></svg>Wallet</span>
+        <span class="ll-chip" style="--x:-270px;--y:240px;--d:-3s"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="11" rx="3"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg>Lunch box</span>
+      </div>
+    </div>
+  </div>
+  <div class="ll-outro wrap">
+    <ul class="ll-stats"><li><b>400+</b><span>downloads</span></li><li><b>10</b><span>paying subscribers</span></li><li><b>400K+</b><span>organic views, building it in public</span></li></ul>
+    <p class="ll-solo">Designed, built and shipped by me. Solo, start to finish.</p>
+    <div class="ll-cta">
+      <a class="ll-store" href="https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span><small>Download on the</small>App Store</span></a>
+      <a class="ll-follow" href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Follow the build @jamieships ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · HOW I WORK -->
 <section class="process" id="process" aria-label="How I work">
   <div class="wrap">
     <div class="sec-head">
@@ -1001,7 +1151,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   </div>
 </section>
 
-<!-- 7 · OFF THE CLOCK -->
+<!-- 8 · OFF THE CLOCK -->
 <section class="life" id="life" aria-label="Off the clock">
   <div class="wrap">
     <div class="sec-head">
@@ -1010,20 +1160,33 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       <p>23. Based between India and Dubai. When I'm not in Figma, I'm usually making noise.</p>
     </div>
     <div class="desk" id="desk">
-      <figure class="item polaroid" style="left:5%;top:7%;--r:-4deg;margin:0"><img src="v2/s/photo.webp" alt="James in a backwards cap and sunglasses, smiling at sunset"><figcaption>me, probably mid-laugh</figcaption></figure>
-      <div class="item note" style="--sc:#FFE98A;left:40%;top:6%;--r:3deg">I play drums, piano &amp; guitar.<small>Calculated chaos</small></div>
-      <div class="item instr" style="left:66%;top:9%;--r:-6deg" aria-hidden="true"><svg viewBox="0 0 150 120"><ellipse cx="75" cy="44" rx="56" ry="16"/><path d="M19 44v40c0 9 25 16 56 16s56-7 56-16V44"/><path d="M40 20l20 20M110 20l-20 20"/><circle cx="36" cy="17" r="4"/><circle cx="114" cy="17" r="4"/></svg></div>
-      <div class="item card-ig" style="left:43%;top:44%;--r:-2deg"><h4>I make content, too.</h4><p>Design, building, career, and a few things I've learned along the way.</p><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">@jamieships ↗</a><a href="https://www.instagram.com/jameschughh" target="_blank" rel="noopener">@jameschughh ↗</a></div>
-      <div class="item tools" style="left:6%;top:60%;--r:2deg"><h4>What's on my dock</h4><ul><li>Figma</li><li>Framer</li><li>Protopie</li><li>Rive</li><li>Mobbin</li><li>Canva</li><li>Claude</li><li>Cursor</li><li>Supabase</li></ul></div>
-      <div class="item lastlook-app" style="left:77%;top:44%;--r:5deg"><img src="v2/s/llicon.webp" alt="LastLook app icon"><span>my first app</span></div>
-      <div class="item note" style="--sc:#CFE7FF;left:74%;top:72%;--r:-4deg;width:190px">IND / DXB<small>Where to find me</small></div>
-      <div class="item instr" style="left:30%;top:74%;--r:8deg;width:120px" aria-hidden="true"><svg viewBox="0 0 120 150"><path d="M60 8v70"/><path d="M52 8h16v18H52z"/><path d="M60 78c-22 0-34 12-34 30s16 34 34 34 34-16 34-34-12-30-34-30z"/><circle cx="60" cy="104" r="10"/><path d="M50 128h20"/></svg></div>
-      <p class="desk-hint">everything here can be moved ;)</p>
+      <figure class="item polaroid pinned p1" style="left:3%;top:6%;--r:-5deg;--pc:#E4402A;margin:0"><img src="v2/s/photo.webp" alt="James in a backwards cap and sunglasses, smiling at sunset"><figcaption>me, probably mid-laugh</figcaption></figure>
+      <div class="item about pinned p2" style="left:25%;top:4%;--r:1.5deg;--pc:#2A7BD1">
+        <p class="ab-k">About me</p>
+        <h4>Hi, I’m James.</h4>
+        <b>What I’ve done</b>
+        <ul><li>B.Tech in Mechanical Engineering at NSUT</li><li>Designed at Hindustan Times, EazyDiner and MakeMyTrip</li><li>Lifted payment success by 41% at EazyDiner</li><li>Built and shipped LastLook, solo</li></ul>
+        <b>What I do</b>
+        <ul><li>Product design at OYO, from booking to check-in</li><li>Build my own apps, in public</li><li>Share it all on Instagram and LinkedIn</li></ul>
+      </div>
+      <div class="item note taped p3" style="--sc:#FFE98A;left:59%;top:5%;--r:4deg">I play drums, piano &amp; guitar.<small>Calculated chaos</small></div>
+      <div class="item scrap pinned p4" style="left:79%;top:6%;--r:-6deg;--pc:#2E9E6B" aria-hidden="true"><svg viewBox="0 0 150 120"><ellipse cx="75" cy="44" rx="56" ry="16"/><path d="M19 44v40c0 9 25 16 56 16s56-7 56-16V44"/><path d="M40 20l20 20M110 20l-20 20"/><circle cx="36" cy="17" r="4"/><circle cx="114" cy="17" r="4"/></svg><span>the loud one</span></div>
+      <div class="item card-ig pinned p5" style="left:57%;top:38%;--r:-2deg;--pc:#F2B705"><h4>I make content, too.</h4><p>Design, building, career, and a few things I've learned along the way.</p><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">@jamieships ↗</a><a href="https://www.instagram.com/jameschughh" target="_blank" rel="noopener">@jameschughh ↗</a></div>
+      <div class="item note taped p6" style="--sc:#C9EBD2;left:82%;top:37%;--r:5deg;width:170px">Currently: designing at OYO.<small>Gurgaon</small></div>
+      <div class="item ticket pinned p7" style="left:26%;top:67%;--r:-3deg;--pc:#E4402A"><div class="tk-l"><small>Boarding pass</small><b>DEL <i>⇄</i> DXB</b><span>Based between India and Dubai</span></div><div class="tk-r"><small>Seat</small><b>23A</b></div></div>
+      <span class="item mag p8" style="left:4%;top:76%;--r:-8deg;--mc:#E4402A">J</span>
+      <span class="item mag p9" style="left:8.6%;top:74%;--r:6deg;--mc:#2A7BD1">A</span>
+      <span class="item mag p10" style="left:13.2%;top:77%;--r:-4deg;--mc:#F2B705">M</span>
+      <span class="item mag p11" style="left:18.6%;top:75%;--r:9deg;--mc:#2E9E6B">E</span>
+      <span class="item mag p12" style="left:22.6%;top:77.5%;--r:-6deg;--mc:#7B5CD6">S</span>
+      <div class="item ll-mag p13" style="left:58%;top:70%;--r:6deg"><img src="v2/s/llicon.webp" alt="LastLook app icon"><span>my first app</span></div>
+      <div class="item scrap pinned p14" style="left:78%;top:63%;--r:7deg;--pc:#2A7BD1;width:130px" aria-hidden="true"><svg viewBox="0 0 120 150"><path d="M60 8v70"/><path d="M52 8h16v18H52z"/><path d="M60 78c-22 0-34 12-34 30s16 34 34 34 34-16 34-34-12-30-34-30z"/><circle cx="60" cy="104" r="10"/><path d="M50 128h20"/></svg><span>and the quiet one</span></div>
+      <p class="desk-hint">it’s my board, but go ahead, move things around ;)</p>
     </div>
   </div>
 </section>
 
-<!-- 8 · SAY HI -->
+<!-- 9 · SAY HI -->
 <section class="hello" id="hello" aria-label="Contact">
   <img class="skyimg" src="v2/h/sky.webp" alt="">
   <div class="wrap inner">
@@ -1033,7 +1196,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       <p class="keys-hint">psst, these work on your keyboard too: <kbd>M</kbd> <kbd>I</kbd> <kbd>L</kbd> <kbd>R</kbd></p>
       <div class="keys">
         <div class="kw"><span></span><a class="key" data-k="m" href="mailto:jameschughh@gmail.com" style="--kc:#EA4335;--kd:#A92A20" aria-label="Email me"><span class="cap"><i>M</i><svg viewBox="0 0 24 24"><path fill="#fff" d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></span></a>
-          <p class="knote dn"><svg viewBox="0 0 40 30" aria-hidden="true"><path d="M30 26C26 16 20 8 12 4M12 4l2 8M12 4l8 1"/></svg>Roles, projects, or just hi.<br><span id="mailText">jameschughh@gmail.com</span> <button id="copy" type="button">Copy email</button></p></div>
+          <p class="knote dn"><svg viewBox="0 0 40 30" aria-hidden="true"><path d="M30 26C26 16 20 8 12 4M12 4l2 8M12 4l8 1"/></svg>Roles, projects, or just hi.<br><span class="mailrow"><span id="mailText">jameschughh@gmail.com</span><button id="copy" type="button" aria-label="Copy email" title="Copy email"><svg class="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11.5" height="11.5" rx="3"/><path d="M15.5 8.5V6.5a2.5 2.5 0 0 0-2.5-2.5H6.5A2.5 2.5 0 0 0 4 6.5V13a2.5 2.5 0 0 0 2.5 2.5h2"/></svg><svg class="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button></span></p></div>
         <div class="kw"><p class="knote up">Where I build in public.<br>@jamieships<svg viewBox="0 0 40 30" aria-hidden="true"><path d="M10 4C16 12 20 18 22 26M22 26l-7-4M22 26l3-8"/></svg></p><a class="key" data-k="i" href="https://www.instagram.com/jamieships" target="_blank" rel="noopener" style="--kc:#DD2A7B;--kd:#8A1E57;--kbg:linear-gradient(40deg, #F9A13A, #EE2A7B 45%, #8134AF 80%, #515BD4)" aria-label="Instagram"><span class="cap"><i>I</i><svg viewBox="0 0 24 24"><path fill="#fff" d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></span></a><span></span></div>
         <div class="kw"><span></span><a class="key" data-k="l" href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener" style="--kc:#0A66C2;--kd:#063F7A" aria-label="LinkedIn"><span class="cap"><i>L</i><svg viewBox="0 0 24 24"><path fill="#fff" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span></a>
           <p class="knote dn"><svg viewBox="0 0 40 30" aria-hidden="true"><path d="M20 26C20 18 20 10 20 4M20 4l-5 7M20 4l5 7"/></svg>The work, and what I<br>learned doing it.</p></div>
@@ -1085,7 +1248,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     me: { c: '#F2B705', side: 'left', tag: 'About me', t: 'Hey, I’m James', r: '23 · Product designer · Builder · Engineer',
       l: 'I design so people don’t rage quit.',
       d: 'Two years in the industry across dining, travel and hospitality. I also built LastLook, an iOS app that reminds you when you leave something behind, because I kept forgetting my things.',
-      n: [['2 yrs', 'industry experience'], ['3', 'products shipped at scale'], ['1', 'app of my own']], p: ['ll1', 'll2', 'll3'], j: 8, about: true }
+      n: [['2 yrs', 'industry experience'], ['3', 'products shipped at scale'], ['1', 'app of my own']], p: ['ll1', 'll2', 'll3'], j: 7, about: true }
   };
   const ICONS = {
     cap: '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/>',
@@ -1118,59 +1281,54 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   };
   const LI = 'https://www.linkedin.com/in/jameschughh/', IG = 'https://www.instagram.com/jamieships', APP = 'https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140';
   const STOPS = [
-    { id: 'jee', when: '2021', place: 'New Delhi', icon: 'cap', c: '#D2553A', at: [380, 1480], lift: 175, name: 'NSUT',
+    { id: 'jee', when: '2021', place: 'New Delhi', icon: 'cap', c: '#D2553A', at: [400, 1420], lift: 175, name: 'NSUT',
       title: 'The day JEE changed everything.',
       txt: 'I cleared JEE and got into <b>NSUT</b> for Mechanical Engineering. I had even cleared Waterloo Mathematics, but somehow, Delhi felt like where I was meant to be. I just didn’t know yet that engineering wouldn’t be the path I’d end up following.',
       photos: [['', 'JEE results day'], ['', 'First day at NSUT'], ['', 'Campus, 2021']],
       pois: [[-170, -120, 'check', 'Cleared Waterloo Mathematics too.']] },
-    { id: 'app', when: 'April 2022', place: 'New Delhi', icon: 'phone', c: '#7B5CD6', at: [830, 1400], lift: 150, name: 'The failed app',
+    { id: 'app', when: 'April 2022', place: 'New Delhi', icon: 'phone', c: '#7B5CD6', at: [960, 960], lift: 150, name: 'The failed app',
       title: 'A failed app changed my life.',
       txt: 'A friend and I tried building an app together. It didn’t work, but somewhere along the way I opened <b>Figma</b> and got completely hooked. The app failed. I accidentally found UX, and, eventually, the career I wanted.',
       photos: [['', 'The app that didn’t work'], ['', 'My first Figma file'], ['', 'Late nights, 2022']],
       pois: [[160, 90, 'pen', 'Opened Figma. Never really closed it.']] },
-    { id: 'iitd', when: '2022 – 2023', place: 'New Delhi', icon: 'bulb', c: '#2E9E6B', at: [1280, 1380], lift: 165, name: 'IIT Delhi',
+    { id: 'iitd', when: '2022 – 2023', place: 'New Delhi', icon: 'bulb', c: '#2E9E6B', at: [1520, 1320], lift: 165, name: 'IIT Delhi',
       title: 'I started chasing that feeling.',
       txt: 'I began teaching myself design and got an internship at <b>IIT Delhi</b>. For the first time, the things I was learning at night were solving problems for someone beyond myself. I realised I didn’t just enjoy designing. I enjoyed figuring things out.',
       photos: [['', 'Self-taught, one tutorial at a time'], ['', 'IIT Delhi internship'], ['', 'Figuring things out']],
       pois: [[170, 90, 'book', 'Learning at night, designing by day.']] },
-    { id: 'ht', when: '2024', place: 'New Delhi', icon: 'news', c: '#1E7FC8', at: [1730, 1250], lift: 272, name: 'Hindustan Times',
+    { id: 'ht', when: '2024', place: 'New Delhi', icon: 'news', c: '#1E7FC8', at: [2080, 880], lift: 272, name: 'Hindustan Times',
       title: 'HT Media made it real.',
       txt: 'At <b>Hindustan Times</b>, design became a real job, not just something I was learning on the side. For the first time, the things I designed shipped to people I’d never meet.',
       photos: [['', 'Design as a real job'], ['', 'The HT newsroom'], ['', 'New Delhi, 2024']],
       pois: [[160, 90, 'news', 'Design became a real job here.']] },
-    { id: 'eazydiner', when: 'Feb – Apr 2025', place: 'New Delhi', logo: 'logo-eazydiner', c: '#F4511E', at: [2150, 1180], lift: 150, name: 'EazyDiner',
+    { id: 'eazydiner', when: 'Feb – Apr 2025', place: 'New Delhi', logo: 'logo-eazydiner', c: '#F4511E', at: [2640, 1400], lift: 150, name: 'EazyDiner',
       title: 'EazyDiner taught me to look beyond the screen.',
       txt: 'I started noticing that good design wasn’t really about the interface. It was about what people <b>felt, understood, and did</b> because of it. That shift quietly changed the way I approached every product after that.',
       stats: [['+41%', 'payment success'], ['300+', 'offers, ranked']],
       work: CS + 'eazydiner',
       photos: [['ed1', 'The Coupon Hunter'], ['ed3', 'Every offer, sorted'], ['ed4', 'Wohoo, you saved']],
       pois: [[150, 100, 'ticket', '300+ offers, and the best one shown first.']] },
-    { id: 'mmt', when: 'Apr – Oct 2025', place: 'Gurgaon', logo: 'logo-mmt', c: '#E4262C', at: [2700, 1000], lift: 238, name: 'MakeMyTrip',
+    { id: 'mmt', when: 'Apr – Oct 2025', place: 'Gurgaon', logo: 'logo-mmt', c: '#E4262C', at: [3260, 1000], lift: 238, name: 'MakeMyTrip',
       title: 'Then everything got bigger at MakeMyTrip.',
       txt: 'Millions of users. Complicated journeys. Tiny decisions that suddenly mattered a lot more. <b>MakeMyTrip</b> showed me what product design looked like at scale, and pushed me to think beyond individual screens.',
       stats: [['4,500+', 'bookings a day use it'], ['16 → 35%', 'hotels replying']],
       work: CS + 'requests',
       photos: [['mmt1', 'Special Requests'], ['mmt2', 'Every ask, sorted'], ['mmt3', 'Chat with the hotel']],
       pois: [[160, 100, 'bell', 'Hotels now reply: 16% → 35%.'], [-170, 110, 'heart', 'Swipr.AI: swipe right on a hotel.']] },
-    { id: 'oyo', when: 'Dec 2025', place: 'Gurgaon', logo: 'logo-oyo', c: '#DC402A', at: [3150, 930], lift: 200, name: 'OYO',
+    { id: 'oyo', when: 'Dec 2025', place: 'Gurgaon', logo: 'logo-oyo', c: '#DC402A', at: [3820, 1460], lift: 200, name: 'OYO',
       title: 'Then OYO, and the whole stay.',
       txt: 'At <b>OYO</b>, a hospitality chain, I design the moments between booking a room and walking into it: <b>self check-in, room selection and cancellations</b>.',
       stats: [['500', 'properties validated'], ['6,000+', 'approved next']],
       photos: [['logo-oyo', 'December: OYO'], ['', 'Self check-in'], ['', 'Picking your room']],
       pois: [[160, 100, 'key', 'Self check-in, straight to your room.']] },
-    { id: 'prism', when: '2026', place: 'Gurgaon → Europe', icon: 'plane', c: '#1F7A8C', at: [3580, 780], lift: 160, name: 'PRISM Group',
-      title: 'Designing for Europe, in the open.',
-      txt: 'At <b>PRISM Group</b>, I’m designing for <b>European travel brands</b>, while building in public on the side and sharing every step of it.',
-      photos: [['', 'European travel brands'], ['', 'Building in public'], ['', '2026']],
-      pois: [[160, 100, 'plane', 'Travel brands across Europe.']] },
-    { id: 'lastlook', when: '2026', place: 'On the App Store', logo: 'logo-lastlook', c: '#9A6A3E', at: [4010, 690], lift: 190, name: 'LastLook',
+    { id: 'lastlook', when: '2026', place: 'On the App Store', logo: 'logo-lastlook', c: '#9A6A3E', at: [4380, 940], lift: 190, name: 'LastLook',
       title: 'Then I built something of my own.',
       txt: '<b>LastLook</b> started as a problem I wanted to solve for myself: I kept forgetting my things. So I designed it, built it and launched it on iOS.',
       stats: [['400+', 'downloads'], ['10', 'paying subscribers'], ['400K+', 'organic views']],
       work: APP,
       photos: [['ll1', 'Never forget your things'], ['ll2', 'Find your lost devices'], ['ll3', 'Link items to places']],
       pois: [[160, 100, 'rocket', 'Idea to App Store, solo.']] },
-    { id: 'creator', when: 'Always on', place: 'Instagram & LinkedIn', icon: 'camera', c: '#E1306C', at: [4430, 520], lift: 150, name: 'Creator corner',
+    { id: 'creator', when: 'Always on', place: 'Instagram & LinkedIn', icon: 'camera', c: '#E1306C', at: [4940, 1260], lift: 150, name: 'Creator corner',
       title: 'And I share it all along the way.',
       txt: 'On <b>Instagram and LinkedIn</b>, I share what I make: design, building, career, and a few things I’ve learned along the way.',
       share: true,
@@ -1436,16 +1594,26 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   $$('.item', $('#desk')).forEach(el => {
     el.style.transform = 'translate(var(--tx,0), var(--ty,0)) rotate(var(--r,0deg))';
     draggable(el);
+    if (el.classList.contains('mag')) el.addEventListener('pointerdown', () => { el.classList.remove('wig'); void el.offsetWidth; el.classList.add('wig'); });
   });
 
   /* =========================================================
      3 · THE JOURNEY (a map you discover)
      ========================================================= */
   const journey = $('#journey'), jTrack = $('#jTrack'), mapview = $('#mapview'), world3 = $('#world3'), mapArt = $('#mapArt'), jcard = $('#jcard'), jcIn = $('#jcIn'), compass = $('#compass'), needle = $('#needle'), meTip = $('#meTip'), polsEl = $('#pols');
-  const N = STOPS.length, MW = 4900, MH = 1800;
+  const N = STOPS.length, MW = 4720, MH = 3900;
+  // the route is a heart: it starts at the tip, climbs the Delhi lobe, crosses the river, and comes home down the Gurgaon side
+  const HX = MW / 2, HY = 1780, HKX = 110, HKY = 100;
+  const heartAt = t => [HX + 16 * Math.sin(t) ** 3 * HKX, HY - (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * HKY];
+  const heartPts = Array.from({ length: 721 }, (_, k) => heartAt(Math.PI + 2 * Math.PI * k / 720));
+  const heartLen = [0]; for (let k = 1; k < heartPts.length; k++) heartLen.push(heartLen[k - 1] + Math.hypot(heartPts[k][0] - heartPts[k - 1][0], heartPts[k][1] - heartPts[k - 1][1]));
+  const heartPoint = f => { const L = f * heartLen[heartLen.length - 1]; let k = 1; while (k < heartLen.length - 1 && heartLen[k] < L) k++; const a = heartPts[k - 1], b = heartPts[k], u = (L - heartLen[k - 1]) / Math.max(1e-6, heartLen[k] - heartLen[k - 1]); return [Math.round(a[0] + (b[0] - a[0]) * u), Math.round(a[1] + (b[1] - a[1]) * u)]; };
+  const HEART_F = [.075, .15, .23, .31, .39, .61, .7, .79, .88];
+  STOPS.forEach((st, i) => { st.at = heartPoint(HEART_F[i]); });
+  const heartD = 'M' + heartPts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L');
   const jHead = $('#jHead'), jFade = $('#jFade');
   let spot, spotG; const spotC = { x: STOPS[0].at[0], y: STOPS[0].at[1] };
-  jTrack.style.height = (N * 78 + 200) + 'vh';
+  jTrack.style.height = (N * 84 + 200) + 'vh';
   const holeR = STOPS.map(() => 0);
   let jTop = 0, jRange = 1, carve, casing, ghost, fogPath, holes = [], pathLen = 0, stopL = [], jmarks = [], pois = [], lastCard = -2, heading = 0, polFor = -2;
   const mrand = (a => () => (a = (a * 16807) % 2147483647) / 2147483647)(42);
@@ -1459,31 +1627,27 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       <radialGradient id="spotG" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="820"><stop offset="0" stop-color="${LAND}" stop-opacity="0"/><stop offset=".4" stop-color="${LAND}" stop-opacity="0"/><stop offset="1" stop-color="${LAND}" stop-opacity=".86"/></radialGradient>
       <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF3FD"/><stop offset="1" stop-color="#C9DDF2"/></linearGradient></defs>`;
     h += `<rect x="-3000" y="-3000" width="${MW + 6000}" height="${MH + 6000}" fill="${LAND}"/>`;
-    // a few big, soft parks, well away from the stops
-    [[640, 560, 380, 210], [2050, 420, 320, 170], [3000, 1640, 420, 170], [4450, 1350, 330, 190], [1450, 1780, 360, 120]].forEach(([cx, cy, rx, ry], k) => {
+    // a soft blush inside the heart, so it reads when you zoom out
+    h += `<path d="${heartD}Z" fill="#F7E2D6" opacity=".55"/>`;
+    // a few big, soft parks, away from the stops
+    [[HX - 1020, HY + 820, 330, 150], [HX + 1000, HY - 60, 300, 170], [520, 520, 360, 190], [MW - 520, 560, 340, 180], [560, MH - 420, 380, 160], [MW - 560, MH - 380, 360, 150]].forEach(([cx, cy, rx, ry], k) => {
       h += `<path d="${blob(cx, cy, rx, ry, .16, k * 1.7)}" fill="${PARK}"/><path d="${blob(cx + 14, cy - 8, rx * .6, ry * .56, .2, k * 1.7 + .5)}" fill="${PARK2}"/>`; });
-    h += `<path d="${blob(1180, 360, 200, 104, .12, 3)}" fill="${WATER}" stroke="${WATER_E}" stroke-width="3"/>`;
-    // the river between Delhi and Gurgaon
-    const river = 'M2440 -300 C 2360 160, 2520 540, 2420 900 S 2360 1320, 2450 1600 S 2500 1980, 2430 2200';
+    h += `<path d="${blob(HX - 1000, HY - 80, 230, 120, .12, 3)}" fill="${WATER}" stroke="${WATER_E}" stroke-width="3"/>`;
+    // the river splits Delhi from Gurgaon, right down the middle of the heart
+    const river = `M${HX - 40} -300 C ${HX + 70} 500, ${HX - 70} 1300, ${HX} 2100 S ${HX + 60} 3200, ${HX - 20} ${MH + 400}`;
     h += `<path id="river" d="${river}" fill="none" stroke="${WATER_E}" stroke-width="84" stroke-linecap="round"/><path d="${river}" fill="none" stroke="${WATER}" stroke-width="76" stroke-linecap="round"/>
       <path d="${river}" fill="none" stroke="#D6ECFB" stroke-width="3" stroke-dasharray="26 34"><animate attributeName="stroke-dashoffset" from="0" to="-120" dur="5s" repeatCount="indefinite"/></path>`;
-    // just three roads: one main road under the trail, one cross street per city
-    const roads = ['M1510 -300 C 1570 400, 1450 1000, 1530 2100', 'M3370 -300 C 3310 400, 3440 1100, 3360 2100'];
-    const main = 'M-300 1790 C 500 1770, 1200 1720, 1900 1560 S 3000 1290, 3600 1150 S 4500 930, 5200 880';
-    roads.forEach((d, i) => { h += `<path id="road${i}" d="${d}" fill="none" stroke="#E2D8C2" stroke-width="20" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/>`; });
+    const main = `M-300 ${HY + 420} C ${MW * .25} ${HY + 360}, ${MW * .5} ${HY + 480}, ${MW * .75} ${HY + 400} S ${MW + 200} ${HY + 380}, ${MW + 400} ${HY + 420}`;
     h += `<path id="roadM" d="${main}" fill="none" stroke="#E7B84C" stroke-width="26" stroke-linecap="round"/><path d="${main}" fill="none" stroke="#FFD86B" stroke-width="19" stroke-linecap="round"/>`;
-    [[640, 1060, 7], [2900, 360, 8], [3950, 1500, 7], [300, 330, 8], [4700, 1650, 6], [1950, 820, 5]].forEach(([cx, cy, n]) => { for (let i = 0; i < n; i++) { const a = mrand() * 6.3, r = Math.sqrt(mrand()) * n * 4, x = cx + Math.cos(a) * r * 1.3, y = cy + Math.sin(a) * r * .8, sz = 10 + mrand() * 8;
+    [[HX - 560, HY + 1180, 7], [HX + 560, HY + 1180, 7], [HX - 1500, HY - 1500, 8], [HX + 1500, HY - 1500, 8], [300, HY + 400, 7], [MW - 300, HY + 380, 7], [HX, 380, 6]].forEach(([cx, cy, n]) => { for (let i = 0; i < n; i++) { const a = mrand() * 6.3, r = Math.sqrt(mrand()) * n * 4, x = cx + Math.cos(a) * r * 1.3, y = cy + Math.sin(a) * r * .8, sz = 10 + mrand() * 8;
       h += `<circle cx="${(x + 3).toFixed(0)}" cy="${(y + 5).toFixed(0)}" r="${sz.toFixed(1)}" fill="#8DBB6E" opacity=".35"/><circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${sz.toFixed(1)}" fill="${['#A3CF84', '#94C675', '#AED790'][i % 3]}"/>`; } });
     const car = (id, col, dur, begin) => `<g><rect x="-9" y="-5" width="18" height="10" rx="3" fill="${col}"/><rect x="1" y="-4" width="5" height="8" rx="1.5" fill="#fff" opacity=".7"/><animateMotion dur="${dur}s" begin="${begin}s" repeatCount="indefinite" rotate="auto"><mpath href="#${id}"/></animateMotion></g>`;
-    h += car('roadM', '#E4262C', 60, 0) + car('roadM', '#2A7BD1', 60, -20) + car('roadM', '#13233A', 60, -40) + car('road0', '#F4511E', 40, -5) + car('road1', '#1F7A8C', 44, -18);
-    h += `<g><path d="M-16 4h32l-6 8h-20z" fill="#fff" stroke="#6C9CC2" stroke-width="1.5"/><path d="M0 2V-18l12 18z" fill="#FF6B4A"/><animateMotion dur="80s" repeatCount="indefinite"><mpath href="#river"/></animateMotion></g>`;
-    h += `<g font-family="${FONT}" font-weight="800" fill="#CDBD99" opacity=".7" letter-spacing="22" text-anchor="middle" font-size="58"><text x="1000" y="900">NEW DELHI</text><text x="3700" y="1500">GURGAON</text></g>`;
-    h += `<g font-family="${FONT}" font-style="italic" font-weight="600" font-size="22" fill="#3F86C6" text-anchor="middle"><text x="1180" y="368">Blue Lake</text></g>`;
-    // ---- the trail: one gentle rise from 2021 (bottom left) to now (top right)
-    const P = [[140, 1600], ...STOPS.map(st => st.at), [4690, 380]];
-    let d = `M${P[0][0]} ${P[0][1]}`;
-    for (let i = 0; i < P.length - 1; i++) { const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2, t = 6;
-      d += ` C${(p1[0] + (p2[0] - p0[0]) / t).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) / t).toFixed(1)}, ${(p2[0] - (p3[0] - p1[0]) / t).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) / t).toFixed(1)}, ${p2[0]} ${p2[1]}`; }
+    h += car('roadM', '#E4262C', 60, 0) + car('roadM', '#2A7BD1', 60, -20) + car('roadM', '#13233A', 60, -40);
+    h += `<g><path d="M-16 4h32l-6 8h-20z" fill="#fff" stroke="#6C9CC2" stroke-width="1.5"/><path d="M0 2V-18l12 18z" fill="#FF6B4A"/><animateMotion dur="90s" repeatCount="indefinite"><mpath href="#river"/></animateMotion></g>`;
+    h += `<g font-family="${FONT}" font-weight="800" fill="#CDBD99" opacity=".7" letter-spacing="22" text-anchor="middle" font-size="64"><text x="${HX - 1000}" y="${HY + 250}">NEW DELHI</text><text x="${HX + 1000}" y="${HY + 250}">GURGAON</text></g>`;
+    h += `<g font-family="${FONT}" font-style="italic" font-weight="600" font-size="22" fill="#3F86C6" text-anchor="middle"><text x="${HX - 1000}" y="${HY - 72}">Blue Lake</text></g>`;
+    // ---- the trail
+    const d = heartD;
     // ---- landmarks, drawn flat in the map's own style
     const box = (x, y, w, hh, dd, f, sd, rf) => { const dx = dd * .55, dy = -dd * .4; return `<path d="M${x} ${y - hh}h${w}v${hh}h${-w}z" fill="${f}"/><path d="M${x + w} ${y - hh}l${dx} ${dy}v${hh}l${-dx} ${-dy}z" fill="${sd}"/><path d="M${x} ${y - hh}l${dx} ${dy}h${w}l${-dx} ${-dy}z" fill="${rf}"/>`; };
     const wins = (x, y, cols, rows, cw, ch, gx, gy, c) => { let o = ''; for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) o += `<rect x="${x + i * (cw + gx)}" y="${y + j * (ch + gy)}" width="${cw}" height="${ch}" rx="2" fill="${c}"/>`; return o; };
@@ -1536,10 +1700,10 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     };
     STOPS.forEach((st, i) => { h += `<circle class="ripple" id="rip${i}" cx="${st.at[0]}" cy="${st.at[1] - 40}" r="90" fill="none" stroke="${st.c}" stroke-width="6"/><g class="lm" id="lm${i}">${LM[st.id](st.at[0], st.at[1] - 16)}</g>`; });
     // start and finish flags
-    h += `<g font-family="${FONT}" font-weight="800" font-size="22"><g transform="translate(140 1600)"><path d="M0 0v-70" stroke="#13233A" stroke-width="4"/><path d="M0 -70h54l-10 14 10 14h-54z" fill="#FF6B4A"/><text x="8" y="-49" fill="#fff" font-size="16">2021</text></g>
-      <g transform="translate(4690 380)"><path d="M0 0v-70" stroke="#13233A" stroke-width="4"/><path d="M0 -70h70l-10 14 10 14h-70z" fill="#4285F4"/><text x="8" y="-49" fill="#fff" font-size="16">NOW</text></g></g>`;
+    h += `<g font-family="${FONT}" font-weight="800" font-size="22"><g transform="translate(${HX - 70} ${HY + 1720})"><path d="M0 0v-70" stroke="#13233A" stroke-width="4"/><path d="M0 -70h54l-10 14 10 14h-54z" fill="#FF6B4A"/><text x="8" y="-49" fill="#fff" font-size="16">2021</text></g>
+      <g transform="translate(${HX + 40} ${HY + 1720})"><path d="M0 0v-70" stroke="#13233A" stroke-width="4"/><path d="M0 -70h70l-10 14 10 14h-70z" fill="#4285F4"/><text x="8" y="-49" fill="#fff" font-size="16">NOW</text></g></g>`;
     h += `<rect id="spot" x="-3000" y="-3000" width="${MW + 6000}" height="${MH + 6000}" fill="url(#spotG)" opacity="0"/>`;
-    h += `<path id="ghostPath" d="${d}" fill="none" stroke="#4285F4" stroke-opacity=".55" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 16"/>`;
+    h += `<path id="ghostPath" d="${d}" fill="none" stroke="#4285F4" stroke-opacity=".45" stroke-width="2.5" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`;
     h += `<rect id="fog" x="-900" y="-900" width="${MW + 1800}" height="${MH + 1800}" fill="#ECE6D4" mask="url(#fogMask)" opacity="0"/>`;
     h += `<path id="casing" d="${d}" fill="none" stroke="#1A5FD0" stroke-width="15" stroke-linecap="round"/><path id="carve" d="${d}" fill="none" stroke="#4285F4" stroke-width="10" stroke-linecap="round"/>`;
     mapArt.setAttribute('viewBox', `0 0 ${MW} ${MH}`); mapArt.innerHTML = h;
@@ -1864,6 +2028,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   /* =========================================================
      5 · MY STACK (a gift that opens on scroll)
      ========================================================= */
+  const TOOL_ROLE = { Claude: 'Think', Vercel: 'Ship', Antigravity: 'Build', Supabase: 'Build', Figma: 'Design', ProtoPie: 'Prototype', Xcode: 'Build', Notion: 'Plan', 'Apple Music': 'Focus' };
   const TOOLS = [
     { n: 'Claude', bg: '#D97757', how: 'My thinking partner. I use it to pressure-test flows, write UX copy and build faster.', icon: '<svg viewBox="0 0 24 24"><path fill="#fff" d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>' },
     { n: 'Vercel', bg: '#0B0B0B', how: 'Where my side projects go live. Push, preview, share the link.', icon: '<svg viewBox="0 0 24 24"><path fill="#fff" transform="translate(3.6 4) scale(.7)" d="m12 1.608 12 20.784H0Z"/></svg>' },
@@ -1890,13 +2055,13 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     b.addEventListener('click', () => showTip(tipFor === i ? -1 : i));
     ring.appendChild(b); return b;
   });
-  const bits = Array.from({ length: 16 }, (_, k) => { const el = document.createElement('i'); const a = -Math.PI / 2 + (k / 15 - .5) * 2.6, d = 180 + (k * 53 % 120);
-    el.style.setProperty('--c', ['#FFD23F', '#FF6B4A', '#4285F4', '#8CC26C', '#E1306C', '#9C7BFF'][k % 6]); confetti.appendChild(el); return { el, x: Math.cos(a) * d * 1.6, y: Math.sin(a) * d, r: (k % 2 ? 1 : -1) * (200 + k * 20) }; });
+  const bits = Array.from({ length: 9 }, (_, k) => { const el = document.createElement('i'); const a = -Math.PI / 2 + (k / 8 - .5) * 2.2, d = 110 + (k * 53 % 90); el.style.scale = (.5 + (k * 37 % 10) / 14).toFixed(2);
+    el.style.setProperty('--c', ['#FFD23F', '#FF6B4A', '#4285F4', '#8CC26C', '#E1306C', '#9C7BFF'][k % 6]); confetti.appendChild(el); return { el, x: Math.cos(a) * d * 1.3, y: Math.sin(a) * d, r: (k % 2 ? 1 : -1) * 90 }; });
   function showTip(i) {
     tipFor = i; toolEls.forEach((b, k) => b.classList.toggle('on', k === i)); ring.classList.toggle('hov', i >= 0);
     if (i < 0 || !toolEls[i].classList.contains('set')) { toolTip.classList.remove('in'); ring.classList.toggle('hov', false); return; }
     const t = TOOLS[i], [x, y] = toolPos(i), above = y > 0 || (mobile && y > -RY * .5);
-    $('#ttN').textContent = t.n; $('#ttP').textContent = t.how; toolTip.style.setProperty('--bg', t.bg);
+    $('#ttN').textContent = t.n; $('#ttP').textContent = t.how; $('#ttC').textContent = TOOL_ROLE[t.n] || ''; $('#ttI').innerHTML = t.icon; toolTip.style.setProperty('--bg', t.bg);
     const half = (mobile ? 220 : 260) / 2 + 12;
     toolTip.style.left = clamp(x, -vw / 2 + half, vw / 2 - half) + 'px'; toolTip.style.top = (above ? y - (mobile ? 40 : 56) : y + (mobile ? 58 : 80)) + 'px';
     toolTip.classList.toggle('above', above); toolTip.classList.add('in');
@@ -1908,12 +2073,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   function frameStack(y) {
     const q = clamp((y - stTop) / stRange), now = performance.now() / 1000;
     const rise = ss(range(q, 0, .16)), shake = range(q, .14, .34), open = ss(range(q, .32, .44));
-    const amp = reduce ? 0 : shake * (1 - open) * 9, rot = Math.sin(now * 23) * amp, hop = Math.abs(Math.sin(now * 11.5)) * amp * 1.4;
+    const amp = reduce ? 0 : shake * (1 - open) * 3.5, rot = Math.sin(now * 23) * amp, hop = Math.abs(Math.sin(now * 11.5)) * amp * 1.4;
     gift.style.transform = `translate3d(0, ${((1 - rise) * vh * .5 - hop).toFixed(1)}px, 0) rotate(${rot.toFixed(2)}deg) scale(${(.82 + .18 * rise - .06 * range(q, .44, .8)).toFixed(3)})`;
     lidG.style.transform = `translate(${(open * 90).toFixed(1)}px, ${(-open * 150 + Math.sin(open * Math.PI) * -40 + ss(range(q, .44, .6)) * 110).toFixed(1)}px) rotate(${(open * 28).toFixed(1)}deg)`;
     gGlow.setAttribute('opacity', open.toFixed(3)); burst.style.opacity = (open * .95).toFixed(3); burst.style.scale = (.55 + .45 * open).toFixed(3);
     const cf = range(q, .34, .56);
-    bits.forEach(b => { b.el.style.opacity = cf > 0 && cf < 1 ? (1 - cf) * 1.4 : 0; b.el.style.transform = `translate(${(b.x * ss(cf)).toFixed(1)}px, ${(b.y * ss(cf) + cf * cf * 220).toFixed(1)}px) rotate(${(b.r * cf).toFixed(0)}deg)`; });
+    bits.forEach(b => { b.el.style.opacity = cf > 0 && cf < 1 ? (1 - cf) * 1.4 : 0; b.el.style.transform = `translate(${(b.x * ss(cf)).toFixed(1)}px, ${(b.y * ss(cf) - cf * 40).toFixed(1)}px) rotate(${(b.r * cf).toFixed(0)}deg)`; });
     const hk = ss(range(q, .36, .5)); stackHead.style.opacity = (1 - hk).toFixed(3); stackHead.style.transform = `translate3d(0, ${(-hk * 40).toFixed(1)}px, 0)`;
     giftCap.style.opacity = q > .8 ? 1 : 0;
     toolEls.forEach((el, i) => {
@@ -1953,7 +2118,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   let dockY = 0;
   const dock = $('.bar .nav');
   function frameMisc(y) {
-    const inMap = y > jTop - vh * .4 && y < jTop + jRange + vh * .3, bx = boxTrack.getBoundingClientRect(), pinned = (bx.top < vh * .3 && bx.bottom > vh * .7) || (y > stTop - vh * .2 && y < stTop + stRange) || (y > bTop - vh * .2 && y < bTop + bRange);
+    const inMap = y > jTop - vh * .4 && y < jTop + jRange + vh * .3, bx = boxTrack.getBoundingClientRect(), pinned = (bx.top < vh * .3 && bx.bottom > vh * .7) || (y > stTop - vh * .2 && y < stTop + stRange) || (y > llTop - vh * .2 && y < llTop + llRange) || (y > bTop - vh * .2 && y < bTop + bRange);
     if (y > dockY + 3 && y > vh * .5) dock.dataset.dn = 1; else if (y < dockY - 3) dock.dataset.dn = '';
     dock.classList.toggle('away', !!dock.dataset.dn || inMap || pinned); dockY = y;
     lateHl.forEach(h => { if (!h.classList.contains('on') && h.getBoundingClientRect().top < vh * .78) h.classList.add('on'); });
@@ -1967,10 +2132,31 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   /* ---------- copy email ---------- */
   $('#copy').addEventListener('click', e => {
     const b = e.currentTarget, text = $('#mailText').textContent;
-    const done = () => { b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy email', 1800); };
-    try { navigator.clipboard.writeText(text).then(done, () => { selectMail(); b.textContent = 'Press ⌘C / Ctrl+C'; }); } catch (_) { selectMail(); }
+    const done = () => { b.classList.add('ok'); b.title = 'Copied'; setTimeout(() => { b.classList.remove('ok'); b.title = 'Copy email'; }, 1800); };
+    try { navigator.clipboard.writeText(text).then(done, () => selectMail()); } catch (_) { selectMail(); }
   });
   function selectMail() { const r = document.createRange(); r.selectNodeContents($('#mailText')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+
+  /* ---------- LastLook ---------- */
+  const llTrack = $('#llTrack'), llCards = $$('.ll-card'), llSteps = $$('.ll-step'), llEyes = $$('#llEyes b');
+  let llTop = 0, llRange = 1, llOn = -1;
+  function layoutLL() { llTop = top(llTrack); llRange = Math.max(1, llTrack.offsetHeight - vh); }
+  function frameLL(y) {
+    const q = clamp((y - llTop) / llRange), n = llCards.length, t = clamp(q * 1.12 - .04) * (n - 1);
+    llCards.forEach((c, i) => {
+      const d = i - t;
+      if (d >= 0) { const k = Math.min(d, 3); c.style.transform = `translate3d(${(k * 26).toFixed(1)}px, ${(-k * 8).toFixed(1)}px, 0) scale(${(1 - k * .06).toFixed(3)}) rotate(${(k * 3).toFixed(2)}deg)`; c.style.opacity = d > 2.2 ? clamp(3 - d) : 1; c.style.filter = d > .5 ? `brightness(${(1 - Math.min(d, 2) * .06).toFixed(3)})` : ''; }
+      else { const k = ss(clamp(-d)); c.style.transform = `translate3d(${(-k * 130).toFixed(1)}%, ${(k * 40).toFixed(1)}px, 0) rotate(${(-k * 14).toFixed(2)}deg) scale(${(1 - k * .1).toFixed(3)})`; c.style.opacity = (1 - k).toFixed(3); }
+      c.style.zIndex = 10 - i;
+    });
+    const on = Math.round(t); if (on !== llOn) { llOn = on; llSteps.forEach((s, i) => s.classList.toggle('on', i === on)); }
+  }
+  llSteps.forEach((s, i) => $('button', s).addEventListener('click', () => goTo(llTop + ((i / (llCards.length - 1) + .04) / 1.12) * llRange + 2, 1.4)));
+  addEventListener('pointermove', e => {
+    const r = llEyes[0] && llEyes[0].parentElement.getBoundingClientRect(); if (!r || r.bottom < -200 || r.top > vh + 200) return;
+    llEyes.forEach(b => { const p = b.parentElement.getBoundingClientRect(), dx = e.clientX - (p.left + p.width / 2), dy = e.clientY - (p.top + p.height / 2), a = Math.atan2(dy, dx), m = Math.min(1, Math.hypot(dx, dy) / 300) * p.width * .22;
+      b.style.setProperty('--ex', (Math.cos(a) * m).toFixed(1) + 'px'); b.style.setProperty('--ey', (Math.sin(a) * m).toFixed(1) + 'px'); });
+  }, { passive: true });
 
   /* ---------- keycaps: they work on your keyboard too ---------- */
   const keysMat = $('#keysMat');
@@ -1987,7 +2173,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   /* ---------- loop ---------- */
   function layout() {
     vw = innerWidth; vh = innerHeight; mobile = vw < 860;
-    layoutValley(); layoutStory(); layoutJourney(); layoutBrand(); layoutStack(); layoutProc(); boxScale();
+    layoutValley(); layoutStory(); layoutJourney(); layoutBrand(); layoutStack(); layoutLL(); layoutProc(); boxScale();
   }
   let last = performance.now();
   function frame(t) {
@@ -2000,6 +2186,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     if (y > jTop + jRange - vh) frameWork();
     if (y > bTop - vh && y < bTop + bRange + vh) frameBrand(dt, y);
     if (y > stTop - vh && y < stTop + stRange + vh) frameStack(y);
+    if (y > llTop - vh && y < llTop + llRange + vh) frameLL(y);
     if (y > pTop - vh * 1.2) frameProc(y);
     frameMisc(y);
     requestAnimationFrame(frame);
