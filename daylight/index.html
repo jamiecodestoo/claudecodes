@@ -592,15 +592,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .gift-stage.open .confetti i { animation: sparkle 3.6s linear infinite; animation-delay: var(--d); }
 @keyframes sparkle { 0% { transform: translate(var(--x0), 0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(var(--x1), -52vh) rotate(180deg); opacity: 0; } }
 .ring { position: absolute; left: 0; top: 0; }
-.tool { position: absolute; left: 0; top: 0; width: 84px; margin: -42px 0 0 -42px; display: grid; justify-items: center; gap: 9px; opacity: 0; will-change: transform; transition: opacity .3s, filter .3s; }
-.tool .ti { width: 80px; height: 80px; border-radius: 22px; background: var(--bg); display: grid; place-items: center; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), inset 0 0 0 1px rgba(19, 35, 58, .07), 0 1px 2px rgba(19, 35, 58, .08), 0 12px 24px -12px rgba(19, 35, 58, .45); transition: transform .5s var(--spring), box-shadow .4s; }
-.tool .ti svg { width: 42px; height: 42px; overflow: visible; }
-.tool .tn { display: none; }
-.strings { position: absolute; left: 0; top: 0; width: 1px; height: 1px; overflow: visible; pointer-events: none; }
+.tool { position: absolute; left: 0; top: 0; width: 64px; margin: -32px 0 0 -32px; display: grid; justify-items: center; gap: 8px; opacity: 0; will-change: transform; transition: opacity .3s, filter .3s; }
+.tool .ti { width: 64px; height: 64px; border-radius: 17px; background: var(--bg); display: grid; place-items: center; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), inset 0 0 0 1px rgba(19, 35, 58, .07), 0 1px 2px rgba(19, 35, 58, .08), 0 12px 24px -12px rgba(19, 35, 58, .45); transition: transform .5s var(--spring), box-shadow .4s; }
+.tool .ti svg { width: 34px; height: 34px; overflow: visible; }
+.tool .tn { display: block; font: 600 12px/1 var(--sans); color: var(--ink-2); white-space: nowrap; letter-spacing: -.01em; transition: color .3s; }
+.tool.on .tn { color: var(--ink); }
+.shelf { position: absolute; z-index: 0; border-radius: 32px; opacity: 0; pointer-events: none; background: linear-gradient(180deg, rgba(255, 255, 255, .72), rgba(255, 255, 255, .42)); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(19, 35, 58, .05), 0 30px 60px -30px rgba(90, 60, 20, .35); }
+.strings { display: none; position: absolute; left: 0; top: 0; width: 1px; height: 1px; overflow: visible; pointer-events: none; }
 .strings path { fill: none; stroke: #C9AE7C; stroke-width: 1.3; opacity: 0; }
 .tool.on .tn { color: var(--ink); }
 .tool.set .ti { animation: bob2 4.2s ease-in-out infinite; animation-delay: calc(var(--i) * -.47s); }
-@keyframes bob2 { 50% { translate: 0 -4px; } }
+@keyframes bob2 { 50% { translate: 0 -3px; } }
 .tool.set:hover .ti, .tool.on .ti { transform: translateY(-4px) scale(1.08); box-shadow: 0 0 0 1px rgba(19, 35, 58, .06), 0 22px 36px -14px rgba(19, 35, 58, .55); }
 .ring.hov .tool.set:not(.on) { opacity: .3 !important; filter: grayscale(.6) blur(.5px); }
 .tool-tip { position: absolute; z-index: 5; left: 0; top: -250px; width: 300px; box-sizing: border-box; padding: 16px 18px 18px; border-radius: 20px; background: rgba(255, 255, 255, .96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--ink); box-shadow: 0 30px 60px -24px rgba(19, 35, 58, .45), 0 0 0 1px rgba(19, 35, 58, .06);
@@ -904,10 +906,11 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .gift { transform-origin: 50% 92%; left: -110px; top: -125px; width: 220px; height: 220px; }
   .gift-cap { font-size: 16px; }
   .gift-stage { top: 86%; }
-  .tool { width: 58px; margin: -29px 0 0 -29px; gap: 6px; }
-  .tool .ti { width: 56px; height: 56px; border-radius: 16px; }
-  .tool .ti svg { width: 32px; height: 32px; }
-  .tool .tn { font-size: 11px; }
+  .tool { width: 50px; margin: -25px 0 0 -25px; gap: 6px; }
+  .tool .ti { width: 50px; height: 50px; border-radius: 13px; }
+  .tool .ti svg { width: 27px; height: 27px; }
+  .tool .tn { font-size: 10px; }
+  .shelf { border-radius: 24px; }
   .tool-tip { width: 220px; padding: 12px 14px 14px; }
   .tool-tip p { font-size: 14px; }
   .keys { grid-template-columns: repeat(2, 150px); gap: 14px 12px; }
@@ -2150,6 +2153,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     { n: 'Gmail', bg: '#FFFFFF', how: 'Where recruiters, collaborators and clients reach me, and where every handoff gets a paper trail.', icon: '<svg viewBox="0 0 24 24"><path fill="#4285F4" d="M2 6.5v11A1.5 1.5 0 0 0 3.5 19H6V10l-4-3.5z"/><path fill="#34A853" d="M18 19h2.5a1.5 1.5 0 0 0 1.5-1.5v-11L18 10z"/><path fill="#FBBC04" d="M18 5.5V10l4-3.5V5.2c0-1.3-1.5-2-2.5-1.2z"/><path fill="#EA4335" d="M6 10V5.5l6 4.5 6-4.5V10l-6 4.5z"/><path fill="#C5221F" d="M2 5.2v1.3L6 10V5.5L4.5 4C3.5 3.2 2 3.9 2 5.2z"/></svg>' },
     { n: 'ElevenLabs', bg: '#0B0B0B', how: 'AI voiceovers for my reels and app demos, when I need a clean voice track fast.', icon: '<svg viewBox="0 0 24 24"><path fill="#fff" d="M4.6035 0v24h4.9317V0zm9.8613 0v24h4.9317V0z"/></svg>' }
   ];
+  const shelf = document.createElement('div'); shelf.className = 'shelf'; $('#ring').before(shelf);
   const giftStageEl = $('#giftStage'), beam = $('#beam'), stackTrack = $('#stackTrack'), stackHead = $('#stackHead'), gift = $('#gift'), lidG = $('#lid'), gGlow = $('#gGlowEl'), burst = $('#burst'), ring = $('#ring'), toolTip = $('#toolTip'), giftCap = $('#giftCap'), confetti = $('#confetti');
   let stTop = 0, stRange = 1, RX = 420, RY = 250, tipFor = -1;
   if (!hoverable) $('#giftCapV').textContent = 'Tap';
@@ -2158,14 +2162,16 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const BUNCH = [[5, 6, 5, 1], [4, 5, 4, 3, 1]].map(rows => rows.flatMap((n, r) => Array.from({ length: n }, (_, k) => [r, k - (n - 1) / 2])));
   let BS = 104, BCY = -380;
   // an organic cloud of balloons (a sunflower spread inside an ellipse), all tied back to the box
-  let BRX = 420, BRY = 160;
-  const toolPos = i => { const n = TOOLS.length, r = Math.sqrt((i + .5) / n), a = i * 2.39996 + .6; return [Math.cos(a) * r * BRX, BCY + Math.sin(a) * r * BRY * (1 + .12 * Math.sin(i * 1.7))]; };
+  // the tools land in a neat, glassy grid above the box, like a home screen
+  let BRX = 0, BRY = 0, COLS = 6, PX = 104, PY = 106, GTOP = -420;
+  const toolPos = i => { const n = TOOLS.length, rows = Math.ceil(n / COLS), r = Math.floor(i / COLS), inRow = r < rows - 1 ? COLS : n - COLS * (rows - 1), c = i % COLS;
+    return [(c - (inRow - 1) / 2) * PX, GTOP + r * PY + PY * .4]; };
   const toolPosOld = i => { if (mobile) { const row = i < 4 ? 0 : i < 8 ? 1 : 2, inRow = row < 2 ? 4 : TOOLS.length - 8, k = row < 2 ? i % 4 : i - 8; return [(k - (inRow - 1) / 2) * Math.min(86, vw * .22), -210 - (2 - row) * 100]; }
     const a = (188 + 164 * i / (TOOLS.length - 1)) * Math.PI / 180; return [Math.cos(a) * RX, MOUTH + Math.sin(a) * RY]; };
   const toolEls = TOOLS.map((t, i) => {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'tool'; b.style.setProperty('--bg', t.bg); b.style.setProperty('--i', i);
     b.setAttribute('aria-label', `${t.n}: ${t.how}`);
-    b.innerHTML = `<span class="ti">${t.icon}</span><span class="tn">${t.n}</span>`;
+    b.innerHTML = `<span class="ti">${t.icon}</span><span class="tn">${t.n.replace('Microsoft ', '')}</span>`;
     b.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') showTip(i); });
     b.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') showTip(-1); });
     b.addEventListener('focus', () => showTip(i)); b.addEventListener('blur', () => showTip(-1));
@@ -2183,7 +2189,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     // sit right next to the hovered icon: outside edge first, flip inward if there's no room
     const [px, py] = toolPos(i), w = mobile ? 220 : 300, gap = mobile ? 44 : 60;
     let tx, ty = py;
-    if (mobile) { tx = clamp(px, -vw / 2 + w / 2 + 12, vw / 2 - w / 2 - 12); ty = py < BCY ? py + gap + 56 : py - gap - 56; }
+    if (mobile) { tx = clamp(px, -vw / 2 + w / 2 + 12, vw / 2 - w / 2 - 12); ty = py < GTOP + PY ? py + gap + 60 : py - gap - 56; }
     else { const out = px >= 0 ? 1 : -1; tx = px + out * (gap + w / 2); if (Math.abs(tx) + w / 2 > vw / 2 - 16) tx = px - out * (gap + w / 2); }
     toolTip.style.left = tx.toFixed(0) + 'px'; toolTip.style.top = ty.toFixed(0) + 'px';
     toolTip.classList.add('in'); giftCap.classList.add('hide');
@@ -2191,7 +2197,9 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   function layoutStack() {
     stTop = top(stackTrack); stRange = Math.max(1, stackTrack.offsetHeight - vh);
     RX = mobile ? vw * .44 : Math.min(vw * .42, 620); RY = mobile ? Math.min(vh * .46, 380) : Math.min(vh * .58, 480);
-    BS = mobile ? 58 : 80; BRX = mobile ? vw * .44 : Math.min(vw * .32, 470); BRY = mobile ? Math.min(vh * .15, 125) : Math.min(vh * .16, 150); BCY = MOUTH - BRY - (mobile ? 90 : 80);
+    COLS = mobile ? 5 : 6; PX = mobile ? Math.min(70, (vw - 40) / 5) : 108; PY = mobile ? 86 : 108; BS = 1; BRX = COLS * PX / 2;
+    const rows = Math.ceil(TOOLS.length / COLS), pad = mobile ? 14 : 24; GTOP = MOUTH - (mobile ? 40 : 56) - rows * PY;
+    shelf.style.cssText = `left:${-COLS * PX / 2 - pad}px; top:${GTOP - pad}px; width:${COLS * PX + pad * 2}px; height:${rows * PY + pad * 2 - 10}px`;
   }
   function frameStack(y) {
     const q = clamp((y - stTop) / stRange), now = performance.now() / 1000;
@@ -2201,15 +2209,14 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     gift.style.transform = `translate3d(0, ${((1 - rise) * vh * .08 - hop).toFixed(1)}px, 0) rotate(${rot.toFixed(2)}deg) scale(${(.9 + .1 * rise).toFixed(3)})`;
     lidG.style.transform = `translate(${(open * 90).toFixed(1)}px, ${(-open * 150 + Math.sin(open * Math.PI) * -40 + ss(range(q, .25, .38)) * 110).toFixed(1)}px) rotate(${(open * 28).toFixed(1)}deg)`;
     gGlow.setAttribute('opacity', open.toFixed(3)); burst.style.opacity = (open * .95).toFixed(3); burst.style.scale = (.55 + .45 * open).toFixed(3);
-    $('#giftStage').classList.toggle('open', open > .6); beam.style.opacity = (open * .8).toFixed(3);
+    $('#giftStage').classList.toggle('open', open > .6); shelf.style.opacity = ss(range(q, .25, .36)).toFixed(3); shelf.style.transform = `translateY(${((1 - ss(range(q, .25, .36))) * 24).toFixed(1)}px) scale(${(.96 + .04 * ss(range(q, .25, .36))).toFixed(3)})`; beam.style.opacity = (open * .8).toFixed(3);
     const hk = 0; stackHead.style.opacity = (1 - hk).toFixed(3); stackHead.style.transform = `translate3d(0, ${(-hk * 40).toFixed(1)}px, 0)`;
     giftCap.style.opacity = 0;
     toolEls.forEach((el, i) => {
       const s0 = .27 + i * .016, f = ss(range(q, s0, s0 + .14)), [tx, ty] = toolPos(i);
       const cx = tx * .25, cy = ty - 60, sx = 0, sy = MOUTH, u = 1 - f;
       const x = u * u * sx + 2 * u * f * cx + f * f * tx, yy = u * u * sy + 2 * u * f * cy + f * f * ty;
-      el.style.transform = `translate3d(${x.toFixed(1)}px, ${yy.toFixed(1)}px, 0) scale(${(.2 + .8 * f).toFixed(3)}) rotate(${(u * (tx < 0 ? -40 : 40) + f * tx / BRX * 9).toFixed(1)}deg)`;
-      const sp = strings[i]; sp.setAttribute('d', `M0 ${MOUTH + 6} Q ${(x * .2).toFixed(1)} ${((yy + MOUTH) / 2 + 30).toFixed(1)} ${x.toFixed(1)} ${(yy + BS * .38).toFixed(1)}`); sp.style.opacity = (f * .9).toFixed(2);
+      el.style.transform = `translate3d(${x.toFixed(1)}px, ${yy.toFixed(1)}px, 0) scale(${(.2 + .8 * f).toFixed(3)}) rotate(${(u * (tx < 0 ? -40 : 40)).toFixed(1)}deg)`;
       el.style.opacity = f > 0 ? Math.min(1, f * 5).toFixed(2) : 0; el.style.pointerEvents = f > .98 ? '' : 'none';
       const set = f > .98; if (el.classList.contains('set') !== set) { el.classList.toggle('set', set); if (!set && tipFor === i) showTip(-1); }
     });
