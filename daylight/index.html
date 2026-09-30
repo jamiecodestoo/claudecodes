@@ -2266,7 +2266,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   let BS = 104, BCY = -380;
   // an organic cloud of balloons (a sunflower spread inside an ellipse), all tied back to the box
   // the tools land in a neat, glassy grid above the box, like a home screen
-  let BRX = 0, BRY = 0, COLS = 6, PX = 104, PY = 106, GTOP = -420;
+  let BRX = 0, BRY = 0, COLS = 6, PX = 104, PY = 106, GTOP = -420, GIFT_LIFT = 0;
   const toolPos = i => { const n = TOOLS.length, rows = Math.ceil(n / COLS), r = Math.floor(i / COLS), inRow = r < rows - 1 ? COLS : n - COLS * (rows - 1), c = i % COLS;
     return [(c - (inRow - 1) / 2) * PX, GTOP + r * PY + PY / 2]; };
   const toolPosOld = i => { if (mobile) { const row = i < 4 ? 0 : i < 8 ? 1 : 2, inRow = row < 2 ? 4 : TOOLS.length - 8, k = row < 2 ? i % 4 : i - 8; return [(k - (inRow - 1) / 2) * Math.min(86, vw * .22), -210 - (2 - row) * 100]; }
@@ -2301,13 +2301,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     stTop = top(stackTrack); stRange = Math.max(1, stackTrack.offsetHeight - vh);
     RX = mobile ? vw * .44 : Math.min(vw * .42, 620); RY = mobile ? Math.min(vh * .46, 380) : Math.min(vh * .58, 480);
     COLS = mobile ? 5 : 9; PX = mobile ? Math.min(74, (vw - 24) / 5) : Math.min(112, (vw - 80) / 9); PY = mobile ? 84 : 116; BS = 1; BRX = COLS * PX / 2;
-    const pinBox = $('#giftStage').parentElement.getBoundingClientRect(), headB = stackHead.getBoundingClientRect().bottom - pinBox.top, stageY = pinBox.height * (mobile ? .86 : .84);
-    GTOP = headB + (mobile ? 18 : 30) - stageY;
+    // heading, icon rows and gift stack as one tight group: the gift sits right under the last row of icons
+    const pinBox = $('#giftStage').parentElement.getBoundingClientRect(), headB = stackHead.getBoundingClientRect().bottom - pinBox.top;
+    const giftTop = mobile ? 125 : 170, gapTop = mobile ? 18 : 30, gapMid = mobile ? 18 : 40, gridH = Math.ceil(TOOLS.length / COLS) * PY;
+    const stageY = Math.min(pinBox.height - (mobile ? 120 : 150), headB + gapTop + gridH + gapMid + giftTop);
+    $('#giftStage').style.top = stageY + 'px';
+    GTOP = headB + gapTop - stageY; GIFT_LIFT = Math.max(0, stageY - (headB + gapTop + giftTop));
   }
   function frameStack(y) {
     const q = clamp((y - stTop) / stRange), now = performance.now() / 1000;
     const rise = ss(range(q, 0, .05)), shake = range(q, .03, .17), open = ss(range(q, .16, .25)), drop = ss(range(q, .14, .28));
-    giftStageEl.style.transform = `translate3d(0, ${(-(1 - drop) * vh * (mobile ? .26 : .3)).toFixed(1)}px, 0)`;
+    giftStageEl.style.transform = `translate3d(0, ${(-(1 - drop) * GIFT_LIFT).toFixed(1)}px, 0)`;
     const amp = reduce ? 0 : shake * (1 - open) * 3.5, rot = Math.sin(now * 23) * amp, hop = Math.abs(Math.sin(now * 11.5)) * amp * 1.4;
     gift.style.transform = `translate3d(0, ${((1 - rise) * vh * .08 - hop).toFixed(1)}px, 0) rotate(${rot.toFixed(2)}deg) scale(${(.9 + .1 * rise).toFixed(3)})`;
     lidG.style.transform = `translate(${(open * 90).toFixed(1)}px, ${(-open * 150 + Math.sin(open * Math.PI) * -40 + ss(range(q, .25, .38)) * 110).toFixed(1)}px) rotate(${(open * 28).toFixed(1)}deg)`;
