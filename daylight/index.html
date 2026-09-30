@@ -69,7 +69,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 /* =========================================================
    1 · THE VALLEY
    ========================================================= */
-.valley { position: relative; height: 290vh; }
+.valley { position: relative; height: 260vh; }
+.stage .shade { position: absolute; z-index: 4; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(180deg, rgba(255, 248, 236, 0) 30%, rgba(255, 248, 236, .55)); }
 .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; overflow: clip; background: #2c7fd6; touch-action: pan-y; }
 .cam { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
 .scene { position: absolute; inset: 0; }
@@ -182,30 +183,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .btn-ghost:hover { background: rgba(19, 35, 58, .12); }
 
 /* opening + closing clouds */
-.veil { position: absolute; z-index: 20; inset: 0; pointer-events: none; animation: gone 0s 3.1s forwards; }
-.veil::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 60%, #fff, #EAF5FF); animation: fadeout 1.4s .9s var(--ease) forwards; }
-.veil img { position: absolute; width: 110vw; min-width: 760px; filter: blur(1px); }
-.veil .c1 { left: -40vw; top: -18vh; animation: vl 2.6s .25s cubic-bezier(.65, 0, .2, 1) forwards; }
-.veil .c2 { right: -44vw; top: 4vh; transform: scaleX(-1); animation: vr 2.6s .35s cubic-bezier(.65, 0, .2, 1) forwards; }
-.veil .c3 { left: -24vw; bottom: -34vh; animation: vd 2.6s .2s cubic-bezier(.65, 0, .2, 1) forwards; }
-.veil .c4 { right: -30vw; bottom: -38vh; transform: scaleX(-1); animation: vd2 2.6s .3s cubic-bezier(.65, 0, .2, 1) forwards; }
-.veil .c5 { left: -5vw; top: 18vh; animation: vc 2.3s .15s cubic-bezier(.65, 0, .2, 1) forwards; }
-@keyframes vl { to { transform: translate(-80vw, -26vh) scale(1.6); opacity: .4; } }
-@keyframes vr { to { transform: translate(80vw, -22vh) scale(-1.6, 1.6); opacity: .4; } }
-@keyframes vd { to { transform: translate(-60vw, 70vh) scale(1.7); } }
-@keyframes vd2 { to { transform: translate(60vw, 70vh) scale(-1.7, 1.7); } }
-@keyframes vc { to { transform: translate(0, -90vh) scale(2.2); opacity: 0; } }
+.veil { position: absolute; z-index: 20; inset: 0; pointer-events: none; background: #FFFDF8; animation: fadeout 1.6s .3s cubic-bezier(.4, 0, .2, 1) forwards, gone 0s 2s forwards; }
 @keyframes fadeout { to { opacity: 0; } }
 @keyframes gone { to { visibility: hidden; } }
-.curtain { position: absolute; z-index: 12; inset: 0; pointer-events: none; }
-.curtain img { position: absolute; will-change: transform, opacity; filter: blur(1.5px); }
-.fog { position: absolute; left: 0; right: 0; bottom: 0; height: 120%; background: linear-gradient(to top, #FFFDF8 0%, rgba(255, 253, 248, .92) 28%, rgba(255, 253, 248, 0) 62%); transform: translateY(100%); will-change: transform; }
-.whiteout { position: absolute; z-index: 13; inset: 0; background: var(--paper); opacity: 0; pointer-events: none; }
 
 /* =========================================================
    2 · HOW I GOT HERE
    ========================================================= */
-.story { position: relative; height: 250vh; background: var(--paper); }
+.story { position: relative; z-index: 8; height: 250vh; margin-top: -48vh; background: var(--paper); }
+.story::before, .story::after { content: ""; position: absolute; left: 0; right: 0; pointer-events: none; background-size: 100% 100%; background-repeat: no-repeat; }
+.story::before { top: -74px; height: 80px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 200' preserveAspectRatio='none'%3E%3Cpath d='M0 14.2 L-1.6 14.2 L9.0 13.4 L24.7 29.6 L31.7 23.8 L42.5 14.2 L58.1 30.2 L68.5 16.2 L78.5 28.1 L91.2 13.8 L101.0 40.1 L111.0 13.9 L124.4 24.0 L135.8 24.5 L146.5 23.1 L156.1 38.4 L165.5 46.9 L175.1 25.7 L189.1 22.3 L203.0 16.2 L209.3 25.9 L221.4 28.4 L233.7 48.9 L241.8 17.0 L256.2 17.1 L264.7 39.0 L279.0 31.7 L290.3 50.1 L298.7 33.2 L310.6 32.7 L324.1 18.4 L333.0 14.9 L347.2 36.2 L352.8 15.6 L365.8 35.3 L380.7 21.3 L386.2 30.1 L401.1 32.2 L411.1 17.4 L420.0 23.6 L432.8 33.7 L442.9 38.0 L455.1 17.4 L468.7 39.9 L476.3 17.3 L487.3 48.1 L497.3 32.4 L514.1 20.8 L523.1 29.4 L533.3 14.0 L546.7 31.8 L554.6 26.4 L567.5 29.9 L578.7 27.1 L591.4 50.0 L602.8 33.2 L608.4 48.8 L625.0 43.6 L631.3 25.9 L645.9 32.4 L652.6 49.3 L668.9 14.5 L679.5 31.3 L691.2 16.4 L699.0 31.6 L710.9 40.5 L719.4 25.0 L735.5 42.3 L743.6 28.9 L752.6 30.4 L764.2 23.9 L779.5 18.8 L788.8 50.3 L797.7 25.6 L811.2 21.5 L823.9 13.4 L831.5 18.6 L844.0 46.5 L857.8 32.8 L866.6 19.4 L880.2 44.6 L887.8 23.9 L901.3 39.6 L909.6 30.6 L923.8 33.7 L934.4 25.4 L946.9 22.2 L954.4 31.1 L967.3 38.7 L979.4 19.9 L986.7 30.7 L1001.9 15.8 L1000 200 L0 200 Z' fill='%23F4E6CC'/%3E%3C/svg%3E"); filter: drop-shadow(0 -10px 18px rgba(19, 35, 58, .16)); }
+.story::after { top: -52px; height: 56px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 200' preserveAspectRatio='none'%3E%3Cpath d='M0 24.0 L-0.2 24.0 L13.3 7.8 L24.6 8.9 L34.0 8.3 L45.7 14.2 L53.5 22.1 L66.7 20.9 L79.4 13.2 L86.5 11.9 L101.4 24.7 L109.7 10.7 L124.1 10.6 L135.6 8.5 L144.4 8.0 L158.0 9.3 L164.4 16.0 L176.0 18.8 L189.1 18.9 L200.0 20.9 L210.5 27.8 L222.7 10.2 L236.1 8.5 L245.1 9.8 L258.5 33.0 L267.9 21.3 L278.4 8.3 L289.9 16.1 L297.5 12.7 L311.6 14.2 L325.1 26.9 L335.1 12.4 L342.7 14.0 L353.1 27.7 L368.4 8.1 L379.6 14.8 L387.4 18.2 L398.4 21.5 L410.3 20.0 L423.2 10.1 L431.9 8.4 L442.5 21.2 L456.2 18.9 L464.9 13.3 L480.6 23.8 L489.3 20.7 L500.3 28.7 L510.8 17.8 L521.5 31.4 L534.6 18.7 L544.4 20.1 L555.7 10.2 L564.2 18.9 L574.9 10.2 L589.2 24.3 L599.9 21.2 L613.8 8.1 L624.6 15.5 L633.6 31.7 L645.3 15.5 L656.9 29.0 L667.9 14.2 L678.6 8.5 L688.1 20.3 L701.9 18.1 L713.4 8.2 L722.9 17.4 L730.7 10.4 L742.5 8.6 L755.4 26.4 L768.3 12.5 L774.8 21.3 L791.7 21.8 L797.6 12.7 L812.8 10.4 L819.9 9.4 L836.2 13.0 L844.2 15.2 L856.4 11.1 L866.8 10.5 L880.4 19.0 L890.7 8.5 L902.1 16.4 L908.5 11.6 L924.0 21.7 L935.7 21.0 L947.0 32.5 L954.5 11.2 L966.6 12.7 L977.2 10.7 L988.7 16.4 L999.6 10.4 L1000 200 L0 200 Z' fill='%23FFF8EC'/%3E%3C/svg%3E"); filter: drop-shadow(0 -4px 6px rgba(19, 35, 58, .12)); }
 .story-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; overflow: hidden; }
 .kicker { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
 .kicker svg { width: 22px; height: 22px; fill: var(--coral); animation: spin 14s linear infinite; }
@@ -520,23 +508,9 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       <div class="row" id="s-row"></div>
     </aside>
 
-    <div class="curtain" id="curtain" aria-hidden="true">
-      <div class="fog" id="fog"></div>
-      <img src="v2/h/cloud_s.webp" alt="" data-x="-18" data-w="80" data-s=".9" data-o="0">
-      <img src="v2/h/cloud_s.webp" alt="" data-x="42" data-w="84" data-s="1.1" data-o=".05" data-f="1">
-      <img src="v2/h/cloud_s.webp" alt="" data-x="8" data-w="96" data-s="1.3" data-o=".12">
-      <img src="v2/h/cloud_s.webp" alt="" data-x="-30" data-w="110" data-s="1.5" data-o=".2" data-f="1">
-      <img src="v2/h/cloud_s.webp" alt="" data-x="30" data-w="120" data-s="1.7" data-o=".26">
-    </div>
-    <div class="whiteout" id="whiteout"></div>
 
-    <div class="veil" aria-hidden="true">
-      <img class="c5" src="v2/h/cloud_s.webp" alt="">
-      <img class="c3" src="v2/h/cloud_s.webp" alt="">
-      <img class="c4" src="v2/h/cloud_s.webp" alt="">
-      <img class="c1" src="v2/h/cloud_s.webp" alt="">
-      <img class="c2" src="v2/h/cloud_s.webp" alt="">
-    </div>
+    <div class="shade" id="shade"></div>
+    <div class="veil" aria-hidden="true"></div>
   </div>
 </section>
 
@@ -741,7 +715,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const stage = $('#stage'), cam = $('#cam'), scene = $('#scene'), valley = $('#top');
   const layers = $$('.ly', scene).map(el => ({ el, d: +el.dataset.d || 0 }));
   const chips = $('#chips'), heroCopy = $('#heroCopy'), places = $('#places'), cue = $('#cue'), hint = $('#hint'), sheet = $('#sheet');
-  const fog = $('#fog'), curtain = $$('#curtain img'), whiteout = $('#whiteout');
+  const shade = $('#shade'); const t0 = performance.now();
   let SW = 0, SH = 0, baseX = 0, baseY = 0, ax = .5, vTop = 0, vRange = 1, pV = 0;
   const cur = { x: 0, y: 0, s: 1.18 }, ptr = { x: 0, y: 0, sx: 0, sy: 0 };
   let focusId = null, rate = 2;
@@ -752,7 +726,6 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     if (mobile) ax = clamp(ax, 0, 1);
     baseX = (vw - SW) * (mobile ? ax : .5); baseY = (vh - SH) * .55;
     vTop = top(valley); vRange = Math.max(1, valley.offsetHeight - vh);
-    curtain.forEach(im => { im.style.width = (+im.dataset.w) + 'vw'; im.style.left = (+im.dataset.x) + 'vw'; im.style.minWidth = (+im.dataset.w * 7) + 'px'; });
     if (!cur.ok) { cur.x = baseX - (cur.s - 1) * SW * .5; cur.y = baseY - (cur.s - 1) * SH * .55; cur.ok = true; }
   }
   const clampCam = o => { o.x = Math.min(0, Math.max(vw - o.s * SW, o.x)); o.y = Math.min(0, Math.max(vh - o.s * SH, o.y)); return o; };
@@ -830,7 +803,9 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     const k = reduce ? 1 : 1 - Math.exp(-dt * rate);
     cur.x += (T.x - cur.x) * k; cur.y += (T.y - cur.y) * k; cur.s += (T.s - cur.s) * k;
     ptr.sx += (ptr.x - ptr.sx) * clamp(dt * 2.6); ptr.sy += (ptr.y - ptr.sy) * clamp(dt * 2.6);
-    const blur = pV > .5 ? (range(pV, .5, .95) * 8).toFixed(2) : 0;
+    const intro = reduce ? 0 : 1 - ss(clamp((performance.now() - t0 - 200) / 2000));
+    const bv = Math.max(intro * 18, ss(range(pV, .3, .95)) * 14);
+    const blur = bv > .05 ? bv.toFixed(2) : 0;
     cam.style.transform = `translate3d(${cur.x.toFixed(2)}px, ${cur.y.toFixed(2)}px, 0) scale(${cur.s.toFixed(4)})`;
     cam.style.filter = blur ? `blur(${blur}px)` : '';
     cam.classList.toggle('flying', pV > .03);
@@ -848,17 +823,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     places.style.opacity = pV > .002 ? (1 - range(pV, .0, .08)).toFixed(3) : '';
     places.style.pointerEvents = pV > .06 ? 'none' : '';
     cue.style.opacity = pV > .002 || focusId ? (1 - range(pV, 0, .06)) * (focusId ? 0 : 1) : '';
-    // cloud curtain rises and swallows the valley
-    const c = range(pV, .06, .9);
-    curtain.forEach(im => {
-      const o = +im.dataset.o, s = +im.dataset.s, q = clamp((c - o) / (1 - o));
-      const yy = (1 - ss(q)) * vh * 1.05 - q * vh * .25, sc = .8 + q * s;
-      im.style.bottom = (-vh * .5) + 'px';
-      im.style.transform = `translate3d(0, ${yy.toFixed(1)}px, 0) scale(${im.dataset.f ? -sc : sc}, ${sc})`;
-      im.style.opacity = q > 0 ? 1 : 0;
-    });
-    fog.style.transform = `translate3d(0, ${((1 - ss(range(pV, .1, .9))) * 100).toFixed(2)}%, 0)`;
-    whiteout.style.opacity = range(pV, .8, .98).toFixed(3);
+    shade.style.opacity = range(pV, .35, .9).toFixed(3);
     if (!focusId) { const fo = (1 - range(pV, .0, .12)); chips.style.opacity = pV > .002 ? fo.toFixed(3) : ''; hint.style.opacity = pV > .002 ? fo.toFixed(3) : ''; }
   }
 
