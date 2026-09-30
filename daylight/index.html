@@ -257,15 +257,29 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .poi:hover .tip, .poi.tipon .tip, .poi:focus-visible .tip { opacity: 1; transform: translate(-50%, 0); }
 /* polaroids that pop out of the map */
 .pols { position: absolute; left: 0; top: 0; z-index: 4; width: 0; height: 0; transform: scale(var(--inv, 1)); transform-origin: 0 0; pointer-events: none; }
-.pol { position: absolute; left: 0; top: 0; width: 118px; padding: 7px 7px 26px; background: #fff; border-radius: 4px; box-shadow: 0 18px 30px -16px rgba(19, 35, 58, .55); cursor: zoom-in; pointer-events: auto;
+.pol { position: absolute; left: 0; top: 0; width: 152px; padding: 9px 9px 34px; background: #fff; border-radius: 14px; box-shadow: 0 18px 30px -16px rgba(19, 35, 58, .55); cursor: zoom-in; pointer-events: auto;
   transform: translate(-50%, -50%) translate(0, 0) rotate(0) scale(.2); opacity: 0; transition: transform .9s var(--spring), opacity .35s; transition-delay: calc(var(--k) * 90ms); }
 .pols.in .pol { opacity: 1; transform: translate(-50%, -50%) translate(var(--x), var(--y)) rotate(var(--r)) scale(1); }
 .pol:hover { transform: translate(-50%, -50%) translate(var(--x), calc(var(--y) - 8px)) rotate(0deg) scale(1.08) !important; z-index: 2; }
-.pol .ph { display: block; width: 100%; aspect-ratio: 1; border-radius: 2px; overflow: hidden; background: var(--g); }
+.pol .ph { display: block; width: 100%; aspect-ratio: 1; border-radius: 9px; overflow: hidden; background: var(--g); }
 .pol .ph img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
 .pol .ph.empty { display: grid; place-items: center; color: #fff; }
 .pol .ph.empty svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
-.pol span { position: absolute; left: 6px; right: 6px; bottom: 6px; font: italic 14px/1 var(--serif); color: var(--ink); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pol span { position: absolute; left: 8px; right: 8px; bottom: 10px; font: italic 16px/1 var(--serif); color: var(--ink); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lm { transform-box: fill-box; transform-origin: 50% 100%; transform: translateY(14px) scale(.8); opacity: .22; filter: grayscale(1); transition: transform 1.1s cubic-bezier(.34, 1.56, .64, 1), opacity .6s, filter .9s; }
+.lm.seen { transform: none; opacity: 1; filter: none; }
+.lm.all { transform: none; opacity: .92; filter: none; }
+.ripple { transform-box: fill-box; transform-origin: 50% 50%; opacity: 0; }
+.ripple.go { animation: ripple 1.6s cubic-bezier(.2, .7, .3, 1) forwards; }
+@keyframes ripple { 0% { transform: scale(.2); opacity: .7; } 100% { transform: scale(3.2); opacity: 0; } }
+.jc-share { margin-top: 18px; padding: 14px; border-radius: 18px; background: color-mix(in srgb, var(--c) 7%, #fff); }
+.jc-share p { margin: 0 0 10px; font: italic 17px/1.3 var(--serif); color: var(--ink); }
+.jc-share a { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 12px; text-decoration: none; color: var(--ink); font: 700 14px/1.2 var(--sans); transition: background .2s; }
+.jc-share a:hover { background: #fff; }
+.jc-share a i { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; color: #fff; flex: none; }
+.jc-share a i svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.jc-share a span { display: block; font-weight: 500; font-size: 12.5px; color: var(--ink-2); }
+.jc-share a em { margin-left: auto; font-style: normal; color: var(--ink-2); }
 .me-tip { position: absolute; left: 0; top: 0; z-index: 1; width: 40px; height: 40px; transform: translate(-50%, -50%) scale(var(--inv, 1)); pointer-events: none; opacity: 0; transition: opacity .4s; }
 .me-tip::before { content: ""; position: absolute; inset: -22px; border-radius: 50%; background: rgba(66, 133, 244, .16); border: 1px solid rgba(66, 133, 244, .35); animation: halo 2.4s ease-in-out infinite; }
 .me-tip img { position: relative; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 2px #4285F4, 0 8px 18px -6px rgba(19, 35, 58, .5); box-sizing: border-box; }
@@ -334,10 +348,10 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .lb-track { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; align-items: center; }
 .lb-track::-webkit-scrollbar { display: none; }
 .lb-slide { flex: none; width: 100%; height: 100%; scroll-snap-align: center; display: grid; place-items: center; align-content: center; gap: 14px; }
-.lb-slide .frame { max-width: min(92vw, 900px); max-height: 66vh; padding: 12px 12px 14px; background: #fff; border-radius: 6px; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .6); transform: scale(.94); transition: transform .5s var(--spring); }
+.lb-slide .frame { max-width: min(92vw, 980px); max-height: 72vh; padding: 14px; background: #fff; border-radius: 24px; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .6); transform: scale(.94); transition: transform .5s var(--spring); }
 .lb.open .lb-slide .frame { transform: none; }
-.lb-slide img { display: block; max-width: 100%; max-height: calc(66vh - 26px); width: auto; height: auto; border-radius: 3px; }
-.lb-slide .empty { width: min(70vw, 520px); aspect-ratio: 4 / 3; border-radius: 3px; display: grid; place-items: center; align-content: center; gap: 10px; background: var(--g); color: #fff; font: 600 15px/1 var(--sans); }
+.lb-slide img { display: block; max-width: 100%; max-height: calc(72vh - 28px); width: auto; height: auto; border-radius: 14px; }
+.lb-slide .empty { width: min(76vw, 620px); aspect-ratio: 4 / 3; border-radius: 14px; display: grid; place-items: center; align-content: center; gap: 10px; background: var(--g); color: #fff; font: 600 15px/1 var(--sans); }
 .lb-slide .empty svg { width: 44px; height: 44px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .lb-slide figcaption { font: italic 22px/1.2 var(--serif); color: #fff; text-align: center; }
 .lb-foot { display: flex; justify-content: center; align-items: center; gap: 16px; font: 700 14px/1 var(--sans); font-variant-numeric: tabular-nums; }
@@ -582,7 +596,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .mapctl { display: none; }
   .jtl { bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); padding: 8px 12px; gap: 10px; }
   .jtl .yr { display: none; }
-  .pol { width: 92px; }
+  .pol { width: 120px; }
   .pols { transform: scale(calc(var(--inv, 1) * .62)); }
   .sec-head h2 { font-size: clamp(2rem, 9.2vw, 3rem); }
   .desk .item:nth-child(1) { left: 4% !important; top: 2% !important; width: 56%; }
@@ -929,53 +943,53 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   };
   const LI = 'https://www.linkedin.com/in/jameschughh/', IG = 'https://www.instagram.com/jamieships', APP = 'https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140';
   const STOPS = [
-    { id: 'jee', when: '2021', place: 'New Delhi', icon: 'cap', c: '#D2553A', at: [330, 1030], name: 'NSUT',
+    { id: 'jee', when: '2021', place: 'New Delhi', icon: 'cap', c: '#D2553A', at: [330, 1240], lift: 175, name: 'NSUT',
       title: 'The day JEE changed everything.',
       txt: 'I cleared JEE and got into <b>NSUT</b> for Mechanical Engineering. I had even cleared Waterloo Mathematics, but somehow, Delhi felt like where I was meant to be. I just didn’t know yet that engineering wouldn’t be the path I’d end up following.',
       photos: [['', 'JEE results day'], ['', 'First day at NSUT'], ['', 'Campus, 2021']],
-      pois: [[190, 900, 'check', 'Cleared Waterloo Mathematics too.']] },
-    { id: 'app', when: 'April 2022', place: 'New Delhi', icon: 'phone', c: '#7B5CD6', at: [620, 560], name: 'The failed app',
+      pois: [[190, 1120, 'check', 'Cleared Waterloo Mathematics too.']] },
+    { id: 'app', when: 'April 2022', place: 'New Delhi', icon: 'phone', c: '#7B5CD6', at: [660, 1080], lift: 150, name: 'The failed app',
       title: 'A failed app changed my life.',
       txt: 'A friend and I tried building an app together. It didn’t work, but somewhere along the way I opened <b>Figma</b> and got completely hooked. The app failed. I accidentally found UX, and, eventually, the career I wanted.',
       photos: [['', 'The app that didn’t work'], ['', 'My first Figma file'], ['', 'Late nights, 2022']],
-      pois: [[770, 460, 'pen', 'Opened Figma. Never really closed it.']] },
-    { id: 'iitd', when: '2022 – 2023', place: 'New Delhi', icon: 'bulb', c: '#2E9E6B', at: [930, 1000], name: 'IIT Delhi',
+      pois: [[800, 980, 'pen', 'Opened Figma. Never really closed it.']] },
+    { id: 'iitd', when: '2022 – 2023', place: 'New Delhi', icon: 'bulb', c: '#2E9E6B', at: [990, 1110], lift: 165, name: 'IIT Delhi',
       title: 'I started chasing that feeling.',
       txt: 'I began teaching myself design and got an internship at <b>IIT Delhi</b>. For the first time, the things I was learning at night were solving problems for someone beyond myself. I realised I didn’t just enjoy designing. I enjoyed figuring things out.',
       photos: [['', 'Self-taught, one tutorial at a time'], ['', 'IIT Delhi internship'], ['', 'Figuring things out']],
-      pois: [[1060, 1110, 'book', 'Learning at night, designing by day.']] },
-    { id: 'ht', when: '2024', place: 'New Delhi', icon: 'news', c: '#1E7FC8', at: [1080, 430], name: 'Hindustan Times',
+      pois: [[1130, 1200, 'book', 'Learning at night, designing by day.']] },
+    { id: 'ht', when: '2024', place: 'New Delhi', icon: 'news', c: '#1E7FC8', at: [1320, 900], lift: 235, name: 'Hindustan Times',
       title: 'HT Media made it real.',
       txt: 'At <b>Hindustan Times</b>, design became a real job, not just something I was learning on the side. Around the same time, I started sharing my work on <b>Instagram and LinkedIn</b>, slowly turning making things into something I could share with other people too.',
-      links: [['LinkedIn', LI, 'in'], ['Instagram', IG, 'ig']],
+      share: true,
       photos: [['photo', 'Me, around then'], ['', 'Design as a real job'], ['', 'The first post I shared']],
-      pois: [[1250, 340, 'in', 'LinkedIn', LI, '#0A66C2'], [1250, 520, 'ig', 'Instagram', IG, '#E1306C']] },
-    { id: 'eazydiner', when: 'Feb – Apr 2025', place: 'New Delhi', logo: 'logo-eazydiner', c: '#EE5A2B', at: [1230, 1170], name: 'EazyDiner',
+      pois: [[960, 420, 'in', 'LinkedIn', LI, '#0A66C2'], [1150, 410, 'ig', 'Instagram', IG, '#E1306C'], [890, 560, 'camera', 'Creator corner: design, building, career, and a few things I’ve learned along the way.']] },
+    { id: 'eazydiner', when: 'Feb – Apr 2025', place: 'New Delhi', logo: 'logo-eazydiner', c: '#EE5A2B', at: [1640, 880], lift: 150, name: 'EazyDiner',
       title: 'EazyDiner taught me to look beyond the screen.',
       txt: 'I started noticing that good design wasn’t really about the interface. It was about what people <b>felt, understood, and did</b> because of it. That shift quietly changed the way I approached every product after that.',
       stats: [['+41%', 'payment success'], ['300+', 'offers, ranked']],
       links: [['The Coupon Hunter', CS + 'eazydiner']],
       photos: [['ed1', 'The Coupon Hunter'], ['ed3', 'Every offer, sorted'], ['ed4', 'Wohoo, you saved']],
-      pois: [[1090, 1290, 'ticket', '300+ offers, and the best one shown first.']] },
-    { id: 'mmt', when: 'Apr – Oct 2025', place: 'Gurgaon', logo: 'logo-mmt', c: '#2A7BD1', at: [1790, 780], name: 'MakeMyTrip',
+      pois: [[1780, 980, 'ticket', '300+ offers, and the best one shown first.']] },
+    { id: 'mmt', when: 'Apr – Oct 2025', place: 'Gurgaon', logo: 'logo-mmt', c: '#2A7BD1', at: [2170, 700], lift: 190, name: 'MakeMyTrip',
       title: 'Then everything got bigger at MakeMyTrip.',
       txt: 'Millions of users. Complicated journeys. Tiny decisions that suddenly mattered a lot more. <b>MakeMyTrip</b> showed me what product design looked like at scale, and pushed me to think beyond individual screens.',
       stats: [['4,500+', 'bookings a day use it'], ['16 → 35%', 'hotels replying']],
       links: [['Special Requests', CS + 'requests'], ['Swipr.AI', CS + 'swipr']],
       photos: [['mmt1', 'Special Requests'], ['mmt2', 'Every ask, sorted'], ['mmt3', 'Chat with the hotel']],
-      pois: [[1930, 680, 'bell', 'Hotels now reply: 16% → 35%.'], [1660, 900, 'heart', 'Swipr.AI: swipe right on a hotel.']] },
-    { id: 'quiet', when: 'Oct – Dec 2025', place: 'Gurgaon', icon: 'moon', c: '#6B7A99', at: [2030, 1170], name: 'The quiet road',
+      pois: [[2310, 800, 'bell', 'Hotels now reply: 16% → 35%.'], [2040, 820, 'heart', 'Swipr.AI: swipe right on a hotel.']] },
+    { id: 'quiet', when: 'Oct – Dec 2025', place: 'Gurgaon', icon: 'moon', c: '#6B7A99', at: [2490, 660], lift: 150, name: 'The quiet road',
       title: 'Then the road went quiet.',
       txt: 'After MakeMyTrip, I spent two months unemployed. It wasn’t part of the plan, but it gave me time to stop waiting for the next opportunity and start <b>creating my own momentum</b>. In December, <b>OYO</b> became the next chapter.',
       photos: [['', 'Two quiet months'], ['', 'Building my own momentum'], ['logo-oyo', 'December: OYO']],
-      pois: [[2160, 1280, 'bench', 'Two months. A lot of building.']] },
-    { id: 'build', when: '2026', place: 'Gurgaon → Everywhere', logo: 'logo-lastlook', c: '#E8892B', at: [2230, 520], name: 'PRISM · LastLook',
+      pois: [[2620, 770, 'bench', 'Two months. A lot of building.']] },
+    { id: 'build', when: '2026', place: 'Gurgaon → Everywhere', logo: 'logo-lastlook', c: '#E8892B', at: [2800, 430], lift: 175, name: 'PRISM · LastLook',
       title: 'Then I built something of my own.',
       txt: 'At <b>PRISM Group</b>, I was designing for European travel brands while building in public. Then came <b>LastLook</b>, an idea born from a problem I wanted to solve myself. I built and launched it.',
       stats: [['400+', 'downloads'], ['10', 'paying subscribers'], ['400K+', 'organic views']],
       links: [['Get LastLook', APP], ['Follow the build', IG]],
       photos: [['ll1', 'Never forget your things'], ['ll2', 'Find your lost devices'], ['ll3', 'Link items to places']],
-      pois: [[2370, 400, 'rocket', 'Next stop: everywhere.']] }
+      pois: [[2930, 330, 'rocket', 'Next stop: everywhere.']] }
   ];
   const WORK = [
     { id: 'coupon', bg: 'radial-gradient(120% 80% at 15% 0%, #FFC9A8 0%, transparent 55%), radial-gradient(90% 70% at 100% 100%, #E8402A 0%, transparent 60%), linear-gradient(165deg, #FF9A6B, #F25A38)', glow: '#FF7A4F', logo: 'logo-eazydiner', face: ['big', '+41%', 'payment success'], name: 'The Coupon Hunter', co: 'EazyDiner · PayEazy', t: '#FFE3D6', c: '#EE5A2B', icon: 'ticket', cs: CS + 'eazydiner', status: 'Live on app',
@@ -1245,7 +1259,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
      3 · THE JOURNEY (a map you discover)
      ========================================================= */
   const journey = $('#journey'), jTrack = $('#jTrack'), mapview = $('#mapview'), world3 = $('#world3'), mapArt = $('#mapArt'), jcard = $('#jcard'), jcIn = $('#jcIn'), compass = $('#compass'), needle = $('#needle'), meTip = $('#meTip'), polsEl = $('#pols');
-  const N = STOPS.length, MW = 2500, MH = 1500;
+  const N = STOPS.length, MW = 3100, MH = 1500;
   jTrack.style.height = (N * 85 + 170) + 'vh';
   const holeR = STOPS.map(() => 0);
   let jTop = 0, jRange = 1, carve, casing, ghost, fogPath, holes = [], pathLen = 0, stopL = [], jmarks = [], pois = [], lastCard = -2, heading = 0, polFor = -2;
@@ -1254,55 +1268,111 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const grad = c => `linear-gradient(145deg, color-mix(in srgb, ${c} 55%, #fff), ${c})`;
   (function drawMap() {
     const FONT = 'Bricolage Grotesque, sans-serif', LAND = '#F3EEDF', PARK = '#C7E3AE', PARK2 = '#B5D99A', WATER = '#9FD1F4', WATER_E = '#7DBDEB', BLOCK = '#EAE2CF', BLD = '#E0D5BD';
-    let h = `<defs><radialGradient id="hole"><stop offset="0" stop-color="#000"/><stop offset=".3" stop-color="#000"/><stop offset=".62" stop-color="#666"/><stop offset="1" stop-color="#fff"/></radialGradient>
-      <mask id="fogMask" maskUnits="userSpaceOnUse" x="-800" y="-800" width="${MW + 1600}" height="${MH + 1600}"><rect x="-800" y="-800" width="${MW + 1600}" height="${MH + 1600}" fill="#fff"/>
-      <path id="fogPath" fill="none" stroke="#000" stroke-opacity=".45" stroke-width="240" stroke-linecap="round" stroke-linejoin="round"/>${STOPS.map((_, i) => `<circle id="hole${i}" r="0" fill="url(#hole)"/>`).join('')}</mask>
-      <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="30"/></filter></defs>`;
+    let h = `<defs><radialGradient id="hole"><stop offset="0" stop-color="#000"/><stop offset=".35" stop-color="#000"/><stop offset=".7" stop-color="#777"/><stop offset="1" stop-color="#fff"/></radialGradient>
+      <mask id="fogMask" maskUnits="userSpaceOnUse" x="-900" y="-900" width="${MW + 1800}" height="${MH + 1800}"><rect x="-900" y="-900" width="${MW + 1800}" height="${MH + 1800}" fill="#fff"/>
+      <path id="fogPath" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="260" stroke-linecap="round" stroke-linejoin="round"/>${STOPS.map((_, i) => `<circle id="hole${i}" r="0" fill="url(#hole)"/>`).join('')}</mask>
+      <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="30"/></filter>
+      <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF3FD"/><stop offset="1" stop-color="#C9DDF2"/></linearGradient></defs>`;
     h += `<rect x="-3000" y="-3000" width="${MW + 6000}" height="${MH + 6000}" fill="${LAND}"/>`;
-    [[520, 280, 300, 190], [1180, 700, 200, 150], [240, 620, 200, 140], [800, 1360, 280, 160], [1950, 330, 330, 210], [2300, 900, 200, 160], [1900, 1400, 240, 130]].forEach(([cx, cy, rx, ry], k) => {
+    [[560, 300, 320, 190], [1450, 720, 190, 140], [230, 700, 200, 150], [900, 1380, 300, 150], [2400, 320, 360, 210], [2800, 950, 230, 170], [2250, 1380, 260, 130], [1650, 260, 230, 150]].forEach(([cx, cy, rx, ry], k) => {
       h += `<path d="${blob(cx, cy, rx, ry, .18, k * 1.7)}" fill="${PARK}"/>`;
       for (let j = 1; j < 4; j++) h += `<path d="${blob(cx + 10, cy - 6, rx * (1 - j * .22), ry * (1 - j * .22), .2, k * 1.7 + j * .4)}" fill="${j === 3 ? PARK2 : 'none'}" stroke="#A9D18C" stroke-width="1.4" opacity=".8"/>`;
     });
-    STOPS.forEach(st => { const [cx, cy] = st.at, rot = (mrand() - .5) * 24;
-      h += `<g transform="rotate(${rot.toFixed(1)} ${cx} ${cy})"><rect x="${cx - 190}" y="${cy - 140}" width="380" height="280" rx="36" fill="${BLOCK}"/>`;
-      for (let gx = -165; gx < 165; gx += 70) for (let gy = -118; gy < 118; gy += 62) { if (Math.abs(gx + 35) < 80 && Math.abs(gy + 31) < 70) continue; if (mrand() < .2) continue;
-        h += `<rect x="${cx + gx + 6}" y="${cy + gy + 6}" width="${50 - mrand() * 12}" height="${44 - mrand() * 12}" rx="6" fill="${BLD}"/>`; }
+    // quiet background blocks, away from the stops
+    [[480, 700], [860, 640], [1150, 1340], [1520, 1250], [2050, 1100], [2380, 1180], [2700, 1280], [2000, 420], [1180, 380], [2950, 700]].forEach(([cx, cy]) => {
+      h += `<g opacity=".8"><rect x="${cx - 110}" y="${cy - 80}" width="220" height="160" rx="30" fill="${BLOCK}"/>`;
+      for (let gx = -90; gx < 90; gx += 62) for (let gy = -62; gy < 62; gy += 56) if (mrand() > .2) h += `<rect x="${cx + gx + 6}" y="${cy + gy + 6}" width="${44 - mrand() * 10}" height="${40 - mrand() * 10}" rx="6" fill="${BLD}"/>`;
       h += `</g>`; });
-    h += `<path d="M300 180c60-70 220-80 300-20s90 170 0 210-230 40-290-20-70-110-10-170z" fill="${WATER}" stroke="${WATER_E}" stroke-width="3"/>`;
-    const river = 'M1520 -120 C 1450 180, 1620 380, 1540 620 S 1400 900, 1560 1120 S 1640 1420, 1540 1640';
-    h += `<path id="river" d="${river}" fill="none" stroke="${WATER_E}" stroke-width="70" stroke-linecap="round"/><path d="${river}" fill="none" stroke="${WATER}" stroke-width="64" stroke-linecap="round"/>
+    h += `<path d="${blob(420, 260, 150, 80, .12, 3)}" fill="${WATER}" stroke="${WATER_E}" stroke-width="3"/>`;
+    const river = 'M1900 -140 C 1820 180, 2000 380, 1910 620 S 1770 900, 1930 1120 S 2010 1420, 1910 1660';
+    h += `<path id="river" d="${river}" fill="none" stroke="${WATER_E}" stroke-width="74" stroke-linecap="round"/><path d="${river}" fill="none" stroke="${WATER}" stroke-width="68" stroke-linecap="round"/>
       <path d="${river}" fill="none" stroke="#D6ECFB" stroke-width="3" stroke-dasharray="26 34"><animate attributeName="stroke-dashoffset" from="0" to="-120" dur="5s" repeatCount="indefinite"/></path>`;
-    const roads = ['M-100 300 C 400 360, 900 260, 1300 330 S 2000 250, 2600 300', 'M760 -100 C 780 300, 660 700, 760 1600', 'M2040 -100 C 1980 400, 2120 800, 1980 1600', 'M-100 1300 C 500 1250, 1000 1400, 1500 1300 S 2100 1180, 2600 1260'];
-    const main = 'M-100 820 C 300 860, 600 700, 900 760 S 1300 900, 1600 820 S 2200 660, 2600 700';
+    const roads = ['M-100 560 C 500 520, 1000 620, 1500 540 S 2400 460, 3200 520', 'M900 -100 C 940 400, 820 900, 900 1600', 'M2560 -100 C 2500 400, 2640 900, 2520 1600', 'M-100 1420 C 600 1380, 1300 1480, 1900 1400 S 2700 1320, 3200 1360'];
+    const main = 'M-100 1000 C 400 1020, 800 900, 1200 960 S 1700 1040, 2100 920 S 2700 780, 3200 820';
     roads.forEach((d, i) => { h += `<path id="road${i}" d="${d}" fill="none" stroke="#DDD3BC" stroke-width="20" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/>`; });
     h += `<path id="roadM" d="${main}" fill="none" stroke="#E7B84C" stroke-width="26" stroke-linecap="round"/><path d="${main}" fill="none" stroke="#FFD86B" stroke-width="19" stroke-linecap="round"/>`;
-    [[560, 820, 40], [1700, 900, 30], [150, 1250, 26], [2350, 300, 36], [1000, 1250, 26], [1850, 150, 22], [2400, 1420, 20], [900, 120, 22], [1300, 1450, 24], [1300, 560, 18]].forEach(([cx, cy, n]) => { for (let i = 0; i < n; i++) { const a = mrand() * 6.3, r = Math.sqrt(mrand()) * n * 3, x = cx + Math.cos(a) * r * 1.3, y = cy + Math.sin(a) * r * .8, sz = 9 + mrand() * 8;
+    [[660, 820, 30], [2100, 1260, 26], [150, 1250, 24], [2900, 280, 30], [1200, 1250, 22], [2200, 150, 20], [3000, 1400, 18], [1000, 150, 22], [1560, 1450, 22], [1500, 420, 16]].forEach(([cx, cy, n]) => { for (let i = 0; i < n; i++) { const a = mrand() * 6.3, r = Math.sqrt(mrand()) * n * 3, x = cx + Math.cos(a) * r * 1.3, y = cy + Math.sin(a) * r * .8, sz = 9 + mrand() * 8;
       h += `<circle cx="${(x + 3).toFixed(0)}" cy="${(y + 5).toFixed(0)}" r="${sz.toFixed(1)}" fill="#8DBB6E" opacity=".45"/><circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${sz.toFixed(1)}" fill="${['#9CCB7C', '#8CC26C', '#A9D48A'][i % 3]}"/>`; } });
     const car = (id, col, dur, begin) => `<g><rect x="-9" y="-5" width="18" height="10" rx="3" fill="${col}"/><rect x="1" y="-4" width="5" height="8" rx="1.5" fill="#fff" opacity=".7"/><animateMotion dur="${dur}s" begin="${begin}s" repeatCount="indefinite" rotate="auto"><mpath href="#${id}"/></animateMotion></g>`;
-    h += car('roadM', '#E3342F', 38, 0) + car('roadM', '#2A7BD1', 38, -13) + car('roadM', '#13233A', 38, -26) + car('road0', '#EE5A2B', 44, -5) + car('road2', '#7B5CD6', 40, -18) + car('road3', '#2E9E6B', 46, -30) + car('road1', '#E8892B', 42, -9);
+    h += car('roadM', '#E3342F', 42, 0) + car('roadM', '#2A7BD1', 42, -14) + car('roadM', '#13233A', 42, -28) + car('road0', '#EE5A2B', 48, -5) + car('road2', '#7B5CD6', 40, -18) + car('road3', '#2E9E6B', 50, -30) + car('road1', '#E8892B', 42, -9);
     const boat = (dur, begin) => `<g><path d="M-16 4h32l-6 8h-20z" fill="#fff" stroke="#6C9CC2" stroke-width="1.5"/><path d="M0 2V-18l12 18z" fill="#FF6B4A"/><animateMotion dur="${dur}s" begin="${begin}s" repeatCount="indefinite"><mpath href="#river"/></animateMotion></g>`;
     h += boat(70, 0) + boat(70, -35);
-    h += [[300, 400, 90, 0], [900, 1100, 110, -40], [1600, 300, 80, -70]].map(([x, y, dur, b]) => `<ellipse cx="${x}" cy="${y}" rx="220" ry="120" fill="#23405A" opacity=".07" filter="url(#soft)"><animateTransform attributeName="transform" type="translate" from="-900 0" to="2800 0" dur="${dur}s" begin="${b}s" repeatCount="indefinite"/></ellipse>`).join('');
-    h += `<g font-family="${FONT}" font-weight="800" fill="#C4B38E" opacity=".75" letter-spacing="18" text-anchor="middle" font-size="46"><text x="760" y="110">NEW DELHI</text><text x="2040" y="110">GURGAON</text></g>`;
-    h += `<g font-family="${FONT}" font-weight="800" fill="#E8892B" font-size="30" letter-spacing="4"><text x="2250" y="250">EVERYWHERE ↗</text></g>`;
-    h += `<g font-family="${FONT}" font-style="italic" font-weight="600" font-size="20" fill="#3F86C6" text-anchor="middle"><text x="450" y="290">Blue Lake</text></g>`;
-    const P = [[140, 1240], ...STOPS.flatMap((st, i) => i < N - 1 ? [st.at, [(st.at[0] + STOPS[i + 1].at[0]) / 2 + (i % 2 ? 36 : -36), (st.at[1] + STOPS[i + 1].at[1]) / 2]] : [st.at]), [2440, 300]];
+    h += [[300, 400, 90, 0], [900, 1100, 110, -40], [1600, 300, 80, -70]].map(([x, y, dur, b]) => `<ellipse cx="${x}" cy="${y}" rx="220" ry="120" fill="#23405A" opacity=".07" filter="url(#soft)"><animateTransform attributeName="transform" type="translate" from="-900 0" to="3400 0" dur="${dur}s" begin="${b}s" repeatCount="indefinite"/></ellipse>`).join('');
+    h += `<g font-family="${FONT}" font-weight="800" fill="#C4B38E" opacity=".75" letter-spacing="18" text-anchor="middle" font-size="46"><text x="950" y="120">NEW DELHI</text><text x="2500" y="120">GURGAON</text></g>`;
+    h += `<g font-family="${FONT}" font-style="italic" font-weight="600" font-size="20" fill="#3F86C6" text-anchor="middle"><text x="420" y="266">Blue Lake</text></g>`;
+    // ---- the trail: a smooth rise from 2021 (bottom left) to everywhere (top right)
+    const P = [[110, 1360], ...STOPS.map(st => st.at), [3040, 230]];
     let d = `M${P[0][0]} ${P[0][1]}`;
-    for (let i = 0; i < P.length - 1; i++) { const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
-      d += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)}, ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)}, ${p2[0]} ${p2[1]}`; }
+    for (let i = 0; i < P.length - 1; i++) { const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2, t = 5;
+      d += ` C${(p1[0] + (p2[0] - p0[0]) / t).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) / t).toFixed(1)}, ${(p2[0] - (p3[0] - p1[0]) / t).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) / t).toFixed(1)}, ${p2[0]} ${p2[1]}`; }
+    // side trail to the creator corner, off the HT stop
+    const ht = STOPS[3].at, cc = [1070, 590];
+    h += `<path d="M${ht[0]} ${ht[1]} C ${ht[0] - 60} ${ht[1] - 120}, ${cc[0] - 40} ${cc[1] + 140}, ${cc[0]} ${cc[1] + 40}" fill="none" stroke="#E1306C" stroke-width="5" stroke-dasharray="2 14" stroke-linecap="round" opacity=".75"/>`;
+    // ---- landmarks, drawn flat in the map's own style
+    const box = (x, y, w, hh, dd, f, sd, rf) => { const dx = dd * .55, dy = -dd * .4; return `<path d="M${x} ${y - hh}h${w}v${hh}h${-w}z" fill="${f}"/><path d="M${x + w} ${y - hh}l${dx} ${dy}v${hh}l${-dx} ${-dy}z" fill="${sd}"/><path d="M${x} ${y - hh}l${dx} ${dy}h${w}l${-dx} ${-dy}z" fill="${rf}"/>`; };
+    const wins = (x, y, cols, rows, cw, ch, gx, gy, c) => { let o = ''; for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) o += `<rect x="${x + i * (cw + gx)}" y="${y + j * (ch + gy)}" width="${cw}" height="${ch}" rx="2" fill="${c}"/>`; return o; };
+    const tree = (x, y, r = 16, c = '#8CC26C') => `<rect x="${x - 2}" y="${y - 6}" width="4" height="12" fill="#8B6B45"/><circle cx="${x}" cy="${y - r}" r="${r}" fill="${c}"/><circle cx="${x - r * .35}" cy="${y - r * 1.2}" r="${r * .5}" fill="#A9D48A"/>`;
+    const pad = (x, y, rx = 170, ry = 58, c = '#E6DDC6') => `<ellipse cx="${x + 20}" cy="${y}" rx="${rx}" ry="${ry}" fill="${c}"/>`;
+    const LM = {
+      jee: (x, y) => pad(x, y + 4) + tree(x - 150, y) + tree(x + 170, y - 4, 18) +
+        box(x - 120, y, 240, 72, 60, '#C8573F', '#A94632', '#E3826A') + wins(x - 104, y - 60, 7, 2, 20, 18, 12, 14, '#F8E9D8') +
+        box(x - 22, y, 44, 140, 36, '#D66A50', '#B5503C', '#F09A80') + `<path d="M${x - 26} ${y - 140}l26 -34 26 34z" fill="#8E3B2A"/><circle cx="${x}" cy="${y - 112}" r="12" fill="#FFF6E8" stroke="#8E3B2A" stroke-width="3"/><path d="M${x} ${y - 118}v6h5" stroke="#8E3B2A" stroke-width="2.5" fill="none" stroke-linecap="round"/>` +
+        `<rect x="${x - 14}" y="${y - 30}" width="28" height="30" rx="14" fill="#6E2C1F"/><path d="M${x + 40} ${y - 72}v-40" stroke="#6E2C1F" stroke-width="3"/><path d="M${x + 40} ${y - 112}h26l-6 8 6 8h-26z" fill="#FFD23F"/>`,
+      app: (x, y) => pad(x, y + 4, 140) + tree(x - 110, y) +
+        box(x - 80, y, 160, 64, 50, '#9A8BE6', '#7B69CE', '#C2B8F4') + wins(x - 62, y - 50, 2, 1, 36, 22, 16, 0, '#FFF8D6') +
+        `<rect x="${x + 16}" y="${y - 44}" width="54" height="44" rx="3" fill="#6553B8"/>${wins(x + 20, y - 40, 1, 5, 46, 4, 0, 4, '#8E7EDC')}` +
+        `<g transform="translate(${x - 22} ${y - 150}) rotate(-8)"><rect width="44" height="78" rx="9" fill="#13233A"/><rect x="4" y="8" width="36" height="58" rx="4" fill="#B8A8FF"/><path d="M12 30l8 8 12-16" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="18" y="70" width="8" height="3" rx="1.5" fill="#fff"/></g>` +
+        `<path d="M${x + 44} ${y - 140}l14 -10 M${x + 48} ${y - 118}l18 0 M${x + 42} ${y - 98}l14 10" stroke="#FFB020" stroke-width="4" stroke-linecap="round"/>`,
+      iitd: (x, y) => pad(x, y + 4, 190) + tree(x - 170, y) + tree(x + 190, y, 14) +
+        box(x - 140, y, 280, 56, 70, '#DDD8CB', '#C1BAA8', '#F0ECE2') + wins(x - 124, y - 44, 9, 1, 22, 26, 8, 0, '#3E6C9B') +
+        box(x - 50, y - 56, 100, 70, 56, '#D2CCBD', '#B6AF9D', '#E9E4D9') + wins(x - 40, y - 116, 4, 2, 16, 20, 8, 10, '#3E6C9B') +
+        `<g transform="translate(${x + 70} ${y - 170})"><circle r="22" fill="#2E9E6B"/><path d="M-7 8h14M-5 14h10M0 -10a10 10 0 0 0-5 18h10a10 10 0 0 0-5-18z" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>`,
+      ht: (x, y) => pad(x, y + 4, 150) + tree(x - 110, y) + tree(x + 130, y, 14) +
+        box(x - 50, y, 100, 200, 54, '#2C6FB5', '#1F5591', '#6FA6DE') + wins(x - 40, y - 190, 4, 10, 16, 12, 8, 7, '#A9CCF0') +
+        box(x - 110, y, 60, 70, 40, '#EFE7D6', '#D8CCB2', '#FAF5EA') + wins(x - 100, y - 60, 2, 2, 16, 16, 12, 10, '#9CB7D6') +
+        `<rect x="${x - 34}" y="${y - 236}" width="68" height="30" rx="6" fill="#fff"/><text x="${x}" y="${y - 214}" text-anchor="middle" font-family="${FONT}" font-weight="800" font-size="20" fill="#1E4E86">HT</text><path d="M${x} ${y - 200}v-6" stroke="#1F5591" stroke-width="3"/>`,
+      eazydiner: (x, y) => pad(x, y + 4, 170) + tree(x - 140, y) + tree(x + 170, y, 14) +
+        box(x - 100, y, 200, 70, 56, '#F6E8D6', '#E2CFB6', '#EE5A2B') + wins(x - 84, y - 58, 5, 1, 24, 24, 12, 0, '#F4B083') +
+        `<g>${Array.from({ length: 10 }, (_, i) => `<rect x="${x - 104 + i * 21}" y="${y - 36}" width="21" height="18" fill="${i % 2 ? '#fff' : '#EE5A2B'}"/>`).join('')}<path d="M${x - 104} ${y - 18}q10.5 8 21 0${'q10.5 8 21 0'.repeat(9)}" fill="#EE5A2B"/></g>` +
+        [[-70], [0], [70]].map(([dx2]) => `<g transform="translate(${x + dx2 + 20} ${y + 36})"><rect x="-2" y="-26" width="4" height="26" fill="#6B4A2E"/><path d="M-22 -24q22 -20 44 0z" fill="${dx2 ? '#FFB38A' : '#EE5A2B'}"/><ellipse cx="0" cy="0" rx="14" ry="5" fill="#D8C4A4"/></g>`).join(''),
+      mmt: (x, y) => pad(x, y + 4, 170) + tree(x - 150, y) +
+        box(x - 90, y, 180, 140, 60, 'url(#glass)', '#B4CBE6', '#F6FAFF') + wins(x - 80, y - 128, 6, 6, 20, 14, 7, 7, '#7FAEE0') +
+        `<circle cx="${x}" cy="${y - 172}" r="26" fill="#E23A36" stroke="#fff" stroke-width="4"/><text x="${x}" y="${y - 164}" text-anchor="middle" font-family="${FONT}" font-style="italic" font-weight="800" font-size="24" fill="#fff">my</text>` +
+        `<path id="planeLoop" d="M${x - 180} ${y - 150} C ${x - 180} ${y - 330}, ${x + 220} ${y - 330}, ${x + 220} ${y - 150} S ${x - 180} ${y + 30}, ${x - 180} ${y - 150}" fill="none"/>` +
+        `<g><path d="M-14 0l28 -3 6 3-6 3zM-2 -1l-6 -12h5l9 12zM-2 1l-6 12h5l9 -12zM-14 0l-4 -6h3l5 5z" fill="#2A7BD1"/><animateMotion dur="14s" repeatCount="indefinite" rotate="auto"><mpath href="#planeLoop"/></animateMotion></g>`,
+      quiet: (x, y) => `<ellipse cx="${x + 20}" cy="${y + 4}" rx="150" ry="54" fill="#CFE6B8"/>` + tree(x - 90, y - 4, 24, '#8CC26C') + tree(x + 120, y, 16) +
+        `<g><rect x="${x - 50}" y="${y - 34}" width="100" height="8" rx="3" fill="#8B6B45"/><rect x="${x - 50}" y="${y - 52}" width="100" height="7" rx="3" fill="#A07F55"/><rect x="${x - 44}" y="${y - 26}" width="6" height="26" fill="#6B4A2E"/><rect x="${x + 38}" y="${y - 26}" width="6" height="26" fill="#6B4A2E"/></g>` +
+        `<rect x="${x + 64}" y="${y - 120}" width="5" height="120" fill="#6B7A99"/><path d="M${x + 58} ${y - 124}h28l-6 12h-16z" fill="#6B7A99"/><circle cx="${x + 72}" cy="${y - 108}" r="12" fill="#FFE9A8" opacity=".85"/>` +
+        `<path d="M${x - 10} ${y - 160}a26 26 0 1 0 30 30a20 20 0 0 1 -30 -30z" fill="#FFE9A8"/>`,
+      build: (x, y) => pad(x, y + 4, 170) + tree(x - 150, y) +
+        box(x - 100, y, 170, 80, 56, '#FFEAD2', '#F2D2B0', '#E8892B') + wins(x - 86, y - 66, 3, 1, 32, 34, 14, 0, '#FFC98A') +
+        `<rect x="${x - 20}" y="${y - 40}" width="30" height="40" rx="3" fill="#C06A1D"/>` +
+        `<g transform="translate(${x + 110} ${y})"><path d="M0 0C0 0 -38 -52 -38 -84a38 38 0 0 1 76 0c0 32 -38 84 -38 84z" fill="#F07A2A" stroke="#fff" stroke-width="5"/><circle cy="-86" r="14" fill="#fff"/></g>` +
+        `<g transform="translate(${x - 40} ${y - 150}) rotate(35)"><path d="M0 -30c10 8 14 24 10 40h-20c-4 -16 0 -32 10 -40z" fill="#fff" stroke="#13233A" stroke-width="3"/><circle cy="-6" r="5" fill="#2A7BD1"/><path d="M-6 12l-8 12 10-6zM6 12l8 12-10-6z" fill="#E8892B"/><path d="M-4 12q4 14 8 0" fill="#FFB020"/></g>`
+    };
+    const CC = (x, y) => pad(x, y + 4, 120, 44, '#F8D7E3') + tree(x + 110, y, 13) +
+      box(x - 60, y, 120, 58, 44, '#FFF1F6', '#F4D3E0', '#E1306C') + wins(x - 48, y - 46, 2, 1, 30, 22, 14, 0, '#FBC4D8') +
+      `<g transform="translate(${x - 110} ${y})"><circle cy="-70" r="22" fill="none" stroke="#FFE08A" stroke-width="7"/><path d="M0 -48v48M-12 0l12 -18 12 18" stroke="#13233A" stroke-width="3" fill="none"/></g>` +
+      `<g transform="translate(${x + 10} ${y - 100})"><rect x="-16" y="-12" width="32" height="24" rx="5" fill="#13233A"/><circle r="7" fill="#9FD3FF"/></g>` +
+      `<text x="${x}" y="${y + 40}" text-anchor="middle" font-family="${FONT}" font-weight="800" font-size="18" fill="#C21E5A" letter-spacing="2">CREATOR CORNER</text>`;
+    h += `<g class="lm all" id="lmCC">${CC(cc[0], cc[1])}</g>`;
+    STOPS.forEach((st, i) => { h += `<circle class="ripple" id="rip${i}" cx="${st.at[0]}" cy="${st.at[1] - 40}" r="90" fill="none" stroke="${st.c}" stroke-width="6"/><g class="lm" id="lm${i}">${LM[st.id](st.at[0], st.at[1] - 16)}</g>`; });
+    // start and finish flags
+    h += `<g font-family="${FONT}" font-weight="800" font-size="22"><g transform="translate(110 1360)"><path d="M0 0v-70" stroke="#13233A" stroke-width="4"/><path d="M0 -70h54l-10 14 10 14h-54z" fill="#FF6B4A"/><text x="8" y="-49" fill="#fff" font-size="16">2021</text></g>
+      <g transform="translate(3040 230)"><path d="M0 0v-70" stroke="#13233A" stroke-width="4"/><path d="M0 -70h160l-10 14 10 14h-160z" fill="#E8892B"/><text x="8" y="-49" fill="#fff" font-size="16">EVERYWHERE ↗</text></g></g>`;
     h += `<path id="ghostPath" d="${d}" fill="none" stroke="#4285F4" stroke-opacity=".55" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 16"/>`;
-    h += `<rect id="fog" x="-800" y="-800" width="${MW + 1600}" height="${MH + 1600}" fill="#EEF0E2" mask="url(#fogMask)" opacity="0"/>`;
+    h += `<rect id="fog" x="-900" y="-900" width="${MW + 1800}" height="${MH + 1800}" fill="#EEF0E2" mask="url(#fogMask)" opacity="0"/>`;
     h += `<path id="casing" d="${d}" fill="none" stroke="#1A5FD0" stroke-width="15" stroke-linecap="round"/><path id="carve" d="${d}" fill="none" stroke="#4285F4" stroke-width="10" stroke-linecap="round"/>`;
     mapArt.setAttribute('viewBox', `0 0 ${MW} ${MH}`); mapArt.innerHTML = h;
     world3.style.width = MW + 'px'; world3.style.height = MH + 'px';
     carve = $('#carve'); casing = $('#casing'); ghost = $('#ghostPath'); fogPath = $('#fogPath'); fogPath.setAttribute('d', d);
-    holes = STOPS.map((_, i) => $('#hole' + i)); STOPS.forEach((st, i) => { holes[i].setAttribute('cx', st.at[0]); holes[i].setAttribute('cy', st.at[1]); });
+    holes = STOPS.map((_, i) => $('#hole' + i)); STOPS.forEach((st, i) => { holes[i].setAttribute('cx', st.at[0]); holes[i].setAttribute('cy', st.at[1] - 60); });
     pathLen = carve.getTotalLength();
     [carve, casing, fogPath].forEach(p => { p.style.strokeDasharray = pathLen; p.style.strokeDashoffset = pathLen; });
     stopL = STOPS.map(st => { let best = 0, bd = 1e12; for (let l = 0; l <= pathLen; l += 4) { const q = carve.getPointAtLength(l), dd = (q.x - st.at[0]) ** 2 + (q.y - st.at[1]) ** 2; if (dd < bd) { bd = dd; best = l; } } return best; });
     const pinShape = c => `<svg viewBox="0 0 54 66"><path d="M27 64C27 64 4 40 4 25a23 23 0 0 1 46 0c0 15-23 39-23 39z" fill="${c}" stroke="#fff" stroke-width="3"/></svg>`;
     STOPS.forEach((st, i) => {
-      const m = document.createElement('button'); m.className = 'mk'; m.type = 'button'; m.style.setProperty('--c', st.c); m.style.left = st.at[0] + 'px'; m.style.top = st.at[1] + 'px';
+      const m = document.createElement('button'); m.className = 'mk'; m.type = 'button'; m.style.setProperty('--c', st.c); m.style.left = st.at[0] + 'px'; m.style.top = (st.at[1] - st.lift) + 'px';
       m.setAttribute('aria-label', `Go to ${st.when}: ${st.name}`);
       m.innerHTML = `<span class="halo"></span><span class="dot"></span><span class="pinhead">${pinShape(st.c)}${st.logo ? `<img class="lg" src="${img(st.logo)}" alt="">` : `<span class="ic"><svg viewBox="0 0 24 24">${ICONS[st.icon]}</svg></span>`}</span><span class="nm">${st.name}</span>`;
       m.addEventListener('click', () => { if (!dragMoved) walkTo(i); }); world3.insertBefore(m, meTip); jmarks.push(m);
@@ -1314,7 +1384,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         world3.insertBefore(p, meTip); pois.push(p); });
     });
   })();
-  const fogRect = $('#fog');
+  const fogRect = $('#fog'), lms = STOPS.map((_, i) => $('#lm' + i)), rips = STOPS.map((_, i) => $('#rip' + i)), found = STOPS.map(() => false);
   // timeline
   const jtlDots = $('#jtlDots'), jtlYr = $('#jtlYr');
   const tlBtns = STOPS.map((st, i) => { const li = document.createElement('li'); const b = document.createElement('button'); b.type = 'button'; b.style.setProperty('--c', st.c); b.setAttribute('aria-label', `${st.when}, ${st.name}`); b.title = `${st.when} · ${st.name}`; b.addEventListener('click', () => walkTo(i)); li.appendChild(b); jtlDots.appendChild(li); return b; });
@@ -1327,8 +1397,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     if (i < 0) { showPols.t = setTimeout(() => polsEl.innerHTML = '', 400); return; }
     const st = STOPS[i], left = st.at[0] > MW * .75;
     showPols.t = setTimeout(() => {
-      polsEl.style.left = st.at[0] + 'px'; polsEl.style.top = st.at[1] + 'px';
-      const spots = left ? [[-250, -170, -9], [-150, -250, 4], [-40, -205, -3]] : [[120, -210, -7], [230, -265, 5], [335, -195, 11]];
+      polsEl.style.left = st.at[0] + 'px'; polsEl.style.top = (st.at[1] - st.lift + 20) + 'px';
+      const spots = left ? [[-330, 30, -8], [-190, -30, 4], [-60, 40, -5]] : [[150, -10, -7], [295, -60, 5], [440, 10, 10]];
       polsEl.innerHTML = st.photos.map((ph, k) => `<button class="pol" type="button" style="--k:${k};--x:${spots[k][0]}px;--y:${spots[k][1]}px;--r:${spots[k][2]}deg;--g:${grad(st.c)}" data-i="${k}" aria-label="Open photo: ${ph[1]}"><span class="ph${ph[0] ? '' : ' empty'}">${photoHTML(st, ph)}</span><span>${ph[1]}</span></button>`).join('');
       requestAnimationFrame(() => requestAnimationFrame(() => polsEl.classList.add('in')));
     }, 280);
@@ -1358,6 +1428,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     const links = (st.links || []).map(([t, u, ic], k) => `<a class="cbtn${k ? ' ghost' : ''}" href="${u}" target="_blank" rel="noopener">${ic ? `<svg viewBox="0 0 24 24">${ICONS[ic]}</svg>` : ''}${t} ↗</a>`).join('');
     return `${`<div class="jc-top">${tile}<p><b>${String(i + 1).padStart(2, '0')} / ${String(N).padStart(2, '0')}</b>${st.when} · ${st.place}</p></div>`}
       <h3>${st.title}</h3><p class="txt">${st.txt}</p>
+      ${st.share ? `<div class="jc-share"><p>Around then I started sharing what I make.</p><a href="${IG}" target="_blank" rel="noopener"><i style="background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF)"><svg viewBox="0 0 24 24">${ICONS.ig}</svg></i><div>@jamieships<span>Design, building and career on Instagram</span></div><em>↗</em></a><a href="${LI}" target="_blank" rel="noopener"><i style="background:#0A66C2"><svg viewBox="0 0 24 24">${ICONS.in}</svg></i><div>James Chugh<span>Work and lessons on LinkedIn</span></div><em>↗</em></a></div>` : ''}
       ${st.stats ? `<ul class="jc-stats">${st.stats.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>` : ''}
       <div class="jc-act"><button class="cbtn ghost" type="button" data-photos="${i}"><svg viewBox="0 0 24 24">${ICONS.camera}</svg>Photos</button>${links}</div>
       <div class="jc-nav"><button type="button" data-step="${i - 1}" ${i === 0 ? 'disabled' : ''}><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>Back</button><span>${st.name}</span><button type="button" data-step="${i + 1}" ${i === N - 1 ? 'disabled' : ''}>Next<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button></div>`;
@@ -1391,7 +1462,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const lenAt = pos => { if (pos <= 0) return pos < -.999 ? 0 : stopL[0] * (1 + pos); const i = Math.min(N - 2, Math.floor(pos)), f = pos - i; return stopL[i] + (stopL[i + 1] - stopL[i]) * f; };
   const cam3 = { x: 0, y: 0, s: 0, ok: false };
   const cardW = () => mobile ? 0 : Math.min(26 * 16, vw - 32) + 44;
-  function viewFor(cx, cy, s) { const L = cardW(), fx = mobile ? vw * .5 : L + (vw - L) * .42, fy = mobile ? vh * .37 : vh * .56; return { x: fx - cx * s, y: fy - cy * s, s }; }
+  function viewFor(cx, cy, s) { const L = cardW(), fx = mobile ? vw * .5 : L + (vw - L) * .42, fy = mobile ? vh * .42 : vh * .62; return { x: fx - cx * s, y: fy - cy * s, s }; }
   function overview() { const s = Math.min((vw - 48) / MW, (vh - 150) / MH) * (mobile ? 1.35 : 1); return { x: (vw - MW * s) / 2, y: 70 + (vh - 70 - 70 - MH * s) / 2, s }; }
   function frameJourney(dt, y) {
     const p = clamp((y - jTop) / jRange), ph = phase(p);
@@ -1409,12 +1480,14 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     const carved = ph.pos < 0 ? stopL[0] * clamp(ph.pos + 1) : L;
     const off = (pathLen - carved).toFixed(1);
     carve.style.strokeDashoffset = off; casing.style.strokeDashoffset = off; fogPath.style.strokeDashoffset = off;
-    fogRect.setAttribute('opacity', (.6 * ph.k * (1 - ph.out)).toFixed(3));
+    fogRect.setAttribute('opacity', (.5 * ph.k * (1 - ph.out)).toFixed(3));
     ghost.style.opacity = (1 - ph.k * .8 + ph.out * .8).toFixed(3);
-    STOPS.forEach((_, i) => { const d = clamp((ph.pos - (i - .6)) / .75), want = ss(d) * (mobile ? 480 : 560); holeR[i] += (want - holeR[i]) * (reduce ? 1 : clamp(dt * 2.2)); holes[i].setAttribute('r', holeR[i].toFixed(1)); });
+    STOPS.forEach((_, i) => { const d = clamp((ph.pos - (i - .7)) / .8), want = ss(d) * (mobile ? 520 : 620); holeR[i] += (want - holeR[i]) * (reduce ? 1 : clamp(dt * 2.2)); holes[i].setAttribute('r', holeR[i].toFixed(1)); });
     const settled = ph.k > .95 && !ph.out && Math.abs(ph.pos - Math.round(ph.pos)) < .06;
     const active = ph.pos < -.35 || ph.out > .3 ? -1 : Math.round(ph.pos);
     if (active !== lastActive) { lastActive = active; pan.x = 0; pan.y = 0; pois.forEach(q => q.classList.remove('tipon')); }
+    lms.forEach((g, i) => { const reached = ph.pos >= i - .08 && ph.k > .5 && ph.out < .3; g.classList.toggle('seen', reached); g.classList.toggle('all', ph.k < .5 || ph.out > .3);
+      if (reached && !found[i]) { found[i] = true; rips[i].classList.remove('go'); void rips[i].getBBox(); rips[i].classList.add('go'); } if (!reached && ph.pos < i - .5) found[i] = false; });
     jmarks.forEach((m, i) => { const seen = ph.k < .5 || ph.out > .3 || ph.pos >= i - .08; m.classList.toggle('seen', seen); m.classList.toggle('on', i === active); m.classList.toggle('dim', ph.k > .5 && !ph.out && ph.pos < i - .08); });
     pois.forEach(q => q.classList.toggle('seen', ph.pos >= +q.dataset.stop - .08 && ph.k > .9 && !ph.out));
     showPols(settled ? active : -1);
