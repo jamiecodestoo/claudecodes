@@ -2,7 +2,7 @@
 <meta name="description" content="James Chugh, product designer. A painted valley of the places I've worked, and the numbers my work moved.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;600&display=swap">
 <style>
 /* Layout: a layered painted valley you fly into; clouds carry you onto paper where the
    story draws itself; a pinned diorama walks place to place; stacked case cards; a desk
@@ -23,6 +23,7 @@
   --shadow: 0 30px 70px -24px rgba(19, 35, 58, .38), 0 2px 8px rgba(19, 35, 58, .08);
   --shadow-sm: 0 10px 24px -12px rgba(19, 35, 58, .35);
   --sans: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --geist: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --ease: cubic-bezier(.22, 1, .36, 1);
   --spring: cubic-bezier(.34, 1.56, .64, 1);
@@ -190,16 +191,14 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 /* =========================================================
    2 · HOW I GOT HERE
    ========================================================= */
-.story { position: relative; z-index: 8; height: 250vh; margin-top: -48vh; background: var(--paper); }
-.story::before, .story::after { content: ""; position: absolute; left: 0; right: 0; pointer-events: none; background-size: 100% 100%; background-repeat: no-repeat; }
-.story::before { top: -74px; height: 80px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 200' preserveAspectRatio='none'%3E%3Cpath d='M0 14.2 L-1.6 14.2 L9.0 13.4 L24.7 29.6 L31.7 23.8 L42.5 14.2 L58.1 30.2 L68.5 16.2 L78.5 28.1 L91.2 13.8 L101.0 40.1 L111.0 13.9 L124.4 24.0 L135.8 24.5 L146.5 23.1 L156.1 38.4 L165.5 46.9 L175.1 25.7 L189.1 22.3 L203.0 16.2 L209.3 25.9 L221.4 28.4 L233.7 48.9 L241.8 17.0 L256.2 17.1 L264.7 39.0 L279.0 31.7 L290.3 50.1 L298.7 33.2 L310.6 32.7 L324.1 18.4 L333.0 14.9 L347.2 36.2 L352.8 15.6 L365.8 35.3 L380.7 21.3 L386.2 30.1 L401.1 32.2 L411.1 17.4 L420.0 23.6 L432.8 33.7 L442.9 38.0 L455.1 17.4 L468.7 39.9 L476.3 17.3 L487.3 48.1 L497.3 32.4 L514.1 20.8 L523.1 29.4 L533.3 14.0 L546.7 31.8 L554.6 26.4 L567.5 29.9 L578.7 27.1 L591.4 50.0 L602.8 33.2 L608.4 48.8 L625.0 43.6 L631.3 25.9 L645.9 32.4 L652.6 49.3 L668.9 14.5 L679.5 31.3 L691.2 16.4 L699.0 31.6 L710.9 40.5 L719.4 25.0 L735.5 42.3 L743.6 28.9 L752.6 30.4 L764.2 23.9 L779.5 18.8 L788.8 50.3 L797.7 25.6 L811.2 21.5 L823.9 13.4 L831.5 18.6 L844.0 46.5 L857.8 32.8 L866.6 19.4 L880.2 44.6 L887.8 23.9 L901.3 39.6 L909.6 30.6 L923.8 33.7 L934.4 25.4 L946.9 22.2 L954.4 31.1 L967.3 38.7 L979.4 19.9 L986.7 30.7 L1001.9 15.8 L1000 200 L0 200 Z' fill='%23F4E6CC'/%3E%3C/svg%3E"); filter: drop-shadow(0 -10px 18px rgba(19, 35, 58, .16)); }
-.story::after { top: -52px; height: 56px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 200' preserveAspectRatio='none'%3E%3Cpath d='M0 24.0 L-0.2 24.0 L13.3 7.8 L24.6 8.9 L34.0 8.3 L45.7 14.2 L53.5 22.1 L66.7 20.9 L79.4 13.2 L86.5 11.9 L101.4 24.7 L109.7 10.7 L124.1 10.6 L135.6 8.5 L144.4 8.0 L158.0 9.3 L164.4 16.0 L176.0 18.8 L189.1 18.9 L200.0 20.9 L210.5 27.8 L222.7 10.2 L236.1 8.5 L245.1 9.8 L258.5 33.0 L267.9 21.3 L278.4 8.3 L289.9 16.1 L297.5 12.7 L311.6 14.2 L325.1 26.9 L335.1 12.4 L342.7 14.0 L353.1 27.7 L368.4 8.1 L379.6 14.8 L387.4 18.2 L398.4 21.5 L410.3 20.0 L423.2 10.1 L431.9 8.4 L442.5 21.2 L456.2 18.9 L464.9 13.3 L480.6 23.8 L489.3 20.7 L500.3 28.7 L510.8 17.8 L521.5 31.4 L534.6 18.7 L544.4 20.1 L555.7 10.2 L564.2 18.9 L574.9 10.2 L589.2 24.3 L599.9 21.2 L613.8 8.1 L624.6 15.5 L633.6 31.7 L645.3 15.5 L656.9 29.0 L667.9 14.2 L678.6 8.5 L688.1 20.3 L701.9 18.1 L713.4 8.2 L722.9 17.4 L730.7 10.4 L742.5 8.6 L755.4 26.4 L768.3 12.5 L774.8 21.3 L791.7 21.8 L797.6 12.7 L812.8 10.4 L819.9 9.4 L836.2 13.0 L844.2 15.2 L856.4 11.1 L866.8 10.5 L880.4 19.0 L890.7 8.5 L902.1 16.4 L908.5 11.6 L924.0 21.7 L935.7 21.0 L947.0 32.5 L954.5 11.2 L966.6 12.7 L977.2 10.7 L988.7 16.4 L999.6 10.4 L1000 200 L0 200 Z' fill='%23FFF8EC'/%3E%3C/svg%3E"); filter: drop-shadow(0 -4px 6px rgba(19, 35, 58, .12)); }
+.story { position: relative; z-index: 8; height: 250vh; margin-top: -100vh; background: var(--paper); }
+.story::before { content: ""; position: absolute; left: 0; right: 0; top: -120px; height: 150px; pointer-events: none; background: url("v2/h/tear.png") 0 0 / auto 150px repeat-x; filter: drop-shadow(0 -8px 14px rgba(19, 35, 58, .16)); }
 .story-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; overflow: hidden; }
 .kicker { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
 .kicker svg { width: 22px; height: 22px; fill: var(--coral); animation: spin 14s linear infinite; }
 @keyframes spin { to { rotate: 360deg; } }
-.tell-box { position: relative; }
-.tell { position: relative; z-index: 1; margin: 0; max-width: 21ch; font-weight: 800; font-size: clamp(2.2rem, 5.6vw, 5.4rem); line-height: 1.04; letter-spacing: -.045em; text-wrap: pretty; }
+.tell-box { position: relative; padding-right: min(18rem, 22vw); }
+.tell { position: relative; z-index: 1; margin: 0; max-width: 22ch; font-weight: 800; font-size: clamp(2rem, 4.2vw, 4.1rem); line-height: 1.34; letter-spacing: -.03em; word-spacing: .04em; text-wrap: pretty; }
 .tell .w { opacity: .13; transition: opacity .3s linear; }
 .tell .hl::before { inset: .1em -.1em .0em -.12em; }
 .doodles { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
@@ -216,59 +215,60 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .move-hint svg { width: 40px; height: 28px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; }
 
 /* =========================================================
-   3 · THE JOURNEY (pinned diorama)
+   3 · THE JOURNEY (a map you discover)
    ========================================================= */
-.journey { position: relative; background: var(--paper); }
-.j-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; grid-template-columns: minmax(0, 27rem) minmax(0, 1fr); }
-.j-head { position: absolute; z-index: 6; left: clamp(16px, 4vw, 56px); top: calc(env(safe-area-inset-top, 0px) + 84px); display: flex; align-items: baseline; gap: 14px; }
-.j-head h2 { margin: 0; font: 800 clamp(26px, 2.4vw, 34px)/1 var(--sans); letter-spacing: -.04em; }
-.j-head span { font: italic 20px/1 var(--serif); color: var(--ink-2); }
-.panel { position: relative; z-index: 5; align-self: center; padding: 120px clamp(16px, 4vw, 56px) 60px; }
-.pstep { position: absolute; left: clamp(16px, 4vw, 56px); right: 8px; top: 50%; transform: translateY(calc(-50% + 30px)); opacity: 0; visibility: hidden;
-  transition: opacity .55s var(--ease), transform .8s var(--ease), visibility 0s .8s; }
-.pstep.on { opacity: 1; visibility: visible; transform: translateY(-46%); transition: opacity .6s var(--ease) .1s, transform .9s var(--ease) .05s, visibility 0s; }
-.pstep .when { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
-.pstep .when b { color: var(--c); font-variant-numeric: tabular-nums; }
-.pstep h3 { margin: 10px 0 2px; font: 800 clamp(34px, 3.4vw, 52px)/.98 var(--sans); letter-spacing: -.045em; }
-.pstep .role { margin: 0 0 14px; font-size: 15px; font-weight: 600; color: var(--ink-2); }
-.pstep .lead { margin: 0 0 10px; font: italic 400 clamp(21px, 1.8vw, 25px)/1.22 var(--serif); }
-.pstep p.body { margin: 0; font-size: 16px; line-height: 1.55; max-width: 44ch; }
-.pstep .nums { max-width: 30rem; }
-.pstep .row { margin-top: 16px; }
-.board { position: relative; overflow: hidden; }
-.world2 { position: absolute; left: 0; top: 0; will-change: transform; }
-.ground { position: absolute; inset: 0; border-radius: 48px; overflow: hidden;
-  background:
-    radial-gradient(40% 30% at 12% 30%, rgba(122, 186, 92, .55), transparent 70%),
-    radial-gradient(35% 40% at 30% 75%, rgba(150, 204, 110, .5), transparent 70%),
-    radial-gradient(30% 35% at 52% 25%, rgba(110, 176, 90, .45), transparent 70%),
-    radial-gradient(45% 40% at 70% 70%, rgba(140, 198, 100, .55), transparent 70%),
-    radial-gradient(35% 35% at 90% 35%, rgba(118, 182, 96, .5), transparent 70%),
-    linear-gradient(180deg, #E4F2CF, #D6EBBD); }
-.ground canvas { position: absolute; inset: 0; width: 100%; height: 100%; mix-blend-mode: multiply; opacity: .32; filter: blur(1.5px); }
-.shadows { position: absolute; inset: 0; pointer-events: none; }
-.shadows i { position: absolute; width: 22%; height: 26%; border-radius: 50%; background: rgba(30, 60, 30, .16); filter: blur(28px); animation: cshadow var(--d, 60s) linear infinite; }
-@keyframes cshadow { from { transform: translateX(-30%); } to { transform: translateX(420%); } }
-.trail2 { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.trail2 path { fill: none; stroke-linecap: round; }
-.stop2 { position: absolute; transform-origin: 50% 100%; transform: translate(-50%, -94%); transition: filter .8s var(--ease), opacity .8s var(--ease), transform .9s var(--spring); filter: grayscale(1) contrast(.85) brightness(1.1); opacity: .42; }
-.stop2 img { width: 100%; height: auto; filter: drop-shadow(0 18px 20px rgba(30, 60, 30, .25)); }
-.stop2.on { filter: none; opacity: 1; transform: translate(-50%, -94%) scale(1.08); }
-.stop2 .flag { position: absolute; left: 50%; top: -4%; transform: translate(-50%, -100%) scale(.8); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
-  font-size: 14px; font-weight: 800; padding: 8px 14px 8px 9px; border-radius: 999px; background: var(--card); box-shadow: var(--shadow-sm); opacity: 0; transition: opacity .5s, transform .7s var(--spring); }
-.stop2 .flag::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
-.stop2.on .flag { opacity: 1; transform: translate(-50%, -100%) scale(1); }
-.walker2 { position: absolute; width: 1.25%; z-index: 4; pointer-events: none; will-change: transform; }
-.walker2 img { width: 100%; height: auto; filter: drop-shadow(0 6px 5px rgba(20, 40, 20, .3)); }
-.walker2.walking img { animation: step .34s ease-in-out infinite alternate; }
-@keyframes step { from { transform: translateY(0) rotate(-3deg); } to { transform: translateY(-4px) rotate(3deg); } }
-.j-dots { position: absolute; z-index: 6; right: clamp(16px, 3vw, 40px); top: 50%; transform: translateY(-50%); display: grid; gap: 10px; }
-.j-dots button { width: 12px; height: 12px; border-radius: 50%; background: rgba(19, 35, 58, .18); transition: transform .4s var(--spring), background .4s; }
-.j-dots button.on { background: var(--c); transform: scale(1.5); }
-.j-screens { position: absolute; z-index: 5; right: clamp(40px, 6vw, 100px); bottom: 6vh; display: flex; align-items: flex-end; pointer-events: none; }
-.j-screens img { width: clamp(90px, 8.5vw, 140px); height: auto; border-radius: 16px; border: 3px solid #fff; box-shadow: var(--shadow); background: #fff; margin-left: -26px;
-  opacity: 0; transform: translateY(40px) rotate(var(--r)); transition: opacity .5s var(--ease), transform .8s var(--spring); }
-.j-screens img.in { opacity: 1; transform: translateY(0) rotate(var(--r)); }
+.journey { position: relative; background: #F4ECDC; font-family: var(--geist); }
+.j-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: #F4ECDC; }
+.mapview { position: absolute; inset: 0; }
+.world3 { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+.world3 > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.mk { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%) scale(var(--inv, 1)); display: grid; justify-items: center; gap: 8px; cursor: pointer;
+  transition: opacity .6s var(--ease); }
+.mk .ic { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--c);
+  box-shadow: 0 0 0 3px var(--c), 0 14px 26px -12px rgba(19, 35, 58, .45); transform: scale(.2); opacity: 0; transition: transform .8s var(--spring), opacity .4s; }
+.mk .ic svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.mk .nm { font: 600 13px/1 var(--geist); color: var(--ink); background: #fff; padding: 6px 10px; border-radius: 999px; white-space: nowrap;
+  box-shadow: 0 6px 14px -8px rgba(19, 35, 58, .4); opacity: 0; transform: translateY(-6px); transition: opacity .4s .15s, transform .6s var(--spring) .15s; }
+.mk .dot { position: absolute; top: 24px; width: 10px; height: 10px; border-radius: 50%; background: #B9A887; transition: opacity .4s; }
+.mk.seen .ic { transform: scale(1); opacity: 1; }
+.mk.seen .nm { opacity: 1; transform: none; }
+.mk.seen .dot, .mk.hid .dot { opacity: 0; }
+.mk.hid { opacity: 0; pointer-events: none; }
+.mk.on .ic { box-shadow: 0 0 0 3px var(--c), 0 0 0 12px color-mix(in srgb, var(--c) 18%, transparent), 0 18px 30px -12px rgba(19, 35, 58, .5); }
+.mk.on .ic::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--c); animation: ping 2.2s var(--ease) infinite; }
+.mk .ic { position: relative; }
+.me-tip { position: absolute; left: 0; top: 0; width: 38px; height: 38px; transform: translate(-50%, -50%) scale(var(--inv, 1)); border-radius: 50%; overflow: hidden;
+  border: 3px solid #fff; box-shadow: 0 8px 18px -6px rgba(19, 35, 58, .5); opacity: 0; transition: opacity .4s; pointer-events: none; }
+.me-tip img { width: 100%; height: 100%; object-fit: cover; }
+.compass { position: absolute; z-index: 6; right: clamp(16px, 3vw, 40px); top: calc(env(safe-area-inset-top, 0px) + 86px); width: 108px; height: 108px;
+  opacity: 0; transform: scale(.6) rotate(-90deg); transition: opacity .8s var(--ease), transform 1.2s var(--spring); }
+.compass.in { opacity: 1; transform: none; }
+.compass svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 10px 16px rgba(19, 35, 58, .2)); }
+.compass .needle { transform-origin: 54px 54px; transition: transform .2s linear; }
+.jcard { position: absolute; z-index: 6; left: clamp(16px, 3.4vw, 48px); top: 50%; width: min(24rem, calc(100vw - 32px)); padding: 24px; box-sizing: border-box;
+  background: #FFFDF8; border-radius: 22px; box-shadow: 0 30px 60px -28px rgba(19, 35, 58, .45), 0 0 0 1px rgba(19, 35, 58, .06); color: var(--ink);
+  transform: translateY(-50%); font: 400 16px/1.5 var(--geist); transition: opacity .5s var(--ease); }
+.jcard.swap { opacity: 0; }
+.jc-meta { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 13px; color: var(--ink-2); }
+.jc-meta i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--c); color: #fff; flex: none; }
+.jc-meta i svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.jcard h3 { margin: 10px 0 12px; font: 600 28px/1.1 var(--geist); letter-spacing: -.02em; }
+.jc-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.jc-list li { position: relative; padding-left: 18px; }
+.jc-list li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.jc-nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 18px 0 0; padding: 16px 0 0; border-top: 1px solid rgba(19, 35, 58, .1); list-style: none; }
+.jc-nums b { display: block; font: 600 28px/1 var(--geist); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.jc-nums span { display: block; margin-top: 6px; font-size: 13px; line-height: 1.3; color: var(--ink-2); }
+.jc-shots { display: flex; gap: 8px; margin-top: 18px; }
+.jc-shots img { height: 104px; width: auto; border-radius: 10px; border: 1px solid rgba(19, 35, 58, .1); background: #fff; }
+.jc-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
+.jc-links a { font-size: 13px; font-weight: 600; color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--c); padding-bottom: 2px; }
+.jc-links a:hover { color: var(--c); }
+.jscale { position: absolute; z-index: 6; right: clamp(16px, 3vw, 40px); bottom: calc(env(safe-area-inset-bottom, 0px) + 28px); display: flex; align-items: center; gap: 12px;
+  font: 400 13px/1 var(--geist); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.jscale .bar { position: relative; display: block; width: 160px; height: 3px; border-radius: 2px; background: repeating-linear-gradient(90deg, var(--ink) 0 20px, transparent 20px 32px); opacity: .9; }
+.jscale .bar i { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--coral); border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, .25); }
+.jscale .bar i { left: var(--x, 0%); }
 
 /* =========================================================
    4 · WORK (stacked cards)
@@ -382,19 +382,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .sheet, .sheet.left { top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 78px); left: 12px; right: 12px; width: auto; max-height: 62svh; padding: 20px; transform: translateY(30px); }
   .sheet.on { transform: none; }
   .sheet .peek img { border-radius: 10px; }
-  .j-pin { grid-template-columns: 1fr; grid-template-rows: 44% 56%; }
-  .board { grid-row: 1; }
-  .panel { grid-row: 2; padding: 0 16px; align-self: stretch; }
-  .pstep { left: 16px; right: 16px; top: 8px; transform: translateY(24px); }
-  .pstep.on { transform: none; }
-  .pstep h3 { font-size: 32px; }
-  .pstep .lead { font-size: 19px; }
-  .pstep p.body { font-size: 15px; }
-  .pstep .nums li:nth-child(n+3) { display: none; }
-  .pstep .row { margin-top: 10px; }
-  .j-head { top: calc(env(safe-area-inset-top, 0px) + 74px); }
-  .j-dots, .j-screens { display: none; }
-  .j-head { background: rgba(255, 248, 236, .88); padding: 8px 14px; border-radius: 16px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .jcard { top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); left: 12px; right: 12px; width: auto; transform: none; padding: 18px; max-height: 52svh; overflow: auto; }
+  .jcard h3 { font-size: 24px; margin: 8px 0 10px; }
+  .jc-nums b { font-size: 22px; }
+  .jc-shots img { height: 84px; }
+  .compass { width: 72px; height: 72px; top: calc(env(safe-area-inset-top, 0px) + 74px); }
+  .jscale { display: none; }
   .sec-head h2 { font-size: clamp(2rem, 9.2vw, 3rem); }
   .desk .item:nth-child(1) { left: 4% !important; top: 2% !important; width: 56%; }
   .desk .item:nth-child(2) { left: 52% !important; top: 5% !important; width: 44%; font-size: 19px; }
@@ -414,6 +407,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .pnode .dot, .pnode.up .dot { margin: 0; grid-row: span 2; order: 0; }
   .desk { height: 980px; }
   .sticky { width: 10.5rem; font-size: 18px; padding: 14px; }
+  .tell-box { padding-right: 0; }
+  .tell { font-size: clamp(1.9rem, 8.4vw, 2.6rem); line-height: 1.3; }
   .tell-box .sticky:nth-of-type(n+2), .move-hint { display: none; }
   .tell-box .sticky:nth-of-type(1) { top: auto !important; bottom: -30%; right: 0 !important; }
   .chips { bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); }
@@ -534,18 +529,22 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 <!-- 3 · THE JOURNEY -->
 <section class="journey" id="journey" aria-label="The journey">
   <div class="j-pin" id="jPin">
-    <div class="j-head"><h2>The journey</h2><span id="jCount">01 / 05</span></div>
-    <div class="panel" id="panel"></div>
-    <div class="board" id="board">
-      <div class="world2" id="world2">
-        <div class="ground"><canvas id="grain"></canvas></div>
-        <div class="shadows"><i style="left:-10%;top:10%;--d:70s"></i><i style="left:-30%;top:55%;--d:90s;animation-delay:-40s"></i><i style="left:-20%;top:30%;--d:110s;animation-delay:-70s"></i></div>
-        <svg class="trail2" id="trail2"><path id="t2bg" stroke="rgba(120,90,50,.28)" stroke-width="16"/><path id="t2dots" stroke="#fff" stroke-width="7" stroke-dasharray=".1 18"/></svg>
-        <div class="walker2" id="walker2"><img src="v2/h/james_s.webp" alt=""></div>
+    <div class="mapview" id="mapview">
+      <div class="world3" id="world3">
+        <svg id="mapArt" aria-hidden="true"></svg>
+        <div class="me-tip" id="meTip"><img src="v2/s/photo.webp" alt=""></div>
       </div>
     </div>
-    <div class="j-screens" id="jScreens"></div>
-    <div class="j-dots" id="jDots"></div>
+    <div class="compass" id="compass" aria-hidden="true">
+      <svg viewBox="0 0 108 108">
+        <circle cx="54" cy="54" r="50" fill="#FFFDF8" stroke="#13233A" stroke-width="1.5"/>
+        <circle cx="54" cy="54" r="42" fill="none" stroke="#13233A" stroke-width=".8" stroke-dasharray="1.5 4.1"/>
+        <g font-family="Geist, sans-serif" font-size="10" font-weight="600" fill="#13233A" text-anchor="middle"><text x="54" y="20">N</text><text x="54" y="96">S</text><text x="91" y="58">E</text><text x="17" y="58">W</text></g>
+        <g class="needle" id="needle"><path d="M54 26 L60 54 L54 58 L48 54Z" fill="#FF6B4A"/><path d="M54 82 L60 54 L54 50 L48 54Z" fill="#13233A"/><circle cx="54" cy="54" r="3.5" fill="#FFFDF8" stroke="#13233A"/></g>
+      </svg>
+    </div>
+    <article class="jcard" id="jcard" aria-live="polite"></article>
+    <div class="jscale" aria-hidden="true"><span>2021</span><span class="bar"><i id="jscaleDot"></i></span><span>now</span></div>
   </div>
 </section>
 
@@ -657,24 +656,30 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       d: 'Two years in the industry across dining, travel and hospitality. I also built LastLook, an iOS app that reminds you when you leave something behind, because I kept forgetting my things.',
       n: [['2 yrs', 'industry experience'], ['3', 'products shipped at scale'], ['1', 'app of my own']], p: ['ll1', 'll2', 'll3'], j: 4, about: true }
   };
+  const ICONS = {
+    cap: '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/>',
+    fork: '<path d="M7 3v8"/><path d="M5 3v5a2 2 0 0 0 4 0V3"/><path d="M7 11v10"/><path d="M17 21V3c-2 1-3 4-3 7h3"/>',
+    plane: '<path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/>',
+    bed: '<path d="M3 18V6"/><path d="M3 14h18v4"/><path d="M21 14v-3a3 3 0 0 0-3-3h-7v6"/><circle cx="7" cy="11" r="1.6"/>',
+    pin: '<path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>',
+    map: '<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14"/><path d="M15 6v14"/>'
+  };
   const STOPS = [
-    { id: 'nsut', img: 'v2/h/college_s.webp', x: 10, y: 60, w: 13, c: '#C4553A', when: 'Class of 2021', name: 'NSUT', role: 'B.Tech, Mechanical Engineering',
-      lead: 'Where I learnt how things work.', body: 'Netaji Subhas University of Technology, New Delhi. Machines, drawings, tolerances, and a lot of maths. Somewhere in there, the "why do people use this?" question took over.',
-      n: [['B.Tech', 'Mechanical Engineering'], ['2021', 'Graduated']], shots: [], links: [] },
-    { id: 'eazydiner', img: 'v2/h/diner_s.webp', x: 30, y: 40, w: 15, c: '#EE5A2B', when: 'Feb – Apr 2025', name: 'EazyDiner', role: 'Product Design Intern',
-      lead: '"Finding the best coupon shouldn’t feel like a treasure hunt."', body: 'Only 36 of every 100 users completed payment, and 40% dropped at the payment step. I dug into real complaints, boiled 40+ pain points down to 5, studied 50+ apps, and shipped a coupon tray that shows the best deal upfront.',
-      n: [['34.6 → 45.6%', 'payment success'], ['55.5 → 67%', 'coupon application'], ['18 → 42%', 'filter engagement'], ['300+', 'offers ranked']],
-      shots: ['ed1', 'ed3', 'ed4'], links: [['Read the case study', CS + 'eazydiner']] },
-    { id: 'mmt', img: 'v2/h/travel_s.webp', x: 50, y: 58, w: 8, c: '#2A7BD1', when: 'Apr – Oct 2025', name: 'MakeMyTrip', role: 'Product Design Intern',
-      lead: '"Skip the calls, make it special, right in the app."', body: 'Only 16% of guests ever found Special Requests and 84% dropped mid-flow. I gave it a clear entry point, split requests into scannable groups, and added Chat with Hotelier. On the side: Swipr.AI, a GenAI swipe-to-discover hotel search that won an award.',
-      n: [['16 → 25%', 'funnel access in 2 weeks'], ['16 → 35%', 'hotel response rate'], ['20 → 80%', 'guests placing 2+ requests'], ['4,500+', 'bookings a day']],
-      shots: ['mmt1', 'mmt2', 'mmt3'], links: [['Special Requests', CS + 'requests'], ['Swipr.AI', CS + 'swipr']] },
-    { id: 'oyo', img: 'v2/h/hotel.webp', x: 70, y: 38, w: 13, c: '#E3342F', when: 'Dec 2025 – now', name: 'PRISM Group (OYO)', role: 'Associate Product Designer',
-      lead: 'The hotel on the hill. Where I am now.', body: 'Tackling self check-in, room selection and cancellations across OYO’s booking journey. The work is still under wraps, but it’s already out in the real world.',
+    { id: 'nsut', icon: 'cap', c: '#C4553A', at: [430, 1060], name: 'NSUT', label: 'Campus', meta: 'Class of 2021 · B.Tech, Mechanical Engineering',
+      did: ['Learned how machines work: drawings, tolerances, a lot of maths', 'Started designing on the side, like CampusX, a social app for college life', 'Found the question I still chase: why do people use things?'],
+      n: [], shots: [], links: [['CampusX', CS + 'campusx']] },
+    { id: 'eazydiner', icon: 'fork', c: '#EE5A2B', at: [940, 620], name: 'EazyDiner', label: 'Food street', meta: 'Feb – Apr 2025 · Product Design Intern',
+      did: ['Led the redesign of the PayEazy coupon tray, end to end', 'Ranked 300+ bank and restaurant offers and put the best one upfront', 'Handed off with a 3-hour deep dive with the devs'],
+      n: [['+41%', 'payment success'], ['67%', 'coupon use, from 55%'], ['42%', 'filter use, from 18%']], shots: ['ed1', 'ed3', 'ed4'], links: [['Case study', CS + 'eazydiner']] },
+    { id: 'mmt', icon: 'plane', c: '#2A7BD1', at: [1440, 1010], name: 'MakeMyTrip', label: 'Travel bay', meta: 'Apr – Oct 2025 · Product Design Intern',
+      did: ['Rebuilt Special Requests so guests actually find and use it', 'Added Chat with Hotelier, so hotels reply in real time', 'Designed Swipr.AI, a GenAI swipe-to-discover hotel search'],
+      n: [['35%', 'hotels reply, from 16%'], ['4,500+', 'bookings a day use it'], ['80%', 'place 2+ requests']], shots: ['mmt1', 'mmt2', 'mmt3'], links: [['Special Requests', CS + 'requests'], ['Swipr.AI', CS + 'swipr']] },
+    { id: 'oyo', icon: 'bed', c: '#E3342F', at: [1880, 560], name: 'PRISM · OYO', label: 'Hotel hill', meta: 'Dec 2025 – now · Associate Product Designer',
+      did: ['Designing self check-in, room selection and cancellations', 'Across OYO’s whole booking journey', 'Still under wraps. Ask me about it.'],
       n: [['500', 'properties validated'], ['6,000+', 'approved next']], shots: [], links: [] },
-    { id: 'lastlook', img: 'v2/h/cottage.webp', x: 89, y: 60, w: 13, c: '#F07A4A', when: 'Side project · live on iOS', name: 'LastLook', role: 'Designer & builder',
-      lead: 'I kept forgetting where I left things. So I built an app.', body: 'FindMy, but for everything you own. Link your keys, headphones or bag to a place, and LastLook reminds you when you leave without them. Designed, built and shipped by me.',
-      n: [['iOS', 'live on the App Store'], ['0 → 1', 'idea to launch, solo']], shots: ['ll1', 'll2', 'll3'], links: [['Get it on iOS', 'https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140']] }
+    { id: 'lastlook', icon: 'pin', c: '#E8892B', at: [2050, 1170], name: 'LastLook', label: 'Maker’s corner', meta: 'Side project · Designer & builder',
+      did: ['FindMy, but for everything you own', 'Links your things to places and reminds you when you leave them behind', 'Designed, built and shipped solo, live on iOS'],
+      n: [], shots: ['ll1', 'll2', 'll3'], links: [['Get it on iOS', 'https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140']] }
   ];
   const WORK = [
     { name: 'The Coupon Hunter', co: 'EazyDiner · PayEazy', bg: '#FFE3D6', stamps: [['live', 'Live on app']], cs: CS + 'eazydiner',
@@ -804,7 +809,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     cur.x += (T.x - cur.x) * k; cur.y += (T.y - cur.y) * k; cur.s += (T.s - cur.s) * k;
     ptr.sx += (ptr.x - ptr.sx) * clamp(dt * 2.6); ptr.sy += (ptr.y - ptr.sy) * clamp(dt * 2.6);
     const intro = reduce ? 0 : 1 - ss(clamp((performance.now() - t0 - 200) / 2000));
-    const bv = Math.max(intro * 18, ss(range(pV, .3, .95)) * 14);
+    const bv = Math.max(intro * 18, ss(range(pV, .25, .7)) * 12);
     const blur = bv > .05 ? bv.toFixed(2) : 0;
     cam.style.transform = `translate3d(${cur.x.toFixed(2)}px, ${cur.y.toFixed(2)}px, 0) scale(${cur.s.toFixed(4)})`;
     cam.style.filter = blur ? `blur(${blur}px)` : '';
@@ -812,8 +817,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     // fly-through: each layer grows around the valley's focal point by depth; foreground flies out
     const px = reduce ? 0 : ptr.sx, py = reduce ? 0 : ptr.sy;
     for (const L of layers) {
-      const d = L.d, sc = 1 + Math.pow(e, 1.35) * (0.12 + d * .5);
-      const drop = d > .8 ? Math.pow(range(pV, .3, .85), 1.5) * vh * .35 : 0;
+      const d = L.d, sc = 1 + e * (0.04 + d * .16);
+      const drop = 0;
       const tx = -px * d * 26, ty = -py * d * 12 + e * d * 30 + drop;
       L.el.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0) scale(${sc.toFixed(4)})`;
     }
@@ -823,7 +828,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     places.style.opacity = pV > .002 ? (1 - range(pV, .0, .08)).toFixed(3) : '';
     places.style.pointerEvents = pV > .06 ? 'none' : '';
     cue.style.opacity = pV > .002 || focusId ? (1 - range(pV, 0, .06)) * (focusId ? 0 : 1) : '';
-    shade.style.opacity = range(pV, .35, .9).toFixed(3);
+    shade.style.opacity = range(pV, .25, .65).toFixed(3);
     if (!focusId) { const fo = (1 - range(pV, .0, .12)); chips.style.opacity = pV > .002 ? fo.toFixed(3) : ''; hint.style.opacity = pV > .002 ? fo.toFixed(3) : ''; }
   }
 
@@ -919,71 +924,135 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   });
 
   /* =========================================================
-     3 · THE JOURNEY
+     3 · THE JOURNEY (a map you discover)
      ========================================================= */
-  const journey = $('#journey'), board = $('#board'), world2 = $('#world2'), panel = $('#panel'), walker = $('#walker2'), jDots = $('#jDots'), jScreens = $('#jScreens');
-  const N = STOPS.length; let jTop = 0, jRange = 1, BW = 0, BH = 0, WW = 0, WH = 0, samples = [], total = 0, stopEls = [], stepEls = [], dotEls = [], activeJ = -1, stopL = [];
-  journey.style.height = (N * 95 + 60) + 'vh';
-  STOPS.forEach((s, i) => {
-    const el = document.createElement('div'); el.className = 'stop2'; el.style.setProperty('--c', s.c); el.style.left = s.x + '%'; el.style.top = s.y + '%'; el.style.width = s.w + '%';
-    el.innerHTML = `<img src="${s.img}" alt="${s.name}"><span class="flag">${s.name}</span>`; world2.appendChild(el); stopEls.push(el);
-    const st = document.createElement('article'); st.className = 'pstep'; st.style.setProperty('--c', s.c);
-    st.innerHTML = `<div class="when"><b>${String(i + 1).padStart(2, '0')}</b>${s.when}</div><h3>${s.name}</h3><p class="role">${s.role}</p><p class="lead">${s.lead}</p><p class="body">${s.body}</p>
-      <ul class="nums">${s.n.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>
-      ${s.links.length ? `<div class="row">${s.links.map(([t, u], k) => `<a class="btn ${k ? 'btn-ghost' : 'btn-ink'}" href="${u}" target="_blank" rel="noopener">${t} ↗</a>`).join('')}</div>` : ''}`;
-    panel.appendChild(st); stepEls.push(st);
-    const b = document.createElement('button'); b.style.setProperty('--c', s.c); b.setAttribute('aria-label', s.name); b.addEventListener('click', () => walkTo(i)); jDots.appendChild(b); dotEls.push(b);
-  });
-  (function grain() {
-    const c = $('#grain'), x = c.getContext('2d'); c.width = 600; c.height = 300; const r = (a => () => (a = (a * 16807) % 2147483647) / 2147483647)(3);
-    for (let i = 0; i < 900; i++) { x.fillStyle = `rgba(${70 + r() * 50},${120 + r() * 50},${50 + r() * 30},${.04 + r() * .08})`; const w = 4 + r() * 22; x.beginPath(); x.ellipse(r() * 600, r() * 300, w, w * (.3 + r() * .5), r() * 3, 0, 7); x.fill(); }
-    for (let i = 0; i < 90; i++) { x.fillStyle = ['#fff', '#FFD23F', '#FFB4A0', '#D9CCFF'][i % 4]; x.globalAlpha = .7; x.beginPath(); x.arc(r() * 600, r() * 300, 1.2 + r() * 1.3, 0, 7); x.fill(); }
+  const journey = $('#journey'), mapview = $('#mapview'), world3 = $('#world3'), mapArt = $('#mapArt'), jcard = $('#jcard'), compass = $('#compass'), needle = $('#needle'), meTip = $('#meTip'), scaleDot = $('#jscaleDot');
+  const N = STOPS.length, MW = 2400, MH = 1500, NS = 'http://www.w3.org/2000/svg';
+  journey.style.height = (N * 110 + 160) + 'vh';
+  let jTop = 0, jRange = 1, carve, casing, ghost, fogPath, holes = [], pathLen = 0, stopL = [], jmarks = [], lastCard = null, heading = 0;
+  const mrand = (a => () => (a = (a * 16807) % 2147483647) / 2147483647)(42);
+  (function drawMap() {
+    let h = `<defs><radialGradient id="hole"><stop offset="0" stop-color="#000"/><stop offset=".55" stop-color="#000"/><stop offset="1" stop-color="#fff"/></radialGradient>
+      <mask id="fogMask" maskUnits="userSpaceOnUse" x="-400" y="-400" width="${MW + 800}" height="${MH + 800}"><rect x="-400" y="-400" width="${MW + 800}" height="${MH + 800}" fill="#fff"/>
+      <path id="fogPath" fill="none" stroke="#000" stroke-opacity=".75" stroke-width="150" stroke-linecap="round" stroke-linejoin="round"/>${STOPS.map((_, i) => `<circle id="hole${i}" r="0" fill="url(#hole)"/>`).join('')}</mask>
+      <pattern id="grid" width="120" height="120" patternUnits="userSpaceOnUse"><path d="M120 0H0V120" fill="none" stroke="#E4D6BA" stroke-width="1"/></pattern></defs>`;
+    h += `<rect x="-2000" y="-2000" width="${MW + 4000}" height="${MH + 4000}" fill="#F4ECDC"/><rect width="${MW}" height="${MH}" fill="url(#grid)"/>`;
+    // hills as contour rings
+    const hills = [[700, 330, 260], [1560, 330, 300], [260, 640, 180], [1150, 1320, 240], [2200, 820, 220], [1820, 1330, 170], [1260, 700, 150]];
+    hills.forEach(([cx, cy, R], k) => {
+      const ph = [mrand() * 6, mrand() * 6, mrand() * 6];
+      for (let j = 0; j < 7; j++) {
+        const r = R * (1 - j / 7.4); let d = '';
+        for (let a = 0; a <= 72; a++) { const t = a / 72 * Math.PI * 2, w = 1 + .12 * Math.sin(3 * t + ph[0]) + .07 * Math.sin(5 * t + ph[1] + j * .3) + .04 * Math.sin(9 * t + ph[2]);
+          d += (a ? 'L' : 'M') + (cx + Math.cos(t) * r * w * 1.25).toFixed(1) + ' ' + (cy + Math.sin(t) * r * w * .85).toFixed(1); }
+        h += `<path d="${d}Z" fill="${j === 6 ? '#EADFC5' : 'none'}" stroke="#D8C8A4" stroke-width="${j % 3 === 0 ? 1.6 : 1}"/>`;
+      }
+    });
+    // lake + river
+    h += `<path d="M430 250c60-70 220-80 300-20s90 170 0 210-230 40-290-20-70-110-10-170z" fill="#CFE4F2" stroke="#9CC6E6" stroke-width="2"/>`;
+    const river = 'M1130 -40 C 1090 160, 1260 260, 1210 420 S 1080 640, 1180 780 S 1420 860, 1340 1060 S 1240 1300, 1400 1560';
+    h += `<path d="${river}" fill="none" stroke="#9CC6E6" stroke-width="52" stroke-linecap="round"/><path d="${river}" fill="none" stroke="#CFE4F2" stroke-width="46" stroke-linecap="round"/><path d="${river}" fill="none" stroke="#E7F2FA" stroke-width="3" stroke-dasharray="22 30"/>`;
+    // woods
+    const woods = [[600, 820, 60], [1700, 820, 50], [150, 1250, 40], [2250, 330, 50], [980, 1140, 40], [1600, 150, 30], [2300, 1400, 36], [820, 120, 26]];
+    woods.forEach(([cx, cy, n]) => { for (let i = 0; i < n; i++) { const a = mrand() * 6.3, r = Math.sqrt(mrand()) * n * 2.6, x = cx + Math.cos(a) * r * 1.3, y = cy + Math.sin(a) * r * .8, s = 7 + mrand() * 7;
+      h += `<circle cx="${(x + 3).toFixed(0)}" cy="${(y + 4).toFixed(0)}" r="${s.toFixed(1)}" fill="#C9D9AC"/><circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${s.toFixed(1)}" fill="#DCE8C2" stroke="#B9CC95" stroke-width="1.2"/>`; } });
+    // labels + frame + cartouche
+    h += `<g font-family="Geist, sans-serif" font-size="15" font-weight="600" fill="#AF9E7C" letter-spacing="5" text-anchor="middle">${STOPS.map(st => `<text x="${st.at[0]}" y="${st.at[1] + 118}">${st.label.toUpperCase()}</text>`).join('')}</g>`;
+    h += `<rect x="30" y="30" width="${MW - 60}" height="${MH - 60}" fill="none" stroke="#13233A" stroke-width="2"/><rect x="42" y="42" width="${MW - 84}" height="${MH - 84}" fill="none" stroke="#13233A" stroke-width=".8"/>`;
+    h += `<g transform="translate(80 86)"><rect width="330" height="74" rx="6" fill="#FFFDF8" stroke="#13233A" stroke-width="1.2"/><text x="22" y="32" font-family="Geist, sans-serif" font-size="20" font-weight="600" fill="#13233A">James’s map</text><text x="22" y="56" font-family="Geist, sans-serif" font-size="14" fill="#4B5D72">2021 → now · five stops</text></g>`;
+    // path through the stops, with gentle detours
+    const P = [[300, 1260], ...STOPS.flatMap((st, i) => i < N - 1 ? [st.at, [(st.at[0] + STOPS[i + 1].at[0]) / 2 + (i % 2 ? 90 : -60), (st.at[1] + STOPS[i + 1].at[1]) / 2 + (i % 2 ? -120 : 140)]] : [st.at]), [2250, 1330]];
+    let d = `M${P[0][0]} ${P[0][1]}`;
+    for (let i = 0; i < P.length - 1; i++) { const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2;
+      d += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)}, ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)}, ${p2[0]} ${p2[1]}`; }
+    h += `<path id="ghostPath" d="${d}" fill="none" stroke="#A8977A" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 14"/>`;
+    h += `<rect id="fog" x="-400" y="-400" width="${MW + 800}" height="${MH + 800}" fill="#F1E7D4" mask="url(#fogMask)" opacity="0"/>`;
+    h += `<path id="casing" d="${d}" fill="none" stroke="#FFFDF8" stroke-width="14" stroke-linecap="round"/><path id="carve" d="${d}" fill="none" stroke="#13233A" stroke-width="4.5" stroke-linecap="round"/>`;
+    mapArt.setAttribute('viewBox', `0 0 ${MW} ${MH}`); mapArt.innerHTML = h;
+    world3.style.width = MW + 'px'; world3.style.height = MH + 'px';
+    carve = $('#carve'); casing = $('#casing'); ghost = $('#ghostPath'); fogPath = $('#fogPath'); fogPath.setAttribute('d', d);
+    holes = STOPS.map((_, i) => $('#hole' + i)); STOPS.forEach((st, i) => { holes[i].setAttribute('cx', st.at[0]); holes[i].setAttribute('cy', st.at[1]); });
+    pathLen = carve.getTotalLength();
+    [carve, casing, fogPath].forEach(p => { p.style.strokeDasharray = pathLen; p.style.strokeDashoffset = pathLen; });
+    stopL = STOPS.map(st => { let best = 0, bd = 1e12; for (let l = 0; l <= pathLen; l += 4) { const q = carve.getPointAtLength(l), dd = (q.x - st.at[0]) ** 2 + (q.y - st.at[1]) ** 2; if (dd < bd) { bd = dd; best = l; } } return best; });
+    STOPS.forEach((st, i) => {
+      const m = document.createElement('button'); m.className = 'mk'; m.style.setProperty('--c', st.c); m.style.left = st.at[0] + 'px'; m.style.top = st.at[1] + 'px';
+      m.setAttribute('aria-label', st.name); m.innerHTML = `<span class="dot"></span><span class="ic"><svg viewBox="0 0 24 24">${ICONS[st.icon]}</svg></span><span class="nm">${st.name}</span>`;
+      m.addEventListener('click', () => walkTo(i)); world3.insertBefore(m, meTip); jmarks.push(m);
+    });
   })();
-  function layoutJourney() {
-    jTop = top(journey); jRange = Math.max(1, journey.offsetHeight - vh);
-    BW = board.clientWidth; BH = board.clientHeight;
-    WH = BH * 1.02; WW = Math.max(BW * 2.6, WH * 3.2);
-    world2.style.width = WW + 'px'; world2.style.height = WH + 'px';
-    const P = STOPS.map(s => [s.x / 100 * WW, (s.y / 100) * WH + WH * .02]);
-    let d = `M ${P[0][0] - WW * .12} ${P[0][1] + WH * .1}`;
-    let prev = [P[0][0] - WW * .12, P[0][1] + WH * .1];
-    P.forEach(p => { const mx = (prev[0] + p[0]) / 2; d += ` C ${mx} ${prev[1]}, ${mx} ${p[1]}, ${p[0]} ${p[1]}`; prev = p; });
-    d += ` C ${prev[0] + WW * .05} ${prev[1]}, ${prev[0] + WW * .06} ${prev[1] - WH * .2}, ${prev[0] + WW * .12} ${prev[1] - WH * .22}`;
-    $('#t2bg').setAttribute('d', d); $('#t2dots').setAttribute('d', d);
-    const pth = $('#t2bg'); total = pth.getTotalLength(); samples = [];
-    for (let l = 0; l <= total; l += 8) { const q = pth.getPointAtLength(l); samples.push([l, q.x, q.y]); }
-    stopL = P.map(p => { let best = 0, bd = 1e9; samples.forEach(s => { const dd = (s[1] - p[0]) ** 2 + (s[2] - p[1]) ** 2; if (dd < bd) { bd = dd; best = s[0]; } }); return best; });
-    $('#trail2').setAttribute('viewBox', `0 0 ${WW} ${WH}`);
+  const fogRect = $('#fog');
+  const OVER = { id: 'over', icon: 'map', c: '#13233A', meta: '2021 → now', name: 'The path so far', did: ['One college, three product teams and an app of my own.', 'Scroll to walk it. Tap a place to jump there.'], n: [], shots: [], links: [] };
+  const END = { id: 'end', icon: 'map', c: '#13233A', meta: 'To be continued', name: 'Where next?', did: ['The path is still being carved.', 'If your team is building something good, I’d love to hear about it.'], n: [], shots: [], links: [['Say hi', '#hello']] };
+  function cardHTML(st) {
+    return `<p class="jc-meta" style="--c:${st.c}"><i><svg viewBox="0 0 24 24">${ICONS[st.icon]}</svg></i>${st.meta}</p><h3>${st.name}</h3>
+      <ul class="jc-list" style="--c:${st.c}">${st.did.map(t => `<li>${t}</li>`).join('')}</ul>
+      ${st.n.length ? `<ul class="jc-nums">${st.n.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>` : ''}
+      ${st.shots.length ? `<div class="jc-shots">${st.shots.map(k => `<img src="${img(k)}" alt="" loading="lazy">`).join('')}</div>` : ''}
+      ${st.links.length ? `<div class="jc-links" style="--c:${st.c}">${st.links.map(([t, u]) => `<a href="${u}" ${u[0] === '#' ? 'data-go="hello"' : 'target="_blank" rel="noopener"'}>${t} ${u[0] === '#' ? '↓' : '↗'}</a>`).join('')}</div>` : ''}`;
   }
-  const jc = { x: 0, y: 0 };
+  function showCard(st) {
+    if (lastCard === st.id) return; lastCard = st.id;
+    jcard.classList.add('swap');
+    clearTimeout(showCard.t); showCard.t = setTimeout(() => { jcard.innerHTML = cardHTML(st); jcard.classList.remove('swap'); }, lastCard ? 220 : 0);
+  }
+  jcard.addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (a) { e.preventDefault(); goTo(top($('#hello')), 2.2); } });
+  showCard(OVER);
+  function layoutJourney() { jTop = top(journey); jRange = Math.max(1, journey.offsetHeight - vh); }
+  const PH = { hold: .05, zoom: .13, walk: .9 };
+  function phase(p) {
+    if (p < PH.hold) return { pos: -1, k: 0, out: 0 };
+    if (p < PH.zoom) return { pos: -1 + ss((p - PH.hold) / (PH.zoom - PH.hold)), k: ss((p - PH.hold) / (PH.zoom - PH.hold)), out: 0 };
+    if (p < PH.walk) { const t = (p - PH.zoom) / (PH.walk - PH.zoom) * (N - 1), i = Math.min(N - 2, Math.floor(t)), f = t - i; return { pos: i + ss(clamp((f - .3) / .6)), k: 1, out: 0 }; }
+    return { pos: N - 1, k: 1, out: ss(clamp((p - PH.walk) / .08)) };
+  }
+  const lenAt = pos => { if (pos <= 0) return pos < -.999 ? 0 : stopL[0] * (1 + pos); const i = Math.min(N - 2, Math.floor(pos)), f = pos - i; return stopL[i] + (stopL[i + 1] - stopL[i]) * f; };
+  const cam3 = { x: 0, y: 0, s: 0, ok: false };
+  function viewFor(cx, cy, s) {
+    const fx = mobile ? vw * .5 : Math.min(vw * .64, (vw + 420) / 2), fy = mobile ? vh * .3 : vh * .52;
+    return { x: fx - cx * s, y: fy - cy * s, s };
+  }
+  function overview() {
+    const areaL = mobile ? 0 : 440, areaW = vw - areaL - 40, areaH = mobile ? vh * .55 : vh - 60;
+    const s = Math.min(areaW / MW, areaH / MH) * .96;
+    return { x: areaL + (vw - areaL - MW * s) / 2 - (mobile ? 0 : 10), y: (mobile ? 70 : 0) + ((mobile ? vh * .5 : vh) - MH * s) / 2, s };
+  }
   function frameJourney(dt, y) {
-    const raw = clamp((y - jTop) / jRange) * (N - 1);
-    const i0 = Math.floor(raw), f = raw - i0, fe = ss(range(f, .45, .9));
-    const pos = Math.min(N - 1, i0 + fe);
-    const idx = Math.min(N - 1, Math.round(pos));
-    if (idx !== activeJ) {
-      activeJ = idx;
-      stopEls.forEach((e, k) => e.classList.toggle('on', k === idx));
-      stepEls.forEach((e, k) => e.classList.toggle('on', k === idx));
-      dotEls.forEach((e, k) => e.classList.toggle('on', k === idx));
-      $('#jCount').textContent = `${String(idx + 1).padStart(2, '0')} / ${String(N).padStart(2, '0')}`;
-      jScreens.innerHTML = STOPS[idx].shots.map((k, n) => `<img src="${img(k)}" alt="" style="--r:${[-8, 0, 8][n]}deg">`).join('');
-      requestAnimationFrame(() => $$('img', jScreens).forEach((im, n) => setTimeout(() => im.classList.add('in'), 90 * n)));
-    }
-    // camera: centre the walker, a little ahead
-    const a = Math.floor(pos), b = Math.min(N - 1, a + 1), t = pos - a;
-    const L = stopL.length ? stopL[a] + (stopL[b] - stopL[a]) * t : 0;
-    let lo = 0, hi = samples.length - 1; while (lo < hi) { const m = (lo + hi) >> 1; if (samples[m][0] < L) lo = m + 1; else hi = m; }
-    const S = samples[lo] || [0, 0, 0];
-    const tx = clamp(BW * (mobile ? .5 : .46) - S[1], BW - WW, 0), ty = clamp(BH * .52 - S[2], BH - WH, 0);
-    const k = reduce ? 1 : 1 - Math.exp(-dt * 5);
-    jc.x += (tx - jc.x) * k; jc.y += (ty - jc.y) * k;
-    world2.style.transform = `translate3d(${jc.x.toFixed(1)}px, ${jc.y.toFixed(1)}px, 0)`;
-    const face = walker.dataset.px && S[1] < +walker.dataset.px - .5 ? -1 : 1; walker.dataset.px = S[1];
-    walker.style.transform = `translate3d(${(S[1] - WW * .00625).toFixed(1)}px, ${(S[2] - WW * .0282).toFixed(1)}px, 0) scaleX(${face})`;
-    walker.classList.toggle('walking', t > .02 && t < .98);
+    const p = clamp((y - jTop) / jRange), ph = phase(p);
+    const L = lenAt(Math.max(ph.pos, 0)), tip = carve.getPointAtLength(Math.max(0.01, L));
+    const O = overview(), Z = mobile ? 1.05 : clamp(vw / 1500, .8, 1.15);
+    const dip = ph.pos > 0 && ph.pos < N - 1 ? Math.sin(Math.PI * (ph.pos % 1)) * .22 : 0;
+    const F = viewFor(tip.x, tip.y, Z * (1 - dip));
+    const k = ph.out ? 1 - ph.out : ph.k;
+    const T = { x: O.x + (F.x - O.x) * k, y: O.y + (F.y - O.y) * k, s: O.s + (F.s - O.s) * k };
+    if (!cam3.ok) { Object.assign(cam3, T, { ok: true }); }
+    const e = reduce ? 1 : 1 - Math.exp(-dt * 7);
+    cam3.x += (T.x - cam3.x) * e; cam3.y += (T.y - cam3.y) * e; cam3.s += (T.s - cam3.s) * e;
+    world3.style.transform = `translate3d(${cam3.x.toFixed(1)}px, ${cam3.y.toFixed(1)}px, 0) scale(${cam3.s.toFixed(4)})`;
+    world3.style.setProperty('--inv', clamp(1 / cam3.s, .6, 3).toFixed(3));
+    // carve + fog of war
+    const carved = ph.pos < 0 ? stopL[0] * clamp(ph.pos + 1) : L;
+    const off = (pathLen - carved).toFixed(1);
+    carve.style.strokeDashoffset = off; casing.style.strokeDashoffset = off; fogPath.style.strokeDashoffset = off;
+    fogRect.setAttribute('opacity', (.92 * ph.k * (1 - ph.out)).toFixed(3));
+    ghost.style.opacity = (1 - ph.k * .7 + ph.out * .7).toFixed(3);
+    STOPS.forEach((_, i) => { const d = clamp((ph.pos - (i - .15)) / .4); holes[i].setAttribute('r', (ss(d) * (mobile ? 330 : 380)).toFixed(1)); });
+    const active = ph.pos < -.4 ? -1 : Math.round(ph.pos);
+    jmarks.forEach((m, i) => { const seen = ph.pos >= i - .08 || ph.out > .5; m.classList.toggle('seen', seen); m.classList.toggle('on', i === active && !ph.out); m.classList.toggle('hid', !seen && ph.k > .5 && !ph.out); });
+    meTip.style.opacity = ph.pos > -.5 && ph.out < .5 ? 1 : 0;
+    meTip.style.left = tip.x + 'px'; meTip.style.top = tip.y + 'px';
+    // compass points where the path is heading
+    const ahead = carve.getPointAtLength(Math.min(pathLen, L + 40)), want = ph.pos < 0 || ph.out ? 0 : Math.atan2(ahead.x - tip.x, -(ahead.y - tip.y)) * 180 / Math.PI;
+    let dh = ((want - heading + 540) % 360) - 180; heading += dh * (reduce ? 1 : clamp(dt * 4));
+    needle.style.transform = `rotate(${heading.toFixed(1)}deg)`;
+    compass.classList.toggle('in', p > .005 && p < .999);
+    scaleDot.style.setProperty('--x', (clamp(ph.pos, 0, N - 1) / (N - 1) * 100).toFixed(1) + '%');
+    showCard(ph.out > .5 ? END : active < 0 ? OVER : STOPS[active]);
   }
-  function walkTo(i) { goTo(jTop + (i / (N - 1)) * jRange + (i ? 2 : 4), 2); }
+  function walkTo(i) {
+    const t = Math.min(N - 1.001, i + .1), p = PH.zoom + t / (N - 1) * (PH.walk - PH.zoom);
+    goTo(jTop + (i === 0 ? PH.zoom + .005 : p) * jRange, 2.2);
+  }
 
   /* =========================================================
      4 · WORK
