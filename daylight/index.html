@@ -533,7 +533,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .stk.star { width: 84px; height: 84px; }
 .stk.star svg { width: 100%; height: 100%; }
 .stk.pill { padding: 8px 14px; border-radius: 999px; background: #13233A; color: #fff; font: 700 18px/1 var(--hand); border: 2px solid #fff; }
-.brand-prog { position: absolute; left: clamp(16px, 4vw, 56px); right: clamp(16px, 4vw, 56px); bottom: calc(env(safe-area-inset-bottom, 0px) + 28px); height: 4px; border-radius: 2px; background: rgba(19, 35, 58, .1); }
+.brand-prog { display: none; position: absolute; left: clamp(16px, 4vw, 56px); right: clamp(16px, 4vw, 56px); bottom: calc(env(safe-area-inset-bottom, 0px) + 28px); height: 4px; border-radius: 2px; background: rgba(19, 35, 58, .1); }
 .brand-prog i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--p, 0%); border-radius: 2px; background: var(--coral); }
 /* mini landing pages */
 .lp { position: absolute; inset: 0; padding: 7% 7%; box-sizing: border-box; display: flex; flex-direction: column; }
@@ -580,7 +580,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .stack-head .sec-head { justify-items: center; text-align: center; margin: 0; }
 .stack-head .sec-head h2 { max-width: none; font-size: clamp(2rem, 4vw, 3.9rem); }
 .stack-head .sec-head p:not(.kicker) { max-width: none; }
-.gift-stage { position: absolute; left: 50%; top: 80%; width: 0; height: 0; will-change: transform; }
+.gift-stage { position: absolute; left: 50%; top: 84%; width: 0; height: 0; will-change: transform; }
 .beam { position: absolute; left: -200px; bottom: 60px; width: 400px; height: 46vh; opacity: 0; pointer-events: none; clip-path: polygon(38% 100%, 62% 100%, 100% 0, 0 0); background: linear-gradient(0deg, rgba(255, 226, 160, .75), rgba(255, 226, 160, .18) 55%, rgba(255, 226, 160, 0)); filter: blur(6px); }
 .burst { position: absolute; left: -420px; top: -470px; width: 840px; height: 840px; border-radius: 50%; opacity: 0; pointer-events: none; background: radial-gradient(closest-side, rgba(255, 222, 160, .7), rgba(255, 222, 160, .22) 45%, transparent 72%); }
 .gift { position: absolute; left: -150px; top: -170px; width: 300px; height: 300px; transform-origin: 50% 92%; will-change: transform; }
@@ -627,12 +627,16 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .ll-roles { width: min(1100px, 100%); margin: 0 0 9vh; }
 .ll-roles-k { margin: 0 0 26px; font: 700 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #8A6242; }
 .ll-roles ol { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); margin: 0; padding: 0; list-style: none; }
-.ll-roles ol::before, .ll-roles ol::after { content: ""; position: absolute; left: calc(100% / 12); right: calc(100% / 12); top: 9px; height: 3px; border-radius: 2px; background: rgba(58, 38, 22, .12); }
+.ll-roles ol::before, .ll-roles ol::after { content: ""; position: absolute; left: calc(100% / 12); right: calc(100% / 12); top: 24px; height: 3px; border-radius: 2px; background: rgba(58, 38, 22, .12); }
 .ll-roles ol::after { background: linear-gradient(90deg, #FF6B4A, #F2A93B, #C98B52, #1DB954, #0B0B0C, #E1306C); transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.8s var(--ease); }
 .ll-roles.in ol::after { transform: scaleX(1); }
 .ll-roles li { position: relative; display: grid; justify-items: center; gap: 6px; padding: 0 8px; opacity: 0; translate: 0 12px; transition: opacity .6s var(--ease), translate .7s var(--spring); transition-delay: calc(var(--d) * .25s + .2s); }
 .ll-roles.in li { opacity: 1; translate: 0 0; }
-.ll-roles li i { position: relative; z-index: 1; width: 21px; height: 21px; border-radius: 50%; background: #FFF8EC; box-shadow: inset 0 0 0 5px var(--c), 0 4px 10px -4px var(--c); margin-bottom: 8px; }
+.ll-roles li i.hat { position: relative; z-index: 1; display: grid; place-items: end center; width: 64px; height: 50px; margin: -24px 0 6px; }
+.ll-roles li i.hat svg { width: 58px; height: auto; filter: drop-shadow(0 6px 5px rgba(58, 38, 22, .28)); transform-origin: 50% 90%; transform: translateY(-60px) rotate(-18deg); opacity: 0; transition: transform .8s cubic-bezier(.34, 1.56, .64, 1), opacity .3s; transition-delay: calc(var(--d) * .25s + .3s); }
+.ll-roles.in li i.hat svg { transform: none; opacity: 1; }
+.ll-roles li:hover i.hat svg { animation: hattip .7s var(--ease); }
+@keyframes hattip { 40% { transform: translateY(-10px) rotate(-12deg); } 70% { transform: translateY(0) rotate(4deg); } }
 .ll-roles li b { font: 800 18px/1.1 var(--sans); letter-spacing: -.02em; color: var(--ll-ink); }
 .ll-roles li span { font: 400 14px/1.4 var(--sans); color: #6E5038; max-width: 16ch; }
 .ll-rev-track { position: relative; height: 175vh; }
@@ -892,13 +896,14 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .ll-roles ol::before, .ll-roles ol::after { left: 18px; right: auto; top: 10px; bottom: 10px; width: 3px; height: auto; }
   .ll-roles ol::after { transform: scaleY(0); transform-origin: 50% 0; }
   .ll-roles.in ol::after { transform: scaleY(1); }
-  .ll-roles li { grid-template-columns: 22px 1fr; justify-items: start; text-align: left; column-gap: 14px; row-gap: 2px; }
-  .ll-roles li i { grid-row: span 2; margin: 0; }
+  .ll-roles li { grid-template-columns: 64px 1fr; justify-items: start; text-align: left; column-gap: 14px; row-gap: 2px; }
+  .ll-roles li i.hat { grid-row: span 2; margin: 0; }
+  .ll-roles ol::before, .ll-roles ol::after { left: 38px !important; }
   .ll-stats { grid-template-columns: 1fr; gap: 28px; }
   .ll-stats li + li { border-left: 0; border-top: 1px solid rgba(58, 38, 22, .15); padding-top: 28px; }
   .gift { transform-origin: 50% 92%; left: -110px; top: -125px; width: 220px; height: 220px; }
   .gift-cap { font-size: 16px; }
-  .gift-stage { top: 80%; }
+  .gift-stage { top: 86%; }
   .tool { width: 58px; margin: -29px 0 0 -29px; gap: 6px; }
   .tool .ti { width: 56px; height: 56px; border-radius: 16px; }
   .tool .ti svg { width: 32px; height: 32px; }
@@ -1120,12 +1125,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     <div class="ll-roles" id="llRoles">
       <p class="ll-roles-k">Every hat I wore to ship it</p>
       <ol>
-        <li style="--c:#FF6B4A;--d:0"><i></i><b>Founder</b><span>Spotted the problem: my own forgetting</span></li>
-        <li style="--c:#F2A93B;--d:1"><i></i><b>Product designer</b><span>Places, items and smart reminders</span></li>
-        <li style="--c:#C98B52;--d:2"><i></i><b>Brand designer</b><span>The name, the eyes, the icon</span></li>
-        <li style="--c:#1DB954;--d:3"><i></i><b>iOS developer</b><span>Built it myself in Xcode</span></li>
-        <li style="--c:#0B0B0C;--d:4"><i></i><b>Launch</b><span>Live on the App Store</span></li>
-        <li style="--c:#E1306C;--d:5"><i></i><b>Marketer</b><span>Built in public, 500K+ views</span></li>
+        <li style="--c:#FF6B4A;--d:0"><i class="hat"><svg viewBox="0 0 64 44"><path d="M8 30c0-12 11-22 24-22s24 10 24 22z" fill="#1F2D44"/><path d="M4 30h56c0 4-4 7-8 7H12c-4 0-8-3-8-7z" fill="#13233A"/><rect x="8" y="26" width="48" height="5" fill="#E2BF7E"/><circle cx="32" cy="18" r="4.5" fill="#E2BF7E"/></svg></i><b>Founder</b><span>Spotted the problem: my own forgetting</span></li>
+        <li style="--c:#F2A93B;--d:1"><i class="hat"><svg viewBox="0 0 64 44"><path d="M10 32c0-14 10-24 22-24s22 10 22 24z" fill="#FF6B4A"/><path d="M26 10h12l-2-4h-8z" fill="#E14F30"/><path d="M4 32h30c-2 5-8 8-14 8-8 0-14-3-16-8z" fill="#E14F30"/><path d="M34 32h24v4H34z" fill="#C63E22"/><path d="M40 14c4 2 7 6 8 11" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".5"/></svg></i><b>Product designer</b><span>Places, items and smart reminders</span></li>
+        <li style="--c:#C98B52;--d:2"><i class="hat"><svg viewBox="0 0 64 44"><ellipse cx="32" cy="26" rx="26" ry="12" fill="#C98B52"/><ellipse cx="30" cy="24" rx="22" ry="9" fill="#DDA36B"/><path d="M31 15c1-5 3-8 3-8" stroke="#8B5E33" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="24" r="3" fill="#FF6B4A"/><circle cx="30" cy="27" r="3" fill="#4285F4"/><circle cx="40" cy="24" r="3" fill="#FFD23F"/></svg></i><b>Brand designer</b><span>The name, the eyes, the icon</span></li>
+        <li style="--c:#1DB954;--d:3"><i class="hat"><svg viewBox="0 0 64 44"><path d="M10 30c0-13 10-22 22-22s22 9 22 22z" fill="#FFC21A"/><path d="M26 9h12v21H26z" fill="#F2AE00"/><path d="M4 30h56v5c0 2-2 4-4 4H8c-2 0-4-2-4-4z" fill="#F2AE00"/><path d="M16 22c2-6 6-10 10-11" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".6"/></svg></i><b>iOS developer</b><span>Built it myself in Xcode</span></li>
+        <li style="--c:#0B0B0C;--d:4"><i class="hat"><svg viewBox="0 0 64 44"><path d="M32 2L50 38H14z" fill="#9C7BFF"/><path d="M23 20l18 8M19 28l24 9M28 10l12 6" stroke="#FFD23F" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="3" r="4" fill="#FF6B4A"/><path d="M10 38h44" stroke="#7B5CD6" stroke-width="4" stroke-linecap="round"/></svg></i><b>Launch</b><span>Live on the App Store</span></li>
+        <li style="--c:#E1306C;--d:5"><i class="hat"><svg viewBox="0 0 64 44"><rect x="18" y="4" width="28" height="28" rx="2" fill="#1B1B1F"/><rect x="18" y="22" width="28" height="6" fill="#E1306C"/><path d="M4 34c0-2 2-3 4-3h48c2 0 4 1 4 3s-2 4-4 4H8c-2 0-4-2-4-4z" fill="#111114"/><path d="M22 8v10" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".25"/></svg></i><b>Marketer</b><span>Built in public, 500K+ views</span></li>
       </ol>
     </div>
     <ul class="ll-stats"><li><b>400+</b><span>downloads</span></li><li><b>10</b><span>paying subscribers</span></li><li><b>500K+</b><span>organic views, building in public</span></li></ul>
@@ -2152,7 +2157,9 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const MOUTH = -70;
   const BUNCH = [[5, 6, 5, 1], [4, 5, 4, 3, 1]].map(rows => rows.flatMap((n, r) => Array.from({ length: n }, (_, k) => [r, k - (n - 1) / 2])));
   let BS = 104, BCY = -380;
-  const toolPos = i => { const B = BUNCH[mobile ? 1 : 0], rows = B[B.length - 1][0] + 1, [r, c] = B[i], j = ((i * 37) % 7 - 3) * 2; return [c * BS + j, BCY + (r - (rows - 1) / 2) * BS * .84 + ((i * 53) % 5 - 2) * 2]; };
+  // an organic cloud of balloons (a sunflower spread inside an ellipse), all tied back to the box
+  let BRX = 420, BRY = 160;
+  const toolPos = i => { const n = TOOLS.length, r = Math.sqrt((i + .5) / n), a = i * 2.39996 + .6; return [Math.cos(a) * r * BRX, BCY + Math.sin(a) * r * BRY * (1 + .12 * Math.sin(i * 1.7))]; };
   const toolPosOld = i => { if (mobile) { const row = i < 4 ? 0 : i < 8 ? 1 : 2, inRow = row < 2 ? 4 : TOOLS.length - 8, k = row < 2 ? i % 4 : i - 8; return [(k - (inRow - 1) / 2) * Math.min(86, vw * .22), -210 - (2 - row) * 100]; }
     const a = (188 + 164 * i / (TOOLS.length - 1)) * Math.PI / 180; return [Math.cos(a) * RX, MOUTH + Math.sin(a) * RY]; };
   const toolEls = TOOLS.map((t, i) => {
@@ -2173,14 +2180,18 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     if (i < 0 || !toolEls[i].classList.contains('set')) { toolTip.classList.remove('in'); giftCap.classList.remove('hide'); ring.classList.toggle('hov', false); return; }
     const t = TOOLS[i];
     $('#ttN').textContent = t.n; $('#ttP').textContent = t.how; $('#ttC').textContent = TOOL_ROLE[t.n] || ''; $('#ttI').innerHTML = t.icon; toolTip.style.setProperty('--bg', t.bg);
+    // sit right next to the hovered icon: outside edge first, flip inward if there's no room
+    const [px, py] = toolPos(i), w = mobile ? 220 : 300, gap = mobile ? 44 : 60;
+    let tx, ty = py;
+    if (mobile) { tx = clamp(px, -vw / 2 + w / 2 + 12, vw / 2 - w / 2 - 12); ty = py < BCY ? py + gap + 56 : py - gap - 56; }
+    else { const out = px >= 0 ? 1 : -1; tx = px + out * (gap + w / 2); if (Math.abs(tx) + w / 2 > vw / 2 - 16) tx = px - out * (gap + w / 2); }
+    toolTip.style.left = tx.toFixed(0) + 'px'; toolTip.style.top = ty.toFixed(0) + 'px';
     toolTip.classList.add('in'); giftCap.classList.add('hide');
   }
   function layoutStack() {
     stTop = top(stackTrack); stRange = Math.max(1, stackTrack.offsetHeight - vh);
     RX = mobile ? vw * .44 : Math.min(vw * .42, 620); RY = mobile ? Math.min(vh * .46, 380) : Math.min(vh * .58, 480);
-    BS = mobile ? Math.min(66, vw * .17) : Math.min(100, vh * .108); { const rows = mobile ? 5 : 4; BCY = MOUTH - BS * 1.25 - (rows - 1) / 2 * BS * .84; }
-    const side = mobile ? 0 : BS * 2.2 + 190, ty = mobile ? BCY - BS * 2.1 - 60 : BCY;
-    toolTip.style.left = side + 'px'; toolTip.style.top = ty + 'px'; giftCap.style.left = -side + 'px'; giftCap.style.top = ty + 'px';
+    BS = mobile ? 58 : 80; BRX = mobile ? vw * .44 : Math.min(vw * .32, 470); BRY = mobile ? Math.min(vh * .15, 125) : Math.min(vh * .16, 150); BCY = MOUTH - BRY - (mobile ? 90 : 80);
   }
   function frameStack(y) {
     const q = clamp((y - stTop) / stRange), now = performance.now() / 1000;
@@ -2197,7 +2208,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       const s0 = .27 + i * .016, f = ss(range(q, s0, s0 + .14)), [tx, ty] = toolPos(i);
       const cx = tx * .25, cy = ty - 60, sx = 0, sy = MOUTH, u = 1 - f;
       const x = u * u * sx + 2 * u * f * cx + f * f * tx, yy = u * u * sy + 2 * u * f * cy + f * f * ty;
-      el.style.transform = `translate3d(${x.toFixed(1)}px, ${yy.toFixed(1)}px, 0) scale(${(.2 + .8 * f).toFixed(3)}) rotate(${(u * (tx < 0 ? -40 : 40)).toFixed(0)}deg)`;
+      el.style.transform = `translate3d(${x.toFixed(1)}px, ${yy.toFixed(1)}px, 0) scale(${(.2 + .8 * f).toFixed(3)}) rotate(${(u * (tx < 0 ? -40 : 40) + f * tx / BRX * 9).toFixed(1)}deg)`;
       const sp = strings[i]; sp.setAttribute('d', `M0 ${MOUTH + 6} Q ${(x * .2).toFixed(1)} ${((yy + MOUTH) / 2 + 30).toFixed(1)} ${x.toFixed(1)} ${(yy + BS * .38).toFixed(1)}`); sp.style.opacity = (f * .9).toFixed(2);
       el.style.opacity = f > 0 ? Math.min(1, f * 5).toFixed(2) : 0; el.style.pointerEvents = f > .98 ? '' : 'none';
       const set = f > .98; if (el.classList.contains('set') !== set) { el.classList.toggle('set', set); if (!set && tipFor === i) showTip(-1); }
