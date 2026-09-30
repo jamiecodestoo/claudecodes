@@ -242,9 +242,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .mk { transition: opacity .5s var(--ease); }
 .world3.far .poi { opacity: 0 !important; pointer-events: none !important; }
 .world3 > svg.maplayer { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-#routeArt { will-change: transform; }
-.spot2 { position: absolute; left: 0; top: 0; z-index: 1; width: 1700px; height: 1700px; margin: -850px 0 0 -850px; border-radius: 50%; pointer-events: none; opacity: 0; transition: opacity .9s var(--ease); will-change: transform, opacity;
-  background: radial-gradient(closest-side, rgba(244, 239, 225, 0) 42%, rgba(244, 239, 225, .84) 100%); box-shadow: 0 0 0 6000px rgba(244, 239, 225, .84); }
+.spot2 { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; transition: opacity .9s var(--ease);
+  background: radial-gradient(circle var(--sr, 800px) at var(--sx, 50%) var(--sy, 50%), rgba(244, 239, 225, 0) 38%, rgba(244, 239, 225, .82) 100%); }
 .spot2.on { opacity: 1; }
 .car { position: absolute; left: 0; top: 0; width: 20px; height: 11px; border-radius: 4px; background: linear-gradient(90deg, var(--c) 60%, rgba(255, 255, 255, .75) 60% 78%, var(--c) 78%); box-shadow: 0 2px 3px rgba(19, 35, 58, .25); offset-rotate: auto; animation: drive linear infinite; pointer-events: none; }
 .boat { position: absolute; left: 0; top: 0; width: 30px; height: 12px; border-radius: 3px 3px 10px 10px; background: #fff; box-shadow: 0 0 0 1.5px #6C9CC2; offset-rotate: 0deg; animation: drive linear infinite; pointer-events: none; }
@@ -620,8 +619,23 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 /* =========================================================
    6 · LASTLOOK
    ========================================================= */
-.ll { position: relative; padding-top: 6vh; color: var(--ink); background: #F7E7CC; }
-.ll-rev-track { position: relative; height: 200vh; }
+.ll { --ll-ink: #3A2616; position: relative; padding-top: 6vh; color: var(--ll-ink); background: linear-gradient(180deg, #F7E7CC, #F3DDBB 60%, #F7E7CC); }
+.ll .sec-head h2, .ll .tell, .ll-stats b { color: var(--ll-ink); }
+.ll .kicker { color: #8A6242; }
+.b-caramel { --b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M5 30C14 11 60 9 104 10c46 1 82-1 90 15 6 12-6 23-38 25-40 3-98 4-134 0C5 48 0 41 5 30z' fill='%23EDBB7E'/%3E%3C/svg%3E"); }
+.b-peach { --b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M6 31C16 13 56 7 104 8c46 1 80 0 89 15 5 12-5 25-36 27-42 3-100 5-135 1C5 49 1 42 6 31z' fill='%23FFC4A6'/%3E%3C/svg%3E"); }
+.ll-roles { width: min(1100px, 100%); margin: 0 0 9vh; }
+.ll-roles-k { margin: 0 0 26px; font: 700 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #8A6242; }
+.ll-roles ol { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); margin: 0; padding: 0; list-style: none; }
+.ll-roles ol::before, .ll-roles ol::after { content: ""; position: absolute; left: calc(100% / 12); right: calc(100% / 12); top: 9px; height: 3px; border-radius: 2px; background: rgba(58, 38, 22, .12); }
+.ll-roles ol::after { background: linear-gradient(90deg, #FF6B4A, #F2A93B, #C98B52, #1DB954, #0B0B0C, #E1306C); transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.8s var(--ease); }
+.ll-roles.in ol::after { transform: scaleX(1); }
+.ll-roles li { position: relative; display: grid; justify-items: center; gap: 6px; padding: 0 8px; opacity: 0; translate: 0 12px; transition: opacity .6s var(--ease), translate .7s var(--spring); transition-delay: calc(var(--d) * .25s + .2s); }
+.ll-roles.in li { opacity: 1; translate: 0 0; }
+.ll-roles li i { position: relative; z-index: 1; width: 21px; height: 21px; border-radius: 50%; background: #FFF8EC; box-shadow: inset 0 0 0 5px var(--c), 0 4px 10px -4px var(--c); margin-bottom: 8px; }
+.ll-roles li b { font: 800 18px/1.1 var(--sans); letter-spacing: -.02em; color: var(--ll-ink); }
+.ll-roles li span { font: 400 14px/1.4 var(--sans); color: #6E5038; max-width: 16ch; }
+.ll-rev-track { position: relative; height: 175vh; }
 .ll-rev-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; }
 .ll-tell { max-width: 26ch; margin-top: 4vh !important; }
 .ll-rev-pin .sec-head { margin-bottom: 0; }
@@ -638,12 +652,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .ll-tell .oo { position: relative; display: inline-block; width: .5em; height: .54em; margin: 0 .01em; vertical-align: -.03em; border-radius: 50%; background: radial-gradient(circle at 40% 30%, #fff, #F6EBDA); box-shadow: inset 0 0 0 .07em var(--ink); animation: blink 5s infinite; }
 .ll-tell .oo s { position: absolute; left: 50%; top: 50%; width: .22em; height: .24em; margin: -.12em 0 0 -.11em; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #5A6B85 0 14%, #13233A 16%); transform: translate(var(--ex, 0px), var(--ey, 0px)); transition: transform .12s linear; }
 @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
-.ll-end { padding-block: 0 16vh; display: grid; justify-items: center; text-align: center; }
+.ll-end { padding-block: 2vh 16vh; display: grid; justify-items: center; text-align: center; }
 .ll-end-icon { width: 96px; height: 96px; border-radius: 24px; box-shadow: 0 20px 40px -18px rgba(58, 38, 22, .55); margin-bottom: 4vh; }
 .ll-stats { display: grid; grid-template-columns: repeat(3, 1fr); width: min(960px, 100%); margin: 0; padding: 0; list-style: none; }
 .ll-stats li { padding: 0 clamp(12px, 3vw, 40px); }
 .ll-stats li + li { border-left: 1px solid rgba(58, 38, 22, .15); }
-.ll-stats b { display: block; font: 800 clamp(3rem, 6vw, 5.4rem)/.95 var(--sans); letter-spacing: -.06em; color: var(--ink); }
+.ll-stats b { display: block; font: 800 clamp(3rem, 6vw, 5.4rem)/.95 var(--sans); letter-spacing: -.06em; color: var(--ll-ink); }
 .ll-stats span { display: block; margin: 12px auto 0; font: 600 13px/1.4 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #6E5038; max-width: 16ch; }
 .ll-cta { margin-top: 5vh; display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
 .ll-store { display: inline-flex; align-items: center; gap: 12px; padding: 13px 26px 13px 20px; border-radius: 16px; background: #0B0B0C; color: #fff; text-decoration: none; box-shadow: 0 20px 36px -18px rgba(0, 0, 0, .7); transition: transform .4s var(--spring), box-shadow .3s; }
@@ -874,13 +888,19 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .chips { bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); }
   .chip { padding: 6px 10px; }
   .ll-tell { font-size: clamp(1.45rem, 6.6vw, 2rem); }
+  .ll-roles ol { grid-template-columns: 1fr; gap: 18px; padding-left: 8px; }
+  .ll-roles ol::before, .ll-roles ol::after { left: 18px; right: auto; top: 10px; bottom: 10px; width: 3px; height: auto; }
+  .ll-roles ol::after { transform: scaleY(0); transform-origin: 50% 0; }
+  .ll-roles.in ol::after { transform: scaleY(1); }
+  .ll-roles li { grid-template-columns: 22px 1fr; justify-items: start; text-align: left; column-gap: 14px; row-gap: 2px; }
+  .ll-roles li i { grid-row: span 2; margin: 0; }
   .ll-stats { grid-template-columns: 1fr; gap: 28px; }
   .ll-stats li + li { border-left: 0; border-top: 1px solid rgba(58, 38, 22, .15); padding-top: 28px; }
   .gift { transform-origin: 50% 92%; left: -110px; top: -125px; width: 220px; height: 220px; }
   .gift-cap { font-size: 16px; }
   .gift-stage { top: 80%; }
   .tool { width: 58px; margin: -29px 0 0 -29px; gap: 6px; }
-  .tool .ti { width: 58px; height: 58px; border-radius: 17px; }
+  .tool .ti { width: 56px; height: 56px; border-radius: 16px; }
   .tool .ti svg { width: 32px; height: 32px; }
   .tool .tn { font-size: 11px; }
   .tool-tip { width: 220px; padding: 12px 14px 14px; }
@@ -910,8 +930,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     <span class="ind" id="navInd" aria-hidden="true"></span>
     <a href="#journey" data-go="journey">Journey</a>
     <a href="#work" data-go="work">Work</a>
-    <a href="#stack" data-go="stack">Stack</a>
     <a href="#lastlook" data-go="lastlook">LastLook</a>
+    <a href="#stack" data-go="stack">Stack</a>
     <a href="#life" data-go="life">About</a>
     <a href="#hello" data-go="hello">Contact</a>
     <span class="sep" aria-hidden="true"></span>
@@ -1085,6 +1105,37 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 
 <div class="cs" id="cs" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Case study"></div>
 
+<!-- 6 · LASTLOOK -->
+<section class="ll torn" id="lastlook" aria-label="LastLook, my app">
+  <div class="ll-rev-track" id="llRevTrack">
+    <div class="ll-rev-pin"><div class="wrap">
+      <div class="sec-head">
+        <p class="kicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>My app</p>
+        <h2>I built my <span class="hl b-coral" id="llHl">own app.</span></h2>
+      </div>
+      <p class="tell ll-tell" id="llRev">I kept <span class="hl b-sun">forgetting my things.</span> So I built <span class="w ll-app" aria-hidden="true"><img src="v2/s/llicon.webp" alt=""></span> <span class="hl b-coral"><span class="w">LastL<i class="oo"><s></s></i><i class="oo"><s></s></i>k.</span></span> It’s like <span class="w ll-ic fm" aria-hidden="true"><svg viewBox="0 0 40 40"><defs><linearGradient id="fmG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5BE17A"/><stop offset="1" stop-color="#1DB954"/></linearGradient></defs><rect width="40" height="40" rx="9" fill="url(#fmG)"/><circle cx="20" cy="20" r="12" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="20" cy="20" r="6.5" fill="none" stroke="#fff" stroke-width="2.4" opacity=".85"/><circle cx="20" cy="20" r="2.4" fill="#fff"/></svg></span> <span class="hl b-mint">FindMy,</span> but for <span class="hl b-caramel">everything you own:</span> <span class="w ll-ic ll-loc" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 38s12-11.5 12-21a12 12 0 0 0-24 0c0 9.5 12 21 12 21z" fill="#FF6B4A"/><circle cx="20" cy="17" r="4.6" fill="#fff"/></svg></span> smart, <span class="hl b-peach">location-based reminders</span> that give you one last look before you walk out.</p>
+    </div></div>
+  </div>
+  <div class="ll-end wrap">
+    <div class="ll-roles" id="llRoles">
+      <p class="ll-roles-k">Every hat I wore to ship it</p>
+      <ol>
+        <li style="--c:#FF6B4A;--d:0"><i></i><b>Founder</b><span>Spotted the problem: my own forgetting</span></li>
+        <li style="--c:#F2A93B;--d:1"><i></i><b>Product designer</b><span>Places, items and smart reminders</span></li>
+        <li style="--c:#C98B52;--d:2"><i></i><b>Brand designer</b><span>The name, the eyes, the icon</span></li>
+        <li style="--c:#1DB954;--d:3"><i></i><b>iOS developer</b><span>Built it myself in Xcode</span></li>
+        <li style="--c:#0B0B0C;--d:4"><i></i><b>Launch</b><span>Live on the App Store</span></li>
+        <li style="--c:#E1306C;--d:5"><i></i><b>Marketer</b><span>Built in public, 500K+ views</span></li>
+      </ol>
+    </div>
+    <ul class="ll-stats"><li><b>400+</b><span>downloads</span></li><li><b>10</b><span>paying subscribers</span></li><li><b>500K+</b><span>organic views, building in public</span></li></ul>
+    <div class="ll-cta">
+      <a class="ll-store" href="https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span><small>Download on the</small>App Store</span></a>
+      <a class="ll-follow" href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Follow the build @jamieships ↗</a>
+    </div>
+  </div>
+</section>
+
 <!-- 5 · MY STACK -->
 <section class="stack torn" id="stack" aria-label="My stack">
   <div class="stack-track" id="stackTrack">
@@ -1148,26 +1199,6 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <div class="ring" id="ring"></div>
         <div class="tool-tip" id="toolTip" role="status"><div class="tt-h"><span class="tt-i" id="ttI"></span><div><b id="ttN"></b><span id="ttC"></span></div></div><p id="ttP"></p></div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- 6 · LASTLOOK -->
-<section class="ll torn" id="lastlook" aria-label="LastLook, my app">
-  <div class="ll-rev-track" id="llRevTrack">
-    <div class="ll-rev-pin"><div class="wrap">
-      <div class="sec-head">
-        <p class="kicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>My app</p>
-        <h2>I built my <span class="hl b-coral" id="llHl">own app.</span></h2>
-      </div>
-      <p class="tell ll-tell" id="llRev">I kept <span class="hl b-sun">forgetting my things.</span> So I built <span class="w ll-app" aria-hidden="true"><img src="v2/s/llicon.webp" alt=""></span> <span class="hl b-coral"><span class="w">LastL<i class="oo"><s></s></i><i class="oo"><s></s></i>k.</span></span> It’s like <span class="w ll-ic fm" aria-hidden="true"><svg viewBox="0 0 40 40"><defs><linearGradient id="fmG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5BE17A"/><stop offset="1" stop-color="#1DB954"/></linearGradient></defs><rect width="40" height="40" rx="9" fill="url(#fmG)"/><circle cx="20" cy="20" r="12" fill="none" stroke="#fff" stroke-width="2.6"/><circle cx="20" cy="20" r="6.5" fill="none" stroke="#fff" stroke-width="2.4" opacity=".85"/><circle cx="20" cy="20" r="2.4" fill="#fff"/></svg></span> <span class="hl b-mint">FindMy,</span> but for <span class="hl b-sky">everything you own:</span> <span class="w ll-ic ll-loc" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 38s12-11.5 12-21a12 12 0 0 0-24 0c0 9.5 12 21 12 21z" fill="#FF6B4A"/><circle cx="20" cy="17" r="4.6" fill="#fff"/></svg></span> smart, <span class="hl b-lilac">location-based reminders</span> that give you one last look before you walk out.</p>
-    </div></div>
-  </div>
-  <div class="ll-end wrap">
-    <ul class="ll-stats"><li><b>400+</b><span>downloads</span></li><li><b>10</b><span>paying subscribers</span></li><li><b>400K+</b><span>organic views, building in public</span></li></ul>
-    <div class="ll-cta">
-      <a class="ll-store" href="https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg><span><small>Download on the</small>App Store</span></a>
-      <a class="ll-follow" href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Follow the build @jamieships ↗</a>
     </div>
   </div>
 </section>
@@ -1368,7 +1399,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     { id: 'lastlook', when: '2026', place: 'On the App Store', logo: 'logo-lastlook', c: '#9A6A3E', at: [4380, 940], lift: 190, name: 'LastLook',
       title: 'Then I built something of my own.',
       txt: '<b>LastLook</b> started as a problem I wanted to solve for myself: I kept forgetting my things. So I designed it, built it and launched it on iOS.',
-      stats: [['400+', 'downloads'], ['10', 'paying subscribers'], ['400K+', 'organic views']],
+      stats: [['400+', 'downloads'], ['10', 'paying subscribers'], ['500K+', 'organic views']],
       work: APP,
       photos: [['ll1', 'Never forget your things'], ['ll2', 'Find your lost devices'], ['ll3', 'Link items to places']],
       pois: [[160, 100, 'rocket', 'Idea to App Store, solo.']] },
@@ -1526,10 +1557,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     cur.x += (T.x - cur.x) * k; cur.y += (T.y - cur.y) * k; cur.s += (T.s - cur.s) * k;
     ptr.sx += (ptr.x - ptr.sx) * clamp(dt * 2.6); ptr.sy += (ptr.y - ptr.sy) * clamp(dt * 2.6);
     const intro = reduce ? 0 : 1 - ss(clamp((performance.now() - t0 - 200) / 2000));
-    const bv = Math.max(intro * 18, ss(range(pV, .25, .7)) * 12);
-    const blur = bv > .05 ? bv.toFixed(2) : 0;
+
     cam.style.transform = `translate3d(${cur.x.toFixed(2)}px, ${cur.y.toFixed(2)}px, 0) scale(${cur.s.toFixed(4)})`;
-    cam.style.filter = blur ? `blur(${blur}px)` : '';
     cam.classList.toggle('flying', pV > .03);
     // fly-through: each layer grows around the valley's focal point by depth; foreground flies out
     const px = reduce ? 0 : ptr.sx, py = reduce ? 0 : ptr.sy;
@@ -1765,7 +1794,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     mapArt.setAttribute('viewBox', `0 0 ${MW} ${MH}`); mapArt.innerHTML = h;
     const layer = (id, html, z) => { const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); el.id = id; el.setAttribute('class', 'maplayer'); el.setAttribute('viewBox', `0 0 ${MW} ${MH}`); el.setAttribute('aria-hidden', 'true'); if (z) el.style.zIndex = z; el.innerHTML = html; world3.insertBefore(el, meTip); return el; };
     layer('lmArt', lmH);
-    const sp = document.createElement('div'); sp.className = 'spot2'; sp.id = 'spot'; world3.insertBefore(sp, meTip);
+    const sp = document.createElement('div'); sp.className = 'spot2'; sp.id = 'spot'; $('#jPin').insertBefore(sp, $('#jFade'));
     layer('routeArt', rtH, 1);
     // traffic: small HTML cars on offset paths, so the big map never repaints
     const traffic = [[window.__mapRoads.main, '#E4262C', 70, 0], [window.__mapRoads.main, '#2A7BD1', 70, -24], [window.__mapRoads.main, '#13233A', 70, -48], [heartD, '#F4511E', 150, -10], [heartD, '#2E9E6B', 150, -85]];
@@ -1898,7 +1927,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     jmarks.forEach((m, i) => { const seen = ph.k < .5 || ph.out > .3 || ph.pos >= i - .08; m.classList.toggle('seen', seen); m.classList.toggle('on', i === active); m.classList.toggle('dim', ph.k > .5 && !ph.out && ph.pos < i - .08); });
     pois.forEach(q => { q.classList.toggle('seen', ph.pos >= +q.dataset.stop - .08 && ph.k > .9 && !ph.out); q.classList.toggle('here', +q.dataset.stop === active); });
     world3.classList.toggle('focus', active >= 0);
-    if (active >= 0) { const a = STOPS[active].at, e2 = reduce ? 1 : clamp(dt * 3.5); spotC.x += (a[0] + 190 - spotC.x) * e2; spotC.y += (a[1] - 120 - spotC.y) * e2; spot.style.transform = `translate3d(${spotC.x.toFixed(1)}px, ${spotC.y.toFixed(1)}px, 0)`; }
+    if (active >= 0) { const a = STOPS[active].at, e2 = reduce ? 1 : clamp(dt * 3.5); spotC.x += (a[0] + 190 - spotC.x) * e2; spotC.y += (a[1] - 120 - spotC.y) * e2; }
+    if (active >= 0) { const sx = (cam3.x + spotC.x * cam3.s).toFixed(0), sy = (cam3.y + spotC.y * cam3.s).toFixed(0), sr = (900 * cam3.s).toFixed(0), key = sx + ',' + sy + ',' + sr; if (key !== frameJourney.sp) { frameJourney.sp = key; spot.style.setProperty('--sx', sx + 'px'); spot.style.setProperty('--sy', sy + 'px'); spot.style.setProperty('--sr', sr + 'px'); } }
     spot.classList.toggle('on', active >= 0 && ph.k > .9);
     showPols(settled ? active : -1);
     meTip.style.opacity = ph.pos > -.5 && ph.out < .5 ? 1 : 0;
@@ -2148,7 +2178,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   function layoutStack() {
     stTop = top(stackTrack); stRange = Math.max(1, stackTrack.offsetHeight - vh);
     RX = mobile ? vw * .44 : Math.min(vw * .42, 620); RY = mobile ? Math.min(vh * .46, 380) : Math.min(vh * .58, 480);
-    BS = mobile ? Math.min(66, vw * .17) : Math.min(84, vh * .092); { const rows = mobile ? 5 : 4; BCY = MOUTH - BS * 1.25 - (rows - 1) / 2 * BS * .84; }
+    BS = mobile ? Math.min(66, vw * .17) : Math.min(100, vh * .108); { const rows = mobile ? 5 : 4; BCY = MOUTH - BS * 1.25 - (rows - 1) / 2 * BS * .84; }
     const side = mobile ? 0 : BS * 2.2 + 190, ty = mobile ? BCY - BS * 2.1 - 60 : BCY;
     toolTip.style.left = side + 'px'; toolTip.style.top = ty + 'px'; giftCap.style.left = -side + 'px'; giftCap.style.top = ty + 'px';
   }
@@ -2232,7 +2262,9 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   (function split(node) { [...node.childNodes].forEach(n => { if (n.nodeType === 3) { const f = document.createDocumentFragment(); n.textContent.split(/(\s+)/).forEach(tok => { if (!tok) return; if (/^\s+$/.test(tok)) { f.appendChild(document.createTextNode(tok)); return; } const w = document.createElement('span'); w.className = 'w'; w.textContent = tok; llWords.push(w); f.appendChild(w); }); n.replaceWith(f); } else if (n.classList && n.classList.contains('w')) llWords.push(n); else split(n); }); })(llRevEl);
   const llMarks = $$('.hl', llRevEl).map(el => ({ el, last: llWords.indexOf($$('.w', el).pop()) }));
   function layoutLL() { const sec = $('#lastlook'); llTop = top(sec); llRange = Math.max(1, sec.offsetHeight - vh); rvTop = top(llRevTrack); rvRange = Math.max(1, llRevTrack.offsetHeight - vh); }
+  const llRoles = $('#llRoles');
   function frameLL(y) {
+    if (!llRoles.classList.contains('in') && llRoles.getBoundingClientRect().top < vh * .82) llRoles.classList.add('in');
     const p = clamp((y - rvTop + vh * .25) / (rvRange * .85)), lit = p * llWords.length * 1.05;
     if (Math.abs(lit - llLit) < .05) return; llLit = lit;
     llWords.forEach((w, i) => { w.style.opacity = (.13 + .87 * clamp(lit - i)).toFixed(3); });
