@@ -2134,6 +2134,50 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   .journey.jcm .jcard.open .jc-bd > * { align-self: stretch; } .journey.jcm .jcard.open .jc-more { align-self: flex-start; }
 }
 :root[data-theme="dark"] .journey.jcm .jc-more { color: color-mix(in srgb, var(--c) 60%, #fff); background: color-mix(in srgb, var(--c) 22%, transparent); }
+
+/* dark · the note form */
+:root[data-theme="dark"] .nw-modal { background: rgba(8, 8, 8, .62); }
+:root[data-theme="dark"] .nw-sheet { background: #242424; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8), 0 0 0 1px rgba(255, 255, 255, .08); }
+:root[data-theme="dark"] .nw-k { color: #FFD86B; }
+:root[data-theme="dark"] .nw-x { background: rgba(255, 255, 255, .08); color: #F5F5F5; }
+:root[data-theme="dark"] .nw-x:hover { background: rgba(255, 255, 255, .14); }
+:root[data-theme="dark"] .nw-av { box-shadow: 0 0 0 4px #3A3A3A, 0 10px 18px -8px rgba(0, 0, 0, .7); }
+:root[data-theme="dark"] .nw-face-b button, :root[data-theme="dark"] .nw-up { background: #333; color: #F5F5F5; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+:root[data-theme="dark"] .nw-face-b button:hover, :root[data-theme="dark"] .nw-up:hover { background: #3D3D3D; }
+:root[data-theme="dark"] .nw-up:focus-within { outline-color: #FFD86B; }
+:root[data-theme="dark"] .nw-f span { color: #F0F0F0; }
+:root[data-theme="dark"] .nw-f em { color: #B5B5B5; }
+:root[data-theme="dark"] .nw-f input, :root[data-theme="dark"] .nw-f textarea { background: #1B1B1B; color: #F5F5F5; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .12); caret-color: #FFD86B; }
+:root[data-theme="dark"] .nw-f input::placeholder, :root[data-theme="dark"] .nw-f textarea::placeholder { color: #8C8C8C; }
+:root[data-theme="dark"] .nw-f input:focus, :root[data-theme="dark"] .nw-f textarea:focus { background: #1B1B1B; box-shadow: inset 0 0 0 2px #FFD86B; }
+:root[data-theme="dark"] .nw-err { color: #FF8A80; }
+:root[data-theme="dark"] .nw-go { background: #FFD86B; color: #1A1A1A; }
+:root[data-theme="dark"] .nw-fine { color: #B5B5B5; }
+
+/* where do you work: company + role, with logos */
+.nw-two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.nw-two .nw-f { min-width: 0; }
+.nw-f em { font-size: 12.5px; }
+.nw-co { position: relative; }
+.nw-co.has input { padding-left: 46px; }
+.nw-lg { position: absolute; left: 9px; top: 50%; translate: 0 -50%; display: none; pointer-events: none; }
+.nw-lg.on { display: block; }
+.co { flex: none; display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: var(--bh, #13233A); font: 800 12px/1 var(--sans); font-style: normal; color: #fff; overflow: hidden; vertical-align: middle; }
+.co img { width: 62%; height: 62%; filter: brightness(0) invert(1); }
+.co.mono { background: #E9E3D8; color: #13233A; }
+.nw-sug { position: absolute; z-index: 3; left: 0; right: 0; top: calc(100% + 6px); margin: 0; padding: 6px; list-style: none; border-radius: 14px; background: #fff; box-shadow: 0 24px 40px -18px rgba(19, 35, 58, .45), 0 0 0 1px rgba(19, 35, 58, .08); max-height: 260px; overflow-y: auto; }
+.nw-sug li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; font: 600 14.5px/1.2 var(--sans); cursor: pointer; }
+.nw-sug li:hover, .nw-sug li.on { background: #F4EFE6; }
+.nw-work { display: flex !important; align-items: center; gap: 6px; margin-top: 3px; }
+.nw-work .co { width: 18px; height: 18px; border-radius: 5px; font-size: 10px; }
+.nw-work span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nw-work em { font-style: normal; font-weight: 700; color: #2B3A4E; }
+.nw-card { width: 300px; }
+@media (max-width: 480px) { .nw-two { grid-template-columns: 1fr; gap: 0; } }
+:root[data-theme="dark"] .nw-sug { background: #2E2E2E; box-shadow: 0 24px 40px -18px rgba(0, 0, 0, .8), 0 0 0 1px rgba(255, 255, 255, .1); }
+:root[data-theme="dark"] .nw-sug li { color: #F5F5F5; }
+:root[data-theme="dark"] .nw-sug li:hover, :root[data-theme="dark"] .nw-sug li.on { background: #3A3A3A; }
+:root[data-theme="dark"] .nw-sheet .co.mono { background: #444; color: #F5F5F5; }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -2500,6 +2544,10 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
         </div>
       </div>
       <label class="nw-f"><span>Your name</span><input id="nwName" name="name" maxlength="40" autocomplete="name" required></label>
+      <div class="nw-two">
+        <label class="nw-f"><span>Where do you work? <em>optional</em></span><div class="nw-co"><i class="nw-lg" id="nwLg" aria-hidden="true"></i><input id="nwCo" name="company" maxlength="40" autocomplete="off" placeholder="Company" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="nwSug"><ul class="nw-sug" id="nwSug" role="listbox" hidden></ul></div></label>
+        <label class="nw-f"><span>Your role <em>optional</em></span><input id="nwRole" name="role" maxlength="40" autocomplete="organization-title" placeholder="Designation"></label>
+      </div>
       <label class="nw-f"><span>Email <em>only I’ll see this</em></span><input id="nwEmail" name="email" type="email" maxlength="120" autocomplete="email" required></label>
       <label class="nw-f"><span>Your note <em id="nwCount">0 / 200</em></span><textarea id="nwNote" name="note" maxlength="200" rows="3" required></textarea></label>
       <p class="nw-err" id="nwErr" role="alert"></p>
@@ -4072,10 +4120,18 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   const nwRows = [$('#nwRow1'), $('#nwRow2')];
   let wallNotes = [], localNotes = [], freshId = null;
   try { localNotes = JSON.parse(localStorage.getItem('jc-notes') || '[]').filter(n => n && n.note); } catch (_) {}
+  // company logos come from Simple Icons (free, open source), loaded only when someone types a company
+  const SI = 'https://cdn.jsdelivr.net/npm/simple-icons@13';
+  const coSlug = t => String(t).replace(/\+/g, 'plus').replace(/^\./, 'dot-').replace(/\./g, 'dot').replace(/&/g, 'and').replace(/ß/g, 'ss').replace(/[łŀ]/g, 'l').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const okBrand = b => b && /^[a-z0-9]{1,60}$/.test(b.s) && /^[0-9A-Fa-f]{6}$/.test(b.h) ? { s: b.s, h: b.h } : null;
+  const logoHTML = (name, b, cls = 'co') => { b = okBrand(b); const ch = esc((String(name).trim()[0] || '?').toUpperCase());
+    return b ? `<i class="${cls}" style="--bh:#${b.h}"><img src="${SI}/icons/${b.s}.svg" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('${ch}'))"></i>` : `<i class="${cls} mono">${ch}</i>`; };
+  const workHTML = n => { const co = String(n.company || '').trim(), ro = String(n.role || '').trim(); if (!co && !ro) return '';
+    return `<small class="nw-work">${co ? logoHTML(co, n.brand) : ''}<span>${esc(ro)}${ro && co ? ' · ' : ''}${co ? `<em>${esc(co)}</em>` : ''}</span></small>`; };
   function noteCard(n, k) {
     if (n.ghost) return `<button type="button" class="nw-card nw-ghost" data-open style="--r:${k % 2 ? 1.5 : -1.5}deg"><div><p>Your note could be here.</p><span>Write one ↗</span></div></button>`;
     const c = NOTE_COLORS[hashStr(n.id || n.name) % NOTE_COLORS.length];
-    return `<figure class="nw-card${n.id === freshId ? ' fresh' : ''}" style="--nc:${c};--r:${((hashStr(n.id || n.name) % 7) - 3) * .8}deg;margin:0"><p>${esc(n.note)}</p><figcaption class="nw-by"><span class="av">${faceHTML(n)}</span><span><b>${esc(n.name)}</b><small>${n.local ? 'Saved on this device' : esc(fmtDate(n.at))}</small></span></figcaption></figure>`;
+    return `<figure class="nw-card${n.id === freshId ? ' fresh' : ''}" style="--nc:${c};--r:${((hashStr(n.id || n.name) % 7) - 3) * .8}deg;margin:0"><p>${esc(n.note)}</p><figcaption class="nw-by"><span class="av">${faceHTML(n)}</span><span><b>${esc(n.name)}</b>${workHTML(n) || `<small>${n.local ? 'Saved on this device' : esc(fmtDate(n.at))}</small>`}</span></figcaption></figure>`;
   }
   function renderWall() {
     const seen = new Set(), all = [...localNotes.map(n => ({ ...n, local: true })), ...wallNotes].filter(n => { const key = n.id; if (seen.has(key)) return false; seen.add(key); return true; })
@@ -4097,6 +4153,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   })();
   // the form
   const nwModal = $('#nwModal'), nwForm = $('#nwForm'), nwAv = $('#nwAv'), nwErr = $('#nwErr'), nwFine = $('#nwFine');
+  document.body.appendChild(nwModal); // lifted out of the section so no stacking context can clip it
   let nwSeed = Math.random().toString(36).slice(2, 9), nwPhoto = '';
   const drawAv = () => { nwAv.innerHTML = nwPhoto ? `<img src="${nwPhoto}" alt="">` : avatarSVG(nwSeed); $('#nwClear').hidden = !nwPhoto; };
   function openNotes() { drawAv(); nwErr.textContent = ''; nwFine.textContent = noteCanWrite ? 'Your email stays private. Your name, photo and note go up on the wall.' : 'Your email stays private. On this preview your note is saved on this device.'; nwModal.classList.add('open'); lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; setTimeout(() => $('#nwName').focus(), 200); }
@@ -4109,6 +4166,30 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   $('#nwShuffle').addEventListener('click', () => { nwPhoto = ''; nwSeed = Math.random().toString(36).slice(2, 9); drawAv(); });
   $('#nwClear').addEventListener('click', () => { nwPhoto = ''; $('#nwPhoto').value = ''; drawAv(); });
   $('#nwNote').addEventListener('input', e => { $('#nwCount').textContent = `${e.target.value.length} / 200`; });
+  // where do you work: suggestions with logos, exact matches pick up the brand automatically
+  const nwCo = $('#nwCo'), nwSug = $('#nwSug'), nwLg = $('#nwLg');
+  let coList = null, coLoading = null, coBrand = null, sugAt = -1, sugItems = [];
+  const loadCo = () => coLoading || (coLoading = fetch(`${SI}/_data/simple-icons.json`).then(r => r.json()).then(d => { coList = (d.icons || d).map(x => ({ t: x.title, s: x.slug || coSlug(x.title), h: x.hex, a: [].concat((x.aliases && x.aliases.aka) || []) })); }).catch(() => { coList = []; }));
+  function setBrand(b) { coBrand = b; nwLg.innerHTML = b ? logoHTML(b.t, b, 'co').replace(/^<i class="co"/, '<i class="co"') : ''; nwLg.classList.toggle('on', !!b); nwCo.parentElement.classList.toggle('has', !!b); }
+  function closeSug() { nwSug.hidden = true; nwCo.setAttribute('aria-expanded', 'false'); sugAt = -1; }
+  function showSug() {
+    const q = nwCo.value.trim().toLowerCase(); if (!coList || q.length < 1) { closeSug(); return; }
+    const starts = [], has = [];
+    for (const x of coList) { const t = x.t.toLowerCase(); if (t.startsWith(q) || x.a.some(a => a.toLowerCase().startsWith(q))) starts.push(x); else if (q.length > 2 && t.includes(q)) has.push(x); if (starts.length > 6) break; }
+    sugItems = [...starts, ...has].slice(0, 6); sugAt = -1;
+    if (!sugItems.length) { closeSug(); return; }
+    nwSug.innerHTML = sugItems.map((x, i) => `<li role="option" id="nwSug${i}" data-i="${i}">${logoHTML(x.t, x)}<span>${esc(x.t)}</span></li>`).join('');
+    nwSug.hidden = false; nwCo.setAttribute('aria-expanded', 'true');
+  }
+  function pickSug(i) { const x = sugItems[i]; if (!x) return; nwCo.value = x.t; setBrand(x); closeSug(); $('#nwRole').focus(); }
+  nwCo.addEventListener('focus', () => { loadCo().then(() => { if (document.activeElement === nwCo) showSug(); }); });
+  nwCo.addEventListener('input', () => { const v = nwCo.value.trim().toLowerCase(); const exact = coList && coList.find(x => x.t.toLowerCase() === v); setBrand(exact || null); if (coList) showSug(); else loadCo().then(showSug); });
+  nwCo.addEventListener('keydown', e => { if (nwSug.hidden) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); sugAt = (sugAt + (e.key === 'ArrowDown' ? 1 : -1) + sugItems.length) % sugItems.length; $$('li', nwSug).forEach((li, i) => li.classList.toggle('on', i === sugAt)); nwCo.setAttribute('aria-activedescendant', 'nwSug' + sugAt); }
+    else if (e.key === 'Enter' && sugAt >= 0) { e.preventDefault(); pickSug(sugAt); }
+    else if (e.key === 'Escape') { e.stopPropagation(); closeSug(); } });
+  nwSug.addEventListener('mousedown', e => { const li = e.target.closest('li'); if (li) { e.preventDefault(); pickSug(+li.dataset.i); } });
+  nwCo.addEventListener('blur', () => setTimeout(closeSug, 120));
   $('#nwPhoto').addEventListener('change', e => {
     const f = e.target.files && e.target.files[0]; if (!f || !/^image\//.test(f.type)) return;
     const url = URL.createObjectURL(f), im = new Image();
@@ -4124,14 +4205,15 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { nwErr.textContent = 'That email doesn’t look right.'; $('#nwEmail').focus(); return; }
     if (!note) { nwErr.textContent = 'Write a little something.'; $('#nwNote').focus(); return; }
     const go = $('#nwGo'); go.disabled = true; nwErr.textContent = '';
-    const body = { name: name.slice(0, 40), note: note.slice(0, 200), photo: nwPhoto, avatar: nwSeed, at: Date.now() };
+    const company = $('#nwCo').value.trim().slice(0, 40), role = $('#nwRole').value.trim().slice(0, 40), brand = okBrand(coBrand);
+    const body = { name: name.slice(0, 40), note: note.slice(0, 200), photo: nwPhoto, avatar: nwSeed, at: Date.now(), ...(company && { company }), ...(role && { role }), ...(company && brand && { brand }) };
     let saved = false;
     if (noteDb && noteCanWrite) {
       try { await noteDb.doc('notes/' + noteUid).set(body); try { await noteDb.doc('contacts/' + noteUid).set({ name: body.name, email, at: body.at }); } catch (_) {} freshId = noteUid; saved = true; }
       catch (err) { if (err && err.code === 'quota_exceeded') { nwErr.textContent = 'The wall is full right now. Try again later.'; go.disabled = false; return; } noteCanWrite = false; }
     }
     if (!saved) { const id = 'local-' + body.at; localNotes = [{ id, ...body }, ...localNotes].slice(0, 5); freshId = id; try { localStorage.setItem('jc-notes', JSON.stringify(localNotes)); } catch (_) {} }
-    renderWall(); go.disabled = false; nwForm.reset(); nwPhoto = ''; $('#nwCount').textContent = '0 / 200'; closeNotes();
+    renderWall(); go.disabled = false; nwForm.reset(); setBrand(null); nwPhoto = ''; $('#nwCount').textContent = '0 / 200'; closeNotes();
   });
 
   /* ---------- keycaps: they work on your keyboard too ---------- */
