@@ -4375,19 +4375,16 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     const PENT = [69, 72, 74, 76, 79, 81, 84];
     const hz = m => 440 * Math.pow(2, (m - 69) / 12);
     function build() {
-      ac = new (window.AudioContext || window.webkitAudioContext)();
+      const AC = window.AudioContext || window.webkitAudioContext; try { ac = new AC({ latencyHint: 'playback' }); } catch (_) { ac = new AC(); }
       out = ac.createGain(); out.gain.value = 0;
       const tape = ac.createBiquadFilter(); tape.type = 'lowpass'; tape.frequency.value = 3400; tape.Q.value = .3;
-      const verb = ac.createConvolver(), len = ac.sampleRate * 2.4, ir = ac.createBuffer(2, len, ac.sampleRate);
+      const verb = ac.createConvolver(), len = ac.sampleRate * 1.6, ir = ac.createBuffer(2, len, ac.sampleRate);
       for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3); }
       verb.buffer = ir; const wet = ac.createGain(); wet.gain.value = .28;
       bus = ac.createGain(); bus.connect(tape); bus.connect(verb); verb.connect(wet); wet.connect(tape);
       drums = ac.createGain(); drums.gain.value = .9; drums.connect(tape);
       tape.connect(out); out.connect(ac.destination);
       noise = ac.createBuffer(1, ac.sampleRate, ac.sampleRate); const nd = noise.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
-      const cb = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate), cd = cb.getChannelData(0);
-      for (let i = 0; i < cd.length; i++) cd[i] = Math.random() < .0009 ? (Math.random() * 2 - 1) * .8 : (Math.random() * 2 - 1) * .012;
-      crackle = { buf: cb };
     }
     // a soft electric piano: sine with a touch of FM and a slow warble
     function keys(m, t, dur, vol) {
@@ -4405,7 +4402,8 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
       g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.001, t + dec); n.connect(fl); fl.connect(g); g.connect(drums); n.start(t, Math.random() * .5); n.stop(t + dec + .02); }
     function snare(t) { hit(t, { f: 1700, q: .7, vol: .22, dec: .22 }); const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = 185; g.gain.setValueAtTime(.08, t); g.gain.exponentialRampToValueAtTime(.001, t + .1); o.connect(g); g.connect(drums); o.start(t); o.stop(t + .12); }
     function schedule() {
-      while (nextBeat < ac.currentTime + .6) {
+      if (nextBeat < ac.currentTime + .05) nextBeat = ac.currentTime + .08;
+      while (nextBeat < ac.currentTime + 2.5) {
         const t = nextBeat, bi = beat % 4, bar = Math.floor(beat / 4), c = bar % 4, ch = CH[c];
         if (bi === 0) { ch.forEach((m, i) => keys(m, t + i * .012, SPB * 3.6, .05)); bass(ROOT[c], t, SPB * 1.4); }
         if (bi === 2) { if (Math.random() < .7) ch.slice(1).forEach((m, i) => keys(m, t + SPB * SW + i * .01, SPB * 1.2, .032)); bass(ROOT[c] + 7, t + SPB * SW, SPB * .9); }
@@ -4420,13 +4418,12 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
       if (!ac) build(); if (ac.state === 'suspended') ac.resume();
       clearTimeout(stopT); on = true; nextBeat = Math.max(nextBeat, ac.currentTime + .1);
       const now = ac.currentTime; out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(out.gain.value, now); out.gain.linearRampToValueAtTime(.6, now + 2);
-      if (!crackle.src) { const src = ac.createBufferSource(), hp = ac.createBiquadFilter(), g = ac.createGain(); src.buffer = crackle.buf; src.loop = true; hp.type = 'highpass'; hp.frequency.value = 1500; g.gain.value = .55; src.connect(hp); hp.connect(g); g.connect(out); src.start(); crackle.src = src; }
-      schedule(); clearInterval(timer); timer = setInterval(schedule, 120);
+      schedule(); clearInterval(timer); timer = setInterval(schedule, 300);
       ui();
     }
     function stop() {
       on = false; const now = ac.currentTime; out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(out.gain.value, now); out.gain.linearRampToValueAtTime(0, now + 1.4);
-      stopT = setTimeout(() => { clearInterval(timer); if (crackle.src) { crackle.src.stop(); crackle.src = null; } ac.suspend(); nextBeat = 0; }, 1500);
+      stopT = setTimeout(() => { clearInterval(timer); ac.suspend(); nextBeat = 0; }, 1500);
       ui();
     }
     function ui() {
