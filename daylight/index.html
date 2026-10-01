@@ -2289,6 +2289,25 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 /* the chapter card's next step stays in reach */
 .sheet .row { position: sticky; bottom: -24px; z-index: 2; margin: 14px -24px -24px; padding: 14px 24px 20px; background: linear-gradient(transparent, var(--card) 26%); }
 @media (max-width: 860px) { .sheet .row { margin: 12px -20px -20px; padding: 12px 20px 16px; bottom: -20px; } .pin .hint { display: none; } }
+
+/* simpler, quieter: glass markers, one font in the cards, one short CTA */
+.pin b { background: rgba(18, 26, 34, .36); color: #fff; backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .38), 0 10px 24px -12px rgba(10, 30, 50, .55); text-shadow: 0 1px 6px rgba(10, 30, 50, .45); }
+.pin b::after { background: rgba(18, 26, 34, .36); box-shadow: inset -1px -1px 0 rgba(255, 255, 255, .25); }
+.pin .pyr { background: rgba(255, 255, 255, .18); color: #fff; }
+.pin:hover b, .pin.hov b, .pin.on b { background: rgba(18, 26, 34, .5); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .55), 0 14px 26px -12px rgba(10, 30, 50, .6); }
+:root[data-theme="dark"] .pin b { background: rgba(30, 30, 30, .38); color: #F5F5F5; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 10px 24px -12px rgba(0, 0, 0, .7); }
+:root[data-theme="dark"] .pin b::after { background: rgba(30, 30, 30, .38); }
+:root[data-theme="dark"] .pin .pyr { background: rgba(255, 255, 255, .12); color: #F5F5F5; }
+.hero-key { gap: 10px; padding: 8px 16px 8px 14px; background: rgba(18, 26, 34, .26); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3); font-weight: 500; }
+.hero-key i { position: relative; flex: none; width: 8px; height: 8px; border-radius: 50%; background: #FFD23F; box-shadow: 0 0 0 3px rgba(255, 210, 63, .3); }
+.hero-key i::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid #FFD23F; animation: pdpulse 2.4s var(--ease) infinite; }
+.hero-key u { text-decoration: none; font-weight: 700; border-bottom: 1.5px solid rgba(255, 255, 255, .7); }
+.sheet, .sheet * { font-family: var(--sans) !important; }
+.sheet .lead { font: 700 19px/1.3 var(--sans); font-style: normal; letter-spacing: -.01em; margin-top: 8px; }
+.sheet .jc-ph small { font: 500 10.5px/1 var(--sans); font-style: normal; }
+.sheet .row { justify-content: flex-start; }
+.sheet .row[hidden], .sheet .nums[hidden] { display: none; }
+.s-cta { flex: 0 0 auto; padding-inline: 18px; }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -2328,10 +2347,10 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
         </div>
         <div class="ly" data-d=".16" id="L-hillL"><img src="v2/h/hillL.webp" alt="" style="left:0;top:48.305%;width:55.238%;height:26.483%"></div>
         <div class="ly" data-d=".2" id="L-hillR"><img src="v2/h/hillR.webp" alt="" style="left:44.167%;top:22.881%;width:55.833%;height:51.589%"></div>
-        <div class="ly" data-d=".22" data-id="oyo"><img src="v2/h/hotelL.webp" alt="" style="left:79.107%;top:16.631%;width:13.393%;height:17.903%"><button class="hot" data-id="oyo" aria-label="OYO, the hotel on the hill" style="left:79.1%;top:16.6%;width:13.4%;height:17.9%"></button><button class="pin" data-id="oyo" style="left:85.4%;top:19.4%;--c:#DC402A"><b><img src="v2/s/logo-oyo.webp" alt=""><em class="pnum">4</em>OYO<small class="pyr">Now</small></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".26" data-id="mmt"><img src="v2/h/tower.webp" alt="" style="left:63.095%;top:11.864%;width:9.524%;height:42.797%"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:63.1%;top:11.9%;width:9.5%;height:42.8%"></button><button class="pin" data-id="mmt" style="left:67.86%;top:34.2%;--c:#E4262C"><b><img src="v2/s/logo-mmt.webp" alt=""><em class="pnum">3</em>MakeMyTrip<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".3" data-id="nsut"><img src="v2/h/college.webp" alt="" style="left:7.5%;top:33.051%;width:15%;height:38.559%"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:7.5%;top:33%;width:15%;height:38.6%"></button><button class="pin" data-id="nsut" style="left:14.3%;top:54.2%;--c:#C4553A"><b><img src="v2/s/logo-nsut.webp" alt=""><em class="pnum">1</em>NSUT<small class="pyr">2021</small></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".38" data-id="eazydiner"><img src="v2/h/bistro.webp" alt="" style="left:32.976%;top:56.038%;width:25.357%;height:25.212%"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:33%;top:56%;width:25.4%;height:25.2%"></button><button class="pin" data-id="eazydiner" style="left:44.9%;top:59.2%;--c:#EE5A2B"><span class="hint" id="hint" aria-hidden="true">click a place<svg viewBox="0 0 40 22"><path d="M3 6C14 2 26 6 37 14M37 14l-9-1M37 14l-3-8"/></svg></span><b><img src="v2/s/logo-eazydiner.webp" alt=""><em class="pnum">2</em>EazyDiner<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".22" data-id="oyo"><img src="v2/h/hotelL.webp" alt="" style="left:79.107%;top:16.631%;width:13.393%;height:17.903%"><button class="hot" data-id="oyo" aria-label="OYO, the hotel on the hill" style="left:79.1%;top:16.6%;width:13.4%;height:17.9%"></button><button class="pin" data-id="oyo" style="left:85.4%;top:19.4%;--c:#DC402A"><b><img src="v2/s/logo-oyo.webp" alt="">OYO<small class="pyr">Now</small></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".26" data-id="mmt"><img src="v2/h/tower.webp" alt="" style="left:63.095%;top:11.864%;width:9.524%;height:42.797%"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:63.1%;top:11.9%;width:9.5%;height:42.8%"></button><button class="pin" data-id="mmt" style="left:67.86%;top:34.2%;--c:#E4262C"><b><img src="v2/s/logo-mmt.webp" alt="">MakeMyTrip<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".3" data-id="nsut"><img src="v2/h/college.webp" alt="" style="left:7.5%;top:33.051%;width:15%;height:38.559%"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:7.5%;top:33%;width:15%;height:38.6%"></button><button class="pin" data-id="nsut" style="left:17%;top:56.6%;--c:#C4553A"><b><img src="v2/s/logo-nsut.webp" alt="">NSUT<small class="pyr">2021</small></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".38" data-id="eazydiner"><img src="v2/h/bistro.webp" alt="" style="left:32.976%;top:56.038%;width:25.357%;height:25.212%"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:33%;top:56%;width:25.4%;height:25.2%"></button><button class="pin" data-id="eazydiner" style="left:44.9%;top:59.2%;--c:#EE5A2B"><span class="hint" id="hint" aria-hidden="true">click a place<svg viewBox="0 0 40 22"><path d="M3 6C14 2 26 6 37 14M37 14l-9-1M37 14l-3-8"/></svg></span><b><img src="v2/s/logo-eazydiner.webp" alt="">EazyDiner<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".34" data-id="radio"><div class="radio" id="radio" style="left:76.4%;top:59.4%;width:7.6%"><svg class="rs" viewBox="-10 0 140 146" aria-hidden="true">
 <defs><radialGradient id="rsDisc" cx="50%" cy="50%" r="50%"><stop offset=".18" stop-color="#2a2a2a"/><stop offset=".19" stop-color="#151515"/><stop offset="1" stop-color="#0c0c0c"/></radialGradient>
 <linearGradient id="rsWood" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#B9773A"/><stop offset="1" stop-color="#7E4A22"/></linearGradient>
@@ -2375,7 +2394,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
         <span class="ln" style="--dl:1.9s"><span>don't <span class="rq b-sun" style="--b:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M7 33C18 12 58 8 108 9c42 1 78-2 87 14 5 11-4 24-35 27-40 4-100 5-137 1C6 49 1 43 7 33z' fill='%23FFD23F'/%3E%3C/svg%3E&quot;)">rage quit.<svg viewBox="0 0 220 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 18C40 8 80 22 118 12s70 8 98-4"/></svg></span></span></span>
       </h1>
       <p class="sub">Product designer. Mechanical engineer who Googled his way here.</p>
-      <p class="hero-key"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span>This valley is my career so far. Each building is a chapter. <b>Tap one to step inside.</b></span></p>
+      <p class="hero-key"><i aria-hidden="true"></i><span>This valley is my career so far. Each building is a chapter. <u>Tap one to step inside.</u></span></p>
     </div>
     <div class="scroll-cue" id="cue"><i></i>scroll to fly in</div>
 
@@ -2737,7 +2756,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     nsut: { c: '#C4553A', side: 'right', tag: 'Chapter 01 · 2021 · New Delhi', t: 'NSUT', r: 'B.Tech, Mechanical Engineering · Class of 2021',
       h: 'The day JEE changed everything.',
       st: ['I cleared JEE and got into <b>NSUT</b> for Mechanical Engineering. Four years of machines, drawings and tolerances taught me how things work.', 'Somewhere in there I got hooked on <i>why</i> people use them, and started designing on the side, like <b>CampusX</b>, a social network for college life.'],
-      n: [['B.Tech', 'Mechanical Engineering'], ['2021', 'Graduated'], ['CampusX', 'First side project']], j: 0, cs: 'campusx', csL: 'View the CampusX case study' },
+      n: [], j: 0 },
     eazydiner: { c: '#EE5A2B', side: 'left', tag: 'Chapter 02 · Feb – Apr 2025', t: 'EazyDiner', r: 'Product Design Intern',
       h: 'EazyDiner taught me to look beyond the screen.',
       st: ['At the end of a meal, people were hunting through <b>300+ bank and restaurant offers</b> just to get a discount. Some gave up and paid full price.', 'I led the redesign of the PayEazy coupon tray, <b>The Coupon Hunter</b>, so the best deal is waiting for you upfront. It’s live on the app.'],
@@ -2749,11 +2768,11 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     oyo: { c: '#DC402A', side: 'left', tag: 'Chapter 04 · Dec 2025 → now', t: 'OYO', r: 'Associate Product Designer',
       h: 'Then OYO, and the whole stay.',
       st: ['Where I am right now. I design the moments between booking a room and walking into it: <b>self check-in, room selection and cancellations</b>.', 'It’s still under wraps, so the full story isn’t public yet. Ask me about it.'],
-      n: [['500', 'properties validated'], ['6,000+', 'approved next']], j: 6, mail: 'mailto:jameschughh@gmail.com?subject=Your%20OYO%20work', csL: 'Ask me for the case study' },
+      n: [['500', 'properties validated'], ['6,000+', 'approved next']], j: 6, mail: 'mailto:jameschughh@gmail.com?subject=Your%20OYO%20work', csL: 'Ask me about it' },
     me: { c: '#F2B705', side: 'left', tag: 'About me', t: 'Hey, I’m James', r: '23 · Product designer · Builder · Engineer',
       h: 'I design so people don’t rage quit.',
       st: ['Two years across dining, travel and hospitality, designing products used by millions.', 'I also built <b>LastLook</b>, an iOS app that reminds you when you leave something behind, because I kept forgetting my things.'],
-      n: [['2 yrs', 'industry experience'], ['3', 'products shipped at scale'], ['1', 'app of my own']], j: 7, cs: 'lastlook', csL: 'View the LastLook case study', about: true }
+      n: [['2 yrs', 'industry experience'], ['3', 'products shipped at scale'], ['1', 'app of my own']], j: 7, cs: 'lastlook', csL: 'View case study', about: true }
   };
 
   const ICONS = {
@@ -2941,8 +2960,9 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     const ph = (S && S.photos) || [];
     $('#s-p').innerHTML = ph.length ? `<p>Gallery</p><div>${ph.map(([src, cap], k) => `<button type="button" class="jc-ph" data-sg="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div>` : '';
     $('#s-p').hidden = !ph.length;
-    const cta = P.cs ? `<button type="button" class="btn btn-ink s-cta" data-case="${P.cs}">${P.csL} <span aria-hidden="true">→</span></button>` : `<a class="btn btn-ink s-cta" href="${P.mail}">${P.csL} <span aria-hidden="true">↗</span></a>`;
-    $('#s-row').innerHTML = cta + `<button type="button" class="btn btn-ghost" data-walk="${P.j}">${P.about ? 'Walk my journey' : 'Walk this chapter'} <span aria-hidden="true">↓</span></button>`;
+    $('#s-n').hidden = !P.n.length;
+    const cta = P.cs ? `<button type="button" class="btn btn-ink s-cta" data-case="${P.cs}">${P.csL} <span aria-hidden="true">→</span></button>` : P.mail ? `<a class="btn btn-ink s-cta" href="${P.mail}">${P.csL} <span aria-hidden="true">↗</span></a>` : '';
+    $('#s-row').innerHTML = cta; $('#s-row').hidden = !cta;
   }
 
   function focus(id) {
