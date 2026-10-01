@@ -1456,6 +1456,15 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 }
 @media (max-width: 480px) { .c3-more { grid-template-columns: 1fr; } }
 
+/* final screens gallery */
+.c3-gal { margin-top: 8vh; }
+.c3-galk { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 0 0 3vh; font: 800 clamp(20px, 2vw, 26px)/1.2 var(--sans); letter-spacing: -.02em; }
+.c3-galk i { width: 12px; height: 12px; border-radius: 50%; background: var(--c); }
+.c3-galk small { padding: 5px 10px; border-radius: 999px; background: color-mix(in srgb, var(--c) 12%, #fff); color: var(--c); font: 700 12.5px/1 var(--sans); }
+.c3-galrow { display: flex; justify-content: safe center; gap: clamp(12px, 1.6vw, 24px); padding: 6px clamp(18px, 4vw, 40px) 18px; overflow-x: auto; scrollbar-width: none; }
+.c3-galrow img { flex: 0 0 auto; width: clamp(170px, 15vw, 230px); height: auto; border-radius: 22px; background: #fff; box-shadow: var(--shadow-sm); outline: 3px solid color-mix(in srgb, var(--c) 30%, transparent); outline-offset: 3px; transition: transform .4s var(--spring); }
+.c3-galrow img:hover { transform: translateY(-8px); }
+@media (max-width: 1100px) { .c3-galrow { justify-content: flex-start; scroll-snap-type: x mandatory; } .c3-galrow img { scroll-snap-align: center; width: min(56vw, 230px); } }
 /* ---------- small screens ---------- */
 @media (max-width: 860px) {
   .nav { height: 56px; padding: 0 6px; }
@@ -2763,9 +2772,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     paths: [['up', '#2A7BD1', 'Upfront coupons', 'Best deals, zero hunting.', 'The best coupon for your payment method sits right on the payment summary. Tap it and you’re done.', ['up1', 'up2', 'up3', 'up4'], ['A', 'B', 'C1', 'D', 'E']],
       ['ex', '#7B5CD6', 'Coupon exploration', 'Search, filter, and find the perfect deal your way.', '50+ coupons, organised with tabs, chips and search so people can actually browse them.', ['ex1', 'ex2', 'ex3', 'ex4', 'ex5', 'ex6'], ['A', 'B', 'C2', 'D', 'E']],
       ['ax', '#F4511E', 'Axis Bank cards', 'Cutting through 20+ card types.', 'Enter the first 8 digits of your Axis Bank card to instantly confirm the discount you’re eligible for.', ['ax1', 'ax2', 'ax3', 'ax4'], ['A', 'B', 'C3', 'D', 'E']],
-      ['code', '#E1306C', 'Coupon code', 'Got a coupon code?', 'Drop it in and unlock your savings, with clear feedback when it works and when it doesn’t.', ['code1', 'code2', 'code3', 'code4', 'code5'], ['A', 'B', 'C4', 'D', 'E']],
-      ['pay', '#2E9E6B', 'Smooth checkout', 'Pay any way you like.', 'Choose any payment method and pay seamlessly with Juspay.', ['pay1', 'pay2', 'pay3', 'pay4'], ['A', 'B', 'D', 'E']]],
-    nodes: { A: [90, 220, 'Enter amount'], B: [260, 220, 'Payment summary'], C1: [520, 52, 'Best coupon, upfront', 'Upfront coupon'], C2: [520, 164, 'Coupon tray', 'Coupon tray'], C3: [520, 276, 'Axis card, 8 digits', 'Axis card'], C4: [520, 388, 'Coupon code', 'Coupon code'], D: [775, 220, 'Payment mode'], E: [925, 220, 'Paid with Juspay'] },
+      ['code', '#E1306C', 'Coupon code', 'Got a coupon code?', 'Drop it in and unlock your savings, with clear feedback when it works and when it doesn’t.', ['code1', 'code2', 'code3', 'code4', 'code5'], ['A', 'B', 'C4', 'D', 'E']]],
+    nodes: { A: [90, 220, 'Enter amount'], B: [260, 220, 'Payment summary'], C1: [520, 52, 'Best coupon, upfront', 'Upfront coupon'], C2: [520, 164, 'Coupon tray', 'Coupon tray'], C3: [520, 276, 'Axis card, 8 digits', 'Axis card'], C4: [520, 388, 'Coupon code', 'Coupon code'], D: [775, 220, 'Payment mode'], E: [925, 220, 'Paid'] },
     more: [['requests', 'The Request Rescue', 'MakeMyTrip · Special Requests', '#D7262B'], ['swipr', 'Property Matchmaker', 'MakeMyTrip · Swipr.AI', '#E4262C'], ['lastlook', 'LastLook', 'My own app · iOS', '#9A6A3E'], ['campusx', 'The Digital Campus', 'CampusX · Side project', '#2A7BD1']]
   };
   const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>';
@@ -2923,12 +2931,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <div class="c3-kpi" data-rv>${[['card', 'PayEazy conversion', 'New-user conversion, before and after the redesign.'], ['bell', 'Coupon engagement', 'How many people interact with the coupon section.'], ['ticket', 'Coupon redemption', 'How many successfully apply a coupon at checkout.'], ['head', 'Support tickets', 'Fewer tickets means more clarity and confidence.']].map(([ic, t, d], k) => `<div style="--r:${[-1.5, 1, -1, 1.5][k]}deg"><svg viewBox="0 0 24 24">${ICONS[ic]}</svg><b>${t}</b><p>${d}</p></div>`).join('')}</div></div></section>
 
       <section class="c3-sec" data-ch="The paths"><div class="c3-w">${K('Chapter 9 · The paths')}
-        ${edHead('Five ways to save,', 'zero guesswork.', '', 'b-sky')}
+        ${edHead('Four ways to save,', 'zero guesswork.', '', 'b-sky')}
         <p class="c3-p" data-rv>However people like to pay, there’s now a clear route from the bill to the best saving. Pick a path to trace it through checkout.</p></div>
         <div class="c3-wide"><div class="c3-ptabs" id="c3Pt" data-rv>${ED.paths.map(([id, c, t], k) => `<button type="button" data-path="${k}" style="--c:${c}"${k ? '' : ' class="on"'}>${t}</button>`).join('')}</div>
         <div class="c3-flowd c3-card" data-rv><svg id="c3Flow" aria-label="Checkout flow with the selected path highlighted"></svg></div>
         <div class="c3-pview" id="c3Pv"></div>
         <p class="c3-fullflow"><button type="button" id="c3FullFlow">See the full flow map ↗</button></p></div></section>
+
+      <section class="c3-sec c3-final" data-ch="Final screens"><div class="c3-w">${K('The final designs')}
+        ${edHead('Every screen,', 'as it shipped.', '', 'b-sun')}
+        <p class="c3-p" data-rv>All the final mockups in one place, grouped by path. Tap any screen to look closer.</p></div>
+        ${ED.paths.map(([id, c, t, h, , ims]) => `<div class="c3-gal" style="--c:${c}" data-rv><div class="c3-w"><p class="c3-galk"><i></i>${t}<small>${ims.length} screens</small></p></div><div class="c3-galrow">${ims.map((n, k) => I(n, `${t}, screen ${k + 1}`, '', 'final')).join('')}</div></div>`).join('')}</section>
 
       <section class="c3-sec c3-results" data-ch="Results"><div class="c3-w">${K('Chapter 10 · The results')}
         ${edHead('It’s live, and', 'it’s working.', '', 'b-mint')}
@@ -2954,7 +2967,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   // the checkout flow as a diagram; vertical on narrow screens
   function edFlowSVG(svg, path, vert) {
     const N = ED.nodes, P = k => vert ? [60 + (N[k][1] - 52) * (360 / 336), N[k][0]] : [N[k][0], N[k][1]];
-    const edges = [['A', 'B'], ['B', 'C1'], ['B', 'C2'], ['B', 'C3'], ['B', 'C4'], ['C1', 'D'], ['C2', 'D'], ['C3', 'D'], ['C4', 'D'], ['B', 'D'], ['D', 'E']];
+    const edges = [['A', 'B'], ['B', 'C1'], ['B', 'C2'], ['B', 'C3'], ['B', 'C4'], ['C1', 'D'], ['C2', 'D'], ['C3', 'D'], ['C4', 'D'], ['D', 'E']];
     const curve = (a, b) => { const [x1, y1] = P(a), [x2, y2] = P(b); if (vert) { const m = (y1 + y2) / 2; return `M${x1} ${y1}C${x1} ${m} ${x2} ${m} ${x2} ${y2}`; } const m = (x1 + x2) / 2; return `M${x1} ${y1}C${m} ${y1} ${m} ${y2} ${x2} ${y2}`; };
     const [, c, , , , , route] = path, on = new Set(route.slice(1).map((k, i) => route[i] + k));
     const route2 = route.slice(1).map((k, i) => curve(route[i], k)).map((d, i) => i ? d.replace(/^M[^C]+/, '') : d).join('');
