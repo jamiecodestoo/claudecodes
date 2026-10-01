@@ -1652,13 +1652,6 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .jcar button { white-space: nowrap; }
 .gift-tap { display: none; }
 @media (max-width: 1100px) {
-  /* brands: a row you swipe yourself */
-  .brand-sec.manual .brand-pin { position: relative; height: auto; overflow: visible; padding-bottom: 8vh; }
-  .brand-sec.manual .brand-pin > div[style] { display: block !important; }
-  .brand-sec.manual .brand-row { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 50px var(--gut) 40px; scroll-padding-inline: var(--gut); will-change: auto; }
-  .brand-sec.manual .brand-row::-webkit-scrollbar { display: none; }
-  .brand-sec.manual .site { scroll-snap-align: start; width: min(480px, 82vw); }
-  .brand-sec.manual .brand-prog { display: none; }
   /* gift: tap to open */
   .stack.tap .stack-track { height: 100vh; height: 100svh; }
   .stack.tap .gift-tap { position: absolute; z-index: 5; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 7vh); transform: translateX(-50%); display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px 14px 16px; border-radius: 999px; background: var(--ink); color: #fff; font: 700 15px/1 var(--sans); box-shadow: 0 16px 30px -14px rgba(19, 35, 58, .7); transition: opacity .4s, transform .4s var(--spring); animation: tapbob 2s ease-in-out infinite; }
@@ -1708,6 +1701,27 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 /* brands: the site cards never cover the heading or the call button */
 .brand-pin > div[style] { padding-top: 34px; }
 .site { width: min(560px, 78vw, calc((100svh - 300px) * 1.4)); }
+
+/* brands: a calm carousel with buttons on every screen */
+.brand-sec.manual .brand-pin { position: relative; height: auto; overflow: visible; padding-bottom: 8vh; }
+.brand-car { position: relative; }
+.brand-sec.manual .brand-row { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 50px var(--edge-x) 40px; scroll-padding-inline: var(--edge-x); will-change: auto; }
+.brand-sec.manual .brand-row::-webkit-scrollbar { display: none; }
+.brand-sec.manual .site { scroll-snap-align: start; width: min(560px, 82vw); }
+.brand-sec.manual .brand-prog { display: none; }
+.bnav { position: absolute; z-index: 4; top: 50%; width: 52px; height: 52px; margin-top: -26px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 253, 247, .94); color: var(--ink); font: 700 20px/1 var(--sans); box-shadow: var(--shadow-sm); transition: opacity .3s, transform .3s var(--spring); }
+.bnav:hover { transform: scale(1.08); }
+.bnav:disabled { opacity: 0; pointer-events: none; }
+.bnav.prev { left: 16px; } .bnav.next { right: 16px; }
+@media (max-width: 600px) { .bnav { width: 44px; height: 44px; margin-top: -22px; font-size: 18px; } }
+/* the map: clean checkpoint pins instead of buildings */
+#lmArt, .poi, .car, .boat, .ripple { display: none !important; }
+.world3 .mk.mk { opacity: 1 !important; pointer-events: auto; }
+.mk .pinhead { transform: none; opacity: 1; }
+.mk .dot { opacity: 0; }
+.mk .nm { display: block; opacity: 1; transform: none; top: 12px; font-size: 13px; box-shadow: 0 6px 14px -8px rgba(19, 35, 58, .5); }
+.mk.dim { opacity: .45 !important; }
+.mk.dim .nm { opacity: 0; }
 </style>
 
 <header class="bar">
@@ -1716,8 +1730,6 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     <span class="ind" id="navInd" aria-hidden="true"></span>
     <a href="#journey" data-go="journey">Journey</a>
     <a href="#work" data-go="work">Work</a>
-    <a href="#lastlook" data-go="lastlook">LastLook</a>
-    <a href="#stack" data-go="stack">Stack</a>
     <a href="#life" data-go="life">About</a>
     <a href="#hello" data-go="hello">Contact</a>
     <span class="sep" aria-hidden="true"></span>
@@ -1885,7 +1897,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       </div>
       <p>Sample sites for now. The real ones are coming ;)</p>
     </div>
-    <div style="display:flex;align-items:center"><div class="brand-row" id="brandRow"></div></div>
+    <div class="brand-car"><div class="brand-row" id="brandRow"></div><button type="button" class="bnav prev" id="bPrev" aria-label="Previous site">←</button><button type="button" class="bnav next" id="bNext" aria-label="Next site">→</button></div>
     <div class="brand-prog"><i id="brandProg"></i></div>
   </div>
 </section>
@@ -2288,7 +2300,9 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const lenis = (!reduce && window.Lenis) ? new Lenis({ lerp: .09, smoothWheel: true, wheelMultiplier: .9 }) : null;
   const Y = () => (lenis ? lenis.scroll : window.scrollY);
   const HW = {};
-  const goTo = (y, dur = 1.8) => { for (const k in HW) delete HW[k]; return lenis ? lenis.scrollTo(y, { duration: dur, easing: t => 1 - Math.pow(1 - t, 4) }) : scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' }); };
+  const goTo = (y, dur = 0) => { for (const k in HW) delete HW[k]; return lenis ? lenis.scrollTo(y, dur ? { duration: dur, easing: t => 1 - Math.pow(1 - t, 4) } : { immediate: true, force: true }) : scrollTo({ top: y, behavior: dur && !reduce ? 'smooth' : 'auto' }); };
+  // once a scroll scene has played, its long scroll track folds away: it never replays, and scrolling back is quick
+  const DONE = {};
   // scroll-linked scenes only move forward: scrolling up leaves them as they are,
   // and once you scroll back above a scene it resets and plays again on the way down
   const held = (k, y, resetAt) => { if (y <= resetAt || HW[k] === undefined) HW[k] = y; else HW[k] = Math.max(HW[k], y); return HW[k]; };
@@ -2665,7 +2679,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     stopL = STOPS.map(st => { let best = 0, bd = 1e12; for (let l = 0; l <= pathLen; l += 4) { const q = carve.getPointAtLength(l), dd = (q.x - st.at[0]) ** 2 + (q.y - st.at[1]) ** 2; if (dd < bd) { bd = dd; best = l; } } return best; });
     const pinShape = c => `<svg viewBox="0 0 54 66"><path d="M27 64C27 64 4 40 4 25a23 23 0 0 1 46 0c0 15-23 39-23 39z" fill="${c}" stroke="#fff" stroke-width="3"/></svg>`;
     STOPS.forEach((st, i) => {
-      const m = document.createElement('button'); m.className = 'mk'; m.type = 'button'; m.style.setProperty('--c', st.c); m.style.left = st.at[0] + 'px'; m.style.top = (st.at[1] - st.lift) + 'px';
+      const m = document.createElement('button'); m.className = 'mk'; m.type = 'button'; m.style.setProperty('--c', st.c); m.style.left = st.at[0] + 'px'; m.style.top = st.at[1] + 'px';
       m.setAttribute('aria-label', `Go to ${st.when}: ${st.name}`);
       m.innerHTML = `<span class="halo"></span><span class="dot"></span><span class="pinhead">${pinShape(st.c)}${st.logo ? `<img class="lg" src="${img(st.logo)}" alt="">` : `<span class="ic"><svg viewBox="0 0 24 24">${ICONS[st.icon]}</svg></span>`}</span><span class="nm">${st.name}</span>`;
       m.addEventListener('click', () => { if (!dragMoved) walkTo(i); }); world3.insertBefore(m, meTip); jmarks.push(m);
@@ -2743,7 +2757,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   addEventListener('pointermove', e => { if (!drag) return; const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.abs(dx) + Math.abs(dy) > 4) dragMoved = true; pan.x = drag.px + dx; pan.y = drag.py + dy; });
   addEventListener('pointerup', () => { if (drag) { drag = null; mapview.classList.remove('drag'); setTimeout(() => dragMoved = false, 0); } });
   mapview.addEventListener('click', e => { if (!e.target.closest('.poi')) pois.forEach(q => q.classList.remove('tipon')); });
-  function layoutJourney() { jCar = vw <= 1100; journey.classList.toggle('jcm', jCar); $('.j-how').textContent = jCar ? 'Tap through them, or swipe the map.' : 'Scroll to walk the path.'; jTrack.style.height = jCar ? '' : (N * 84 + 200) + 'vh'; jTop = top(jTrack); jRange = Math.max(1, jTrack.offsetHeight - vh); headB = jHead.offsetTop + jHead.offsetHeight; jFade.style.setProperty('--hb', headB + 'px'); }
+  function layoutJourney() { jCar = vw <= 1100; journey.classList.toggle('jcm', jCar); $('.j-how').textContent = jCar ? 'Tap through them, or swipe the map.' : 'Scroll to walk the path.'; jTrack.style.height = jCar ? '' : DONE.j ? '100vh' : (N * 84 + 200) + 'vh'; jTop = top(jTrack); jRange = Math.max(1, jTrack.offsetHeight - vh); headB = jHead.offsetTop + jHead.offsetHeight; jFade.style.setProperty('--hb', headB + 'px'); }
   const PH = { hold: .05, zoom: .12, walk: .91 };
   function phase(p) {
     if (p < PH.hold) return { pos: -1, k: 0, out: 0 };
@@ -3371,13 +3385,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   let bTop = 0, bRange = 1, bShift = 0;
   let bManual = false;
   function layoutBrand() {
-    bManual = vw <= 1100; brandSec.classList.toggle('manual', bManual);
+    bManual = true; brandSec.classList.toggle('manual', bManual);
     if (bManual) { brandSec.style.height = ''; brandRow.style.transform = ''; bTop = top(brandSec); bRange = 1; bShift = 0; return; }
     bShift = Math.max(0, brandRow.scrollWidth - vw);
     brandSec.style.height = (vh + bShift * 1.1) + 'px';
     bTop = top(brandSec); bRange = Math.max(1, brandSec.offsetHeight - vh);
   }
   const bcur = { x: 0 };
+  const bStep = d => { const c = brandRow.querySelector('.site'); brandRow.scrollBy({ left: d * (c ? c.offsetWidth + 40 : vw * .6), behavior: reduce ? 'auto' : 'smooth' }); };
+  $('#bPrev').addEventListener('click', () => bStep(-1)); $('#bNext').addEventListener('click', () => bStep(1));
+  const bEnds = () => { $('#bPrev').disabled = brandRow.scrollLeft < 8; $('#bNext').disabled = brandRow.scrollLeft > brandRow.scrollWidth - brandRow.clientWidth - 8; };
+  brandRow.addEventListener('scroll', bEnds, { passive: true }); setTimeout(bEnds, 500);
   function frameBrand(dt, y) {
     if (bManual) return;
     const q = clamp((y - bTop) / bRange);
@@ -3657,7 +3675,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   });
 
   /* ---------- nav ---------- */
-  $$('[data-go]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); unfocus(); const id = a.dataset.go; goTo(id === 'top' ? 0 : top($('#' + id)) + (id === 'journey' ? 4 : 0), 2.2); }));
+  $$('[data-go]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); unfocus(); const id = a.dataset.go; goTo(id === 'top' ? 0 : top($('#' + id)) + (id === 'journey' ? 4 : 0)); }));
 
   /* ---------- loop ---------- */
   function layout() {
@@ -3666,17 +3684,33 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     layoutValley(); layoutStory(); layoutJourney(); layoutBrand(); layoutStack(); layoutLL(); layoutProc(); boxScale();
   }
   let last = performance.now();
+  // fold a finished scene down to one screen, keeping what's on screen exactly where it is
+  function fold(k, el, ref, extra) {
+    if (DONE[k] || el.getBoundingClientRect().bottom > -2) return;
+    const y = Y(), before = top(ref);
+    el.style.height = '100vh'; el.style.height = '100svh'; if (extra) extra();
+    DONE[k] = 1; const delta = before - top(ref);
+    if (lenis) lenis.scrollTo(y - delta, { immediate: true, force: true }); else scrollTo(0, y - delta);
+    layout();
+  }
   function frame(t) {
     const dt = Math.min(.05, (t - last) / 1000); last = t;
     if (lenis) lenis.raf(t);
-    const y = Y();
-    if (y < vTop + vRange + vh) frameValley(dt, held('v', y, vh * .04));
-    if (y > sTop - vh && y < sTop + sRange + vh) frameStory(held('s', y, sTop - vh));
-    if (y > jTop - vh && y < jTop + jRange + vh) frameJourney(dt, jCar ? y : held('j', y, jTop - vh));
+    let y = Y();
+    fold('v', valley, $('#journey'), () => { story.style.marginTop = '0px'; });
+    fold('s', story, $('#journey'));
+    if (!jCar) fold('j', jTrack, $('#work'));
+    if (boxOpen) fold('box', boxTrack, $('#brand'));
+    if (!giftTap) fold('st', stackTrack, $('#process'));
+    fold('ll', llRevTrack, llRoles);
+    y = Y();
+    if (y < vTop + vRange + vh) frameValley(dt, DONE.v ? 0 : held('v', y, vh * .04));
+    if (y > sTop - vh && y < sTop + sRange + vh) frameStory(DONE.s ? 1e9 : held('s', y, sTop - vh));
+    if (y > jTop - vh && y < jTop + jRange + vh) frameJourney(dt, jCar ? y : DONE.j ? 1e9 : held('j', y, jTop - vh));
     if (y > jTop + jRange - vh) frameWork(dt);
     if (y > bTop - vh && y < bTop + bRange + vh) frameBrand(dt, held('b', y, bTop - vh));
-    if (y > stTop - vh && y < stTop + Math.max(stRange, vh) + vh) frameStack(held('st', y, stTop - vh));
-    if (y > llTop - vh && y < llTop + llRange + vh) frameLL(held('ll', y, llTop - vh));
+    if (y > stTop - vh && y < stTop + Math.max(stRange, vh) + vh) frameStack(DONE.st ? 1e9 : held('st', y, stTop - vh));
+    if (y > llTop - vh && y < llTop + llRange + vh) frameLL(DONE.ll ? 1e9 : held('ll', y, llTop - vh));
     if (y > pTop - vh * 1.2) frameProc(held('p', y, pTop - vh * 1.2));
     frameMisc(y);
     requestAnimationFrame(frame);
