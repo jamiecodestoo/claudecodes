@@ -709,7 +709,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
    6 · OFF THE CLOCK (desk)
    ========================================================= */
 .life { position: relative; padding-block: 22vh 24vh; background: var(--paper-2); overflow-x: clip; }
-.desk { position: relative; height: min(118vh, 1000px); margin-top: 5vh; border-radius: 22px; border: 16px solid #9A6B3F; box-sizing: border-box;
+.desk { position: relative; height: 1000px; margin-top: 5vh; border-radius: 22px; border: 16px solid #9A6B3F; box-sizing: border-box;
   background: radial-gradient(circle at 30% 20%, rgba(255, 236, 200, .35), transparent 50%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .18 0 0 0 0 .06 0 0 0 1.4 -.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E"),
     linear-gradient(135deg, #D6A56D, #C38D56);
@@ -794,6 +794,11 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .pol-ph span { font: 600 11px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: rgba(19, 35, 58, .55); }
 .polaroid.pol-sm { padding: 9px 9px 40px; }
 .polaroid.pol-sm figcaption { bottom: 10px; font-size: 17px; }
+.desk .polaroid figcaption { display: grid; place-items: center; height: 46px; bottom: 4px; padding: 0 10px; font: 700 22px/.95 var(--hand); color: #2B3A4E; text-wrap: balance; }
+.desk .polaroid.pol-sm { padding-bottom: 52px; }
+@media (min-width: 861px) and (max-width: 1320px) { .desk .item { scale: .9; transform-origin: 0 0; } }
+@media (min-width: 861px) and (max-width: 1180px) { .desk .item { scale: .78; } .desk { height: 840px; } }
+.desk .polaroid.pol-sm figcaption { height: 46px; bottom: 3px; font-size: 19px; }
 .vinyl { cursor: pointer; }
 .vn-ask { position: absolute; z-index: 4; left: 50%; bottom: calc(100% - 6px); width: 230px; padding: 14px 16px; border-radius: 16px; background: #fff; color: var(--ink); box-shadow: var(--shadow); transform: translate(-50%, 8px) scale(.94); opacity: 0; visibility: hidden; transition: opacity .25s, transform .35s var(--spring), visibility 0s .25s; text-align: left; }
 .vinyl.ask .vn-ask { opacity: 1; visibility: visible; transform: translate(-50%, 0) scale(1); transition: opacity .25s, transform .35s var(--spring); }
@@ -1501,15 +1506,19 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .sec-head h2 { font-size: clamp(2rem, 9.2vw, 3rem); }
   .j-head .sec-head h2 { font-size: min(7.2vw, 3rem); }
   .desk-hint { font-size: 15px; right: 12px; bottom: 8px; }
-  .desk .p1 { left: 3% !important; top: 16px !important; width: 55%; }
+  .desk .p1 { left: 3% !important; top: 16px !important; width: 54% !important; }
+  .desk .pc1 { left: 59% !important; top: 40px !important; width: 38% !important; }
   .desk .p2 { left: 3% !important; top: 310px !important; width: 94%; padding-left: 40px; }
-  .desk .p5 { left: 8% !important; top: 770px !important; }
-  .desk .p4 { left: 4% !important; top: 1010px !important; width: min(44%, 200px) !important; }
-  .desk .p18 { left: 52% !important; top: 1040px !important; width: min(42%, 190px) !important; }
-  .desk .p15 { left: 6% !important; top: 1300px !important; width: min(38%, 170px) !important; }
-  .desk .p17 { left: 50% !important; top: 1320px !important; width: 46% !important; font-size: 17px; padding: 14px; }
-  .desk .p7 { left: 3% !important; top: 1540px !important; width: min(92%, 420px); }
-  .desk .p3, .desk .p6, .desk .p13, .desk .p14, .desk .p16, .desk .mag { display: none; }
+  .desk .p5 { left: 8% !important; top: 800px !important; }
+  .desk .pc2 { left: 4% !important; top: 1030px !important; width: 44% !important; }
+  .desk .pc3 { left: 52% !important; top: 1050px !important; width: 44% !important; }
+  .desk .pc4 { left: 4% !important; top: 1300px !important; width: 44% !important; }
+  .desk .pc5 { left: 52% !important; top: 1320px !important; width: 44% !important; }
+  .desk .pc6 { left: 4% !important; top: 1570px !important; width: 44% !important; }
+  .desk .pc7 { left: 52% !important; top: 1590px !important; width: 44% !important; }
+  .desk .p7 { left: 3% !important; top: 1850px !important; width: min(92%, 420px); }
+  .desk .p17 { display: none; }
+  .desk .polaroid.pol-sm figcaption { font-size: 16px; }
   .vn-ask { left: 0; transform: translate(0, 8px) scale(.94); } .vinyl.ask .vn-ask { transform: none; }
   .box-track { height: 190vh; }
   .box-fit { left: 50%; top: 42%; }
@@ -1526,7 +1535,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .proc-line svg { display: none; }
   .pnode, .pnode.up { position: relative; left: auto !important; top: auto !important; transform: none; width: auto; text-align: left; display: grid; grid-template-columns: 26px 1fr; gap: 4px 14px; }
   .pnode .dot, .pnode.up .dot { margin: 0; grid-row: span 2; order: 0; }
-  .desk { height: 1740px; border-width: 10px; }
+  .desk { height: 2060px; border-width: 10px; }
   .sticky { width: 10.5rem; font-size: 18px; padding: 14px; }
   .tell-box { padding-right: 0; }
   .tell { font-size: clamp(1.9rem, 8.4vw, 2.6rem); line-height: 1.3; }
@@ -2409,8 +2418,8 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
       <p>23. Based between India and Dubai. When I'm not in Figma, I'm usually making noise.</p>
     </div>
     <div class="desk" id="desk">
-      <figure class="item polaroid pinned p1" style="left:3%;top:6%;--r:-5deg;--pc:#E4402A;margin:0"><img src="v2/s/photo.webp" alt="James in a backwards cap and sunglasses, smiling at sunset"><figcaption>me, probably mid-laugh</figcaption></figure>
-      <div class="item about pinned p2" style="left:25%;top:4%;--r:1.5deg;--pc:#2A7BD1">
+      <figure class="item polaroid pinned p1" style="width:250px;left:2%;top:3%;--r:-5deg;--pc:#E4402A;margin:0"><img src="v2/s/photo.webp" alt="James in a backwards cap and sunglasses, smiling at sunset"><figcaption>me, probably mid-laugh</figcaption></figure>
+      <div class="item about pinned p2" style="left:27%;top:3%;--r:1.5deg;--pc:#2A7BD1">
         <p class="ab-k">Off the clock</p>
         <h4>Hi, I’m James. Not the work version.</h4>
         <b>Things I can’t stop doing</b>
@@ -2418,11 +2427,16 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
         <b>When I’m not in Figma</b>
         <ul><li>Apple Music is on. Always.</li><li>Asking “but why?” about everything</li></ul>
       </div>
-      <div class="item note taped p3" style="--sc:#FFE98A;left:59%;top:5%;--r:4deg">I play drums, piano &amp; guitar.<small>Calculated chaos</small></div>
-      <figure class="item polaroid pinned p4 pol-sm" style="left:77%;top:2%;--r:5deg;--pc:#2E9E6B;--phc:#FFE9B8;width:200px;margin:0"><div class="pol-ph" aria-hidden="true"><svg viewBox="0 0 64 64"><ellipse cx="32" cy="26" rx="22" ry="7"/><path d="M10 26v16c0 4 10 7 22 7s22-3 22-7V26"/><path d="M18 8l10 12M46 8L36 20"/></svg><span>drums photo soon</span></div><figcaption>the loud one</figcaption></figure>
-      <div class="item vinyl p5" style="left:55%;top:33%;--r:-3deg" tabindex="0" title="Tap to open my playlist"><div class="vn-sleeve"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><b>On repeat</b><small>Apple Music</small></div><div class="vn-disc"><i></i></div><span>my music obsession, spinning</span><div class="vn-ask" role="dialog" aria-label="Open my playlist"><b>Wanna hear what’s on repeat?</b><a href="https://music.apple.com/in/playlist/songs-that-see-me/pl.u-11zBJWVhNvoKNE" target="_blank" rel="noopener">Open “Songs that see me” ↗</a><button type="button" class="vn-x" aria-label="Close">×</button></div></div>
-      <div class="item note taped p6" style="--sc:#C9EBD2;left:80%;top:40%;--r:5deg;width:170px">Home is two places.<small>IND / DXB</small></div>
-      <div class="item ticket pinned p7" style="left:24%;top:70%;--r:-3deg;--pc:#D71920">
+      <figure class="item polaroid pinned pol-sm pc1" style="left:63%;top:3%;--r:4deg;--pc:#E4402A;width:165px;margin:0"><img src="v2/s/life-coldplay.png" alt="Wristbands glowing at a Coldplay stadium show" loading="lazy"><figcaption>Coldplay. Best night ever.</figcaption></figure>
+      <figure class="item polaroid pinned pol-sm pc2" style="left:80%;top:2%;--r:-3deg;--pc:#7B5CD6;width:165px;margin:0"><img src="v2/s/life-jersey.png" alt="A yellow Lakers number 23 James jersey" loading="lazy"><figcaption>first gift from my friends</figcaption></figure>
+      <figure class="item polaroid pinned pol-sm pc3" style="left:81%;top:34%;--r:5deg;--pc:#2E9E6B;width:165px;margin:0"><div class="pol-ph" aria-hidden="true"><svg viewBox="0 0 64 64"><ellipse cx="32" cy="26" rx="22" ry="7"/><path d="M10 26v16c0 4 10 7 22 7s22-3 22-7V26"/><path d="M18 8l10 12M46 8L36 20"/></svg><span>photo soon</span></div><figcaption>the happy noise</figcaption></figure>
+      <div class="item vinyl p5" style="left:38%;top:44%;--r:-3deg" tabindex="0" title="Tap to open my playlist"><div class="vn-sleeve"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><b>On repeat</b><small>Apple Music</small></div><div class="vn-disc"><i></i></div><span>music is life</span><div class="vn-ask" role="dialog" aria-label="Open my playlist"><b>Wanna hear what’s on repeat?</b><a href="https://music.apple.com/in/playlist/songs-that-see-me/pl.u-11zBJWVhNvoKNE" target="_blank" rel="noopener">Open “Songs that see me” ↗</a><button type="button" class="vn-x" aria-label="Close">×</button></div></div>
+      <figure class="item polaroid pinned pol-sm pc4" style="left:64%;top:32%;--r:3deg;--pc:#2A7BD1;width:165px;margin:0"><img src="v2/s/life-sister.png" alt="James’s sister using the LastLook app on her phone" loading="lazy"><figcaption>user #1: my sister</figcaption></figure>
+      <figure class="item polaroid pinned pol-sm pc5" style="left:2%;top:45%;--r:-4deg;--pc:#F2B705;width:165px;margin:0"><img src="v2/s/life-cars.png" alt="Cars at a Dubai junction at night under a purple-lit water tower" loading="lazy"><figcaption>I stop for cars. always.</figcaption></figure>
+      <figure class="item polaroid pinned pol-sm pc6" style="left:19%;top:47%;--r:3deg;--pc:#E4402A;width:175px;margin:0"><div class="pol-ph" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M18 22c-6 0-10 8-8 16l6-2M46 22c6 0 10 8 8 16l-6-2"/><path d="M18 22c4-6 24-6 28 0 3 6 3 18-2 24-4 5-20 5-24 0-5-6-5-18-2-24z"/><circle cx="26" cy="32" r="1.6"/><circle cx="38" cy="32" r="1.6"/><path d="M29 40c2 2 4 2 6 0"/></svg><span>photo soon</span></div><figcaption>my roommate, Olive</figcaption></figure>
+      <figure class="item polaroid pinned pol-sm pc7" style="left:47%;top:66%;--r:-3deg;--pc:#2A7BD1;width:165px;margin:0"><img src="v2/s/life-gym.png" alt="James taking a mirror selfie at the gym" loading="lazy"><figcaption>gym, my reset button</figcaption></figure>
+      <div class="item note taped p17" style="--sc:#D9CCFF;left:78%;top:70%;--r:-4deg;width:180px">My brain has 40 tabs open.<small>Overthinker. Mostly curiosity.</small></div>
+      <div class="item ticket pinned p7" style="left:4%;top:76%;--r:3deg;--pc:#D71920">
         <div class="tk-main">
           <div class="tk-top"><span class="tk-air">Emirates</span><small>Boarding pass</small></div>
           <div class="tk-route"><div><b>DEL</b><span>New Delhi</span></div><i><svg viewBox="0 0 24 24"><path d="M2 13l8-1 4-8h2l-2 8 6 1 2-3h2l-1 4 1 4h-2l-2-3-6 1 2 8h-2l-4-8-8-1z"/></svg></i><div><b>DXB</b><span>Dubai</span></div></div>
@@ -2430,17 +2444,6 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
         </div>
         <div class="tk-stub"><small>DEL ⇄ DXB</small><i class="tk-bar"></i></div>
       </div>
-      <span class="item mag p8" style="left:4%;top:80%;--r:-8deg;--mc:#E4402A">J</span>
-      <span class="item mag p9" style="left:8.6%;top:78%;--r:6deg;--mc:#2A7BD1">A</span>
-      <span class="item mag p10" style="left:13.2%;top:81%;--r:-4deg;--mc:#F2B705">M</span>
-      <span class="item mag p11" style="left:18.6%;top:79%;--r:9deg;--mc:#2E9E6B">E</span>
-      <span class="item mag p12" style="left:1%;top:90%;--r:-6deg;--mc:#7B5CD6">S</span>
-      <div class="item pick p13" style="left:25%;top:55%;--r:-12deg" aria-hidden="true"><svg viewBox="0 0 60 70"><path d="M30 68C14 52 2 36 2 20 2 8 14 2 30 2s28 6 28 18c0 16-12 32-28 48z" fill="#E4402A"/><path d="M12 14c6-5 14-7 22-6" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".5"/></svg><span>for the guitar</span></div>
-      <div class="item scrap pinned p14" style="left:84%;top:56%;--r:7deg;--pc:#2A7BD1;width:130px" aria-hidden="true"><svg viewBox="0 0 120 150"><path d="M60 8v70"/><path d="M52 8h16v18H52z"/><path d="M60 78c-22 0-34 12-34 30s16 34 34 34 34-16 34-34-12-30-34-30z"/><circle cx="60" cy="104" r="10"/><path d="M50 128h20"/></svg><span>and the quiet one</span></div>
-      <figure class="item polaroid pinned p15 pol-sm" style="left:3%;top:58%;--r:-4deg;--pc:#F2B705;--phc:#CFE6FF;width:150px;margin:0"><div class="pol-ph" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M8 40v-6c0-3 2-5 5-5l8-2 7-8c2-2 3-2 6-2h10c3 0 4 1 6 3l6 7 3 1c2 1 3 2 3 5v7"/><circle cx="20" cy="42" r="6"/><circle cx="46" cy="42" r="6"/></svg><span>car photo soon</span></div><figcaption>long drives</figcaption></figure>
-      <figure class="item polaroid pinned p18 pol-sm" style="left:60%;top:57%;--r:3deg;--pc:#2A7BD1;--phc:#D5F2C8;width:185px;margin:0"><div class="pol-ph" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"/><path d="M32 20l9 7-3 11H26l-3-11z"/><path d="M32 10v10M41 27l12-5M38 38l8 10M26 38l-8 10M23 27l-12-5"/></svg><span>football photo soon</span></div><figcaption>football, always</figcaption></figure>
-      <div class="item scrap pinned p16" style="left:40%;top:47%;--r:-5deg;--pc:#E4402A;width:170px" aria-hidden="true"><svg viewBox="0 0 160 80"><path d="M40 40h80"/><rect x="22" y="18" width="16" height="44" rx="4"/><rect x="8" y="26" width="14" height="28" rx="4"/><rect x="122" y="18" width="16" height="44" rx="4"/><rect x="138" y="26" width="14" height="28" rx="4"/></svg><span>gym, then more gym</span></div>
-      <div class="item note taped p17" style="--sc:#D9CCFF;left:78%;top:79%;--r:-4deg;width:190px">My brain has 40 tabs open.<small>Overthinker. Mostly curiosity.</small></div>
       <p class="desk-hint">it’s my board, but go ahead, move things around ;)</p>
     </div>
   </div>
