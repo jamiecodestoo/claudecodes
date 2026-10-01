@@ -221,6 +221,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .sticky.in { opacity: 1; transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--r, -3deg)); }
 .sticky.drag { cursor: grabbing; transition: none; box-shadow: 0 30px 40px -18px rgba(19, 35, 58, .5); }
 .sticky::before { content: ""; position: absolute; left: 50%; top: -10px; width: 64px; height: 20px; margin-left: -32px; background: rgba(255, 255, 255, .55); transform: rotate(-3deg); box-shadow: 0 1px 2px rgba(0, 0, 0, .06); }
+.st-lg { display: flex; gap: 8px; margin-top: 12px; }
+.st-lg img { width: 46px; height: 46px; border-radius: 12px; object-fit: cover; background: #fff; box-shadow: 0 6px 12px -6px rgba(19, 35, 58, .45); pointer-events: none; }
 .sticky small { display: block; margin-top: 8px; font: 700 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; opacity: .55; font-style: normal; }
 .move-hint { position: absolute; font: italic 18px/1 var(--serif); color: var(--ink-2); display: flex; gap: 8px; align-items: center; opacity: 0; transition: opacity .6s; }
 .move-hint.in { opacity: 1; }
@@ -783,6 +785,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 @keyframes vnspin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .vn-disc { animation: none; } }
 .vinyl > span { position: absolute; left: 0; right: 0; bottom: 0; text-align: center; font: italic 18px/1 var(--serif); color: #FFF6E6; text-shadow: 0 1px 3px rgba(40, 20, 0, .5); }
+.pol-ph { width: 100%; aspect-ratio: 5 / 6; display: grid; place-items: center; align-content: center; gap: 8px; background: var(--phc, #EEE); }
+.pol-ph svg { width: 42%; height: auto; fill: none; stroke: #13233A; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; opacity: .75; }
+.pol-ph span { font: 600 11px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: rgba(19, 35, 58, .55); }
+.polaroid.pol-sm { padding: 9px 9px 40px; }
+.polaroid.pol-sm figcaption { bottom: 10px; font-size: 17px; }
+.vinyl { cursor: pointer; }
+.vn-ask { position: absolute; z-index: 4; left: 50%; bottom: calc(100% - 6px); width: 230px; padding: 14px 16px; border-radius: 16px; background: #fff; color: var(--ink); box-shadow: var(--shadow); transform: translate(-50%, 8px) scale(.94); opacity: 0; visibility: hidden; transition: opacity .25s, transform .35s var(--spring), visibility 0s .25s; text-align: left; }
+.vinyl.ask .vn-ask { opacity: 1; visibility: visible; transform: translate(-50%, 0) scale(1); transition: opacity .25s, transform .35s var(--spring); }
+.vn-ask b { display: block; margin: 0 18px 10px 0; font: 700 15px/1.3 var(--sans); }
+.vn-ask a { display: inline-flex; padding: 10px 14px; border-radius: 999px; background: linear-gradient(135deg, #FA2D48, #FC5C7D); color: #fff; font: 700 13.5px/1 var(--sans); text-decoration: none; }
+.vn-x { position: absolute; right: 8px; top: 6px; width: 28px; height: 28px; font-size: 20px; line-height: 1; color: var(--ink-2); }
 .desk-hint { position: absolute; right: 24px; bottom: 16px; margin: 0; font: italic 19px/1 var(--serif); color: rgba(255, 244, 225, .85); text-shadow: 0 1px 3px rgba(40, 20, 0, .4); }
 
 /* =========================================================
@@ -831,7 +844,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .links { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .links a { font-size: 14.5px; font-weight: 700; text-decoration: none; padding: 10px 16px; border-radius: 999px; background: rgba(255, 255, 255, .22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: background .3s, transform .4s var(--spring); }
 .links a:hover { background: rgba(255, 255, 255, .38); transform: translateY(-2px); }
-.hello .clouds-foot { position: relative; height: 34vh; margin-top: 8vh; pointer-events: none; }
+.hello .clouds-foot { position: relative; height: min(34vh, 30vw); margin-top: 8vh; pointer-events: none; }
+@media (min-width: 1400px) { .hello .clouds-foot { display: none; } .hello .foot { margin-top: 10vh; } }
 .hello .clouds-foot img { position: absolute; bottom: -8vh; will-change: transform; }
 .hello .me-cloud { position: absolute; left: 50%; bottom: 11vh; width: 84px; transform: translateX(-50%); z-index: 1; }
 .hello .clouds-foot img.front { z-index: 2; }
@@ -921,26 +935,27 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
    ========================================================= */
 .cs.ed { --ed: #F4511E; --ed-2: #FFE3D6; background: var(--paper); color: var(--ink); }
 .cs.ed .cs-bar { background: rgba(255, 248, 236, .88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-.c3-ch { font: 700 20px/1 var(--hand); color: var(--ink-2); }
+.c3-ch { font: 600 12.5px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
 .c3-prog { position: sticky; top: 62px; z-index: 3; height: 3px; margin-bottom: -3px; background: rgba(19, 35, 58, .06); }
 .c3-prog i { display: block; height: 100%; width: var(--p, 0%); background: var(--ed); border-radius: 0 3px 3px 0; }
 .c3 { text-align: center; overflow-x: clip; }
-.c3-w { max-width: 42rem; margin: 0 auto; padding: 0 clamp(18px, 4vw, 40px); box-sizing: border-box; }
+.c3-w { max-width: 76rem; margin: 0 auto; padding: 0 clamp(18px, 4vw, 40px); box-sizing: border-box; }
 .c3-wide { max-width: 72rem; margin: 0 auto; padding: 0 clamp(18px, 4vw, 40px); box-sizing: border-box; }
 .c3-sec { padding: 18vh 0 0; }
-.c3-k { display: inline-block; margin: 0 0 14px; font: 700 22px/1 var(--hand); color: var(--ed); transform: rotate(-2deg); }
-.c3-h { margin: 0 auto 20px; max-width: 20ch; font: 700 clamp(30px, 3.4vw, 44px)/1.12 var(--sans); letter-spacing: -.035em; text-wrap: balance; }
-.c3-h .it { font-size: 1.1em; }
-.c3-p { margin: 0 auto; font: 400 clamp(18px, 1.4vw, 20px)/1.7 var(--sans); color: var(--ink-2); text-wrap: pretty; }
+.c3 .c3-k { margin: 0 0 18px; justify-content: center; }
+.c3-h { margin: 0 auto 22px; font: 800 clamp(32px, 4.3vw, 66px)/1.04 var(--sans); letter-spacing: -.045em; text-wrap: balance; }
+.c3 .c3-h[data-rv] { opacity: 1; transform: none; }
+.c3-h .w { display: inline-block; opacity: 0; transform: translateY(.45em); transition: opacity .6s var(--ease), transform .9s var(--ease); transition-delay: calc(var(--i) * 70ms); }
+.c3-h.in .w { opacity: 1; transform: none; }
+@media (min-width: 1000px) { .c3-h { white-space: nowrap; } }
+.c3-p { margin: 0 auto; max-width: 44rem; font: 400 clamp(18px, 1.4vw, 20px)/1.7 var(--sans); color: var(--ink-2); text-wrap: pretty; }
 .c3-p + .c3-p { margin-top: 18px; }
 .c3-p b { font-weight: 600; color: var(--ink); }
-.c3-note { font: 700 22px/1.2 var(--hand); color: var(--ink-2); }
 .c3 [data-rv] { opacity: 0; transform: translateY(30px); transition: opacity .9s var(--ease), transform 1.1s var(--ease); }
 .c3 [data-rv].in { opacity: 1; transform: none; }
 .c3 img { display: block; }
-.c3-ph { display: grid; place-items: center; min-height: 180px; padding: 20px; border: 2px dashed rgba(19, 35, 58, .2); border-radius: 18px; background: var(--paper-2); font: 700 18px/1.3 var(--hand); color: var(--ink-2); }
+.c3-ph { display: grid; place-items: center; min-height: 180px; padding: 20px; border: 2px dashed rgba(19, 35, 58, .2); border-radius: 18px; background: var(--paper-2); font: 600 15px/1.4 var(--sans); color: var(--ink-2); }
 .c3-card { background: #fff; border-radius: 22px; box-shadow: var(--shadow); }
-.c3-illo { width: min(440px, 86%); height: auto; margin: 7vh auto 0; }
 .c3-track { position: relative; }
 .c3-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; place-items: center; overflow: hidden; }
 
@@ -950,8 +965,6 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-hero h2 { margin: 0; font: 800 clamp(48px, 7.4vw, 104px)/.95 var(--sans); letter-spacing: -.055em; }
 .c3-hero h2 .it { font-weight: 400; letter-spacing: -.02em; }
 .c3-hero .sub { margin: 20px auto 0; max-width: 30ch; font: 400 clamp(19px, 1.7vw, 23px)/1.5 var(--sans); color: var(--ink-2); }
-.c3-hero .c3-note { margin-top: 5vh; }
-.c3-hero .c3-note svg { display: block; width: 26px; height: 40px; margin: 8px auto 0; fill: none; stroke: var(--ink-2); stroke-width: 2.2; stroke-linecap: round; animation: c3bob 2s var(--ease) infinite; }
 @keyframes c3bob { 50% { transform: translateY(6px); } }
 
 /* comic strip */
@@ -962,7 +975,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-panels figure img { width: 100%; height: 100%; object-fit: cover; }
 .c3-panels figure.seen { opacity: .8; filter: none; }
 .c3-panels figure.on { opacity: 1; filter: none; transform: scale(1.04) rotate(0deg); box-shadow: 0 30px 50px -26px rgba(19, 35, 58, .5); z-index: 1; }
-.c3-panels figure span { position: absolute; left: 10px; top: 8px; font: 700 18px/1 var(--hand); color: var(--ink); background: var(--sun); padding: 3px 8px 4px; border-radius: 8px; }
+.c3-panels figure span { position: absolute; left: 10px; top: 8px; font: 800 13px/1 var(--sans); color: var(--ink); background: var(--sun); padding: 5px 8px; border-radius: 8px; }
 .c3-cap { min-height: 3.2em; max-width: 30ch; margin: 0; font: 700 clamp(22px, 2.2vw, 30px)/1.25 var(--sans); letter-spacing: -.02em; color: var(--ink); }
 .c3-cap small { display: block; margin-top: 6px; font: 400 17px/1.5 var(--sans); color: var(--ink-2); }
 
@@ -977,7 +990,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-receipt dt { color: var(--ink-2); }
 .c3-receipt dd { margin: 0; text-align: right; font-weight: 600; }
 .c3-receipt dd em { font-style: normal; color: #1E8E4E; }
-.c3-receipt .thx { margin: 18px 0 0; text-align: center; font: 700 20px/1 var(--hand); color: var(--ink-2); }
+.c3-receipt .thx { margin: 18px 0 0; text-align: center; font: 600 13px/1 var(--sans); letter-spacing: .04em; color: var(--ink-2); }
 
 /* funnel: 100 diners */
 .c3-fun { display: grid; grid-template-columns: auto minmax(0, 470px); gap: clamp(28px, 6vw, 90px); align-items: center; width: min(1040px, 92vw); }
@@ -1020,7 +1033,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-crowd i.gone { opacity: .16; filter: grayscale(1); transform: translateY(10px) scale(.86); }
 .c3-count { font: 400 18px/1.4 var(--sans); color: var(--ink-2); }
 .c3-count b { display: block; font: 800 clamp(44px, 5vw, 68px)/1 var(--sans); letter-spacing: -.05em; color: var(--ink); }
-.c3-fnote { min-height: 2.6em; max-width: 26ch; font: 700 23px/1.2 var(--hand); color: var(--ed); }
+.c3-fnote { min-height: 2.6em; max-width: 26ch; margin: 0; font: 700 19px/1.3 var(--sans); color: var(--ed); }
 
 /* chat of real users */
 .c3-chat { width: min(620px, 92vw); height: min(74vh, 640px); display: flex; flex-direction: column; border-radius: 26px; background: #fff; box-shadow: var(--shadow); overflow: hidden; text-align: left; }
@@ -1057,56 +1070,42 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 
 /* goal */
 .c3-goal { margin: 0 auto; max-width: 24ch; font: italic 400 clamp(30px, 3.6vw, 48px)/1.2 var(--serif); letter-spacing: -.01em; color: var(--ink); }
-.c3-eq { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 14px 18px; margin-top: 7vh; }
-.c3-eq .t { display: grid; justify-items: center; gap: 8px; font: 600 15px/1.2 var(--sans); }
+.c3-eq { display: flex; justify-content: center; align-items: center; flex-wrap: nowrap; gap: clamp(6px, 1.4vw, 18px); margin-top: 7vh; }
+.c3-eq .t { display: grid; justify-items: center; gap: 8px; font: 600 15px/1.2 var(--sans); text-align: center; }
 .c3-eq .t svg { width: 64px; height: 64px; }
 .c3-eq > i { font: 400 34px/1 var(--serif); font-style: normal; color: var(--ink-2); }
-.c3-ticket { padding: 18px 26px; background: var(--sun); border-radius: 12px; font: 700 18px/1.2 var(--sans); position: relative; transform: rotate(-3deg);
+.c3-ticket { flex: none; padding: 16px 24px; background: var(--sun); border-radius: 12px; font: 800 18px/1.15 var(--sans); position: relative; transform: rotate(-3deg); white-space: nowrap;
   -webkit-mask: radial-gradient(10px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat, radial-gradient(10px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
   mask: radial-gradient(10px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat, radial-gradient(10px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat; }
-.c3-ticket small { display: block; font: 700 16px/1 var(--hand); color: var(--ink-2); margin-bottom: 4px; }
+.c3-ticket small { display: block; font: 600 11px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 5px; }
 
 /* competition */
 .c3-logos { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 5vh; }
 .c3-logos img { width: 54px; height: 54px; object-fit: contain; border-radius: 14px; background: #fff; box-shadow: var(--shadow-sm); padding: 4px; box-sizing: border-box; transition: transform .4s var(--spring); }
 .c3-logos img:hover { transform: translateY(-6px) rotate(-4deg); }
-.c3-logos span { align-self: center; font: 700 20px/1 var(--hand); color: var(--ink-2); margin-left: 6px; }
-.c3-strip { display: flex; gap: 18px; width: max-content; margin-top: 8vh; padding: 0 5vw; will-change: transform; }
+.c3-strip { display: flex; gap: 18px; width: max-content; margin-top: 7vh; padding: 0 5vw; will-change: transform; }
 .c3-strip img { height: clamp(260px, 42vh, 400px); width: auto; border-radius: 20px; box-shadow: var(--shadow-sm); background: #fff; }
-.c3-mx { position: relative; display: grid; grid-template-columns: 1fr 1fr; max-width: 46rem; margin: 7vh auto 0; padding: 0 0 36px 36px; }
-.c3-mx::before { content: ""; position: absolute; left: 36px; right: 0; top: 50%; border-top: 2px solid var(--ink); opacity: .25; }
-.c3-mx::after { content: ""; position: absolute; top: 0; bottom: 36px; left: calc(50% + 18px); border-left: 2px solid var(--ink); opacity: .25; }
-.c3-mx .ax { position: absolute; font: 700 18px/1 var(--hand); color: var(--ink-2); }
-.c3-mx .ax.x { bottom: 4px; left: 50%; transform: translateX(-50%); }
-.c3-mx .ax.y { left: -12px; top: 50%; transform: rotate(-90deg) translateX(50%); transform-origin: left top; white-space: nowrap; }
-.c3-mx div { position: relative; z-index: 1; padding: 26px 18px; }
-.c3-mx small { display: block; font: 700 17px/1 var(--hand); color: var(--ink-2); }
-.c3-mx b { display: block; margin: 8px 0 6px; font: 700 20px/1.2 var(--sans); }
-.c3-mx p { margin: 0 auto; max-width: 24ch; font: 400 15.5px/1.5 var(--sans); color: var(--ink-2); }
-.c3-mx .win b { display: inline-block; padding: 0 10px; border: 2.5px solid var(--ed); border-radius: 50% 46% 52% 48% / 60% 55% 45% 40%; transform: rotate(-2deg); }
 
 /* evolution slider */
 .c3-evo .c3-pin { place-items: stretch; }
 .c3-evo-in { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; height: 100%; padding: 13vh 0 4vh; box-sizing: border-box; }
 .c3-tabs { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; padding: 0 16px; }
-.c3-tabs button { padding: 9px 14px; border-radius: 12px; font: 700 19px/1 var(--hand); color: var(--ink-2); transition: background .3s, color .3s; }
+.c3-tabs button { padding: 10px 16px; border-radius: 999px; font: 600 14px/1 var(--sans); color: var(--ink-2); background: rgba(255, 255, 255, .7); transition: background .3s, color .3s; }
 .c3-tabs button.on { background: var(--ink); color: var(--paper); }
 .c3-row { display: flex; align-items: center; }
-.c3-slide { flex: none; width: var(--cw, 100vw); display: grid; justify-items: center; align-content: center; gap: 18px; padding: 0 clamp(16px, 5vw, 70px); box-sizing: border-box; }
-.c3-slide .c3-card { padding: clamp(10px, 1.6vw, 22px); max-width: min(900px, 100%); box-sizing: border-box; }
-.c3-slide .c3-card img { max-width: 100%; max-height: 44vh; width: auto; height: auto; margin: 0 auto; }
-.c3-slide h4 { margin: 4px 0 0; font: 700 clamp(22px, 2.2vw, 28px)/1.15 var(--sans); letter-spacing: -.02em; }
-.c3-slide ul { margin: 0; padding: 0; list-style: none; max-width: 40rem; display: grid; gap: 4px; }
-.c3-slide li { font: 400 16.5px/1.55 var(--sans); color: var(--ink-2); }
-.c3-slide li b { font-weight: 600; color: var(--ink); }
-.c3-slide .chal { margin: 2px 0 0; max-width: 36ch; font: 700 19px/1.25 var(--hand); color: #C2410C; }
+.c3-slide { flex: none; width: var(--cw, 100vw); display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: center; gap: clamp(24px, 4vw, 64px); padding: 0 max(5vw, calc((var(--cw, 100vw) - 1180px) / 2)); box-sizing: border-box; text-align: left; }
+.c3-slide .c3-card { position: relative; padding: clamp(10px, 1.6vw, 22px); box-sizing: border-box; }
+.c3-slide .c3-card img { max-width: 100%; max-height: 52vh; width: auto; height: auto; margin: 0 auto; }
+.c3-stxt small { display: block; font: 700 12.5px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ed); }
+.c3-stxt h4 { margin: 10px 0 16px; font: 800 clamp(24px, 2.4vw, 34px)/1.1 var(--sans); letter-spacing: -.03em; }
+.c3-stxt ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.c3-stxt li { position: relative; padding-left: 22px; font: 400 16.5px/1.55 var(--sans); color: var(--ink-2); }
+.c3-stxt li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 8px; height: 8px; border-radius: 50%; background: var(--ed); }
+.c3-stxt li b { font-weight: 600; color: var(--ink); }
+.c3-stxt .chal { margin: 16px 0 0; padding: 10px 14px; border-left: 3px solid #C2410C; background: rgba(194, 65, 12, .07); font: 600 15px/1.45 var(--sans); color: #9A3412; border-radius: 0 10px 10px 0; }
 
 /* axis bank try-it */
-.c3-axis { display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(20px, 4vw, 56px); align-items: center; margin-top: 7vh; }
-.c3-axis > img { width: 100%; max-width: 220px; border-radius: 22px; box-shadow: var(--shadow-sm); justify-self: end; }
-.c3-axis > img:last-child { justify-self: start; }
-.c3-try { display: grid; justify-items: center; gap: 16px; width: min(360px, 88vw); }
-.c3-try .c3-note { transform: rotate(-3deg); }
+.c3-try { display: grid; justify-items: center; gap: 14px; width: min(380px, 100%); margin: 6vh auto 0; }
 .c3-cc { position: relative; width: 100%; aspect-ratio: 1.586; border-radius: 18px; padding: 20px 22px; box-sizing: border-box; text-align: left; color: #fff;
   background: radial-gradient(120% 90% at 100% 0%, #B8336A 0%, transparent 60%), linear-gradient(135deg, #97144D, #5B0D2F); box-shadow: 0 26px 40px -24px rgba(91, 13, 47, .8); }
 .c3-cc b { font: 800 18px/1 var(--sans); letter-spacing: .02em; }
@@ -1124,11 +1123,10 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-hint { min-height: 1.4em; font: 400 15px/1.4 var(--sans); color: var(--ink-2); }
 
 /* the twist */
-.c3-q { margin: 9vh auto 0; max-width: 22ch; font: italic 400 clamp(34px, 4.2vw, 58px)/1.12 var(--serif); letter-spacing: -.015em; }
-.c3-twist { display: inline-block; margin-top: 4vh; font: 700 clamp(26px, 2.6vw, 34px)/1 var(--hand); color: var(--ed); transform: rotate(-3deg); }
+.c3-twist { display: inline-block; margin: 3vh 0 6vh; font: 800 clamp(22px, 2.2vw, 30px)/1 var(--sans); letter-spacing: -.02em; color: var(--ed); transform: rotate(-2deg); }
 .c3-twist svg { display: block; width: 100%; height: 14px; margin-top: 2px; fill: none; stroke: var(--ed); stroke-width: 3; stroke-linecap: round; }
-.c3-checks { display: grid; gap: 10px; justify-content: center; margin: 5vh auto 0; padding: 0; list-style: none; text-align: left; }
-.c3-checks li { display: flex; align-items: center; gap: 12px; font: 500 18px/1.4 var(--sans); }
+.c3-checks { display: flex; justify-content: center; gap: clamp(16px, 4vw, 56px); margin: 6vh auto 0; padding: 0; list-style: none; }
+.c3-checks li { display: flex; align-items: center; gap: 10px; font: 600 17px/1.35 var(--sans); }
 .c3-checks li::before { content: ""; flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--grass) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 16px no-repeat; }
 .c3-booster { margin-top: 8vh; padding: clamp(10px, 2vw, 24px); }
 .c3-booster img { width: 100%; height: auto; }
@@ -1137,7 +1135,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-hand { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 6vh; }
 .c3-hand::before { content: ""; position: absolute; left: 12%; right: 12%; top: 21px; border-top: 2.5px dashed rgba(19, 35, 58, .25); }
 .c3-hand div { position: relative; }
-.c3-hand i { display: grid; place-items: center; width: 44px; height: 44px; margin: 0 auto 14px; border-radius: 50%; background: var(--sun); border: 2.5px solid var(--ink); font: 700 20px/1 var(--hand); font-style: normal; }
+.c3-hand i { display: grid; place-items: center; width: 44px; height: 44px; margin: 0 auto 14px; border-radius: 50%; background: var(--sun); border: 2.5px solid var(--ink); font: 800 17px/1 var(--sans); font-style: normal; }
 .c3-hand b { display: block; font: 700 17px/1.3 var(--sans); }
 .c3-hand p { margin: 6px auto 0; max-width: 20ch; font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
 .c3-kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 4vh; }
@@ -1159,8 +1157,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-pview { margin-top: 4vh; }
 .c3-pview h4 { margin: 0 auto 8px; max-width: 26ch; font: 700 clamp(22px, 2.2vw, 28px)/1.2 var(--sans); letter-spacing: -.02em; }
 .c3-pview > p { margin: 0 auto; font: 400 17px/1.5 var(--sans); color: var(--ink-2); }
-.c3-phones { display: flex; justify-content: center; gap: clamp(10px, 1.6vw, 22px); margin-top: 4vh; padding: 0 16px; }
-.c3-phones img { width: clamp(150px, 17vw, 220px); height: auto; border-radius: 20px; box-shadow: var(--shadow-sm); background: #fff; animation: c3pop .6s var(--spring) both; }
+.c3-phones { display: flex; justify-content: center; gap: clamp(10px, 1.4vw, 20px); margin-top: 4vh; padding: 0 16px; }
+.c3-phones img { flex: 0 1 200px; min-width: 0; width: 200px; height: auto; border-radius: 20px; box-shadow: var(--shadow-sm); background: #fff; outline: 3px solid color-mix(in srgb, var(--c) 35%, transparent); outline-offset: 3px; animation: c3pop .6s var(--spring) both; }
 .c3-phones img:nth-child(2) { animation-delay: .06s; } .c3-phones img:nth-child(3) { animation-delay: .12s; } .c3-phones img:nth-child(4) { animation-delay: .18s; }
 
 /* results */
@@ -1173,10 +1171,6 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-bars span i { height: 12px; width: 0; border-radius: 6px; background: #D5D9E0; transition: width 1.6s var(--ease); }
 .c3-bars span + span i { background: var(--ed); transition-delay: .3s; }
 .c3-res.in .c3-bars span i { width: calc(var(--w) * 3.4px); }
-.c3-end { padding: 16vh 0 14vh; }
-.c3-end .c3-note { font-size: 30px; color: var(--ink); }
-.c3-end p { margin: 10px 0 26px; font: 400 17px/1.5 var(--sans); color: var(--ink-2); }
-.c3-end button { padding: 16px 26px; border-radius: 999px; background: var(--ink); color: #fff; font: 700 15px/1 var(--sans); }
 
 @media (max-width: 860px) {
   .c3-panels { grid-template-columns: 1fr 1fr; width: min(440px, 100%); }
@@ -1201,18 +1195,220 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .c3-five div { flex-basis: 28%; font-size: 15px; padding: 8px; }
   .c3-board .sn { width: 40px; height: 36px; }
   .c3-bcap p { font-size: 16px; }
-  .c3-mx div { padding: 20px 10px; }
-  .c3-axis { grid-template-columns: 1fr; justify-items: center; }
-  .c3-axis > img { display: none; }
   .c3-hand, .c3-kpi { grid-template-columns: 1fr 1fr; row-gap: 26px; }
   .c3-hand::before { display: none; }
-  .c3-phones { justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-  .c3-phones img { flex: none; width: 58vw; scroll-snap-align: center; }
-  .c3-slide .c3-card img { max-height: 32vh; }
+  .c3-phones { justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 6px 18px 12px; }
+  .c3-phones img { flex: none; width: min(58vw, 240px); scroll-snap-align: center; }
+  .c3-slide { grid-template-columns: 1fr; gap: 14px; align-content: center; padding: 0 18px; }
+  .c3-slide .c3-card img { max-height: 28vh; }
+  .c3-stxt { max-width: 34rem; margin: 0 auto; }
+  .c3-stxt h4 { margin: 6px 0 8px; font-size: 22px; }
+  .c3-stxt ul { gap: 4px; } .c3-stxt li { font-size: 14px; } .c3-stxt .chal { margin-top: 8px; font-size: 13.5px; padding: 8px 10px; }
   .c3-res.in .c3-bars span i { width: calc(var(--w) * 1.5px); }
   .c3-tabs { flex-wrap: nowrap; } .c3-tabs button { padding: 8px 10px; font-size: 17px; } .c3-tabs button span { display: none; }
   .c3-ptabs { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; padding: 6px 16px 10px; margin-inline: -16px; } .c3-ptabs button { flex: none; }
 }
+
+/* landing-style bits */
+.c3-scrollhint { margin: 5vh 0 0; font: 600 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.c3-scrollhint svg { display: block; width: 26px; height: 40px; margin: 10px auto 0; fill: none; stroke: var(--ink-2); stroke-width: 2.2; stroke-linecap: round; animation: c3bob 2s var(--ease) infinite; }
+.c3-big { margin: 16vh auto 0; max-width: 24ch; font: 800 clamp(30px, 4vw, 60px)/1.12 var(--sans); letter-spacing: -.04em; text-wrap: balance; }
+.c3-big span { color: rgba(19, 35, 58, .13); transition: color .35s; }
+.c3-big span.lit { color: var(--ink); }
+.c3-big.q { margin-top: 12vh; max-width: 22ch; }
+.c3-big.q span.lit { color: var(--ink); }
+.c3-ph { font: 600 14px/1.4 var(--sans) !important; }
+
+/* the competition sketch */
+.c3-sketch { position: relative; width: 100%; height: 100%; display: grid; place-content: center; justify-items: center; gap: 3vh;
+  background: radial-gradient(rgba(19, 35, 58, .1) 1px, transparent 1.3px) 0 0 / 24px 24px; }
+.c3-mx { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; width: min(820px, 90vw); aspect-ratio: 3 / 2; max-height: 72vh; }
+.mx-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.mx-lines path { fill: none; stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: .75; }
+.c3-mx .ax { position: absolute; z-index: 1; font: 700 19px/1 var(--hand); color: var(--ink-2); white-space: nowrap; }
+.c3-mx .ax.x { right: 10px; top: calc(50% + 12px); }
+.c3-mx .ax.y { left: calc(50% + 12px); top: 2px; }
+.c3-mx .q { position: relative; z-index: 1; display: grid; align-content: center; justify-items: center; padding: 18px; text-align: center; opacity: .28; transition: opacity .6s; }
+.c3-mx .q.got { opacity: 1; }
+.c3-mx .slot { display: block; width: 64px; height: 64px; margin-bottom: 10px; }
+.c3-mx small { display: block; font: 700 18px/1 var(--hand); color: var(--ink-2); }
+.c3-mx b { display: block; margin: 6px 0 4px; font: 800 20px/1.2 var(--sans); letter-spacing: -.02em; }
+.c3-mx p { margin: 0 auto; max-width: 24ch; font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
+.c3-mx .win b { display: inline-block; padding: 0 10px; border: 2.5px solid var(--ed); border-radius: 50% 46% 52% 48% / 60% 55% 45% 40%; transform: rotate(-2deg); }
+.bdg { position: absolute; z-index: 3; left: 0; top: 0; width: 64px; height: 64px; display: grid; place-items: center; border-radius: 18px; background: var(--bg); color: #fff; opacity: 0;
+  box-shadow: 0 14px 24px -12px rgba(19, 35, 58, .55), inset 0 0 0 1px rgba(19, 35, 58, .08); pointer-events: none; }
+.bdg b { font: 800 11px/1.05 var(--sans); letter-spacing: -.01em; text-transform: lowercase; text-align: center; }
+.bdg b em { font-style: normal; padding: 0 2px; margin: 0 1px; border-radius: 3px; background: #fff; color: #F84464; }
+.bdg img { width: 52px; height: auto; }
+.bdg:nth-of-type(n) b:only-child { font-size: 12px; }
+.c3-mxcap { min-height: 1.4em; margin: 0; font: 600 16px/1.4 var(--sans); color: var(--ink-2); }
+
+/* the iterations studio: ruler, pencil, measurements */
+.c3-evo .c3-pin { background: radial-gradient(rgba(19, 35, 58, .11) 1px, transparent 1.3px) 0 0 / 22px 22px, #FFF4E2; }
+.c3-doodles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.c3-doodles * { fill: none; stroke: #13233A; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .32; }
+.c3-doodles .pencil path:first-child { fill: #FFD23F; opacity: .55; }
+.c3-doodles .scrib { stroke: #F4511E; opacity: .45; stroke-width: 3; }
+.c3-doodles .comp { stroke-dasharray: 6 8; }
+.c3-doodles text { fill: #13233A; stroke: none; font: 700 22px var(--hand); opacity: .45; }
+.c3-doodles .dim text { font-size: 18px; }
+.c3-evo-in { position: relative; z-index: 1; }
+.c3-card .cm { position: absolute; inset: -14px; pointer-events: none; opacity: .55;
+  background: linear-gradient(#13233A, #13233A) 0 0 / 18px 2px, linear-gradient(#13233A, #13233A) 0 0 / 2px 18px, linear-gradient(#13233A, #13233A) 100% 0 / 18px 2px, linear-gradient(#13233A, #13233A) 100% 0 / 2px 18px,
+    linear-gradient(#13233A, #13233A) 0 100% / 18px 2px, linear-gradient(#13233A, #13233A) 0 100% / 2px 18px, linear-gradient(#13233A, #13233A) 100% 100% / 18px 2px, linear-gradient(#13233A, #13233A) 100% 100% / 2px 18px; background-repeat: no-repeat; }
+.c3 img[data-z] { cursor: zoom-in; }
+.c3-trylbl { margin: 0; font: 700 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ed); }
+
+/* before / after demo */
+.c3-demo { display: grid; justify-items: center; gap: 18px; margin-top: 5vh; }
+.c3-seg { display: inline-flex; padding: 4px; border-radius: 999px; background: #fff; box-shadow: var(--shadow-sm); }
+.c3-seg button { padding: 10px 22px; border-radius: 999px; font: 700 14px/1 var(--sans); color: var(--ink-2); transition: background .3s, color .3s; }
+.c3-seg button.on { background: var(--ink); color: #fff; }
+.c3-dphone { position: relative; width: 300px; border: 9px solid var(--ink); border-radius: 42px; background: #F4F4F6; overflow: hidden; text-align: left; font: 400 13px/1.35 var(--sans); color: var(--ink); box-shadow: var(--shadow); }
+.c3-dphone > header { display: grid; justify-items: center; gap: 2px; padding: 34px 16px 18px; background: var(--ed); color: #fff; }
+.c3-dphone > header small { opacity: .85; font-size: 12px; }
+.c3-dphone > header b { font: 800 30px/1.1 var(--sans); letter-spacing: -.02em; }
+.c3-dphone > header s { display: none; margin-right: 8px; font-size: 17px; font-weight: 600; opacity: .7; }
+.c3-dphone.applied > header s { display: inline; }
+.c3-dphone .lab { margin: 14px 16px 8px; font: 700 10.5px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: #8A93A3; }
+.c3-dphone .bf, .c3-dphone .af { display: none; }
+.c3-dphone[data-mode="before"] .bf, .c3-dphone[data-mode="after"] .af { display: block; }
+.c3-dphone .row { display: flex; justify-content: space-between; align-items: center; width: calc(100% - 32px); margin: 0 16px; padding: 12px 14px; box-sizing: border-box; border-radius: 12px; background: #fff; text-align: left; }
+.c3-dphone .row b { display: block; font-size: 13.5px; } .c3-dphone .row small { color: #8A93A3; } .c3-dphone .row em { font-style: normal; font-size: 22px; color: #8A93A3; }
+.c3-dphone .toast { margin: 8px 16px 0; padding: 0 12px; max-height: 0; overflow: hidden; border-radius: 10px; background: var(--ink); color: #fff; font-size: 12.5px; opacity: 0; }
+.c3-dphone .toast.on { animation: c3toast 3s var(--ease) both; }
+@keyframes c3toast { 0% { max-height: 0; padding: 0 12px; opacity: 0; } 10%, 85% { max-height: 80px; padding: 10px 12px; opacity: 1; } 100% { max-height: 0; padding: 0 12px; opacity: 0; } }
+.c3-dphone .best { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; margin: 0 16px; padding: 12px; border-radius: 12px; background: #fff; border: 1.5px dashed #3DBE6B; }
+.c3-dphone .bk { padding: 6px 6px; border-radius: 6px; background: #97144D; color: #fff; font: 800 9.5px/1 var(--sans); }
+.c3-dphone .best b { display: block; color: #1E8E4E; font-size: 14px; } .c3-dphone .best small { color: #8A93A3; font-size: 11px; }
+.c3-dphone .best button { padding: 9px 14px; border-radius: 9px; background: var(--ed); color: #fff; font: 700 12.5px/1 var(--sans); transition: background .3s, color .3s; }
+.c3-dphone.applied .best button { background: #fff; color: var(--ed); box-shadow: inset 0 0 0 1.5px var(--ed); }
+.c3-dphone .all { margin: 8px 16px 0; text-align: center; font: 600 12px/1 var(--sans); color: var(--ed); }
+.c3-dphone .sum { margin: 0 16px; padding: 4px 12px 10px; border-radius: 12px; background: #fff; }
+.c3-dphone .sum .lab { margin: 10px 0 8px; }
+.c3-dphone .sum div { display: flex; justify-content: space-between; padding: 4px 0; }
+.c3-dphone .sum .disc { display: none; color: #1E8E4E; } .c3-dphone.applied .sum .disc { display: flex; }
+.c3-dphone .sum .tot { margin-top: 4px; padding-top: 8px; border-top: 1px solid rgba(19, 35, 58, .1); font-weight: 800; }
+.c3-dphone .yay { margin: 0 16px; max-height: 0; overflow: hidden; opacity: 0; border-radius: 10px; background: #E8F7EE; color: #1E8E4E; font: 700 13px/1.3 var(--sans); text-align: center; transition: max-height .4s var(--ease), opacity .4s, margin .4s, padding .4s; }
+.c3-dphone.applied .yay { max-height: 60px; opacity: 1; margin-top: 12px; padding: 10px; }
+.c3-dphone .cta { margin: 14px 16px 18px; padding: 13px; border-radius: 12px; background: var(--ed); color: #fff; font: 700 13.5px/1 var(--sans); text-align: center; }
+.c3-dphone .conf { position: absolute; left: 50%; top: 52%; pointer-events: none; }
+.c3-dphone .conf i { position: absolute; width: 8px; height: 12px; border-radius: 2px; background: var(--c); opacity: 0; }
+.c3-dphone .conf.go i { animation: c3conf 1.1s var(--d) var(--ease) both; }
+@keyframes c3conf { 0% { opacity: 1; transform: translate(0, 0) rotate(0); } 100% { opacity: 0; transform: translate(var(--x), var(--y)) rotate(420deg); } }
+.c3-dcap { min-height: 2.8em; max-width: 34ch; margin: 0; font: 600 16px/1.4 var(--sans); color: var(--ink-2); }
+.c3-zoomhint { margin: 12px 0 0; font: 600 13px/1 var(--sans); color: var(--ink-2); }
+
+/* the paths diagram */
+.c3-flowd { margin-top: 4vh; padding: clamp(10px, 2vw, 24px); }
+#c3Flow { display: block; width: 100%; height: auto; }
+#c3Flow .fe { fill: none; stroke: #D7DBE2; stroke-width: 3; transition: stroke .4s; }
+#c3Flow .fe.on { stroke: var(--c); stroke-width: 5; stroke-dasharray: 12 9; animation: c3flow .9s linear infinite; }
+@keyframes c3flow { to { stroke-dashoffset: -21; } }
+#c3Flow .fn rect { fill: #fff; stroke: #D7DBE2; stroke-width: 2; transition: fill .4s, stroke .4s; }
+#c3Flow .fn.on rect { fill: color-mix(in srgb, var(--c) 12%, #fff); stroke: var(--c); stroke-width: 2.5; }
+#c3Flow text { font: 600 15px var(--sans); fill: #8A93A3; text-anchor: middle; }
+#c3Flow .fn.on text { fill: #13233A; font-weight: 700; }
+#c3Flow.v text { font-size: 21px; }
+#c3Flow.v .fe { stroke-width: 4; } #c3Flow.v .fe.on { stroke-width: 6; }
+.c3-pview { margin-top: 5vh; }
+.c3-fullflow { margin: 4vh 0 0; }
+.c3-fullflow button { font: 600 15px/1 var(--sans); color: var(--ink); border-bottom: 1.5px dashed currentColor; padding-bottom: 3px; }
+
+/* results */
+.c3-rseg { display: flex; width: max-content; margin: 5vh auto 3vh; }
+.c3-rgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; max-width: 980px; margin: 0 auto; }
+.c3-rc { padding: 22px; border-radius: 22px; background: #fff; box-shadow: var(--shadow-sm); text-align: left; }
+.c3-rc .rh { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.c3-rc .rh span { font: 700 17px/1.2 var(--sans); }
+.c3-rc .rh b { font: 800 clamp(28px, 3vw, 38px)/1 var(--sans); letter-spacing: -.04em; color: var(--ed); }
+.c3-dots { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px 8px; width: min(100%, 300px); margin: 18px auto 0; }
+.c3-dots.p { width: min(100%, 210px); gap: 4px 6px; }
+.c3-dots i { position: relative; transition: opacity .5s, background .5s, filter .5s, transform .5s var(--spring); transition-delay: calc(var(--d) * 14ms); }
+.c3-dots.p i { aspect-ratio: 5 / 7; filter: grayscale(1); opacity: .2; }
+.c3-dots.p i::before { content: ""; position: absolute; left: 25%; top: 0; width: 50%; aspect-ratio: 1; border-radius: 50%; background: var(--s); }
+.c3-dots.p i::after { content: ""; position: absolute; left: 4%; right: 4%; bottom: 0; height: 52%; border-radius: 50% 50% 18% 18% / 70% 70% 18% 18%; background: var(--c); }
+.c3-dots.p i.lit { filter: none; opacity: 1; }
+.c3-dots.t i { aspect-ratio: 1.5; border-radius: 3px; background: #E3E6EA; -webkit-mask: radial-gradient(3px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat, radial-gradient(3px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat; mask: radial-gradient(3px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat, radial-gradient(3px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat; }
+.c3-dots.t i.lit { background: var(--sun); transform: rotate(-6deg); }
+.c3-dots.c i { aspect-ratio: 2; border-radius: 99px; background: #E3E6EA; }
+.c3-dots.c i.lit { background: #B7A2FF; }
+.c3-rc .rf { margin: 16px 0 0; font: 500 15px/1.4 var(--sans); color: var(--ink-2); }
+.c3-rc .rf .rn { font: 800 22px/1 var(--sans); color: var(--ink); }
+.c3-rc .rf small { display: block; margin-top: 4px; font: 600 13px/1 var(--sans); color: #8A93A3; }
+.c3-tray { display: grid; place-items: center; height: 170px; }
+.tr-box { position: relative; isolation: isolate; width: 170px; height: 70px; margin-top: 70px; border: 3px solid var(--ink); border-top-width: 6px; border-radius: 6px 6px 16px 16px; }
+.tr-box::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: 3px 3px 13px 13px; background: var(--paper-2); }
+.tr-box i { position: absolute; left: 20px; bottom: 14px; width: 60px; height: 34px; border-radius: 6px; background: var(--c); transition: transform .9s var(--spring); z-index: 0; }
+.tr-box i:nth-child(1) { --c: #FFD23F; } .tr-box i:nth-child(2) { --c: #FF6B4A; left: 56px; transition-delay: .1s; } .tr-box i:nth-child(3) { --c: #9FD3FF; left: 92px; transition-delay: .2s; } .tr-box i:nth-child(4) { --c: #BDEBC0; left: 72px; transition-delay: .3s; }
+#c3Res.after .tr-box i:nth-child(1) { transform: translate(-30px, -66px) rotate(-18deg); } #c3Res.after .tr-box i:nth-child(2) { transform: translate(-6px, -84px) rotate(-4deg); }
+#c3Res.after .tr-box i:nth-child(3) { transform: translate(24px, -70px) rotate(14deg); } #c3Res.after .tr-box i:nth-child(4) { transform: translate(4px, -52px) rotate(4deg); }
+.c3-tbars { display: grid; gap: 8px; }
+.c3-tbars span { display: grid; grid-template-columns: 52px 1fr; align-items: center; gap: 10px; font: 600 13px/1 var(--sans); color: var(--ink-2); }
+.c3-tbars em { font-style: normal; }
+.c3-tbars i { display: block; height: 12px; width: var(--w); border-radius: 6px; background: #D5D9E0; transition: background .5s, width .8s var(--ease); }
+#c3Res:not(.after) .c3-tbars span + span i { width: 79.6%; }
+#c3Res.after .c3-tbars span + span i { background: var(--ed); }
+
+/* footer: the restaurant, from above */
+.c3-foot { padding-top: 16vh; }
+.c3-scene { position: relative; height: clamp(280px, 38vw, 520px); overflow: hidden; }
+.c3-scene svg { display: block; width: 100%; height: 100%; }
+.c3-scene .sg { font: 800 11px var(--sans); letter-spacing: .14em; fill: #7A4B2E; text-anchor: middle; }
+.c3-scene .bb { font: 800 15px var(--sans); fill: #1E8E4E; text-anchor: middle; }
+.c3-scene .waiter { animation: c3waiter 14s linear infinite; }
+.c3-scene .waiter .wk { animation: c3step .5s ease-in-out infinite alternate; }
+@keyframes c3step { to { transform: translateY(-2px) rotate(3deg); } }
+@keyframes c3waiter { 0% { transform: translate(1235px, 40px) rotate(100deg); } 18% { transform: translate(1180px, 270px) rotate(170deg); } 42% { transform: translate(790px, 275px) rotate(180deg); }
+  50%, 64% { transform: translate(745px, 300px) rotate(150deg); } 80% { transform: translate(1050px, 270px) rotate(10deg); } 100% { transform: translate(1235px, 40px) rotate(-60deg); } }
+.c3-scene .bubble { opacity: 0; animation: c3bubble 14s linear infinite; }
+@keyframes c3bubble { 0%, 52% { opacity: 0; transform: translateY(8px); } 56%, 78% { opacity: 1; transform: none; } 84%, 100% { opacity: 0; } }
+.c3-scene .bob { animation: c3bob2 3s ease-in-out infinite; }
+@keyframes c3bob2 { 50% { transform: translate(3px, -3px); } }
+.c3-fin { padding: 8vh clamp(18px, 4vw, 40px) 12vh; }
+.c3-more { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; max-width: 64rem; margin: 5vh auto 0; }
+.c3-more button { display: grid; gap: 6px; padding: 18px; border-radius: 18px; background: #fff; box-shadow: var(--shadow-sm); text-align: left; border-top: 5px solid var(--c); transition: transform .4s var(--spring), box-shadow .3s; }
+.c3-more button:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.c3-more small { font: 600 12px/1.3 var(--sans); color: var(--ink-2); }
+.c3-more b { font: 800 18px/1.15 var(--sans); letter-spacing: -.02em; }
+.c3-more em { font: 700 13px/1 var(--sans); font-style: normal; color: var(--c); }
+.c3-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 5vh; }
+.c3-links a, .c3-links button { padding: 12px 18px; border-radius: 999px; background: rgba(19, 35, 58, .07); color: var(--ink); font: 600 14px/1 var(--sans); text-decoration: none; }
+.c3-links button { background: var(--ink); color: #fff; }
+
+/* zoom */
+.c3-lb { position: fixed; z-index: 20; inset: 0; display: grid; place-items: center; padding: 16px; background: rgba(12, 18, 30, .88); opacity: 0; visibility: hidden; transition: opacity .3s, visibility 0s .3s; }
+.c3-lb.open { opacity: 1; visibility: visible; transition: opacity .3s; }
+.c3-lb figure { margin: 0; display: grid; justify-items: center; gap: 12px; transform: scale(.94); transition: transform .4s var(--spring); }
+.c3-lb.open figure { transform: none; }
+.c3-lb img { display: block; max-width: min(92vw, 1200px); max-height: 82vh; width: auto; height: auto; border-radius: 18px; background: #fff; box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .7); }
+.c3-lb figcaption { font: 600 14px/1.3 var(--sans); color: rgba(255, 255, 255, .85); text-align: center; }
+.c3-lb button { position: absolute; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: rgba(255, 255, 255, .14); color: #fff; font: 400 30px/1 var(--sans); }
+.c3-lb .lb-x { right: 16px; top: calc(env(safe-area-inset-top, 0px) + 16px); }
+.c3-lb .lb-p { left: 16px; top: 50%; margin-top: -24px; } .c3-lb .lb-n { right: 16px; top: 50%; margin-top: -24px; }
+.c3-lb.one .lb-p, .c3-lb.one .lb-n { display: none; }
+
+@media (max-width: 860px) {
+  .c3-big { font-size: clamp(28px, 7.4vw, 40px); }
+  .c3-mx { width: 94vw; aspect-ratio: 4 / 5; max-height: 66vh; }
+  .c3-mx .q { padding: 8px; } .c3-mx .slot { width: 52px; height: 52px; margin-bottom: 6px; }
+  .c3-mx b { font-size: 16px; } .c3-mx p { font-size: 12.5px; } .c3-mx small { font-size: 15px; }
+  .c3-mx .ax { font-size: 14px; } .c3-mx .ax.x { right: 6px; top: calc(50% + 8px); }
+  .bdg { width: 52px; height: 52px; border-radius: 14px; } .bdg img { width: 42px; } .bdg b { font-size: 9.5px; }
+  .c3-doodles { opacity: .7; }
+  .c3-eq { gap: 6px; } .c3-eq .t { font-size: 11.5px; gap: 6px; max-width: 64px; } .c3-eq .t svg { width: 38px; height: 38px; } .c3-eq > i { font-size: 20px; }
+  .c3-ticket { padding: 10px 12px; font-size: 12.5px; white-space: normal; max-width: 96px; } .c3-ticket small { font-size: 9px; }
+  .c3-checks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .c3-checks li { flex-direction: column; text-align: center; font-size: 13px; gap: 8px; }
+  .c3-dphone { width: min(300px, 86vw); }
+  .c3-rgrid { grid-template-columns: 1fr; }
+  .c3-dots { gap: 5px 6px; }
+  .c3-more { grid-template-columns: 1fr 1fr; }
+  .c3-lb .lb-p, .c3-lb .lb-n { top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); margin: 0; }
+  .c3-lb img { max-height: 74vh; }
+}
+@media (max-width: 480px) { .c3-more { grid-template-columns: 1fr; } }
+
 
 /* ---------- small screens ---------- */
 @media (max-width: 860px) {
@@ -1244,21 +1440,24 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .pol { width: 120px; }
   .pols { transform: scale(calc(var(--inv, 1) * .62)); }
   .sec-head h2 { font-size: clamp(2rem, 9.2vw, 3rem); }
+  .j-head .sec-head h2 { font-size: min(7.2vw, 3rem); }
   .desk-hint { font-size: 15px; right: 12px; bottom: 8px; }
   .desk .p1 { left: 3% !important; top: 16px !important; width: 55%; }
   .desk .p3 { left: 57% !important; top: 30px !important; width: 40%; font-size: 17px; padding: 14px; }
   .desk .p2 { left: 3% !important; top: 300px !important; width: 94%; padding-left: 40px; }
   .desk .p5 { left: 6% !important; top: 790px !important; }
-  .desk .p15 { left: 3% !important; top: 1020px !important; width: 50% !important; }
-  .desk .p6 { left: 56% !important; top: 1040px !important; width: 42% !important; font-size: 17px; }
-  .desk .p16 { left: 5% !important; top: 1190px !important; width: 44% !important; }
-  .desk .p17 { left: 52% !important; top: 1230px !important; width: 44% !important; font-size: 17px; padding: 14px; }
-  .desk .p7 { left: 3% !important; top: 1400px !important; width: 92%; }
-  .desk .p4 { left: 60% !important; top: 1560px !important; width: 34%; }
+  .desk .p15 { left: 4% !important; top: 1030px !important; width: min(40%, 190px) !important; }
+  .desk .p6 { left: 54% !important; top: 1040px !important; width: 42% !important; font-size: 17px; }
+  .desk .p16 { left: 52% !important; top: 1210px !important; width: 44% !important; }
+  .desk .p17 { left: 6% !important; top: 1330px !important; width: 44% !important; font-size: 17px; padding: 14px; }
+  .desk .p7 { left: 3% !important; top: 1500px !important; width: min(92%, 420px); }
+  .desk .p4 { left: 4% !important; top: 1730px !important; width: min(46%, 220px) !important; }
+  .desk .p18 { left: 54% !important; top: 1770px !important; width: min(40%, 200px) !important; }
   .desk .p14 { display: none; }
-  .desk .mag { font-size: 44px; top: 1590px !important; }
+  .desk .mag { font-size: 44px; top: 2080px !important; }
   .desk .p8 { left: 4% !important; } .desk .p9 { left: 14% !important; } .desk .p10 { left: 24% !important; } .desk .p11 { left: 37% !important; } .desk .p12 { left: 46% !important; }
-  .desk .p13 { left: 16% !important; top: 1680px !important; }
+  .desk .p13 { left: 66% !important; top: 2070px !important; }
+  .vn-ask { left: 0; transform: translate(0, 8px) scale(.94); } .vinyl.ask .vn-ask { transform: none; }
   .box-track { height: 190vh; }
   .box-fit { left: 50%; top: 42%; }
   .box-info { left: 16px; right: 16px; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); transform: none; width: auto; display: block; }
@@ -1274,7 +1473,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .proc-line svg { display: none; }
   .pnode, .pnode.up { position: relative; left: auto !important; top: auto !important; transform: none; width: auto; text-align: left; display: grid; grid-template-columns: 26px 1fr; gap: 4px 14px; }
   .pnode .dot, .pnode.up .dot { margin: 0; grid-row: span 2; order: 0; }
-  .desk { height: 1860px; border-width: 10px; }
+  .desk { height: 2230px; border-width: 10px; }
   .sticky { width: 10.5rem; font-size: 18px; padding: 14px; }
   .tell-box { padding-right: 0; }
   .tell { font-size: clamp(1.9rem, 8.4vw, 2.6rem); line-height: 1.3; }
@@ -1415,7 +1614,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <svg class="doodles" id="doodles" aria-hidden="true"></svg>
         <div class="sticky" data-at=".25" style="--sc:#FFE98A;--r:-6deg;right:-3%;top:2%">NSUT grad btw. Good in maths too.<small>Class of 2021</small></div>
         <div class="sticky" data-at=".5" style="--sc:#FFD1C4;--r:5deg;right:-1%;top:38%">2 years in the industry. Every one of them shipped.<small>Product design</small></div>
-        <div class="sticky" data-at=".75" style="--sc:#CFE7FF;--r:-3deg;right:1%;bottom:-2%">Less "Ugh," more "Ooh!"<small>The whole job, really</small></div>
+        <div class="sticky st-logos" data-at=".75" style="--sc:#CFE7FF;--r:-3deg;right:1%;bottom:-2%">I’ve worked with<span class="st-lg"><img src="v2/s/logo-mmt.webp" alt="MakeMyTrip"><img src="v2/s/logo-eazydiner.webp" alt="EazyDiner"><img src="v2/s/logo-oyo.webp" alt="OYO"></span></div>
         <p class="move-hint" id="moveHint" style="right:3%;bottom:-12%"><svg viewBox="0 0 40 28"><path d="M3 6c10 0 22 4 30 16M33 22l-8-1M33 22l1-8"/></svg>these notes move ;)</p>
       </div>
     </div>
@@ -1437,7 +1636,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       <div class="j-head" id="jHead">
         <div class="sec-head">
           <p class="kicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>The journey</p>
-          <h2>From JEE to my own app, <span class="hl b-sky" id="journeyHl">the long way round.</span></h2>
+          <h2>Engineer by degree, <span class="hl b-sky" id="journeyHl">designer by obsession.</span></h2>
           <p>Nine stops between 2021 and now. Scroll to walk the path.</p>
         </div>
       </div>
@@ -1636,8 +1835,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <ul><li>Apple Music is on. Always.</li><li>Asking “but why?” about everything</li></ul>
       </div>
       <div class="item note taped p3" style="--sc:#FFE98A;left:59%;top:5%;--r:4deg">I play drums, piano &amp; guitar.<small>Calculated chaos</small></div>
-      <div class="item scrap pinned p4" style="left:79%;top:6%;--r:-6deg;--pc:#2E9E6B" aria-hidden="true"><svg viewBox="0 0 150 120"><ellipse cx="75" cy="44" rx="56" ry="16"/><path d="M19 44v40c0 9 25 16 56 16s56-7 56-16V44"/><path d="M40 20l20 20M110 20l-20 20"/><circle cx="36" cy="17" r="4"/><circle cx="114" cy="17" r="4"/></svg><span>the loud one</span></div>
-      <div class="item vinyl p5" style="left:55%;top:33%;--r:-3deg" aria-hidden="true"><div class="vn-sleeve"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><b>On repeat</b><small>Apple Music</small></div><div class="vn-disc"><i></i></div><span>my music obsession, spinning</span></div>
+      <figure class="item polaroid pinned p4 pol-sm" style="left:77%;top:2%;--r:5deg;--pc:#2E9E6B;--phc:#FFE9B8;width:200px;margin:0"><div class="pol-ph" aria-hidden="true"><svg viewBox="0 0 64 64"><ellipse cx="32" cy="26" rx="22" ry="7"/><path d="M10 26v16c0 4 10 7 22 7s22-3 22-7V26"/><path d="M18 8l10 12M46 8L36 20"/></svg><span>drums photo soon</span></div><figcaption>the loud one</figcaption></figure>
+      <div class="item vinyl p5" style="left:55%;top:33%;--r:-3deg" tabindex="0" title="Tap to open my playlist"><div class="vn-sleeve"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><b>On repeat</b><small>Apple Music</small></div><div class="vn-disc"><i></i></div><span>my music obsession, spinning</span><div class="vn-ask" role="dialog" aria-label="Open my playlist"><b>Wanna hear what’s on repeat?</b><a href="https://music.apple.com/in/playlist/songs-that-see-me/pl.u-11zBJWVhNvoKNE" target="_blank" rel="noopener">Open “Songs that see me” ↗</a><button type="button" class="vn-x" aria-label="Close">×</button></div></div>
       <div class="item note taped p6" style="--sc:#C9EBD2;left:80%;top:40%;--r:5deg;width:170px">Home is two places.<small>IND / DXB</small></div>
       <div class="item ticket pinned p7" style="left:24%;top:70%;--r:-3deg;--pc:#D71920">
         <div class="tk-main">
@@ -1652,11 +1851,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       <span class="item mag p10" style="left:13.2%;top:81%;--r:-4deg;--mc:#F2B705">M</span>
       <span class="item mag p11" style="left:18.6%;top:79%;--r:9deg;--mc:#2E9E6B">E</span>
       <span class="item mag p12" style="left:1%;top:90%;--r:-6deg;--mc:#7B5CD6">S</span>
-      <div class="item pick p13" style="left:58%;top:84%;--r:-12deg" aria-hidden="true"><svg viewBox="0 0 60 70"><path d="M30 68C14 52 2 36 2 20 2 8 14 2 30 2s28 6 28 18c0 16-12 32-28 48z" fill="#E4402A"/><path d="M12 14c6-5 14-7 22-6" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".5"/></svg><span>for the guitar</span></div>
-      <div class="item scrap pinned p14" style="left:62%;top:62%;--r:7deg;--pc:#2A7BD1;width:130px" aria-hidden="true"><svg viewBox="0 0 120 150"><path d="M60 8v70"/><path d="M52 8h16v18H52z"/><path d="M60 78c-22 0-34 12-34 30s16 34 34 34 34-16 34-34-12-30-34-30z"/><circle cx="60" cy="104" r="10"/><path d="M50 128h20"/></svg><span>and the quiet one</span></div>
-      <div class="item scrap pinned p15" style="left:3%;top:55%;--r:4deg;--pc:#F2B705;width:190px" aria-hidden="true"><svg viewBox="0 0 170 90"><path d="M10 62V50c0-6 4-9 10-10l22-4 18-18c4-4 8-6 14-6h36c6 0 10 2 14 6l16 18 12 3c6 1 9 5 9 11v12"/><path d="M8 62h14M54 62h62M148 62h12"/><circle cx="38" cy="64" r="14"/><circle cx="132" cy="64" r="14"/><path d="M66 36h30V20H78c-3 0-5 1-7 3zM104 36h26l-12-13c-2-2-4-3-7-3h-7z"/><path d="M2 40h8M0 50h6"/></svg><span>long drives, windows down</span></div>
+      <div class="item pick p13" style="left:25%;top:55%;--r:-12deg" aria-hidden="true"><svg viewBox="0 0 60 70"><path d="M30 68C14 52 2 36 2 20 2 8 14 2 30 2s28 6 28 18c0 16-12 32-28 48z" fill="#E4402A"/><path d="M12 14c6-5 14-7 22-6" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".5"/></svg><span>for the guitar</span></div>
+      <div class="item scrap pinned p14" style="left:84%;top:56%;--r:7deg;--pc:#2A7BD1;width:130px" aria-hidden="true"><svg viewBox="0 0 120 150"><path d="M60 8v70"/><path d="M52 8h16v18H52z"/><path d="M60 78c-22 0-34 12-34 30s16 34 34 34 34-16 34-34-12-30-34-30z"/><circle cx="60" cy="104" r="10"/><path d="M50 128h20"/></svg><span>and the quiet one</span></div>
+      <figure class="item polaroid pinned p15 pol-sm" style="left:3%;top:58%;--r:-4deg;--pc:#F2B705;--phc:#CFE6FF;width:150px;margin:0"><div class="pol-ph" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M8 40v-6c0-3 2-5 5-5l8-2 7-8c2-2 3-2 6-2h10c3 0 4 1 6 3l6 7 3 1c2 1 3 2 3 5v7"/><circle cx="20" cy="42" r="6"/><circle cx="46" cy="42" r="6"/></svg><span>car photo soon</span></div><figcaption>long drives</figcaption></figure>
+      <figure class="item polaroid pinned p18 pol-sm" style="left:60%;top:57%;--r:3deg;--pc:#2A7BD1;--phc:#D5F2C8;width:185px;margin:0"><div class="pol-ph" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"/><path d="M32 20l9 7-3 11H26l-3-11z"/><path d="M32 10v10M41 27l12-5M38 38l8 10M26 38l-8 10M23 27l-12-5"/></svg><span>football photo soon</span></div><figcaption>football, always</figcaption></figure>
       <div class="item scrap pinned p16" style="left:40%;top:47%;--r:-5deg;--pc:#E4402A;width:170px" aria-hidden="true"><svg viewBox="0 0 160 80"><path d="M40 40h80"/><rect x="22" y="18" width="16" height="44" rx="4"/><rect x="8" y="26" width="14" height="28" rx="4"/><rect x="122" y="18" width="16" height="44" rx="4"/><rect x="138" y="26" width="14" height="28" rx="4"/></svg><span>gym, then more gym</span></div>
-      <div class="item note taped p17" style="--sc:#D9CCFF;left:79%;top:74%;--r:-4deg;width:190px">My brain has 40 tabs open.<small>Overthinker. Mostly curiosity.</small></div>
+      <div class="item note taped p17" style="--sc:#D9CCFF;left:78%;top:79%;--r:-4deg;width:190px">My brain has 40 tabs open.<small>Overthinker. Mostly curiosity.</small></div>
       <p class="desk-hint">it’s my board, but go ahead, move things around ;)</p>
     </div>
   </div>
@@ -1721,10 +1921,9 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     </div>
   </div>
   <div class="clouds-foot" id="cloudsFoot" aria-hidden="true">
-    <img src="v2/h/cloud_s.webp" alt="" style="left:-14%;width:62%" data-sp=".18">
-    <img src="v2/h/cloud_s.webp" alt="" style="right:-16%;width:66%;transform:scaleX(-1)" data-sp=".28" data-f="1">
-    <img class="front" src="v2/h/cloud_s.webp" alt="" style="left:15%;width:70%;bottom:-18vh" data-sp=".1">
-    <div class="me-cloud"><img src="v2/h/james_s.webp" alt=""></div>
+    <img src="v2/h/cloud_s.webp" alt="" style="left:-14%;width:min(62%, 760px)" data-sp=".18">
+    <img src="v2/h/cloud_s.webp" alt="" style="right:-16%;width:min(66%, 800px);transform:scaleX(-1)" data-sp=".28" data-f="1">
+    <img class="front" src="v2/h/cloud_s.webp" alt="" style="left:50%;margin-left:max(-35%, -430px);width:min(70%, 860px);bottom:-18vh" data-sp=".1">
   </div>
   <div class="foot"><span>© 2026 James Chugh</span><span>Painted, coded and shipped with a lot of coffee.</span></div>
 </section>
@@ -2094,6 +2293,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   function draggable(el, onMove) {
     let s = null;
     el.addEventListener('pointerdown', e => {
+      if (e.target.closest('a, button')) return;
       e.preventDefault(); el.setPointerCapture(e.pointerId); el.classList.add('drag');
       const cs = getComputedStyle(el); s = { x: e.clientX, y: e.clientY, tx: parseFloat(cs.getPropertyValue('--tx')) || 0, ty: parseFloat(cs.getPropertyValue('--ty')) || 0 };
       el.style.zIndex = ++draggable.z;
@@ -2107,6 +2307,11 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   $$('.item', $('#desk')).forEach(el => {
     el.style.transform = 'translate(var(--tx,0), var(--ty,0)) rotate(var(--r,0deg))';
     draggable(el);
+    if (el.classList.contains('vinyl')) { let d0 = null;
+      el.addEventListener('pointerdown', e => { d0 = [e.clientX, e.clientY]; });
+      el.addEventListener('pointerup', e => { if (e.target.closest('a, button')) return; if (d0 && Math.hypot(e.clientX - d0[0], e.clientY - d0[1]) < 6) el.classList.toggle('ask'); d0 = null; });
+      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.classList.toggle('ask'); } });
+      $('.vn-x', el).addEventListener('click', () => el.classList.remove('ask')); }
     if (el.classList.contains('mag')) el.addEventListener('pointerdown', () => { el.classList.remove('wig'); void el.offsetWidth; el.classList.add('wig'); });
   });
 
@@ -2485,6 +2690,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   }
   // ---------- EazyDiner: the full case study, told as a scroll story
   const cimg = n => `v2/cs/ed-${n}.webp`;
+  const HI = new Set('ax1 ax2 ax3 ax4 booster code1 code2 code3 code4 code5 comp1 comp2 comp3 comp4 comp5 comp6 comp7 comp8 ex1 ex2 ex3 ex4 ex5 ex6 flow it1 it2 it3 it4 pay1 pay2 pay3 pay4 up1 up2 up3 up4'.split(' '));
   const ED = {
     comic: [['story1', 'Dinner’s done. The bill arrives.', 'You’re full, happy, and ready to head home.'],
       ['story2', 'Out comes the phone.', 'PayEazy promises a discount on the bill. Nice.'],
@@ -2507,48 +2713,62 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       ['it2', 'Round 2', 'The breakthrough', ['Introduced <b>sub-chips</b> for cards of different banks, right after picking a payment method.', 'Redesigned <b>how offers were grouped</b>, since early versions didn’t separate savings categories clearly.'], 'The catch: people couldn’t compare two banks side by side.'],
       ['it3', 'Round 3', 'Granular control', ['Added <b>tabs</b> for All offers, Credit cards, Debit cards and Other offers.', 'Showed <b>the number of offers</b> next to each category.', 'Sharpened hierarchy so bank names, discounts and eligibility stand out.', 'Made the offer list <b>resize smoothly</b>, fixing cut-offs from early tests.'], ''],
       ['it4', 'Final', 'Bringing it all together', ['Coupon code entry, search, tabs, sub-chips and a <b>new UI</b>, in one tray.', 'Solved the <b>Axis Bank problem</b> by asking for the first 8 digits of the card.', 'Fixed tap areas, dynamic heights and UX inconsistencies.', 'Added <b>smart recommendations</b> that highlight the best saving for your payment method.'], '']],
-    paths: [['#2A7BD1', 'Upfront coupons', 'Best deals, zero hunting.', 'Just tap and save instantly.', ['up1', 'up2', 'up3', 'up4']],
-      ['#7B5CD6', 'Coupon exploration', 'Search, filter, and find the perfect deal your way.', '50+ coupons, organised so you can actually browse them.', ['ex1', 'ex2', 'ex3', 'ex4']],
-      ['#F4511E', 'Axis Bank cards', 'Cutting through 20+ card types.', 'Enter your Axis Bank card details to instantly confirm your eligible discount.', ['ax1', 'ax2', 'ax3', 'ax4']],
-      ['#E1306C', 'Coupon code', 'Got a coupon code?', 'Drop it here and unlock your savings.', ['code1', 'code2']],
-      ['#2E9E6B', 'Smooth checkout', 'Pay any way you like.', 'Choose any payment method and pay seamlessly with Juspay.', ['pay1', 'pay2', 'pay3', 'pay4']]]
+    // the five ways to save, and the route each one takes through checkout
+    paths: [['up', '#2A7BD1', 'Upfront coupons', 'Best deals, zero hunting.', 'The best coupon for your payment method sits right on the payment summary. Tap it and you’re done.', ['up1', 'up2', 'up3', 'up4'], ['A', 'B', 'C1', 'D', 'E']],
+      ['ex', '#7B5CD6', 'Coupon exploration', 'Search, filter, and find the perfect deal your way.', '50+ coupons, organised with tabs, chips and search so people can actually browse them.', ['ex1', 'ex2', 'ex3', 'ex4', 'ex5', 'ex6'], ['A', 'B', 'C2', 'D', 'E']],
+      ['ax', '#F4511E', 'Axis Bank cards', 'Cutting through 20+ card types.', 'Enter the first 8 digits of your Axis Bank card to instantly confirm the discount you’re eligible for.', ['ax1', 'ax2', 'ax3', 'ax4'], ['A', 'B', 'C3', 'D', 'E']],
+      ['code', '#E1306C', 'Coupon code', 'Got a coupon code?', 'Drop it in and unlock your savings, with clear feedback when it works and when it doesn’t.', ['code1', 'code2', 'code3', 'code4', 'code5'], ['A', 'B', 'C4', 'D', 'E']],
+      ['pay', '#2E9E6B', 'Smooth checkout', 'Pay any way you like.', 'Choose any payment method and pay seamlessly with Juspay.', ['pay1', 'pay2', 'pay3', 'pay4'], ['A', 'B', 'D', 'E']]],
+    nodes: { A: [90, 220, 'Enter amount'], B: [260, 220, 'Payment summary'], C1: [520, 52, 'Best coupon, upfront', 'Upfront coupon'], C2: [520, 164, 'Coupon tray', 'Coupon tray'], C3: [520, 276, 'Axis card, 8 digits', 'Axis card'], C4: [520, 388, 'Coupon code', 'Coupon code'], D: [775, 220, 'Payment mode'], E: [925, 220, 'Paid with Juspay'] },
+    more: [['requests', 'The Request Rescue', 'MakeMyTrip · Special Requests', '#D7262B'], ['swipr', 'Property Matchmaker', 'MakeMyTrip · Swipr.AI', '#E4262C'], ['lastlook', 'LastLook', 'My own app · iOS', '#9A6A3E'], ['campusx', 'The Digital Campus', 'CampusX · Side project', '#2A7BD1']]
   };
+  const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>';
+  // a heading whose words rise in one by one, with one brushed phrase
+  function edHead(pre, hl = '', post = '', b = 'b-sun') {
+    let i = 0; const W = t => t.split(' ').filter(Boolean).map(w => `<span class="w" style="--i:${i++}">${w}</span>`).join(' ');
+    return `<h3 class="c3-h" data-rv>${W(pre)}${hl ? ` <span class="hl ${b}">${W(hl)}</span>` : ''}${post ? ' ' + W(post) : ''}</h3>`;
+  }
+  const edBig = (t, cls = '') => `<p class="c3-big ${cls}" data-scrub>${t.split(' ').map(w => `<span>${w}</span>`).join(' ')}</p>`;
   function edHTML(w) {
-    const I = (n, a = '', extra = '') => `<img src="${cimg(n)}" alt="${a}" loading="lazy" onerror="this.outerHTML='<div class=&quot;c3-ph&quot;>'+(this.alt||'Image coming soon')+'</div>'"${extra}>`;
-    const K = t => `<p class="c3-k" data-rv>${t}</p>`;
-    // 100 diners: who leaves at which step (16, then 34, then 14)
+    const I = (n, a = '', extra = '', g = '') => `<img src="${cimg(n)}" alt="${a}" loading="lazy"${HI.has(n) ? ` data-z="${g || 'all'}" data-hi="v2/cs/hi/ed-${n}.webp"` : ''} onerror="this.outerHTML='<div class=&quot;c3-ph&quot;>'+(this.alt||'Image coming soon')+'</div>'"${extra}>`;
+    const K = t => `<p class="kicker c3-k" data-rv>${STAR}${t}</p>`;
     const drop = Array(100).fill(9), order = [...Array(100).keys()].sort((a, b) => ((a * 37) % 101) - ((b * 37) % 101));
     order.slice(0, 16).forEach(i => drop[i] = 1); order.slice(16, 50).forEach(i => drop[i] = 2); order.slice(50, 64).forEach(i => drop[i] = 3);
     const SK = ['#F2C9A0', '#D9A273', '#A8704A', '#7A4B2E', '#F5D5B8'], SH = ['#FF6B4A', '#2F7FD8', '#FFD23F', '#4F9E4A', '#B7A2FF', '#FF9E7A'];
-    const crowd = drop.map((d, i) => `<i data-g="${d}" style="--s:${SK[(i * 7) % 5]};--c:${SH[(i * 5) % 6]};--d:${(i * 13) % 40}"></i>`).join('');
-    const notes = Array.from({ length: 42 }, (_, i) => { const hs = k => { const v = Math.sin(k * 12.9898) * 43758.5453; return v - Math.floor(v); }, x = hs(i + 1) * 100, y = hs(i + 71) * 100, c = ['#FFE58A', '#FFC9B8', '#C8E6FF', '#D5F2C8', '#E6DAFF'][i % 5];
-      return `<i class="sn" style="left:${2 + x * .9}%;top:${3 + y * .85}%;--c:${c};--r:${((i * 17) % 21) - 10}deg"></i>`; }).join('');
+    const person = i => `style="--s:${SK[(i * 7) % 5]};--c:${SH[(i * 5) % 6]};--d:${(i * 13) % 40}"`;
+    const crowd = drop.map((d, i) => `<i data-g="${d}" ${person(i)}></i>`).join('');
+    const hs = k => { const v = Math.sin(k * 12.9898) * 43758.5453; return v - Math.floor(v); };
+    const notes = Array.from({ length: 42 }, (_, i) => `<i class="sn" style="left:${2 + hs(i + 1) * 90}%;top:${3 + hs(i + 71) * 85}%;--c:${['#FFE58A', '#FFC9B8', '#C8E6FF', '#D5F2C8', '#E6DAFF'][i % 5]};--r:${((i * 17) % 21) - 10}deg"></i>`).join('');
     const tick = '<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="36" fill="#3DBE6B"/><path d="M24 41l11 11 21-24" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     const svgClock = '<svg viewBox="0 0 64 64"><circle cx="32" cy="34" r="24" fill="#9FD3FF" stroke="#13233A" stroke-width="3"/><path d="M32 20v14l9 6" fill="none" stroke="#13233A" stroke-width="3.5" stroke-linecap="round"/><path d="M24 6h16M32 6v4" stroke="#13233A" stroke-width="3" stroke-linecap="round"/></svg>';
     const svgTarget = '<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="#FF6B4A" stroke="#13233A" stroke-width="3"/><circle cx="32" cy="32" r="16" fill="#FFF8EC" stroke="#13233A" stroke-width="3"/><circle cx="32" cy="32" r="6" fill="#FF6B4A" stroke="#13233A" stroke-width="3"/><path d="M32 32l22-22M46 8l8 2 2 8" fill="none" stroke="#13233A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     const svgBulb = '<svg viewBox="0 0 64 64"><path d="M32 6a19 19 0 0 0-11 34.5c2 1.6 3 3.6 3 6V50h16v-3.5c0-2.4 1-4.4 3-6A19 19 0 0 0 32 6z" fill="#FFD23F" stroke="#13233A" stroke-width="3" stroke-linejoin="round"/><path d="M25 56h14M27 61h10" stroke="#13233A" stroke-width="3" stroke-linecap="round"/><path d="M27 32l5 5 5-5" fill="none" stroke="#13233A" stroke-width="2.5" stroke-linecap="round"/></svg>';
-    const [p0] = ED.paths;
+    // rough, hand-drawn lines for the sketch sections
+    const rough = (x1, y1, x2, y2, j = 3) => { const mx = (x1 + x2) / 2 + (hs(x1 + y2) - .5) * j * 2, my = (y1 + y2) / 2 + (hs(y1 + x2) - .5) * j * 2; return `M${x1} ${y1}Q${mx.toFixed(1)} ${my.toFixed(1)} ${x2} ${y2}`; };
+    const mxLines = [rough(6, 200, 594, 203, 4), rough(10, 196, 590, 199, 3), rough(300, 8, 302, 394, 4), rough(296, 12, 299, 390, 3), rough(594, 203, 574, 189, 1) + rough(594, 203, 574, 217, 1), rough(300, 8, 286, 28, 1) + rough(300, 8, 314, 28, 1)];
+    const badge = (k, html, bg, slot) => `<span class="bdg" data-slot="${slot}" style="--bg:${bg}">${html}</span>`;
+    const results = [['pay', 'Payment success', '+41.18%', 41.18, 34.6, 45.6, 'diners who paid', 'p'], ['cpn', 'Coupon application', '+24.64%', 24.64, 55.5, 67, 'diners who applied a coupon', 't'], ['flt', 'Filter engagement', '~2.3×', 0, 18, 42, 'diners who used the filters', 'c']];
     return `<div class="cs-bar"><button class="cs-close" id="csClose" type="button">← Back to the box</button><span class="c3-ch" id="c3Ch">The story</span></div>
       <div class="c3-prog" id="c3Prog"><i></i></div>
       <article class="c3">
       <header class="c3-hero" data-ch="The story"><div class="c3-w">
         ${I('wordmark', 'EazyDiner', ' class="brand" data-rv')}
-        <h2 data-rv>The <span class="it">Coupon</span> Hunter</h2>
+        <h2 data-rv>The Coupon <span class="hl b-coral">Hunter</span></h2>
         <p class="sub" data-rv>Finding the best coupon shouldn’t feel like a treasure hunt. This is how I redesigned the moment you pay for dinner.</p>
-        <p class="c3-note" data-rv>scroll, it starts at dinner<svg viewBox="0 0 26 40"><path d="M13 3v32M4 26l9 10 9-10"/></svg></p></div></header>
+        <p class="c3-scrollhint" data-rv>Scroll, it starts at dinner<svg viewBox="0 0 26 40"><path d="M13 3v32M4 26l9 10 9-10"/></svg></p></div></header>
 
       <div class="c3-track" id="c3Comic" style="height:340vh"><div class="c3-pin"><div class="c3-comic">
         <div class="c3-panels">${ED.comic.map(([n, t], k) => `<figure style="--r:${[-2, 1.5, -1, 2][k]}deg">${I(n, t)}<span>${k + 1}</span></figure>`).join('')}</div>
         <p class="c3-cap" id="c3Cap"></p></div></div></div>
 
-      <div class="c3-w"><p class="c3-p" data-rv>That third panel, <b>the hunt</b>, is where people were getting lost. Over four months I redesigned it end to end, together with a product manager, three developers, two QA engineers and our head of product.</p>
+      <div class="c3-w">${edBig('That third panel, the hunt, is where people were getting lost. So I redesigned it, end to end.')}
         <div class="c3-receipt" data-rv><h4>EAZYDINER · PAYEAZY</h4><p class="sm">Coupon selection redesign</p><hr>
-          <dl><dt>My role</dt><dd>End-to-end redesign lead</dd><dt>Timeline</dt><dd>Jan – Apr 2025</dd><dt>Team</dt><dd>PM, 3 devs, 2 QA, HoP</dd></dl><hr>
+          <dl><dt>My role</dt><dd>End-to-end redesign lead</dd><dt>Timeline</dt><dd>Jan – Apr 2025 · 4 months</dd><dt>Team</dt><dd>1 PM, 3 devs, 2 QA, Head of Product</dd></dl><hr>
           <dl><dt>Coupon application</dt><dd>55.5% → <em>67.0%</em></dd><dt>Payment success</dt><dd>34.6% → <em>45.6%</em></dd><dt>Filter engagement</dt><dd>~18% → <em>~42%</em></dd></dl>
-          <p class="thx">the full story is below ↓</p></div></div>
+          <p class="thx">The full story is below ↓</p></div></div>
 
-      <section class="c3-sec" data-ch="The drop-off"><div class="c3-w">${K('chapter 1 · the drop-off')}
-        <h3 class="c3-h" data-rv>Everyone came for a discount. <span class="it">Few</span> actually paid.</h3>
+      <section class="c3-sec" data-ch="The drop-off"><div class="c3-w">${K('Chapter 1 · The drop-off')}
+        ${edHead('Everyone came for a discount.', 'Few paid.')}
         <p class="c3-p" data-rv>People came to PayEazy with one clear goal: <b>get a discount while paying their bill</b>. The data showed this is exactly where things started to break. Let’s follow 100 diners through checkout.</p></div></section>
       <div class="c3-track" id="c3Fun" style="height:440vh"><div class="c3-pin"><div class="c3-fun">
         <div class="c3-steps">${ED.stages.map(([t]) => `<span>${t}</span>`).join('')}</div>
@@ -2561,152 +2781,273 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       <div class="c3-w"><p class="c3-p" data-rv>Nearly <b>40% of people dropped off</b> between the payment summary and choosing a payment mode. Overall, <b>only 36 out of 100</b> completed the payment.</p>
         <p class="c3-p" data-rv>They wanted the discount, but many couldn’t confidently apply the right coupon, so they left. That made <span class="hl b-sun">payment success and coupon confidence</span> the core problem to solve.</p></div>
 
-      <section class="c3-sec" data-ch="Listening"><div class="c3-w">${K('chapter 2 · listening')}
-        <h3 class="c3-h" data-rv>Before designing, I read what people were <span class="it">telling</span> us.</h3>
+      <section class="c3-sec" data-ch="Listening"><div class="c3-w">${K('Chapter 2 · Listening')}
+        ${edHead('I read what people were', 'telling us.', '', 'b-sky')}
         <p class="c3-p" data-rv>I needed to validate my assumptions, so I pulled the data of real users who had raised issues that lined up with the problem I was defining.</p></div></section>
       <div class="c3-track" id="c3Chat" style="height:${ED.quotes.length * 55 + 80}vh"><div class="c3-pin"><div class="c3-chat">
         <header><i></i><div>User feedback<small>Issues raised about paying with coupons</small></div></header>
         <div class="c3-msgs">${ED.quotes.map(([u, q], k) => `<div class="c3-msg"><span class="c3-av" style="background-image:url('${cimg(k < 4 ? 'users1' : 'users2')}');background-position:${(k % 4) * 33.333}% 0"></span><p><small>${u}</small>${q}</p></div>`).join('')}</div>
         <div class="c3-typing"><i></i><i></i><i></i></div></div></div></div>
-      <div class="c3-w"><p class="c3-p" data-rv>Armed with these insights, I knew exactly what needed fixing. Next step: writing out the problems with the current design.</p></div>
+      <div class="c3-w">${edBig('Armed with these insights, I knew exactly what needed fixing. Next step: writing out every problem with the current design.')}</div>
 
-      <section class="c3-sec" data-ch="The whiteboard"><div class="c3-w">${K('chapter 3 · the whiteboard')}
-        <h3 class="c3-h" data-rv>From 40+ pain points to <span class="it">five</span> real problems.</h3>
-        <p class="c3-p" data-rv>I gathered the team and filled a whiteboard with everything that was broken. From that chaos, I distilled five core problems and built a research-driven approach around them.</p>
-        ${I('problems', 'James at a whiteboard full of problems', ' class="c3-illo" data-rv')}</div></section>
+      <section class="c3-sec" data-ch="The whiteboard"><div class="c3-w">${K('Chapter 3 · The whiteboard')}
+        ${edHead('40+ pain points.', 'Five real problems.', '', 'b-coral')}
+        <p class="c3-p" data-rv>I gathered the team and filled a whiteboard with everything that was broken. From that chaos, I distilled five core problems and built a research-driven approach around them.</p></div></section>
       <div class="c3-track" id="c3Board" style="height:520vh"><div class="c3-pin"><div>
         <div class="c3-board">${notes}<span class="c3-bnum" id="c3Bn">40+ notes</span>
           <div class="c3-five">${ED.probs.map(([t], k) => `<div style="--c:${['#FFE58A', '#FFC9B8', '#C8E6FF', '#D5F2C8', '#E6DAFF'][k]};--r:${[-3, 2, -1.5, 3, -2][k]}deg"><em>0${k + 1}</em>${t}</div>`).join('')}</div></div>
         <div class="c3-w c3-bcap" id="c3Bcap"></div></div></div></div>
 
-      <section class="c3-sec" data-ch="The goal"><div class="c3-w">${K('my primary goal')}
+      <section class="c3-sec" data-ch="The goal"><div class="c3-w">${K('My primary goal')}
         <p class="c3-goal" data-rv>Help people quickly find and confidently apply the best coupon, so they can pay without hesitation.</p>
-        <div class="c3-eq" data-rv><span class="t">${svgClock}Faster decisions</span><i>+</i><span class="t">${svgTarget}Smarter results</span><i>+</i><span class="t">${svgBulb}Less time</span><i>=</i><span class="c3-ticket"><small>the result</small>Coupons that just work</span></div></div></section>
+        <div class="c3-eq" data-rv><span class="t">${svgClock}<span>Faster decisions</span></span><i>+</i><span class="t">${svgTarget}<span>Smarter results</span></span><i>+</i><span class="t">${svgBulb}<span>Less time</span></span><i>=</i><span class="c3-ticket"><small>The result</small>Coupons that just work</span></div></div></section>
 
-      <section class="c3-sec" data-ch="Looking around"><div class="c3-w">${K('chapter 4 · looking around')}
-        <h3 class="c3-h" data-rv>I studied <span class="it">50+ apps</span> before drawing a thing.</h3>
-        <p class="c3-p" data-rv>I wasn’t going to reinvent the wheel without seeing what was already out there, from giants like <b>Zomato, BookMyShow, Swiggy, Airtel, OYO</b> and <b>District</b> to lesser-known but innovative apps.</p>
-        <div class="c3-logos" data-rv>${['zomato', 'swiggy', 'bistro', 'myntra', 'oyo', 'bb', 'mmt', 'ajio'].map(n => I('lg-' + n, n)).join('')}<span>+40 more</span></div></div>
-        <div class="c3-strip" id="c3Strip">${[1, 2, 3, 4, 5, 6, 7, 8].map(n => I('comp' + n, 'A competitor’s coupon screen')).join('')}</div>
-        <div class="c3-w"><p class="c3-p" data-rv style="margin-top:9vh">Then I sorted them by how well their UI and UX actually worked.</p>
-        <div class="c3-mx" data-rv><span class="ax x">better UI →</span><span class="ax y">better UX →</span>
-          <div><small>bad UI, great UX</small><b>BookMyShow</b><p>Intuitive sections based on payment methods made navigation seamless.</p></div>
-          <div class="win"><small>great UI, great UX</small><b>EazyDiner</b><p>You’ll be convinced by the end of this case study.</p></div>
-          <div><small>bad UI, bad UX</small><b>Some apps</b><p>They made me wonder how anyone managed to apply a coupon at all.</p></div>
-          <div><small>great UI, bad UX</small><b>District</b><p>The visual hierarchy guided my eyes perfectly, but essential information was missing.</p></div></div>
-        <p class="c3-p" data-rv style="margin-top:6vh">I took inspiration from these, but crafted a design that solved <b>our specific problems</b>, something no other app had done yet.</p></div></section>
+      <section class="c3-sec" data-ch="Looking around"><div class="c3-w">${K('Chapter 4 · Looking around')}
+        ${edHead('I studied', '50+ apps', 'before drawing a thing.', 'b-lilac')}
+        <p class="c3-p" data-rv>I wasn’t going to reinvent the wheel without seeing what was already out there: giants like <b>Zomato, BookMyShow, Swiggy, Airtel, OYO</b> and <b>District</b>, plus 40 more lesser-known but innovative apps.</p></div>
+        <div class="c3-strip" id="c3Strip">${[1, 2, 3, 4, 5, 6, 7, 8].map(n => I('comp' + n, 'A competitor’s coupon screen', '', 'comp')).join('')}</div>
+        <div class="c3-logos" data-rv>${['zomato', 'swiggy', 'bistro', 'myntra', 'oyo', 'bb', 'mmt', 'ajio'].map(n => I('lg-' + n, n)).join('')}</div>
+        <div class="c3-w"><p class="c3-p" data-rv style="margin-top:8vh">Then I grabbed a pen and sorted them by how well their UI and UX actually worked.</p></div></section>
+      <div class="c3-track" id="c3Mx" style="height:300vh"><div class="c3-pin"><div class="c3-sketch">
+        <div class="c3-mx"><svg class="mx-lines" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true">${mxLines.map(d => `<path d="${d}" pathLength="1"/>`).join('')}</svg>
+          <span class="ax x">better UI →</span><span class="ax y">better UX →</span>
+          <div class="q" data-q="0"><i class="slot" data-s="0"></i><small>bad UI, great UX</small><b>BookMyShow</b><p>Intuitive sections based on payment methods made navigation seamless.</p></div>
+          <div class="q win" data-q="1"><i class="slot" data-s="1"></i><small>great UI, great UX</small><b>EazyDiner</b><p>You’ll be convinced by the end of this case study.</p></div>
+          <div class="q" data-q="2"><i class="slot" data-s="2"></i><small>bad UI, bad UX</small><b>Some apps</b><p>They made me wonder how anyone managed to apply a coupon at all.</p></div>
+          <div class="q" data-q="3"><i class="slot" data-s="3"></i><small>great UI, bad UX</small><b>District</b><p>The visual hierarchy guided my eyes perfectly, but essential information was missing.</p></div></div>
+        ${badge('bms', '<b>book<em>my</em>show</b>', '#F84464', 0)}${badge('ed', '<b>eazy<br>diner</b>', '#F4511E', 1)}${badge('q1', '<b>?</b>', '#C9CDD4', 2)}${badge('q2', '<b>?</b>', '#B5BAC3', 2)}${badge('dst', '<b>district</b>', '#111', 3)}
+        <p class="c3-mxcap" id="c3MxCap"></p></div></div></div>
+      <div class="c3-w"><p class="c3-p" data-rv>I took inspiration from these, but crafted a design that solved <b>our specific problems</b>, something no other app had done yet.</p></div>
 
-      <section class="c3-sec" data-ch="Four rounds"><div class="c3-w">${K('chapter 5 · four rounds')}
-        <h3 class="c3-h" data-rv>The design took <span class="it">four</span> rounds to get right.</h3>
-        <p class="c3-p" data-rv>Each round was tested, picked apart and rebuilt. Keep scrolling to flip through them.</p></div></section>
-      <div class="c3-track c3-evo" id="c3Evo" style="height:${ED.its.length * 95 + 40}vh"><div class="c3-pin"><div class="c3-evo-in">
+      <section class="c3-sec" data-ch="Four rounds"><div class="c3-w">${K('Chapter 5 · Four rounds')}
+        ${edHead('It took', 'four rounds', 'to get right.', 'b-sky')}
+        <p class="c3-p" data-rv>Each round was tested, picked apart and rebuilt. Keep scrolling to flip through them, or tap a round.</p></div></section>
+      <div class="c3-track c3-evo" id="c3Evo" style="height:${ED.its.length * 95 + 40}vh"><div class="c3-pin">
+        <svg class="c3-doodles" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <g class="ruler"><rect x="860" y="820" width="420" height="34" rx="4"/>${Array.from({ length: 21 }, (_, i) => `<path d="M${870 + i * 20} 820v${i % 5 ? 9 : 16}"/>`).join('')}</g>
+          <g class="pencil" transform="translate(1180 690) rotate(-38)"><path d="M0 0h190v26H0z"/><path d="M190 0l34 13-34 13"/><path d="M216 10l8 3-8 3"/><path d="M0 0v26M22 0v26"/><path d="M-160 60c40-30 80 10 120-20s60 20 100-6" class="scrib"/></g>
+          <g class="dim"><path d="M1290 160v300M1280 160h20M1280 460h20"/><path d="M1290 160l-6 12M1290 160l6 12M1290 460l-6-12M1290 460l6-12"/><text x="1306" y="316">812</text></g>
+          <g class="dim"><path d="M140 770h300M140 760v20M440 760v20"/><path d="M140 770l12-6M140 770l12 6M440 770l-12-6M440 770l-12 6"/><text x="270" y="760">375</text></g>
+          <g class="crop"><path d="M70 230v-40h40M1370 230v-40h-40M70 640v40h40M1370 640v40h-40"/></g>
+          <g class="note"><text x="1180" y="250">try again →</text><text x="90" y="560" transform="rotate(-6 90 560)">8px grid!</text></g>
+          <circle class="comp" cx="1240" cy="560" r="70"/><path class="comp" d="M1240 560l50-50"/></svg>
+        <div class="c3-evo-in">
         <div class="c3-tabs">${ED.its.map(([, k, t], i) => `<button type="button" data-evo="${i}">${k}<span>: ${t.toLowerCase()}</span></button>`).join('')}</div>
-        <div class="c3-row" id="c3Row">${ED.its.map(([im, k, t, li, ch]) => `<div class="c3-slide"><div class="c3-card">${I(im, k + ' design')}</div><h4>${t}</h4><ul>${li.map(x => `<li>${x}</li>`).join('')}</ul>${ch ? `<p class="chal">${ch}</p>` : ''}</div>`).join('')}</div></div></div></div>
+        <div class="c3-row" id="c3Row">${ED.its.map(([im, k, t, li, ch]) => `<div class="c3-slide"><div class="c3-card"><i class="cm"></i>${I(im, k + ' design', '', 'its')}</div><div class="c3-stxt"><small>${k}</small><h4>${t}</h4><ul>${li.map(x => `<li>${x}</li>`).join('')}</ul>${ch ? `<p class="chal">${ch}</p>` : ''}</div></div>`).join('')}</div></div></div></div>
 
-      <section class="c3-sec" data-ch="The Axis problem"><div class="c3-w">${K('chapter 6 · the axis problem')}
-        <h3 class="c3-h" data-rv>80+ card types. <span class="it">One</span> simple question.</h3>
-        <p class="c3-p" data-rv>Axis Bank has more than 80 card types, each with different offers. Instead of making people scroll through all of them, I asked for the <b>first 8 digits of their card</b> and showed only the deals that apply.</p></div>
-        <div class="c3-wide c3-axis">${I('ax1', 'Entering card digits')}<div class="c3-try" data-rv><p class="c3-note">go on, try it ↓</p>
+      <section class="c3-sec" data-ch="The Axis problem"><div class="c3-w">${K('Chapter 6 · The Axis problem')}
+        ${edHead('80+ card types.', 'One simple question.', '', 'b-coral')}
+        <p class="c3-p" data-rv>Axis Bank has more than 80 card types, each with different offers. Instead of making people scroll through all of them, I asked for the <b>first 8 digits of their card</b> and showed only the deals that apply.</p>
+        <div class="c3-try" data-rv><p class="c3-trylbl">Go on, try it</p>
           <div class="c3-cc"><b>AXIS BANK</b><i class="chip"></i><div class="num" id="c3Num"><span>••••</span><span>••••</span><span>XXXX</span><span>XXXX</span></div><small>Credit card</small></div>
-          <input id="c3Axis" inputmode="numeric" maxlength="8" placeholder="first 8 digits" aria-label="Type any 8 digits" autocomplete="off">
+          <input id="c3Axis" inputmode="numeric" maxlength="8" placeholder="First 8 digits" aria-label="Type any 8 digits" autocomplete="off">
           <p class="c3-hint" id="c3Hint">Type any 8 digits.</p>
-          <div class="c3-offers" id="c3Off"><div><b>Save ₹743</b>10% off up to ₹1,000 on your card</div><div><b>Offer confirmed</b>Minimum bill value of ₹3,000 · valid once a month</div></div></div>${I('ax3', 'Offers for the card')}</div></section>
+          <div class="c3-offers" id="c3Off"><div><b>Save ₹743</b>10% off up to ₹1,000 on your card</div><div><b>Offer confirmed</b>Minimum bill value of ₹3,000 · valid once a month</div></div></div></div></section>
 
-      <section class="c3-sec" data-ch="The twist"><div class="c3-w">${K('chapter 7 · the twist')}
-        <h3 class="c3-h" data-rv>People didn’t need more coupons. They needed <span class="it">confidence</span>.</h3>
+      <section class="c3-sec" data-ch="The twist"><div class="c3-w">${K('Chapter 7 · The twist')}
+        ${edHead('They needed', 'confidence,', 'not more coupons.', 'b-sun')}
         <p class="c3-p" data-rv>One pattern became obvious during research. People weren’t skipping coupons because they didn’t exist. They hesitated because they didn’t know <b>which one was the best</b>, right at the moment confidence mattered most.</p>
-        ${I('discuss', 'The team discussing the idea', ' class="c3-illo" data-rv')}
-        <p class="c3-q" data-rv>“What if people didn’t have to search at all? What if the best coupon was shown upfront?”</p>
-        <p class="c3-twist" data-rv>and here came the twist!<svg viewBox="0 0 200 14" preserveAspectRatio="none"><path d="M3 9c30-6 60-6 90-2s70 4 104-3"/></svg></p>
-        ${I('making', 'Sketching the best coupon for you', ' class="c3-illo" data-rv')}
-        <p class="c3-p" data-rv style="margin-top:6vh">I introduced an <b>upfront coupon section</b> that automatically surfaces the most relevant, highest-saving coupon for the payment method you picked. Instead of showing everything equally, the system prioritises.</p>
+        ${edBig('What if people didn’t have to search at all? What if the best coupon was shown upfront?', 'q')}
+        <p class="c3-twist" data-rv>And here came the twist!<svg viewBox="0 0 200 14" preserveAspectRatio="none"><path d="M3 9c30-6 60-6 90-2s70 4 104-3"/></svg></p>
+        <p class="c3-p" data-rv>I introduced an <b>upfront coupon section</b> that automatically surfaces the most relevant, highest-saving coupon for the payment method you picked. Instead of showing everything equally, the system prioritises. Try both versions:</p>
+        <div class="c3-demo" data-rv>
+          <div class="c3-seg" role="tablist"><button type="button" data-mode="before">Before</button><button type="button" data-mode="after" class="on">After</button></div>
+          <div class="c3-dphone" id="c3Demo" data-mode="after">
+            <header><small>Cafe Delhi Heights</small><b><s id="c3Old">₹2,810</s><span id="c3Pay">₹2,810</span></b><small>Your bill</small></header>
+            <div class="bf"><p class="lab">Offers for you</p><button type="button" class="row" id="c3Tray"><span><b>Apply coupons</b><small>50+ offers inside</small></span><em>›</em></button><p class="toast" id="c3Toast">50+ offers, all shown the same way. Which one is best? 🤷</p></div>
+            <div class="af"><p class="lab">Best coupon for you</p><div class="best"><span class="bk">AXIS</span><span><b>Save ₹743</b><small>Valid on Axis Bank selected cards</small></span><button type="button" id="c3Apply">Apply</button></div><p class="all">View all coupons</p></div>
+            <div class="sum"><p class="lab">Payment summary</p><div><span>Bill amount</span><span>₹2,810</span></div><div class="disc"><span>Coupon discount</span><span>−₹743</span></div><div class="tot"><span>To pay</span><span id="c3Tot">₹2,810</span></div></div>
+            <div class="yay" id="c3Yay">Woohoo! You’re saving ₹743 🎉</div>
+            <div class="cta">Select payment option</div>
+            <div class="conf" id="c3Conf">${Array.from({ length: 18 }, (_, i) => `<i style="--x:${(hs(i + 9) * 200 - 100).toFixed(0)}px;--y:${(-60 - hs(i + 40) * 140).toFixed(0)}px;--c:${['#FFD23F', '#FF6B4A', '#2F7FD8', '#4F9E4A', '#B7A2FF'][i % 5]};--d:${(i % 6) * 30}ms"></i>`).join('')}</div></div>
+          <p class="c3-dcap" id="c3Dcap">One tap. The best saving for your payment method is already there.</p></div>
         <ul class="c3-checks" data-rv><li>The best coupon appears at the top</li><li>Savings are clearly highlighted</li><li>Apply it instantly, no scrolling</li></ul></div>
-        <div class="c3-wide"><div class="c3-card c3-booster" data-rv>${I('booster', 'The upfront best coupon across states')}</div></div></section>
+        <div class="c3-wide"><div class="c3-card c3-booster" data-rv>${I('booster', 'The upfront best coupon across states', '', 'booster')}<p class="c3-zoomhint">Tap any screen to zoom in</p></div></div></section>
 
-      <section class="c3-sec" data-ch="Handoff"><div class="c3-w">${K('chapter 8 · handoff')}
-        <h3 class="c3-h" data-rv>Three hours with the developers, so the <span class="it">why</span> shipped too.</h3>
-        <p class="c3-p" data-rv>Once the design was final, I ran a three-hour deep-dive with the devs, walking through every decision in four parts.</p></div>
+      <section class="c3-sec" data-ch="Handoff"><div class="c3-w">${K('Chapter 8 · Handoff')}
+        ${edHead('Three hours with the devs, so the', 'why', 'shipped too.', 'b-mint')}
+        <p class="c3-p" data-rv>Once the design was final, I ran a three-hour deep-dive with the developers, walking through every decision in four parts.</p></div>
         <div class="c3-wide"><div class="c3-hand" data-rv>${[['The problems', 'What we found, and why each one mattered.'], ['The solutions', 'The logic behind every design decision.'], ['Functionality', 'What we expected every state to do.'], ['Feasibility', 'Aligning the design with development constraints.']].map(([t, d], k) => `<div><i>${k + 1}</i><b>${t}</b><p>${d}</p></div>`).join('')}</div>
         <div class="c3-w" style="margin-top:12vh"><p class="c3-p" data-rv>And we agreed on how we’d know it worked:</p></div>
         <div class="c3-kpi" data-rv>${[['card', 'PayEazy conversion', 'New-user conversion, before and after the redesign.'], ['bell', 'Coupon engagement', 'How many people interact with the coupon section.'], ['ticket', 'Coupon redemption', 'How many successfully apply a coupon at checkout.'], ['head', 'Support tickets', 'Fewer tickets means more clarity and confidence.']].map(([ic, t, d], k) => `<div style="--r:${[-1.5, 1, -1, 1.5][k]}deg"><svg viewBox="0 0 24 24">${ICONS[ic]}</svg><b>${t}</b><p>${d}</p></div>`).join('')}</div></div></section>
 
-      <section class="c3-sec" data-ch="The paths"><div class="c3-w">${K('chapter 9 · the paths')}
-        <h3 class="c3-h" data-rv>However you pay, there’s a <span class="it">clear</span> path to saving.</h3>
-        <p class="c3-p" data-rv>Here’s the full flow. Each colour is a different way people now save.</p></div>
-        <div class="c3-wide"><div class="c3-card c3-flow" data-rv>${I('flow', 'The full coupon flow with three colour-coded paths')}</div>
-        <div class="c3-legend" data-rv><span style="--c:#2A7BD1">the best coupon, upfront</span><span style="--c:#7B5CD6">50+ coupons to explore</span><span style="--c:#E1306C">instant savings with a code</span></div>
-        <div class="c3-ptabs" id="c3Pt" data-rv>${ED.paths.map(([c, t], k) => `<button type="button" data-path="${k}" style="--c:${c}"${k ? '' : ' class="on"'}>${t}</button>`).join('')}</div>
-        <div class="c3-pview" id="c3Pv">${pathView(p0)}</div></div></section>
+      <section class="c3-sec" data-ch="The paths"><div class="c3-w">${K('Chapter 9 · The paths')}
+        ${edHead('Five ways to save,', 'zero guesswork.', '', 'b-sky')}
+        <p class="c3-p" data-rv>However people like to pay, there’s now a clear route from the bill to the best saving. Pick a path to trace it through checkout.</p></div>
+        <div class="c3-wide"><div class="c3-ptabs" id="c3Pt" data-rv>${ED.paths.map(([id, c, t], k) => `<button type="button" data-path="${k}" style="--c:${c}"${k ? '' : ' class="on"'}>${t}</button>`).join('')}</div>
+        <div class="c3-flowd c3-card" data-rv><svg id="c3Flow" aria-label="Checkout flow with the selected path highlighted"></svg></div>
+        <div class="c3-pview" id="c3Pv"></div>
+        <p class="c3-fullflow"><button type="button" id="c3FullFlow">See the full flow map ↗</button></p></div></section>
 
-      <section class="c3-sec" data-ch="Results"><div class="c3-w">${K('chapter 10 · the results')}
-        <h3 class="c3-h" data-rv>It’s live on the app, and it’s <span class="it">working</span>.</h3>
-        <p class="c3-p" data-rv>The coupon redesign shipped in the EazyDiner app, and the numbers moved by a great margin.</p>
-        <div class="c3-res" id="c3Res" data-rv>
-          <div><span class="lab">Payment success</span><b class="big" data-to="41.18">+0%</b><span class="c3-bars"><span><i style="--w:34.6"></i>34.6% before</span><span><i style="--w:45.6"></i>45.6% after</span></span></div>
-          <div><span class="lab">Coupon application</span><b class="big" data-to="24.64">+0%</b><span class="c3-bars"><span><i style="--w:55.5"></i>55.5% before</span><span><i style="--w:67"></i>67.0% after</span></span></div>
-          <div><span class="lab">Filter engagement</span><b class="big">~2.3×</b><span class="c3-bars"><span><i style="--w:18"></i>~18% before</span><span><i style="--w:42"></i>~42% after</span></span></div>
-          <div><span class="lab">People opening the coupon tray</span><b class="big" data-to="25.58">+0%</b><span class="c3-bars"><span>more people exploring offers</span></span></div></div></div></section>
+      <section class="c3-sec c3-results" data-ch="Results"><div class="c3-w">${K('Chapter 10 · The results')}
+        ${edHead('It’s live, and', 'it’s working.', '', 'b-mint')}
+        <p class="c3-p" data-rv>The coupon redesign shipped in the EazyDiner app. Remember our 100 diners? Out of every 100, about <b>11 more now pay</b> than before.</p></div>
+        <div class="c3-wide" id="c3Res"><div class="c3-seg c3-rseg" role="tablist"><button type="button" data-res="0">Before</button><button type="button" data-res="1" class="on">After</button></div>
+          <div class="c3-rgrid">${results.map(([id, t, big, , b, a, lab, sh]) => `<div class="c3-rc" data-b="${Math.round(b)}" data-a="${Math.round(a)}"><div class="rh"><span>${t}</span><b>${big}</b></div><div class="c3-dots ${sh}">${Array.from({ length: 100 }, (_, i) => `<i ${sh === 'p' ? person(i) : `style="--d:${(i * 13) % 40}"`}></i>`).join('')}</div><p class="rf"><b class="rn">${Math.round(a)}</b> of 100 ${lab}<small>${b}% → ${a}%</small></p></div>`).join('')}
+            <div class="c3-rc tray"><div class="rh"><span>Opening the coupon tray</span><b>+25.58%</b></div><div class="c3-tray"><div class="tr-box"><i></i><i></i><i></i><i></i></div></div><div class="c3-tbars"><span><em>Before</em><i style="--w:79.6%"></i></span><span><em>After</em><i style="--w:100%"></i></span></div><p class="rf">More people now open the tray to explore offers.<small>Relative increase in tray opens</small></p></div></div></div></section>
 
-      <section class="c3-end"><div class="c3-w"><p class="c3-note" data-rv>thanks for reading!</p><p data-rv>Designed with care by James Chugh.</p><button type="button" data-close data-rv>Back to the box</button></div></section>
-      </article>`;
+      <footer class="c3-foot" data-ch="Thanks">
+        <div class="c3-scene" id="c3Scene"></div>
+        <div class="c3-w c3-fin"><p class="kicker c3-k" data-rv>${STAR}That’s the bill, settled</p>
+          ${edHead('Thanks for', 'reading!', '', 'b-sun')}
+          <p class="c3-p" data-rv>Designed with care by James Chugh. Got a minute for another story?</p>
+          <div class="c3-more" data-rv>${ED.more.map(([id, t, co, c]) => `<button type="button" data-switch="${id}" style="--c:${c}"><small>${co}</small><b>${t}</b><em>Read →</em></button>`).join('')}</div>
+          <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://topmate.io/jameschughh" target="_blank" rel="noopener">Book a free call ↗</a><button type="button" data-close>Back to the box</button></div></div></footer>
+      </article>
+      <div class="c3-lb" id="c3Lb" aria-hidden="true"><button type="button" class="lb-x" aria-label="Close">×</button><button type="button" class="lb-p" aria-label="Previous">‹</button><figure><img alt=""><figcaption></figcaption></figure><button type="button" class="lb-n" aria-label="Next">›</button></div>`;
   }
-  function pathView([c, t, h, d, ims]) {
-    return `<h4>${h}</h4><p>${d}</p><div class="c3-phones">${ims.map(n => `<img src="${cimg(n)}" alt="${t} screen" loading="lazy" onerror="this.outerHTML='<div class=&quot;c3-ph&quot;>Screen coming soon</div>'">`).join('')}</div>`;
+  function edPathView([id, c, t, h, d, ims]) {
+    return `<h4>${h}</h4><p>${d}</p><div class="c3-phones" style="--c:${c}">${ims.map((n, k) => `<img src="${cimg(n)}" alt="${t}, screen ${k + 1}" loading="lazy" data-z="path" data-hi="v2/cs/hi/ed-${n}.webp" onerror="this.outerHTML='<div class=&quot;c3-ph&quot;>Screen coming soon</div>'">`).join('')}</div>`;
+  }
+  // the checkout flow as a diagram; vertical on narrow screens
+  function edFlowSVG(svg, path, vert) {
+    const N = ED.nodes, P = k => vert ? [60 + (N[k][1] - 52) * (360 / 336), N[k][0]] : [N[k][0], N[k][1]];
+    const edges = [['A', 'B'], ['B', 'C1'], ['B', 'C2'], ['B', 'C3'], ['B', 'C4'], ['C1', 'D'], ['C2', 'D'], ['C3', 'D'], ['C4', 'D'], ['B', 'D'], ['D', 'E']];
+    const curve = (a, b) => { const [x1, y1] = P(a), [x2, y2] = P(b); if (vert) { const m = (y1 + y2) / 2; return `M${x1} ${y1}C${x1} ${m} ${x2} ${m} ${x2} ${y2}`; } const m = (x1 + x2) / 2; return `M${x1} ${y1}C${m} ${y1} ${m} ${y2} ${x2} ${y2}`; };
+    const [, c, , , , , route] = path, on = new Set(route.slice(1).map((k, i) => route[i] + k));
+    const route2 = route.slice(1).map((k, i) => curve(route[i], k)).map((d, i) => i ? d.replace(/^M[^C]+/, '') : d).join('');
+    svg.setAttribute('viewBox', vert ? '0 0 480 1000' : '0 0 1000 440'); svg.classList.toggle('v', vert);
+    const lineH = vert ? 24 : 17;
+    svg.innerHTML = `${edges.map(([a, b]) => `<path class="fe${on.has(a + b) ? ' on' : ''}" d="${curve(a, b)}" style="--c:${c}"/>`).join('')}
+      <path id="c3Route" d="${route2}" fill="none" stroke="none"/>
+      ${Object.keys(N).map(k => { const [x, y] = P(k), isC = k[0] === 'C', lit = route.includes(k), label = vert && N[k][3] ? N[k][3] : N[k][2], words = label.split(' ');
+        const w = vert ? (isC ? 110 : 230) : 150, h = vert ? (isC ? 70 : 54) : 56;
+        const lines = vert ? (isC ? [words[0], words.slice(1).join(' ')] : [label]) : words.length > 2 ? [words.slice(0, Math.ceil(words.length / 2)).join(' '), words.slice(Math.ceil(words.length / 2)).join(' ')] : [label];
+        return `<g class="fn${lit ? ' on' : ''}" style="--c:${c}"><rect x="${x - w / 2}" y="${y - h / 2}" width="${w}" height="${h}" rx="14"/>${lines.map((l, i) => `<text x="${x}" y="${y + (i - (lines.length - 1) / 2) * lineH + (vert ? 7 : 5)}">${l}</text>`).join('')}</g>`; }).join('')}
+      <circle id="c3Dot" r="${vert ? 12 : 9}" fill="${c}" stroke="#fff" stroke-width="3"/>`;
+  }
+  // a top-down restaurant: diners at tables, and a waiter bringing the bill
+  function edScene() {
+    const T = [[230, 160, 3], [520, 120, 4], [830, 170, 2], [1110, 130, 4], [360, 360, 4], [700, 380, 3], [1000, 380, 4]];
+    const SK = ['#F2C9A0', '#D9A273', '#A8704A', '#7A4B2E', '#F5D5B8'], SH = ['#FF6B4A', '#2F7FD8', '#FFD23F', '#4F9E4A', '#B7A2FF', '#FF9E7A'], HA = ['#2B1B12', '#5A3A22', '#13233A', '#8A5A2B'];
+    let n = 0;
+    const diner = (x, y, a) => { const r = a * Math.PI / 180, px = x + Math.cos(r) * 64, py = y + Math.sin(r) * 64, k = n++;
+      return `<g transform="translate(${px.toFixed(1)} ${py.toFixed(1)}) rotate(${a + 90})"><rect x="-20" y="2" width="40" height="22" rx="8" fill="#9C6B3E"/><ellipse cx="0" cy="4" rx="21" ry="12" fill="${SH[k % 6]}"/><circle cx="0" cy="-2" r="10" fill="${SK[k % 5]}"/><path d="M-10 0a10 10 0 0 1 20 0c0-4-4-12-10-12s-10 8-10 12z" fill="${HA[k % 4]}"/><g class="bob" style="animation-delay:${(k % 5) * .4}s"><circle cx="-14" cy="-10" r="5" fill="${SK[k % 5]}"/></g></g>`; };
+    const table = ([x, y, p], i) => `<g class="tb"><circle cx="${x}" cy="${y + 6}" r="50" fill="rgba(60,30,0,.18)"/>${Array.from({ length: p }, (_, j) => diner(x, y, (360 / p) * j + 25 * i)).join('')}<circle cx="${x}" cy="${y}" r="48" fill="#FFFDF7" stroke="#E9DCC6" stroke-width="3"/>${Array.from({ length: p }, (_, j) => { const r = ((360 / p) * j + 25 * i) * Math.PI / 180; return `<circle cx="${(x + Math.cos(r) * 30).toFixed(1)}" cy="${(y + Math.sin(r) * 30).toFixed(1)}" r="11" fill="#fff" stroke="#E2D6C2" stroke-width="2"/><circle cx="${(x + Math.cos(r) * 30).toFixed(1)}" cy="${(y + Math.sin(r) * 30).toFixed(1)}" r="6" fill="${['#F4A261', '#E76F51', '#8AB17D', '#E9C46A'][(i + j) % 4]}"/>`; }).join('')}<circle cx="${x}" cy="${y}" r="7" fill="#9FD3FF" opacity=".8"/></g>`;
+    const plant = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><circle r="26" fill="#C8875A"/>${[0, 72, 144, 216, 288].map(a => `<ellipse cx="${(Math.cos(a * Math.PI / 180) * 18).toFixed(1)}" cy="${(Math.sin(a * Math.PI / 180) * 18).toFixed(1)}" rx="16" ry="10" fill="${a % 144 ? '#4F9E4A' : '#6DBB5E'}" transform="rotate(${a} ${(Math.cos(a * Math.PI / 180) * 18).toFixed(1)} ${(Math.sin(a * Math.PI / 180) * 18).toFixed(1)})"/>`).join('')}<circle r="9" fill="#3F8A3A"/></g>`;
+    return `<svg viewBox="0 0 1340 520" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A busy restaurant seen from above, with a waiter bringing the bill">
+      <defs><pattern id="plk" width="120" height="40" patternUnits="userSpaceOnUse"><rect width="120" height="40" fill="#E8C9A0"/><path d="M0 39.5h120M60 0v20M0 20h120M100 20v20" stroke="#D9B588" stroke-width="2"/></pattern><radialGradient id="lamp"><stop offset="0" stop-color="#FFE7A8" stop-opacity=".55"/><stop offset="1" stop-color="#FFE7A8" stop-opacity="0"/></radialGradient></defs>
+      <rect width="1340" height="520" fill="url(#plk)"/>
+      <rect x="430" y="250" width="480" height="40" rx="20" fill="#C0533A" opacity=".18"/>
+      <g><rect x="0" y="0" width="1340" height="34" fill="#7A4B2E"/><rect x="40" y="34" width="300" height="16" rx="6" fill="#5A3A22"/>${[70, 130, 190, 250, 310].map(x => `<circle cx="${x}" cy="66" r="13" fill="#2B1B12"/><circle cx="${x}" cy="66" r="8" fill="#C0533A"/>`).join('')}<rect x="1180" y="0" width="110" height="18" fill="#FFF1D9"/><text x="1235" y="13" class="sg">KITCHEN</text></g>
+      ${T.map(table).join('')}
+      ${plant(40, 480, 1.1)}${plant(1300, 470, 1)}${plant(1300, 80, .8)}
+      ${T.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="120" fill="url(#lamp)"/>`).join('')}
+      <g transform="translate(700 380)"><g class="bubble"><rect x="-92" y="-136" width="184" height="44" rx="14" fill="#fff"/><path d="M-8 -93l8 14 8-14z" fill="#fff"/><text x="0" y="-108" class="bb">Best coupon applied ✓</text></g></g>
+      <g class="waiter"><g class="wk"><ellipse cx="0" cy="4" rx="22" ry="13" fill="#13233A"/><path d="M-6 -6h12l-2 14h-8z" fill="#fff"/><circle cx="0" cy="-2" r="10" fill="#D9A273"/><path d="M-10 -2a10 10 0 0 1 20 0c0-5-4-11-10-11s-10 6-10 11z" fill="#2B1B12"/><rect x="18" y="-14" width="30" height="22" rx="4" fill="#2B1B12"/><rect x="23" y="-11" width="20" height="16" rx="2" fill="#fff"/><path d="M26 -6h14M26 -2h10M26 2h12" stroke="#9AA3B2" stroke-width="1.6"/></g></g>
+    </svg>`;
+  }
+  function edCleanup() {
+    clearInterval(initED.fi); cancelAnimationFrame(initED.raf);
+    if (initED.sc) csEl.removeEventListener('scroll', initED.sc); if (initED.rs) removeEventListener('resize', initED.rs); if (initED.kd) removeEventListener('keydown', initED.kd, true);
+    initED.sc = initED.rs = initED.kd = null;
   }
   function initED() {
+    edCleanup();
     const root = csEl, prog = $('#c3Prog', root), chEl = $('#c3Ch', root);
-    const obs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const t = e.target; t.classList.add('in'); $$('.hl', t).forEach(h => h.classList.add('on')); obs.unobserve(t);
-      if (t.id === 'c3Res') $$('[data-to]', t).forEach(b => { const to = +b.dataset.to, t0 = performance.now(); const tick = n => { const f = Math.min(1, (n - t0) / 1600); b.textContent = '+' + (to * (1 - Math.pow(1 - f, 3))).toFixed(2) + '%'; if (f < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }); }), { root, threshold: .2 });
-    $$('[data-rv]', root).forEach(el => obs.observe(el));
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const t = e.target; t.classList.add('in'); if (t.classList.contains('hl')) t.classList.add('on'); $$('.hl', t).forEach(h => h.classList.add('on')); obs.unobserve(t); }), { root, threshold: .2 });
+    $$('[data-rv], .c3-p .hl', root).forEach(el => obs.observe(el));
     const comic = $('#c3Comic', root), panels = $$('.c3-panels figure', root), cap = $('#c3Cap', root);
     const fun = $('#c3Fun', root), scr = $$('.c3-scr', root), steps = $$('.c3-steps span', root), folk = $$('#c3Crowd i', root), nEl = $('#c3N', root), fn = $('#c3Fn', root);
     const chat = $('#c3Chat', root), msgs = $$('.c3-msg', root), typing = $('.c3-typing', root);
     const board = $('#c3Board', root), sn = $$('.c3-board .sn', root), five = $$('.c3-five div', root), bn = $('#c3Bn', root), bcap = $('#c3Bcap', root);
     const evo = $('#c3Evo', root), row = $('#c3Row', root), tabs = $$('[data-evo]', root), strip = $('#c3Strip', root);
+    const mx = $('#c3Mx', root), mxPin = $('.c3-sketch', root), mxPaths = $$('.mx-lines path', root), bdgs = $$('.bdg', root), slots = $$('.c3-mx .slot', root), qs = $$('.c3-mx .q', root), mxCap = $('#c3MxCap', root);
+    const scrubs = $$('[data-scrub]', root).map(el => ({ el, w: $$('span', el), n: -1 }));
     const chs = $$('[data-ch]', root);
-    const S = { c: -1, f: -1, q: -1, b: '', e: -1 };
+    const S = { c: -1, f: -1, q: -1, b: '', e: -1, m: '' };
     const prg = el => { const r = el.getBoundingClientRect(); return clamp(-r.top / Math.max(1, r.height - vh)); };
     let ticking = false;
     function update() {
       ticking = false;
       const H = root.scrollHeight - root.clientHeight; prog.style.setProperty('--p', (root.scrollTop / Math.max(1, H) * 100).toFixed(2) + '%');
       let name = 'The story'; chs.forEach(c => { if (c.getBoundingClientRect().top < vh * .5) name = c.dataset.ch; }); if (chEl.textContent !== name) chEl.textContent = name;
-      // comic strip, one panel at a time
+      // big lines light up word by word as they cross the screen
+      scrubs.forEach(s => { const r = s.el.getBoundingClientRect(); if (r.bottom < -50 || r.top > vh + 50) return; const f = clamp((vh * .82 - r.top) / (vh * .5)), k = Math.round(f * s.w.length); if (k !== s.n) { s.n = k; s.w.forEach((w, i) => w.classList.toggle('lit', i < k)); } });
       const c = Math.min(3, Math.floor(prg(comic) * 4.2)); if (c !== S.c) { S.c = c;
         panels.forEach((p, k) => { p.classList.toggle('on', k === c); p.classList.toggle('seen', k < c); });
         cap.innerHTML = `${ED.comic[c][1]}<small>${ED.comic[c][2]}</small>`; }
-      // 100 diners walk through checkout
       const f = Math.min(3, Math.floor(prg(fun) * 4.3)); if (f !== S.f) { S.f = f;
         scr.forEach((s2, k) => s2.classList.toggle('on', k === f)); steps.forEach((s2, k) => { s2.classList.toggle('on', k <= f); s2.classList.toggle('cur', k === f); });
         folk.forEach(p => p.classList.toggle('gone', +p.dataset.g <= f)); nEl.textContent = [100, 84, 50, 36][f]; fn.textContent = ED.stages[f][1]; }
-      // user feedback arrives one message at a time
       const q = Math.min(msgs.length, 1 + Math.floor(prg(chat) * (msgs.length + .3))); if (q !== S.q) { S.q = q;
         msgs.forEach((m, k) => m.classList.toggle('on', k < q)); typing.style.visibility = q < msgs.length ? 'visible' : 'hidden'; }
-      // the whiteboard: 40+ notes collapse into five problems, then each one in turn
       const bp = prg(board), col = ss(clamp(bp / .22)), bi = bp < .26 ? -1 : Math.min(4, Math.floor((bp - .26) / .74 * 5));
       sn.forEach((n, k) => { n.style.opacity = (1 - clamp(col * 1.4 - (k % 7) * .05)).toFixed(3); n.style.transform = `rotate(${n.style.getPropertyValue('--r')}) scale(${(1 - col * .5).toFixed(3)})`; });
       const key = (col > .6) + '|' + bi; if (key !== S.b) { S.b = key;
         five.forEach((d, k) => { d.classList.toggle('in', col > .6); d.classList.toggle('on', k === bi); });
         bn.textContent = col > .6 ? '5 problems' : '40+ notes';
         bcap.innerHTML = bi < 0 ? `<p>${col > .6 ? 'Five problems were left standing.' : 'Everything that was broken, on one board.'}</p>` : `<b>0${bi + 1} · ${ED.probs[bi][0]}</b><p>${ED.probs[bi][1]}</p>`; }
-      // four rounds, sliding sideways with a pause on each
+      // the sketch: lines draw themselves, then each app flies into its corner
+      const mp = prg(mx);
+      if (mp > 0 || mx.getBoundingClientRect().top < vh) {
+        const dr = clamp(mp / .25); mxPaths.forEach((p, i) => p.style.strokeDashoffset = (1 - clamp(dr * 1.6 - i * .12)).toFixed(3));
+        const pr = mxPin.getBoundingClientRect(); let landed = 0;
+        bdgs.forEach((b, i) => { const t = ss(clamp((mp - .25 - i * .1) / .2)), sl = slots[+b.dataset.slot].getBoundingClientRect(), twin = b.dataset.slot === '2' ? (i === 2 ? -30 : 30) : 0;
+          const tx = sl.left + sl.width / 2 - pr.left + twin, ty = sl.top + sl.height / 2 - pr.top, sx = pr.width / 2 + (i - 2) * 70, sy = pr.height + 80;
+          const x = sx + (tx - sx) * t, y = sy + (ty - sy) * t - Math.sin(Math.PI * t) * 90;
+          b.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -50%) rotate(${((1 - t) * (i % 2 ? 25 : -25)).toFixed(1)}deg) scale(${(.6 + .4 * t).toFixed(3)})`;
+          b.style.opacity = t > 0 ? 1 : 0; if (t >= 1) landed |= 1 << +b.dataset.slot; });
+        qs.forEach((qq, k) => qq.classList.toggle('got', !!(landed & (1 << k))));
+        const m = landed === 15 ? 'And one app made it to the top right.' : dr < 1 ? 'Two axes: how it looks, and how it works.' : 'Placing the apps…'; if (m !== S.m) { S.m = m; mxCap.textContent = m; }
+      }
       const ep = prg(evo), n = tabs.length, et = ep * (n - 1), e0 = Math.min(n - 2, Math.floor(et)), ex = e0 + ss(clamp((et - e0 - .35) / .45));
       row.style.transform = `translate3d(${(-ex * root.clientWidth).toFixed(1)}px, 0, 0)`;
       const ei = Math.round(ex); if (ei !== S.e) { S.e = ei; tabs.forEach((t, k) => t.classList.toggle('on', k === ei)); }
-      // competitor screens drift sideways
       const sr = strip.getBoundingClientRect(); if (sr.bottom > 0 && sr.top < vh) strip.style.transform = `translate3d(${(-(1 - (sr.top + sr.height) / (vh + sr.height)) * Math.max(0, strip.scrollWidth - root.clientWidth)).toFixed(1)}px, 0, 0)`;
     }
     root.addEventListener('scroll', initED.sc = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    const fitW = () => { root.style.setProperty('--cw', root.clientWidth + 'px'); update(); }; addEventListener('resize', initED.rs = fitW);
+    // checkout paths
+    const flow = $('#c3Flow', root); let pathI = 0, vert = null;
+    const drawFlow = () => { vert = root.clientWidth < 700; edFlowSVG(flow, ED.paths[pathI], vert); };
+    const showPath = i => { pathI = i; drawFlow(); $('#c3Pv', root).innerHTML = edPathView(ED.paths[i]); $$('[data-path]', root).forEach((x, k) => x.classList.toggle('on', k === i)); };
+    $$('[data-path]', root).forEach(b => b.addEventListener('click', () => showPath(+b.dataset.path)));
+    showPath(0);
+    let t0 = performance.now();
+    const dotLoop = now => { initED.raf = requestAnimationFrame(dotLoop); const r = flow.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return;
+      const route = $('#c3Route', flow), dot = $('#c3Dot', flow); if (!route || !dot) return; const L = route.getTotalLength(), u = ((now - t0) / 3200) % 1, p = route.getPointAtLength(L * ss(u)); dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y); };
+    if (!reduce) initED.raf = requestAnimationFrame(dotLoop);
+    // headings stay on one line on wide screens: shrink any that would overflow
+    const fitHeads = () => $$('.c3-h', root).forEach(h => { h.style.fontSize = ''; if (getComputedStyle(h).whiteSpace !== 'nowrap') return; const r = h.clientWidth / h.scrollWidth; if (r < 1) h.style.fontSize = (parseFloat(getComputedStyle(h).fontSize) * r * .97).toFixed(1) + 'px'; });
+    document.fonts && document.fonts.ready.then(fitHeads);
+    const fitW = () => { root.style.setProperty('--cw', root.clientWidth + 'px'); if ((root.clientWidth < 700) !== vert) drawFlow(); fitHeads(); update(); }; addEventListener('resize', initED.rs = fitW);
     fitW();
     tabs.forEach(t => t.addEventListener('click', () => { const r = evo.getBoundingClientRect(); root.scrollTo({ top: root.scrollTop + r.top + (r.height - vh) * (+t.dataset.evo / (tabs.length - 1)), behavior: 'smooth' }); }));
-    $$('[data-path]', root).forEach(b => b.addEventListener('click', () => { $$('[data-path]', root).forEach(x => x.classList.toggle('on', x === b)); $('#c3Pv', root).innerHTML = pathView(ED.paths[+b.dataset.path]); }));
+    // the axis card
     const ax = $('#c3Axis', root), num = $$('#c3Num span', root), hint = $('#c3Hint', root), off = $('#c3Off', root);
     ax.addEventListener('input', () => { const v = ax.value.replace(/\D/g, '').slice(0, 8); ax.value = v;
       num[0].textContent = (v.slice(0, 4) + '••••').slice(0, 4); num[1].textContent = (v.slice(4, 8) + '••••').slice(0, 4);
       num[0].classList.toggle('f', v.length > 0); num[1].classList.toggle('f', v.length > 4);
       const ok = v.length === 8; off.classList.toggle('on', ok);
       hint.textContent = ok ? 'Card found. Only the offers that apply to it:' : v.length ? `${8 - v.length} more to go…` : 'Type any 8 digits.'; });
+    // before / after: the one-tap best coupon
+    const demo = $('#c3Demo', root), apply = $('#c3Apply', root), dcap = $('#c3Dcap', root);
+    const setApplied = on => { demo.classList.toggle('applied', on); apply.textContent = on ? 'Remove' : 'Apply'; $('#c3Pay', root).textContent = on ? '₹2,067' : '₹2,810'; $('#c3Tot', root).textContent = on ? '₹2,067' : '₹2,810';
+      if (on) { const cf = $('#c3Conf', root); cf.classList.remove('go'); void cf.offsetWidth; cf.classList.add('go'); } dcap.textContent = on ? 'Done in one tap. That’s ₹743 saved, without opening a single list.' : 'One tap. The best saving for your payment method is already there.'; };
+    apply.addEventListener('click', () => setApplied(!demo.classList.contains('applied')));
+    $('#c3Tray', root).addEventListener('click', () => { const t = $('#c3Toast', root); t.classList.remove('on'); void t.offsetWidth; t.classList.add('on'); });
+    $$('button[data-mode]', root).forEach(b => b.addEventListener('click', () => { $$('button[data-mode]', root).forEach(x => x.classList.toggle('on', x === b)); demo.dataset.mode = b.dataset.mode; setApplied(false);
+      dcap.textContent = b.dataset.mode === 'before' ? 'Before: the best deal was hidden somewhere inside 50+ offers. Tap the tray and see.' : 'One tap. The best saving for your payment method is already there.'; }));
+    // results: flip between before and after
+    const res = $('#c3Res', root), rcs = $$('.c3-rc[data-a]', root);
+    const setRes = after => { $$('[data-res]', root).forEach(x => x.classList.toggle('on', +x.dataset.res === +after)); res.classList.toggle('after', after);
+      rcs.forEach(rc => { const k = +(after ? rc.dataset.a : rc.dataset.b); $$('.c3-dots i', rc).forEach((d, i) => d.classList.toggle('lit', i < k)); $('.rn', rc).textContent = k; }); };
+    $$('[data-res]', root).forEach(b => b.addEventListener('click', () => setRes(b.dataset.res === '1')));
+    setRes(false);
+    new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { o.disconnect(); setTimeout(() => setRes(true), 900); } }), { root, threshold: .35 }).observe(res);
+    // the footer restaurant
+    $('#c3Scene', root).innerHTML = edScene();
+    // tap any screen to zoom in
+    const lb = $('#c3Lb', root), lbImg = $('img', lb), lbCap = $('figcaption', lb); let group = [], gi = 0;
+    const show = i => { gi = (i + group.length) % group.length; const im = group[gi]; lbImg.src = im.dataset.hi || im.src; lbImg.alt = im.alt; lbCap.textContent = im.alt + (group.length > 1 ? ` · ${gi + 1} of ${group.length}` : ''); lb.classList.toggle('one', group.length < 2); };
+    const openLb = im => { group = $$(`img[data-z="${im.dataset.z}"]`, root); show(group.indexOf(im)); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); };
+    const closeLb = () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); };
+    root.addEventListener('click', e => { const im = e.target.closest('img[data-z]'); if (im && !lb.contains(im)) openLb(im); });
+    $('#c3FullFlow', root).addEventListener('click', () => { group = [{ dataset: { hi: 'v2/cs/hi/ed-flow.webp' }, src: cimg('flow'), alt: 'The full coupon flow' }]; show(0); lb.classList.add('open'); });
+    lb.addEventListener('click', e => { if (e.target.closest('.lb-n')) show(gi + 1); else if (e.target.closest('.lb-p')) show(gi - 1); else if (!e.target.closest('img')) closeLb(); });
+    let sx0 = null; lb.addEventListener('touchstart', e => { sx0 = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => { if (sx0 == null) return; const dx = e.changedTouches[0].clientX - sx0; if (Math.abs(dx) > 50) show(gi + (dx < 0 ? 1 : -1)); sx0 = null; });
+    addEventListener('keydown', initED.kd = e => { if (!lb.classList.contains('open')) return; if (e.key === 'Escape') { closeLb(); e.stopImmediatePropagation(); } else if (e.key === 'ArrowRight') show(gi + 1); else if (e.key === 'ArrowLeft') show(gi - 1); }, true);
   }
   function csHTML(w) {
     if (w.id === 'coupon') return edHTML(w);
@@ -2762,13 +3103,22 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     const r = k.el.getBoundingClientRect();
     csEl.style.transition = 'clip-path .75s cubic-bezier(.7, 0, .2, 1)'; csEl.style.clipPath = rectClip(r);
     setTimeout(() => {
-      k.el.style.opacity = 1; csEl.classList.remove('open', 'ed'); csEl.innerHTML = ''; clearInterval(initED.fi); if (initED.sc) csEl.removeEventListener('scroll', initED.sc); if (initED.rs) removeEventListener('resize', initED.rs);
+      k.el.style.opacity = 1; csEl.classList.remove('open', 'ed'); csEl.innerHTML = ''; edCleanup();
       document.documentElement.style.overflow = ''; lenis && lenis.start();
       const a = k.el.animate([{ transform: faced(k) }, { transform: stand(CH + 60), offset: .55 }, { transform: stand(0) }], { duration: reduce ? 1 : 1400, easing: pickEase, fill: 'forwards' });
       a.onfinish = () => { k.el.style.transform = stand(0); k.z = 0; a.cancel(); k.el.style.transition = ''; picked = null; setCap(null); k.el.focus({ preventScroll: true }); };
     }, 760);
   }
-  csEl.addEventListener('click', e => { if (e.target.closest('#csClose, [data-close]')) closeCase(); });
+  // jump straight from one case study to another, without going back to the box
+  function switchCase(id) {
+    const k = wks.find(x => x.w.id === id); if (!k || !picked || k === picked) return;
+    edCleanup(); picked.el.style.opacity = 1; picked.el.style.transform = stand(0); picked.z = 0;
+    picked = k; k.el.style.transform = faced(k); k.el.style.opacity = 0;
+    csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); if (k.w.id === 'coupon') initED();
+    $('#csClose').focus({ preventScroll: true });
+  }
+  csEl.addEventListener('click', e => { if (e.target.closest('#csClose, [data-close]')) closeCase(); const sw = e.target.closest('[data-switch]'); if (sw) switchCase(sw.dataset.switch); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && picked) closeCase(); });
   function frameWork(dt) {
     boxScale(dt); boxInfo.classList.toggle('in', boxStage.getBoundingClientRect().top < vh * .2);
