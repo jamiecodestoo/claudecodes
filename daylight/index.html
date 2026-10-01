@@ -1088,10 +1088,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 
 /* evolution slider */
 .c3-evo .c3-pin { place-items: stretch; }
-.c3-evo-in { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; height: 100%; padding: 13vh 0 4vh; box-sizing: border-box; }
-.c3-tabs { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; padding: 0 16px; }
-.c3-tabs button { padding: 10px 16px; border-radius: 999px; font: 600 14px/1 var(--sans); color: var(--ink-2); background: rgba(255, 255, 255, .7); transition: background .3s, color .3s; }
-.c3-tabs button.on { background: var(--ink); color: var(--paper); }
+.c3-evo-in { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr auto; height: 100%; padding: 9vh 0 6vh; box-sizing: border-box; }
+.c3-tabs { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 2vh 16px 0; }
+.c3-tabs button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px 8px 8px; border-radius: 999px; font: 600 14.5px/1 var(--sans); color: var(--ink-2); background: #fff; box-shadow: var(--shadow-sm); transition: background .3s, color .3s, transform .3s var(--spring); }
+.c3-tabs button i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--paper-2); font: 800 12.5px/1 var(--sans); font-style: normal; color: var(--ink); }
+.c3-tabs button:hover { transform: translateY(-2px); }
+.c3-tabs button.on { background: var(--ink); color: #fff; } .c3-tabs button.on i { background: var(--sun); }
 .c3-row { display: flex; align-items: center; }
 .c3-slide { flex: none; width: var(--cw, 100vw); display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: center; gap: clamp(24px, 4vw, 64px); padding: 0 max(5vw, calc((var(--cw, 100vw) - 1180px) / 2)); box-sizing: border-box; text-align: left; }
 .c3-slide .c3-card { position: relative; padding: clamp(10px, 1.6vw, 22px); box-sizing: border-box; }
@@ -1205,7 +1207,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .c3-stxt h4 { margin: 6px 0 8px; font-size: 22px; }
   .c3-stxt ul { gap: 4px; } .c3-stxt li { font-size: 14px; } .c3-stxt .chal { margin-top: 8px; font-size: 13.5px; padding: 8px 10px; }
   .c3-res.in .c3-bars span i { width: calc(var(--w) * 1.5px); }
-  .c3-tabs { flex-wrap: nowrap; } .c3-tabs button { padding: 8px 10px; font-size: 17px; } .c3-tabs button span { display: none; }
+  .c3-tabs { flex-wrap: nowrap; gap: 6px; } .c3-tabs button { padding: 6px; font-size: 0; gap: 0; } .c3-tabs button i { width: 34px; height: 34px; font-size: 14px; }
+  .c3-doodles { display: none; }
   .c3-ptabs { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; padding: 6px 16px 10px; margin-inline: -16px; } .c3-ptabs button { flex: none; }
 }
 
@@ -1222,18 +1225,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 /* the competition sketch */
 .c3-sketch { position: relative; width: 100%; height: 100%; display: grid; place-content: center; justify-items: center; gap: 3vh;
   background: radial-gradient(rgba(19, 35, 58, .1) 1px, transparent 1.3px) 0 0 / 24px 24px; }
-.c3-mx { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; width: min(820px, 90vw); aspect-ratio: 3 / 2; max-height: 72vh; }
+.c3-mx { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; width: min(940px, 92vw); aspect-ratio: 3 / 2; max-height: 76vh; }
 .mx-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.mx-lines path { fill: none; stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: .75; }
+.mx-lines path { fill: none; stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round; opacity: .7; }
 .c3-mx .ax { position: absolute; z-index: 1; font: 700 19px/1 var(--hand); color: var(--ink-2); white-space: nowrap; }
 .c3-mx .ax.x { right: 10px; top: calc(50% + 12px); }
 .c3-mx .ax.y { left: calc(50% + 12px); top: 2px; }
-.c3-mx .q { position: relative; z-index: 1; display: grid; align-content: center; justify-items: center; padding: 18px; text-align: center; opacity: .28; transition: opacity .6s; }
-.c3-mx .q.got { opacity: 1; }
+.c3-mx .q { position: relative; z-index: 1; display: grid; align-content: center; justify-items: center; padding: 18px; text-align: center; }
 .c3-mx .slot { display: block; width: 64px; height: 64px; margin-bottom: 10px; }
-.c3-mx small { display: block; font: 700 18px/1 var(--hand); color: var(--ink-2); }
-.c3-mx b { display: block; margin: 6px 0 4px; font: 800 20px/1.2 var(--sans); letter-spacing: -.02em; }
-.c3-mx p { margin: 0 auto; max-width: 24ch; font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
+.c3-mx small { display: block; font: 700 21px/1 var(--hand); color: var(--ink-2); }
+.c3-mx b { display: block; margin: 8px 0 6px; font: 800 clamp(20px, 2vw, 26px)/1.15 var(--sans); letter-spacing: -.02em; }
+.c3-mx p { margin: 0 auto; max-width: 26ch; font: 400 clamp(15px, 1.25vw, 18px)/1.5 var(--sans); color: var(--ink-2); }
 .c3-mx .win b { display: inline-block; padding: 0 10px; border: 2.5px solid var(--ed); border-radius: 50% 46% 52% 48% / 60% 55% 45% 40%; transform: rotate(-2deg); }
 .bdg { position: absolute; z-index: 3; left: 0; top: 0; width: 64px; height: 64px; display: grid; place-items: center; border-radius: 18px; background: var(--bg); color: #fff; opacity: 0;
   box-shadow: 0 14px 24px -12px rgba(19, 35, 58, .55), inset 0 0 0 1px rgba(19, 35, 58, .08); pointer-events: none; }
@@ -1244,14 +1246,11 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-mxcap { min-height: 1.4em; margin: 0; font: 600 16px/1.4 var(--sans); color: var(--ink-2); }
 
 /* the iterations studio: ruler, pencil, measurements */
-.c3-evo .c3-pin { background: radial-gradient(rgba(19, 35, 58, .11) 1px, transparent 1.3px) 0 0 / 22px 22px, #FFF4E2; }
 .c3-doodles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.c3-doodles * { fill: none; stroke: #13233A; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .32; }
-.c3-doodles .pencil path:first-child { fill: #FFD23F; opacity: .55; }
-.c3-doodles .scrib { stroke: #F4511E; opacity: .45; stroke-width: 3; }
-.c3-doodles .comp { stroke-dasharray: 6 8; }
-.c3-doodles text { fill: #13233A; stroke: none; font: 700 22px var(--hand); opacity: .45; }
-.c3-doodles .dim text { font-size: 18px; }
+.c3-doodles * { fill: none; stroke: #13233A; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: .2; }
+.c3-doodles .x { stroke: #F4511E; opacity: .3; }
+.c3-doodles .ok { stroke: #2E9E6B; opacity: .45; stroke-width: 3; }
+.c3-doodles text { fill: #13233A; stroke: none; font: 700 22px var(--hand); opacity: .32; }
 .c3-evo-in { position: relative; z-index: 1; }
 .c3-card .cm { position: absolute; inset: -14px; pointer-events: none; opacity: .55;
   background: linear-gradient(#13233A, #13233A) 0 0 / 18px 2px, linear-gradient(#13233A, #13233A) 0 0 / 2px 18px, linear-gradient(#13233A, #13233A) 100% 0 / 18px 2px, linear-gradient(#13233A, #13233A) 100% 0 / 2px 18px,
@@ -1264,34 +1263,36 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-seg { display: inline-flex; padding: 4px; border-radius: 999px; background: #fff; box-shadow: var(--shadow-sm); }
 .c3-seg button { padding: 10px 22px; border-radius: 999px; font: 700 14px/1 var(--sans); color: var(--ink-2); transition: background .3s, color .3s; }
 .c3-seg button.on { background: var(--ink); color: #fff; }
-.c3-dphone { position: relative; width: 300px; border: 9px solid var(--ink); border-radius: 42px; background: #F4F4F6; overflow: hidden; text-align: left; font: 400 13px/1.35 var(--sans); color: var(--ink); box-shadow: var(--shadow); }
-.c3-dphone > header { display: grid; justify-items: center; gap: 2px; padding: 34px 16px 18px; background: var(--ed); color: #fff; }
-.c3-dphone > header small { opacity: .85; font-size: 12px; }
-.c3-dphone > header b { font: 800 30px/1.1 var(--sans); letter-spacing: -.02em; }
+.c3-dphone { position: relative; width: 370px; box-sizing: border-box; border: 9px solid var(--ink); border-radius: 42px; background: #F4F4F6; overflow: hidden; text-align: left; font: 400 15px/1.4 var(--sans); color: var(--ink); box-shadow: var(--shadow); }
+.c3-dphone > header { display: grid; justify-items: center; gap: 4px; padding: 40px 20px 24px; background: var(--ed); color: #fff; }
+.c3-dphone > header small { opacity: .85; font-size: 13.5px; }
+.c3-dphone > header b { font: 800 36px/1.1 var(--sans); letter-spacing: -.02em; }
 .c3-dphone > header s { display: none; margin-right: 8px; font-size: 17px; font-weight: 600; opacity: .7; }
 .c3-dphone.applied > header s { display: inline; }
-.c3-dphone .lab { margin: 14px 16px 8px; font: 700 10.5px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: #8A93A3; }
+.c3-dphone .lab { margin: 22px 20px 10px; font: 700 11.5px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: #8A93A3; }
 .c3-dphone .bf, .c3-dphone .af { display: none; }
 .c3-dphone[data-mode="before"] .bf, .c3-dphone[data-mode="after"] .af { display: block; }
-.c3-dphone .row { display: flex; justify-content: space-between; align-items: center; width: calc(100% - 32px); margin: 0 16px; padding: 12px 14px; box-sizing: border-box; border-radius: 12px; background: #fff; text-align: left; }
-.c3-dphone .row b { display: block; font-size: 13.5px; } .c3-dphone .row small { color: #8A93A3; } .c3-dphone .row em { font-style: normal; font-size: 22px; color: #8A93A3; }
-.c3-dphone .toast { margin: 8px 16px 0; padding: 0 12px; max-height: 0; overflow: hidden; border-radius: 10px; background: var(--ink); color: #fff; font-size: 12.5px; opacity: 0; }
+.c3-dphone .row { display: flex; justify-content: space-between; align-items: center; width: calc(100% - 40px); margin: 0 20px; padding: 16px 18px; box-sizing: border-box; border-radius: 12px; background: #fff; text-align: left; }
+.c3-dphone .row b { display: block; font-size: 15.5px; } .c3-dphone .row small { color: #8A93A3; } .c3-dphone .row em { font-style: normal; font-size: 22px; color: #8A93A3; }
+.c3-dphone .toast { margin: 10px 20px 0; padding: 0 12px; max-height: 0; overflow: hidden; border-radius: 10px; background: var(--ink); color: #fff; font-size: 12.5px; opacity: 0; }
 .c3-dphone .toast.on { animation: c3toast 3s var(--ease) both; }
 @keyframes c3toast { 0% { max-height: 0; padding: 0 12px; opacity: 0; } 10%, 85% { max-height: 80px; padding: 10px 12px; opacity: 1; } 100% { max-height: 0; padding: 0 12px; opacity: 0; } }
-.c3-dphone .best { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; margin: 0 16px; padding: 12px; border-radius: 12px; background: #fff; border: 1.5px dashed #3DBE6B; }
-.c3-dphone .bk { padding: 6px 6px; border-radius: 6px; background: #97144D; color: #fff; font: 800 9.5px/1 var(--sans); }
-.c3-dphone .best b { display: block; color: #1E8E4E; font-size: 14px; } .c3-dphone .best small { color: #8A93A3; font-size: 11px; }
-.c3-dphone .best button { padding: 9px 14px; border-radius: 9px; background: var(--ed); color: #fff; font: 700 12.5px/1 var(--sans); transition: background .3s, color .3s; }
+.c3-dphone .best { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; margin: 0 20px; padding: 18px 16px; animation: c3glow 2.4s ease-in-out infinite; border-radius: 12px; background: #fff; border: 1.5px dashed #3DBE6B; }
+.c3-dphone .bk { padding: 8px 7px; border-radius: 8px; background: #97144D; color: #fff; font: 800 11px/1 var(--sans); }
+@keyframes c3glow { 50% { box-shadow: 0 0 0 6px rgba(61, 190, 107, .16); } }
+.c3-dphone.applied .best { animation: none; }
+.c3-dphone .best b { display: block; color: #1E8E4E; font-size: 17px; white-space: nowrap; } .c3-dphone .best small { display: block; margin-top: 3px; color: #8A93A3; font-size: 12.5px; }
+.c3-dphone .best button { padding: 12px 18px; border-radius: 11px; background: var(--ed); color: #fff; font: 700 14.5px/1 var(--sans); transition: background .3s, color .3s; }
 .c3-dphone.applied .best button { background: #fff; color: var(--ed); box-shadow: inset 0 0 0 1.5px var(--ed); }
-.c3-dphone .all { margin: 8px 16px 0; text-align: center; font: 600 12px/1 var(--sans); color: var(--ed); }
-.c3-dphone .sum { margin: 0 16px; padding: 4px 12px 10px; border-radius: 12px; background: #fff; }
-.c3-dphone .sum .lab { margin: 10px 0 8px; }
-.c3-dphone .sum div { display: flex; justify-content: space-between; padding: 4px 0; }
+.c3-dphone .all { margin: 14px 20px 0; text-align: center; font: 600 12px/1 var(--sans); color: var(--ed); }
+.c3-dphone .sum { margin: 0 20px; padding: 6px 16px 14px; border-radius: 12px; background: #fff; }
+.c3-dphone .sum .lab { margin: 14px 0 10px; }
+.c3-dphone .sum div { display: flex; justify-content: space-between; padding: 6px 0; }
 .c3-dphone .sum .disc { display: none; color: #1E8E4E; } .c3-dphone.applied .sum .disc { display: flex; }
 .c3-dphone .sum .tot { margin-top: 4px; padding-top: 8px; border-top: 1px solid rgba(19, 35, 58, .1); font-weight: 800; }
-.c3-dphone .yay { margin: 0 16px; max-height: 0; overflow: hidden; opacity: 0; border-radius: 10px; background: #E8F7EE; color: #1E8E4E; font: 700 13px/1.3 var(--sans); text-align: center; transition: max-height .4s var(--ease), opacity .4s, margin .4s, padding .4s; }
-.c3-dphone.applied .yay { max-height: 60px; opacity: 1; margin-top: 12px; padding: 10px; }
-.c3-dphone .cta { margin: 14px 16px 18px; padding: 13px; border-radius: 12px; background: var(--ed); color: #fff; font: 700 13.5px/1 var(--sans); text-align: center; }
+.c3-dphone .yay { margin: 0 20px; max-height: 0; overflow: hidden; opacity: 0; border-radius: 10px; background: #E8F7EE; color: #1E8E4E; font: 700 13px/1.3 var(--sans); text-align: center; transition: max-height .4s var(--ease), opacity .4s, margin .4s, padding .4s; }
+.c3-dphone.applied .yay { max-height: 70px; opacity: 1; margin-top: 16px; padding: 12px; font-size: 14.5px; }
+.c3-dphone .cta { margin: 20px 20px 24px; padding: 16px; border-radius: 14px; background: var(--ed); color: #fff; font: 700 15px/1 var(--sans); text-align: center; }
 .c3-dphone .conf { position: absolute; left: 50%; top: 52%; pointer-events: none; }
 .c3-dphone .conf i { position: absolute; width: 8px; height: 12px; border-radius: 2px; background: var(--c); opacity: 0; }
 .c3-dphone .conf.go i { animation: c3conf 1.1s var(--d) var(--ease) both; }
@@ -1351,7 +1352,6 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 #c3Res.after .c3-tbars span + span i { background: var(--ed); }
 
 /* footer: the restaurant, from above */
-.c3-foot { padding-top: 16vh; }
 .c3-scene { position: relative; height: clamp(280px, 38vw, 520px); overflow: hidden; }
 .c3-scene svg { display: block; width: 100%; height: 100%; }
 .c3-scene .sg { font: 800 11px var(--sans); letter-spacing: .14em; fill: #7A4B2E; text-anchor: middle; }
@@ -1365,13 +1365,6 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 @keyframes c3bubble { 0%, 52% { opacity: 0; transform: translateY(8px); } 56%, 78% { opacity: 1; transform: none; } 84%, 100% { opacity: 0; } }
 .c3-scene .bob { animation: c3bob2 3s ease-in-out infinite; }
 @keyframes c3bob2 { 50% { transform: translate(3px, -3px); } }
-.c3-fin { padding: 8vh clamp(18px, 4vw, 40px) 12vh; }
-.c3-more { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; max-width: 64rem; margin: 5vh auto 0; }
-.c3-more button { display: grid; gap: 6px; padding: 18px; border-radius: 18px; background: #fff; box-shadow: var(--shadow-sm); text-align: left; border-top: 5px solid var(--c); transition: transform .4s var(--spring), box-shadow .3s; }
-.c3-more button:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-.c3-more small { font: 600 12px/1.3 var(--sans); color: var(--ink-2); }
-.c3-more b { font: 800 18px/1.15 var(--sans); letter-spacing: -.02em; }
-.c3-more em { font: 700 13px/1 var(--sans); font-style: normal; color: var(--c); }
 .c3-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 5vh; }
 .c3-links a, .c3-links button { padding: 12px 18px; border-radius: 999px; background: rgba(19, 35, 58, .07); color: var(--ink); font: 600 14px/1 var(--sans); text-decoration: none; }
 .c3-links button { background: var(--ink); color: #fff; }
@@ -1395,20 +1388,73 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .c3-mx b { font-size: 16px; } .c3-mx p { font-size: 12.5px; } .c3-mx small { font-size: 15px; }
   .c3-mx .ax { font-size: 14px; } .c3-mx .ax.x { right: 6px; top: calc(50% + 8px); }
   .bdg { width: 52px; height: 52px; border-radius: 14px; } .bdg img { width: 42px; } .bdg b { font-size: 9.5px; }
-  .c3-doodles { opacity: .7; }
   .c3-eq { gap: 6px; } .c3-eq .t { font-size: 11.5px; gap: 6px; max-width: 64px; } .c3-eq .t svg { width: 38px; height: 38px; } .c3-eq > i { font-size: 20px; }
   .c3-ticket { padding: 10px 12px; font-size: 12.5px; white-space: normal; max-width: 96px; } .c3-ticket small { font-size: 9px; }
   .c3-checks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .c3-checks li { flex-direction: column; text-align: center; font-size: 13px; gap: 8px; }
-  .c3-dphone { width: min(300px, 86vw); }
+  .c3-dphone { width: min(360px, calc(100vw - 32px)); box-sizing: border-box; }
   .c3-rgrid { grid-template-columns: 1fr; }
   .c3-dots { gap: 5px 6px; }
-  .c3-more { grid-template-columns: 1fr 1fr; }
   .c3-lb .lb-p, .c3-lb .lb-n { top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); margin: 0; }
   .c3-lb img { max-height: 74vh; }
 }
-@media (max-width: 480px) { .c3-more { grid-template-columns: 1fr; } }
 
+
+/* the bill flips */
+.c3-flip { width: min(420px, 100%); margin: 9vh auto 0; perspective: 1400px; }
+.c3-flip-in { position: relative; display: grid; width: 100%; padding: 0; text-align: left; transform-style: preserve-3d; transition: transform .9s var(--spring); transform: rotate(-1.5deg); }
+.c3-flip-in:hover { transform: rotate(0deg) translateY(-4px); }
+.c3-flip-in.flipped, .c3-flip-in.flipped:hover { transform: rotateY(180deg) rotate(1.5deg); }
+.c3-flip-in > .c3-receipt { grid-area: 1 / 1; width: 100%; margin: 0; transform: none; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.c3-flip-in > .c3-receipt.back { transform: rotateY(180deg); background: #FFFDF6; }
+.c3-fliphint { margin: 18px 0 0; font: 600 14px/1 var(--sans); color: var(--ink-2); }
+.c3-logos span { align-self: center; margin-left: 6px; font: 800 16px/1 var(--sans); color: var(--ink-2); }
+/* results */
+.c3-rc { display: grid; align-content: start; padding: clamp(22px, 2.4vw, 32px); }
+.c3-rc .rh { align-items: center; }
+.c3-rc .rh span { font: 700 18px/1.2 var(--sans); }
+.c3-rc .rd { padding: 7px 12px; border-radius: 999px; background: rgba(244, 81, 30, .12); color: var(--ed); font: 800 14px/1 var(--sans); font-style: normal; opacity: 0; transform: scale(.8); transition: opacity .4s, transform .5s var(--spring); }
+#c3Res.after .c3-rc .rd { opacity: 1; transform: none; }
+.c3-rc .rv { margin-top: 10px; font: 800 clamp(40px, 4.4vw, 56px)/1 var(--sans); letter-spacing: -.045em; color: var(--ink); transition: color .4s; }
+#c3Res.after .c3-rc .rv { color: var(--ed); }
+.c3-rc .c3-dots { margin-top: 22px; }
+.c3-rc .rf { margin-top: 18px; }
+.c3-tbar { height: 14px; margin-top: 18px; border-radius: 7px; background: rgba(19, 35, 58, .06); overflow: hidden; }
+.c3-tbar i { display: block; height: 100%; width: 79.6%; border-radius: 7px; background: #C9CED6; transition: width 1s var(--ease), background .5s; }
+#c3Res.after .c3-tbar i { width: 100%; background: var(--ed); }
+.c3-tray { height: 190px; }
+/* other case studies, as cards */
+.c3-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 4vh; }
+.c3-morek { margin: 10vh 0 0; font: 800 clamp(22px, 2.2vw, 30px)/1.2 var(--sans); letter-spacing: -.02em; }
+.c3-more { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; max-width: 72rem; margin: 4vh auto 0; }
+.c3-wc { position: relative; display: grid; grid-template-rows: auto 1fr auto auto; gap: 12px; min-height: 290px; padding: 18px; border-radius: 24px; background: var(--bg); color: #fff; text-align: left; overflow: hidden;
+  box-shadow: 0 24px 40px -24px var(--g), 0 2px 6px rgba(19, 35, 58, .12); transition: transform .5s var(--spring), box-shadow .4s; }
+.c3-wc::after { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255, 255, 255, .22), transparent 40%); pointer-events: none; }
+.c3-wc:hover { transform: translateY(-8px) rotate(-1deg); box-shadow: 0 34px 50px -24px var(--g), 0 2px 6px rgba(19, 35, 58, .12); }
+.wc-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.wc-top img { width: 40px; height: 40px; border-radius: 11px; object-fit: cover; background: #fff; box-shadow: 0 6px 12px -6px rgba(0, 0, 0, .4); }
+.wc-top em { padding: 6px 10px; border-radius: 999px; background: rgba(255, 255, 255, .22); font: 700 11.5px/1 var(--sans); font-style: normal; }
+.wc-ic { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; background: #fff; color: #5B21B6; box-shadow: 0 6px 12px -6px rgba(0, 0, 0, .4); }
+.wc-ic svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.wc-face { display: grid; align-content: center; gap: 6px; }
+.wc-face b { font: 800 22px/1.08 var(--sans); letter-spacing: -.03em; }
+.wc-face.big b { font-size: 54px; letter-spacing: -.05em; }
+.wc-face small { font: 600 13px/1.2 var(--sans); opacity: .85; }
+.wc-name b { display: block; font: 800 18px/1.15 var(--sans); letter-spacing: -.02em; }
+.wc-name small { display: block; margin-top: 4px; font: 500 12.5px/1.3 var(--sans); opacity: .85; }
+.wc-go { font: 700 13px/1 var(--sans); padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, .3); }
+/* the restaurant closes the page, under a torn paper edge */
+.c3-foot { padding-top: 14vh; }
+.c3-fin { padding: 6vh clamp(18px, 4vw, 40px) 14vh; }
+.c3-scene { --edge: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='1600'%20height='60'%20viewBox='0%200%201600%2060'%3E%3Cfilter%20id='s'%20x='0'%20y='-50%'%20width='100%'%20height='200%'%3E%3CfeDropShadow%20dx='0'%20dy='-3'%20stdDeviation='3.5'%20flood-color='%23281A0A'%20flood-opacity='.16'/%3E%3C/filter%3E%3Cpath%20d='M0%2060%20L0%2020.5%20L16%2017.0%20L28%2016.8%20L36%2030.1%20L44%2021.9%20L53%2019.1%20L73%2024.1%20L94%2016.7%20L105%2026.0%20L116%2027.4%20L131%2024.9%20L146%2024.9%20L156%2025.5%20L167%2024.2%20L178%2027.1%20L189%2024.0%20L208%2026.2%20L229%2017.7%20L246%2018.1%20L254%2025.4%20L269%2028.3%20L286%2024.3%20L299%2027.8%20L313%2033.3%20L330%2025.1%20L348%2020.0%20L364%2016.3%20L374%2025.6%20L391%2017.8%20L404%2036.2%20L417%2023.7%20L436%2028.1%20L449%2021.0%20L469%2018.1%20L479%2019.3%20L494%2027.7%20L507%2021.2%20L528%2025.7%20L543%2033.5%20L563%2026.9%20L581%2021.5%20L589%2032.9%20L597%2018.9%20L609%2024.7%20L618%2017.4%20L626%2028.2%20L635%2019.5%20L647%2017.7%20L668%2022.5%20L676%2017.4%20L687%2027.6%20L694%2029.3%20L703%2031.6%20L717%2029.7%20L734%2019.7%20L744%2026.8%20L761%2020.6%20L780%2029.8%20L798%2027.5%20L808%2023.2%20L816%2016.4%20L826%2025.7%20L840%2029.1%20L860%2021.1%20L870%2018.8%20L886%2028.6%20L900%2025.1%20L908%2025.2%20L926%2026.5%20L935%2027.0%20L953%2029.6%20L966%2029.3%20L975%2017.8%20L995%2027.3%20L1014%2029.7%20L1026%2023.7%20L1033%2029.6%20L1047%2029.1%20L1066%2027.6%20L1077%2020.1%20L1092%2019.6%20L1101%2028.7%20L1114%2024.2%20L1127%2028.8%20L1142%2031.3%20L1155%2026.6%20L1173%2018.4%20L1190%2023.8%20L1204%2023.8%20L1213%2023.8%20L1224%2026.8%20L1239%2026.6%20L1252%2024.6%20L1266%2025.7%20L1280%2022.7%20L1297%2028.3%20L1308%2023.8%20L1327%2017.9%20L1340%2017.0%20L1348%2025.4%20L1367%2018.2%20L1384%2018.0%20L1404%2019.1%20L1417%2022.8%20L1435%2018.3%20L1450%2020.7%20L1461%2034.1%20L1476%2030.2%20L1488%2024.7%20L1495%2029.8%20L1516%2017.5%20L1524%2026.9%20L1532%2021.9%20L1551%2019.6%20L1571%2024.0%20L1579%2016.8%20L1592%2017.0%20L1600%2020.5%20L1600%2060Z'%20fill='%23FFF8EC'%20filter='url(%23s)'/%3E%3C/svg%3E"); }
+.c3-scene::before { content: ""; position: absolute; z-index: 2; left: 0; right: 0; top: -2px; height: 60px; pointer-events: none; background: var(--edge) 0 0 / 1600px 60px repeat-x; transform: scaleY(-1); }
+@media (max-width: 1100px) { .c3-more { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 860px) {
+  .c3-mx small { font-size: 16px; } .c3-mx b { font-size: 18px; } .c3-mx p { font-size: 13.5px; }
+  .c3-rc .rv { font-size: 44px; }
+  .c3-wc { min-height: 240px; }
+}
+@media (max-width: 480px) { .c3-more { grid-template-columns: 1fr; } }
 
 /* ---------- small screens ---------- */
 @media (max-width: 860px) {
@@ -2762,10 +2808,16 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <p class="c3-cap" id="c3Cap"></p></div></div></div>
 
       <div class="c3-w">${edBig('That third panel, the hunt, is where people were getting lost. So I redesigned it, end to end.')}
-        <div class="c3-receipt" data-rv><h4>EAZYDINER · PAYEAZY</h4><p class="sm">Coupon selection redesign</p><hr>
-          <dl><dt>My role</dt><dd>End-to-end redesign lead</dd><dt>Timeline</dt><dd>Jan – Apr 2025 · 4 months</dd><dt>Team</dt><dd>1 PM, 3 devs, 2 QA, Head of Product</dd></dl><hr>
-          <dl><dt>Coupon application</dt><dd>55.5% → <em>67.0%</em></dd><dt>Payment success</dt><dd>34.6% → <em>45.6%</em></dd><dt>Filter engagement</dt><dd>~18% → <em>~42%</em></dd></dl>
-          <p class="thx">The full story is below ↓</p></div></div>
+        <div class="c3-flip" data-rv><button type="button" class="c3-flip-in" id="c3Bill" aria-label="Flip the bill to see more">
+          <div class="c3-receipt"><h4>EAZYDINER · PAYEAZY</h4><p class="sm">Coupon selection redesign</p><hr>
+            <dl><dt>My role</dt><dd>End-to-end redesign lead</dd><dt>Timeline</dt><dd>Jan – Apr 2025 · 4 months</dd><dt>Team</dt><dd>1 PM, 3 devs, 2 QA, Head of Product</dd></dl><hr>
+            <dl><dt>Coupon application</dt><dd>55.5% → <em>67.0%</em></dd><dt>Payment success</dt><dd>34.6% → <em>45.6%</em></dd><dt>Filter engagement</dt><dd>~18% → <em>~42%</em></dd></dl>
+            <p class="thx">Tap to flip ↻</p></div>
+          <div class="c3-receipt back"><h4>THE ORDER, ITEMISED</h4><p class="sm">Everything that went into it</p><hr>
+            <dl><dt>The problem</dt><dd>Only 36 of 100 diners paid</dd><dt>User feedback</dt><dd>Real complaints, checked</dd><dt>Pain points</dt><dd>40+ → 5 core problems</dd><dt>Apps studied</dt><dd>50+</dd><dt>Design rounds</dt><dd>4</dd><dt>Card types handled</dt><dd>80+ Axis cards</dd><dt>Dev handoff</dt><dd>3-hour deep-dive</dd></dl><hr>
+            <dl><dt>Status</dt><dd><em>Live on the app</em></dd></dl>
+            <p class="thx">Tap to flip back ↻</p></div></button></div>
+        <p class="c3-fliphint" data-rv>The bill flips. Go on, tap it.</p></div>
 
       <section class="c3-sec" data-ch="The drop-off"><div class="c3-w">${K('Chapter 1 · The drop-off')}
         ${edHead('Everyone came for a discount.', 'Few paid.')}
@@ -2804,12 +2856,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 
       <section class="c3-sec" data-ch="Looking around"><div class="c3-w">${K('Chapter 4 · Looking around')}
         ${edHead('I studied', '50+ apps', 'before drawing a thing.', 'b-lilac')}
-        <p class="c3-p" data-rv>I wasn’t going to reinvent the wheel without seeing what was already out there: giants like <b>Zomato, BookMyShow, Swiggy, Airtel, OYO</b> and <b>District</b>, plus 40 more lesser-known but innovative apps.</p></div>
+        <p class="c3-p" data-rv>I wasn’t going to reinvent the wheel without seeing what was already out there: giants like <b>Zomato, BookMyShow, Swiggy, Airtel, OYO</b> and <b>District</b>, and lesser-known but innovative apps.</p></div>
+        <div class="c3-logos" data-rv>${['zomato', 'swiggy', 'bistro', 'myntra', 'oyo', 'bb', 'mmt', 'ajio'].map(n => I('lg-' + n, n)).join('')}<span>+40 more</span></div>
         <div class="c3-strip" id="c3Strip">${[1, 2, 3, 4, 5, 6, 7, 8].map(n => I('comp' + n, 'A competitor’s coupon screen', '', 'comp')).join('')}</div>
-        <div class="c3-logos" data-rv>${['zomato', 'swiggy', 'bistro', 'myntra', 'oyo', 'bb', 'mmt', 'ajio'].map(n => I('lg-' + n, n)).join('')}</div>
         <div class="c3-w"><p class="c3-p" data-rv style="margin-top:8vh">Then I grabbed a pen and sorted them by how well their UI and UX actually worked.</p></div></section>
       <div class="c3-track" id="c3Mx" style="height:300vh"><div class="c3-pin"><div class="c3-sketch">
-        <div class="c3-mx"><svg class="mx-lines" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true">${mxLines.map(d => `<path d="${d}" pathLength="1"/>`).join('')}</svg>
+        <div class="c3-mx"><svg class="mx-lines" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true">${mxLines.map(d => `<path d="${d}"/>`).join('')}</svg>
           <span class="ax x">better UI →</span><span class="ax y">better UX →</span>
           <div class="q" data-q="0"><i class="slot" data-s="0"></i><small>bad UI, great UX</small><b>BookMyShow</b><p>Intuitive sections based on payment methods made navigation seamless.</p></div>
           <div class="q win" data-q="1"><i class="slot" data-s="1"></i><small>great UI, great UX</small><b>EazyDiner</b><p>You’ll be convinced by the end of this case study.</p></div>
@@ -2824,16 +2876,15 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <p class="c3-p" data-rv>Each round was tested, picked apart and rebuilt. Keep scrolling to flip through them, or tap a round.</p></div></section>
       <div class="c3-track c3-evo" id="c3Evo" style="height:${ED.its.length * 95 + 40}vh"><div class="c3-pin">
         <svg class="c3-doodles" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <g class="ruler"><rect x="860" y="820" width="420" height="34" rx="4"/>${Array.from({ length: 21 }, (_, i) => `<path d="M${870 + i * 20} 820v${i % 5 ? 9 : 16}"/>`).join('')}</g>
-          <g class="pencil" transform="translate(1180 690) rotate(-38)"><path d="M0 0h190v26H0z"/><path d="M190 0l34 13-34 13"/><path d="M216 10l8 3-8 3"/><path d="M0 0v26M22 0v26"/><path d="M-160 60c40-30 80 10 120-20s60 20 100-6" class="scrib"/></g>
-          <g class="dim"><path d="M1290 160v300M1280 160h20M1280 460h20"/><path d="M1290 160l-6 12M1290 160l6 12M1290 460l-6-12M1290 460l6-12"/><text x="1306" y="316">812</text></g>
-          <g class="dim"><path d="M140 770h300M140 760v20M440 760v20"/><path d="M140 770l12-6M140 770l12 6M440 770l-12-6M440 770l-12 6"/><text x="270" y="760">375</text></g>
-          <g class="crop"><path d="M70 230v-40h40M1370 230v-40h-40M70 640v40h40M1370 640v40h-40"/></g>
-          <g class="note"><text x="1180" y="250">try again →</text><text x="90" y="560" transform="rotate(-6 90 560)">8px grid!</text></g>
-          <circle class="comp" cx="1240" cy="560" r="70"/><path class="comp" d="M1240 560l50-50"/></svg>
+          <g transform="translate(34 300) rotate(-4)"><path d="M2 3q30-3 60 0l1 118q-30 2-61 0z"/><path d="M12 22h40M12 34h28M12 50q18 2 38 0M12 66h34M12 82h22"/><path d="M-4 -6l74 136M70 -6l-76 136" class="x"/><text x="4" y="150">v1, too busy</text></g>
+          <g transform="translate(1340 560) rotate(5)"><path d="M2 2q32-2 62 1v120q-31 2-62 0z"/><path d="M12 18q20-2 42 0M12 30h30M12 46h40v14H12zM12 72h26M12 86h36"/><path d="M20 140l8 8 18-20" class="ok"/><text x="-10" y="176">this one ✓</text></g>
+          <g transform="translate(150 790) rotate(-3)"><path d="M0 30c40-26 90-30 140-8"/><path d="M128 10l14 12-18 6"/><text x="150" y="30">search first?</text></g>
+          <g transform="translate(1210 150) rotate(4)"><text x="0" y="0">chips → tabs</text><path d="M0 12q60 8 110-2"/></g>
+          <g transform="translate(60 120) rotate(-6)"><text x="0" y="0">too many offers :(</text><path d="M-4 10q90 10 180-4" class="x"/></g>
+        </svg>
         <div class="c3-evo-in">
-        <div class="c3-tabs">${ED.its.map(([, k, t], i) => `<button type="button" data-evo="${i}">${k}<span>: ${t.toLowerCase()}</span></button>`).join('')}</div>
-        <div class="c3-row" id="c3Row">${ED.its.map(([im, k, t, li, ch]) => `<div class="c3-slide"><div class="c3-card"><i class="cm"></i>${I(im, k + ' design', '', 'its')}</div><div class="c3-stxt"><small>${k}</small><h4>${t}</h4><ul>${li.map(x => `<li>${x}</li>`).join('')}</ul>${ch ? `<p class="chal">${ch}</p>` : ''}</div></div>`).join('')}</div></div></div></div>
+        <div class="c3-row" id="c3Row">${ED.its.map(([im, k, t, li, ch]) => `<div class="c3-slide"><div class="c3-card"><i class="cm"></i>${I(im, k + ' design', '', 'its')}</div><div class="c3-stxt"><small>${k}</small><h4>${t}</h4><ul>${li.map(x => `<li>${x}</li>`).join('')}</ul>${ch ? `<p class="chal">${ch}</p>` : ''}</div></div>`).join('')}</div>
+        <div class="c3-tabs">${ED.its.map(([, k, t], i) => `<button type="button" data-evo="${i}"><i>${i + 1}</i>${t}</button>`).join('')}</div></div></div></div>
 
       <section class="c3-sec" data-ch="The Axis problem"><div class="c3-w">${K('Chapter 6 · The Axis problem')}
         ${edHead('80+ card types.', 'One simple question.', '', 'b-coral')}
@@ -2883,16 +2934,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         ${edHead('It’s live, and', 'it’s working.', '', 'b-mint')}
         <p class="c3-p" data-rv>The coupon redesign shipped in the EazyDiner app. Remember our 100 diners? Out of every 100, about <b>11 more now pay</b> than before.</p></div>
         <div class="c3-wide" id="c3Res"><div class="c3-seg c3-rseg" role="tablist"><button type="button" data-res="0">Before</button><button type="button" data-res="1" class="on">After</button></div>
-          <div class="c3-rgrid">${results.map(([id, t, big, , b, a, lab, sh]) => `<div class="c3-rc" data-b="${Math.round(b)}" data-a="${Math.round(a)}"><div class="rh"><span>${t}</span><b>${big}</b></div><div class="c3-dots ${sh}">${Array.from({ length: 100 }, (_, i) => `<i ${sh === 'p' ? person(i) : `style="--d:${(i * 13) % 40}"`}></i>`).join('')}</div><p class="rf"><b class="rn">${Math.round(a)}</b> of 100 ${lab}<small>${b}% → ${a}%</small></p></div>`).join('')}
-            <div class="c3-rc tray"><div class="rh"><span>Opening the coupon tray</span><b>+25.58%</b></div><div class="c3-tray"><div class="tr-box"><i></i><i></i><i></i><i></i></div></div><div class="c3-tbars"><span><em>Before</em><i style="--w:79.6%"></i></span><span><em>After</em><i style="--w:100%"></i></span></div><p class="rf">More people now open the tray to explore offers.<small>Relative increase in tray opens</small></p></div></div></div></section>
+          <div class="c3-rgrid">${results.map(([id, t, big, , b, a, lab, sh]) => `<div class="c3-rc" data-b="${Math.round(b)}" data-a="${Math.round(a)}"><div class="rh"><span>${t}</span><em class="rd">${big}</em></div><b class="rv" data-from="${b}" data-to="${a}">${b}%</b><div class="c3-dots ${sh}">${Array.from({ length: 100 }, (_, i) => `<i ${sh === 'p' ? person(i) : `style="--d:${(i * 13) % 40}"`}></i>`).join('')}</div><p class="rf"><b class="rn">${Math.round(b)}</b> of 100 ${lab}<small data-b="Before the redesign" data-a="Up from ${b}%">Before the redesign</small></p></div>`).join('')}
+            <div class="c3-rc tray"><div class="rh"><span>Opening the coupon tray</span><em class="rd">+25.58%</em></div><b class="rv tv" data-b="Baseline" data-a="+25.58%">Baseline</b><div class="c3-tray"><div class="tr-box"><i></i><i></i><i></i><i></i></div></div><div class="c3-tbar"><i></i></div><p class="rf"><span class="tl" data-b="How often people opened the tray before." data-a="More people now open the tray to explore offers.">How often people opened the tray before.</span></p></div></div></div></section>
 
       <footer class="c3-foot" data-ch="Thanks">
-        <div class="c3-scene" id="c3Scene"></div>
         <div class="c3-w c3-fin"><p class="kicker c3-k" data-rv>${STAR}That’s the bill, settled</p>
           ${edHead('Thanks for', 'reading!', '', 'b-sun')}
-          <p class="c3-p" data-rv>Designed with care by James Chugh. Got a minute for another story?</p>
-          <div class="c3-more" data-rv>${ED.more.map(([id, t, co, c]) => `<button type="button" data-switch="${id}" style="--c:${c}"><small>${co}</small><b>${t}</b><em>Read →</em></button>`).join('')}</div>
-          <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://topmate.io/jameschughh" target="_blank" rel="noopener">Book a free call ↗</a><button type="button" data-close>Back to the box</button></div></div></footer>
+          <p class="c3-p" data-rv>Designed with care by James Chugh.</p>
+          <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://topmate.io/jameschughh" target="_blank" rel="noopener">Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
+          <p class="c3-morek" data-rv>Got a minute for another story?</p>
+          <div class="c3-more" data-rv>${WORK.filter(x => x.id !== 'coupon').map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div></div>
+        <div class="c3-scene" id="c3Scene"></div></footer>
       </article>
       <div class="c3-lb" id="c3Lb" aria-hidden="true"><button type="button" class="lb-x" aria-label="Close">×</button><button type="button" class="lb-p" aria-label="Previous">‹</button><figure><img alt=""><figcaption></figcaption></figure><button type="button" class="lb-n" aria-label="Next">›</button></div>`;
   }
@@ -2978,18 +3030,16 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         five.forEach((d, k) => { d.classList.toggle('in', col > .6); d.classList.toggle('on', k === bi); });
         bn.textContent = col > .6 ? '5 problems' : '40+ notes';
         bcap.innerHTML = bi < 0 ? `<p>${col > .6 ? 'Five problems were left standing.' : 'Everything that was broken, on one board.'}</p>` : `<b>0${bi + 1} · ${ED.probs[bi][0]}</b><p>${ED.probs[bi][1]}</p>`; }
-      // the sketch: lines draw themselves, then each app flies into its corner
+      // the sketch stays put; each app flies into its corner as you scroll
       const mp = prg(mx);
       if (mp > 0 || mx.getBoundingClientRect().top < vh) {
-        const dr = clamp(mp / .25); mxPaths.forEach((p, i) => p.style.strokeDashoffset = (1 - clamp(dr * 1.6 - i * .12)).toFixed(3));
         const pr = mxPin.getBoundingClientRect(); let landed = 0;
-        bdgs.forEach((b, i) => { const t = ss(clamp((mp - .25 - i * .1) / .2)), sl = slots[+b.dataset.slot].getBoundingClientRect(), twin = b.dataset.slot === '2' ? (i === 2 ? -30 : 30) : 0;
+        bdgs.forEach((b, i) => { const t = ss(clamp((mp - .08 - i * .14) / .22)), sl = slots[+b.dataset.slot].getBoundingClientRect(), twin = b.dataset.slot === '2' ? (i === 2 ? -30 : 30) : 0;
           const tx = sl.left + sl.width / 2 - pr.left + twin, ty = sl.top + sl.height / 2 - pr.top, sx = pr.width / 2 + (i - 2) * 70, sy = pr.height + 80;
           const x = sx + (tx - sx) * t, y = sy + (ty - sy) * t - Math.sin(Math.PI * t) * 90;
           b.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -50%) rotate(${((1 - t) * (i % 2 ? 25 : -25)).toFixed(1)}deg) scale(${(.6 + .4 * t).toFixed(3)})`;
           b.style.opacity = t > 0 ? 1 : 0; if (t >= 1) landed |= 1 << +b.dataset.slot; });
-        qs.forEach((qq, k) => qq.classList.toggle('got', !!(landed & (1 << k))));
-        const m = landed === 15 ? 'And one app made it to the top right.' : dr < 1 ? 'Two axes: how it looks, and how it works.' : 'Placing the apps…'; if (m !== S.m) { S.m = m; mxCap.textContent = m; }
+        const m = landed === 15 ? 'And one app made it to the top right.' : ''; if (m !== S.m) { S.m = m; mxCap.textContent = m; }
       }
       const ep = prg(evo), n = tabs.length, et = ep * (n - 1), e0 = Math.min(n - 2, Math.floor(et)), ex = e0 + ss(clamp((et - e0 - .35) / .45));
       row.style.transform = `translate3d(${(-ex * root.clientWidth).toFixed(1)}px, 0, 0)`;
@@ -3030,11 +3080,21 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       dcap.textContent = b.dataset.mode === 'before' ? 'Before: the best deal was hidden somewhere inside 50+ offers. Tap the tray and see.' : 'One tap. The best saving for your payment method is already there.'; }));
     // results: flip between before and after
     const res = $('#c3Res', root), rcs = $$('.c3-rc[data-a]', root);
-    const setRes = after => { $$('[data-res]', root).forEach(x => x.classList.toggle('on', +x.dataset.res === +after)); res.classList.toggle('after', after);
-      rcs.forEach(rc => { const k = +(after ? rc.dataset.a : rc.dataset.b); $$('.c3-dots i', rc).forEach((d, i) => d.classList.toggle('lit', i < k)); $('.rn', rc).textContent = k; }); };
+    const countTo = (el, from, to, fmt) => { const t0 = performance.now(); const tick = n => { const f = Math.min(1, (n - t0) / 900), e = 1 - Math.pow(1 - f, 3); el.textContent = fmt(from + (to - from) * e); if (f < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); };
+    let resAfter = null;
+    const setRes = after => { if (after === resAfter) return; const was = resAfter; resAfter = after;
+      $$('[data-res]', root).forEach(x => x.classList.toggle('on', +x.dataset.res === +after)); res.classList.toggle('after', after);
+      rcs.forEach(rc => { const k = +(after ? rc.dataset.a : rc.dataset.b), k0 = +(after ? rc.dataset.b : rc.dataset.a); $$('.c3-dots i', rc).forEach((d, i) => d.classList.toggle('lit', i < k));
+        const rv = $('.rv', rc), a = +rv.dataset.to, b = +rv.dataset.from;
+        if (was === null) { rv.textContent = (after ? a : b) + '%'; $('.rn', rc).textContent = k; }
+        else { countTo(rv, after ? b : a, after ? a : b, v => (Math.round(v * 10) / 10) + '%'); countTo($('.rn', rc), k0, k, v => Math.round(v)); }
+        const sm = $('.rf small', rc); sm.textContent = after ? sm.dataset.a : sm.dataset.b; });
+      $$('[data-b][data-a]', $('.c3-rc.tray', root)).forEach(el => el.textContent = after ? el.dataset.a : el.dataset.b); };
     $$('[data-res]', root).forEach(b => b.addEventListener('click', () => setRes(b.dataset.res === '1')));
     setRes(false);
     new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { o.disconnect(); setTimeout(() => setRes(true), 900); } }), { root, threshold: .35 }).observe(res);
+    // the bill flips over
+    const bill = $('#c3Bill', root); bill.addEventListener('click', () => bill.classList.toggle('flipped'));
     // the footer restaurant
     $('#c3Scene', root).innerHTML = edScene();
     // tap any screen to zoom in
