@@ -462,7 +462,10 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .bi-m b { display: block; font: 800 26px/1 var(--sans); letter-spacing: -.04em; color: color-mix(in srgb, var(--c) 85%, var(--ink)); }
 .bi-m span { display: block; margin-top: 5px; font: 500 12.5px/1.3 var(--sans); color: var(--ink-2); max-width: 17ch; }
 @keyframes bim { from { opacity: 0; transform: translateY(6px); } }
-.bi-list { margin: auto 0 0; padding: 0; list-style: none; display: flex; flex-wrap: nowrap; justify-content: center; gap: 2px; }
+.bi-list { margin: auto 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(5, auto); justify-content: center; column-gap: clamp(2px, 1.2vw, 24px); width: 100%; }
+.bi-list li { min-width: 0; }
+.bi-list button { max-width: 100%; }
+.bi-list button em { font-style: normal; white-space: nowrap; }
 .bi-list button { padding: 10px 14px !important; font-size: 15px !important; }
 .bi-list button { width: auto; display: grid; grid-template-columns: 26px auto; text-align: left; align-items: baseline; gap: 0 8px; padding: 10px 12px; border-radius: 14px; text-align: left; font: 700 16px/1.2 var(--sans); color: var(--ink); transition: background .25s, transform .35s var(--spring); }
 .bi-list button b { font: 700 13px/1 var(--sans); color: var(--c); }
@@ -473,6 +476,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .bi-list button:hover::before, .bi-list button.on::before { transform: scaleX(1); }
 .bi-list:has(button.on) button:not(.on):not(:hover) { opacity: .45; }
 .bi-list button { transition: opacity .3s, color .3s, transform .45s var(--spring); }
+@media (min-width: 861px) { .bi-list button { padding: 10px 8px !important; font-size: clamp(13.5px, 1.05vw, 16px) !important; grid-template-columns: 22px auto; gap: 0 6px; } .bi-list button b { font-size: 12px; } .bi-list button { grid-template-columns: 22px auto !important; } .bi-list button span { font-size: clamp(11.5px, .9vw, 13px); } }
 .box-cap { display: none !important; position: absolute; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 5vh); transform: translateX(-50%); display: flex; align-items: center; gap: 12px; font: 400 17px/1 var(--geist); color: var(--ink); white-space: nowrap; }
 .box-cap b { font-weight: 600; color: var(--c, var(--coral)); font-variant-numeric: tabular-nums; }
 .box-cap .hint2 { font: 700 24px/1 var(--hand); color: var(--ink-2); }
@@ -3216,7 +3220,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   let boxOpen = false, picked = null, hoverK = null, boxS = 1;
   const BOX_TOP = [['+41%', 'payment success, EazyDiner'], ['16 → 35%', 'hotels replying, MakeMyTrip'], ['400+', 'LastLook downloads']];
   const boxInfo = document.createElement('div'); boxInfo.className = 'box-info'; boxStage.appendChild(boxInfo);
-  boxInfo.innerHTML = `<p class="bi-k" id="biK">Pick a card</p><h3 id="biT">Five projects, one box.</h3><p class="bi-p" id="biP">Hover a card to read about it. Click to open the full case study.</p><ul class="bi-m" id="biM"></ul><ol class="bi-list">${WORK.map((w, i) => `<li><button type="button" data-k="${i}" style="--c:${w.c}"><b>${String(i + 1).padStart(2, '0')}</b>${w.name}<span>${w.co}</span></button></li>`).join('')}</ol>`;
+  boxInfo.innerHTML = `<p class="bi-k" id="biK">Pick a card</p><h3 id="biT">Five projects, one box.</h3><p class="bi-p" id="biP">Hover a card to read about it. Click to open the full case study.</p><ul class="bi-m" id="biM"></ul><ol class="bi-list">${WORK.map((w, i) => `<li><button type="button" data-k="${i}" style="--c:${w.c}"><b>${String(i + 1).padStart(2, '0')}</b><em>${w.name}</em><span>${w.co}</span></button></li>`).join('')}</ol>`;
   boxInfo.addEventListener('pointerover', e => { const b = e.target.closest('[data-k]'); if (!b || picked || !boxOpen) return; const k = wks[+b.dataset.k]; if (hoverK !== k) { hoverK && hoverK.leave(); k.enter(); } });
   boxInfo.addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) pick(wks[+b.dataset.k]); });
   function setCap(k) {
@@ -3244,10 +3248,32 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   // hover stays on a card until the pointer reaches another card or leaves the box, so a lifted card never flickers
   boxStage.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse' || !hoverK || picked) return; if (!e.target.closest('#box3, .box-info')) hoverK.leave(); });
   boxStage.addEventListener('pointerleave', () => { if (hoverK && !picked) hoverK.leave(); });
-  function boxBase() { return mobile ? Math.min(1, (vw - 24) / 900, vh / 760) : Math.min(1, (vw * .54) / 820, vh / 1180); }
-  let boxSW = 0, boxCur = 0;
-  function boxScale(dt) { if (picked) return boxS; const r = boxTrack.getBoundingClientRect(), q = clamp((vh - r.top) / (r.height)), want = boxBase() * (mobile ? .7 + .42 * ss(q) : .82 + .18 * ss(q));
+  // the box is measured once (lid open, cards lifted), then centred and scaled into the gap between the heading and the project list
+  let boxExt = null, boxSW = 0, boxCur = 0, boxPos = '';
+  function boxMeasure() {
+    const parts = [...box3.children].filter(e => !e.classList.contains('box-shadow')), saved = parts.map(e => [e.style.transition, e.style.transform]);
+    const fitT = boxFit.style.transform; boxFit.style.transform = 'none';
+    parts.forEach(e => { e.style.transition = 'none'; if (e === lid) e.style.transform = `translate3d(0,0,${BH}px) rotateX(-72deg)`; else if (e.classList.contains('wk')) e.style.transform = stand(70); });
+    const o = boxFit.getBoundingClientRect(); let l = 1e9, t = 1e9, r = -1e9, b = -1e9;
+    parts.forEach(e => { const q = e.getBoundingClientRect(); l = Math.min(l, q.left); t = Math.min(t, q.top); r = Math.max(r, q.right); b = Math.max(b, q.bottom); });
+    parts.forEach((e, i) => { e.style.transform = saved[i][1]; });
+    void box3.offsetWidth; parts.forEach((e, i) => { e.style.transition = saved[i][0]; });
+    boxFit.style.transform = fitT;
+    boxExt = { l: l - o.left, t: t - o.top, w: r - l, h: b - t };
+  }
+  function boxZone() {
+    const st = boxStage.getBoundingClientRect(), vis = el => el && el.offsetParent !== null && getComputedStyle(el).display !== 'none';
+    let top = 0; for (const el of [$('#biK'), $('#biT'), $('#biP')]) if (vis(el)) top = Math.max(top, el.getBoundingClientRect().bottom - st.top);
+    top += mobile ? 80 : 94; // room for the three numbers that appear on hover
+    const list = $('.bi-list', boxInfo), bot = (vis(list) ? list.getBoundingClientRect().top : st.bottom) - st.top - (mobile ? 10 : 18);
+    return { x: 16, y: top, w: st.width - 32, h: Math.max(120, bot - top) };
+  }
+  function boxScale(dt) { if (picked) return boxS; if (!boxExt) boxMeasure();
+    const z = boxZone(), fit = Math.min(z.w / boxExt.w, z.h / boxExt.h, mobile ? 1.1 : 1.15);
+    const r = boxTrack.getBoundingClientRect(), q = clamp((vh - r.top) / (r.height)), want = fit * (.94 + .06 * ss(q));
     boxCur = !boxCur || !dt || reduce ? want : boxCur + (want - boxCur) * (1 - Math.exp(-dt * 7));
+    const x = z.x + z.w / 2 - boxCur * (boxExt.l + boxExt.w / 2), y = z.y + z.h / 2 - boxCur * (boxExt.t + boxExt.h / 2), pos = x.toFixed(1) + ',' + y.toFixed(1);
+    if (pos !== boxPos) { boxPos = pos; boxFit.style.left = x.toFixed(1) + 'px'; boxFit.style.top = y.toFixed(1) + 'px'; }
     if (Math.abs(boxCur - boxSW) > .0004) { boxSW = boxCur; boxS = boxCur; boxFit.style.transform = `scale(${boxCur.toFixed(4)})`; } return boxS; }
   const pickEase = 'cubic-bezier(.55, 0, .15, 1)';
   function pick(k) {
