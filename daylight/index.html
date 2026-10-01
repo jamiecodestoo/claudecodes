@@ -1498,20 +1498,14 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .j-head .sec-head h2 { font-size: min(7.2vw, 3rem); }
   .desk-hint { font-size: 15px; right: 12px; bottom: 8px; }
   .desk .p1 { left: 3% !important; top: 16px !important; width: 55%; }
-  .desk .p3 { left: 57% !important; top: 30px !important; width: 40%; font-size: 17px; padding: 14px; }
-  .desk .p2 { left: 3% !important; top: 300px !important; width: 94%; padding-left: 40px; }
-  .desk .p5 { left: 6% !important; top: 790px !important; }
-  .desk .p15 { left: 4% !important; top: 1030px !important; width: min(40%, 190px) !important; }
-  .desk .p6 { left: 54% !important; top: 1040px !important; width: 42% !important; font-size: 17px; }
-  .desk .p16 { left: 52% !important; top: 1210px !important; width: 44% !important; }
-  .desk .p17 { left: 6% !important; top: 1330px !important; width: 44% !important; font-size: 17px; padding: 14px; }
-  .desk .p7 { left: 3% !important; top: 1500px !important; width: min(92%, 420px); }
-  .desk .p4 { left: 4% !important; top: 1730px !important; width: min(46%, 220px) !important; }
-  .desk .p18 { left: 54% !important; top: 1770px !important; width: min(40%, 200px) !important; }
-  .desk .p14 { display: none; }
-  .desk .mag { font-size: 44px; top: 2080px !important; }
-  .desk .p8 { left: 4% !important; } .desk .p9 { left: 14% !important; } .desk .p10 { left: 24% !important; } .desk .p11 { left: 37% !important; } .desk .p12 { left: 46% !important; }
-  .desk .p13 { left: 66% !important; top: 2070px !important; }
+  .desk .p2 { left: 3% !important; top: 310px !important; width: 94%; padding-left: 40px; }
+  .desk .p5 { left: 8% !important; top: 770px !important; }
+  .desk .p4 { left: 4% !important; top: 1010px !important; width: min(44%, 200px) !important; }
+  .desk .p18 { left: 52% !important; top: 1040px !important; width: min(42%, 190px) !important; }
+  .desk .p15 { left: 6% !important; top: 1300px !important; width: min(38%, 170px) !important; }
+  .desk .p17 { left: 50% !important; top: 1320px !important; width: 46% !important; font-size: 17px; padding: 14px; }
+  .desk .p7 { left: 3% !important; top: 1540px !important; width: min(92%, 420px); }
+  .desk .p3, .desk .p6, .desk .p13, .desk .p14, .desk .p16, .desk .mag { display: none; }
   .vn-ask { left: 0; transform: translate(0, 8px) scale(.94); } .vinyl.ask .vn-ask { transform: none; }
   .box-track { height: 190vh; }
   .box-fit { left: 50%; top: 42%; }
@@ -1528,7 +1522,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .proc-line svg { display: none; }
   .pnode, .pnode.up { position: relative; left: auto !important; top: auto !important; transform: none; width: auto; text-align: left; display: grid; grid-template-columns: 26px 1fr; gap: 4px 14px; }
   .pnode .dot, .pnode.up .dot { margin: 0; grid-row: span 2; order: 0; }
-  .desk { height: 2230px; border-width: 10px; }
+  .desk { height: 1740px; border-width: 10px; }
   .sticky { width: 10.5rem; font-size: 18px; padding: 14px; }
   .tell-box { padding-right: 0; }
   .tell { font-size: clamp(1.9rem, 8.4vw, 2.6rem); line-height: 1.3; }
@@ -1638,6 +1632,82 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   .ll-stats b { font-size: clamp(28px, 8.6vw, 38px); }
   .ll-stats span { font-size: 10px; letter-spacing: .08em; }
 }
+
+/* journey as a carousel on phones and tablets */
+.jcar { display: none; }
+.journey.jcm .jcar { position: absolute; z-index: 7; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 6px; border-radius: 999px; background: rgba(255, 253, 247, .94); box-shadow: var(--shadow-sm); }
+.jcar button { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 999px; font: 700 15px/1 var(--sans); color: var(--ink); background: rgba(19, 35, 58, .06); }
+.jcar button:disabled { display: none; }
+.jcar #jcPrev { width: 44px; padding: 0; justify-content: center; font-size: 18px; }
+.jcar .nx { background: var(--ink); color: #fff; }
+.jcar #jcCount { min-width: 4ch; font: 700 13px/1 var(--sans); color: var(--ink-2); text-align: center; font-variant-numeric: tabular-nums; }
+.jcar #jcCount:empty { display: none; }
+.journey.jcm .j-track { height: 100vh; height: 100svh; }
+.journey.jcm .jtl, .journey.jcm .mapctl, .journey.jcm .jc-nav { display: none; }
+.journey.jcm .jcard { bottom: calc(env(safe-area-inset-bottom, 0px) + 76px); }
+@media (min-width: 861px) and (max-width: 1100px) { .journey.jcm .jcard { top: auto; transform: translateY(30px); max-height: calc(100svh - 200px); } .journey.jcm .jcard.in { transform: none; } }
+@media (max-width: 860px) { .journey.jcm .jcard { max-height: 50svh; } }
+
+/* ===== touch layouts (phones and tablets) ===== */
+.jcar button { white-space: nowrap; }
+.gift-tap { display: none; }
+@media (max-width: 1100px) {
+  /* brands: a row you swipe yourself */
+  .brand-sec.manual .brand-pin { position: relative; height: auto; overflow: visible; padding-bottom: 8vh; }
+  .brand-sec.manual .brand-pin > div[style] { display: block !important; }
+  .brand-sec.manual .brand-row { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 50px var(--gut) 40px; scroll-padding-inline: var(--gut); will-change: auto; }
+  .brand-sec.manual .brand-row::-webkit-scrollbar { display: none; }
+  .brand-sec.manual .site { scroll-snap-align: start; width: min(480px, 82vw); }
+  .brand-sec.manual .brand-prog { display: none; }
+  /* gift: tap to open */
+  .stack.tap .stack-track { height: 100vh; height: 100svh; }
+  .stack.tap .gift-tap { position: absolute; z-index: 5; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 7vh); transform: translateX(-50%); display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px 14px 16px; border-radius: 999px; background: var(--ink); color: #fff; font: 700 15px/1 var(--sans); box-shadow: 0 16px 30px -14px rgba(19, 35, 58, .7); transition: opacity .4s, transform .4s var(--spring); animation: tapbob 2s ease-in-out infinite; }
+  .stack.tap .gift-tap i { width: 10px; height: 10px; border-radius: 50%; background: var(--sun); box-shadow: 0 0 0 4px rgba(255, 210, 63, .3); }
+  .stack.tap .gift-tap.gone { opacity: 0; pointer-events: none; transform: translate(-50%, 10px); }
+  .stack.tap #giftStage { cursor: pointer; }
+  /* journey carousel card on tablets */
+  .journey.jcm .jcard { left: 50%; right: auto; width: min(560px, calc(100vw - 24px)); translate: -50% 0; }
+  .journey.jcm .jc-gal > div { grid-template-columns: repeat(3, minmax(0, 96px)); }
+}
+@keyframes tapbob { 50% { transform: translate(-50%, -4px); } }
+@media (max-width: 860px) {
+  /* A · hero: a shorter fly-in */
+  .valley { height: 150vh; }
+  /* B · story: keep the colour marks, drop the drawn scribbles that misalign on small lines */
+  #doodles { display: none; }
+  /* D · the box on phones: numbers on top, projects as a swipeable row at the bottom */
+  .box-fit { top: 54%; }
+  .box-info { left: 0; right: 0; top: calc(env(safe-area-inset-top, 0px) + 70px); bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); width: auto; transform: none; display: flex; flex-direction: column; align-items: stretch; padding: 0; }
+  .box-info .bi-k { display: block; margin: 0 0 6px; text-align: center; }
+  .box-info h3 { display: block; margin: 0 16px 8px; font-size: 24px; text-align: center; }
+  .bi-m { margin: 6px 16px 0; justify-content: center; }
+  .bi-m li { flex: 1 1 0; }
+  .bi-list { display: flex !important; margin: auto 0 0 !important; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 10px; padding: 6px 16px 4px; scroll-padding-inline: 16px; justify-content: flex-start; }
+  .bi-list::-webkit-scrollbar { display: none; }
+  .bi-list li { flex: 0 0 auto; scroll-snap-align: start; }
+  .bi-list button { min-width: 190px; background: #fff; border-radius: 14px; box-shadow: var(--shadow-sm) !important; transform: none !important; }
+  .bi-list:has(button.on) button:not(.on):not(:hover) { opacity: 1; }
+  /* F · LastLook: tighter, and highlights that wrap cleanly */
+  .ll-rev-track { height: 135vh; }
+  .ll-end { padding-block: 0 12vh; }
+  /* G · hats: no line running through them, just a clean list */
+  .ll-roles ol::before, .ll-roles ol::after { display: none; }
+  .ll-roles ol { gap: 20px; padding-left: 0; }
+  .ll-roles li i.hat { margin: 0; width: 56px; height: 44px; }
+  /* J · email fits its column */
+  .keys { grid-template-columns: repeat(2, minmax(0, 160px)); }
+  .kw .knote { width: 100%; }
+  .knote #mailText { font-size: 11px; white-space: nowrap; letter-spacing: -.01em; }
+  .mailrow { flex-wrap: wrap; justify-content: center; }
+}
+@media (max-width: 600px) {
+  .tell .hl, .ll-tell .hl { -webkit-box-decoration-break: clone; box-decoration-break: clone; background: var(--b) center / 100% 100% no-repeat; padding: 0 .08em; border-radius: .1em; }
+  .tell .hl::before, .ll-tell .hl::before { display: none; }
+  .tell .hl:not(.on) { background-size: 0 100%; transition: background-size .8s var(--ease); }
+}
+/* brands: the site cards never cover the heading or the call button */
+.brand-pin > div[style] { padding-top: 34px; }
+.site { width: min(560px, 78vw, calc((100svh - 300px) * 1.4)); }
 </style>
 
 <header class="bar">
@@ -1754,7 +1824,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <div class="sec-head">
           <p class="kicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>The journey</p>
           <h2>Engineer by degree, <span class="hl b-sky" id="journeyHl">designer by obsession.</span></h2>
-          <p>Nine stops between 2021 and now. Scroll to walk the path.</p>
+          <p>Nine stops between 2021 and now. <span class="j-how">Scroll to walk the path.</span></p>
         </div>
       </div>
       <div class="compass" id="compass" aria-hidden="true">
@@ -1770,6 +1840,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <button class="solo" id="mapRe" type="button" aria-label="Recenter"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
         <div class="grp"><button id="mapIn" type="button" aria-label="Zoom in">+</button><button id="mapOut" type="button" aria-label="Zoom out">&minus;</button></div>
       </div>
+      <div class="jcar" aria-label="Journey stops"><button type="button" id="jcPrev" aria-label="Previous stop" disabled>←</button><span id="jcCount"></span><button type="button" id="jcNext" class="nx">Start the journey <span aria-hidden="true">→</span></button></div>
       <nav class="jtl" id="jtl" aria-label="Years"><ol id="jtlDots"></ol><span class="yr" id="jtlYr">2021 &rarr; now</span></nav>
     </div>
   </div>
@@ -2216,7 +2287,11 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   /* ---------- smooth scroll ---------- */
   const lenis = (!reduce && window.Lenis) ? new Lenis({ lerp: .09, smoothWheel: true, wheelMultiplier: .9 }) : null;
   const Y = () => (lenis ? lenis.scroll : window.scrollY);
-  const goTo = (y, dur = 1.8) => lenis ? lenis.scrollTo(y, { duration: dur, easing: t => 1 - Math.pow(1 - t, 4) }) : scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+  const HW = {};
+  const goTo = (y, dur = 1.8) => { for (const k in HW) delete HW[k]; return lenis ? lenis.scrollTo(y, { duration: dur, easing: t => 1 - Math.pow(1 - t, 4) }) : scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' }); };
+  // scroll-linked scenes only move forward: scrolling up leaves them as they are,
+  // and once you scroll back above a scene it resets and plays again on the way down
+  const held = (k, y, resetAt) => { if (y <= resetAt || HW[k] === undefined) HW[k] = y; else HW[k] = Math.max(HW[k], y); return HW[k]; };
   const top = el => el.getBoundingClientRect().top + window.scrollY;
 
   let vw = innerWidth, vh = innerHeight, mobile = vw < 860;
@@ -2448,7 +2523,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const heartD = 'M' + heartPts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L');
   const jHead = $('#jHead'), jFade = $('#jFade');
   let spot, spotG; const spotC = { x: STOPS[0].at[0], y: STOPS[0].at[1] };
-  jTrack.style.height = (N * 84 + 200) + 'vh';
+  let jCar = false, jv = 0, jvT = 0, jIdx = -1;
   const holeR = STOPS.map(() => 0);
   let jTop = 0, jRange = 1, carve, casing, ghost, fogPath, holes = [], pathLen = 0, stopL = [], jmarks = [], pois = [], lastCard = -2, heading = 0, polFor = -2;
   const mrand = (a => () => (a = (a * 16807) % 2147483647) / 2147483647)(42);
@@ -2668,7 +2743,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   addEventListener('pointermove', e => { if (!drag) return; const dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.abs(dx) + Math.abs(dy) > 4) dragMoved = true; pan.x = drag.px + dx; pan.y = drag.py + dy; });
   addEventListener('pointerup', () => { if (drag) { drag = null; mapview.classList.remove('drag'); setTimeout(() => dragMoved = false, 0); } });
   mapview.addEventListener('click', e => { if (!e.target.closest('.poi')) pois.forEach(q => q.classList.remove('tipon')); });
-  function layoutJourney() { jTop = top(jTrack); jRange = Math.max(1, jTrack.offsetHeight - vh); headB = jHead.offsetTop + jHead.offsetHeight; jFade.style.setProperty('--hb', headB + 'px'); }
+  function layoutJourney() { jCar = vw <= 1100; journey.classList.toggle('jcm', jCar); $('.j-how').textContent = jCar ? 'Tap through them, or swipe the map.' : 'Scroll to walk the path.'; jTrack.style.height = jCar ? '' : (N * 84 + 200) + 'vh'; jTop = top(jTrack); jRange = Math.max(1, jTrack.offsetHeight - vh); headB = jHead.offsetTop + jHead.offsetHeight; jFade.style.setProperty('--hb', headB + 'px'); }
   const PH = { hold: .05, zoom: .12, walk: .91 };
   function phase(p) {
     if (p < PH.hold) return { pos: -1, k: 0, out: 0 };
@@ -2679,14 +2754,15 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const lenAt = pos => { if (pos <= 0) return pos < -.999 ? 0 : stopL[0] * (1 + pos); const i = Math.min(N - 2, Math.floor(pos)), f = pos - i; return stopL[i] + (stopL[i + 1] - stopL[i]) * f; };
   const cam3 = { x: 0, y: 0, s: 0, ok: false };
   const cardW = () => mobile ? 0 : Math.min(26 * 16, vw - 32) + 44;
-  function viewFor(cx, cy, s) { const L = cardW(), fx = mobile ? vw * .5 : L + (vw - L) * .36, fy = mobile ? vh * .42 : vh * .62; return { x: fx - cx * s, y: fy - cy * s, s }; }
+  function viewFor(cx, cy, s) { const L = cardW(), fx = mobile ? vw * .5 : L + (vw - L) * .36, fy = mobile ? vh * .27 : vh * .58; return { x: fx - cx * s, y: fy - cy * s, s }; }
   let headB = 240;
   function overview() { const t = headB + 10, b = mobile ? 70 : 90, s = Math.min((vw - 48) / MW, (vh - t - b) / MH) * (mobile ? 1.12 : 1); return { x: (vw - MW * s) / 2, y: t + (vh - t - b - MH * s) / 2, s }; }
   function frameJourney(dt, y) {
-    const p = clamp((y - jTop) / jRange), ph = phase(p);
+    if (jCar) jv += (jvT - jv) * (reduce ? 1 : clamp(dt * 2.6));
+    const p = jCar ? jv : clamp((y - jTop) / jRange), ph = phase(p);
     const L = lenAt(Math.max(ph.pos, 0)), tip = carve.getPointAtLength(Math.max(0.01, L));
-    const O = overview(), Z = (mobile ? .9 : clamp(vw / 1200, .9, 1.35)) * uz;
-    const dip = ph.pos > 0 && ph.pos < N - 1 ? Math.sin(Math.PI * (ph.pos % 1)) * .2 : 0;
+    const O = overview(), Z = (mobile ? .5 : jCar ? .52 : clamp(vw / 3000, .44, .6)) * uz;
+    const dip = 0;
     const F = viewFor(tip.x, tip.y, Z * (1 - dip));
     const k = ph.out ? 1 - ph.out : ph.k;
     const hk = ss(clamp(k * 1.6));
@@ -2697,7 +2773,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     const e = reduce ? 1 : 1 - Math.exp(-dt * 6);
     cam3.x += (T.x - cam3.x) * e; cam3.y += (T.y - cam3.y) * e; cam3.s += (T.s - cam3.s) * e;
     world3.style.transform = `translate3d(${cam3.x.toFixed(1)}px, ${cam3.y.toFixed(1)}px, 0) scale(${cam3.s.toFixed(4)})`;
-    const inv = clamp(1 / cam3.s, .55, 3); if (Math.abs(inv - (frameJourney.inv || 0)) > .004) { frameJourney.inv = inv; world3.style.setProperty('--inv', inv.toFixed(3)); }
+    const inv = Math.round(clamp(1 / cam3.s, .55, 3) * 20) / 20; if (inv !== frameJourney.inv) { frameJourney.inv = inv; world3.style.setProperty('--inv', inv.toFixed(3)); }
     const carved = ph.pos < 0 ? stopL[0] * clamp(ph.pos + 1) : L;
     const off = (pathLen - carved).toFixed(1);
     if (off !== frameJourney.off) { frameJourney.off = off; carve.style.strokeDashoffset = off; casing.style.strokeDashoffset = off; }
@@ -2725,7 +2801,22 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     jtlYr.textContent = active >= 0 ? `${STOPS[active].when} · ${STOPS[active].place}` : '2021 → now';
     showCard(active);
   }
+  const stopP = i => i < 0 ? 0 : PH.zoom + Math.min(N - 1.001, i + .1) / (N - 1) * (PH.walk - PH.zoom);
+  function carTo(i) {
+    if (jIdx < 0 && i >= 0 && Math.abs(Y() - jTop) > 20) goTo(jTop, 1);
+    jIdx = clamp(i, -1, N - 1); jvT = stopP(jIdx);
+    $('#jcPrev').disabled = jIdx < 0; $('#jcCount').textContent = jIdx < 0 ? '' : `${jIdx + 1} / ${N}`;
+    $('#jcNext').innerHTML = jIdx < 0 ? 'Start the journey <span aria-hidden="true">→</span>' : jIdx === N - 1 ? 'See my work <span aria-hidden="true">↓</span>' : 'Next stop <span aria-hidden="true">→</span>';
+    journey.classList.toggle('started', jIdx >= 0);
+  }
+  $('#jcPrev').addEventListener('click', () => carTo(jIdx - 1));
+  $('#jcNext').addEventListener('click', () => { if (jIdx === N - 1) goTo(top($('#work'))); else carTo(jIdx + 1); });
+  let jsx = null;
+  $('#jPin').addEventListener('touchstart', e => { if (jCar && !e.target.closest('.jcar')) jsx = [e.touches[0].clientX, e.touches[0].clientY]; }, { passive: true });
+  $('#jPin').addEventListener('touchend', e => { if (!jsx) return; const dx = e.changedTouches[0].clientX - jsx[0], dy = e.changedTouches[0].clientY - jsx[1]; jsx = null;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) carTo(jIdx + (dx < 0 ? 1 : -1)); }, { passive: true });
   function walkTo(i) {
+    if (jCar) { carTo(i); if (Math.abs(Y() - jTop) > vh * .5) goTo(jTop); return; }
     i = clamp(i, 0, N - 1);
     const t = Math.min(N - 1.001, i + .1), p = PH.zoom + t / (N - 1) * (PH.walk - PH.zoom);
     goTo(jTop + (i === 0 ? PH.zoom + .01 : p) * jRange, 2.2);
@@ -3278,13 +3369,17 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const brandSec = $('#brand'), brandRow = $('#brandRow'), brandProg = $('#brandProg');
   brandRow.innerHTML = SITES.map(x => `<article class="site" style="--dy:${x.dy}px;--r:${x.r}deg" title="Sample project, swap with your own">${x.st}<div class="win"><div class="chrome"><i></i><i></i><i></i><span>${x.url}</span></div><div class="page">${x.page}</div></div><div class="cap"><b>${x.name}</b><span>${x.kind} · sample</span></div></article>`).join('');
   let bTop = 0, bRange = 1, bShift = 0;
+  let bManual = false;
   function layoutBrand() {
+    bManual = vw <= 1100; brandSec.classList.toggle('manual', bManual);
+    if (bManual) { brandSec.style.height = ''; brandRow.style.transform = ''; bTop = top(brandSec); bRange = 1; bShift = 0; return; }
     bShift = Math.max(0, brandRow.scrollWidth - vw);
     brandSec.style.height = (vh + bShift * 1.1) + 'px';
     bTop = top(brandSec); bRange = Math.max(1, brandSec.offsetHeight - vh);
   }
   const bcur = { x: 0 };
   function frameBrand(dt, y) {
+    if (bManual) return;
     const q = clamp((y - bTop) / bRange);
     const k = reduce ? 1 : 1 - Math.exp(-dt * 8);
     bcur.x += (-q * bShift - bcur.x) * k;
@@ -3358,7 +3453,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     toolTip.style.left = tx.toFixed(0) + 'px'; toolTip.style.top = ty.toFixed(0) + 'px';
     toolTip.classList.add('in'); giftCap.classList.add('hide');
   }
+  let giftTap = false, giftQ = 0, giftGo = false;
+  const giftBtn = document.createElement('button'); giftBtn.type = 'button'; giftBtn.className = 'gift-tap'; giftBtn.innerHTML = '<i></i>Tap to unwrap'; $('#giftStage').parentElement.appendChild(giftBtn);
+  const unwrap = () => { if (giftTap && !giftGo) { giftGo = true; giftBtn.classList.add('gone'); } };
+  giftBtn.addEventListener('click', unwrap); $('#giftStage').addEventListener('click', unwrap);
   function layoutStack() {
+    giftTap = vw <= 1100; $('#stack').classList.toggle('tap', giftTap);
     stTop = top(stackTrack); stRange = Math.max(1, stackTrack.offsetHeight - vh);
     RX = mobile ? vw * .44 : Math.min(vw * .42, 620); RY = mobile ? Math.min(vh * .46, 380) : Math.min(vh * .58, 480);
     COLS = mobile ? 5 : 9; PX = mobile ? Math.min(74, (vw - 24) / 5) : Math.min(112, (vw - 80) / 9); PY = mobile ? 84 : 116; BS = 1; BRX = COLS * PX / 2;
@@ -3370,7 +3470,8 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     GTOP = headB + gapTop - stageY; GIFT_LIFT = Math.max(0, stageY - (headB + gapTop + giftTop));
   }
   function frameStack(y) {
-    const q = clamp((y - stTop) / stRange), now = performance.now() / 1000;
+    if (giftTap) { if (giftGo) giftQ = Math.min(1, giftQ + (reduce ? 1 : .0055)); }
+    const q = giftTap ? giftQ : clamp((y - stTop) / stRange), now = performance.now() / 1000;
     const rise = ss(range(q, 0, .05)), shake = range(q, .03, .17), open = ss(range(q, .16, .25)), drop = ss(range(q, .14, .28));
     giftStageEl.style.transform = `translate3d(0, ${(-(1 - drop) * GIFT_LIFT).toFixed(1)}px, 0)`;
     const amp = reduce ? 0 : shake * (1 - open) * 3.5, rot = Math.sin(now * 23) * amp, hop = Math.abs(Math.sin(now * 11.5)) * amp * 1.4;
@@ -3569,14 +3670,14 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     const dt = Math.min(.05, (t - last) / 1000); last = t;
     if (lenis) lenis.raf(t);
     const y = Y();
-    if (y < vTop + vRange + vh) frameValley(dt, y);
-    if (y > sTop - vh && y < sTop + sRange + vh) frameStory(y);
-    if (y > jTop - vh && y < jTop + jRange + vh) frameJourney(dt, y);
+    if (y < vTop + vRange + vh) frameValley(dt, held('v', y, vh * .04));
+    if (y > sTop - vh && y < sTop + sRange + vh) frameStory(held('s', y, sTop - vh));
+    if (y > jTop - vh && y < jTop + jRange + vh) frameJourney(dt, jCar ? y : held('j', y, jTop - vh));
     if (y > jTop + jRange - vh) frameWork(dt);
-    if (y > bTop - vh && y < bTop + bRange + vh) frameBrand(dt, y);
-    if (y > stTop - vh && y < stTop + stRange + vh) frameStack(y);
-    if (y > llTop - vh && y < llTop + llRange + vh) frameLL(y);
-    if (y > pTop - vh * 1.2) frameProc(y);
+    if (y > bTop - vh && y < bTop + bRange + vh) frameBrand(dt, held('b', y, bTop - vh));
+    if (y > stTop - vh && y < stTop + Math.max(stRange, vh) + vh) frameStack(held('st', y, stTop - vh));
+    if (y > llTop - vh && y < llTop + llRange + vh) frameLL(held('ll', y, llTop - vh));
+    if (y > pTop - vh * 1.2) frameProc(held('p', y, pTop - vh * 1.2));
     frameMisc(y);
     requestAnimationFrame(frame);
   }
