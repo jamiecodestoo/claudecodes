@@ -1819,6 +1819,15 @@ a.site { display: block; color: inherit; text-decoration: none; }
 /* the next section's torn edge never sits on the last lines */
 .process { padding-bottom: calc(var(--sec) * .85 + 70px); }
 .life, .notes, .stack, .ll, .brand-sec, .hello { scroll-margin-top: 0; }
+
+/* overview pins: names hidden on phones and tablets, a touch smaller on desktop */
+.world3.far .mk { transform: translate(-50%, -100%) scale(calc(var(--inv, 1) * 1.7)); }
+.journey.jcm .world3.far .mk .nm { display: none; }
+
+/* contact keys sit dead centre in their columns */
+.kw { grid-template-columns: 100%; }
+.kw > .key { justify-self: center; }
+.kw > .knote { justify-self: center; }
 </style>
 
 <header class="bar">
@@ -2375,7 +2384,7 @@ a.site { display: block; color: inherit; text-decoration: none; }
       did: ['Link your things to the places you take them, like office, gym or college', 'LastLook notices when you leave a place and reminds you what you carry', 'Memory Insights turns that activity into patterns, like what you forget most', 'Designed, built and shipped it myself'],
       res: [['Solo', 'designed, built and shipped'], ['0 → 1', 'idea to App Store']],
       shots: ['ll1', 'll2', 'll3', 'll4'] },
-    { id: 'campusx', bg: 'radial-gradient(100% 70% at 100% 0%, #8B5CF6 0%, transparent 55%), radial-gradient(90% 70% at 0% 100%, #4C1D95 0%, transparent 60%), linear-gradient(165deg, #1E1630, #0C0A12)', glow: '#8B5CF6', face: ['mid', 'College, but connected.', 'Social app for campus'], name: 'The Digital Campus', co: 'CampusX · College side project', t: '#ECE4FF', c: '#7C3AED', icon: 'cap', cs: CS + 'campusx', status: 'Side project',
+    { id: 'campusx', bg: 'radial-gradient(100% 70% at 100% 0%, #8B5CF6 0%, transparent 55%), radial-gradient(90% 70% at 0% 100%, #4C1D95 0%, transparent 60%), linear-gradient(165deg, #1E1630, #0C0A12)', glow: '#8B5CF6', logo: 'logo-campusx', face: ['mid', 'College, but connected.', 'Social app for campus'], name: 'The Digital Campus', co: 'CampusX · College side project', t: '#ECE4FF', c: '#7C3AED', icon: 'cap', cs: CS + 'campusx', status: 'Side project',
       pitch: 'College life is chaotic. CampusX is a social network just for your campus, built from my own college years.',
       meta: [['Role', 'Designer'], ['When', 'At NSUT'], ['For', 'College students']],
       problem: 'Missed attendance updates, endless WhatsApp groups, and nowhere to really connect with your own campus.',
@@ -3602,7 +3611,8 @@ a.site { display: block; color: inherit; text-decoration: none; }
 
   }
   function frameStack(y) {
-    if (giftTap) { if (giftGo) giftQ = Math.min(1, giftQ + (reduce ? 1 : .0055)); }
+    // the unwrap plays on its own clock: about seven unhurried seconds, eased at both ends
+    if (giftTap && giftGo) { if (!giftGo.t) giftGo = { t: performance.now() }; const u = reduce ? 1 : Math.min(1, (performance.now() - giftGo.t) / 7000); giftQ = u < 1 ? .5 - .5 * Math.cos(Math.PI * u) : 1; }
     if (giftTap && !giftGo) { const gb = gift.getBoundingClientRect(), pb = giftBtn.parentElement.getBoundingClientRect(); if (gb.height) giftBtn.style.top = (gb.bottom - pb.top + 18).toFixed(0) + 'px'; }
     const q = giftTap ? giftQ : clamp((y - stTop) / stRange), now = performance.now() / 1000;
     const rise = ss(range(q, 0, .05)), shake = range(q, .03, .17), open = ss(range(q, .16, .25)), drop = ss(range(q, .14, .28));
