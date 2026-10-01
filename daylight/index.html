@@ -2178,6 +2178,14 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 :root[data-theme="dark"] .nw-sug li { color: #F5F5F5; }
 :root[data-theme="dark"] .nw-sug li:hover, :root[data-theme="dark"] .nw-sug li.on { background: #3A3A3A; }
 :root[data-theme="dark"] .nw-sheet .co.mono { background: #444; color: #F5F5F5; }
+
+/* the box: light spills out when it opens */
+.box-floor::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 70% at 50% 50%, rgba(255, 214, 140, .95), rgba(255, 190, 110, .35) 55%, transparent 80%); opacity: 0; transition: opacity 1.6s var(--ease) .5s; }
+.box-stage.opened .box-floor::after { opacity: .9; }
+.box-stage::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(38% 34% at 50% 58%, rgba(255, 200, 120, .32), transparent 72%); opacity: 0; transition: opacity 2s var(--ease) .6s; }
+.box-stage.opened::before { opacity: 1; }
+.box3 { will-change: transform; }
+:root[data-theme="dark"] .box-stage::before { background: radial-gradient(38% 34% at 50% 58%, rgba(255, 196, 110, .22), transparent 72%); }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -3223,7 +3231,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   function phase(p) {
     if (p < PH.hold) return { pos: -1, k: 0, out: 0 };
     if (p < PH.zoom) { const k = ss((p - PH.hold) / (PH.zoom - PH.hold)); return { pos: -1 + k, k, out: 0 }; }
-    if (p < PH.walk) { const t = (p - PH.zoom) / (PH.walk - PH.zoom) * (N - 1), i = Math.min(N - 2, Math.floor(t)), f = t - i; return { pos: i + ss(clamp((f - .3) / .6)), k: 1, out: 0 }; }
+    if (p < PH.walk) { const t = (p - PH.zoom) / (PH.walk - PH.zoom) * (N - 1), i = Math.min(N - 2, Math.floor(t)), f = t - i; return { pos: i + f - .55 * Math.sin(2 * Math.PI * f) / (2 * Math.PI), k: 1, out: 0 }; }
     return { pos: N - 1, k: 1, out: ss(clamp((p - PH.walk) / .07)) };
   }
   const lenAt = pos => { if (pos <= 0) return pos < -.999 ? 0 : stopL[0] * (1 + pos); const i = Math.min(N - 2, Math.floor(pos)), f = pos - i; return stopL[i] + (stopL[i + 1] - stopL[i]) * f; };
@@ -3363,7 +3371,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     $('#biM').innerHTML = M.map(([b, t]) => `<li style="--c:${k ? k.w.c : 'var(--ink)'}"><b>${b}</b><span>${t}</span></li>`).join('');
   }
   function openBox() {
-    if (boxOpen) return; boxOpen = true;
+    if (boxOpen) return; boxOpen = true; boxStage.classList.add('opened');
     lid.style.transform = `translate3d(0,0,${BH}px) rotateX(-72deg)`;
     wks.forEach((k, i) => setTimeout(() => { if (picked !== k) { k.z = 0; k.el.style.transition = 'transform 1.2s cubic-bezier(.2, .9, .25, 1), box-shadow .5s, filter .5s'; k.el.style.transform = stand(0); rim(k, 0); } }, 800 + i * 130));
   }
@@ -3382,13 +3390,13 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   let boxExt = null, boxSW = 0, boxCur = 0, boxPos = '';
   function boxMeasure() {
     const parts = [...box3.children].filter(e => !e.classList.contains('box-shadow')), saved = parts.map(e => [e.style.transition, e.style.transform]);
-    const fitT = boxFit.style.transform; boxFit.style.transform = 'none';
+    const fitT = boxFit.style.transform, b3T = box3.style.transform; boxFit.style.transform = 'none'; box3.style.transform = '';
     parts.forEach(e => { e.style.transition = 'none'; if (e === lid) e.style.transform = `translate3d(0,0,${BH}px) rotateX(-72deg)`; else if (e.classList.contains('wk')) e.style.transform = stand(70); });
     const o = boxFit.getBoundingClientRect(); let l = 1e9, t = 1e9, r = -1e9, b = -1e9;
     parts.forEach(e => { const q = e.getBoundingClientRect(); l = Math.min(l, q.left); t = Math.min(t, q.top); r = Math.max(r, q.right); b = Math.max(b, q.bottom); });
     parts.forEach((e, i) => { e.style.transform = saved[i][1]; });
     void box3.offsetWidth; parts.forEach((e, i) => { e.style.transition = saved[i][0]; });
-    boxFit.style.transform = fitT;
+    boxFit.style.transform = fitT; box3.style.transform = b3T;
     boxExt = { l: l - o.left, t: t - o.top, w: r - l, h: b - t };
   }
   function boxZone() {
@@ -3398,7 +3406,20 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     const list = $('.bi-list', boxInfo), bot = (vis(list) ? list.getBoundingClientRect().top : st.bottom) - st.top - (mobile ? 10 : 18);
     return { x: 16, y: top, w: st.width - 32, h: Math.max(120, bot - top) };
   }
-  function boxScale(dt) { if (picked) return boxS; if (!boxExt) boxMeasure();
+  // the box spins into view with the scroll, then follows the pointer a little; it settles square whenever a card is picked
+  const bRot = { x: VIEW_X + 16, z: VIEW_Z - 58, ok: false }, bPtr = { x: 0, y: 0, tx: 0, ty: 0 };
+  boxStage.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; bPtr.tx = e.clientX / vw * 2 - 1; bPtr.ty = e.clientY / vh * 2 - 1; }, { passive: true });
+  boxStage.addEventListener('pointerleave', () => { bPtr.tx = 0; bPtr.ty = 0; });
+  function boxSpin(dt, q) {
+    const settle = picked || reduce, e = settle ? 1 : ss(clamp(q / .3));
+    const pe = 1 - Math.exp(-dt * 3); bPtr.x += (bPtr.tx - bPtr.x) * pe; bPtr.y += (bPtr.ty - bPtr.y) * pe;
+    const tilt = settle || !boxOpen ? 0 : 1;
+    const tx = VIEW_X + (1 - e) * 16 - bPtr.y * 4 * tilt, tz = VIEW_Z - (1 - e) * 58 + bPtr.x * 7 * tilt;
+    const k = !bRot.ok || !dt || reduce ? 1 : 1 - Math.exp(-dt * (picked ? 12 : 6)); bRot.ok = true;
+    bRot.x += (tx - bRot.x) * k; bRot.z += (tz - bRot.z) * k;
+    const t = `rotateX(${bRot.x.toFixed(2)}deg) rotateZ(${bRot.z.toFixed(2)}deg)`; if (t !== boxSpin.t) { boxSpin.t = t; box3.style.transform = t; }
+  }
+  function boxScale(dt) { { const r0 = boxTrack.getBoundingClientRect(); boxSpin(dt || 0, clamp((vh - r0.top) / r0.height)); } if (picked) return boxS; if (!boxExt) boxMeasure();
     const z = boxZone(), fit = Math.min(z.w / boxExt.w, z.h / boxExt.h, mobile ? 1.1 : 1.15);
     const r = boxTrack.getBoundingClientRect(), q = clamp((vh - r.top) / (r.height)), want = fit * (.94 + .06 * ss(q));
     boxCur = !boxCur || !dt || reduce ? want : boxCur + (want - boxCur) * (1 - Math.exp(-dt * 7));
