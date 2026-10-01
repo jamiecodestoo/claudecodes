@@ -1722,6 +1722,25 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .mk .nm { display: block; opacity: 1; transform: none; top: 12px; font-size: 13px; box-shadow: 0 6px 14px -8px rgba(19, 35, 58, .5); }
 .mk.dim { opacity: .45 !important; }
 .mk.dim .nm { opacity: 0; }
+
+/* bigger, readable checkpoint pins */
+.mk .pinhead { width: 76px; height: 94px; }
+.mk .pinhead .lg { top: 9px; width: 56px; height: 56px; margin-left: -28px; border-width: 3px; }
+.mk .pinhead .ic { top: 19px; width: 36px; height: 36px; margin-left: -18px; }
+.mk .nm { left: calc(100% + 8px); top: 22px; padding: 9px 14px; font-size: 17px; }
+.mk.on .nm { background: var(--ink); color: #fff; }
+@media (max-width: 860px) { .mk .pinhead { width: 60px; height: 74px; } .mk .pinhead .lg { width: 44px; height: 44px; margin-left: -22px; top: 7px; } .mk .pinhead .ic { top: 15px; width: 28px; height: 28px; margin-left: -14px; } .mk .nm { font-size: 14px; top: 16px; padding: 7px 11px; } }
+/* after the walk: one simple way back in */
+.jtl-view { display: none; }
+.journey.over .jtl { opacity: 0; pointer-events: none; }
+.journey.over .jtl-view { position: absolute; z-index: 7; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); transform: translateX(-50%); display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px 14px 18px; border-radius: 999px; background: var(--ink); color: #fff; font: 700 15px/1 var(--sans); box-shadow: 0 16px 30px -14px rgba(19, 35, 58, .7); animation: c3pop .5s var(--spring) both; }
+.jtl-view svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.jtl-view:hover { transform: translateX(-50%) translateY(-2px); }
+@keyframes c3pop { from { opacity: 0; transform: translate(-50%, 14px) scale(.96); } }
+/* brands: room for the card shadows */
+.brand-sec.manual .brand-row { padding-top: 60px; padding-bottom: 110px; margin-bottom: -60px; }
+/* a few clouds in the footer on every screen */
+@media (min-width: 1400px) { .hello .clouds-foot { display: block; height: 18vh; margin-top: 6vh; } .hello .clouds-foot img { width: min(36%, 620px) !important; } .hello .foot { margin-top: 0; } }
 </style>
 
 <header class="bar">
@@ -1853,6 +1872,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
         <div class="grp"><button id="mapIn" type="button" aria-label="Zoom in">+</button><button id="mapOut" type="button" aria-label="Zoom out">&minus;</button></div>
       </div>
       <div class="jcar" aria-label="Journey stops"><button type="button" id="jcPrev" aria-label="Previous stop" disabled>←</button><span id="jcCount"></span><button type="button" id="jcNext" class="nx">Start the journey <span aria-hidden="true">→</span></button></div>
+      <button type="button" class="jtl-view" id="jtlView"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>View journey map</button>
       <nav class="jtl" id="jtl" aria-label="Years"><ol id="jtlDots"></ol><span class="yr" id="jtlYr">2021 &rarr; now</span></nav>
     </div>
   </div>
@@ -2814,6 +2834,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     tlBtns.forEach((b, i) => { b.classList.toggle('on', i === active); b.classList.toggle('done', ph.pos >= i - .08 && ph.k > .5); });
     jtlYr.textContent = active >= 0 ? `${STOPS[active].when} · ${STOPS[active].place}` : '2021 → now';
     showCard(active);
+    journey.classList.toggle('over', !jCar && ph.out > .6);
   }
   const stopP = i => i < 0 ? 0 : PH.zoom + Math.min(N - 1.001, i + .1) / (N - 1) * (PH.walk - PH.zoom);
   function carTo(i) {
@@ -2823,13 +2844,19 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     $('#jcNext').innerHTML = jIdx < 0 ? 'Start the journey <span aria-hidden="true">→</span>' : jIdx === N - 1 ? 'See my work <span aria-hidden="true">↓</span>' : 'Next stop <span aria-hidden="true">→</span>';
     journey.classList.toggle('started', jIdx >= 0);
   }
+  $('#jtlView').addEventListener('click', () => { if (jCar) { carTo(0); goTo(jTop); } else walkTo(0); });
   $('#jcPrev').addEventListener('click', () => carTo(jIdx - 1));
   $('#jcNext').addEventListener('click', () => { if (jIdx === N - 1) goTo(top($('#work'))); else carTo(jIdx + 1); });
   let jsx = null;
   $('#jPin').addEventListener('touchstart', e => { if (jCar && !e.target.closest('.jcar')) jsx = [e.touches[0].clientX, e.touches[0].clientY]; }, { passive: true });
   $('#jPin').addEventListener('touchend', e => { if (!jsx) return; const dx = e.changedTouches[0].clientX - jsx[0], dy = e.changedTouches[0].clientY - jsx[1]; jsx = null;
     if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) carTo(jIdx + (dx < 0 ? 1 : -1)); }, { passive: true });
+  function reopenJourney() {
+    if (!DONE.j) return; DONE.j = 0; delete HW.j;
+    const y = Y(); layout(); if (Y() !== y) { lenis ? lenis.scrollTo(y, { immediate: true, force: true }) : scrollTo(0, y); }
+  }
   function walkTo(i) {
+    reopenJourney();
     if (jCar) { carTo(i); if (Math.abs(Y() - jTop) > vh * .5) goTo(jTop); return; }
     i = clamp(i, 0, N - 1);
     const t = Math.min(N - 1.001, i + .1), p = PH.zoom + t / (N - 1) * (PH.walk - PH.zoom);
@@ -2863,7 +2890,9 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   face('wall-o', BW, BH, BW / 2, BD, 0, 'rotateX(-90deg)', '<span class="brand">Things I designed</span>');
   const stand = z => `translate3d(0px, 0px, ${z}px) rotateZ(-90deg) rotateX(-90deg) rotateY(0deg)`;
   const faced = k => `translate3d(${(BW / 2 - k.x).toFixed(1)}px, ${BD * .95}px, 210px) rotateZ(${-VIEW_Z}deg) rotateX(${-VIEW_X}deg) rotateY(0deg)`;
-  wks.forEach(k => k.el.style.transform = stand(k.z));
+  // only the part of a card above the rim is drawn, so it can never show through the box walls
+  const rim = (k, z) => { k.el.style.clipPath = `inset(0 0 ${Math.max(0, Math.min(CH, BH - z + 2)).toFixed(0)}px 0 round 0 0 24px 24px)`; };
+  wks.forEach(k => { k.el.style.transform = stand(k.z); rim(k, k.z); });
   let boxOpen = false, picked = null, hoverK = null, boxS = 1;
   const BOX_TOP = [['+41%', 'payment success, EazyDiner'], ['16 → 35%', 'hotels replying, MakeMyTrip'], ['400+', 'LastLook downloads']];
   const boxInfo = document.createElement('div'); boxInfo.className = 'box-info'; boxStage.appendChild(boxInfo);
@@ -2883,11 +2912,11 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   function openBox() {
     if (boxOpen) return; boxOpen = true;
     lid.style.transform = `translate3d(0,0,${BH}px) rotateX(-72deg)`;
-    wks.forEach((k, i) => setTimeout(() => { if (picked !== k) { k.z = 0; k.el.style.transition = 'transform 1.2s cubic-bezier(.2, .9, .25, 1), box-shadow .5s, filter .5s'; k.el.style.transform = stand(0); } }, 800 + i * 130));
+    wks.forEach((k, i) => setTimeout(() => { if (picked !== k) { k.z = 0; k.el.style.transition = 'transform 1.2s cubic-bezier(.2, .9, .25, 1), box-shadow .5s, filter .5s'; k.el.style.transform = stand(0); rim(k, 0); } }, 800 + i * 130));
   }
   wks.forEach(k => {
-    const enter = () => { if (picked || !boxOpen) return; hoverK = k; k.el.classList.add('hover'); k.el.style.transform = stand(70); setCap(k); };
-    const leave = () => { if (picked) return; k.el.classList.remove('hover'); k.el.style.transform = stand(k.z); if (hoverK === k) { hoverK = null; setCap(null); } };
+    const enter = () => { if (picked || !boxOpen) return; hoverK = k; k.el.classList.add('hover'); k.el.style.transform = stand(70); rim(k, 70); setCap(k); };
+    const leave = () => { if (picked) return; k.el.classList.remove('hover'); k.el.style.transform = stand(k.z); rim(k, k.z); if (hoverK === k) { hoverK = null; setCap(null); } };
     k.enter = enter; k.leave = leave;
     k.el.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && hoverK !== k) { hoverK && hoverK.leave(); enter(); } });
     k.el.addEventListener('focus', enter); k.el.addEventListener('blur', leave);
@@ -3306,7 +3335,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   const rectClip = r => `inset(${r.top.toFixed(1)}px ${(innerWidth - r.right).toFixed(1)}px ${(innerHeight - r.bottom).toFixed(1)}px ${r.left.toFixed(1)}px round 18px)`;
   function pick(k) {
     if (picked || !boxOpen) return;
-    picked = k; k.el.classList.remove('hover'); k.el.classList.add('out');
+    picked = k; k.el.classList.remove('hover'); k.el.classList.add('out'); k.el.style.clipPath = 'none';
     const sc = boxScale();
     // 1: lift straight out of the box
     k.el.style.transform = stand(CH + 40);
@@ -3346,13 +3375,13 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
       k.el.style.opacity = 1; csEl.classList.remove('open', 'ed'); csEl.innerHTML = ''; edCleanup();
       document.documentElement.style.overflow = ''; lenis && lenis.start();
       const a = k.el.animate([{ transform: faced(k) }, { transform: stand(CH + 60), offset: .55 }, { transform: stand(0) }], { duration: reduce ? 1 : 1400, easing: pickEase, fill: 'forwards' });
-      a.onfinish = () => { k.el.style.transform = stand(0); k.z = 0; a.cancel(); k.el.style.transition = ''; picked = null; setCap(null); k.el.focus({ preventScroll: true }); };
+      a.onfinish = () => { k.el.style.transform = stand(0); rim(k, 0); k.z = 0; a.cancel(); k.el.style.transition = ''; picked = null; setCap(null); k.el.focus({ preventScroll: true }); };
     }, 760);
   }
   // jump straight from one case study to another, without going back to the box
   function switchCase(id) {
     const k = wks.find(x => x.w.id === id); if (!k || !picked || k === picked) return;
-    edCleanup(); picked.el.style.opacity = 1; picked.el.style.transform = stand(0); picked.z = 0;
+    edCleanup(); picked.el.style.opacity = 1; picked.el.style.transform = stand(0); rim(picked, 0); picked.z = 0;
     picked = k; k.el.style.transform = faced(k); k.el.style.opacity = 0;
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
     csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); if (k.w.id === 'coupon') initED();
@@ -3396,6 +3425,11 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   $('#bPrev').addEventListener('click', () => bStep(-1)); $('#bNext').addEventListener('click', () => bStep(1));
   const bEnds = () => { $('#bPrev').disabled = brandRow.scrollLeft < 8; $('#bNext').disabled = brandRow.scrollLeft > brandRow.scrollWidth - brandRow.clientWidth - 8; };
   brandRow.addEventListener('scroll', bEnds, { passive: true }); setTimeout(bEnds, 500);
+  let bAuto = 0, bStop = false;
+  ['pointerdown', 'wheel', 'touchstart'].forEach(ev => brandRow.addEventListener(ev, () => { bStop = true; clearInterval(bAuto); }, { passive: true }));
+  [$('#bPrev'), $('#bNext')].forEach(b => b.addEventListener('click', () => { bStop = true; clearInterval(bAuto); }));
+  new IntersectionObserver((es, o) => es.forEach(e => { if (!e.isIntersecting || bStop || reduce) return; o.disconnect();
+    setTimeout(() => { if (bStop) return; bAuto = setInterval(() => { if (bStop || brandRow.scrollLeft > brandRow.scrollWidth - brandRow.clientWidth - 8) { clearInterval(bAuto); if (!bStop) setTimeout(() => brandRow.scrollTo({ left: 0, behavior: 'smooth' }), 1400); return; } bStep(1); }, 2200); }, 900); }), { threshold: .45 }).observe(brandRow);
   function frameBrand(dt, y) {
     if (bManual) return;
     const q = clamp((y - bTop) / bRange);
