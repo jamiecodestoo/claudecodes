@@ -2111,6 +2111,29 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 :root[data-theme="dark"] .c3-offers div b { color: #5FD394; }
 :root[data-theme="dark"] .ll .kicker, :root[data-theme="dark"] .ll-roles-k { color: #E8BF8E; }
 :root[data-theme="dark"] .c3-rc .rd { color: #FF9A75; }
+
+/* journey on phones: a compact sheet so the map stays the hero; swipe follows the finger */
+.jc-more { display: none; }
+.journey.jcm .j-pin { touch-action: pan-y; }
+.journey.jcm .jcard .jc-in { will-change: transform, opacity; transition: none; }
+@media (max-width: 860px) {
+  .journey.jcm .jcard { max-height: none !important; overflow: hidden; transition: opacity .5s var(--ease), transform .8s var(--ease), box-shadow .4s; }
+  .journey.jcm .jcard .jc-top { padding: 12px 16px; gap: 12px; }
+  .journey.jcm .jcard .jc-top .tile { width: 40px; height: 40px; }
+  .journey.jcm .jcard .jc-bd { padding: 12px 16px 14px; }
+  .journey.jcm .jcard h3 { margin: 0 0 6px; font-size: 20px; line-height: 1.12; }
+  .journey.jcm .jcard .txt { margin: 0; font-size: 14.5px; line-height: 1.5; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+  .journey.jcm .jcard:not(.open) .jc-bd > :not(h3):not(.txt):not(.jc-more) { display: none; }
+  .journey.jcm .jc-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 8px 14px; border-radius: 999px; font: 700 13px/1 var(--sans); color: color-mix(in srgb, var(--c) 75%, var(--ink)); background: color-mix(in srgb, var(--c) 12%, transparent); }
+  .journey.jcm .jc-more::after { content: ""; width: 7px; height: 7px; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .3s var(--ease); }
+  .journey.jcm .jcard.open { overflow-y: auto; max-height: calc(100svh - var(--navh) - 150px) !important; }
+  .journey.jcm .jcard.open .txt { -webkit-line-clamp: unset; display: block; }
+  .journey.jcm .jcard.open .jc-more { order: 9; }
+  .journey.jcm .jcard.open .jc-more::after { transform: translateY(2px) rotate(-135deg); }
+  .journey.jcm .jcard.open .jc-bd { display: flex; flex-direction: column; align-items: flex-start; }
+  .journey.jcm .jcard.open .jc-bd > * { align-self: stretch; } .journey.jcm .jcard.open .jc-more { align-self: flex-start; }
+}
+:root[data-theme="dark"] .journey.jcm .jc-more { color: color-mix(in srgb, var(--c) 60%, #fff); background: color-mix(in srgb, var(--c) 22%, transparent); }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -2926,7 +2949,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   const heartD = 'M' + heartPts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L');
   const jHead = $('#jHead'), jFade = $('#jFade');
   let spot, spotG; const spotC = { x: STOPS[0].at[0], y: STOPS[0].at[1] };
-  let jCar = false, jv = 0, jvT = 0, jIdx = -1;
+  let jCar = false, jpos = -1, jposT = -1, jdrag = false, jIdx = -1;
   const holeR = STOPS.map(() => 0);
   let jTop = 0, jRange = 1, carve, casing, ghost, fogPath, holes = [], pathLen = 0, stopL = [], jmarks = [], pois = [], lastCard = -2, heading = 0, polFor = -2;
   const mrand = (a => () => (a = (a * 16807) % 2147483647) / 2147483647)(42);
@@ -3122,7 +3145,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     const st = STOPS[i];
     const tile = st.logo ? `<span class="tile"><img src="${img(st.logo)}" alt="${st.name} logo"></span>` : `<span class="tile"><svg viewBox="0 0 24 24">${ICONS[st.icon]}</svg></span>`;
     return `<div class="jc-top">${tile}<p><b>${st.name}</b>${st.when} · ${st.place}</p><em>${String(i + 1).padStart(2, '0')} / ${String(N).padStart(2, '0')}</em></div>
-      <div class="jc-bd"><h3>${st.title}</h3><p class="txt">${st.txt}</p>
+      <div class="jc-bd"><h3>${st.title}</h3><p class="txt">${st.txt}</p><button type="button" class="jc-more" aria-expanded="false">Read more</button>
       ${st.share ? `<div class="jc-share"><a href="${IG}" target="_blank" rel="noopener"><i style="background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF)"><svg viewBox="0 0 24 24">${ICONS.ig}</svg></i><div>@jamieships<span>Design, building and career on Instagram</span></div><em>↗</em></a><a href="${LI}" target="_blank" rel="noopener"><i style="background:#0A66C2"><svg viewBox="0 0 24 24">${ICONS.in}</svg></i><div>James Chugh<span>Work and lessons on LinkedIn</span></div><em>↗</em></a></div>` : ''}
       ${st.stats ? `<ul class="jc-stats">${st.stats.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>` : ''}
       ${st.photos && st.photos.length ? `<div class="jc-gal"><p>Gallery</p><div>${st.photos.map(([src, cap], k) => `<button type="button" class="jc-ph" data-lb="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div></div>` : ''}
@@ -3133,10 +3156,11 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     jcard.classList.toggle('in', i >= 0);
     if (i < 0) return;
     jcard.style.setProperty('--c', STOPS[i].c);
+    if (jCar) { clearTimeout(showCard.t); jcIn.innerHTML = cardHTML(i); jcard.scrollTop = 0; jcard.classList.remove('open', 'swap'); return; }
     jcard.classList.add('swap'); clearTimeout(showCard.t);
     showCard.t = setTimeout(() => { jcIn.innerHTML = cardHTML(i); jcard.scrollTop = 0; jcard.classList.remove('swap'); }, first ? 0 : 260);
   }
-  jcard.addEventListener('click', e => { const s = e.target.closest('[data-step]'); if (s) walkTo(+s.dataset.step); const p = e.target.closest('[data-photos]'); if (p) openLB(+p.dataset.photos, 0); const g = e.target.closest('[data-lb]'); if (g && lastCard >= 0) openLB(lastCard, +g.dataset.lb); });
+  jcard.addEventListener('click', e => { const mo = e.target.closest('.jc-more'); if (mo) { const o = jcard.classList.toggle('open'); mo.setAttribute('aria-expanded', o); mo.textContent = o ? 'Show less' : 'Read more'; if (!o) jcard.scrollTop = 0; return; } const s = e.target.closest('[data-step]'); if (s) walkTo(+s.dataset.step); const p = e.target.closest('[data-photos]'); if (p) openLB(+p.dataset.photos, 0); const g = e.target.closest('[data-lb]'); if (g && lastCard >= 0) openLB(lastCard, +g.dataset.lb); });
   // map controls
   let uz = 1, pan = { x: 0, y: 0 }, dragMoved = false, drag = null, lastActive = -2;
   $('#mapIn').addEventListener('click', () => uz = clamp(uz * 1.3, .55, 2.4));
@@ -3157,12 +3181,12 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   const lenAt = pos => { if (pos <= 0) return pos < -.999 ? 0 : stopL[0] * (1 + pos); const i = Math.min(N - 2, Math.floor(pos)), f = pos - i; return stopL[i] + (stopL[i + 1] - stopL[i]) * f; };
   const cam3 = { x: 0, y: 0, s: 0, ok: false };
   const cardW = () => mobile ? 0 : Math.min(26 * 16, vw - 32) + 44;
-  function viewFor(cx, cy, s) { const L = cardW(), fx = mobile ? vw * .5 : L + (vw - L) * .36, fy = mobile ? vh * .27 : vh * .58; return { x: fx - cx * s, y: fy - cy * s, s }; }
+  function viewFor(cx, cy, s) { const L = cardW(), fx = mobile ? vw * .5 : L + (vw - L) * .36, fy = mobile ? vh * .33 : vh * .58; return { x: fx - cx * s, y: fy - cy * s, s }; }
   let headB = 240;
   function overview() { const t = headB + 10, b = mobile ? 70 : 90, s = Math.min((vw - 48) / MW, (vh - t - b) / MH) * (mobile ? 1.12 : 1); return { x: (vw - MW * s) / 2, y: t + (vh - t - b - MH * s) / 2, s }; }
   function frameJourney(dt, y) {
-    if (jCar) jv += (jvT - jv) * (reduce ? 1 : clamp(dt * 2.6));
-    const p = jCar ? jv : clamp((y - jTop) / jRange), ph = phase(p);
+    if (jCar) { const ke = reduce ? 1 : 1 - Math.exp(-dt * (jdrag ? 22 : 4.6)); jpos += (jposT - jpos) * ke; if (Math.abs(jposT - jpos) < .0005) jpos = jposT; }
+    const p = jCar ? (jpos <= -.999 ? 0 : .5) : clamp((y - jTop) / jRange), ph = jCar ? (jpos < 0 ? { pos: jpos, k: ss(jpos + 1), out: 0 } : { pos: jpos, k: 1, out: 0 }) : phase(p);
     const L = lenAt(Math.max(ph.pos, 0)), tip = carve.getPointAtLength(Math.max(0.01, L));
     const O = overview(), Z = (mobile ? .5 : jCar ? .52 : clamp(vw / 3000, .44, .6)) * uz;
     const dip = 0;
@@ -3203,12 +3227,14 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     tlBtns.forEach((b, i) => { b.classList.toggle('on', i === active); b.classList.toggle('done', ph.pos >= i - .08 && ph.k > .5); });
     jtlYr.textContent = active >= 0 ? `${STOPS[active].when} · ${STOPS[active].place}` : '2021 → now';
     showCard(active);
+    if (jCar) { const f = ph.pos < 0 ? 0 : ph.pos - Math.round(ph.pos), dx = (-f * 150).toFixed(1), da = Math.max(0, 1 - Math.abs(f) * 2.1).toFixed(3);
+      if (dx !== frameJourney.dx || da !== frameJourney.da) { frameJourney.dx = dx; frameJourney.da = da; jcIn.style.transform = `translate3d(${dx}px, 0, 0)`; jcIn.style.opacity = da; } }
     journey.classList.toggle('over', !jCar && ph.out > .6);
   }
   const stopP = i => i < 0 ? 0 : PH.zoom + Math.min(N - 1.001, i + .1) / (N - 1) * (PH.walk - PH.zoom);
   function carTo(i) {
     if (jIdx < 0 && i >= 0 && Math.abs(Y() - jTop) > 20) goTo(jTop, 1);
-    jIdx = clamp(i, -1, N - 1); jvT = stopP(jIdx);
+    jIdx = clamp(i, -1, N - 1); jposT = jIdx;
     $('#jcPrev').disabled = jIdx < 0; $('#jcCount').textContent = jIdx < 0 ? '' : `${jIdx + 1} / ${N}`;
     $('#jcNext').innerHTML = jIdx < 0 ? 'Start the journey <span aria-hidden="true">→</span>' : jIdx === N - 1 ? 'See my work <span aria-hidden="true">↓</span>' : 'Next stop <span aria-hidden="true">→</span>';
     journey.classList.toggle('started', jIdx >= 0);
@@ -3216,10 +3242,22 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   $('#jtlView').addEventListener('click', () => { if (jCar) { carTo(0); goTo(jTop); } else walkTo(0); });
   $('#jcPrev').addEventListener('click', () => carTo(jIdx - 1));
   $('#jcNext').addEventListener('click', () => { if (jIdx === N - 1) goTo(top($('#work'))); else carTo(jIdx + 1); });
-  let jsx = null;
-  $('#jPin').addEventListener('touchstart', e => { if (jCar && !e.target.closest('.jcar')) jsx = [e.touches[0].clientX, e.touches[0].clientY]; }, { passive: true });
-  $('#jPin').addEventListener('touchend', e => { if (!jsx) return; const dx = e.changedTouches[0].clientX - jsx[0], dy = e.changedTouches[0].clientY - jsx[1]; jsx = null;
-    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) carTo(jIdx + (dx < 0 ? 1 : -1)); }, { passive: true });
+  // swipe between stops: the map and card follow the finger, then glide to the next stop or spring back
+  let sw = null, swEat = false;
+  const jPinEl = $('#jPin');
+  jPinEl.addEventListener('pointerdown', e => { if (!jCar || e.pointerType === 'mouse' || e.target.closest('.jcar, .mapctl, a, .jtl')) return; sw = { x: e.clientX, y: e.clientY, t: performance.now(), ax: null, base: jIdx, vx: 0, lx: e.clientX, lt: performance.now() }; });
+  jPinEl.addEventListener('pointermove', e => { if (!sw) return; const dx = e.clientX - sw.x, dy = e.clientY - sw.y;
+    if (!sw.ax) { if (Math.hypot(dx, dy) < 8) return; sw.ax = Math.abs(dx) > Math.abs(dy) * 1.15 ? 'x' : 'y'; if (sw.ax === 'x') { jdrag = true; try { jPinEl.setPointerCapture(e.pointerId); } catch (_) {} } }
+    if (sw.ax !== 'x') return;
+    const now = performance.now(); sw.vx = sw.vx * .6 + ((e.clientX - sw.lx) / Math.max(1, now - sw.lt)) * .4; sw.lx = e.clientX; sw.lt = now;
+    let t = sw.base - dx / Math.min(vw * .75, 520); const lo = Math.max(-1, sw.base - 1), hi = Math.min(N - 1, sw.base + 1);
+    if (t < lo) t = lo - (lo - t) * .25; if (t > hi) t = hi + (t - hi) * .25; jposT = t; });
+  const swEnd = e => { if (!sw) return; const s0 = sw; sw = null; if (s0.ax !== 'x') return; jdrag = false; swEat = true; setTimeout(() => swEat = false, 50);
+    const dx = e.clientX - s0.x, far = Math.abs(dx) > Math.min(vw * .16, 90), fast = Math.abs(s0.vx) > .35;
+    const go = (far || fast) ? (dx < 0 ? 1 : -1) : 0, to = clamp(s0.base + go, -1, N - 1);
+    if (to === -1 && s0.base === 0) carTo(0); else carTo(to); };
+  jPinEl.addEventListener('pointerup', swEnd); jPinEl.addEventListener('pointercancel', swEnd);
+  jPinEl.addEventListener('click', e => { if (swEat) { e.stopPropagation(); e.preventDefault(); } }, true);
   function reopenJourney() {
     if (!DONE.j) return; DONE.j = 0; delete HW.j;
     const y = Y(); layout(); if (Y() !== y) { lenis ? lenis.scrollTo(y, { immediate: true, force: true }) : scrollTo(0, y); }
