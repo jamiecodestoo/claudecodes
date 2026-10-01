@@ -1795,6 +1795,11 @@ a.site { display: block; color: inherit; text-decoration: none; }
 .site .page img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
 /* hats, centred */
 @media (max-width: 860px) { .ll-roles { text-align: center; } .ll-roles ol { width: fit-content; margin: 0 auto; } .ll-roles li { text-align: left; } }
+
+/* view journey map: softer shadow that fits, and a clear hover */
+.journey.over .jtl-view { bottom: calc(env(safe-area-inset-bottom, 0px) + 40px); box-shadow: 0 6px 14px -8px rgba(19, 35, 58, .45); transition: background .25s, transform .3s var(--spring), box-shadow .25s; }
+.journey.over .jtl-view:hover { background: #22395a; transform: translateX(-50%) translateY(-3px); box-shadow: 0 10px 18px -10px rgba(19, 35, 58, .5); }
+.journey.over .jtl-view:hover svg { stroke: var(--sun); }
 </style>
 
 <header class="bar">
@@ -2268,22 +2273,22 @@ a.site { display: block; color: inherit; text-decoration: none; }
   };
   const LI = 'https://www.linkedin.com/in/jameschughh/', IG = 'https://www.instagram.com/jamieships', APP = 'https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140';
   const STOPS = [
-    { id: 'jee', when: '2021', place: 'New Delhi', icon: 'cap', c: '#D2553A', at: [400, 1420], lift: 175, name: 'NSUT',
+    { id: 'jee', when: '2021', place: 'New Delhi', icon: 'cap', logo: 'logo-nsut', c: '#D2553A', at: [400, 1420], lift: 175, name: 'NSUT',
       title: 'The day JEE changed everything.',
       txt: 'I cleared JEE and got into <b>NSUT</b> for Mechanical Engineering. I had even cleared Waterloo Mathematics, but somehow, Delhi felt like where I was meant to be. I just didn’t know yet that engineering wouldn’t be the path I’d end up following.',
       photos: [['', 'JEE results day'], ['', 'First day at NSUT'], ['', 'Campus, 2021']],
       pois: [[-170, -120, 'check', 'Cleared Waterloo Mathematics too.']] },
-    { id: 'app', when: 'April 2022', place: 'New Delhi', icon: 'phone', c: '#7B5CD6', at: [960, 960], lift: 150, name: 'The failed app',
+    { id: 'app', when: 'April 2022', place: 'New Delhi', icon: 'phone', logo: 'logo-campusx', c: '#7B5CD6', at: [960, 960], lift: 150, name: 'The failed app',
       title: 'A failed app changed my life.',
       txt: 'A friend and I tried building an app together. It didn’t work, but somewhere along the way I opened <b>Figma</b> and got completely hooked. The app failed. I accidentally found UX, and, eventually, the career I wanted.',
       photos: [['', 'The app that didn’t work'], ['', 'My first Figma file'], ['', 'Late nights, 2022']],
       pois: [[160, 90, 'pen', 'Opened Figma. Never really closed it.']] },
-    { id: 'iitd', when: '2022 – 2023', place: 'New Delhi', icon: 'bulb', c: '#2E9E6B', at: [1520, 1320], lift: 165, name: 'IIT Delhi',
+    { id: 'iitd', when: '2022 – 2023', place: 'New Delhi', icon: 'bulb', logo: 'logo-iit', c: '#2E9E6B', at: [1520, 1320], lift: 165, name: 'IIT Delhi',
       title: 'I started chasing that feeling.',
       txt: 'I began teaching myself design and got an internship at <b>IIT Delhi</b>. For the first time, the things I was learning at night were solving problems for someone beyond myself. I realised I didn’t just enjoy designing. I enjoyed figuring things out.',
       photos: [['', 'Self-taught, one tutorial at a time'], ['', 'IIT Delhi internship'], ['', 'Figuring things out']],
       pois: [[170, 90, 'book', 'Learning at night, designing by day.']] },
-    { id: 'ht', when: '2024', place: 'New Delhi', icon: 'news', c: '#1E7FC8', at: [2080, 880], lift: 272, name: 'Hindustan Times',
+    { id: 'ht', when: '2024', place: 'New Delhi', icon: 'news', logo: 'logo-ht', c: '#1E7FC8', at: [2080, 880], lift: 272, name: 'Hindustan Times',
       title: 'HT Media made it real.',
       txt: 'At <b>Hindustan Times</b>, design became a real job, not just something I was learning on the side. For the first time, the things I designed shipped to people I’d never meet.',
       photos: [['', 'Design as a real job'], ['', 'The HT newsroom'], ['', 'New Delhi, 2024']],
