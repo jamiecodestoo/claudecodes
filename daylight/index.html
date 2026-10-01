@@ -2197,13 +2197,11 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 .pin .pd { position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 3px #fff; }
 .pin .pd::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--c); animation: pdpulse 2.4s var(--ease) infinite; }
 @keyframes pdpulse { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(3); opacity: 0; } }
-.ly .hint { position: absolute; z-index: 5; transform: translate(-100%, -100%); pointer-events: none; flex-direction: row; align-items: flex-end; }
-.ly .hint svg { margin-bottom: -18px; }
 :root[data-theme="dark"] .pin::after { background: linear-gradient(rgba(255, 255, 255, .55), rgba(255, 255, 255, .15)); }
 :root[data-theme="dark"] .pin .pd { box-shadow: 0 0 0 3px #2A2A2A; }
 
 /* the music station on the hill */
-.radio { position: absolute; transform: translate(-50%, -100%); pointer-events: auto; cursor: pointer; filter: drop-shadow(0 8px 10px rgba(30, 30, 10, .35)); }
+.radio { position: absolute; transform: translate(-50%, -100%); pointer-events: auto; cursor: pointer; filter: saturate(.86) sepia(.1) contrast(.97) drop-shadow(0 6px 8px rgba(30, 30, 10, .25)); }
 .radio .rs { display: block; width: 100%; height: auto; overflow: visible; }
 .rs-disc { transform-box: fill-box; transform-origin: center; animation: rsspin 3.2s linear infinite; animation-play-state: paused; }
 .radio.on .rs-disc { animation-play-state: running; }
@@ -2234,6 +2232,37 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 @media (max-width: 860px) { .np { right: calc(clamp(14px, 2.4vw, 28px) + 56px); padding-right: 12px; } .np-t { display: none; } }
 :root[data-theme="dark"] .np { background: rgba(42, 42, 42, .88); color: #F5F5F5; box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 10px 30px -10px rgba(0, 0, 0, .6); }
 :root[data-theme="dark"] .radio .rs { filter: brightness(.75) saturate(.9); }
+
+/* work: the section heading leads the box stage, centred */
+.work { padding-top: 8vh; }
+.work > .wrap { display: none; }
+.box-info { opacity: 1 !important; translate: none !important; }
+.box-info .bi-list { opacity: 0; translate: 0 14px; transition: opacity .7s var(--ease), translate .9s var(--ease); }
+.box-info.in .bi-list { opacity: 1; translate: 0 0; }
+.box-info .bi-head { display: grid; justify-items: center; gap: 8px; margin: 0 auto; text-align: center; }
+.box-info .bi-head .kicker { margin: 0; }
+.box-info .bi-head h2 { max-width: 22ch; font-size: clamp(2rem, 3.6vw, 3.5rem); text-wrap: balance; }
+.box-info .bi-head p:not(.kicker) { max-width: 44ch; font-size: clamp(17px, 1.35vw, 21px); }
+@media (max-width: 860px) { .box-info .bi-head { padding: 0 16px; } .box-info .bi-head h2 { font-size: clamp(1.7rem, 7vw, 2.3rem); } .box-info .bi-head p:not(.kicker) { font-size: 15.5px; } }
+
+/* map: the opening overview stays clean until you start scrolling */
+.journey.jstart .mk .nm { opacity: 0 !important; transform: translateX(-4px) !important; }
+
+/* the hint rides on the EazyDiner marker */
+.pin .hint { position: absolute; right: calc(100% + 4px); top: 50%; translate: 0 -62%; display: flex; align-items: center; gap: 4px; white-space: nowrap; pointer-events: none; font: italic 19px/1 var(--serif); color: #fff; text-shadow: 0 2px 12px rgba(10, 40, 60, .65); transition: opacity .5s; }
+.pin .hint svg { width: 40px; height: 22px; margin-bottom: 0; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; }
+.pin:hover .hint, .pin.hov .hint { opacity: 0; }
+/* birds wander around the heading */
+.sky-birds { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
+.sky-birds .sb { position: absolute; left: 0; top: 0; will-change: transform; }
+.sky-birds svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sky-birds path { fill: none; stroke: #26303B; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.sky-birds .w { transform-origin: 12px 7px; animation: sbflap var(--fl, .5s) ease-in-out infinite alternate; }
+.sky-birds .sb.glide .w { animation-play-state: paused; }
+@keyframes sbflap { from { transform: scaleY(1); } to { transform: scaleY(-.55); } }
+.cam.flying ~ .sky-birds { opacity: 0; transition: opacity .6s; }
+:root[data-theme="dark"] .sky-birds path { stroke: #D9D9D9; }
+:root[data-theme="dark"] .sky-birds { opacity: .75; }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -2276,12 +2305,17 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
         <div class="ly" data-d=".22" data-id="oyo"><img src="v2/h/hotelL.webp" alt="" style="left:79.107%;top:16.631%;width:13.393%;height:17.903%"><button class="hot" data-id="oyo" aria-label="OYO, the hotel on the hill" style="left:79.1%;top:16.6%;width:13.4%;height:17.9%"></button><button class="pin" data-id="oyo" style="left:85.4%;top:19.4%;--c:#DC402A"><b><img src="v2/s/logo-oyo.webp" alt="">OYO</b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".26" data-id="mmt"><img src="v2/h/tower.webp" alt="" style="left:63.095%;top:11.864%;width:9.524%;height:42.797%"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:63.1%;top:11.9%;width:9.5%;height:42.8%"></button><button class="pin" data-id="mmt" style="left:67.86%;top:34.2%;--c:#E4262C"><b><img src="v2/s/logo-mmt.webp" alt="">MakeMyTrip</b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".3" data-id="nsut"><img src="v2/h/college.webp" alt="" style="left:7.5%;top:33.051%;width:15%;height:38.559%"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:7.5%;top:33%;width:15%;height:38.6%"></button><button class="pin" data-id="nsut" style="left:14.3%;top:54.2%;--c:#C4553A"><b><img src="v2/s/logo-nsut.webp" alt="">NSUT</b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".38" data-id="eazydiner"><img src="v2/h/bistro.webp" alt="" style="left:32.976%;top:56.038%;width:25.357%;height:25.212%"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:33%;top:56%;width:25.4%;height:25.2%"></button><button class="pin" data-id="eazydiner" style="left:44.9%;top:59.2%;--c:#EE5A2B"><b><img src="v2/s/logo-eazydiner.webp" alt="">EazyDiner</b><i class="pd" aria-hidden="true"></i></button><div class="hint" id="hint" style="left:30.5%;top:50.5%">click a place<svg viewBox="0 0 58 40"><path d="M4 4C18 8 28 20 40 30M40 30l-2-9M40 30l-9-1"/></svg></div></div>
-        <div class="ly" data-d=".34" data-id="radio"><div class="radio" id="radio" style="left:76.4%;top:58.5%;width:6.6%"><svg class="rs" viewBox="0 0 120 130" aria-hidden="true">
+        <div class="ly" data-d=".38" data-id="eazydiner"><img src="v2/h/bistro.webp" alt="" style="left:32.976%;top:56.038%;width:25.357%;height:25.212%"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:33%;top:56%;width:25.4%;height:25.2%"></button><button class="pin" data-id="eazydiner" style="left:44.9%;top:59.2%;--c:#EE5A2B"><span class="hint" id="hint" aria-hidden="true">click a place<svg viewBox="0 0 40 22"><path d="M3 6C14 2 26 6 37 14M37 14l-9-1M37 14l-3-8"/></svg></span><b><img src="v2/s/logo-eazydiner.webp" alt="">EazyDiner</b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".34" data-id="radio"><div class="radio" id="radio" style="left:76.4%;top:59.4%;width:7.6%"><svg class="rs" viewBox="-10 0 140 146" aria-hidden="true">
 <defs><radialGradient id="rsDisc" cx="50%" cy="50%" r="50%"><stop offset=".18" stop-color="#2a2a2a"/><stop offset=".19" stop-color="#151515"/><stop offset="1" stop-color="#0c0c0c"/></radialGradient>
 <linearGradient id="rsWood" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#B9773A"/><stop offset="1" stop-color="#7E4A22"/></linearGradient>
-<linearGradient id="rsBrass" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#FFE29A"/><stop offset=".5" stop-color="#D9A441"/><stop offset="1" stop-color="#9C6B1E"/></linearGradient></defs>
-<ellipse cx="62" cy="125" rx="50" ry="5" fill="rgba(30,40,10,.35)"/>
+<linearGradient id="rsBrass" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#FFE29A"/><stop offset=".5" stop-color="#D9A441"/><stop offset="1" stop-color="#9C6B1E"/></linearGradient><filter id="rsPaint" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+<radialGradient id="rsGround" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#8C7A45" stop-opacity=".95"/><stop offset=".7" stop-color="#7A8A3E" stop-opacity=".6"/><stop offset="1" stop-color="#6E8C3A" stop-opacity="0"/></radialGradient></defs>
+<g filter="url(#rsPaint)">
+<ellipse cx="62" cy="126" rx="66" ry="13" fill="url(#rsGround)"/>
+<ellipse cx="64" cy="124" rx="44" ry="5.5" fill="rgba(40,30,10,.38)"/>
+
+
 <rect x="22" y="72" width="80" height="52" rx="6" fill="url(#rsWood)"/>
 <path d="M22 86h80M22 100h80M22 114h80" stroke="#6B3D1B" stroke-width="1" opacity=".45"/>
 <circle cx="47" cy="98" r="14" fill="#3B2412"/><circle cx="47" cy="98" r="10.5" fill="none" stroke="#C8924F" stroke-width="1.5" stroke-dasharray="2 2.4"/>
@@ -2294,7 +2328,12 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 <path d="M58 69l4-29 4 29z" fill="#6B3D1B"/>
 <path d="M100 70c0-14-6-24-16-30" stroke="url(#rsBrass)" stroke-width="4" fill="none" stroke-linecap="round"/>
 <path d="M84 40c-4-12 2-26 18-32 6 10 6 22-2 30z" fill="url(#rsBrass)"/><path d="M101 9c5 9 5 19-1 27" stroke="#8A5A15" stroke-width="1.4" fill="none" opacity=".6"/>
-</svg><span class="rn" aria-hidden="true"><i>♪</i><i>♫</i><i>♪</i><i>♬</i></span></div><button class="pin rpin" id="radioPin" style="left:76.6%;top:46.7%;--c:#7B5CD6" aria-pressed="false"><b><span class="rpi"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><span class="rpl">Play some music</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></b><i class="pd" aria-hidden="true"></i></button></div>
+
+<path d="M23 73h36" stroke="#F3C98A" stroke-width="1.6" opacity=".55" stroke-linecap="round"/>
+<g stroke-linecap="round" fill="none"><path d="M6 128c2-7 4-11 8-14M10 129c0-6 1-9 3-12M14 128c1-5 4-8 7-9" stroke="#5E8A2E" stroke-width="2.2"/><path d="M98 129c1-7 3-10 7-13M104 129c0-5 2-9 5-11M110 128c2-5 4-7 8-8M92 129c-1-5 0-8 2-11" stroke="#6E9A34" stroke-width="2.2"/><path d="M30 130c1-4 2-6 5-8M36 130c0-4 1-6 3-8" stroke="#4F7A26" stroke-width="2"/></g>
+<circle cx="13" cy="116" r="2.6" fill="#F2D24B"/><circle cx="106" cy="117" r="2.4" fill="#F7F1E3"/><circle cx="113" cy="121" r="2.2" fill="#E98AA0"/><circle cx="34" cy="122" r="2" fill="#F7F1E3"/>
+</g>
+</svg><span class="rn" aria-hidden="true"><i>♪</i><i>♫</i><i>♪</i><i>♬</i></span></div><button class="pin rpin" id="radioPin" style="left:76.5%;top:46.4%;--c:#7B5CD6" aria-pressed="false"><b><span class="rpi"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><span class="rpl">Play some music</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".85" id="L-fgL"><img src="v2/h/fgL.webp" alt="" style="left:0;top:40.572%;width:30.595%;height:59.428%"></div>
         <div class="ly" data-d=".9" id="L-fgR"><img src="v2/h/fgR.webp" alt="" style="left:48.095%;top:39.513%;width:51.905%;height:60.487%"></div>
         <div class="ly" data-d=".95" data-id="me"><div class="me-fig" style="left:80.6%;top:63.5%;width:5.9%"><img src="v2/h/james_s.webp" alt="Painted illustration of James in a backwards cap, waving"></div><button class="hot" data-id="me" aria-label="About me" style="left:80%;top:62%;width:7%;height:28%"></button><button class="pin" data-id="me" style="left:84.3%;top:64.6%;--c:#F2B705"><b><img src="v2/s/photo.webp" alt="">That’s me</b><i class="pd" aria-hidden="true"></i></button></div>
@@ -2302,6 +2341,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
       </div>
     </div>
 
+    <div class="sky-birds" id="skyBirds" aria-hidden="true"></div>
     <div class="hero-copy" id="heroCopy">
       <p class="hey"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M9 17c-2-3-3-6-1-7s3 2 4 4M11 13l-2-6c-1-2 2-3 3-1l3 7M14 12l-1-6c0-2 3-2 3 0l1 6M17 12v-4c0-2 3-2 3 0v8c0 5-3 9-8 9-3 0-5-2-6-5" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><path d="M23 6c2 1 3 3 3 5M5 7C4 9 3 10 3 12" stroke="#FFD23F" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>hey, I'm James</p>
       <h1>
@@ -3309,7 +3349,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     const k = ph.out ? 1 - ph.out : ph.k;
     const hk = ss(clamp(k * 1.6));
     jHead.style.opacity = (1 - hk).toFixed(3); jHead.style.transform = `translate3d(0, ${(-hk * 40).toFixed(1)}px, 0)`; jFade.style.opacity = (1 - ss(k)).toFixed(3);
-    world3.classList.toggle('far', k < .5); journey.classList.toggle('jfar', k < .5);
+    world3.classList.toggle('far', k < .5); journey.classList.toggle('jfar', k < .5); journey.classList.toggle('jstart', ph.pos <= -.995 && !ph.out);
     const T = { x: O.x + (F.x - O.x) * k + pan.x, y: O.y + (F.y - O.y) * k + pan.y, s: O.s + (F.s - O.s) * k };
     if (!cam3.ok) Object.assign(cam3, T, { ok: true });
     const e = reduce ? 1 : 1 - Math.exp(-dt * 6);
@@ -3417,18 +3457,15 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   let boxOpen = false, picked = null, hoverK = null, boxS = 1;
   const BOX_TOP = [['+41%', 'payment success, EazyDiner'], ['16 → 35%', 'hotels replying, MakeMyTrip'], ['400+', 'LastLook downloads']];
   const boxInfo = document.createElement('div'); boxInfo.className = 'box-info'; boxStage.appendChild(boxInfo);
-  boxInfo.innerHTML = `<p class="bi-k" id="biK">Pick a card</p><h3 id="biT">Five projects, one box.</h3><p class="bi-p" id="biP">Hover a card to read about it. Click to open the full case study.</p><ul class="bi-m" id="biM"></ul><ol class="bi-list">${WORK.map((w, i) => `<li><button type="button" data-k="${i}" style="--c:${w.c}"><b>${String(i + 1).padStart(2, '0')}</b><em>${w.name}</em><span>${w.co}</span></button></li>`).join('')}</ol>`;
+  boxInfo.innerHTML = `<ol class="bi-list">${WORK.map((w, i) => `<li><button type="button" data-k="${i}" style="--c:${w.c}"><b>${String(i + 1).padStart(2, '0')}</b><em>${w.name}</em><span>${w.co}</span></button></li>`).join('')}</ol>`;
+  { const sh = $('#work .sec-head'); sh.classList.add('bi-head'); boxInfo.prepend(sh); }
   boxInfo.addEventListener('pointerover', e => { const b = e.target.closest('[data-k]'); if (!b || picked || !boxOpen) return; const k = wks[+b.dataset.k]; if (hoverK !== k) { hoverK && hoverK.leave(); k.enter(); } });
   boxInfo.addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) pick(wks[+b.dataset.k]); });
   function setCap(k) {
     boxInfo.style.setProperty('--c', k ? k.w.c : 'var(--coral)');
     $$('[data-k]', boxInfo).forEach(b => b.classList.toggle('on', k && +b.dataset.k === k.i));
-    $('#biK').textContent = k ? `${String(k.i + 1).padStart(2, '0')} · ${k.w.status}` : 'Pick a card';
-    $('#biT').textContent = k ? k.w.name : 'Five projects, one box.';
-    $('#biP').textContent = k ? k.w.pitch : 'Hover a card to read about it. Click to open the full case study.';
-    const M = k ? (k.w.res.length ? k.w.res.slice(0, 3) : [[k.w.status, k.w.co]]) : [];
-    $('#biM').innerHTML = M.map(([b, t]) => `<li style="--c:${k ? k.w.c : 'var(--ink)'}"><b>${b}</b><span>${t}</span></li>`).join('');
   }
+
   function openBox() {
     if (boxOpen) return; boxOpen = true; boxStage.classList.add('opened');
     lid.style.transform = `translate3d(0,0,${BH}px) rotateX(-72deg)`;
@@ -3460,27 +3497,26 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   }
   function boxZone() {
     const st = boxStage.getBoundingClientRect(), vis = el => el && el.offsetParent !== null && getComputedStyle(el).display !== 'none';
-    let top = 0; for (const el of [$('#biK'), $('#biT'), $('#biP')]) if (vis(el)) top = Math.max(top, el.getBoundingClientRect().bottom - st.top);
-    top += mobile ? 80 : 94; // room for the three numbers that appear on hover
+    const hd = $('.bi-head', boxInfo); let top = (hd ? hd.getBoundingClientRect().bottom - st.top : 0) + (mobile ? 18 : 28);
     const list = $('.bi-list', boxInfo), bot = (vis(list) ? list.getBoundingClientRect().top : st.bottom) - st.top - (mobile ? 10 : 18);
     return { x: 16, y: top, w: st.width - 32, h: Math.max(120, bot - top) };
   }
   // the box spins into view with the scroll, then follows the pointer a little; it settles square whenever a card is picked
-  const bRot = { x: VIEW_X + 16, z: VIEW_Z - 58, ok: false }, bPtr = { x: 0, y: 0, tx: 0, ty: 0 };
+  const bRot = { x: VIEW_X, z: VIEW_Z, ok: false }, bPtr = { x: 0, y: 0, tx: 0, ty: 0 };
   boxStage.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; bPtr.tx = e.clientX / vw * 2 - 1; bPtr.ty = e.clientY / vh * 2 - 1; }, { passive: true });
   boxStage.addEventListener('pointerleave', () => { bPtr.tx = 0; bPtr.ty = 0; });
   function boxSpin(dt, q) {
-    const settle = picked || reduce, e = settle ? 1 : ss(clamp(q / .3));
+    const settle = picked || reduce, e = 1;
     const pe = 1 - Math.exp(-dt * 3); bPtr.x += (bPtr.tx - bPtr.x) * pe; bPtr.y += (bPtr.ty - bPtr.y) * pe;
     const tilt = settle || !boxOpen ? 0 : 1;
-    const tx = VIEW_X + (1 - e) * 16 - bPtr.y * 4 * tilt, tz = VIEW_Z - (1 - e) * 58 + bPtr.x * 7 * tilt;
+    const tx = VIEW_X - bPtr.y * 2.5 * tilt, tz = VIEW_Z + bPtr.x * 4.5 * tilt;
     const k = !bRot.ok || !dt || reduce ? 1 : 1 - Math.exp(-dt * (picked ? 12 : 6)); bRot.ok = true;
     bRot.x += (tx - bRot.x) * k; bRot.z += (tz - bRot.z) * k;
     const t = `rotateX(${bRot.x.toFixed(2)}deg) rotateZ(${bRot.z.toFixed(2)}deg)`; if (t !== boxSpin.t) { boxSpin.t = t; box3.style.transform = t; }
   }
   function boxScale(dt) { { const r0 = boxTrack.getBoundingClientRect(); boxSpin(dt || 0, clamp((vh - r0.top) / r0.height)); } if (picked) return boxS; if (!boxExt) boxMeasure();
     const z = boxZone(), fit = Math.min(z.w / boxExt.w, z.h / boxExt.h, mobile ? 1.1 : 1.15);
-    const r = boxTrack.getBoundingClientRect(), q = clamp((vh - r.top) / (r.height)), want = fit * (.94 + .06 * ss(q));
+    const r = boxTrack.getBoundingClientRect(), q = clamp((vh - r.top) / (r.height)), want = fit * (.5 + .5 * ss(clamp(q / .42)));
     boxCur = !boxCur || !dt || reduce ? want : boxCur + (want - boxCur) * (1 - Math.exp(-dt * 7));
     const x = z.x + z.w / 2 - boxCur * (boxExt.l + boxExt.w / 2), y = z.y + z.h / 2 - boxCur * (boxExt.t + boxExt.h / 2), pos = x.toFixed(1) + ',' + y.toFixed(1);
     if (pos !== boxPos) { boxPos = pos; boxFit.style.left = x.toFixed(1) + 'px'; boxFit.style.top = y.toFixed(1) + 'px'; }
@@ -4140,7 +4176,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     if (cur !== navOn) { navOn = cur; navLinks.forEach(a => a.classList.toggle('on', a === cur)); navInd.classList.toggle('on', !!cur); if (cur) { navInd.style.width = cur.offsetWidth + 'px'; navInd.style.transform = `translateX(${cur.offsetLeft}px)`; } }
     const inMap = y > jTop - vh * .4 && y < jTop + jRange + vh * .3, bx = boxTrack.getBoundingClientRect(), pinned = (bx.top < vh * .3 && bx.bottom > vh * .7) || (y > stTop - vh * .2 && y < stTop + stRange) || (y > rvTop - vh * .2 && y < rvTop + rvRange) || (y > bTop - vh * .2 && y < bTop + bRange);
     if (y > dockY + 3 && y > vh * .5) dock.dataset.dn = 1; else if (y < dockY - 3) dock.dataset.dn = '';
-    dock.classList.remove('away'); // the nav always stays on screen dockY = y;
+    dock.classList.remove('away'); dockY = y; // the nav always stays on screen
     lateHl.forEach(h => { if (!h.classList.contains('on') && h.getBoundingClientRect().top < vh * .78) h.classList.add('on'); });
     const hr = helloRq.getBoundingClientRect();
     if (hr.top < vh * .8 && !helloRq.dataset.done) { helloRq.dataset.done = 1; helloRq.classList.add('painted'); }
@@ -4297,56 +4333,105 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   });
 
 
+
+  /* ---------- birds around the heading: a loose flock that wanders, flaps and glides ---------- */
+  (() => {
+    const box = $('#skyBirds'), copy = $('#heroCopy'); if (!box || reduce) return;
+    const B = Array.from({ length: mobile ? 4 : 7 }, (_, i) => {
+      const el = document.createElement('div'); el.className = 'sb'; const sz = (mobile ? 18 : 22) + Math.random() * 14; el.style.width = sz + 'px'; el.style.setProperty('--fl', (.32 + Math.random() * .26).toFixed(2) + 's');
+      el.innerHTML = '<svg viewBox="0 0 24 12"><path class="w" d="M1 7Q6 1 12 7Q18 1 23 7"/></svg>'; box.appendChild(el);
+      return { el, x: Math.random() * vw * .6, y: vh * (.05 + Math.random() * .3), a: Math.random() * Math.PI * 2, v: 34 + Math.random() * 26, t: Math.random() * 10, g: 0 };
+    });
+    let last = performance.now();
+    (function fly(now) {
+      const dt = Math.min(.05, (now - last) / 1000); last = now;
+      if (Y() < vh) {
+        const r = copy.getBoundingClientRect(), L = Math.max(0, r.left - 60), R = Math.min(vw, r.right + vw * .12), T = Math.max(20, r.top - vh * .14), Bo = Math.min(vh * .62, r.bottom + vh * .06);
+        const cx = B.reduce((s, b) => s + b.x, 0) / B.length, cy = B.reduce((s, b) => s + b.y, 0) / B.length;
+        B.forEach(b => {
+          b.t += dt; let tx = Math.cos(b.a), ty = Math.sin(b.a);
+          b.a += (Math.sin(b.t * .7 + b.v) * .9 + Math.sin(b.t * 1.9) * .4) * dt;
+          const want = (dx, dy) => { const da = Math.atan2(dy, dx) - b.a; b.a += Math.atan2(Math.sin(da), Math.cos(da)) * dt * 1.4; };
+          if (b.x < L || b.x > R || b.y < T || b.y > Bo) want((L + R) / 2 - b.x, (T + Bo) / 2 - b.y);
+          else if (Math.hypot(cx - b.x, cy - b.y) > 160) want(cx - b.x, cy - b.y);
+          if (b.g > 0) b.g -= dt; else if (Math.random() < dt * .25) b.g = 1 + Math.random() * 1.5;
+          const sp = b.v * (b.g > 0 ? .85 : 1); b.x += Math.cos(b.a) * sp * dt; b.y += Math.sin(b.a) * sp * dt * .55;
+          b.el.classList.toggle('glide', b.g > 0);
+          const flip = Math.cos(b.a) < 0 ? -1 : 1, tilt = Math.sin(b.a) * 14 * flip;
+          b.el.style.transform = `translate3d(${b.x.toFixed(1)}px, ${b.y.toFixed(1)}px, 0) scaleX(${flip}) rotate(${tilt.toFixed(1)}deg)`;
+        });
+      }
+      requestAnimationFrame(fly);
+    })(last);
+  })();
+
   /* ---------- music on the hill: soft generative lo-fi, made live in the browser ---------- */
   (() => {
     const radio = $('#radio'), pinR = $('#radioPin'), np = $('#np'), lbl = $('.rpl', pinR);
     if (!radio || !pinR) return;
-    let ac = null, out = null, on = false, timer = 0, nextBar = 0, bar = 0, stopT = 0, crackle = null;
-    const CH = [[48, 55, 59, 64], [45, 52, 55, 60], [41, 48, 52, 57], [43, 50, 53, 59]], PENT = [72, 74, 76, 79, 81, 84, 86, 88], BAR = 4.2;
+    let ac = null, out = null, bus = null, drums = null, on = false, timer = 0, nextBeat = 0, beat = 0, stopT = 0, crackle = null, noise = null;
+    const BPM = 78, SPB = 60 / BPM, SW = .6;
+    const CH = [[50, 53, 57, 60, 64], [43, 53, 57, 59, 64], [48, 52, 55, 59, 62], [45, 52, 55, 60, 64]], ROOT = [38, 31, 36, 33];
+    const PENT = [69, 72, 74, 76, 79, 81, 84];
     const hz = m => 440 * Math.pow(2, (m - 69) / 12);
     function build() {
       ac = new (window.AudioContext || window.webkitAudioContext)();
       out = ac.createGain(); out.gain.value = 0;
-      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2200; lp.Q.value = .4;
-      const verb = ac.createConvolver(), len = ac.sampleRate * 3.2, ir = ac.createBuffer(2, len, ac.sampleRate);
-      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
-      verb.buffer = ir; const wet = ac.createGain(); wet.gain.value = .42;
-      lp.connect(out); lp.connect(verb); verb.connect(wet); wet.connect(out); out.connect(ac.destination);
-      out.bus = lp;
-      const nb = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate), nd = nb.getChannelData(0);
-      for (let i = 0; i < nd.length; i++) nd[i] = Math.random() < .0008 ? (Math.random() * 2 - 1) * .9 : (Math.random() * 2 - 1) * .015;
-      crackle = { buf: nb };
+      const tape = ac.createBiquadFilter(); tape.type = 'lowpass'; tape.frequency.value = 3400; tape.Q.value = .3;
+      const verb = ac.createConvolver(), len = ac.sampleRate * 2.4, ir = ac.createBuffer(2, len, ac.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3); }
+      verb.buffer = ir; const wet = ac.createGain(); wet.gain.value = .28;
+      bus = ac.createGain(); bus.connect(tape); bus.connect(verb); verb.connect(wet); wet.connect(tape);
+      drums = ac.createGain(); drums.gain.value = .9; drums.connect(tape);
+      tape.connect(out); out.connect(ac.destination);
+      noise = ac.createBuffer(1, ac.sampleRate, ac.sampleRate); const nd = noise.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+      const cb = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate), cd = cb.getChannelData(0);
+      for (let i = 0; i < cd.length; i++) cd[i] = Math.random() < .0009 ? (Math.random() * 2 - 1) * .8 : (Math.random() * 2 - 1) * .012;
+      crackle = { buf: cb };
     }
-    function tone(m, t, dur, { type = 'sine', vol = .06, a = 1.2, r = 1.8, det = 0 } = {}) {
-      const o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.value = hz(m); o.detune.value = det;
-      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + a); g.gain.setValueAtTime(vol, t + Math.max(a, dur - r)); g.gain.linearRampToValueAtTime(0, t + dur);
-      o.connect(g); g.connect(out.bus); o.start(t); o.stop(t + dur + .05);
+    // a soft electric piano: sine with a touch of FM and a slow warble
+    function keys(m, t, dur, vol) {
+      const o = ac.createOscillator(), mo = ac.createOscillator(), mg = ac.createGain(), g = ac.createGain(), trem = ac.createOscillator(), tg = ac.createGain();
+      o.frequency.value = hz(m); mo.frequency.value = hz(m) * 2; mg.gain.value = hz(m) * .35; mo.connect(mg); mg.connect(o.frequency);
+      trem.frequency.value = 4.2; tg.gain.value = vol * .18; trem.connect(tg); tg.connect(g.gain);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .012); g.gain.exponentialRampToValueAtTime(vol * .45, t + .9); g.gain.linearRampToValueAtTime(0, t + dur);
+      o.connect(g); g.connect(bus); [o, mo, trem].forEach(x => { x.start(t); x.stop(t + dur + .05); });
     }
+    function bass(m, t, dur) { const o = ac.createOscillator(), g = ac.createGain(), f = ac.createBiquadFilter(); o.type = 'triangle'; o.frequency.value = hz(m); f.type = 'lowpass'; f.frequency.value = 420;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.2, t + .02); g.gain.exponentialRampToValueAtTime(.08, t + dur * .8); g.gain.linearRampToValueAtTime(0, t + dur); o.connect(f); f.connect(g); g.connect(bus); o.start(t); o.stop(t + dur + .05); }
+    function bell(m, t) { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = hz(m); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.04, t + .01); g.gain.exponentialRampToValueAtTime(.0008, t + 2.4); o.connect(g); g.connect(bus); o.start(t); o.stop(t + 2.5); }
+    function kick(t) { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(42, t + .14); g.gain.setValueAtTime(.55, t); g.gain.exponentialRampToValueAtTime(.001, t + .38); o.connect(g); g.connect(drums); o.start(t); o.stop(t + .4); }
+    function hit(t, { f = 1800, type = 'bandpass', q = .8, vol = .2, dec = .18 } = {}) { const n = ac.createBufferSource(), fl = ac.createBiquadFilter(), g = ac.createGain(); n.buffer = noise; fl.type = type; fl.frequency.value = f; fl.Q.value = q;
+      g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.001, t + dec); n.connect(fl); fl.connect(g); g.connect(drums); n.start(t, Math.random() * .5); n.stop(t + dec + .02); }
+    function snare(t) { hit(t, { f: 1700, q: .7, vol: .22, dec: .22 }); const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = 185; g.gain.setValueAtTime(.08, t); g.gain.exponentialRampToValueAtTime(.001, t + .1); o.connect(g); g.connect(drums); o.start(t); o.stop(t + .12); }
     function schedule() {
-      while (nextBar < ac.currentTime + 1.2) {
-        const ch = CH[bar % CH.length], t = nextBar;
-        ch.forEach((m, i) => { tone(m, t, BAR + 1.2, { vol: .035, a: 1.4, r: 2 , det: i % 2 ? 6 : -6 }); tone(m + 12, t, BAR + 1, { type: 'triangle', vol: .012, a: 1.8, r: 2 }); });
-        tone(ch[0] - 12, t, BAR, { vol: .07, a: .25, r: 1.2 });
-        for (let b = 0; b < 8; b++) if (Math.random() < .42) { const n = PENT[Math.floor(Math.random() * PENT.length)] - (Math.random() < .5 ? 12 : 0); tone(n, t + b * BAR / 8 + Math.random() * .04, 2.2, { vol: .028, a: .015, r: 2.1 }); }
-        nextBar += BAR; bar++;
+      while (nextBeat < ac.currentTime + .6) {
+        const t = nextBeat, bi = beat % 4, bar = Math.floor(beat / 4), c = bar % 4, ch = CH[c];
+        if (bi === 0) { ch.forEach((m, i) => keys(m, t + i * .012, SPB * 3.6, .05)); bass(ROOT[c], t, SPB * 1.4); }
+        if (bi === 2) { if (Math.random() < .7) ch.slice(1).forEach((m, i) => keys(m, t + SPB * SW + i * .01, SPB * 1.2, .032)); bass(ROOT[c] + 7, t + SPB * SW, SPB * .9); }
+        if (bi === 0 || (bi === 2 && Math.random() < .5)) kick(t); if (bi === 1 && Math.random() < .35) kick(t + SPB * SW);
+        if (bi === 1 || bi === 3) snare(t + .012);
+        hit(t, { f: 7800, type: 'highpass', q: .4, vol: .07, dec: .05 }); hit(t + SPB * SW, { f: 7800, type: 'highpass', q: .4, vol: Math.random() < .5 ? .035 : .055, dec: .04 });
+        if (Math.random() < .3) bell(PENT[Math.floor(Math.random() * PENT.length)], t + (Math.random() < .5 ? 0 : SPB * SW));
+        nextBeat += SPB; beat++;
       }
     }
     function start() {
       if (!ac) build(); if (ac.state === 'suspended') ac.resume();
-      clearTimeout(stopT); on = true; nextBar = Math.max(nextBar, ac.currentTime + .1);
-      const now = ac.currentTime; out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(out.gain.value, now); out.gain.linearRampToValueAtTime(.55, now + 2.5);
-      if (!crackle.src) { const src = ac.createBufferSource(), hp = ac.createBiquadFilter(), g = ac.createGain(); src.buffer = crackle.buf; src.loop = true; hp.type = 'highpass'; hp.frequency.value = 1500; g.gain.value = .5; src.connect(hp); hp.connect(g); g.connect(out); src.start(); crackle.src = src; }
-      schedule(); clearInterval(timer); timer = setInterval(schedule, 250);
+      clearTimeout(stopT); on = true; nextBeat = Math.max(nextBeat, ac.currentTime + .1);
+      const now = ac.currentTime; out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(out.gain.value, now); out.gain.linearRampToValueAtTime(.6, now + 2);
+      if (!crackle.src) { const src = ac.createBufferSource(), hp = ac.createBiquadFilter(), g = ac.createGain(); src.buffer = crackle.buf; src.loop = true; hp.type = 'highpass'; hp.frequency.value = 1500; g.gain.value = .55; src.connect(hp); hp.connect(g); g.connect(out); src.start(); crackle.src = src; }
+      schedule(); clearInterval(timer); timer = setInterval(schedule, 120);
       ui();
     }
     function stop() {
       on = false; const now = ac.currentTime; out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(out.gain.value, now); out.gain.linearRampToValueAtTime(0, now + 1.4);
-      stopT = setTimeout(() => { clearInterval(timer); if (crackle.src) { crackle.src.stop(); crackle.src = null; } ac.suspend(); nextBar = 0; }, 1500);
+      stopT = setTimeout(() => { clearInterval(timer); if (crackle.src) { crackle.src.stop(); crackle.src = null; } ac.suspend(); nextBeat = 0; }, 1500);
       ui();
     }
     function ui() {
       radio.classList.toggle('on', on); pinR.classList.toggle('on', on); pinR.setAttribute('aria-pressed', on); lbl.textContent = on ? 'Now playing' : 'Play some music';
-      np.hidden = false; np.classList.toggle('paused', !on); np.setAttribute('aria-label', on ? 'Pause music' : 'Play music'); $('.np-t', np).textContent = on ? 'Music on the hill' : 'Paused';
+      np.hidden = false; np.classList.toggle('paused', !on); np.setAttribute('aria-label', on ? 'Pause music' : 'Play music'); $('.np-t', np).textContent = on ? 'Lo-fi on the hill' : 'Paused';
     }
     const toggle = e => { e && e.stopPropagation(); on ? stop() : start(); };
     pinR.addEventListener('click', toggle); np.addEventListener('click', toggle); radio.addEventListener('click', toggle);
