@@ -2186,11 +2186,60 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 .box-stage.opened::before { opacity: 1; }
 .box3 { will-change: transform; }
 :root[data-theme="dark"] .box-stage::before { background: radial-gradient(38% 34% at 50% 58%, rgba(255, 196, 110, .22), transparent 72%); }
+
+/* place markers: anchored on each building, they move with it */
+.pin { z-index: 4; padding-bottom: 0; }
+.pin b { gap: 7px; padding: 5px 13px 5px 5px; font-size: 13.5px; position: relative; }
+.pin b > img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: #fff; box-shadow: 0 0 0 2px var(--c); }
+.pin b::before { display: none; }
+.pin b::after { content: ""; position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px; margin-left: -5px; background: inherit; transform: rotate(45deg); border-radius: 0 0 3px 0; }
+.pin::after { width: 2px; height: 14px; margin-top: 2px; background: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .4)); }
+.pin .pd { position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 3px #fff; }
+.pin .pd::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--c); animation: pdpulse 2.4s var(--ease) infinite; }
+@keyframes pdpulse { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(3); opacity: 0; } }
+.ly .hint { position: absolute; z-index: 5; transform: translate(-100%, -100%); pointer-events: none; flex-direction: row; align-items: flex-end; }
+.ly .hint svg { margin-bottom: -18px; }
+:root[data-theme="dark"] .pin::after { background: linear-gradient(rgba(255, 255, 255, .55), rgba(255, 255, 255, .15)); }
+:root[data-theme="dark"] .pin .pd { box-shadow: 0 0 0 3px #2A2A2A; }
+
+/* the music station on the hill */
+.radio { position: absolute; transform: translate(-50%, -100%); pointer-events: auto; cursor: pointer; filter: drop-shadow(0 8px 10px rgba(30, 30, 10, .35)); }
+.radio .rs { display: block; width: 100%; height: auto; overflow: visible; }
+.rs-disc { transform-box: fill-box; transform-origin: center; animation: rsspin 3.2s linear infinite; animation-play-state: paused; }
+.radio.on .rs-disc { animation-play-state: running; }
+@keyframes rsspin { to { transform: rotate(360deg); } }
+.radio .rn { position: absolute; left: 70%; top: 0; width: 60%; height: 60%; pointer-events: none; }
+.radio .rn i { position: absolute; left: 0; bottom: 0; font: 700 clamp(12px, 1.2vw, 20px)/1 var(--sans); font-style: normal; color: #fff; text-shadow: 0 2px 6px rgba(40, 20, 80, .45); opacity: 0; }
+.radio.on .rn i { animation: rnote 3.6s var(--ease) infinite; }
+.radio.on .rn i:nth-child(2) { animation-delay: .9s; left: 30%; } .radio.on .rn i:nth-child(3) { animation-delay: 1.8s; left: -10%; } .radio.on .rn i:nth-child(4) { animation-delay: 2.7s; left: 45%; }
+@keyframes rnote { 0% { opacity: 0; transform: translate(0, 10px) rotate(-10deg) scale(.7); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(26px, -70px) rotate(14deg) scale(1.15); } }
+.rpin .rpi { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--c); color: #fff; }
+.rpin .rpi svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.rpin .eq { display: none; align-items: flex-end; gap: 2px; height: 12px; margin-left: 2px; }
+.rpin .eq i, .np-b i { width: 3px; border-radius: 2px; background: var(--c, #7B5CD6); animation: eqb .9s ease-in-out infinite alternate; }
+.rpin .eq i:nth-child(1) { height: 6px; } .rpin .eq i:nth-child(2) { height: 12px; animation-delay: .3s; } .rpin .eq i:nth-child(3) { height: 8px; animation-delay: .6s; }
+@keyframes eqb { from { transform: scaleY(.35); } to { transform: scaleY(1); } }
+.rpin.on .eq { display: inline-flex; }
+.rpin .eq i { transform-origin: 50% 100%; }
+/* now playing, reachable from anywhere */
+.np { position: fixed; z-index: 70; top: calc(env(safe-area-inset-top, 0px) + 14px); right: calc(clamp(14px, 2.4vw, 28px) + 58px); height: 48px; display: inline-flex; align-items: center; gap: 10px; padding: 0 16px 0 8px; border-radius: 999px; background: rgba(255, 253, 247, .9); color: var(--ink); box-shadow: var(--shadow-sm); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); font: 700 13.5px/1 var(--sans); --c: #7B5CD6; transition: transform .4s var(--spring), opacity .4s; }
+.np[hidden] { display: none; }
+.np:hover { transform: translateY(-2px); }
+.np-d { width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(circle, #E4402A 0 26%, #1a1a1a 27% 30%, #2a2a2a 31% 45%, #151515 46% 60%, #2a2a2a 61% 75%, #111 76%); animation: rsspin 3.2s linear infinite; }
+.np.paused .np-d, .np.paused .np-b i { animation-play-state: paused; }
+.np-b { display: inline-flex; align-items: flex-end; gap: 3px; height: 14px; }
+.np-b i { height: 14px; transform-origin: 50% 100%; } .np-b i:nth-child(2) { animation-delay: .35s; }
+.np.paused .np-b { gap: 4px; } .np.paused .np-b i { animation: none; transform: none; height: 13px; width: 4px; }
+.np:not(.paused) .np-b i { width: 3px; }
+@media (max-width: 860px) { .np { right: calc(clamp(14px, 2.4vw, 28px) + 56px); padding-right: 12px; } .np-t { display: none; } }
+:root[data-theme="dark"] .np { background: rgba(42, 42, 42, .88); color: #F5F5F5; box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 10px 30px -10px rgba(0, 0, 0, .6); }
+:root[data-theme="dark"] .radio .rs { filter: brightness(.75) saturate(.9); }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
 <header class="bar">
-  <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch theme"><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg></button>
+  <button class="np" id="np" type="button" aria-label="Pause music" hidden><span class="np-d" aria-hidden="true"></span><span class="np-t">Music on the hill</span><span class="np-b" aria-hidden="true"><i></i><i></i></span></button>
+<button class="theme-btn" id="themeBtn" type="button" aria-label="Switch theme"><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg></button>
   <a class="logo" href="#top" data-go="top"><i><img src="v2/s/photo.webp" alt=""></i>James Chugh</a>
   <nav class="nav" aria-label="Sections">
     <span class="ind" id="navInd" aria-hidden="true"></span>
@@ -2224,21 +2273,32 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
         </div>
         <div class="ly" data-d=".16" id="L-hillL"><img src="v2/h/hillL.webp" alt="" style="left:0;top:48.305%;width:55.238%;height:26.483%"></div>
         <div class="ly" data-d=".2" id="L-hillR"><img src="v2/h/hillR.webp" alt="" style="left:44.167%;top:22.881%;width:55.833%;height:51.589%"></div>
-        <div class="ly" data-d=".22" data-id="oyo"><img src="v2/h/hotelL.webp" alt="" style="left:79.107%;top:16.631%;width:13.393%;height:17.903%"><button class="hot" data-id="oyo" aria-label="OYO, the hotel on the hill" style="left:79.1%;top:16.6%;width:13.4%;height:17.9%"></button></div>
-        <div class="ly" data-d=".26" data-id="mmt"><img src="v2/h/tower.webp" alt="" style="left:63.095%;top:11.864%;width:9.524%;height:42.797%"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:63.1%;top:11.9%;width:9.5%;height:42.8%"></button></div>
-        <div class="ly" data-d=".3" data-id="nsut"><img src="v2/h/college.webp" alt="" style="left:7.5%;top:33.051%;width:15%;height:38.559%"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:7.5%;top:33%;width:15%;height:38.6%"></button></div>
-        <div class="ly" data-d=".38" data-id="eazydiner"><img src="v2/h/bistro.webp" alt="" style="left:32.976%;top:56.038%;width:25.357%;height:25.212%"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:33%;top:56%;width:25.4%;height:25.2%"></button></div>
+        <div class="ly" data-d=".22" data-id="oyo"><img src="v2/h/hotelL.webp" alt="" style="left:79.107%;top:16.631%;width:13.393%;height:17.903%"><button class="hot" data-id="oyo" aria-label="OYO, the hotel on the hill" style="left:79.1%;top:16.6%;width:13.4%;height:17.9%"></button><button class="pin" data-id="oyo" style="left:85.4%;top:19.4%;--c:#DC402A"><b><img src="v2/s/logo-oyo.webp" alt="">OYO</b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".26" data-id="mmt"><img src="v2/h/tower.webp" alt="" style="left:63.095%;top:11.864%;width:9.524%;height:42.797%"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:63.1%;top:11.9%;width:9.5%;height:42.8%"></button><button class="pin" data-id="mmt" style="left:67.86%;top:34.2%;--c:#E4262C"><b><img src="v2/s/logo-mmt.webp" alt="">MakeMyTrip</b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".3" data-id="nsut"><img src="v2/h/college.webp" alt="" style="left:7.5%;top:33.051%;width:15%;height:38.559%"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:7.5%;top:33%;width:15%;height:38.6%"></button><button class="pin" data-id="nsut" style="left:14.3%;top:54.2%;--c:#C4553A"><b><img src="v2/s/logo-nsut.webp" alt="">NSUT</b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".38" data-id="eazydiner"><img src="v2/h/bistro.webp" alt="" style="left:32.976%;top:56.038%;width:25.357%;height:25.212%"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:33%;top:56%;width:25.4%;height:25.2%"></button><button class="pin" data-id="eazydiner" style="left:44.9%;top:59.2%;--c:#EE5A2B"><b><img src="v2/s/logo-eazydiner.webp" alt="">EazyDiner</b><i class="pd" aria-hidden="true"></i></button><div class="hint" id="hint" style="left:30.5%;top:50.5%">click a place<svg viewBox="0 0 58 40"><path d="M4 4C18 8 28 20 40 30M40 30l-2-9M40 30l-9-1"/></svg></div></div>
+        <div class="ly" data-d=".34" data-id="radio"><div class="radio" id="radio" style="left:76.4%;top:58.5%;width:6.6%"><svg class="rs" viewBox="0 0 120 130" aria-hidden="true">
+<defs><radialGradient id="rsDisc" cx="50%" cy="50%" r="50%"><stop offset=".18" stop-color="#2a2a2a"/><stop offset=".19" stop-color="#151515"/><stop offset="1" stop-color="#0c0c0c"/></radialGradient>
+<linearGradient id="rsWood" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#B9773A"/><stop offset="1" stop-color="#7E4A22"/></linearGradient>
+<linearGradient id="rsBrass" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#FFE29A"/><stop offset=".5" stop-color="#D9A441"/><stop offset="1" stop-color="#9C6B1E"/></linearGradient></defs>
+<ellipse cx="62" cy="125" rx="50" ry="5" fill="rgba(30,40,10,.35)"/>
+<rect x="22" y="72" width="80" height="52" rx="6" fill="url(#rsWood)"/>
+<path d="M22 86h80M22 100h80M22 114h80" stroke="#6B3D1B" stroke-width="1" opacity=".45"/>
+<circle cx="47" cy="98" r="14" fill="#3B2412"/><circle cx="47" cy="98" r="10.5" fill="none" stroke="#C8924F" stroke-width="1.5" stroke-dasharray="2 2.4"/>
+<circle cx="84" cy="90" r="3.2" fill="#E9C27A"/><circle cx="84" cy="104" r="3.2" fill="#E9C27A"/>
+<rect x="20" y="68" width="84" height="7" rx="3" fill="#C98B47"/>
+<g class="rs-disc"><circle cx="62" cy="40" r="29" fill="url(#rsDisc)"/>
+<circle cx="62" cy="40" r="23" fill="none" stroke="#2c2c2c" stroke-width=".8"/><circle cx="62" cy="40" r="18" fill="none" stroke="#2c2c2c" stroke-width=".8"/><circle cx="62" cy="40" r="13.5" fill="none" stroke="#2c2c2c" stroke-width=".8"/>
+<circle cx="62" cy="40" r="8.5" fill="#E4402A"/><path d="M62 33.5a6.5 6.5 0 0 1 6.2 4.6" stroke="#FFD9A0" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="62" cy="40" r="1.6" fill="#1a1a1a"/></g>
+<path d="M44 22a26 26 0 0 1 22-9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".28"/>
+<path d="M58 69l4-29 4 29z" fill="#6B3D1B"/>
+<path d="M100 70c0-14-6-24-16-30" stroke="url(#rsBrass)" stroke-width="4" fill="none" stroke-linecap="round"/>
+<path d="M84 40c-4-12 2-26 18-32 6 10 6 22-2 30z" fill="url(#rsBrass)"/><path d="M101 9c5 9 5 19-1 27" stroke="#8A5A15" stroke-width="1.4" fill="none" opacity=".6"/>
+</svg><span class="rn" aria-hidden="true"><i>♪</i><i>♫</i><i>♪</i><i>♬</i></span></div><button class="pin rpin" id="radioPin" style="left:76.6%;top:46.7%;--c:#7B5CD6" aria-pressed="false"><b><span class="rpi"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><span class="rpl">Play some music</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".85" id="L-fgL"><img src="v2/h/fgL.webp" alt="" style="left:0;top:40.572%;width:30.595%;height:59.428%"></div>
         <div class="ly" data-d=".9" id="L-fgR"><img src="v2/h/fgR.webp" alt="" style="left:48.095%;top:39.513%;width:51.905%;height:60.487%"></div>
-        <div class="ly" data-d=".95" data-id="me"><div class="me-fig" style="left:80.6%;top:63.5%;width:5.9%"><img src="v2/h/james_s.webp" alt="Painted illustration of James in a backwards cap, waving"></div><button class="hot" data-id="me" aria-label="About me" style="left:80%;top:62%;width:7%;height:28%"></button></div>
+        <div class="ly" data-d=".95" data-id="me"><div class="me-fig" style="left:80.6%;top:63.5%;width:5.9%"><img src="v2/h/james_s.webp" alt="Painted illustration of James in a backwards cap, waving"></div><button class="hot" data-id="me" aria-label="About me" style="left:80%;top:62%;width:7%;height:28%"></button><button class="pin" data-id="me" style="left:84.3%;top:64.6%;--c:#F2B705"><b><img src="v2/s/photo.webp" alt="">That’s me</b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d="1" id="L-fgB"><img src="v2/h/fgB.webp" alt="" style="left:23.869%;top:72.775%;width:31.31%;height:27.225%"></div>
-        <div class="ly keep pins" data-d=".3" id="pins">
-          <button class="pin" data-id="nsut" style="left:21.8%;top:56%;--c:#C4553A"><b>NSUT</b></button>
-          <button class="pin" data-id="eazydiner" style="left:45.6%;top:56.6%;--c:#EE5A2B"><b>EazyDiner</b></button>
-          <button class="pin" data-id="mmt" style="left:67.9%;top:11.4%;--c:#E4262C"><b>MakeMyTrip</b></button>
-          <button class="pin" data-id="oyo" style="left:85.8%;top:17.2%;--c:#DC402A"><b>OYO</b></button>
-          <button class="pin" data-id="me" style="left:83.6%;top:63.6%;--c:#F2B705"><b>That's me</b></button>
-        </div>
       </div>
     </div>
 
@@ -2250,7 +2310,6 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
       </h1>
       <p class="sub">Product designer. Mechanical engineer who Googled his way here.</p>
     </div>
-    <div class="hint" id="hint" style="left:38%;top:47%"><svg viewBox="0 0 58 40"><path d="M54 4C40 8 30 20 18 30M18 30l2-9M18 30l9-1"/></svg>click a place</div>
     <div class="scroll-cue" id="cue"><i></i>scroll to fly in</div>
 
     <aside class="sheet" id="sheet" aria-live="polite">
@@ -2835,7 +2894,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     heroCopy.style.opacity = ''; hint.style.opacity = ''; chips.style.opacity = '';
   }
   let hoverT = 0, leaveT = 0;
-  $$('.hot, .pin', scene).forEach(el => {
+  $$('.hot, .pin:not(.rpin)', scene).forEach(el => {
     const pinFor = $(`.pin[data-id="${el.dataset.id}"]`, scene);
     el.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') pinFor.classList.add('hov'); });
     el.addEventListener('pointerleave', () => pinFor.classList.remove('hov'));
@@ -4236,6 +4295,62 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     if (!saved) { const id = 'local-' + body.at; localNotes = [{ id, ...body }, ...localNotes].slice(0, 5); freshId = id; try { localStorage.setItem('jc-notes', JSON.stringify(localNotes)); } catch (_) {} }
     renderWall(); go.disabled = false; nwForm.reset(); setBrand(null); nwPhoto = ''; $('#nwCount').textContent = '0 / 200'; closeNotes();
   });
+
+
+  /* ---------- music on the hill: soft generative lo-fi, made live in the browser ---------- */
+  (() => {
+    const radio = $('#radio'), pinR = $('#radioPin'), np = $('#np'), lbl = $('.rpl', pinR);
+    if (!radio || !pinR) return;
+    let ac = null, out = null, on = false, timer = 0, nextBar = 0, bar = 0, stopT = 0, crackle = null;
+    const CH = [[48, 55, 59, 64], [45, 52, 55, 60], [41, 48, 52, 57], [43, 50, 53, 59]], PENT = [72, 74, 76, 79, 81, 84, 86, 88], BAR = 4.2;
+    const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+    function build() {
+      ac = new (window.AudioContext || window.webkitAudioContext)();
+      out = ac.createGain(); out.gain.value = 0;
+      const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2200; lp.Q.value = .4;
+      const verb = ac.createConvolver(), len = ac.sampleRate * 3.2, ir = ac.createBuffer(2, len, ac.sampleRate);
+      for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
+      verb.buffer = ir; const wet = ac.createGain(); wet.gain.value = .42;
+      lp.connect(out); lp.connect(verb); verb.connect(wet); wet.connect(out); out.connect(ac.destination);
+      out.bus = lp;
+      const nb = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate), nd = nb.getChannelData(0);
+      for (let i = 0; i < nd.length; i++) nd[i] = Math.random() < .0008 ? (Math.random() * 2 - 1) * .9 : (Math.random() * 2 - 1) * .015;
+      crackle = { buf: nb };
+    }
+    function tone(m, t, dur, { type = 'sine', vol = .06, a = 1.2, r = 1.8, det = 0 } = {}) {
+      const o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.value = hz(m); o.detune.value = det;
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + a); g.gain.setValueAtTime(vol, t + Math.max(a, dur - r)); g.gain.linearRampToValueAtTime(0, t + dur);
+      o.connect(g); g.connect(out.bus); o.start(t); o.stop(t + dur + .05);
+    }
+    function schedule() {
+      while (nextBar < ac.currentTime + 1.2) {
+        const ch = CH[bar % CH.length], t = nextBar;
+        ch.forEach((m, i) => { tone(m, t, BAR + 1.2, { vol: .035, a: 1.4, r: 2 , det: i % 2 ? 6 : -6 }); tone(m + 12, t, BAR + 1, { type: 'triangle', vol: .012, a: 1.8, r: 2 }); });
+        tone(ch[0] - 12, t, BAR, { vol: .07, a: .25, r: 1.2 });
+        for (let b = 0; b < 8; b++) if (Math.random() < .42) { const n = PENT[Math.floor(Math.random() * PENT.length)] - (Math.random() < .5 ? 12 : 0); tone(n, t + b * BAR / 8 + Math.random() * .04, 2.2, { vol: .028, a: .015, r: 2.1 }); }
+        nextBar += BAR; bar++;
+      }
+    }
+    function start() {
+      if (!ac) build(); if (ac.state === 'suspended') ac.resume();
+      clearTimeout(stopT); on = true; nextBar = Math.max(nextBar, ac.currentTime + .1);
+      const now = ac.currentTime; out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(out.gain.value, now); out.gain.linearRampToValueAtTime(.55, now + 2.5);
+      if (!crackle.src) { const src = ac.createBufferSource(), hp = ac.createBiquadFilter(), g = ac.createGain(); src.buffer = crackle.buf; src.loop = true; hp.type = 'highpass'; hp.frequency.value = 1500; g.gain.value = .5; src.connect(hp); hp.connect(g); g.connect(out); src.start(); crackle.src = src; }
+      schedule(); clearInterval(timer); timer = setInterval(schedule, 250);
+      ui();
+    }
+    function stop() {
+      on = false; const now = ac.currentTime; out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(out.gain.value, now); out.gain.linearRampToValueAtTime(0, now + 1.4);
+      stopT = setTimeout(() => { clearInterval(timer); if (crackle.src) { crackle.src.stop(); crackle.src = null; } ac.suspend(); nextBar = 0; }, 1500);
+      ui();
+    }
+    function ui() {
+      radio.classList.toggle('on', on); pinR.classList.toggle('on', on); pinR.setAttribute('aria-pressed', on); lbl.textContent = on ? 'Now playing' : 'Play some music';
+      np.hidden = false; np.classList.toggle('paused', !on); np.setAttribute('aria-label', on ? 'Pause music' : 'Play music'); $('.np-t', np).textContent = on ? 'Music on the hill' : 'Paused';
+    }
+    const toggle = e => { e && e.stopPropagation(); on ? stop() : start(); };
+    pinR.addEventListener('click', toggle); np.addEventListener('click', toggle); radio.addEventListener('click', toggle);
+  })();
 
   /* ---------- keycaps: they work on your keyboard too ---------- */
   const keysMat = $('#keysMat');
