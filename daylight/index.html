@@ -1773,6 +1773,12 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-links button:hover { background: var(--ed); }
 /* other case study cards: no divider */
 .wc-go { border-top: 0; padding-top: 4px; }
+
+/* clouds rise up to meet the contact card */
+.hello .clouds-foot { z-index: 1; margin-top: -14vh !important; height: max(min(44vh, 40vw), 260px) !important; }
+.hello .clouds-foot img { bottom: -4vh; }
+@media (min-width: 1400px) { .hello .clouds-foot img { width: min(56%, 1050px) !important; } }
+@media (max-width: 860px) { .hello .clouds-foot { margin-top: -8vh !important; } }
 </style>
 
 <header class="bar">
