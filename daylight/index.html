@@ -1741,6 +1741,15 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .brand-sec.manual .brand-row { padding-top: 60px; padding-bottom: 110px; margin-bottom: -60px; }
 /* a few clouds in the footer on every screen */
 @media (min-width: 1400px) { .hello .clouds-foot { display: block; height: 18vh; margin-top: 6vh; } .hello .clouds-foot img { width: min(36%, 620px) !important; } .hello .foot { margin-top: 0; } }
+
+/* map: no zoom buttons in the overview, and the ground runs edge to edge */
+.journey.jfar .mapctl { opacity: 0; pointer-events: none; }
+.mapctl { transition: opacity .3s; }
+.j-pin { background: #F4EFE1; }
+#mapArt { overflow: visible; }
+/* more clouds at the very bottom */
+@media (min-width: 1400px) { .hello .clouds-foot { height: 30vh; margin-top: 4vh; } .hello .clouds-foot img { width: min(48%, 900px) !important; } }
+.hello .clouds-foot { height: max(min(34vh, 30vw), 220px); }
 </style>
 
 <header class="bar">
@@ -2801,7 +2810,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
     const k = ph.out ? 1 - ph.out : ph.k;
     const hk = ss(clamp(k * 1.6));
     jHead.style.opacity = (1 - hk).toFixed(3); jHead.style.transform = `translate3d(0, ${(-hk * 40).toFixed(1)}px, 0)`; jFade.style.opacity = (1 - ss(k)).toFixed(3);
-    world3.classList.toggle('far', k < .5);
+    world3.classList.toggle('far', k < .5); journey.classList.toggle('jfar', k < .5);
     const T = { x: O.x + (F.x - O.x) * k + pan.x, y: O.y + (F.y - O.y) * k + pan.y, s: O.s + (F.s - O.s) * k };
     if (!cam3.ok) Object.assign(cam3, T, { ok: true });
     const e = reduce ? 1 : 1 - Math.exp(-dt * 6);
@@ -3720,7 +3729,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
   let last = performance.now();
   // fold a finished scene down to one screen, keeping what's on screen exactly where it is
   function fold(k, el, ref, extra) {
-    if (DONE[k] || el.getBoundingClientRect().bottom > -2) return;
+    if (DONE[k] || el.getBoundingClientRect().bottom > vh + 2) return;
     const y = Y(), before = top(ref);
     el.style.height = '100vh'; el.style.height = '100svh'; if (extra) extra();
     DONE[k] = 1; const delta = before - top(ref);
