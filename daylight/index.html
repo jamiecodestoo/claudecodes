@@ -2170,7 +2170,9 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 .nw-sug li:hover, .nw-sug li.on { background: #F4EFE6; }
 .nw-work { display: flex !important; align-items: center; gap: 6px; margin-top: 3px; }
 .nw-work .co { width: 18px; height: 18px; border-radius: 5px; font-size: 10px; }
-.nw-work span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nw-work span { min-width: 0; white-space: normal; overflow-wrap: anywhere; text-wrap: pretty; }
+.nw-work { align-items: flex-start !important; } .nw-work .co { flex: none; margin-top: -1px; }
+.nw-by > span:last-child { flex: 1; min-width: 0; }
 .nw-work em { font-style: normal; font-weight: 700; color: #2B3A4E; }
 .nw-card { width: 300px; }
 @media (max-width: 480px) { .nw-two { grid-template-columns: 1fr; gap: 0; } }
@@ -3550,6 +3552,37 @@ div.mm { overflow-x: clip; }
   .lo-leaf::after { height: 70px; }
 }
 @media (prefers-reduced-motion: reduce) { .lo-n i, .lo-lamp i, .lo-note, .lo-leaf .dnd, .lo-boy.on, .lo-go.glow { animation: none; } }
+
+/* =========================================================
+   Every button is glass: translucent, blurred, a light rim, never a solid fill
+   ========================================================= */
+.nav a.cta, .btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail button, .nw-cta, .nw-go, .c3-links a, .c3-links button, .fb-go, .mm-trc .ar button, .mm-tra button, .c3-step button,
+.sw-match button, .sw-ctrl button, .sw-cnav button, .lb-foot button, .cbtn, .sn-drop, .sn-f button, .sn-btn, .sn-done button, .c3-ptabs button, .c3-tabs button.on, .c3-seg button.on, .fb-c.on, .sw-tabs button.on {
+  --gk: #13233A;
+  background: color-mix(in srgb, var(--gk) 9%, rgba(255, 255, 255, .42)) !important; color: var(--ink) !important;
+  backdrop-filter: blur(14px) saturate(1.6); -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--gk) 28%, rgba(255, 255, 255, .7)), inset 0 1px 0 rgba(255, 255, 255, .75), 0 12px 26px -16px color-mix(in srgb, var(--gk) 70%, transparent) !important; }
+.nav a.cta:hover, .btn-ink:hover, .btn-ghost:hover, .cs-close:hover, .bh-cta:hover, .mail button:hover, .nw-cta:hover, .nw-go:hover, .c3-links a:hover, .c3-links button:hover, .fb-go:hover, .mm-trc .ar button:hover, .mm-tra button:hover, .c3-step button:hover,
+.sw-match button:hover, .sw-ctrl button:hover, .sw-cnav button:hover, .lb-foot button:hover, .cbtn:hover, .sn-drop:hover, .sn-f button:hover, .sn-btn:hover, .sn-done button:hover, .c3-ptabs button:hover {
+  background: color-mix(in srgb, var(--gk) 18%, rgba(255, 255, 255, .5)) !important; color: var(--ink) !important;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--gk) 50%, rgba(255, 255, 255, .7)), 0 0 0 4px color-mix(in srgb, var(--gk) 12%, transparent), 0 16px 30px -14px color-mix(in srgb, var(--gk) 70%, transparent) !important; }
+/* each button keeps its own colour as the tint */
+.bh-cta, .c3-links a[href*="topmate"] { --gk: #E4402A; }
+.c3-links a[href*="linkedin"] { --gk: #0A66C2; } .c3-links a[href*="instagram"] { --gk: #DD2A7B; } .c3-links a[href^="mailto"] { --gk: #EA4335; }
+.cbtn, .sn-drop, .sn-f button, .sn-btn, .sn-done button, .c3-ptabs button { --gk: var(--c, #13233A); }
+.cs.ed .c3-links button, .cs.ed .fb-go { --gk: #EE5A2B; } .cs.mm .c3-links button, .cs.mm .fb-go, .mm-trc .ar button, .mm-tra button { --gk: #E4262C; }
+.cs.sw .c3-links button, .cs.sw .fb-go, .sw-match button, .sw-ctrl .yes, .sw-tabs button.on { --gk: #8B5CF6; } .sw-ctrl .no { --gk: #F0396B; }
+.sw-ctrl .yes, .sw-ctrl .no { color: var(--gk) !important; }
+.c3-tabs button.on i { background: var(--sun); }
+:root[data-theme="dark"] :is(.nav a.cta, .btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail button, .nw-cta, .nw-go, .c3-links a, .c3-links button, .fb-go, .mm-trc .ar button, .mm-tra button, .c3-step button, .sw-match button, .sw-ctrl button, .sw-cnav button, .lb-foot button, .cbtn, .sn-drop, .sn-f button, .sn-btn, .sn-done button, .c3-ptabs button, .c3-tabs button.on, .c3-seg button.on, .fb-c.on, .sw-tabs button.on) {
+  --gk: #FFD86B; background: color-mix(in srgb, var(--gk) 14%, rgba(255, 255, 255, .05)) !important; color: #F5F5F5 !important;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--gk) 40%, rgba(255, 255, 255, .16)), inset 0 1px 0 rgba(255, 255, 255, .1), 0 12px 26px -14px rgba(0, 0, 0, .7) !important; }
+:root[data-theme="dark"] :is(.nav a.cta, .btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail button, .nw-cta, .nw-go, .c3-links a, .c3-links button, .fb-go, .mm-trc .ar button, .mm-tra button, .c3-step button, .sw-match button, .sw-ctrl button, .sw-cnav button, .lb-foot button, .cbtn, .sn-drop, .sn-f button, .sn-btn, .sn-done button, .c3-ptabs button):hover {
+  background: color-mix(in srgb, var(--gk) 24%, rgba(255, 255, 255, .06)) !important; color: #fff !important; }
+:root[data-theme="dark"] .c3-links a[href*="linkedin"] { --gk: #5AA9FF; } :root[data-theme="dark"] .c3-links a[href*="instagram"] { --gk: #FF6FB0; } :root[data-theme="dark"] .c3-links a[href^="mailto"], :root[data-theme="dark"] .c3-links a[href*="topmate"], :root[data-theme="dark"] .bh-cta { --gk: #FF8A6B; }
+:root[data-theme="dark"] :is(.cbtn, .sn-drop, .sn-f button, .sn-btn, .sn-done button, .c3-ptabs button) { --gk: color-mix(in srgb, var(--c, #FFD86B) 60%, #fff); }
+:root[data-theme="dark"] .cs.sw :is(.c3-links button, .fb-go), :root[data-theme="dark"] :is(.sw-match button, .sw-ctrl .yes, .sw-tabs button.on) { --gk: #C4A8FF; } :root[data-theme="dark"] .sw-ctrl .no { --gk: #FF7A9C; }
+:root[data-theme="dark"] .sw-ctrl .yes, :root[data-theme="dark"] .sw-ctrl .no { color: var(--gk) !important; }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -6441,7 +6474,7 @@ div.mm { overflow-x: clip; }
     y = Y();
     if (y < vTop + vRange + vh) frameValley(dt, DONE.v ? 0 : held('v', y, vh * .04));
     if (y > sTop - vh && y < sTop + sRange + vh) frameStory(DONE.s ? 1e9 : held('s', y, sTop - vh));
-    if (y > jTop - vh && y < jTop + jRange + vh) frameJourney(dt, jCar ? y : DONE.j ? 1e9 : held('j', y, jTop - vh));
+    if (y > jTop - vh && y < jTop + jRange + vh) frameJourney(dt, y);
     if (y > jTop + jRange - vh) frameWork(dt);
     if (y > bTop - vh && y < bTop + bRange + vh) frameBrand(dt, held('b', y, bTop - vh));
     if (y > stTop - vh && y < stTop + Math.max(stRange, vh) + vh) frameStack(DONE.st ? 1e9 : held('st', y, stTop - vh));
