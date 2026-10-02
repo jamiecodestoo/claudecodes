@@ -2403,6 +2403,329 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   .journey.jcm .jcard:not(.open) .jc-bd { display: flex; flex-wrap: wrap; align-items: center; column-gap: 8px; }
   .journey.jcm .jcard:not(.open) .jc-bd > h3, .journey.jcm .jcard:not(.open) .jc-bd > .txt { flex-basis: 100%; }
 }
+
+/* =========================================================
+   MakeMyTrip · Special Requests — a stay at a hotel
+   ========================================================= */
+.cs.mm { --mr: #E4262C; --mr2: #FF5A4F; --gold: #C9962E; --wood: #8A5A32; background: var(--paper); color: var(--ink); }
+.cs.mm .mm-bar { background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.mm-bk { display: inline-flex; align-items: center; gap: 10px; font: 700 14px/1 var(--sans); color: var(--ink-2); }
+.mm-bk img { height: 22px; width: auto; }
+.mm { overflow: hidden; }
+.mm [data-rv] { opacity: 0; translate: 0 26px; transition: opacity .8s var(--ease), translate 1s var(--ease); }
+.mm [data-rv].in { opacity: 1; translate: 0 0; }
+.mm-sec { position: relative; max-width: 76rem; margin: 0 auto; padding: 16vh clamp(18px, 4vw, 48px) 0; box-sizing: border-box; }
+.mm-pl { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 18px; font: 700 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.mm-pl span { padding: 7px 11px; border-radius: 8px; background: linear-gradient(180deg, #E9C46A, #C9962E); color: #3B2A0B; box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .18), 0 6px 12px -8px rgba(120, 80, 10, .6); letter-spacing: .08em; }
+.mm-h { margin: 0 0 4vh; font: 800 clamp(30px, 4.4vw, 60px)/1.02 var(--sans); letter-spacing: -.045em; max-width: 20ch; text-wrap: balance; }
+.mm-p { margin: -2vh 0 4vh; max-width: 60ch; font: 400 clamp(16px, 1.25vw, 19px)/1.6 var(--sans); color: var(--ink-2); }
+.mm-p.c { margin: 5vh auto 0; text-align: center; }
+.mm-p mark { background: none; color: var(--ink); font-weight: 700; box-shadow: inset 0 -.45em 0 color-mix(in srgb, var(--mr) 22%, transparent); }
+
+/* hero */
+.mm-hero { position: relative; padding: 8vh 0 0; text-align: center; background: radial-gradient(70% 60% at 50% 0%, color-mix(in srgb, var(--mr) 10%, transparent), transparent 70%); }
+.mm-hw { max-width: 54rem; margin: 0 auto; padding: 0 20px; }
+.mm-k { margin: 0; font: 700 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mr); }
+.mm-t { margin: 18px 0 0; font: 800 clamp(44px, 7.4vw, 104px)/.95 var(--sans); letter-spacing: -.055em; }
+.mm-t em { font-style: normal; color: var(--mr); }
+.mm-lead { margin: 22px auto 0; max-width: 46ch; font: 400 clamp(17px, 1.4vw, 21px)/1.5 var(--sans); color: var(--ink-2); }
+.mm-ring { display: inline-flex; align-items: center; gap: 14px; margin-top: 30px; }
+.mm-bell { width: 74px; height: 64px; padding: 6px; border-radius: 20px; background: var(--card); box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--line); cursor: pointer; transition: transform .4s var(--spring); }
+.mm-bell:hover { transform: translateY(-3px); }
+.mm-bell svg { width: 100%; height: 100%; overflow: visible; }
+.mm-bell .bl { fill: url(#none); fill: #E3B04B; } .mm-bell .bs { fill: #8A5A32; } .mm-bell .bk { fill: #C9962E; } .mm-bell .bh { fill: none; stroke: #FFF3D1; stroke-width: 3; stroke-linecap: round; opacity: .7; }
+.mm-bell.ding svg { animation: mmding .7s var(--spring); transform-origin: 50% 90%; }
+@keyframes mmding { 20% { transform: scale(.9, .85); } 45% { transform: scale(1.06) rotate(-6deg); } 70% { transform: rotate(4deg); } }
+.mm-ringt { font: 700 15px/1.2 var(--sans); color: var(--ink); text-align: left; min-width: 13ch; }
+.mm-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 30px 0 0; padding: 0; list-style: none; }
+.mm-meta li { padding: 10px 16px; border-radius: 999px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); font: 600 14px/1 var(--sans); }
+.mm-meta b { margin-right: 8px; font-weight: 700; color: var(--ink-2); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.mm-illo { max-width: 72rem; margin: 6vh auto 0; padding: 0 20px; transition: transform .5s var(--spring); }
+.mm-illo img { width: 100%; height: auto; display: block; animation: mmfloat 7s ease-in-out infinite; }
+.mm-illo.pop img { animation: mmpop .8s var(--spring); }
+@keyframes mmfloat { 50% { transform: translateY(-8px); } }
+@keyframes mmpop { 30% { transform: scale(1.04) translateY(-10px); } }
+.mm-stays { margin-top: 5vh; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.mm-stays > div { display: flex; width: max-content; animation: mmstays 70s linear infinite; }
+.mm-stays img { height: clamp(150px, 18vw, 250px); width: auto; display: block; }
+@keyframes mmstays { to { transform: translateX(-50%); } }
+
+/* 01 · key rack */
+.mm-rack { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 26px); padding: 44px clamp(16px, 2.4vw, 32px) 34px; border-radius: 22px;
+  background: linear-gradient(180deg, #9B6A3E, #7C5130); box-shadow: inset 0 2px 0 rgba(255, 220, 170, .35), inset 0 -6px 14px rgba(40, 20, 5, .4), 0 30px 50px -30px rgba(60, 30, 5, .6); align-items: start; }
+.mm-rack::before { content: ""; position: absolute; left: 20px; right: 20px; top: 22px; height: 6px; border-radius: 3px; background: linear-gradient(#E9C46A, #A97A22); box-shadow: 0 2px 2px rgba(0, 0, 0, .3); }
+.mm-key { position: relative; display: grid; justify-items: center; text-align: center; cursor: pointer; padding-top: 6px; }
+.mm-ring2 { width: 22px; height: 22px; margin-top: -24px; border-radius: 50%; border: 3px solid #D9B05A; box-sizing: border-box; }
+.mm-fob { display: grid; justify-items: center; gap: 6px; width: min(130px, 100%); padding: 16px 10px 18px; margin-top: -4px; border-radius: 14px 14px 40px 40px; background: linear-gradient(170deg, var(--mr2), var(--mr) 60%, #B3121A); color: #fff;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, .35), 0 14px 20px -12px rgba(0, 0, 0, .55); transform-origin: 50% -16px; animation: mmsway 4.4s ease-in-out infinite; animation-delay: calc(var(--i) * -1.1s); transition: transform .6s var(--spring); box-sizing: border-box; }
+.mm-fob b { font: 800 22px/1 var(--sans); letter-spacing: .04em; }
+.mm-fob i { font-style: normal; font-size: 26px; line-height: 1; }
+.mm-key:hover .mm-fob { transform: translateY(4px) rotate(2deg); }
+@keyframes mmsway { 0%, 100% { rotate: -2.5deg; } 50% { rotate: 2.5deg; } }
+.mm-key.on .mm-fob { animation: none; transform: translateY(10px) scale(1.04); }
+.mm-kc { display: grid; gap: 8px; width: 100%; max-height: 0; overflow: hidden; margin-top: 0; padding: 0 16px; border-radius: 16px; background: var(--card); color: var(--ink); text-align: left; box-sizing: border-box; box-shadow: var(--shadow-sm); opacity: 0;
+  transition: max-height .8s var(--ease), opacity .5s, margin .6s var(--ease), padding .6s var(--ease); }
+.mm-kc b { font: 800 18px/1.2 var(--sans); letter-spacing: -.02em; }
+.mm-kc span { font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
+.mm-key.on .mm-kc { max-height: 260px; opacity: 1; margin-top: 22px; padding: 18px 16px; }
+.mm-hint { margin: 16px 0 0; text-align: center; font: 600 14px/1 var(--sans); color: var(--ink-2); }
+
+/* 02 · two sides of the desk */
+.mm-desk { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: clamp(16px, 3vw, 40px); }
+.mm-side { padding: 26px; border-radius: 24px; background: var(--card); box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--line); }
+.mm-side.l { border-top: 5px solid var(--mr); } .mm-side.r { border-top: 5px solid var(--gold); }
+.mm-who { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font: 800 18px/1.1 var(--sans); }
+.mm-who img { height: 34px; width: auto; }
+.mm-side ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.mm-side li { position: relative; padding: 12px 14px 12px 40px; border-radius: 14px; background: color-mix(in srgb, var(--ink) 4%, transparent); font: 600 15.5px/1.4 var(--sans); opacity: 0; translate: var(--x, -20px) 0; transition: opacity .6s var(--ease), translate .8s var(--spring); transition-delay: calc(var(--d) * .14s + .2s); }
+.mm-side.r li { --x: 20px; }
+.mm-side li::before { content: "✓"; position: absolute; left: 14px; top: 12px; font-weight: 800; color: var(--mr); }
+.mm-side.r li::before { color: var(--gold); }
+.mm-side.in li { opacity: 1; translate: 0 0; }
+.mm-mid { display: grid; place-items: center; }
+.mm-mid span { display: grid; place-items: center; width: 118px; height: 118px; border-radius: 50%; background: linear-gradient(135deg, var(--mr), var(--gold)); color: #fff; font: 800 16px/1.15 var(--sans); text-align: center; padding: 14px; box-sizing: border-box; box-shadow: 0 20px 40px -20px color-mix(in srgb, var(--mr) 70%, transparent); }
+.mm-mid.in span { animation: mmbeat 2.6s var(--ease) 1.4s infinite; }
+@keyframes mmbeat { 0%, 60%, 100% { transform: none; } 30% { transform: scale(1.07); } }
+
+/* 03 · the audit */
+.mm-audit { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 44px); align-items: center; }
+.mm-scr { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mm-scr figure { position: relative; margin: 0; border-radius: 14px; overflow: hidden; background: #fff; box-shadow: var(--shadow-sm); transition: opacity .5s, filter .5s, transform .6s var(--spring), box-shadow .5s; cursor: zoom-in; }
+.mm-scr figure img { display: block; width: 100%; height: auto; }
+.mm-scr figure > span { position: absolute; z-index: 1; right: 8px; top: 8px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--mr); color: #fff; font: 800 14px/1 var(--sans); box-shadow: 0 0 0 4px rgba(228, 38, 44, .25); }
+.mm-audit:not([data-on="0"]) .mm-scr figure:nth-child(1), .mm-audit:not([data-on="1"]) .mm-scr figure:nth-child(2), .mm-audit:not([data-on="2"]) .mm-scr figure:nth-child(3), .mm-audit:not([data-on="3"]) .mm-scr figure:nth-child(4) { opacity: .35; filter: grayscale(.7) blur(.5px); transform: scale(.96); }
+.mm-audit[data-on="0"] .mm-scr figure:nth-child(1), .mm-audit[data-on="1"] .mm-scr figure:nth-child(2), .mm-audit[data-on="2"] .mm-scr figure:nth-child(3), .mm-audit[data-on="3"] .mm-scr figure:nth-child(4) { transform: translateY(-8px) scale(1.04); box-shadow: 0 0 0 3px var(--mr), 0 24px 40px -20px rgba(228, 38, 44, .55); }
+.mm-iss { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.mm-iss button { display: grid; grid-template-columns: 34px 1fr; gap: 2px 12px; width: 100%; padding: 14px 16px; border-radius: 16px; text-align: left; background: transparent; box-shadow: inset 0 0 0 1px var(--line); cursor: pointer; transition: background .3s, box-shadow .3s; }
+.mm-iss button > span { grid-row: span 2; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 8%, transparent); font: 800 14px/1 var(--sans); }
+.mm-iss b { font: 800 17px/1.25 var(--sans); }
+.mm-iss em { font: 400 14.5px/1.45 var(--sans); font-style: normal; color: var(--ink-2); max-height: 0; overflow: hidden; transition: max-height .5s var(--ease); }
+.mm-iss button.on { background: var(--card); box-shadow: inset 0 0 0 2px var(--mr), var(--shadow-sm); }
+.mm-iss button.on > span { background: var(--mr); color: #fff; }
+.mm-iss button.on em { max-height: 120px; }
+
+/* 04 · the hotel facade */
+.mm-fac { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(24px, 4vw, 60px); align-items: end; }
+.mm-bld { position: relative; padding: 54px 26px 0; border-radius: 18px 18px 4px 4px; background: linear-gradient(180deg, #D98C5F, #B9663F); box-shadow: inset 0 0 0 6px #C7774C, 0 40px 60px -40px rgba(80, 30, 10, .7); }
+.mm-sign { position: absolute; left: 50%; top: -18px; translate: -50% 0; padding: 8px 18px; border-radius: 8px; background: #2B1B12; color: #FFD879; font: 800 16px/1 var(--sans); letter-spacing: .3em; box-shadow: 0 0 22px rgba(255, 200, 90, .35); }
+.mm-win { display: grid; grid-template-columns: repeat(10, 1fr); gap: 7px; }
+.mm-win i { aspect-ratio: 3 / 4; border-radius: 3px 3px 1px 1px; background: #4A2A1B; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .25); transition: background .35s, box-shadow .35s; }
+.mm-win i.on { background: var(--wc); box-shadow: 0 0 10px color-mix(in srgb, var(--wc) 70%, transparent), inset 0 -3px 0 rgba(0, 0, 0, .15); }
+.mm-door { width: 64px; height: 72px; margin: 18px auto 0; border-radius: 32px 32px 0 0; background: linear-gradient(#5B3524, #3C2116); box-shadow: inset 0 0 0 4px #C7774C; }
+.mm-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.mm-tabs button { display: grid; gap: 4px; padding: 14px 16px; border-radius: 16px; text-align: left; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); cursor: pointer; transition: box-shadow .3s, transform .4s var(--spring); }
+.mm-tabs button:hover { transform: translateY(-2px); }
+.mm-tabs b { font: 800 28px/1 var(--sans); letter-spacing: -.03em; color: var(--sc); }
+.mm-tabs span { font: 600 13.5px/1.3 var(--sans); color: var(--ink-2); }
+.mm-tabs button.on { box-shadow: inset 0 0 0 2px var(--sc), 0 14px 24px -16px var(--sc); }
+.mm-sd { min-height: 170px; margin-top: 22px; }
+.mm-sd .h { margin: 0; font: 700 13px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--sc); }
+.mm-sd .n { margin: 10px 0 0; font: 700 22px/1.2 var(--sans); }
+.mm-sd .n b { font-size: 54px; letter-spacing: -.05em; }
+.mm-sd .d { margin: 10px 0 0; font: 400 16px/1.55 var(--sans); color: var(--ink-2); max-width: 46ch; animation: mmin .5s var(--ease); }
+@keyframes mmin { from { opacity: 0; transform: translateY(8px); } }
+.mm-fn { margin: 14px 0 0; font: 500 13.5px/1.4 var(--sans); color: var(--ink-2); }
+
+/* 05 · luggage tags */
+.mm-tags { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2vw, 26px); perspective: 1200px; }
+.mm-tag { position: relative; height: 230px; padding: 0; cursor: pointer; background: none; }
+.mm-tag::before { content: ""; position: absolute; left: 50%; top: -26px; width: 2px; height: 34px; background: #B88A4A; transform-origin: 50% 0; rotate: -8deg; }
+.mm-tin { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .8s var(--spring); rotate: calc((var(--i) - 1.5) * 2deg); }
+.mm-tag:hover .mm-tin { transform: rotateY(12deg); }
+.mm-tag.fl .mm-tin { transform: rotateY(180deg); }
+.mm-tin > span { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; gap: 10px; padding: 34px 18px 18px; border-radius: 16px 16px 18px 18px; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: var(--shadow-sm); box-sizing: border-box;
+  clip-path: polygon(22% 0, 78% 0, 100% 14%, 100% 100%, 0 100%, 0 14%); }
+.mm-tin > span::before { content: ""; position: absolute; left: 50%; top: 14px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: var(--paper); box-shadow: inset 0 0 0 3px #C9A05A; }
+.mm-tin .f { background: var(--card); }
+.mm-tin .f img { width: 64px; height: 64px; border-radius: 16px; }
+.mm-tin .f b { font: 800 20px/1 var(--sans); }
+.mm-tin .f small { font: 600 12px/1 var(--sans); color: var(--ink-2); letter-spacing: .08em; text-transform: uppercase; }
+.mm-tin .b { transform: rotateY(180deg); background: linear-gradient(160deg, var(--mr2), var(--mr)); color: #fff; text-align: center; }
+.mm-tin .b b { font: 800 18px/1 var(--sans); opacity: .85; }
+.mm-tin .b span { font: 700 17px/1.35 var(--sans); }
+.mm-cimg { margin: 5vh 0 0; border-radius: 22px; overflow: hidden; background: #fff; box-shadow: var(--shadow-sm); cursor: zoom-in; }
+.mm-cimg img { display: block; width: 100%; height: auto; }
+.mm-cimg figcaption { padding: 12px; text-align: center; font: 600 13px/1 var(--sans); color: #5B6576; background: #F6F6F6; }
+
+/* 06 · iterations */
+.mm-it { display: grid; grid-template-columns: 210px minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(18px, 3vw, 40px); align-items: center; padding: clamp(18px, 2.4vw, 32px); border-radius: 28px; background: var(--card); box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--line); }
+.mm-itn { display: grid; gap: 6px; align-self: start; }
+.mm-itn button { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; text-align: left; font: 600 14px/1.25 var(--sans); color: var(--ink-2); cursor: pointer; transition: background .3s, color .3s; }
+.mm-itn button span { flex: none; display: grid; place-items: center; width: 30px; height: 26px; border-radius: 8px; background: color-mix(in srgb, var(--ink) 7%, transparent); font: 800 12px/1 var(--sans); }
+.mm-itn button.on { background: color-mix(in srgb, var(--mr) 10%, transparent); color: var(--ink); }
+.mm-itn button.on span { background: var(--mr); color: #fff; }
+.mm-its .ph { display: flex; justify-content: center; gap: 10px; animation: mmin .5s var(--ease); }
+.mm-its img { height: min(58vh, 520px); width: auto; max-width: 100%; border-radius: 18px; box-shadow: 0 24px 44px -24px rgba(19, 35, 58, .5), 0 0 0 1px var(--line); cursor: zoom-in; background: #fff; }
+.mm-its .many img { height: min(44vh, 400px); max-width: 32%; object-fit: cover; object-position: top; }
+.mm-itc { animation: mmin .5s var(--ease); }
+.mm-itc .v { margin: 0; font: 700 12.5px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--mr); }
+.mm-itc h4 { margin: 10px 0 10px; font: 800 clamp(24px, 2.2vw, 32px)/1.1 var(--sans); letter-spacing: -.03em; }
+.mm-itc > p { margin: 0; font: 400 16px/1.55 var(--sans); color: var(--ink-2); }
+.mm-itc ul { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.mm-itc li { padding: 10px 12px 10px 38px; position: relative; border-radius: 12px; font: 600 14.5px/1.4 var(--sans); }
+.mm-itc li::before { position: absolute; left: 12px; top: 9px; font-weight: 800; }
+.mm-itc li.y { background: color-mix(in srgb, #2FA36B 12%, transparent); } .mm-itc li.y::before { content: "✓"; color: #2FA36B; }
+.mm-itc li.n { background: color-mix(in srgb, var(--mr) 10%, transparent); } .mm-itc li.n::before { content: "✗"; color: var(--mr); }
+.mm-itc .ar { display: flex; gap: 10px; margin-top: 20px; }
+.mm-itc .ar button { padding: 12px 18px; border-radius: 999px; font: 700 14px/1 var(--sans); background: var(--ink); color: var(--paper); cursor: pointer; transition: transform .3s var(--spring), opacity .3s; }
+.mm-itc .ar button[data-d="-1"] { background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink); }
+.mm-itc .ar button:disabled { opacity: .4; cursor: default; }
+.mm-eq { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; margin-top: 7vh; }
+.mm-eq span { display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px; border-radius: 999px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), var(--shadow-sm); font: 700 16px/1 var(--sans); }
+.mm-eq i { font-style: normal; font-size: 20px; }
+.mm-eq b { font: 800 26px/1 var(--sans); color: var(--ink-2); }
+.mm-eq .res { background: var(--mr); color: #fff; box-shadow: 0 18px 30px -16px var(--mr); }
+.mm-eq .res img { height: 18px; width: auto; filter: brightness(0) invert(1); }
+.mm-eq > * { opacity: 0; transform: translateY(14px) scale(.9); transition: opacity .5s, transform .6s var(--spring); }
+.mm-eq.in > * { opacity: 1; transform: none; }
+.mm-eq.in > :nth-child(2) { transition-delay: .15s; } .mm-eq.in > :nth-child(3) { transition-delay: .3s; } .mm-eq.in > :nth-child(4) { transition-delay: .45s; } .mm-eq.in > :nth-child(5) { transition-delay: .6s; } .mm-eq.in > :nth-child(6) { transition-delay: .75s; } .mm-eq.in > :nth-child(7) { transition-delay: 1s; }
+
+/* 07 · the lift */
+.mm-lift { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: clamp(16px, 2.4vw, 30px); }
+.mm-pan { align-self: start; display: grid; gap: 8px; padding: 16px; border-radius: 22px; background: linear-gradient(160deg, #3B3F46, #24272C); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 24px 40px -24px rgba(0, 0, 0, .6); }
+.mm-led { display: flex; align-items: center; justify-content: center; gap: 10px; height: 54px; margin-bottom: 6px; border-radius: 12px; background: #0E0F11; color: #FF5A4F; font: 800 30px/1 ui-monospace, monospace; text-shadow: 0 0 10px rgba(255, 90, 79, .7); }
+.mm-led i { font-style: normal; font-size: 16px; }
+.lift-moving .mm-led i, .mm-lift.moving .mm-led i { animation: mmblink .3s steps(2) infinite; }
+@keyframes mmblink { 50% { opacity: .2; } }
+.mm-pan button { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 14px; text-align: left; color: #E8E8E8; font: 600 14px/1.25 var(--sans); cursor: pointer; transition: background .3s; }
+.mm-pan button:hover { background: rgba(255, 255, 255, .06); }
+.mm-pan button span { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #F2F2F2, #A7ABB2); color: #2A2D33; font: 800 15px/1 var(--sans); box-shadow: inset 0 -2px 3px rgba(0, 0, 0, .3), 0 2px 4px rgba(0, 0, 0, .4); transition: box-shadow .3s, color .3s; }
+.mm-pan button.on span { color: #fff; background: radial-gradient(circle at 40% 35%, #FF8A80, #E4262C); box-shadow: 0 0 0 3px rgba(255, 90, 79, .35), 0 0 16px rgba(255, 90, 79, .7); }
+.mm-pan button em { margin-left: auto; padding: 4px 7px; border-radius: 6px; background: #FFD23F; color: #2A2D33; font: 800 10px/1 var(--sans); font-style: normal; letter-spacing: .06em; text-transform: uppercase; }
+.mm-car { position: relative; min-height: 560px; border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, color-mix(in srgb, var(--gold) 10%, var(--card)), var(--card)); box-shadow: inset 0 0 0 1px var(--line), var(--shadow-sm); }
+.mm-fl { padding: 26px; }
+.mm-fl .hd h4 { margin: 0; font: 800 clamp(24px, 2.2vw, 32px)/1.1 var(--sans); letter-spacing: -.03em; }
+.mm-fl .hd h4 em { margin-left: 6px; padding: 4px 9px; border-radius: 8px; background: #FFD23F; color: #2A2D33; font: 800 12px/1 var(--sans); font-style: normal; letter-spacing: .06em; text-transform: uppercase; vertical-align: middle; }
+.mm-fl .hd p { margin: 8px 0 0; font: 400 16px/1.5 var(--sans); color: var(--ink-2); }
+.mm-fl .row { display: flex; gap: 14px; margin-top: 22px; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; }
+.mm-fl .row::-webkit-scrollbar { display: none; }
+.mm-fl .row img { flex: none; height: min(56vh, 480px); width: auto; border-radius: 18px; background: #fff; box-shadow: 0 20px 34px -22px rgba(19, 35, 58, .55), 0 0 0 1px var(--line); cursor: zoom-in; }
+.mm-fl .row.desk img { height: auto; width: min(46%, 560px); flex: 1 1 0; }
+.mm-doors { position: absolute; inset: 0; display: flex; pointer-events: none; }
+.mm-doors i { flex: 1; background: linear-gradient(90deg, #C9CDD3, #EEF0F2 50%, #B9BEC5); transition: transform .5s cubic-bezier(.7, 0, .3, 1); }
+.mm-doors i:first-child { transform: translateX(-101%); box-shadow: inset -2px 0 0 rgba(0, 0, 0, .15); } .mm-doors i:last-child { transform: translateX(101%); }
+.mm-lift.moving .mm-doors i { transform: none; }
+
+/* 08 · the split-flap board */
+.mm-bd { padding: clamp(16px, 2vw, 26px); border-radius: 22px; background: #121417; color: #F2F2F2; box-shadow: 0 40px 70px -40px rgba(0, 0, 0, .8), inset 0 0 0 1px rgba(255, 255, 255, .06); }
+.mm-bdh { display: flex; justify-content: space-between; gap: 12px; padding: 4px 6px 16px; border-bottom: 1px solid rgba(255, 255, 255, .1); font: 700 13px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #FFD23F; }
+.mm-bdh span:last-child { color: #8C9099; }
+.mm-row { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 20px; align-items: center; padding: 16px 6px; border-bottom: 1px solid rgba(255, 255, 255, .07); }
+.mm-row:last-child { border-bottom: 0; }
+.mm-fx { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.mm-fx > i { font-style: normal; color: #8C9099; font: 700 20px/1 var(--sans); }
+.sf { display: inline-flex; gap: 3px; }
+.sf i { position: relative; display: grid; place-items: center; width: 26px; height: 38px; border-radius: 5px; background: linear-gradient(180deg, #2A2E34 50%, #22252A 50%); font: 800 22px/1 ui-monospace, "SF Mono", monospace; font-style: normal; color: #F2F2F2; box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .5); }
+.sf i::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0, 0, 0, .55); }
+.sf i.flip { animation: mmflip .055s linear; }
+@keyframes mmflip { 50% { transform: scaleY(.3); } }
+.sf.big i { width: 34px; height: 50px; font-size: 30px; color: #FFD23F; }
+.mm-rt b { display: block; font: 800 18px/1.25 var(--sans); }
+.mm-rt span { display: block; margin-top: 6px; font: 400 14.5px/1.5 var(--sans); color: #A9ADB5; }
+
+/* 09 · guestbook */
+.mm-gb { position: relative; max-width: 50rem; margin: 0 auto; padding: 44px clamp(22px, 4vw, 60px) 40px clamp(56px, 6vw, 90px); border-radius: 6px 20px 20px 6px; background: #FFFDF6;
+  background-image: linear-gradient(90deg, transparent 38px, rgba(228, 38, 44, .35) 38px 40px, transparent 40px), repeating-linear-gradient(transparent 0 37px, rgba(30, 90, 160, .13) 37px 38px); background-position: 0 0, 0 30px;
+  color: #13233A; box-shadow: 0 30px 50px -30px rgba(60, 40, 10, .5), inset 10px 0 18px -12px rgba(60, 40, 10, .25); transform: rotate(-.6deg); }
+.mm-gb p { margin: 0 0 14px; font: 400 clamp(19px, 1.6vw, 23px)/1.6 var(--hand); }
+.mm-gb p.o { font-size: clamp(22px, 2vw, 28px); font-weight: 700; color: var(--mr); }
+.mm-gb u { text-decoration: none; background: linear-gradient(transparent 58%, rgba(255, 210, 63, .7) 58%); }
+.mm-gb .sig { margin: 26px 0 0; text-align: right; font: 700 clamp(26px, 2.6vw, 36px)/1 var(--hand); color: var(--mr); transform: rotate(-3deg); }
+
+/* next stay */
+.mm-next { padding-bottom: 14vh; text-align: center; }
+.mm-nk { margin: 0 0 22px; font: 800 clamp(24px, 2.4vw, 34px)/1.1 var(--sans); letter-spacing: -.03em; }
+.mm-bps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.mm-bp { position: relative; display: grid; gap: 8px; padding: 18px 18px 16px; border-radius: 16px; text-align: left; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), var(--shadow-sm); cursor: pointer; transition: transform .4s var(--spring); }
+.mm-bp::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 4px; border-radius: 0 4px 4px 0; background: var(--c); }
+.mm-bp::after { content: ""; position: absolute; right: 66px; top: 0; bottom: 0; border-left: 2px dashed var(--line); }
+.mm-bp:hover { transform: translateY(-4px); }
+.mm-bp .a { font: 700 11.5px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); padding-right: 70px; }
+.mm-bp b { font: 800 18px/1.15 var(--sans); padding-right: 70px; }
+.mm-bp .go { position: absolute; right: 12px; top: 50%; translate: 0 -50%; font: 800 13px/1.1 var(--sans); color: var(--mr); width: 44px; text-align: center; }
+.mm-back { margin-top: 30px; padding: 14px 22px; border-radius: 999px; background: var(--ink); color: var(--paper); font: 700 15px/1 var(--sans); cursor: pointer; }
+
+/* lightbox */
+.mm-lb { position: fixed; z-index: 120; inset: 0; display: grid; place-items: center; padding: 60px 70px; background: rgba(10, 12, 16, .88); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: opacity .3s, visibility 0s .3s; }
+.mm-lb.open { opacity: 1; visibility: visible; transition: opacity .3s; }
+.mm-lb img { max-width: 100%; max-height: calc(100svh - 140px); border-radius: 12px; background: #fff; }
+.mm-lb p { position: absolute; left: 0; right: 0; bottom: 20px; margin: 0; text-align: center; font: 600 14px/1.3 var(--sans); color: rgba(255, 255, 255, .85); }
+.mm-lb button { position: absolute; width: 48px; height: 48px; border-radius: 50%; background: rgba(255, 255, 255, .14); color: #fff; font: 400 28px/1 var(--sans); cursor: pointer; }
+.mm-lb .x { right: 18px; top: 18px; } .mm-lb .p { left: 14px; top: 50%; } .mm-lb .n { right: 14px; top: 50%; }
+.mm-lb.one .p, .mm-lb.one .n { display: none; }
+
+/* dark: the same hotel, after dark */
+:root[data-theme="dark"] .mm-rack { background: linear-gradient(180deg, #5E3F25, #4A301C); }
+:root[data-theme="dark"] .mm-bld { background: linear-gradient(180deg, #8E5A3D, #6F4129); box-shadow: inset 0 0 0 6px #7F4E33, 0 40px 60px -40px rgba(0, 0, 0, .8); }
+:root[data-theme="dark"] .mm-win i:not(.on) { background: #26170F; }
+:root[data-theme="dark"] .mm-gb { filter: brightness(.9); }
+:root[data-theme="dark"] .mm-scr figure, :root[data-theme="dark"] .mm-cimg { background: #fff; }
+:root[data-theme="dark"] .mm-bk img, :root[data-theme="dark"] .mm-who img[alt="MakeMyTrip"], :root[data-theme="dark"] .mm-tin .f img { filter: none; }
+:root[data-theme="dark"] .mm-who img[alt="MakeMyTrip"], :root[data-theme="dark"] .mm-bk img { background: #fff; border-radius: 8px; padding: 3px 6px; }
+:root[data-theme="dark"] .mm-car { background: linear-gradient(180deg, #2C2A26, var(--card)); }
+:root[data-theme="dark"] .mm-tin > span::before { background: #1A1A1A; }
+:root[data-theme="dark"] .mm-tabs b { filter: brightness(1.15); }
+
+/* responsive */
+@media (max-width: 1100px) {
+  .mm-it { grid-template-columns: 1fr; }
+  .mm-itn { display: flex; overflow-x: auto; scrollbar-width: none; gap: 6px; }
+  .mm-itn button { flex: none; }
+  .mm-its .ph { justify-content: center; }
+  .mm-lift { grid-template-columns: 1fr; }
+  .mm-pan { grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: start; }
+  .mm-led { display: none; }
+  .mm-pan button { flex-direction: column; text-align: center; font-size: 12px; gap: 6px; padding: 6px 4px; }
+  .mm-pan button em { margin: 0; }
+  .mm-audit { grid-template-columns: 1fr; }
+  .mm-fac { grid-template-columns: 1fr; }
+  .mm-bld { max-width: 520px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+  .mm-bps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .mm-sec { padding-top: 11vh; }
+  .mm-rack { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; padding-top: 40px; }
+  .mm-rack::before { display: none; }
+  .mm-key .mm-ring2 { margin-top: -10px; }
+  .mm-desk { grid-template-columns: 1fr; }
+  .mm-mid span { width: auto; height: auto; padding: 12px 22px; border-radius: 999px; }
+  .mm-tags { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; padding-top: 20px; }
+  .mm-tag { height: 210px; }
+  .mm-scr { grid-template-columns: repeat(4, minmax(150px, 1fr)); overflow-x: auto; scrollbar-width: none; padding: 10px 2px; }
+  .mm-its img { height: min(52vh, 440px); }
+  .mm-its .many img { height: auto; max-width: 31%; }
+  .mm-car { min-height: 0; }
+  .mm-fl { padding: 18px; }
+  .mm-fl .row img { height: 52vh; }
+  .mm-fl .row.desk { flex-direction: column; } .mm-fl .row.desk img { width: 100%; }
+  .mm-row { grid-template-columns: 1fr; gap: 12px; }
+  .sf i { width: 21px; height: 32px; font-size: 18px; } .sf.big i { width: 27px; height: 40px; font-size: 24px; }
+  .mm-gb { padding-left: 52px; transform: none; }
+  .mm-lb { padding: 60px 12px; } .mm-lb .p, .mm-lb .n { top: auto; bottom: 60px; }
+}
+@media (max-width: 520px) { .mm-bps { grid-template-columns: 1fr; } .mm-tabs b { font-size: 24px; } .mm-pan button { font-size: 10.5px; } .mm-pan button span { width: 30px; height: 30px; } }
+@media (prefers-reduced-motion: reduce) { .mm-stays > div, .mm-illo img, .mm-fob { animation: none; } }
+
+/* audit: each issue sits under its own screen */
+.mm-audit { grid-template-columns: 1fr !important; gap: 14px !important; }
+.mm-iss { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mm-iss button { height: 100%; align-content: start; }
+.mm-iss em { max-height: none !important; }
+.mm-scr { gap: 12px; }
+.mm-fob i { display: grid; place-items: center; height: 28px; font-size: 24px; }
+.mm-bps { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; max-width: 52rem; margin: 0 auto; }
+@media (max-width: 860px) {
+  .mm-audit .mm-scr, .mm-audit .mm-iss { grid-template-columns: repeat(4, minmax(200px, 1fr)); }
+  .mm-audit { overflow-x: auto; scrollbar-width: none; }
+  .mm-audit > * { min-width: 840px; }
+}
+@media (max-width: 520px) { .mm-bps { grid-template-columns: 1fr !important; } }
+
+:root[data-theme="dark"] .cs.mm { background: var(--paper) !important; }
+:root[data-theme="dark"] .cs.mm .mm-bar { background: color-mix(in srgb, var(--paper) 88%, transparent) !important; }
+.mm-key.on .mm-kc { max-height: 480px; }
+.mm-bar .cs-close { white-space: nowrap; }
+@media (max-width: 520px) { .mm-bk { font-size: 0; gap: 0; } .mm-bk img { height: 20px; } }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -3451,6 +3774,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lb-slide') || e.target === lbTrack) closeLB(); });
   addEventListener('keydown', e => { if (!lb.classList.contains('open')) return; if (e.key === 'Escape') closeLB(); if (e.key === 'ArrowRight') lbGo(1); if (e.key === 'ArrowLeft') lbGo(-1); });
   // the card
+  const CASE_OF = { [CS + 'eazydiner']: 'coupon', [CS + 'requests']: 'requests' };
   function cardHTML(i) {
     const st = STOPS[i];
     const tile = st.logo ? `<span class="tile"><img src="${img(st.logo)}" alt="${st.name} logo"></span>` : `<span class="tile"><svg viewBox="0 0 24 24">${ICONS[st.icon]}</svg></span>`;
@@ -3459,7 +3783,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
       ${st.share ? `<div class="jc-share"><a href="${IG}" target="_blank" rel="noopener"><i style="background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF)"><svg viewBox="0 0 24 24">${ICONS.ig}</svg></i><div>@jamieships<span>Design, building and career on Instagram</span></div><em>↗</em></a><a href="${LI}" target="_blank" rel="noopener"><i style="background:#0A66C2"><svg viewBox="0 0 24 24">${ICONS.in}</svg></i><div>James Chugh<span>Work and lessons on LinkedIn</span></div><em>↗</em></a></div>` : ''}
       ${st.stats ? `<ul class="jc-stats">${st.stats.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>` : ''}
       ${st.photos && st.photos.length ? `<div class="jc-gal"><p>Gallery</p><div style="--n:${st.photos.length}">${st.photos.map(([src, cap], k) => `<button type="button" class="jc-ph" data-lb="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div></div>` : ''}
-      ${st.work ? `<div class="jc-act"><a class="cbtn" href="${st.work}" target="_blank" rel="noopener">View work<svg viewBox="0 0 24 24">${ICONS.arrowR}</svg></a></div>` : ''}</div>`;
+      ${st.work ? `<div class="jc-act">${CASE_OF[st.work] ? `<button type="button" class="cbtn" data-case="${CASE_OF[st.work]}">View case study<svg viewBox="0 0 24 24">${ICONS.arrowR}</svg></button>` : `<a class="cbtn" href="${st.work}" target="_blank" rel="noopener">View work<svg viewBox="0 0 24 24">${ICONS.arrowR}</svg></a>`}</div>` : ''}</div>`;
   }
   function showCard(i) {
     if (lastCard === i) return; const first = lastCard < 0; lastCard = i;
@@ -3470,7 +3794,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     jcard.classList.add('swap'); clearTimeout(showCard.t);
     showCard.t = setTimeout(() => { jcIn.innerHTML = cardHTML(i); jcard.scrollTop = 0; jcard.classList.remove('swap'); }, first ? 0 : 260);
   }
-  jcard.addEventListener('click', e => { const mo = e.target.closest('.jc-more'); if (mo) { const o = jcard.classList.toggle('open'); mo.setAttribute('aria-expanded', o); mo.textContent = o ? 'Show less' : 'Read more'; if (!o) jcard.scrollTop = 0; return; } const s = e.target.closest('[data-step]'); if (s) walkTo(+s.dataset.step); const p = e.target.closest('[data-photos]'); if (p) openLB(+p.dataset.photos, 0); const g = e.target.closest('[data-lb]'); if (g && lastCard >= 0) openLB(lastCard, +g.dataset.lb); });
+  jcard.addEventListener('click', e => { const oc = e.target.closest('[data-case]'); if (oc) { openCaseAt(oc.dataset.case, oc); return; } const mo = e.target.closest('.jc-more'); if (mo) { const o = jcard.classList.toggle('open'); mo.setAttribute('aria-expanded', o); mo.textContent = o ? 'Show less' : 'Read more'; if (!o) jcard.scrollTop = 0; return; } const s = e.target.closest('[data-step]'); if (s) walkTo(+s.dataset.step); const p = e.target.closest('[data-photos]'); if (p) openLB(+p.dataset.photos, 0); const g = e.target.closest('[data-lb]'); if (g && lastCard >= 0) openLB(lastCard, +g.dataset.lb); });
   // map controls
   let uz = 1, pan = { x: 0, y: 0 }, dragMoved = false, drag = null, lastActive = -2;
   $('#mapIn').addEventListener('click', () => uz = clamp(uz * 1.3, .55, 2.4));
@@ -3946,6 +4270,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     </svg>`;
   }
   function edCleanup() {
+    mmCleanup();
     clearInterval(initED.fi); cancelAnimationFrame(initED.raf);
     if (initED.sc) csEl.removeEventListener('scroll', initED.sc); if (initED.rs) removeEventListener('resize', initED.rs); if (initED.kd) removeEventListener('keydown', initED.kd, true);
     initED.sc = initED.rs = initED.kd = null;
@@ -4068,8 +4393,220 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     lb.addEventListener('touchend', e => { if (sx0 == null) return; const dx = e.changedTouches[0].clientX - sx0; if (Math.abs(dx) > 50) show(gi + (dx < 0 ? 1 : -1)); sx0 = null; });
     addEventListener('keydown', initED.kd = e => { if (!lb.classList.contains('open')) return; if (e.key === 'Escape') { closeLb(); e.stopImmediatePropagation(); } else if (e.key === 'ArrowRight') show(gi + 1); else if (e.key === 'ArrowLeft') show(gi - 1); }, true);
   }
+  // ---------- MakeMyTrip: Special Requests, told as a stay at a hotel ----------
+  const mi = n => `v2/mm/${n}.webp`;
+  const MM = {
+    probs: [['🛎️', 'Guests had special needs', 'Many travellers wanted to ask for late check-ins, extra beds, or even small surprises like birthday arrangements.'],
+      ['🫣', 'The request flow was hidden', 'The option to add special requests was buried deep in the booking journey, so very few people even discovered it.'],
+      ['⛔', 'No confirmation from hotels', 'Even when requests were made, guests didn’t receive any acknowledgment, so they never knew if the hotel had received or acted on them.'],
+      ['📋', 'One long list of requests', 'All types of requests were shown together in a single list, which made it harder for guests to quickly pick what they actually needed.']],
+    mmt: ['Seamless in-app requests, no calls needed', 'Quick acknowledgment builds guest trust', 'A personal touch drives loyalty', 'A smooth flow boosts booking conversions'],
+    htl: ['Manage requests through the MMT CMS', 'Turn requests on or off', 'Every chat in one place, inside Myra', 'Better visibility, more efficient staff'],
+    issues: [['No clear entry point', 'There was no dedicated CTA, which reduced visibility and led to low adoption.'],
+      ['Choice overload', 'Once inside the flow, every request was shown together, creating decision fatigue.'],
+      ['No home for one-off needs', 'There was no separate space for occasional or one-off requests.'],
+      ['No tracking, no transparency', 'Guests couldn’t see their request’s progress.']],
+    stats: [[16, 'found Special Requests', 'Awareness gap', 'Only 16% of guests (30% of premium guests) ever accessed Special Requests. It was free, but nobody could find it.', '#F5B83D'],
+      [84, 'dropped off mid-flow', 'High drop-offs', '84% left halfway through, from confusion, effort, or not knowing where to place a request. So they called the hotel instead.', '#E4262C'],
+      [80, 'placed just one request', 'Lost potential', 'With 80% using just one request, chances for personalisation, upsell and deeper engagement were missed.', '#3D8BF2'],
+      [16, 'heard back from the hotel', 'No communication', 'Only 16% of guests ever got an update on their request, and hotels struggled to manage and respond to them.', '#2FA36B']],
+    comps: [['cleartrip', 'Cleartrip', 'Categorises the different types of requests.'], ['ixigo', 'Ixigo', 'A dedicated CTA to enter the special requests funnel.'],
+      ['swiggy', 'Swiggy', 'Solves issues upfront with chips, so there are fewer clicks.'], ['zomato', 'Zomato', 'A checklist, similar to MMT’s, to list the options for a product.']],
+    its: [['Surfacing top requests', 'The first designs put the three most-used requests upfront for quick access.', ['Quick access to the top three'], ['The card got taller and pushed down critical review-page content'], ['it1']],
+      ['A custom request CTA', 'Free-text input brought keyboard overlap and a bloated card, so a clear “Add Custom Request” CTA separated standard and custom requests.', ['No more keyboard overlap', 'Standard and custom requests, separated'], [], ['it3']],
+      ['Every request, upfront', 'Showing all requests horizontally, upfront, to see if guests would browse them.', [], ['Dead scrolling and low retention', 'Options hidden off-screen'], ['it2']],
+      ['Checkbox selection', 'A list view with checkboxes, inspired by Zomato, for standard requests.', ['Better visibility for standard requests'], ['A taller card', 'Struggled with second-level (L2) requests'], ['it4']],
+      ['The L2 problem', 'Handling second-level choices, like picking a check-in time, inside the card.', [], ['Too many tabs and icons raised cognitive load', 'Big tabs meant horizontal scroll and low readability', 'Icons would get hard to manage as requests grow'], ['l2-1', 'l2-2', 'l2-3']]],
+    floors: [['Entry points', 'Guests can discover and start adding requests from every relevant touchpoint.', ['ui01', 'ui02', 'ui03', 'ui04']],
+      ['Placing a request', 'Adding special requests is now quicker, clearer and more intuitive.', ['ui05', 'ui06', 'ui07', 'ui08']],
+      ['Custom request field', 'Guests can type specific needs beyond the predefined options.', ['ui09', 'ui10', 'ui11', 'ui12', 'ui13']],
+      ['Chat with hotelier', 'A new chat, so requests and questions get resolved with the hotel team instantly.', ['ui14', 'ui15', 'ui16', 'ui17', 'ui18'], 'New'],
+      ['Desktop', 'The redesign, extended to desktop for one seamless experience across platforms.', ['desk1', 'desk2']]],
+    board: [['16%', '25%', 'Guests reaching Special Requests', 'More guests now find and use it: funnel access jumped from 16% to 25% within two weeks, a 56% rise.'],
+      ['20/80', '80/20', 'Multiple vs single requests', 'Guests now place several requests per booking. The split flipped from 20/80 to 80/20.'],
+      ['16%', '35%', 'Hotel response rate', 'Up 120%, as Chat with Hotelier gave hotels a faster, direct way to reply and manage requests.'],
+      ['', '2,800+', 'Hotels on the new funnel', 'Stronger engagement and adoption, even with a smaller rollout than the earlier 5,000-hotel coverage.'],
+      ['', '4,500+', 'Bookings a day use it', 'Special Requests is now part of how people regularly book.']]
+  };
+  function mmHTML(w) {
+    const Z = (n, a, g) => `<img src="${mi(n)}" alt="${a}" loading="lazy" data-mz="${g}">`;
+    const plaque = (n, t) => `<p class="mm-pl" data-rv><span>Room ${String(n).padStart(2, '0')}</span>${t}</p>`;
+    const others = WORK.filter(x => x.id !== 'requests');
+    return `<div class="cs-bar mm-bar"><button class="cs-close" id="csClose" type="button">← Back to the box</button><span class="mm-bk"><img src="${mi('logo')}" alt="MakeMyTrip"> Special Requests</span></div>
+    <div class="mm">
+      <header class="mm-hero">
+        <div class="mm-hw">
+          <p class="mm-k" data-rv>Product Design Intern · MakeMyTrip</p>
+          <h2 class="mm-t" data-rv>Skip the calls.<br><em>Make it special.</em></h2>
+          <p class="mm-lead" data-rv>Special Requests bridges the gap between what guests expect and what hotels deliver: a clear way to share your needs, and a way for hotels to act on them.</p>
+          <div class="mm-ring" data-rv><button type="button" class="mm-bell" id="mmBell" aria-label="Ring the concierge bell"><svg viewBox="0 0 64 52" aria-hidden="true"><path class="bl" d="M8 40a24 24 0 0 1 48 0z"/><rect x="2" y="40" width="60" height="7" rx="3.5" class="bs"/><path class="bk" d="M29 14h6v-3a3 3 0 0 0-6 0z"/><path d="M18 30c2-6 6-9 11-10" class="bh"/></svg></button><span class="mm-ringt" id="mmRingT">Ring for service</span></div>
+          <ul class="mm-meta" data-rv><li><b>Role</b>Product Design Intern</li><li><b>Timeline</b>1.5 months</li><li><b>Live on</b>App and desktop</li></ul>
+        </div>
+        <div class="mm-illo" id="mmIllo"><img src="${mi('illo')}" alt="A guest's phone surrounded by everything a hotel can help with: room service, a late check-in, an extra bed, Wi-Fi, transfers"></div>
+        <div class="mm-stays" aria-hidden="true"><div><img src="${mi('stays')}" alt=""><img src="${mi('stays')}" alt=""></div></div>
+      </header>
+
+      <section class="mm-sec" id="mmProb">
+        ${plaque(1, 'The problem')}
+        <h3 class="mm-h" data-rv>Guests wanted things.<br>The app made it hard to ask.</h3>
+        <div class="mm-rack" data-rv>${MM.probs.map(([e, t, d], i) => `<button type="button" class="mm-key" style="--i:${i}" aria-expanded="false"><span class="mm-ring2"></span><span class="mm-fob"><b>${101 + i}</b><i>${e}</i></span><span class="mm-kc"><b>${t}</b><span>${d}</span></span></button>`).join('')}</div>
+        <p class="mm-hint" data-rv>Pull a key to read it</p>
+      </section>
+
+      <section class="mm-sec" id="mmDesk">
+        ${plaque(2, 'Business objective')}
+        <h3 class="mm-h" data-rv>One feature. Two sides of the front desk.</h3>
+        <div class="mm-desk">
+          <div class="mm-side l" data-rv><div class="mm-who"><img src="${mi('logo')}" alt="MakeMyTrip"><span>MakeMyTrip’s side</span></div><ul>${MM.mmt.map((t, i) => `<li style="--d:${i * 2}">${t}</li>`).join('')}</ul></div>
+          <div class="mm-mid" data-rv><span>Everyone wins</span></div>
+          <div class="mm-side r" data-rv><div class="mm-who"><img src="${mi('hotel')}" alt=""><span>The hotel’s side</span></div><ul>${MM.htl.map((t, i) => `<li style="--d:${i * 2 + 1}">${t}</li>`).join('')}</ul></div>
+        </div>
+      </section>
+
+      <section class="mm-sec" id="mmAudit">
+        ${plaque(3, 'Current design issues')}
+        <h3 class="mm-h" data-rv>The old flow, under a magnifying glass.</h3>
+        <div class="mm-audit" data-on="0" data-rv>
+          <div class="mm-scr">${[1, 2, 3, 4].map(n => `<figure style="--n:${n - 1}"><span>${n}</span>${Z('now' + n, ['Entry point', 'Requests bottom sheet', 'Custom request', 'Review added requests'][n - 1], 'now')}</figure>`).join('')}</div>
+          <ol class="mm-iss">${MM.issues.map(([t, d], i) => `<li><button type="button" data-i="${i}"><span>${i + 1}</span><b>${t}</b><em>${d}</em></button></li>`).join('')}</ol>
+        </div>
+      </section>
+
+      <section class="mm-sec" id="mmFac">
+        ${plaque(4, 'User metrics')}
+        <h3 class="mm-h" data-rv>Picture 100 guests checking in.</h3>
+        <div class="mm-fac" data-rv>
+          <div class="mm-bld" aria-hidden="true"><div class="mm-sign">HOTEL</div><div class="mm-win" id="mmWin">${'<i></i>'.repeat(100)}</div><div class="mm-door"></div></div>
+          <div class="mm-stat">
+            <div class="mm-tabs" role="tablist">${MM.stats.map(([n, t], i) => `<button type="button" role="tab" data-s="${i}" style="--sc:${MM.stats[i][4]}"><b>${n}%</b><span>${t}</span></button>`).join('')}</div>
+            <div class="mm-sd" id="mmSd"></div>
+            <p class="mm-fn">The old flow was live across 5,000 hotels.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mm-sec" id="mmComp">
+        ${plaque(5, 'Competitor analysis')}
+        <h3 class="mm-h" data-rv>What the neighbours got right.</h3>
+        <div class="mm-tags">${MM.comps.map(([k, n, d], i) => `<button type="button" class="mm-tag" style="--i:${i}" data-rv><span class="mm-tin"><span class="f"><img src="${mi('lg-' + k)}" alt=""><b>${n}</b><small>Flip me</small></span><span class="b"><b>${n}</b><span>${d}</span></span></span></button>`).join('')}</div>
+        <figure class="mm-cimg" data-rv>${Z('comp', 'How Swiggy, Zomato and other apps handle notes and special requests', 'comp')}<figcaption>Tap to look closer</figcaption></figure>
+      </section>
+
+      <section class="mm-sec" id="mmIt">
+        ${plaque(6, 'Iterations and feedback')}
+        <h3 class="mm-h" data-rv>The card that took five tries.</h3>
+        <p class="mm-p" data-rv>The upfront Special Request card evolved through several iterations to strike the right balance between visibility, usability and compactness.</p>
+        <div class="mm-it" data-rv data-v="0">
+          <div class="mm-itn">${MM.its.map(([t], i) => `<button type="button" data-v="${i}"><span>v${i + 1}</span>${t}</button>`).join('')}</div>
+          <div class="mm-its" id="mmIts"></div>
+          <div class="mm-itc" id="mmItc"></div>
+        </div>
+        <div class="mm-eq" data-rv><span><i>🎯</i>Precise list</span><b>+</b><span><i>⏱️</i>Quicker decisions</span><b>+</b><span><i>💡</i>Lesser duration</span><b>=</b><span class="res"><img src="${mi('logo')}" alt="">Special Requests</span></div>
+        <p class="mm-p c" data-rv>Each iteration sharpened the design, optimising for <mark>discoverability, functional reliability and a lean, scannable interface</mark>.</p>
+      </section>
+
+      <section class="mm-sec" id="mmLift">
+        ${plaque(7, 'The user interface')}
+        <h3 class="mm-h" data-rv>Take the lift through the final design.</h3>
+        <div class="mm-lift" data-rv data-f="0">
+          <div class="mm-pan"><div class="mm-led"><i id="mmArr">▲</i><b id="mmFl">1</b></div>${MM.floors.map(([t, , , nw], i) => `<button type="button" data-f="${i}"><span>${i + 1}</span>${t}${nw ? '<em>New</em>' : ''}</button>`).join('')}</div>
+          <div class="mm-car"><div class="mm-fl" id="mmFloor"></div><div class="mm-doors" aria-hidden="true"><i></i><i></i></div></div>
+        </div>
+      </section>
+
+      <section class="mm-sec" id="mmBoard">
+        ${plaque(8, 'Impact of the project')}
+        <h3 class="mm-h" data-rv>Now arriving: the results.</h3>
+        <div class="mm-bd" data-rv>
+          <div class="mm-bdh"><span>✈ Arrivals · Special Requests</span><span>Two weeks after launch</span></div>
+          ${MM.board.map(([a, b, t, d]) => `<div class="mm-row"><div class="mm-fx">${a ? `<span class="sf" data-t="${a}"></span><i>→</i>` : ''}<span class="sf big" data-t="${b}"></span></div><div class="mm-rt"><b>${t}</b><span>${d}</span></div></div>`).join('')}
+        </div>
+      </section>
+
+      <section class="mm-sec" id="mmBook">
+        ${plaque(9, 'What I learned')}
+        <h3 class="mm-h" data-rv>Signing the guestbook.</h3>
+        <div class="mm-gb" data-rv>
+          <p class="o">This project taught me a lot more than just design.</p>
+          <p>I learned to pause and really listen to what users were struggling with, not what I <u>thought</u> they were. Understanding the real pain points became my starting line.</p>
+          <p>I realised <u>how powerful the right data can be</u>. Working closely with the product team helped me connect numbers to behaviour: funnel entries, CTRs, drop-offs. All of it told a story about what was really happening.</p>
+          <p><u>Great design means nothing if it doesn’t move the needle for the business.</u> The sweet spot is an experience users love and the company values.</p>
+          <p>Through every round of feedback, iteration and stakeholder conversation, I learned to stay open: defend what mattered, but adapt when needed.</p>
+          <p>Most importantly, I learned to <u>own my work completely</u>. Not just the pixels, but the outcome.</p>
+          <p class="sig">James Chugh</p>
+        </div>
+      </section>
+
+      <section class="mm-sec mm-next">
+        <p class="mm-nk" data-rv>Your next stay</p>
+        <div class="mm-bps">${others.map(x => `<button type="button" class="mm-bp" data-switch="${x.id}" data-rv style="--c:${x.c}"><span class="a">${x.co}</span><b>${x.name}</b><span class="go">Board →</span></button>`).join('')}</div>
+        <button type="button" class="mm-back" data-close>← Back to the box</button>
+      </section>
+      <div class="mm-lb" id="mmLb" aria-hidden="true"><button type="button" class="x" aria-label="Close">×</button><button type="button" class="p" aria-label="Previous">‹</button><img alt=""><button type="button" class="n" aria-label="Next">›</button><p></p></div>
+    </div>`;
+  }
+  function mmCleanup() { if (initMM.kd) removeEventListener('keydown', initMM.kd, true); initMM.kd = null; clearTimeout(initMM.t); (initMM.ts || []).forEach(clearInterval); initMM.ts = []; }
+  function initMM() {
+    mmCleanup(); initMM.ts = [];
+    const root = csEl;
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); obs.unobserve(e.target); if (e.target._on) e.target._on(); }), { root, threshold: .18 });
+    // the concierge bell
+    const bell = $('#mmBell', root), ringT = $('#mmRingT', root), illo = $('#mmIllo', root); let rung = 0;
+    bell.addEventListener('click', () => { bell.classList.remove('ding'); illo.classList.remove('pop'); void bell.offsetWidth; bell.classList.add('ding'); illo.classList.add('pop'); rung++;
+      ringT.textContent = ['Ding! Request sent to the hotel', 'The hotel replied ✓', 'Ding! One more for the stay'][(rung - 1) % 3]; });
+    // the key rack
+    const keys = $$('.mm-key', root), pull = k => { const o = !k.classList.contains('on'); k.classList.toggle('on', o); k.setAttribute('aria-expanded', o); };
+    keys.forEach(k => k.addEventListener('click', () => pull(k)));
+    $('.mm-rack', root)._on = () => { initMM.t = setTimeout(() => { if (!keys.some(k => k.classList.contains('on'))) pull(keys[0]); }, 700); };
+    // the audit
+    const audit = $('.mm-audit', root), setIss = i => { audit.dataset.on = i; $$('.mm-iss button', root).forEach(b => b.classList.toggle('on', +b.dataset.i === i)); };
+    $$('.mm-iss button', root).forEach(b => b.addEventListener('click', () => setIss(+b.dataset.i)));
+    $$('.mm-scr figure', root).forEach((f, i) => f.addEventListener('mouseenter', () => setIss(i)));
+    setIss(0);
+    // the hotel facade
+    const wins = $$('#mmWin i', root), order = wins.map((_, i) => i).sort((a, b) => ((a * 37) % 100) - ((b * 37) % 100)), sd = $('#mmSd', root);
+    const setStat = i => { const [n, t, h, d, c] = MM.stats[i]; $$('.mm-tabs button', root).forEach(b => b.classList.toggle('on', +b.dataset.s === i));
+      wins.forEach(w => w.classList.remove('on')); order.slice(0, n).forEach((k, j) => { wins[k].style.setProperty('--wc', c); wins[k].style.transitionDelay = (j * 9) + 'ms'; wins[k].classList.add('on'); });
+      sd.innerHTML = `<p class="h" style="--sc:${c}">${h}</p><p class="n"><b>${n}</b>% ${t}</p><p class="d">${d}</p>`; };
+    $$('.mm-tabs button', root).forEach(b => b.addEventListener('click', () => setStat(+b.dataset.s)));
+    $('.mm-fac', root)._on = () => setTimeout(() => setStat(0), 300);
+    sd.innerHTML = `<p class="d">Tap a number to light up the windows.</p>`;
+    // luggage tags flip
+    $$('.mm-tag', root).forEach(t => t.addEventListener('click', () => t.classList.toggle('fl')));
+    // iterations
+    const itw = $('.mm-it', root), its = $('#mmIts', root), itc = $('#mmItc', root);
+    const setIt = i => { const [t, d, pro, con, ims] = MM.its[i]; itw.dataset.v = i; $$('.mm-itn button', root).forEach(b => b.classList.toggle('on', +b.dataset.v === i));
+      its.innerHTML = `<div class="ph${ims.length > 1 ? ' many' : ''}">${ims.map(n => `<img src="${mi(n)}" alt="Iteration ${i + 1}: ${t}" data-mz="it">`).join('')}</div>`;
+      itc.innerHTML = `<p class="v">Version ${i + 1} of 5</p><h4>${t}</h4><p>${d}</p><ul>${pro.map(x => `<li class="y">${x}</li>`).join('')}${con.map(x => `<li class="n">${x}</li>`).join('')}</ul><div class="ar"><button type="button" data-d="-1" aria-label="Previous version"${i ? '' : ' disabled'}>←</button><button type="button" data-d="1" aria-label="Next version"${i < 4 ? '' : ' disabled'}>${i < 4 ? 'Next try →' : 'Final ✓'}</button></div>`; };
+    $$('.mm-itn button', root).forEach(b => b.addEventListener('click', () => setIt(+b.dataset.v)));
+    itc.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (b && !b.disabled) setIt(Math.max(0, Math.min(4, +itw.dataset.v + +b.dataset.d))); });
+    setIt(0);
+    // the lift
+    const lift = $('.mm-lift', root), floorEl = $('#mmFloor', root), fl = $('#mmFl', root), arr = $('#mmArr', root);
+    const drawFloor = i => { const [t, d, ims, nw] = MM.floors[i]; floorEl.innerHTML = `<div class="hd"><h4>${t}${nw ? ' <em>New</em>' : ''}</h4><p>${d}</p></div><div class="row${i === 4 ? ' desk' : ''}">${ims.map(n => `<img src="${mi(n)}" alt="${t}" loading="lazy" data-mz="f${i}">`).join('')}</div>`; floorEl.scrollLeft = 0; };
+    let curF = 0, liftT = 0;
+    const setFloor = i => { if (i === curF && lift.dataset.f == i) return; $$('.mm-pan button', root).forEach(b => b.classList.toggle('on', +b.dataset.f === i)); arr.textContent = i > curF ? '▲' : '▼'; lift.classList.add('moving'); clearTimeout(liftT);
+      liftT = setTimeout(() => { drawFloor(i); fl.textContent = i + 1; lift.dataset.f = i; curF = i; lift.classList.remove('moving'); }, reduce ? 0 : 520); };
+    $$('.mm-pan button', root).forEach(b => b.addEventListener('click', () => setFloor(+b.dataset.f)));
+    drawFloor(0); $$('.mm-pan button', root)[0].classList.add('on');
+    // the split-flap board
+    const CHARS = ' 0123456789%/,+→';
+    $('.mm-bd', root)._on = () => $$('.sf', root).forEach((s, k) => { const t = s.dataset.t; s.innerHTML = [...t].map(() => '<i> </i>').join(''); const cells = $$('i', s);
+      cells.forEach((c, j) => { let n = 0; const stop = 10 + j * 3 + k * 4; const iv = setInterval(() => { n++; c.textContent = n >= stop ? t[j] : CHARS[Math.floor(Math.random() * CHARS.length)]; c.classList.toggle('flip', n % 2 === 0); if (n >= stop) { clearInterval(iv); c.classList.remove('flip'); } }, reduce ? 1 : 55); initMM.ts.push(iv); }); });
+    $$('.sf', root).forEach(s => { s.innerHTML = [...s.dataset.t].map(ch => `<i>${ch}</i>`).join(''); });
+    // tap any screen to look closer
+    const lb = $('#mmLb', root), lbI = $('img', lb), lbP = $('p', lb); let grp = [], gi = 0;
+    const show = i => { gi = (i + grp.length) % grp.length; lbI.src = grp[gi].src; lbP.textContent = grp[gi].alt + (grp.length > 1 ? ` · ${gi + 1} of ${grp.length}` : ''); lb.classList.toggle('one', grp.length < 2); };
+    const closeLb = () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); };
+    root.addEventListener('click', e => { const im = e.target.closest('img[data-mz]'); if (im && !lb.contains(im)) { grp = $$(`img[data-mz="${im.dataset.mz}"]`, root); show(grp.indexOf(im)); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); } });
+    lb.addEventListener('click', e => { if (e.target.closest('.n')) show(gi + 1); else if (e.target.closest('.p')) show(gi - 1); else if (e.target !== lbI) closeLb(); });
+    addEventListener('keydown', initMM.kd = e => { if (!lb.classList.contains('open')) return; if (e.key === 'Escape') { closeLb(); e.stopImmediatePropagation(); } else if (e.key === 'ArrowRight') show(gi + 1); else if (e.key === 'ArrowLeft') show(gi - 1); }, true);
+    $$('[data-rv]', root).forEach(el => obs.observe(el));
+  }
+
   function csHTML(w) {
     if (w.id === 'coupon') return edHTML(w);
+    if (w.id === 'requests') return mmHTML(w);
     const i = WORK.indexOf(w);
     return `<div class="cs-bar"><button class="cs-close" id="csClose" type="button">← Back to the box</button><a class="cs-full" href="${w.cs}" target="_blank" rel="noopener">${w.csLabel || 'Full case study'} ↗</a></div>
       <header class="cs-hero cs-in"><span class="k"><i><svg viewBox="0 0 24 24">${ICONS[w.icon]}</svg></i>${String(i + 1).padStart(2, '0')} · ${w.co}</span><h2>${w.name}</h2><p class="pitch">${w.pitch}</p>
@@ -4099,7 +4636,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   function expand(k) {
     const r = k.el.getBoundingClientRect();
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); if (k.w.id === 'coupon') initED();
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM();
     csEl.style.transition = 'none'; csEl.style.clipPath = rectClip(r); csEl.classList.add('open');
     // a flat copy of the card grows with the page, then melts into it
     const g = k.el.cloneNode(true); g.classList.add('wk-ghost'); g.classList.remove('hover'); g.removeAttribute('aria-label');
@@ -4121,7 +4658,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     const k = wks.find(x => x.w.id === id); if (!k || picked) return;
     picked = k; csFrom = from; const r = from.getBoundingClientRect();
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); if (k.w.id === 'coupon') initED();
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM();
     csEl.style.transition = 'none'; csEl.style.clipPath = rectClip(r); csEl.classList.add('open'); csEl.offsetWidth;
     csEl.style.transition = 'clip-path .9s cubic-bezier(.7, 0, .2, 1)'; csEl.style.clipPath = 'inset(0px 0px 0px 0px round 0px)';
     lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden';
@@ -4131,14 +4668,14 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     if (!picked) return; const k = picked;
     if (csFrom) { const from = csFrom; csFrom = null; csEl.classList.remove('ready');
       const r = from.getBoundingClientRect(); csEl.style.transition = 'clip-path .7s cubic-bezier(.7, 0, .2, 1)'; csEl.style.clipPath = rectClip(r);
-      setTimeout(() => { csEl.classList.remove('open', 'ed'); csEl.innerHTML = ''; edCleanup(); document.documentElement.style.overflow = ''; lenis && lenis.start();
+      setTimeout(() => { csEl.classList.remove('open', 'ed', 'mm'); csEl.innerHTML = ''; edCleanup(); document.documentElement.style.overflow = ''; lenis && lenis.start();
         wks.forEach(w => { if (w.el.style.opacity === '0') { w.el.style.opacity = 1; w.el.style.transform = stand(boxOpen ? 0 : w.z); } }); picked = null; setCap(null); from.focus({ preventScroll: true }); }, 720);
       return; }
     csEl.classList.remove('ready');
     const r = k.el.getBoundingClientRect();
     csEl.style.transition = 'clip-path .75s cubic-bezier(.7, 0, .2, 1)'; csEl.style.clipPath = rectClip(r);
     setTimeout(() => {
-      k.el.style.opacity = 1; csEl.classList.remove('open', 'ed'); csEl.innerHTML = ''; edCleanup();
+      k.el.style.opacity = 1; csEl.classList.remove('open', 'ed', 'mm'); csEl.innerHTML = ''; edCleanup();
       document.documentElement.style.overflow = ''; lenis && lenis.start();
       const a = k.el.animate([{ transform: faced(k) }, { transform: stand(CH + 60), offset: .55 }, { transform: stand(0) }], { duration: reduce ? 1 : 1400, easing: pickEase, fill: 'forwards' });
       a.onfinish = () => { k.el.style.transform = stand(0); rim(k, 0); k.z = 0; a.cancel(); k.el.style.transition = ''; picked = null; setCap(null); k.el.focus({ preventScroll: true }); };
@@ -4150,7 +4687,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     edCleanup(); picked.el.style.opacity = 1; picked.el.style.transform = stand(0); rim(picked, 0); picked.z = 0;
     picked = k; k.el.style.transform = faced(k); k.el.style.opacity = 0;
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); if (k.w.id === 'coupon') initED();
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM();
     $('#csClose').focus({ preventScroll: true });
   }
   csEl.addEventListener('click', e => { if (e.target.closest('#csClose, [data-close]')) closeCase(); const sw = e.target.closest('[data-switch]'); if (sw) switchCase(sw.dataset.switch); });
