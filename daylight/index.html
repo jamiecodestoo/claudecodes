@@ -2308,12 +2308,25 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 .sheet .row { justify-content: flex-start; }
 .sheet .row[hidden], .sheet .nums[hidden] { display: none; }
 .s-cta { flex: 0 0 auto; padding-inline: 18px; }
+
+/* the switch says where it takes you: Night in the day, Day at night */
+.theme-btn { width: auto; padding: 0 17px 0 13px; gap: 8px; display: inline-flex; align-items: center; border-radius: 999px; }
+.theme-btn:hover { transform: translateY(-2px); }
+.theme-btn .ti { position: relative; width: 22px; height: 22px; flex: none; overflow: hidden; }
+.theme-btn .ti svg { left: 0; top: 0; }
+.theme-btn .tl { position: relative; display: grid; overflow: hidden; height: 18px; font: 700 14.5px/18px var(--sans); }
+.theme-btn .tl b { grid-area: 1 / 1; font-weight: 700; transition: transform .7s var(--spring), opacity .4s; }
+.theme-btn .tl-d { transform: translateY(100%); opacity: 0; }
+:root[data-theme="dark"] .theme-btn .tl-n { transform: translateY(-100%); opacity: 0; }
+:root[data-theme="dark"] .theme-btn .tl-d { transform: none; opacity: 1; }
+.np { right: calc(clamp(14px, 2.4vw, 28px) + 112px); }
+@media (max-width: 860px) { .theme-btn { height: 44px; padding: 0 14px 0 11px; } .theme-btn .tl { font-size: 13.5px; } .np { right: calc(clamp(14px, 2.4vw, 28px) + 104px); } }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
 <header class="bar">
   <button class="np" id="np" type="button" aria-label="Pause music" hidden><span class="np-d" aria-hidden="true"></span><span class="np-t">Music on the hill</span><span class="np-b" aria-hidden="true"><i></i><i></i></span></button>
-<button class="theme-btn" id="themeBtn" type="button" aria-label="Switch theme"><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg></button>
+<button class="theme-btn" id="themeBtn" type="button" aria-label="Switch theme"><span class="ti"><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg></span><span class="tl"><b class="tl-n">Night</b><b class="tl-d">Day</b></span></button>
   <a class="logo" href="#top" data-go="top"><i><img src="v2/s/photo.webp" alt=""></i>James Chugh</a>
   <nav class="nav" aria-label="Sections">
     <span class="ind" id="navInd" aria-hidden="true"></span>
