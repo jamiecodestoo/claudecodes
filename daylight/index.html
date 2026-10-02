@@ -3681,7 +3681,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
 .logo .jc { position: absolute; inset: 0; display: grid; place-items: center; background: var(--ink); color: var(--paper); font: 800 12.5px/1 var(--sans); letter-spacing: -.02em; opacity: 0; scale: .6; transition: opacity .35s, scale .45s var(--spring); }
 @media (max-width: 859px) {
   /* hero: one painted sky from edge to edge, no flat blue, no places bar */
-  .stage { background: #0E64B7 url("v2/h/sky.webp") 50% 0 / auto 62% repeat-x !important; }
+  .stage { background: #0E64B7 url("v2/h/sky.webp") 50% 0 / cover no-repeat !important; }
   :root[data-theme="dark"] .stage { background: #09090B !important; }
   .cam { -webkit-mask: linear-gradient(transparent, #000 9%); mask: linear-gradient(transparent, #000 9%); }
   .stage .places, #places { display: none !important; }
