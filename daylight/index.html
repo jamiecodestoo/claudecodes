@@ -2889,6 +2889,43 @@ div.mm { overflow-x: clip; }
 .cs:not(.mm):not(.ed) .fb { opacity: 1 !important; transform: none !important; }
 :root[data-theme="dark"] .fb-c.on, :root[data-theme="dark"] .fb-go { background: #FFD86B; color: #1A1A1A; }
 @media (max-width: 560px) { .fb-row { grid-template-columns: 1fr; } }
+
+/* ===== phones: nothing plays on scroll; you tap to explore ===== */
+.places { display: none; }
+@media (max-width: 860px) {
+  .valley { height: 100vh !important; height: 100svh !important; }
+  .story { margin-top: 0 !important; height: auto !important; }
+  .story-pin { position: relative !important; height: auto !important; padding: 12vh 0 10vh; overflow: visible; }
+  #moveHint { display: none; }
+  .ll-rev-track { height: auto !important; }
+  .ll-rev-pin { position: relative !important; height: auto !important; padding: 12vh 0; }
+  .box-track { height: 100vh !important; height: 100svh !important; }
+  .places { display: flex; bottom: calc(var(--navh, 92px) + 8px); opacity: 1; animation: none; max-width: calc(100vw - 24px); }
+  .places button { padding: 9px 12px; font-size: 13px; }
+  .stage .sheet, .stage .sheet.left { bottom: calc(var(--navh, 92px) + 66px) !important; max-height: calc(100svh - var(--navh, 92px) - 150px) !important; }
+  .hint, .scroll-cue { display: none !important; }
+}
+:root[data-theme="dark"] .places { background: rgba(34, 34, 34, .86); }
+:root[data-theme="dark"] .places button { color: var(--ink); }
+
+@property --sp { syntax: '<number>'; inherits: true; initial-value: 0; }
+.mm-sig.ph { transition: --sp 2.6s cubic-bezier(.45, .05, .4, 1) .2s; }
+.c3-step { display: none; }
+@media (max-width: 860px) {
+  .c3-step { position: absolute; z-index: 6; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); translate: -50% 0; display: flex; align-items: center; gap: 10px; padding: 6px; border-radius: 999px; background: color-mix(in srgb, var(--card) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--line); }
+  .c3-step button { min-width: 44px; height: 44px; padding: 0 16px; border-radius: 999px; background: var(--ink); color: var(--paper); font: 700 14px/1 var(--sans); white-space: nowrap; }
+  .c3-step button[data-sd="-1"] { padding: 0; background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink); font-size: 22px; }
+  .c3-step button:disabled { opacity: .35; }
+  .c3-step .dots { display: flex; gap: 5px; }
+  .c3-step .dots i { width: 6px; height: 6px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 22%, transparent); transition: width .3s, background .3s; }
+  .c3-step .dots i.on { width: 18px; border-radius: 3px; background: var(--ed, var(--coral)); }
+  .c3-strip, #c3Strip { overflow-x: auto; scrollbar-width: none; }
+  /* nothing waits for the scroll on phones */
+  .mm [data-rv], .c3 [data-rv] { opacity: 1 !important; translate: none !important; transform: none !important; }
+  .mm-h { background-position: 0 0 !important; }
+  .c3-h .w { opacity: 1 !important; transform: none !important; }
+}
+:root[data-theme="dark"] .c3-step button:not([data-sd="-1"]) { background: #FFD86B; color: #1A1A1A; }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -3498,7 +3535,7 @@ div.mm { overflow-x: clip; }
   const img = k => `v2/s/${k}.webp`;
 
   /* ---------- smooth scroll ---------- */
-  const lenis = (!reduce && window.Lenis) ? new Lenis({ lerp: .09, smoothWheel: true, wheelMultiplier: .9 }) : null;
+  const lenis = (!reduce && window.Lenis && innerWidth >= 860 && !matchMedia('(pointer: coarse)').matches) ? new Lenis({ lerp: .09, smoothWheel: true, wheelMultiplier: .9 }) : null;
   const Y = () => (lenis ? lenis.scroll : window.scrollY);
   const HW = {};
   const goTo = (y, dur = 0) => { for (const k in HW) delete HW[k]; return lenis ? lenis.scrollTo(y, dur ? { duration: dur, easing: t => 1 - Math.pow(1 - t, 4) } : { immediate: true, force: true }) : scrollTo({ top: y, behavior: dur && !reduce ? 'smooth' : 'auto' }); };
@@ -3586,6 +3623,9 @@ div.mm { overflow-x: clip; }
     if (e.pointerType !== 'mouse') return;
     lmx = e.clientX; lmy = e.clientY;
   });
+  places.id = 'places'; places.className = 'places'; places.setAttribute('aria-label', 'Places in the valley');
+  places.innerHTML = Object.entries(PLACES).map(([id, P]) => `<button type="button" data-id="${id}" style="--c:${P.c}">${id === 'me' ? 'Me' : P.t.replace(/,.*/, '')}</button>`).join('');
+  stage.appendChild(places);
   $$('#places button').forEach(b => b.addEventListener('click', () => focusId === b.dataset.id ? unfocus() : focus(b.dataset.id)));
   $('#s-x').addEventListener('click', unfocus);
   sheet.addEventListener('click', e => { const w = e.target.closest('[data-walk]'); if (w) { unfocus(); walkTo(+w.dataset.walk); return; } const g = e.target.closest('[data-sg]'); if (g && focusId) { openLB(PLACES[focusId].j, +g.dataset.sg); return; } const c = e.target.closest('[data-case]'); if (c) openCaseAt(c.dataset.case, c); });
@@ -3601,7 +3641,7 @@ div.mm { overflow-x: clip; }
   if (!hoverable) hint.innerHTML = hint.innerHTML.replace('click a place', 'tap a place');
 
   function frameValley(dt, y) {
-    pV = clamp((y - vTop) / vRange);
+    pV = mobile ? 0 : clamp((y - vTop) / vRange);
     if (focusId && pV > .04) unfocus();
     const e = ss(pV);
     rate += ((focusId ? 3 : 2.2) - rate) * clamp(dt);
@@ -3692,7 +3732,7 @@ div.mm { overflow-x: clip; }
   function layoutStory() { sTop = top(story); sRange = Math.max(1, story.offsetHeight - vh); buildDoodles(); lastQ = -1; }
   let lastQ = -1;
   function frameStory(y) {
-    const q = clamp((y - sTop + vh * .25) / (sRange * .85));
+    const q = mobile ? 1 : clamp((y - sTop + vh * .25) / (sRange * .85));
     if (Math.abs(q - lastQ) < .001) return; lastQ = q;
     const lit = q * words.length * 1.05;
     const b0 = DIMW(); words.forEach((w, i) => { w.el.style.opacity = (b0 + (1 - b0) * clamp(lit - i)).toFixed(3); });
@@ -4158,7 +4198,7 @@ div.mm { overflow-x: clip; }
   }
   function boxScale(dt) { { const r0 = boxTrack.getBoundingClientRect(); boxSpin(dt || 0, clamp((vh - r0.top) / r0.height)); } if (picked) return boxS; if (!boxExt) boxMeasure();
     const z = boxZone(), fit = Math.min(z.w / boxExt.w, z.h / boxExt.h, mobile ? 1.1 : 1.15);
-    const r = boxTrack.getBoundingClientRect(), q = clamp((vh - r.top) / (r.height)), want = fit * (.5 + .5 * ss(clamp(q / .42)));
+    const r = boxTrack.getBoundingClientRect(), q = clamp((vh - r.top) / (r.height)), want = mobile ? fit : fit * (.5 + .5 * ss(clamp(q / .42)));
     boxCur = !boxCur || !dt || reduce ? want : boxCur + (want - boxCur) * (1 - Math.exp(-dt * 7));
     const x = z.x + z.w / 2 - boxCur * (boxExt.l + boxExt.w / 2), y = z.y + z.h / 2 - boxCur * (boxExt.t + boxExt.h / 2), pos = x.toFixed(1) + ',' + y.toFixed(1);
     if (pos !== boxPos) { boxPos = pos; boxFit.style.left = x.toFixed(1) + 'px'; boxFit.style.top = y.toFixed(1) + 'px'; }
@@ -4453,10 +4493,11 @@ div.mm { overflow-x: clip; }
     const scrubs = $$('[data-scrub]', root).map(el => ({ el, w: $$('span', el), n: -1 }));
     const chs = $$('[data-ch]', root);
     const S = { c: -1, f: -1, q: -1, b: '', e: -1, m: '' };
-    const prg = el => { if (el.dataset.done) return 1; const r = el.getBoundingClientRect(); return clamp(-r.top / Math.max(1, r.height - vh)); };
+    const PHONE = innerWidth < 860;
+    const prg = el => { if (PHONE) return el._p || 0; if (el.dataset.done) return 1; const r = el.getBoundingClientRect(); return clamp(-r.top / Math.max(1, r.height - vh)); };
     // a scene that has played to its end folds to one screen: scrolling back never replays or reverses it
     let evoPick = -1;
-    const foldCS = () => { [comic, fun, chat, board, mx, evo].forEach(el => { if (el.dataset.done) return; const r = el.getBoundingClientRect(); if (r.bottom > root.clientHeight + 2) return;
+    const foldCS = () => { if (PHONE) return; [comic, fun, chat, board, mx, evo].forEach(el => { if (el.dataset.done) return; const r = el.getBoundingClientRect(); if (r.bottom > root.clientHeight + 2) return;
       const before = r.height; el.dataset.done = 1; el.style.height = '100vh'; el.style.height = '100svh'; root.scrollTop -= before - el.offsetHeight; }); };
     let ticking = false;
     function update() {
@@ -4464,7 +4505,7 @@ div.mm { overflow-x: clip; }
       const H = root.scrollHeight - root.clientHeight; prog.style.setProperty('--p', (root.scrollTop / Math.max(1, H) * 100).toFixed(2) + '%');
       let name = 'The story'; chs.forEach(c => { if (c.getBoundingClientRect().top < vh * .5) name = c.dataset.ch; }); if (chEl.textContent !== name) chEl.textContent = name;
       // big lines light up word by word as they cross the screen
-      scrubs.forEach(s => { const r = s.el.getBoundingClientRect(); if (r.bottom < -50 || r.top > vh + 50) return; const f = clamp((vh * .82 - r.top) / (vh * .5)), k = Math.round(f * s.w.length); if (k !== s.n) { s.n = k; s.w.forEach((w, i) => w.classList.toggle('lit', i < k)); } });
+      scrubs.forEach(s => { const r = s.el.getBoundingClientRect(); if (!PHONE && (r.bottom < -50 || r.top > vh + 50)) return; const f = PHONE ? 1 : clamp((vh * .82 - r.top) / (vh * .5)), k = Math.round(f * s.w.length); if (k !== s.n) { s.n = k; s.w.forEach((w, i) => w.classList.toggle('lit', i < k)); } });
       const c = Math.min(3, Math.floor(prg(comic) * 4.2)); if (c !== S.c) { S.c = c;
         panels.forEach((p, k) => { p.classList.toggle('on', k === c); p.classList.toggle('seen', k < c); });
         cap.innerHTML = `${ED.comic[c][1]}<small>${ED.comic[c][2]}</small>`; }
@@ -4493,9 +4534,29 @@ div.mm { overflow-x: clip; }
       const ep = prg(evo), n = tabs.length, et = ep * (n - 1), e0 = Math.min(n - 2, Math.floor(et)), ex = evoPick >= 0 ? evoPick : e0 + ss(clamp((et - e0 - .35) / .45));
       row.style.transform = `translate3d(${(-ex * root.clientWidth).toFixed(1)}px, 0, 0)`;
       const ei = Math.round(ex); if (ei !== S.e) { S.e = ei; tabs.forEach((t, k) => t.classList.toggle('on', k === ei)); }
-      const sr = strip.getBoundingClientRect(); if (sr.bottom > 0 && sr.top < vh) strip.style.transform = `translate3d(${(-(1 - (sr.top + sr.height) / (vh + sr.height)) * Math.max(0, strip.scrollWidth - root.clientWidth)).toFixed(1)}px, 0, 0)`;
+      const sr = strip.getBoundingClientRect(); if (!PHONE && sr.bottom > 0 && sr.top < vh) strip.style.transform = `translate3d(${(-(1 - (sr.top + sr.height) / (vh + sr.height)) * Math.max(0, strip.scrollWidth - root.clientWidth)).toFixed(1)}px, 0, 0)`;
     }
     root.addEventListener('scroll', initED.sc = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    // phones: each scene is one screen with Back / Next, nothing scrubs with the scroll
+    if (PHONE) {
+      const L = msgs.length, EV = tabs.length;
+      const STEPS = [[comic, [0, .25, .5, .76], 'Next panel'], [fun, [0, .24, .47, .7], 'Next step'], [chat, Array.from({ length: L }, (_, k) => k / (L + .3) + .01), 'Next quote'],
+        [board, [0, .25, ...[0, 1, 2, 3, 4].map(k => .26 + (k + .5) / 5 * .74)], 'Next'], [mx, [0, .3, .44, .58, .72, .86, 1], 'Fly in'], [evo, Array.from({ length: EV }, (_, k) => k / Math.max(1, EV - 1)), 'Next round']];
+      STEPS.forEach(([el, ps, lab]) => {
+        el.style.height = '100svh'; el._p = 0; el._i = 0;
+        const bar = document.createElement('div'); bar.className = 'c3-step';
+        bar.innerHTML = `<button type="button" data-sd="-1" aria-label="Back" disabled>‹</button><span class="dots">${ps.map((_, k) => `<i${k ? '' : ' class="on"'}></i>`).join('')}</span><button type="button" data-sd="1">${lab} ›</button>`;
+        $('.c3-pin', el).appendChild(bar);
+        const go = i => { i = Math.max(0, Math.min(ps.length - 1, i)); el._i = i; const from = el._p, to = ps[i], t0 = performance.now();
+          $$('.dots i', bar).forEach((d, k) => d.classList.toggle('on', k === i)); bar.firstElementChild.disabled = i === 0; bar.lastElementChild.disabled = i === ps.length - 1;
+          if (el === evo) { evoPick = i; row.style.transition = 'transform .6s cubic-bezier(.22,1,.36,1)'; }
+          const tw = now => { const k = Math.min(1, (now - t0) / 700); el._p = from + (to - from) * ss(k); update(); if (k < 1) requestAnimationFrame(tw); }; requestAnimationFrame(tw); };
+        bar.addEventListener('click', e => { const b = e.target.closest('[data-sd]'); if (b && !b.disabled) go(el._i + +b.dataset.sd); });
+        let x0 = null; el.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+        el.addEventListener('touchend', e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 50) go(el._i + (dx < 0 ? 1 : -1)); }, { passive: true });
+      });
+      tabs.forEach(t => t.addEventListener('click', () => { const bar = $('.c3-step', evo); evo._i = +t.dataset.evo; evoPick = evo._i; row.style.transition = 'transform .6s cubic-bezier(.22,1,.36,1)'; update(); $$('.dots i', bar).forEach((d, k) => d.classList.toggle('on', k === evo._i)); }));
+    }
     // checkout paths
     const flow = $('#c3Flow', root); let pathI = 0, vert = null;
     const drawFlow = () => {};
@@ -4808,7 +4869,7 @@ div.mm { overflow-x: clip; }
       cells.forEach((c, j) => { let n = 0; const stop = 10 + j * 3 + k * 4; const iv = setInterval(() => { n++; c.textContent = n >= stop ? t[j] : CHARS[Math.floor(Math.random() * CHARS.length)]; c.classList.toggle('flip', n % 2 === 0); if (n >= stop) { clearInterval(iv); c.classList.remove('flip'); } }, reduce ? 1 : 55); initMM.ts.push(iv); }); });
     $$('.sf', root).forEach(s => { s.innerHTML = [...s.dataset.t].map(ch => `<i>${ch}</i>`).join(''); });
     // the signature writes itself
-    const sig = $('#mmSig', root); csEl.addEventListener('scroll', initMM.sc = () => { const r = sig.getBoundingClientRect(), p = clamp((innerHeight * .92 - r.top) / (innerHeight * .42)); sig.style.setProperty('--sp', p.toFixed(3)); }, { passive: true }); initMM.sc();
+    const sig = $('#mmSig', root); if (innerWidth < 860) { sig.classList.add('ph'); new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { sig.style.setProperty('--sp', 1); o.disconnect(); } }), { root, threshold: .6 }).observe(sig); } else csEl.addEventListener('scroll', initMM.sc = () => { const r = sig.getBoundingClientRect(), p = clamp((innerHeight * .92 - r.top) / (innerHeight * .42)); sig.style.setProperty('--sp', p.toFixed(3)); }, { passive: true }); initMM.sc && initMM.sc();
     // tap any screen to look closer
     const lb = $('#mmLb', root), lbI = $('img', lb), lbP = $('p', lb); let grp = [], gi = 0;
     const show = i => { gi = (i + grp.length) % grp.length; lbI.src = grp[gi].src; lbP.textContent = grp[gi].alt + (grp.length > 1 ? ` · ${gi + 1} of ${grp.length}` : ''); lb.classList.toggle('one', grp.length < 2); };
@@ -4932,7 +4993,7 @@ div.mm { overflow-x: clip; }
   addEventListener('keydown', e => { if (e.key === 'Escape' && picked) closeCase(); });
   function frameWork(dt) {
     boxScale(dt); boxInfo.classList.toggle('in', boxStage.getBoundingClientRect().top < vh * .2);
-    if (!boxOpen && boxStage.getBoundingClientRect().top < vh * .3) openBox();
+    if (!boxOpen && boxStage.getBoundingClientRect().top < vh * (mobile ? .6 : .3)) openBox();
   }
 
   /* =========================================================
@@ -5149,7 +5210,7 @@ div.mm { overflow-x: clip; }
   const llRoles = $('#llRoles');
   function frameLL(y) {
     if (!llRoles.classList.contains('in') && llRoles.getBoundingClientRect().top < vh * .82) llRoles.classList.add('in');
-    const p = clamp((y - rvTop + vh * .25) / (rvRange * .85)), lit = p * llWords.length * 1.05;
+    const p = mobile ? 1 : clamp((y - rvTop + vh * .25) / (rvRange * .85)), lit = p * llWords.length * 1.05;
     if (Math.abs(lit - llLit) < .05) return; llLit = lit;
     const b1 = DIMW(); llWords.forEach((w, i) => { w.style.opacity = (b1 + (1 - b1) * clamp(lit - i)).toFixed(3); });
     llMarks.forEach(m => m.el.classList.toggle('on', lit >= m.last + 1));
