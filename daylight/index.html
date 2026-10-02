@@ -4830,7 +4830,7 @@ div.mm { overflow-x: clip; }
   face('wall-i', BW, BH, BW / 2, 0, 0, 'rotateX(-90deg)');
   face('wall-i', BD, BH, 0, BD / 2, 0, 'rotateZ(90deg) rotateX(-90deg)');
   const lid = face('box-lid', BW, BD, BW / 2, 0, BH, 'rotateX(-180deg)');
-  const SUNK = -(CH - BH + 10);
+  const SUNK = -(CH - BH + 40);
   const wks = WORK.map((w, i) => {
     const x = 108 + i * ((BW - 216) / (WORK.length - 1));
     const el = document.createElement('button'); el.className = 'wk' + (w.cls ? ' ' + w.cls : ''); el.type = 'button';
@@ -4847,7 +4847,8 @@ div.mm { overflow-x: clip; }
   face('wall-o', BW, BH, BW / 2, BD, 0, 'rotateX(-90deg)', '<span class="brand">Things I designed</span>');
   const stand = z => `translate3d(0px, 0px, ${z}px) rotateZ(-90deg) rotateX(-90deg) rotateY(0deg)`;
   const faced = k => `translate3d(${(BW / 2 - k.x).toFixed(1)}px, ${BD * .95}px, 210px) rotateZ(${-VIEW_Z}deg) rotateX(${-VIEW_X}deg) rotateY(0deg)`;
-  const rim = () => {};
+  // a card sunk into the box is clipped at the box floor, so nothing ever pokes out underneath
+  const rim = (k, z) => { k.el.style.clipPath = z < 0 ? `inset(${z <= SUNK ? 0 : -90}px -90px ${-z}px -90px)` : (k.el.style.clipPath ? 'inset(-90px -90px 0px -90px)' : ''); };
   wks.forEach(k => { k.el.style.transform = stand(k.z); rim(k, k.z); });
   let boxOpen = false, picked = null, hoverK = null, boxS = 1;
   const BOX_TOP = [['+41%', 'payment success, EazyDiner'], ['16 → 35%', 'hotels replying, MakeMyTrip'], ['400+', 'LastLook downloads']];
@@ -4864,7 +4865,7 @@ div.mm { overflow-x: clip; }
   function openBox() {
     if (boxOpen) return; boxOpen = true; boxStage.classList.add('opened');
     lid.style.transform = `translate3d(0,0,${BH}px) rotateX(-72deg)`;
-    wks.forEach((k, i) => setTimeout(() => { if (picked !== k) { k.z = 0; k.el.style.transition = 'transform 1.2s cubic-bezier(.2, .9, .25, 1), box-shadow .5s, filter .5s'; k.el.style.transform = stand(0); rim(k, 0); } }, 800 + i * 130));
+    wks.forEach((k, i) => setTimeout(() => { if (picked !== k) { k.z = 0; k.el.style.transition = 'transform 1.2s cubic-bezier(.2, .9, .25, 1), clip-path 1.2s cubic-bezier(.2, .9, .25, 1), box-shadow .5s, filter .5s'; k.el.style.transform = stand(0); rim(k, 0); setTimeout(() => { if (k.z === 0) k.el.style.clipPath = ''; }, 1300); } }, 800 + i * 130));
   }
   wks.forEach(k => {
     const enter = () => { if (picked || !boxOpen) return; hoverK = k; k.el.classList.add('hover'); k.el.style.transform = stand(70); rim(k, 70); setCap(k); };
