@@ -2411,7 +2411,8 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 .cs.mm .mm-bar { background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 .mm-bk { display: inline-flex; align-items: center; gap: 10px; font: 700 14px/1 var(--sans); color: var(--ink-2); }
 .mm-bk img { height: 22px; width: auto; }
-.mm { overflow: hidden; }
+div.mm { overflow-x: clip; }
+.cs.mm { overflow-y: auto; overflow-x: hidden; }
 .mm [data-rv] { opacity: 0; translate: 0 26px; transition: opacity .8s var(--ease), translate 1s var(--ease); }
 .mm [data-rv].in { opacity: 1; translate: 0 0; }
 .mm-sec { position: relative; max-width: 76rem; margin: 0 auto; padding: 16vh clamp(18px, 4vw, 48px) 0; box-sizing: border-box; }
