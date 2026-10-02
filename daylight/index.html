@@ -3309,6 +3309,46 @@ div.mm { overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) {
   .sw-aur i, .sw-sky .fc, .sw-sky .ht, .sw-win .hearts i, .sw-loop *, .sw-loop *::after { animation: none !important; }
 }
+
+/* =========================================================
+   Glass chrome: map controls, labels, CTAs and the Day/Night toggle
+   ========================================================= */
+:root { --gl-bg: rgba(255, 255, 255, .34); --gl-bg-h: rgba(255, 255, 255, .5); --gl-ring: rgba(255, 255, 255, .72); --gl-ink: #13233A; --gl-blur: blur(16px) saturate(1.7);
+  --gl-sh: inset 0 1px 0 rgba(255, 255, 255, .55), 0 12px 28px -16px rgba(19, 35, 58, .5); }
+:root[data-theme="dark"] { --gl-bg: rgba(38, 38, 38, .38); --gl-bg-h: rgba(60, 60, 60, .5); --gl-ring: rgba(255, 255, 255, .18); --gl-ink: #F5F5F5;
+  --gl-sh: inset 0 1px 0 rgba(255, 255, 255, .1), 0 12px 28px -14px rgba(0, 0, 0, .7); }
+.theme-btn, .np, .mapctl .grp, .mapctl .solo, .jtl, .jcar, .jtl-view, .mk .nm, .journey.jcm .jcar, .journey.over .jtl-view {
+  background: var(--gl-bg) !important; color: var(--gl-ink) !important; backdrop-filter: var(--gl-blur); -webkit-backdrop-filter: var(--gl-blur);
+  box-shadow: inset 0 0 0 1px var(--gl-ring), var(--gl-sh) !important; }
+.theme-btn:hover, .np:hover, .mapctl button:hover, .jtl-view:hover { background: var(--gl-bg-h) !important; }
+.mapctl .grp .solo, .mapctl .grp button { background: transparent !important; box-shadow: none !important; }
+.mapctl button { color: var(--gl-ink); } .mapctl button + button { border-top-color: var(--gl-ring); } .mapctl .solo { color: #4285F4 !important; }
+:root[data-theme="dark"] .theme-btn { color: #FFD86B !important; }
+:root[data-theme="dark"] .theme-btn .tl { color: var(--gl-ink); }
+.jtl .yr, #jcCount { color: var(--gl-ink) !important; }
+.jtl ol::before { background: var(--gl-ring); }
+.jtl button::before, :root[data-theme="dark"] .jtl button::before { background: var(--gl-bg-h); }
+.jtl button.done::before, .jtl button.on::before, :root[data-theme="dark"] .jtl button.done::before, :root[data-theme="dark"] .jtl button.on::before { background: var(--c); }
+/* the map's buttons: tinted glass, never a solid fill */
+.jcar button, :root[data-theme="dark"] .jcar button { background: rgba(255, 255, 255, .22); color: var(--gl-ink); box-shadow: inset 0 0 0 1px var(--gl-ring); }
+.jcar .nx, :root[data-theme="dark"] .jcar .nx { background: rgba(255, 255, 255, .42); color: var(--gl-ink); box-shadow: inset 0 0 0 1.5px var(--gl-ring), 0 8px 18px -10px rgba(19, 35, 58, .5); }
+:root[data-theme="dark"] .jcar button, :root[data-theme="dark"] .jcar .nx { background: rgba(255, 255, 255, .1); }
+.mk.on .nm, :root[data-theme="dark"] .mk.on .nm { background: color-mix(in srgb, var(--c) 26%, var(--gl-bg)) !important; color: var(--gl-ink) !important;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--c) 60%, var(--gl-ring)), 0 10px 22px -12px var(--c) !important; }
+.jcard .cbtn, .poi.link { background: color-mix(in srgb, var(--c) 14%, rgba(255, 255, 255, .45)); color: color-mix(in srgb, var(--c) 82%, #13233A);
+  backdrop-filter: var(--gl-blur); -webkit-backdrop-filter: var(--gl-blur);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--c) 42%, transparent), inset 0 1px 0 rgba(255, 255, 255, .7), 0 10px 22px -14px var(--c); }
+.jcard .cbtn:hover, .poi.link:hover { background: color-mix(in srgb, var(--c) 22%, rgba(255, 255, 255, .5)); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--c) 60%, transparent), 0 0 0 4px color-mix(in srgb, var(--c) 14%, transparent), 0 14px 26px -12px var(--c); }
+:root[data-theme="dark"] .jcard .cbtn, :root[data-theme="dark"] .poi.link { background: color-mix(in srgb, var(--c) 20%, rgba(255, 255, 255, .06)); color: color-mix(in srgb, var(--c) 45%, #fff); }
+.places { background: var(--gl-bg); backdrop-filter: var(--gl-blur); -webkit-backdrop-filter: var(--gl-blur); box-shadow: inset 0 0 0 1px var(--gl-ring), var(--gl-sh); }
+.places button { color: var(--gl-ink); }
+.places button:hover, .places button.on { background: var(--gl-bg-h); box-shadow: inset 0 0 0 1px var(--gl-ring); }
+/* the compass becomes a glass dial */
+.compass::before { content: ""; position: absolute; inset: 3.7%; border-radius: 50%; backdrop-filter: var(--gl-blur); -webkit-backdrop-filter: var(--gl-blur); }
+.compass svg { position: relative; }
+.compass svg > circle:first-child, :root[data-theme="dark"] .compass svg > circle:first-child { fill: var(--gl-bg); stroke: var(--gl-ring); stroke-width: 1.5; }
+.compass svg > circle:nth-child(2) { stroke: var(--gl-ink); opacity: .5; }
+.compass text, :root[data-theme="dark"] .compass text { fill: var(--gl-ink); }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
