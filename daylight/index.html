@@ -3689,7 +3689,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
   .logo { padding: 5px; gap: 0; height: 48px; width: 48px; box-sizing: border-box; justify-content: center; }
   .logo .lt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .logo i { width: 38px; height: 38px; }
-  html.scrolled .logo .jc { opacity: 1; scale: 1; }
+  .logo .jc { display: none; }
   /* every tappable pill is 48px tall */
   :is(.theme-btn, .nw-cta, .nw-go, .cbtn, .jc-more, .jcar button, .fb-go, .c3-links a, .c3-links button, .cs-close, .sn-pri, .s-cta, .sw-cnav button, .bh-cta) { height: 48px !important; min-height: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; box-sizing: border-box; }
   .nw-cta { padding: 0 18px 0 8px !important; gap: 10px; font-size: 15px; }
@@ -3711,6 +3711,14 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
 .sn-foot { max-width: 76rem; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) 14vh; text-align: center; }
 .sn-foot .c3-links { justify-content: center; }
 .sn-more { padding-bottom: 8vh !important; }
+@media (max-width: 859px) {
+  .nw-card { width: 158px !important; min-height: 206px; padding: 20px 14px 14px; display: flex; flex-direction: column; }
+  .nw-card p { font-size: 17px; line-height: 1.25; }
+  .nw-card .nw-by { margin-top: auto; padding-top: 12px; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .nw-card .nw-by .av { width: 32px; height: 32px; }
+  .nw-ghost p { font-size: 17px; }
+  .nw-card.nw-ghost { display: grid; place-items: center; }
+}
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
