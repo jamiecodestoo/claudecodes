@@ -2356,11 +2356,39 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 @media (max-width: 860px) {
   /* phones: the plane gets its own lane between the header and the greeting */
   .hero-copy { top: calc(env(safe-area-inset-top, 0px) + 124px) !important; }
-  .sky-plane { top: calc(env(safe-area-inset-top, 0px) + 66px); width: 64px; }
+  .sky-plane { top: calc(env(safe-area-inset-top, 0px) + 80px); width: 64px; }
   .sp-ban { top: -4%; }
   .sp-rope { width: 20px; }
   .sp-flag { padding: 4px 11px 4px 16px; border-width: 2px; }
   .sp-flag span { font-size: 11.5px; line-height: 1; }
+}
+
+/* the banner rides level with the plane: straight rope, no swing */
+.sp-ban { top: 50% !important; translate: 0 -50%; animation: none !important; }
+.sp-flag { animation: none !important; }
+
+/* while a building is open, everything in the sky holds still where it is */
+.stage.still .sky-plane, .stage.still .sky-plane *, .stage.still .sky-birds * { animation-play-state: paused !important; }
+
+/* banner sits closer behind the plane */
+.sp-ban { right: 84% !important; }
+.sp-rope { width: clamp(12px, 1.1vw, 18px) !important; }
+@media (max-width: 860px) { .sp-rope { width: 10px !important; } }
+
+@media (max-width: 860px) {
+  .hero-copy { top: calc(env(safe-area-inset-top, 0px) + 138px) !important; }
+  .sky-plane { top: calc(env(safe-area-inset-top, 0px) + 82px) !important; }
+  .sp-flag { padding: 3px 10px 3px 15px !important; border-width: 2px !important; }
+  .sp-flag span { font-size: 11px !important; line-height: 1.1 !important; }
+}
+
+.sp-flag { line-height: 1; font-size: 0; }
+.sp-flag span { display: block; }
+
+@keyframes spflyflat { from { transform: translate3d(-40vw, 0, 0); } to { transform: translate3d(118vw, 0, 0); } }
+@media (max-width: 860px) {
+  .sky-plane { top: calc(env(safe-area-inset-top, 0px) + 84px) !important; animation-name: spflyflat !important; }
+  .hero-copy { top: calc(env(safe-area-inset-top, 0px) + 140px) !important; }
 }
 </style>
 
@@ -2435,7 +2463,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     </div>
 
     <div class="sky-birds" id="skyBirds" aria-hidden="true"></div>
-    <div class="sky-plane" aria-hidden="true"><div class="sp-in"><div class="sp-ban"><svg class="sp-rope" viewBox="0 0 40 20" preserveAspectRatio="none"><path d="M0 10 Q20 15 40 4"/></svg><div class="sp-flag"><span>Welcome to my dream place</span></div></div>
+    <div class="sky-plane" aria-hidden="true"><div class="sp-in"><div class="sp-ban"><svg class="sp-rope" viewBox="0 0 40 20" preserveAspectRatio="none"><path d="M0 10 L40 10"/></svg><div class="sp-flag"><span>Welcome to my dream place</span></div></div>
       <svg viewBox="0 0 150 60">
         <defs><linearGradient id="spBody" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FFF7E6"/><stop offset=".6" stop-color="#EADFC8"/><stop offset="1" stop-color="#C9B999"/></linearGradient>
         <linearGradient id="spWing" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F3E8D2"/><stop offset="1" stop-color="#BFAE8C"/></linearGradient></defs>
@@ -3031,6 +3059,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   function focus(id) {
     if (!PLACES[id] || pV > .04) { if (PLACES[id]) { goTo(vTop); setTimeout(() => focus(id), 900); } return; }
     if (focusId === id) return;
+    stage.classList.add('still');
     focusId = id; rate = 3; moved = 0; focusAt = performance.now(); clearTimeout(leaveT); leaveT = 0; fillSheet(id);
     sheet.classList.toggle('left', PLACES[id].side === 'left'); sheet.classList.add('on');
     scene.classList.add('focusing');
@@ -3040,6 +3069,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   }
   function unfocus() {
     if (!focusId) return;
+    stage.classList.remove('still');
     focusId = null; rate = 2.6; sheet.classList.remove('on'); scene.classList.remove('focusing');
     layers.forEach(L => L.el.classList.remove('on', 'lift'));
     $$('.pin, #places button').forEach(b => b.classList.remove('on'));
@@ -4473,7 +4503,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     let last = performance.now();
     (function fly(now) {
       const dt = Math.min(.05, (now - last) / 1000); last = now;
-      if (Y() < vh) {
+      if (Y() < vh && !box.parentElement.classList.contains('still')) {
         const r = copy.getBoundingClientRect(), L = Math.max(0, r.left - 60), R = Math.min(vw, r.right + vw * .12), T = Math.max(20, r.top - vh * .14), Bo = Math.min(vh * .62, r.bottom + vh * .06);
         const cx = B.reduce((s, b) => s + b.x, 0) / B.length, cy = B.reduce((s, b) => s + b.y, 0) / B.length;
         B.forEach(b => {
