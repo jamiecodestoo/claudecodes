@@ -2390,6 +2390,19 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   .sky-plane { top: calc(env(safe-area-inset-top, 0px) + 84px) !important; animation-name: spflyflat !important; }
   .hero-copy { top: calc(env(safe-area-inset-top, 0px) + 140px) !important; }
 }
+
+/* galleries hold three or four polaroids */
+.jc-gal > div, .s-gal > div { grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)) !important; gap: 10px; }
+.journey.jcm .jc-gal > div { grid-template-columns: repeat(var(--n, 3), minmax(0, 90px)) !important; }
+/* journey card: the CTA stays pinned at the bottom of the card, always in view */
+.jc-act { position: sticky; bottom: 0; z-index: 2; margin: 18px -26px -26px !important; padding: 16px 26px 22px; background: linear-gradient(rgba(255, 255, 255, 0), #fff 34%); }
+:root[data-theme="dark"] .jc-act { background: linear-gradient(rgba(42, 42, 42, 0), var(--card) 34%); }
+@media (max-width: 860px) {
+  .jc-act { margin: 10px -16px -14px !important; padding: 10px 16px 14px; }
+  .journey.jcm .jcard:not(.open) .jc-bd > .jc-act { display: flex !important; position: static; margin: 10px 0 0 !important; padding: 0; background: none; }
+  .journey.jcm .jcard:not(.open) .jc-bd { display: flex; flex-wrap: wrap; align-items: center; column-gap: 8px; }
+  .journey.jcm .jcard:not(.open) .jc-bd > h3, .journey.jcm .jcard:not(.open) .jc-bd > .txt { flex-basis: 100%; }
+}
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -2515,7 +2528,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
       <div class="tell-box" id="tellBox">
         <p class="tell" id="tell">I started as a <span class="hl b-sky" data-dd="gear">mechanical engineer</span>, learning <span class="hl" data-dd="circle">how things work.</span> Then I got way more curious about <span class="hl b-sun" data-dd="under">why people use them.</span> So I Googled my way into <span class="hl b-coral" data-dd="stars">UX</span>, and I've been fixing the <span class="hl b-lilac" data-dd="scribble">"ugh" moments</span> ever since.</p>
         <svg class="doodles" id="doodles" aria-hidden="true"></svg>
-        <div class="sticky" data-at=".25" style="--sc:#FFE98A;--r:-6deg;right:-3%;top:2%">NSUT grad btw. Good in maths too.<small>Class of 2021</small></div>
+        <div class="sticky" data-at=".25" style="--sc:#FFE98A;--r:-6deg;right:-3%;top:2%">NSUT grad btw. Good in maths too.<small>Class of 2025</small></div>
         <div class="sticky" data-at=".5" style="--sc:#FFD1C4;--r:5deg;right:-1%;top:38%">2 years in the industry. Every one of them shipped.<small>Product design</small></div>
         <div class="sticky st-logos" data-at=".75" style="--sc:#CFE7FF;--r:-3deg;right:1%;bottom:-2%">I’ve worked with<span class="st-lg"><img src="v2/s/logo-mmt.webp" alt="MakeMyTrip"><img src="v2/s/logo-eazydiner.webp" alt="EazyDiner"><img src="v2/s/logo-oyo.webp" alt="OYO"></span></div>
         <p class="move-hint" id="moveHint" style="right:3%;bottom:-12%"><svg viewBox="0 0 40 28"><path d="M3 6c10 0 22 4 30 16M33 22l-8-1M33 22l1-8"/></svg>these notes move ;)</p>
@@ -2646,8 +2659,8 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
       <div class="stack-head" id="stackHead">
         <div class="sec-head">
           <p class="kicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.2 7.1L21 5l-3.6 6.5L24 14l-7.1 1.3L19 22l-7-3.9L5 22l2.1-6.7L0 14l6.6-2.5L3 5l6.8 3.1z"/></svg>My stack</p>
-          <h2>The tools I <span class="hl b-sun" id="stackHl">unwrap</span> every day.</h2>
-          <p>Seventeen tools I reach for, from the first sketch to the shipped build.</p>
+          <h2>Everything I know, <span class="hl b-sun" id="stackHl">unwrapped</span>.</h2>
+          <p>Seventeen tools I know well, from the first sketch to the shipped build.</p>
         </div>
       </div>
       <div class="gift-stage" id="giftStage">
@@ -2698,7 +2711,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
             </g>
           </svg>
         </div>
-        <p class="gift-cap" id="giftCap">My stack. <span id="giftCapV">Hover</span> a tool to see how I use it.</p>
+        <p class="gift-cap" id="giftCap">My toolkit. <span id="giftCapV">Hover</span> a tool to see what I do with it.</p>
         <div class="ring" id="ring"></div>
         <div class="tool-tip" id="toolTip" role="status"><div class="tt-h"><span class="tt-i" id="ttI"></span><div><b id="ttN"></b><span id="ttC"></span></div></div><p id="ttP"></p></div>
       </div>
@@ -2844,7 +2857,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 
   /* ---------- content: from James's own portfolio ---------- */
   const PLACES = {
-    nsut: { c: '#C4553A', side: 'right', tag: 'Chapter 01 · 2021 · New Delhi', t: 'NSUT', r: 'B.Tech, Mechanical Engineering · Class of 2021',
+    nsut: { c: '#C4553A', side: 'right', tag: 'Chapter 01 · 2021 · New Delhi', t: 'NSUT', r: 'B.Tech, Mechanical Engineering · 2021 – 2025',
       h: 'The day JEE changed everything.',
       st: ['I cleared JEE and got into <b>NSUT</b> for Mechanical Engineering. Four years of machines, drawings and tolerances taught me how things work.', 'Somewhere in there I got hooked on <i>why</i> people use them, and started designing on the side, like <b>CampusX</b>, a social network for college life.'],
       n: [], j: 0 },
@@ -2900,7 +2913,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     { id: 'jee', when: '2021', place: 'New Delhi', icon: 'cap', logo: 'logo-nsut', c: '#D2553A', at: [400, 1420], lift: 175, name: 'NSUT',
       title: 'The day JEE changed everything.',
       txt: 'I cleared JEE and got into <b>NSUT</b> for Mechanical Engineering. I had even cleared Waterloo Mathematics, but somehow, Delhi felt like where I was meant to be. I just didn’t know yet that engineering wouldn’t be the path I’d end up following.',
-      photos: [['', 'JEE results day'], ['', 'First day at NSUT'], ['', 'Campus, 2021']],
+      photos: [['nsut-day1', 'First day at NSUT'], ['nsut-project', 'Final project, submitted'], ['nsut-band', 'The college band'], ['nsut-degree', 'Degree day, 2025']],
       pois: [[-170, -120, 'check', 'Cleared Waterloo Mathematics too.']] },
     { id: 'app', when: 'April 2022', place: 'New Delhi', icon: 'phone', logo: 'logo-campusx', c: '#7B5CD6', at: [960, 960], lift: 150, name: 'The failed app',
       title: 'A failed app changed my life.',
@@ -3049,7 +3062,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     $('#s-d').innerHTML = P.st.map(t => `<p>${t}</p>`).join('');
     $('#s-n').innerHTML = P.n.map(([b, s]) => `<li><b>${b}</b><span>${s}</span></li>`).join('');
     const ph = (S && S.photos) || [];
-    $('#s-p').innerHTML = ph.length ? `<p>Gallery</p><div>${ph.map(([src, cap], k) => `<button type="button" class="jc-ph" data-sg="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div>` : '';
+    $('#s-p').innerHTML = ph.length ? `<p>Gallery</p><div style="--n:${ph.length}">${ph.map(([src, cap], k) => `<button type="button" class="jc-ph" data-sg="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div>` : '';
     $('#s-p').hidden = !ph.length;
     $('#s-n').hidden = !P.n.length;
     const cta = P.cs ? `<button type="button" class="btn btn-ink s-cta" data-case="${P.cs}">${P.csL} <span aria-hidden="true">→</span></button>` : P.mail ? `<a class="btn btn-ink s-cta" href="${P.mail}">${P.csL} <span aria-hidden="true">↗</span></a>` : '';
@@ -3445,7 +3458,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
       <div class="jc-bd"><h3>${st.title}</h3><p class="txt">${st.txt}</p><button type="button" class="jc-more" aria-expanded="false">Read more</button>
       ${st.share ? `<div class="jc-share"><a href="${IG}" target="_blank" rel="noopener"><i style="background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF)"><svg viewBox="0 0 24 24">${ICONS.ig}</svg></i><div>@jamieships<span>Design, building and career on Instagram</span></div><em>↗</em></a><a href="${LI}" target="_blank" rel="noopener"><i style="background:#0A66C2"><svg viewBox="0 0 24 24">${ICONS.in}</svg></i><div>James Chugh<span>Work and lessons on LinkedIn</span></div><em>↗</em></a></div>` : ''}
       ${st.stats ? `<ul class="jc-stats">${st.stats.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>` : ''}
-      ${st.photos && st.photos.length ? `<div class="jc-gal"><p>Gallery</p><div>${st.photos.map(([src, cap], k) => `<button type="button" class="jc-ph" data-lb="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div></div>` : ''}
+      ${st.photos && st.photos.length ? `<div class="jc-gal"><p>Gallery</p><div style="--n:${st.photos.length}">${st.photos.map(([src, cap], k) => `<button type="button" class="jc-ph" data-lb="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div></div>` : ''}
       ${st.work ? `<div class="jc-act"><a class="cbtn" href="${st.work}" target="_blank" rel="noopener">View work<svg viewBox="0 0 24 24">${ICONS.arrowR}</svg></a></div>` : ''}</div>`;
   }
   function showCard(i) {
