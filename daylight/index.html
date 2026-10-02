@@ -3719,6 +3719,44 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
   .nw-ghost p { font-size: 17px; }
   .nw-card.nw-ghost { display: grid; place-items: center; }
 }
+
+/* ===== case studies on phones ===== */
+@media (max-width: 859px) {
+  .cs :is(.c3-h, .mm-h, .sw-h, .sw-t, .mm-t) { font-size: clamp(27px, 8.2vw, 36px) !important; letter-spacing: -.035em !important; max-width: 100%; overflow-wrap: break-word; }
+  .cs :is(.c3-p, .mm-p, .sw-p) { font-size: 16px; }
+  .cs :is(.c3-sec, .mm-sec, .sw-sec, .c3-w) { padding-left: 16px !important; padding-right: 16px !important; }
+  .cs .hl { -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  /* sideways rows: one card at a time, stepped with buttons */
+  .ph-car { display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 0 !important; padding: 8px 0 18px !important; margin: 0 !important; width: 100% !important; justify-content: flex-start !important; }
+  .ph-car::-webkit-scrollbar { display: none; }
+  .ph-car > * { flex: 0 0 100% !important; width: 100% !important; max-width: none !important; margin: 0 !important; box-sizing: border-box; scroll-snap-align: center; rotate: 0deg !important; translate: none !important; opacity: 1 !important; }
+  .ph-car > img { height: min(64svh, 540px) !important; object-fit: contain; background: transparent !important; outline: 0 !important; box-shadow: none !important; }
+  .ph-car > :not(img) { display: flex; flex-direction: column; align-items: center; padding: 0 2px; }
+  .sw-hand.ph-car > .sw-cc, .sw-bento.ph-car > .sw-ft { display: grid; align-items: initial; width: calc(100% - 4px) !important; flex-basis: 100% !important; }
+  .sw-strip.ph-car .sw-scr .fr { width: min(60vw, 250px); }
+  .mm-fl .ph-car > img { height: min(60svh, 500px) !important; }
+  .ph-cb { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 4px auto 0; font: 700 14px/1 var(--sans); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .ph-cb[hidden] { display: none; }
+  .ph-cb button { width: 48px; height: 48px; border: 0; border-radius: 50%; cursor: pointer; font: 700 18px/1 var(--sans); color: var(--ink);
+    background: rgba(255, 255, 255, .55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 10px 24px -14px rgba(19, 35, 58, .45); transition: opacity .25s, transform .25s; }
+  .ph-cb button:disabled { opacity: .3; }
+  .ph-cb button:active { transform: scale(.94); }
+  :root[data-theme="dark"] .ph-cb button { background: rgba(255, 255, 255, .08); color: #F2F2F2; box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .8); }
+  .mm-fl .sw, .c3-galrow + .hint { display: none; }
+  /* tabs wrap instead of running off screen */
+  .c3-ptabs, .sw-ui .sw-tabs { flex-wrap: wrap !important; justify-content: center !important; overflow: visible !important; margin-inline: 0 !important; padding: 0 !important; max-width: 100% !important; }
+  /* footer links: a tidy grid */
+  .cs .c3-links { display: grid !important; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 360px; margin-inline: auto; }
+  .cs .c3-links > * { display: inline-flex !important; align-items: center; justify-content: center; margin: 0 !important; }
+  .cs .c3-links > button { grid-column: 1 / -1; }
+  /* back to the box: no outline */
+  html:root .cs .cs-bar button.cs-close, html:root .cs .cs-bar button.cs-close:hover { outline: 0 !important; border: 0 !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), 0 8px 22px -14px rgba(19, 35, 58, .5) !important; }
+}
+@media (max-width: 859px) {
+  .cs h2, .cs h3 { max-width: 100%; overflow-wrap: break-word; }
+  .cs h2:not(.sw-t):not(.mm-t), .cs h3.c3-h, .cs h3.mm-h, .cs h3.sw-h { font-size: clamp(26px, 7.8vw, 34px) !important; }
+  .cs .c3-links > * { font-size: 14px !important; white-space: nowrap; padding-inline: 10px !important; }
+}
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -5976,7 +6014,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
       </section>
       <section class="sn-more">
         <p class="c3-morek">Finished stories, ready to read</p>
-        <div class="c3-more">${WORK.filter(x => !SOON[x.id]).map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div>
+        <div class="c3-more">${WORK.filter(x => x.id !== w.id && x.id !== 'campusx').map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div>
       </section>
       <footer class="sn-foot"><p class="c3-morek">Say hello</p>
         <div class="c3-links"><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://topmate.io/jameschughh" target="_blank" rel="noopener">Book a free call ↗</a><button type="button" data-close>Back to the box</button></div></footer>
@@ -6000,6 +6038,23 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
       if (!ok) location.href = `mailto:jameschughh@gmail.com?subject=${encodeURIComponent('Notify me: ' + w.name + ' case study')}&body=${encodeURIComponent('Please let me know when it’s live: ' + email)}`;
       f.hidden = true; $('.sn-ok', root).hidden = false;
     });
+  }
+  // phones: sideways rows become one card at a time, stepped with buttons
+  function phCar(root) {
+    if (innerWidth >= 860) return;
+    [['.c3-phones'], ['.c3-galrow'], ['#c3Strip, .c3-strip'], ['.mm-fl', '.row'], ['.sw-hand'], ['.sw-bento'], ['.sw-strip']].forEach(([hs, rs]) => $$(hs, root).forEach(host => {
+      if (host._car) return; host._car = 1;
+      const row = () => rs ? host.querySelector(rs) : host;
+      const bar = document.createElement('div'); bar.className = 'ph-cb'; bar.innerHTML = '<button type="button" data-d="-1" aria-label="Previous">←</button><span>1 / 1</span><button type="button" data-d="1" aria-label="Next">→</button>';
+      host.after(bar);
+      const items = () => { const r = row(); return r ? [...r.children].filter(c => c.offsetParent !== null) : []; };
+      const idx = () => { const r = row(); if (!r) return 0; return Math.round(r.scrollLeft / Math.max(1, r.clientWidth)); };
+      const upd = () => { const r = row(); if (r && !r.classList.contains('ph-car')) { r.classList.add('ph-car'); r.addEventListener('scroll', () => requestAnimationFrame(upd), { passive: true }); } const n = items().length, i = Math.min(idx(), n - 1);
+        $('span', bar).textContent = `${i + 1} / ${n}`; bar.querySelectorAll('button')[0].disabled = i <= 0; bar.querySelectorAll('button')[1].disabled = i >= n - 1; bar.hidden = n < 2; };
+      bar.addEventListener('click', e => { const b = e.target.closest('[data-d]'); const r = row(); if (!b || !r) return; r.scrollTo({ left: (idx() + +b.dataset.d) * r.clientWidth, behavior: 'smooth' }); });
+      new MutationObserver(() => { const r = row(); if (r) r.scrollLeft = 0; upd(); }).observe(host, { childList: true, subtree: !!rs });
+      upd();
+    }));
   }
   function csHTML(w) {
     if (w.id === 'coupon') return edHTML(w);
@@ -6036,7 +6091,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
   function expand(k) {
     const r = k.el.getBoundingClientRect();
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w);
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl);
     csEl.style.transition = 'none'; csEl.style.clipPath = rectClip(r); csEl.classList.add('open');
     // a flat copy of the card grows with the page, then melts into it
     const g = k.el.cloneNode(true); g.classList.add('wk-ghost'); g.classList.remove('hover'); g.removeAttribute('aria-label');
@@ -6058,7 +6113,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
     const k = wks.find(x => x.w.id === id); if (!k || picked) return;
     picked = k; csFrom = from; const r = from.getBoundingClientRect();
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w);
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl);
     csEl.style.transition = 'none'; csEl.style.clipPath = rectClip(r); csEl.classList.add('open'); csEl.offsetWidth;
     csEl.style.transition = 'clip-path .9s cubic-bezier(.7, 0, .2, 1)'; csEl.style.clipPath = 'inset(0px 0px 0px 0px round 0px)';
     lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden';
@@ -6087,7 +6142,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
     edCleanup(); picked.el.style.opacity = 1; picked.el.style.transform = stand(0); rim(picked, 0); picked.z = 0;
     picked = k; k.el.style.transform = faced(k); k.el.style.opacity = 0;
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w);
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl);
     $('#csClose').focus({ preventScroll: true });
   }
   csEl.addEventListener('click', e => { if (e.target.closest('#csClose, [data-close]')) closeCase(); const sw = e.target.closest('[data-switch]'); if (sw) switchCase(sw.dataset.switch); });
