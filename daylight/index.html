@@ -241,7 +241,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .j-head .kicker { margin-bottom: 6px; }
 .j-head .sec-head p:not(.kicker) { max-width: none; }
 .world3:not(.far) .mk { opacity: 0 !important; pointer-events: none; }
-.mk { transition: opacity .5s var(--ease); }
+.mk { transition: opacity .5s var(--ease), transform .7s cubic-bezier(.22, 1, .36, 1); }
 .world3.far .poi { opacity: 0 !important; pointer-events: none !important; }
 .world3 > svg.maplayer { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .spot2 { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; transition: opacity .9s var(--ease);
@@ -256,7 +256,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .world3 { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
 .world3 > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 /* pins */
-.mk { position: absolute; left: 0; top: 0; z-index: 3; transform: translate(-50%, -100%) scale(var(--inv, 1)); transform-origin: 50% 100%; cursor: pointer; transition: opacity .6s var(--ease); }
+.mk { position: absolute; left: 0; top: 0; z-index: 3; transform: translate(-50%, -100%) scale(var(--inv, 1)); transform-origin: 50% 100%; cursor: pointer; transition: opacity .6s var(--ease), transform .7s cubic-bezier(.22, 1, .36, 1); }
 .mk .pinhead { position: relative; display: block; width: 52px; height: 64px; transform: scale(.3) translateY(24px); opacity: 0; transform-origin: 50% 100%; transition: transform .8s var(--spring), opacity .4s; filter: drop-shadow(0 10px 10px rgba(19, 35, 58, .28)); }
 .mk .pinhead > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .mk .pinhead .lg { position: absolute; left: 50%; top: 6px; width: 38px; height: 38px; margin-left: -19px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-sizing: border-box; background: #fff; }
@@ -1904,20 +1904,16 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 
 /* 3 · the map, in night mode */
 :root[data-theme="dark"] .journey { --paper: #1C1C1C; }
-:root[data-theme="dark"] #mapArt [fill="#FDFCF9"] { fill: #1C1C1C; }
-:root[data-theme="dark"] #mapArt [fill="#F6DFD2"] { fill: #262626; }
-:root[data-theme="dark"] #mapArt [fill="#8DBB6E"], :root[data-theme="dark"] #mapArt [fill="#94C675"] { fill: #1F2C24; }
-:root[data-theme="dark"] #mapArt [fill="#A3CF84"], :root[data-theme="dark"] #mapArt [fill="#AED790"] { fill: #24332A; }
-:root[data-theme="dark"] #mapArt [fill="#CFE6B6"], :root[data-theme="dark"] #mapArt [fill="#BEDCA0"] { fill: #1C2620; }
-:root[data-theme="dark"] #mapArt [fill="#A6D4F2"] { fill: #1F2A33; }
-:root[data-theme="dark"] #mapArt [stroke="#A6D4F2"] { stroke: #26343F; }
-:root[data-theme="dark"] #mapArt [stroke="#86C1EA"] { stroke: #33475A; }
-:root[data-theme="dark"] #mapArt [stroke="#D6ECFB"] { stroke: #2C3D4C; }
-:root[data-theme="dark"] #mapArt [stroke="#FFFDF7"], :root[data-theme="dark"] #mapArt [stroke="#FFFFFF"] { stroke: #363636; }
-:root[data-theme="dark"] #mapArt [fill="#fff"]:not(mask *):not(mask) { fill: #363636; }
-:root[data-theme="dark"] #mapArt [stroke="#E2D6BF"], :root[data-theme="dark"] #mapArt [stroke="#DCCFB6"] { stroke: #202020; }
-:root[data-theme="dark"] #mapArt [stroke="#E7B84C"], :root[data-theme="dark"] #mapArt [stroke="#FFD86B"] { stroke: #9C7A2E; }
-:root[data-theme="dark"] #mapArt text { fill: #6E6E6E; }
+:root[data-theme="dark"] #mapArt [fill="#F4F2EE"] { fill: #1C1E21; }
+:root[data-theme="dark"] #mapArt #cityG stop { stop-color: #212428; }
+:root[data-theme="dark"] #mapArt [fill="#E3DED5"] { fill: #2A2D32; }
+:root[data-theme="dark"] #mapArt [stroke="#E2DDD3"], :root[data-theme="dark"] #mapArt [stroke="#DCD5C9"] { stroke: #17181A; }
+:root[data-theme="dark"] #mapArt [stroke="#FFFFFF"] { stroke: #34373C; }
+:root[data-theme="dark"] #mapArt [fill="#CDE8C4"] { fill: #1E2B22; }
+:root[data-theme="dark"] #mapArt [fill="#AAD3F2"] { fill: #1A2733; } :root[data-theme="dark"] #mapArt [stroke="#AAD3F2"] { stroke: #1A2733; }
+:root[data-theme="dark"] #mapArt [stroke="#EDC458"] { stroke: #5C4A1F; } :root[data-theme="dark"] #mapArt [stroke="#FCDE86"] { stroke: #7A6328; }
+:root[data-theme="dark"] #mapArt [fill="#fff"]:not(mask *):not(mask) { fill: #2A2D32; }
+:root[data-theme="dark"] #mapArt text { fill: #8A9099; stroke: #1C1E21; }
 :root[data-theme="dark"] .mk .nm { background: #333333; color: var(--ink); }
 :root[data-theme="dark"] .mk.on .nm { background: #FFD86B; color: #1A1A1A; }
 :root[data-theme="dark"] .jcard { background: var(--card); color: var(--ink); }
@@ -4512,45 +4508,46 @@ div.mm { overflow-x: clip; }
   const blob = (cx, cy, rx, ry, amp, seed) => { let d = ''; for (let a = 0; a <= 64; a++) { const t = a / 64 * Math.PI * 2, w = 1 + amp * (Math.sin(3 * t + seed) * .6 + Math.sin(5 * t + seed * 2) * .3 + Math.sin(8 * t + seed) * .1); d += (a ? 'L' : 'M') + (cx + Math.cos(t) * rx * w).toFixed(1) + ' ' + (cy + Math.sin(t) * ry * w).toFixed(1); } return d + 'Z'; };
   const grad = c => `linear-gradient(145deg, color-mix(in srgb, ${c} 55%, #fff), ${c})`;
   (function drawMap() {
-    const FONT = 'Bricolage Grotesque, sans-serif', LAND = '#FDFCF9', PARK = '#CFE6B6', PARK2 = '#BEDCA0', WATER = '#A6D4F2', WATER_E = '#86C1EA';
+    const FONT = 'Bricolage Grotesque, sans-serif', LAND = '#F4F2EE', PARK = '#CDE8C4', PARK2 = '#BEDCA0', WATER = '#AAD3F2', WATER_E = '#86C1EA';
     let h = `<defs><radialGradient id="hole"><stop offset="0" stop-color="#000"/><stop offset=".35" stop-color="#000"/><stop offset=".7" stop-color="#777"/><stop offset="1" stop-color="#fff"/></radialGradient>
       <mask id="fogMask" maskUnits="userSpaceOnUse" x="-900" y="-900" width="${MW + 1800}" height="${MH + 1800}"><rect x="-900" y="-900" width="${MW + 1800}" height="${MH + 1800}" fill="#fff"/>
       <path id="fogPath" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="260" stroke-linecap="round" stroke-linejoin="round"/>${STOPS.map((_, i) => `<circle id="hole${i}" r="0" fill="url(#hole)"/>`).join('')}</mask>
       <radialGradient id="spotG" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="820"><stop offset="0" stop-color="${LAND}" stop-opacity="0"/><stop offset=".4" stop-color="${LAND}" stop-opacity="0"/><stop offset="1" stop-color="${LAND}" stop-opacity=".86"/></radialGradient>
       <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF3FD"/><stop offset="1" stop-color="#C9DDF2"/></linearGradient></defs>`;
     h += `<rect x="-3000" y="-3000" width="${MW + 6000}" height="${MH + 6000}" fill="${LAND}"/>`;
-    // city blocks: a soft tint where the streets are
+    // two cities: a tight street grid with building footprints between the streets
     const CITIES = [[HX - 1050, HY + 150, 1380], [HX + 1050, HY + 150, 1380]];
-    h += `<defs><radialGradient id="cityG"><stop offset="0" stop-color="#EDE3CE"/><stop offset=".75" stop-color="#EFE6D3"/><stop offset="1" stop-color="${LAND}" stop-opacity="0"/></radialGradient>${CITIES.map(([cx, cy, R], k) => `<clipPath id="cityC${k}"><circle cx="${cx}" cy="${cy}" r="${R * .92}"/></clipPath>`).join('')}</defs>`;
-    CITIES.forEach(([cx, cy, R]) => { h += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#cityG)"/>`; });
-    // a soft blush inside the heart, so it reads when you zoom out
-    h += `<path d="${heartD}Z" fill="#F6DFD2" opacity=".5"/>`;
-    // streets: a loose grid in each city, with a couple of diagonals
-    let streets = '';
-    CITIES.forEach(([cx, cy, R], k) => {
-      let d2 = '';
-      for (let g = -R; g <= R; g += 300) { const w = R; d2 += `M${cx + g} ${cy - w} C ${cx + g + 30} ${cy - w / 3}, ${cx + g - 30} ${cy + w / 3}, ${cx + g + 10} ${cy + w} M${cx - w} ${cy + g} C ${cx - w / 3} ${cy + g - 24}, ${cx + w / 3} ${cy + g + 24}, ${cx + w} ${cy + g - 8} `; }
-      d2 += `M${cx - R} ${cy - R * .7} L${cx + R} ${cy + R * .8} M${cx - R * .8} ${cy + R} L${cx + R * .6} ${cy - R}`;
-      streets += `<g clip-path="url(#cityC${k})"><path d="${d2}" fill="none" stroke="#E2D6BF" stroke-width="16" stroke-linecap="round"/><path d="${d2}" fill="none" stroke="#FFFDF7" stroke-width="10" stroke-linecap="round"/></g>`;
-    });
-    h += streets;
-    // parks sit inside blocks, like on a real map
+    h += `<defs><radialGradient id="cityG"><stop offset="0" stop-color="#ECE8E1"/><stop offset=".8" stop-color="#EEEAE3"/><stop offset="1" stop-color="${LAND}" stop-opacity="0"/></radialGradient>${CITIES.map(([cx, cy, R], k) => `<clipPath id="cityC${k}"><circle cx="${cx}" cy="${cy}" r="${R}"/></clipPath>`).join('')}</defs>`;
+    const ST = 150, AR = 600, dens = (x, y) => Math.max(...CITIES.map(([cx, cy, R]) => 1 - Math.hypot(x - cx, y - cy) / (R * 1.25)));
+    let bld = '', minor = '', major = '';
+    for (let x0 = -ST * 2; x0 < MW + ST * 2; x0 += ST) for (let y0 = -ST * 2; y0 < MH + ST * 2; y0 += ST) {
+      const dn = dens(x0 + ST / 2, y0 + ST / 2); if (mrand() > .25 + dn * 1.1) continue;
+      const n = dn < .2 ? 1 : mrand() < .35 ? 1 : 2 + Math.floor(mrand() * 2), m = 18;
+      for (let q = 0; q < n; q++) { const w = (ST - m * 2) / (n > 2 ? 2 : n) - 6, hh = n > 2 ? (ST - m * 2) / 2 - 6 : ST - m * 2 - mrand() * 40;
+        const bx = x0 + m + (n > 2 ? (q % 2) * (w + 12) : q * (w + 12)), by = y0 + m + (n > 2 ? Math.floor(q / 2) * (hh + 12) : 0);
+        if (mrand() < .9) bld += `<rect x="${bx.toFixed(0)}" y="${by.toFixed(0)}" width="${Math.max(10, w).toFixed(0)}" height="${Math.max(10, hh).toFixed(0)}" rx="4"/>`; }
+    }
+    for (let g = -ST * 2; g <= Math.max(MW, MH) + ST * 2; g += ST) { const isA = g % AR === 0; const seg = (g <= MW + ST * 2 ? `M${g} -400V${MH + 400}` : '') + (g <= MH + ST * 2 ? `M-400 ${g}H${MW + 400}` : ''); if (isA) major += seg; else minor += seg; }
+    CITIES.forEach(([cx, cy, R]) => { major += `M${cx - R} ${cy - R * .7}L${cx + R} ${cy + R * .8}`; });
+    h += `<g fill="#E3DED5">${bld}</g>
+      <path d="${minor}" fill="none" stroke="#E2DDD3" stroke-width="12"/><path d="${minor}" fill="none" stroke="#FFFFFF" stroke-width="8"/>
+      <path d="${major}" fill="none" stroke="#DCD5C9" stroke-width="22"/><path d="${major}" fill="none" stroke="#FFFFFF" stroke-width="16"/>`;
+    // parks and water, flat like a real map
     [[HX - 1020, HY + 820, 300, 140], [HX + 1000, HY - 60, 280, 160], [520, 520, 360, 190], [MW - 520, 560, 340, 180], [560, MH - 420, 380, 160], [MW - 560, MH - 380, 360, 150], [HX - 1500, HY + 380, 170, 110], [HX + 1420, HY + 700, 190, 110]].forEach(([cx, cy, rx, ry], k) => {
-      h += `<path d="${blob(cx, cy, rx, ry, .16, k * 1.7)}" fill="${PARK}"/><path d="${blob(cx + 14, cy - 8, rx * .6, ry * .56, .2, k * 1.7 + .5)}" fill="${PARK2}"/>`; });
-    h += `<path d="${blob(HX - 1000, HY - 80, 230, 120, .12, 3)}" fill="${WATER}" stroke="${WATER_E}" stroke-width="3"/>`;
-    // the river splits Delhi from Gurgaon, right down the middle of the heart
+      h += `<path d="${blob(cx, cy, rx, ry, .1, k * 1.7)}" fill="${PARK}"/>`; });
+    h += `<path d="${blob(HX - 1000, HY - 80, 230, 120, .1, 3)}" fill="${WATER}"/>`;
+    // the river splits Delhi from Gurgaon, right down the middle
     const river = `M${HX - 40} -300 C ${HX + 70} 500, ${HX - 70} 1300, ${HX} 2100 S ${HX + 60} 3200, ${HX - 20} ${MH + 400}`;
-    h += `<path d="${river}" fill="none" stroke="${WATER_E}" stroke-width="84" stroke-linecap="round"/><path d="${river}" fill="none" stroke="${WATER}" stroke-width="76" stroke-linecap="round"/><path d="${river}" fill="none" stroke="#D6ECFB" stroke-width="3" stroke-dasharray="26 34"/>`;
-    // the highway between the two cities
+    h += `<path d="${river}" fill="none" stroke="${WATER}" stroke-width="80" stroke-linecap="round"/>`;
+    // the expressway between the two cities
     const main = `M-300 ${HY + 420} C ${MW * .25} ${HY + 360}, ${MW * .5} ${HY + 480}, ${MW * .75} ${HY + 400} S ${MW + 200} ${HY + 380}, ${MW + 400} ${HY + 420}`;
-    h += `<path d="${main}" fill="none" stroke="#E7B84C" stroke-width="30" stroke-linecap="round"/><path d="${main}" fill="none" stroke="#FFD86B" stroke-width="22" stroke-linecap="round"/>`;
-    h += `<g transform="translate(${HX - 260} ${HY + 420})"><rect x="-34" y="-15" width="68" height="30" rx="8" fill="#fff" stroke="#E7B84C" stroke-width="3"/><text y="7" text-anchor="middle" font-family="${FONT}" font-weight="800" font-size="18" fill="#8A6A1E">NH 48</text></g>`;
-    // the route itself is a road: the blue line drives along it
-    h += `<path d="${heartD}" fill="none" stroke="#DCCFB6" stroke-width="40" stroke-linejoin="round"/><path d="${heartD}" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linejoin="round"/>`;
-    [[HX - 560, HY + 1180, 7], [HX + 560, HY + 1180, 7], [HX - 1500, HY - 1500, 8], [HX + 1500, HY - 1500, 8], [300, HY + 400, 7], [MW - 300, HY + 380, 7], [HX, 380, 6]].forEach(([cx, cy, n]) => { for (let i = 0; i < n; i++) { const a = mrand() * 6.3, r = Math.sqrt(mrand()) * n * 4, x = cx + Math.cos(a) * r * 1.3, y = cy + Math.sin(a) * r * .8, sz = 10 + mrand() * 8;
-      h += `<circle cx="${(x + 3).toFixed(0)}" cy="${(y + 5).toFixed(0)}" r="${sz.toFixed(1)}" fill="#8DBB6E" opacity=".35"/><circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${sz.toFixed(1)}" fill="${['#A3CF84', '#94C675', '#AED790'][i % 3]}"/>`; } });
-    h += `<g font-family="${FONT}" font-weight="800" fill="#C4B28B" opacity=".75" letter-spacing="22" text-anchor="middle" font-size="64"><text x="${HX - 1000}" y="${HY + 250}">NEW DELHI</text><text x="${HX + 1000}" y="${HY + 250}">GURGAON</text></g>`;
-    h += `<g font-family="${FONT}" font-style="italic" font-weight="600" font-size="22" fill="#3F86C6" text-anchor="middle"><text x="${HX - 1000}" y="${HY - 72}">Blue Lake</text></g>`;
+    h += `<path d="${main}" fill="none" stroke="#EDC458" stroke-width="30" stroke-linecap="round"/><path d="${main}" fill="none" stroke="#FCDE86" stroke-width="24" stroke-linecap="round"/>`;
+    h += `<g transform="translate(${HX - 260} ${HY + 420})"><rect x="-30" y="-14" width="60" height="28" rx="6" fill="#fff" stroke="#E4B847" stroke-width="2.5"/><text y="7" text-anchor="middle" font-family="${FONT}" font-weight="800" font-size="17" fill="#8A6A1E">NH48</text></g>`;
+    // the route runs on a road of its own
+    h += `<path d="${heartD}" fill="none" stroke="#DCD5C9" stroke-width="34" stroke-linejoin="round"/><path d="${heartD}" fill="none" stroke="#FFFFFF" stroke-width="27" stroke-linejoin="round"/>`;
+    // labels: quiet grey with a paper halo, like a real map
+    h += `<g font-family="${FONT}" font-weight="700" fill="#8C9096" stroke="${LAND}" stroke-width="10" paint-order="stroke" stroke-linejoin="round" letter-spacing="14" text-anchor="middle" font-size="46"><text x="${HX - 1000}" y="${HY + 250}">NEW DELHI</text><text x="${HX + 1000}" y="${HY + 250}">GURGAON</text></g>`;
+    h += `<g font-family="${FONT}" font-weight="600" font-size="22" fill="#6E9FCB" text-anchor="middle"><text x="${HX - 1000}" y="${HY - 72}">Blue Lake</text></g>`;
     window.__mapRoads = { main, river };
     // ---- the trail
     const d = heartD;
@@ -4629,17 +4626,13 @@ div.mm { overflow-x: clip; }
     // start and finish flags
     h += `<g font-family="${FONT}" font-weight="800" font-size="22"><g transform="translate(${HX - 70} ${HY + 1720})"><path d="M0 0v-70" stroke="#13233A" stroke-width="4"/><path d="M0 -70h54l-10 14 10 14h-54z" fill="#FF6B4A"/><text x="8" y="-49" fill="#fff" font-size="16">2021</text></g>
       <g transform="translate(${HX + 40} ${HY + 1720})"><path d="M0 0v-70" stroke="#13233A" stroke-width="4"/><path d="M0 -70h70l-10 14 10 14h-70z" fill="#4285F4"/><text x="8" y="-49" fill="#fff" font-size="16">NOW</text></g></g>`;
-    rtH += `<path id="ghostPath" d="${d}" fill="none" stroke="#4285F4" stroke-opacity=".45" stroke-width="2.5" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`;
+    rtH += `<path id="ghostPath" d="${d}" fill="none" stroke="#4285F4" stroke-opacity=".8" stroke-width="3.5" stroke-dasharray="1 9" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`;
     rtH += `<path id="casing" d="${d}" fill="none" stroke="#1A5FD0" stroke-width="15" stroke-linecap="round"/><path id="carve" d="${d}" fill="none" stroke="#4285F4" stroke-width="10" stroke-linecap="round"/>`;
     mapArt.setAttribute('viewBox', `0 0 ${MW} ${MH}`); mapArt.innerHTML = h;
     const layer = (id, html, z) => { const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); el.id = id; el.setAttribute('class', 'maplayer'); el.setAttribute('viewBox', `0 0 ${MW} ${MH}`); el.setAttribute('aria-hidden', 'true'); if (z) el.style.zIndex = z; el.innerHTML = html; world3.insertBefore(el, meTip); return el; };
     layer('routeArt', rtH);
     layer('lmArt', lmH);
     const sp = document.createElement('div'); sp.className = 'spot2'; sp.id = 'spot'; $('#jPin').insertBefore(sp, $('#jFade'));
-    // traffic: small HTML cars on offset paths, so the big map never repaints
-    const traffic = [[window.__mapRoads.main, '#E4262C', 70, 0], [window.__mapRoads.main, '#2A7BD1', 70, -24], [window.__mapRoads.main, '#13233A', 70, -48], [heartD, '#F4511E', 150, -10], [heartD, '#2E9E6B', 150, -85]];
-    traffic.forEach(([p, c, t, dl]) => { const car = document.createElement('i'); car.className = 'car'; car.style.cssText = `offset-path: path('${p}'); --c: ${c}; animation-duration: ${t}s; animation-delay: ${dl}s`; world3.insertBefore(car, meTip); });
-    const boat = document.createElement('i'); boat.className = 'boat'; boat.style.cssText = `offset-path: path('${window.__mapRoads.river}'); animation-duration: 120s`; world3.insertBefore(boat, meTip);
     world3.style.width = MW + 'px'; world3.style.height = MH + 'px';
     spot = $('#spot'); carve = $('#carve'); casing = $('#casing'); ghost = $('#ghostPath');
     pathLen = carve.getTotalLength();
