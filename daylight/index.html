@@ -2788,6 +2788,107 @@ div.mm { overflow-x: clip; }
 .wlong { display: grid; gap: 9px; overflow: hidden; flex: 1; min-height: 0; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
 .wlong .wrow { animation: mmscan 3s ease-in-out infinite; animation-delay: calc(var(--k, 0) * 1s); }
 .wmore { padding: 7px; border-radius: 8px; background: color-mix(in srgb, var(--mr) 12%, transparent); color: var(--mr); text-align: center; font: 700 10.5px/1.2 var(--sans); flex: none; }
+
+/* ===== MakeMyTrip round 3 ===== */
+/* centred page */
+.mm-sec { text-align: center; }
+.mm-h, .mm-p { margin-left: auto; margin-right: auto; }
+.mm-pl { justify-content: center; }
+/* headings: ink sweeps across as they arrive */
+.mm-h { background: linear-gradient(90deg, var(--ink) 0 50%, color-mix(in srgb, var(--ink) 16%, transparent) 50% 100%); background-size: 200% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; color: transparent; transition: background-position 1.6s cubic-bezier(.6, 0, .2, 1) .1s, opacity .8s, translate 1s var(--ease) !important; }
+.mm-h.in { background-position: 0 0; }
+/* hero: centred, logo first, lines unmask */
+.mm-hero { display: grid; grid-template-columns: 1fr; justify-items: center; text-align: center; min-height: 0; padding-top: 7vh; gap: 5vh; }
+.mm-hw { max-width: 56rem; display: grid; justify-items: center; }
+.mm-logo { padding: 16px 26px; border-radius: 22px; background: #fff; box-shadow: 0 24px 50px -24px rgba(228, 38, 44, .45), inset 0 0 0 1px rgba(19, 35, 58, .06); opacity: 0; transform: translateY(16px) scale(.9); transition: opacity .7s, transform .9s var(--spring); }
+.mm-logo img { display: block; height: clamp(40px, 4.4vw, 60px); width: auto; }
+.mm-hero.in .mm-logo { opacity: 1; transform: none; }
+.mm-k { margin-top: 26px; opacity: 0; transition: opacity .8s .3s; } .mm-hero.in .mm-k { opacity: 1; }
+.mm-t { margin-top: 14px; font-size: clamp(46px, 6.6vw, 104px); }
+.mm-t .ln { display: block; overflow: hidden; padding-bottom: .06em; }
+.mm-t .ln > span { display: inline-block; transform: translateY(110%) rotate(3deg); transition: transform 1.1s cubic-bezier(.2, .9, .2, 1); }
+.mm-t .ln:nth-child(1) > span { transition-delay: .35s; } .mm-t .ln:nth-child(2) > span { transition-delay: .55s; }
+.mm-hero.in .mm-t .ln > span { transform: none; }
+.mm-lead, .mm-meta { opacity: 0; transform: translateY(14px); transition: opacity .8s .9s, transform 1s var(--ease) .9s; }
+.mm-meta { justify-content: center; transition-delay: 1.05s; }
+.mm-lead { margin-left: auto; margin-right: auto; }
+.mm-hero.in .mm-lead, .mm-hero.in .mm-meta { opacity: 1; transform: none; }
+.mm-demo { position: relative; padding: 0 clamp(0px, 14vw, 260px); opacity: 0; transform: translateY(40px); transition: opacity 1s 1.2s, transform 1.2s var(--ease) 1.2s; }
+.mm-hero.in .mm-demo { opacity: 1; transform: none; }
+.mm-chip { position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; background: var(--card); box-shadow: 0 18px 30px -18px rgba(19, 35, 58, .45), inset 0 0 0 1px var(--line); font: 700 14px/1 var(--sans); white-space: nowrap; animation: mmfl 6s ease-in-out infinite; }
+.mm-chip b { padding: 4px 8px; border-radius: 999px; background: rgba(47, 163, 107, .14); color: #2FA36B; font: 800 11.5px/1 var(--sans); }
+.mm-chip.c1 { left: 0; top: 14%; animation-delay: -1s; } .mm-chip.c2 { right: 0; top: 24%; animation-delay: -3s; } .mm-chip.c3 { left: 2%; top: 58%; animation-delay: -2s; } .mm-chip.c4 { right: 3%; top: 68%; animation-delay: -4s; }
+@keyframes mmfl { 50% { transform: translateY(-10px); } }
+@media (max-width: 860px) { .mm-chip { display: none; } .mm-demo { padding: 0; } }
+/* two buildings */
+.mm-blds { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: clamp(10px, 2vw, 30px); max-width: 66rem; margin: 0 auto; }
+.mm-b { display: grid; justify-items: center; }
+.bsign { display: inline-flex; align-items: center; gap: 8px; margin-bottom: -2px; padding: 10px 16px; border-radius: 12px 12px 0 0; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); font: 800 13px/1 var(--sans); letter-spacing: .3em; color: #8A5A10; }
+.bsign img { height: 26px; width: auto; }
+.bbody { position: relative; width: 100%; padding: 18px 16px 0; border-radius: 14px 14px 4px 4px; box-sizing: border-box; display: grid; gap: 10px; transform-origin: 50% 100%; transform: scaleY(.04); transition: transform 1.1s cubic-bezier(.3, .9, .3, 1); }
+.mm-blds.in .bbody { transform: none; }
+.mmt .bbody { background: linear-gradient(180deg, #2B3A55, #1D2738); box-shadow: inset 0 0 0 4px #3B4C6B, 0 40px 60px -40px rgba(19, 35, 58, .7); }
+.htl .bbody { background: linear-gradient(180deg, #D98C5F, #B9663F); box-shadow: inset 0 0 0 4px #C7774C, 0 40px 60px -40px rgba(80, 30, 10, .7); }
+.htl .bsign img { height: 24px; }
+.btag { margin: 0 0 4px; font: 800 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .7); }
+.bfl { display: grid; grid-template-columns: 14px 1fr 14px; align-items: center; gap: 10px; padding: 12px 12px; border-radius: 8px; font: 700 clamp(13px, 1.1vw, 15.5px)/1.3 var(--sans); text-align: center; opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .6s var(--ease); transition-delay: calc(.9s + var(--d) * .16s); }
+.mm-blds.in .bfl { opacity: 1; transform: none; }
+.bfl > i { width: 14px; height: 18px; border-radius: 2px; }
+.mmt .bfl { background: rgba(140, 190, 255, .16); color: #EAF2FF; box-shadow: inset 0 0 0 1px rgba(140, 190, 255, .25); } .mmt .bfl > i { background: #8EC2FF; box-shadow: 0 0 10px rgba(142, 194, 255, .8); }
+.htl .bfl { background: rgba(255, 230, 190, .2); color: #FFF7EA; box-shadow: inset 0 0 0 1px rgba(255, 230, 190, .3); } .htl .bfl > i { background: #FFD879; box-shadow: 0 0 10px rgba(255, 216, 121, .8); }
+.bdoor { width: 54px; height: 40px; margin: 6px auto 0; border-radius: 6px 6px 0 0; }
+.mmt .bdoor { background: linear-gradient(90deg, #8EC2FF33, #8EC2FF66, #8EC2FF33); box-shadow: inset 0 0 0 3px #3B4C6B; } .htl .bdoor { border-radius: 27px 27px 0 0; background: #4A2A1B; box-shadow: inset 0 0 0 3px #C7774C; }
+.mm-link { align-self: center; display: flex; align-items: center; gap: 6px; margin-bottom: 18%; }
+.lk-l { width: clamp(16px, 3vw, 46px); height: 0; border-top: 3px dashed color-mix(in srgb, var(--mr) 55%, transparent); }
+.lk-c { display: grid; justify-items: center; gap: 4px; padding: 14px 16px; border-radius: 20px; background: var(--card); box-shadow: 0 20px 40px -20px rgba(19, 35, 58, .5), inset 0 0 0 2px color-mix(in srgb, var(--mr) 35%, transparent); opacity: 0; scale: .7; transition: opacity .5s .9s, scale .8s var(--spring) .9s; }
+.mm-blds.in .lk-c { opacity: 1; scale: 1; }
+.lk-bell { font-size: 26px; animation: mmring 2.6s ease-in-out 2.4s infinite; display: inline-block; }
+@keyframes mmring { 0%, 70%, 100% { transform: none; } 75% { transform: rotate(-14deg); } 85% { transform: rotate(12deg); } }
+.lk-c b { font: 800 15px/1.1 var(--sans); } .lk-c small { font: 600 11.5px/1 var(--sans); color: var(--ink-2); }
+:root[data-theme="dark"] .bsign img[alt="MakeMyTrip"] { background: #fff; border-radius: 6px; padding: 2px 4px; }
+@media (max-width: 860px) { .mm-blds { grid-template-columns: 1fr; align-items: stretch; gap: 0; } .mm-link { flex-direction: column; margin: 0; } .lk-l { width: 0; height: 26px; border-top: 0; border-left: 3px dashed color-mix(in srgb, var(--mr) 55%, transparent); } }
+/* iterations: nav sits still under the tracker */
+.mm-tra { justify-content: center; margin: 0 0 clamp(18px, 3vh, 28px); display: flex; gap: 10px; }
+.mm-tra button { padding: 13px 22px; border-radius: 999px; font: 700 14.5px/1 var(--sans); background: var(--ink); color: var(--paper); cursor: pointer; transition: transform .3s var(--spring), opacity .3s; min-width: 150px; }
+.mm-tra button[data-d="-1"] { background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink); min-width: 0; }
+.mm-tra button:disabled { opacity: .35; cursor: default; }
+.mm-tra button:hover:not(:disabled) { transform: translateY(-2px); }
+.mm-trb { min-height: min(56vh, 520px); text-align: left; }
+.mm-tr { text-align: center; }
+/* arrivals: charcoal, not pitch black */
+.mm-bd { background: #222; box-shadow: 0 40px 70px -40px rgba(0, 0, 0, .6), inset 0 0 0 6px #2E2E2E; }
+.mm-row { border-bottom-color: #333; text-align: left; }
+.sf i { background: linear-gradient(180deg, #333 50%, #2B2B2B 50%); }
+.sf i::after { background: #1F1F1F; }
+/* signature: written as you scroll */
+.mm-sig { position: relative; width: max-content; max-width: 100%; margin: 12px 0 0 auto; padding-right: 30px; clip-path: none !important; --sp: 0; }
+.mm-sig .sg { display: block; font: 400 clamp(54px, 6vw, 84px)/1.1 "Mrs Saint Delafield", "Allura", "Snell Roundhand", "Segoe Script", cursive; color: #1F3A8A; clip-path: inset(-30% calc((1 - var(--sp)) * 100%) -30% 0); white-space: nowrap; padding: 0 6px; }
+.mm-sig .pen { position: absolute; top: 18%; left: calc(var(--sp) * (100% - 30px)); font-size: 30px; transform: rotate(-10deg); opacity: calc(1 - max(0, (var(--sp) - .95) * 20)); pointer-events: none; }
+/* footer paper edge */
+.mm-hall.c3-scene { height: clamp(220px, 28vw, 380px); }
+/* feedback, in every case study */
+.fb { max-width: 44rem; margin: 9vh auto 0; padding: clamp(22px, 3vw, 36px); border-radius: 28px; background: var(--card); box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--line); text-align: left; }
+.fb-k { margin: 0; font: 800 12.5px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--c, var(--coral)); }
+.fb h3 { margin: 10px 0 6px; font: 800 clamp(24px, 2.4vw, 32px)/1.1 var(--sans); letter-spacing: -.03em; }
+.fb-s { margin: 0 0 18px; font: 400 16px/1.5 var(--sans); color: var(--ink-2); }
+.fb-l { display: block; margin: 16px 0 8px; font: 700 14px/1 var(--sans); }
+.fb-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.fb-c { padding: 9px 14px; border-radius: 999px; background: color-mix(in srgb, var(--ink) 6%, transparent); color: var(--ink); font: 600 13.5px/1 var(--sans); cursor: pointer; transition: background .25s, color .25s, transform .3s var(--spring); }
+.fb-c:hover { transform: translateY(-1px); }
+.fb-c.on { background: var(--ink); color: var(--paper); }
+.fb textarea, .fb input { width: 100%; box-sizing: border-box; padding: 13px 15px; border: 0; border-radius: 14px; background: color-mix(in srgb, var(--ink) 5%, transparent); color: var(--ink); font: 500 16px/1.45 var(--sans); box-shadow: inset 0 0 0 1.5px var(--line); resize: vertical; }
+.fb textarea:focus, .fb input:focus { outline: none; box-shadow: inset 0 0 0 2px var(--c, var(--coral)); }
+.fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.fb-err { min-height: 18px; margin: 10px 0 0; font: 600 13px/1.3 var(--sans); color: #D93025; }
+.fb-go { margin-top: 6px; padding: 14px 22px; border-radius: 999px; background: var(--ink); color: var(--paper); font: 700 15px/1 var(--sans); cursor: pointer; transition: transform .3s var(--spring); }
+.fb-go:hover { transform: translateY(-2px); }
+.fb-done { display: grid; justify-items: center; gap: 8px; padding: 20px 0 6px; text-align: center; animation: mmin .6s var(--spring); }
+.fb-done span { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #2FA36B; color: #fff; font: 800 26px/1 var(--sans); }
+.fb-done b { font: 800 22px/1.2 var(--sans); } .fb-done p { margin: 0; font: 400 16px/1.5 var(--sans); color: var(--ink-2); }
+.fb-done[hidden], .fb-f[hidden] { display: none; }
+.cs:not(.mm):not(.ed) .fb { opacity: 1 !important; transform: none !important; }
+:root[data-theme="dark"] .fb-c.on, :root[data-theme="dark"] .fb-go { background: #FFD86B; color: #1A1A1A; }
+@media (max-width: 560px) { .fb-row { grid-template-columns: 1fr; } }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -4283,6 +4384,7 @@ div.mm { overflow-x: clip; }
           ${edHead('Thanks for', 'reading!', '', 'b-sun')}
           <p class="c3-p" data-rv>Designed with care by James Chugh.</p>
           <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://topmate.io/jameschughh" target="_blank" rel="noopener">Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
+          ${fbHTML('EazyDiner Coupon Hunter', ['The story', 'The drop-off', 'Listening', 'The paths', 'The whiteboard', 'Four rounds', 'Final screens', 'Results'])}
           <p class="c3-morek" data-rv>Got a minute for another story?</p>
           <div class="c3-more" data-rv>${WORK.filter(x => x.id !== 'coupon').map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div></div>
         <div class="c3-scene" id="c3Scene"></div></footer>
@@ -4527,14 +4629,16 @@ div.mm { overflow-x: clip; }
     const plaque = (n, t) => `<p class="mm-pl" data-rv><span>Room ${String(n).padStart(2, '0')}</span>${t}</p>`;
     return `<div class="cs-bar mm-bar"><button class="cs-close" id="csClose" type="button">← Back to the box</button><span class="mm-bk"><img src="${mi('logo')}" alt="MakeMyTrip"> Special Requests</span></div>
     <div class="mm">
-      <header class="mm-hero">
+      <header class="mm-hero" id="mmHero">
         <div class="mm-hw">
-          <p class="mm-k" data-rv>Product Design Intern · MakeMyTrip</p>
-          <h2 class="mm-t" data-rv>Skip the calls.<br><em>Make it special.</em></h2>
-          <p class="mm-lead" data-rv>Special Requests bridges the gap between what guests expect and what hotels deliver: a clear way to share your needs, and a way for hotels to act on them.</p>
-          <ul class="mm-meta" data-rv><li><b>Role</b>Product Design Intern</li><li><b>Timeline</b>1.5 months</li><li><b>Live on</b>App and desktop</li></ul>
+          <div class="mm-logo"><img src="${mi('logo')}" alt="MakeMyTrip"></div>
+          <p class="mm-k">Special Requests · Product Design Intern</p>
+          <h2 class="mm-t"><span class="ln"><span>Skip the calls.</span></span><span class="ln"><span><em>Make it special.</em></span></span></h2>
+          <p class="mm-lead">Special Requests bridges the gap between what guests expect and what hotels deliver: a clear way to share your needs, and a way for hotels to act on them.</p>
+          <ul class="mm-meta"><li><b>Role</b>Product Design Intern</li><li><b>Timeline</b>1.5 months</li><li><b>Live on</b>App and desktop</li></ul>
         </div>
-        <div class="mm-demo" data-rv>
+        <div class="mm-demo">
+          <span class="mm-chip c1">🌙 Late check-in <b>Confirmed</b></span><span class="mm-chip c2">🎂 Birthday cake <b>On it</b></span><span class="mm-chip c3">🚕 Pickup at 9:40 PM <b>Booked</b></span><span class="mm-chip c4">🛏️ Extra bed <b>Ready</b></span>
           <div class="mm-ph" id="mmPh" data-s="0">
             <div class="ph-top"><span>9:41</span><i></i></div>
             <div class="ph-app"><p class="ph-k">Review booking</p><div class="ph-stay"><b>Your stay</b><span>2 nights · 1 room · 2 guests</span></div><i class="ph-bar"></i><i class="ph-bar s"></i>
@@ -4557,10 +4661,10 @@ div.mm { overflow-x: clip; }
       <section class="mm-sec" id="mmDesk">
         ${plaque(2, 'Business objective')}
         <h3 class="mm-h" data-rv>Two sides of the front desk.<br>One sweet spot.</h3>
-        <div class="mm-venn" data-rv>
-          <div class="vc l"><div class="vin"><img src="${mi('logo')}" alt="MakeMyTrip"><ul>${MM.mmt.map((t, i) => `<li style="--d:${i}">${t}</li>`).join('')}</ul></div></div>
-          <div class="vc r"><div class="vin"><span class="vh"><img src="${mi('hotel')}" alt="">The hotel</span><ul>${MM.htl.map((t, i) => `<li style="--d:${i}">${t}</li>`).join('')}</ul></div></div>
-          <div class="vx"><span>🛎️</span><b>Special Requests</b><small>where both win</small></div>
+        <div class="mm-blds" data-rv>
+          <div class="mm-b mmt"><div class="bsign"><img src="${mi('logo')}" alt="MakeMyTrip"></div><div class="bbody"><p class="btag">MakeMyTrip’s office</p>${MM.mmt.map((t, i) => `<div class="bfl" style="--d:${3 - i}"><i></i><span>${t}</span><i></i></div>`).join('')}<div class="bdoor"></div></div></div>
+          <div class="mm-link"><span class="lk-l"></span><div class="lk-c"><span class="lk-bell">🛎️</span><b>Special Requests</b><small>connects the two</small></div><span class="lk-l"></span></div>
+          <div class="mm-b htl"><div class="bsign"><img src="${mi('hotel')}" alt=""><span>HOTEL</span></div><div class="bbody"><p class="btag">The hotel</p>${MM.htl.map((t, i) => `<div class="bfl" style="--d:${3 - i}"><i></i><span>${t}</span><i></i></div>`).join('')}<div class="bdoor"></div></div></div>
         </div>
       </section>
 
@@ -4593,7 +4697,7 @@ div.mm { overflow-x: clip; }
         <p class="mm-p" data-rv>The goal: a card on the review page that’s easy to find, easy to use, and small enough not to push everything else down.</p>
         <div class="mm-tr" data-rv data-v="0">
           <ol class="mm-trk">${MM.its.map(([t], i) => `<li><button type="button" data-v="${i}" aria-label="${i < 5 ? 'Try ' + (i + 1) : 'Shipped'}: ${t}"><i>${i < 5 ? i + 1 : '✓'}</i><span>${i < 5 ? 'Try ' + (i + 1) : 'Shipped'}</span></button></li>`).join('')}<li class="fill" aria-hidden="true"></li></ol>
-          <div class="mm-trb"><div class="mm-trs" id="mmTrs"></div><div class="mm-trc" id="mmTrc"></div></div>
+          <div class="ar mm-tra"><button type="button" data-d="-1">← Back</button><button type="button" data-d="1" id="mmTrN">Next try →</button></div><div class="mm-trb"><div class="mm-trs" id="mmTrs"></div><div class="mm-trc" id="mmTrc"></div></div>
         </div>
       </section>
 
@@ -4625,7 +4729,7 @@ div.mm { overflow-x: clip; }
           <p><u>Great design means nothing if it doesn’t move the needle for the business.</u> The sweet spot is an experience users love and the company values.</p>
           <p>Through every round of feedback, iteration and stakeholder conversation, I learned to stay open: defend what mattered, but adapt when needed.</p>
           <p>Most importantly, I learned to <u>own my work completely</u>. Not just the pixels, but the outcome.</p>
-          <div class="mm-sig" id="mmSig"><svg viewBox="0 0 420 120" aria-label="Signed, James Chugh"><text x="10" y="86">James Chugh</text></svg></div>
+          <div class="mm-sig" id="mmSig" aria-label="Signed, James Chugh"><span class="sg">James Chugh</span><span class="pen" aria-hidden="true">✒️</span></div>
         </div>
       </section>
 
@@ -4634,14 +4738,15 @@ div.mm { overflow-x: clip; }
           ${edHead('Thanks for', 'staying!', '', 'b-coral')}
           <p class="c3-p" data-rv>Designed with care by James Chugh.</p>
           <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://topmate.io/jameschughh" target="_blank" rel="noopener">Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
+          ${fbHTML('MakeMyTrip Special Requests', ['The problem', 'Business objective', 'Design issues', 'User metrics', 'Competitors', 'Iterations', 'Final UI', 'Impact'])}
           <p class="c3-morek" data-rv>Got a minute for another story?</p>
           <div class="c3-more" data-rv>${WORK.filter(x => x.id !== 'requests').map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div></div>
-        <div class="mm-hall">${mmHall()}</div>
+        <div class="mm-hall c3-scene">${mmHall()}</div>
       </footer>
       <div class="mm-lb" id="mmLb" aria-hidden="true"><button type="button" class="x" aria-label="Close">×</button><button type="button" class="p" aria-label="Previous">‹</button><img alt=""><button type="button" class="n" aria-label="Next">›</button><p></p></div>
     </div>`;
   }
-  function mmCleanup() { if (initMM.kd) removeEventListener('keydown', initMM.kd, true); initMM.kd = null; (initMM.tt || []).forEach(clearTimeout); initMM.tt = []; (initMM.ts || []).forEach(clearInterval); initMM.ts = []; }
+  function mmCleanup() { if (initMM.kd) removeEventListener('keydown', initMM.kd, true); initMM.kd = null; if (initMM.sc) csEl.removeEventListener('scroll', initMM.sc); initMM.sc = null; (initMM.tt || []).forEach(clearTimeout); initMM.tt = []; (initMM.ts || []).forEach(clearInterval); initMM.ts = []; }
   function initMM() {
     mmCleanup(); initMM.ts = []; initMM.tt = [];
     const root = csEl, later = (f, ms) => initMM.tt.push(setTimeout(f, ms));
@@ -4662,7 +4767,7 @@ div.mm { overflow-x: clip; }
     let demoN = 0; const demo = () => { if (!auto) return; tapAt($('#mmBell', root)); ph.classList.add('tap1'); later(() => { ph.classList.remove('tap1'); if (auto) ring(); }, 600);
       later(() => { if (!auto) return; const k = [0, 4, 3, 1, 2, 5][demoN++ % 6]; tapAt($$('.ph-svc button', root)[k]); later(() => { if (auto) send(k); }, 600); }, 2200);
       later(demo, 9800); };
-    $('.mm-demo', root)._on = () => later(demo, 900);
+    later(() => $('#mmHero', root).classList.add('in'), 80); later(demo, 1800);
     // keys come off the rack one by one
     $('.mm-rack', root)._on = () => $$('.mm-key', root).forEach((k, i) => later(() => k.classList.add('on'), 250 + i * 650));
     // the hotel facade
@@ -4683,9 +4788,9 @@ div.mm { overflow-x: clip; }
       trc.innerHTML = `<p class="v${last ? ' ship' : ''}">${last ? 'Shipped ✓' : `Try ${i + 1} of 5`}</p><h4>${t}</h4><p class="d">${d}</p>
         ${pro.length ? `<div class="col y"><b>${last ? 'What it gives guests' : 'What worked'}</b><ul>${pro.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}
         ${con.length ? `<div class="col n"><b>What didn’t</b><ul>${con.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}
-        <div class="ar"><button type="button" data-d="-1"${i ? '' : ' disabled'}>← Back</button><button type="button" data-d="1"${last ? ' disabled' : ''}>${i === N - 2 ? 'See what shipped →' : 'Next try →'}</button></div>`; };
+`; const na = $('.mm-tra', root); na.querySelector('[data-d="-1"]').disabled = !i; const nx = $('#mmTrN', root); nx.disabled = last; nx.textContent = last ? 'Shipped ✓' : i === N - 2 ? 'See what shipped →' : 'Next try →'; };
     $$('.mm-trk button', root).forEach(b => b.addEventListener('click', () => setIt(+b.dataset.v)));
-    trc.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (b && !b.disabled) setIt(+tr.dataset.v + +b.dataset.d); });
+    $('.mm-tra', root).addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (b && !b.disabled) setIt(+tr.dataset.v + +b.dataset.d); });
     let tx0 = null; trs.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; }, { passive: true });
     trs.addEventListener('touchend', e => { if (tx0 == null) return; const dx = e.changedTouches[0].clientX - tx0; if (Math.abs(dx) > 50) setIt(+tr.dataset.v + (dx < 0 ? 1 : -1)); tx0 = null; }, { passive: true });
     setIt(0);
@@ -4703,7 +4808,7 @@ div.mm { overflow-x: clip; }
       cells.forEach((c, j) => { let n = 0; const stop = 10 + j * 3 + k * 4; const iv = setInterval(() => { n++; c.textContent = n >= stop ? t[j] : CHARS[Math.floor(Math.random() * CHARS.length)]; c.classList.toggle('flip', n % 2 === 0); if (n >= stop) { clearInterval(iv); c.classList.remove('flip'); } }, reduce ? 1 : 55); initMM.ts.push(iv); }); });
     $$('.sf', root).forEach(s => { s.innerHTML = [...s.dataset.t].map(ch => `<i>${ch}</i>`).join(''); });
     // the signature writes itself
-    const sig = $('#mmSig', root); sig._on = () => sig.classList.add('go');
+    const sig = $('#mmSig', root); csEl.addEventListener('scroll', initMM.sc = () => { const r = sig.getBoundingClientRect(), p = clamp((innerHeight * .92 - r.top) / (innerHeight * .42)); sig.style.setProperty('--sp', p.toFixed(3)); }, { passive: true }); initMM.sc();
     // tap any screen to look closer
     const lb = $('#mmLb', root), lbI = $('img', lb), lbP = $('p', lb); let grp = [], gi = 0;
     const show = i => { gi = (i + grp.length) % grp.length; lbI.src = grp[gi].src; lbP.textContent = grp[gi].alt + (grp.length > 1 ? ` · ${gi + 1} of ${grp.length}` : ''); lb.classList.toggle('one', grp.length < 2); };
@@ -4712,9 +4817,30 @@ div.mm { overflow-x: clip; }
     lb.addEventListener('click', e => { if (e.target.closest('.n')) show(gi + 1); else if (e.target.closest('.p')) show(gi - 1); else if (e.target !== lbI) closeLb(); });
     addEventListener('keydown', initMM.kd = e => { if (lb.classList.contains('open')) { if (e.key === 'Escape') { closeLb(); e.stopImmediatePropagation(); } else if (e.key === 'ArrowRight') show(gi + 1); else if (e.key === 'ArrowLeft') show(gi - 1); return; }
       const r = tr.getBoundingClientRect(); if (r.top < innerHeight * .7 && r.bottom > innerHeight * .3 && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) setIt(+tr.dataset.v + (e.key === 'ArrowRight' ? 1 : -1)); }, true);
-    $$('[data-rv], .mm-sig', root).forEach(el => obs.observe(el));
+    $$('[data-rv]', root).forEach(el => obs.observe(el));
   }
 
+  // your opinion: which part could be better, and how you'd have solved it — it reaches me directly
+  const fbHTML = (id, secs) => `<section class="fb" data-fb="${id}" data-rv><p class="fb-k">Your opinion</p><h3>How would you have solved it?</h3><p class="fb-s">Tell me which part could be better, or how you’d have approached the problem. It comes straight to me.</p>
+    <form class="fb-f" novalidate><p class="fb-l">Which part could be better?</p><div class="fb-chips">${secs.map(t => `<button type="button" class="fb-c" aria-pressed="false">${t}</button>`).join('')}</div>
+    <label class="fb-l" for="fbT-${id}">Your take</label><textarea id="fbT-${id}" name="t" maxlength="800" rows="4" placeholder="I would have…"></textarea>
+    <div class="fb-row"><input name="n" maxlength="60" placeholder="Your name (optional)" autocomplete="name"><input name="e" type="email" maxlength="120" placeholder="Email, so I can reply (optional)" autocomplete="email"></div>
+    <p class="fb-err" role="alert"></p><button type="submit" class="fb-go">Send it to James →</button></form>
+    <div class="fb-done" hidden><span>✓</span><b>Thanks for putting this out there!</b><p>I’ve received it and will reach out to you.</p></div></section>`;
+  csEl.addEventListener('click', e => { const c = e.target.closest('.fb-c'); if (c) { const on = c.getAttribute('aria-pressed') !== 'true'; c.setAttribute('aria-pressed', on); c.classList.toggle('on', on); } });
+  csEl.addEventListener('submit', async e => {
+    const f = e.target.closest('.fb-f'); if (!f) return; e.preventDefault();
+    const sec = f.closest('.fb'), err = $('.fb-err', f), go = $('.fb-go', f);
+    const text = f.t.value.trim(), parts = $$('.fb-c.on', f).map(b => b.textContent), name = f.n.value.trim(), email = f.e.value.trim();
+    if (!text && !parts.length) { err.textContent = 'Pick a part or write a line first.'; return; }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'That email doesn’t look right.'; return; }
+    err.textContent = ''; go.disabled = true; go.textContent = 'Sending…';
+    const body = { cs: sec.dataset.fb, parts, text: text.slice(0, 800), name: name.slice(0, 60), email: email.slice(0, 120), at: Date.now() };
+    let ok = false;
+    if (noteDb && noteUid && noteCanWrite) { try { await noteDb.collection('feedback/' + noteUid + '/items').add(body); ok = true; } catch (_) {} }
+    if (!ok) { location.href = `mailto:jameschughh@gmail.com?subject=${encodeURIComponent('Feedback on ' + sec.dataset.fb + ' case study')}&body=${encodeURIComponent((parts.length ? 'Could be better: ' + parts.join(', ') + '\n\n' : '') + text + (name ? '\n\n— ' + name : ''))}`; }
+    f.hidden = true; $('.fb-done', sec).hidden = false;
+  });
   function csHTML(w) {
     if (w.id === 'coupon') return edHTML(w);
     if (w.id === 'requests') return mmHTML(w);
@@ -4728,6 +4854,7 @@ div.mm { overflow-x: clip; }
         <section class="cs-sec"><h3>What I did</h3><ol>${w.did.map(t => `<li>${t}</li>`).join('')}</ol></section>
         ${w.res.length ? `<section class="cs-sec"><h3>What changed</h3><ul class="cs-res">${w.res.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul></section>` : ''}
         <section class="cs-sec"><h3>Want more?</h3><div class="cs-end"><a href="${w.cs}" target="_blank" rel="noopener">${w.csLabel || 'Read the full case study'} ↗</a><button type="button" data-close>Back to the box</button></div></section>
+        ${fbHTML(w.name, ['The problem', 'What I did', 'The results'])}
       </div></div>`;
   }
   const rectClip = r => `inset(${r.top.toFixed(1)}px ${(innerWidth - r.right).toFixed(1)}px ${(innerHeight - r.bottom).toFixed(1)}px ${r.left.toFixed(1)}px round 18px)`;
