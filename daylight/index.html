@@ -2321,6 +2321,24 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 :root[data-theme="dark"] .theme-btn .tl-d { transform: none; opacity: 1; }
 .np { right: calc(clamp(14px, 2.4vw, 28px) + 112px); }
 @media (max-width: 860px) { .theme-btn { height: 44px; padding: 0 14px 0 11px; } .theme-btn .tl { font-size: 13.5px; } .np { right: calc(clamp(14px, 2.4vw, 28px) + 104px); } }
+
+/* a little plane crosses the sky, slowly */
+.sky-plane { position: absolute; z-index: 3; left: 0; top: clamp(70px, 9vh, 110px); width: clamp(84px, 7vw, 124px); pointer-events: none; animation: spfly 64s linear infinite; animation-delay: -18s; will-change: transform; }
+.sp-in { position: relative; animation: spbob 7s ease-in-out infinite; }
+.sky-plane svg { position: relative; display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgba(20, 40, 70, .22)); }
+.sp-trail { position: absolute; right: 90%; top: 50%; width: 20vw; height: 4px; margin-top: -2px; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .5)); clip-path: polygon(0 45%, 100% 0, 100% 100%, 0 55%); filter: blur(1.2px); }
+.sp-prop { transform-box: fill-box; transform-origin: center; animation: spprop .14s linear infinite; }
+.sp-l { opacity: 0; }
+@keyframes spfly { from { transform: translate3d(-30vw, 0, 0) rotate(-2deg); } to { transform: translate3d(118vw, -4vh, 0) rotate(-2deg); } }
+@keyframes spbob { 50% { transform: translateY(-5px) rotate(.6deg); } }
+@keyframes spprop { 50% { transform: scaleY(.25); } }
+@keyframes splight { 0%, 70%, 100% { opacity: 0; } 78% { opacity: 1; } }
+.cam.flying ~ .sky-plane { opacity: 0; transition: opacity .6s; }
+:root[data-theme="dark"] .sky-plane svg { filter: brightness(.62) saturate(.8) drop-shadow(0 6px 8px rgba(0, 0, 0, .4)); }
+:root[data-theme="dark"] .sp-trail { background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .22)); }
+:root[data-theme="dark"] .sp-l { animation: splight 1.6s linear infinite; filter: brightness(1.8); } :root[data-theme="dark"] .sp-l.g { animation-delay: .8s; }
+@media (prefers-reduced-motion: reduce) { .sky-plane { display: none; } }
+@media (max-width: 860px) { .sky-plane { top: calc(env(safe-area-inset-top, 0px) + 64px); animation-duration: 40s; } }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -2351,12 +2369,6 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
         <div class="ly keep drift" data-d=".08" id="L-drift">
           <img src="v2/h/cloud_s.webp" alt="" style="left:30%;top:6%;width:14%;--d:130s">
           <img src="v2/h/cloud_s.webp" alt="" style="left:58%;top:26%;width:10%;--d:90s;transform:scaleX(-1)">
-        </div>
-        <div class="ly keep" data-d=".1" aria-hidden="true">
-          <div class="birds">
-            <div class="flock" style="top:12%;--t:56s;--dl:-10s"><span style="left:0;top:0"><svg class="bird" viewBox="0 0 24 10"><path d="M1 6Q6 1 12 6Q18 1 23 6"/></svg></span><span style="left:1.8vw;top:1.1vw;animation-delay:-.8s"><svg class="bird" viewBox="0 0 24 10" style="width:.9vw"><path d="M1 6Q6 1 12 6Q18 1 23 6" style="animation-delay:-.2s"/></svg></span><span style="left:3.3vw;top:-.5vw;animation-delay:-1.6s"><svg class="bird" viewBox="0 0 24 10" style="width:.8vw"><path d="M1 6Q6 1 12 6Q18 1 23 6" style="animation-delay:-.1s"/></svg></span></div>
-            <div class="flock" style="top:24%;--t:74s;--dl:-44s"><span style="left:0;top:0"><svg class="bird" viewBox="0 0 24 10" style="width:.75vw"><path d="M1 6Q6 1 12 6Q18 1 23 6"/></svg></span><span style="left:1.3vw;top:.7vw;animation-delay:-1s"><svg class="bird" viewBox="0 0 24 10" style="width:.65vw"><path d="M1 6Q6 1 12 6Q18 1 23 6" style="animation-delay:-.3s"/></svg></span></div>
-          </div>
         </div>
         <div class="ly" data-d=".16" id="L-hillL"><img src="v2/h/hillL.webp" alt="" style="left:0;top:48.305%;width:55.238%;height:26.483%"></div>
         <div class="ly" data-d=".2" id="L-hillR"><img src="v2/h/hillR.webp" alt="" style="left:44.167%;top:22.881%;width:55.833%;height:51.589%"></div>
@@ -2400,6 +2412,22 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
     </div>
 
     <div class="sky-birds" id="skyBirds" aria-hidden="true"></div>
+    <div class="sky-plane" aria-hidden="true"><div class="sp-in"><i class="sp-trail"></i>
+      <svg viewBox="0 0 150 60">
+        <defs><linearGradient id="spBody" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FFF7E6"/><stop offset=".6" stop-color="#EADFC8"/><stop offset="1" stop-color="#C9B999"/></linearGradient>
+        <linearGradient id="spWing" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F3E8D2"/><stop offset="1" stop-color="#BFAE8C"/></linearGradient></defs>
+        <path d="M22 26c10-3 20-4 30-4h52c12 0 22 3 29 8 2 1 2 3 0 4-7 5-17 8-29 8H50c-12 0-22-2-30-6-4-2-5-7 2-10z" fill="url(#spBody)"/>
+        <path d="M26 33c18 4 40 5 64 5h20c10 0 18-2 24-5" stroke="#D2483A" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+        <path d="M30 37c16 3 36 4 58 4h22c8 0 15-1 20-3" stroke="#2F5D96" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+        <path d="M14 13l12 13h14L28 9c-3-3-10-2-14 4z" fill="url(#spWing)"/><path d="M15 13c4-4 9-4 12-2" stroke="#D2483A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M58 33l16 22c2 2 6 3 9 2l4-2-10-22z" fill="url(#spWing)"/><path d="M66 44l8 11" stroke="#D2483A" stroke-width="2" opacity=".8"/>
+        <path d="M60 31l12-14c2-2 6-3 8-2l3 1-8 15z" fill="#B9A986" opacity=".85"/>
+        <path d="M98 24c4-4 10-5 15-4 5 1 9 3 11 6l-24 1z" fill="#3E6FA6" opacity=".85"/><path d="M101 24c3-2 7-3 11-3" stroke="#fff" stroke-width="1.2" opacity=".6" fill="none" stroke-linecap="round"/>
+        <circle cx="86" cy="29" r="2.2" fill="#3E6FA6"/><circle cx="78" cy="29" r="2.2" fill="#3E6FA6"/><circle cx="70" cy="29" r="2.2" fill="#3E6FA6"/>
+        <path d="M133 26c3 1 4 4 4 6s-1 4-4 5z" fill="#8C7A5A"/>
+        <ellipse class="sp-prop" cx="138" cy="31.5" rx="2" ry="13" fill="#5B5145" opacity=".38"/>
+        <circle class="sp-l" cx="83" cy="56" r="1.8" fill="#FF5A4A"/><circle class="sp-l g" cx="14" cy="12" r="1.8" fill="#7CFFB0"/>
+      </svg></div></div>
     <div class="hero-copy" id="heroCopy">
       <p class="hey"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M9 17c-2-3-3-6-1-7s3 2 4 4M11 13l-2-6c-1-2 2-3 3-1l3 7M14 12l-1-6c0-2 3-2 3 0l1 6M17 12v-4c0-2 3-2 3 0v8c0 5-3 9-8 9-3 0-5-2-6-5" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><path d="M23 6c2 1 3 3 3 5M5 7C4 9 3 10 3 12" stroke="#FFD23F" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>hey, I'm James</p>
       <h1>
@@ -4414,7 +4442,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
   /* ---------- birds around the heading: a loose flock that wanders, flaps and glides ---------- */
   (() => {
     const box = $('#skyBirds'), copy = $('#heroCopy'); if (!box || reduce) return;
-    const B = Array.from({ length: mobile ? 4 : 7 }, (_, i) => {
+    const B = Array.from({ length: mobile ? 1 : 2 }, (_, i) => {
       const el = document.createElement('div'); el.className = 'sb'; const sz = (mobile ? 18 : 22) + Math.random() * 14; el.style.width = sz + 'px'; el.style.setProperty('--fl', (.32 + Math.random() * .26).toFixed(2) + 's');
       el.innerHTML = '<svg viewBox="0 0 24 12"><path class="w" d="M1 7Q6 1 12 7Q18 1 23 7"/></svg>'; box.appendChild(el);
       return { el, x: Math.random() * vw * .6, y: vh * (.05 + Math.random() * .3), a: Math.random() * Math.PI * 2, v: 34 + Math.random() * 26, t: Math.random() * 10, g: 0 };
@@ -4430,8 +4458,8 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
           b.a += (Math.sin(b.t * .7 + b.v) * .9 + Math.sin(b.t * 1.9) * .4) * dt;
           const want = (dx, dy) => { const da = Math.atan2(dy, dx) - b.a; b.a += Math.atan2(Math.sin(da), Math.cos(da)) * dt * 1.4; };
           if (b.x < L || b.x > R || b.y < T || b.y > Bo) want((L + R) / 2 - b.x, (T + Bo) / 2 - b.y);
-          else if (Math.hypot(cx - b.x, cy - b.y) > 160) want(cx - b.x, cy - b.y);
-          if (b.g > 0) b.g -= dt; else if (Math.random() < dt * .25) b.g = 1 + Math.random() * 1.5;
+          else if (Math.hypot(cx - b.x, cy - b.y) > 90) want(cx - b.x, cy - b.y);
+          if (b.g > 0) b.g -= dt; else if (Math.random() < dt * .4) b.g = 1.6 + Math.random() * 2;
           const sp = b.v * (b.g > 0 ? .85 : 1); b.x += Math.cos(b.a) * sp * dt; b.y += Math.sin(b.a) * sp * dt * .55;
           b.el.classList.toggle('glide', b.g > 0);
           const flip = Math.cos(b.a) < 0 ? -1 : 1, tilt = Math.sin(b.a) * 14 * flip;
