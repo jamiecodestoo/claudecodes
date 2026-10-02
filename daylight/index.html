@@ -2920,10 +2920,6 @@ div.mm { overflow-x: clip; }
   .c3-step .dots i { width: 6px; height: 6px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 22%, transparent); transition: width .3s, background .3s; }
   .c3-step .dots i.on { width: 18px; border-radius: 3px; background: var(--ed, var(--coral)); }
   .c3-strip, #c3Strip { overflow-x: auto; scrollbar-width: none; }
-  /* nothing waits for the scroll on phones */
-  .mm [data-rv], .c3 [data-rv] { opacity: 1 !important; translate: none !important; transform: none !important; }
-  .mm-h { background-position: 0 0 !important; }
-  .c3-h .w { opacity: 1 !important; transform: none !important; }
 }
 :root[data-theme="dark"] .c3-step button:not([data-sd="-1"]) { background: #FFD86B; color: #1A1A1A; }
 </style>
@@ -3729,10 +3725,13 @@ div.mm { overflow-x: clip; }
       }
     });
   }
+  // phones: a reveal starts when its block comes into view and plays on its own, the scroll never holds it
+  const PLAY = {};
+  function playIn(el, k, ms) { if (!PLAY[k]) { const r = el.getBoundingClientRect(); if (r.top < vh * .8 && r.bottom > 0) PLAY[k] = performance.now(); else return 0; } return clamp((performance.now() - PLAY[k]) / ms); }
   function layoutStory() { sTop = top(story); sRange = Math.max(1, story.offsetHeight - vh); buildDoodles(); lastQ = -1; }
   let lastQ = -1;
   function frameStory(y) {
-    const q = mobile ? 1 : clamp((y - sTop + vh * .25) / (sRange * .85));
+    const q = mobile ? playIn(tell, 'st', 2800) : clamp((y - sTop + vh * .25) / (sRange * .85));
     if (Math.abs(q - lastQ) < .001) return; lastQ = q;
     const lit = q * words.length * 1.05;
     const b0 = DIMW(); words.forEach((w, i) => { w.el.style.opacity = (b0 + (1 - b0) * clamp(lit - i)).toFixed(3); });
@@ -5210,7 +5209,7 @@ div.mm { overflow-x: clip; }
   const llRoles = $('#llRoles');
   function frameLL(y) {
     if (!llRoles.classList.contains('in') && llRoles.getBoundingClientRect().top < vh * .82) llRoles.classList.add('in');
-    const p = mobile ? 1 : clamp((y - rvTop + vh * .25) / (rvRange * .85)), lit = p * llWords.length * 1.05;
+    const p = mobile ? playIn(llRevEl, 'll', 2600) : clamp((y - rvTop + vh * .25) / (rvRange * .85)), lit = p * llWords.length * 1.05;
     if (Math.abs(lit - llLit) < .05) return; llLit = lit;
     const b1 = DIMW(); llWords.forEach((w, i) => { w.style.opacity = (b1 + (1 - b1) * clamp(lit - i)).toFixed(3); });
     llMarks.forEach(m => m.el.classList.toggle('on', lit >= m.last + 1));
