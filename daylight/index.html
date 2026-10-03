@@ -3686,7 +3686,13 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
 .logo .jc { position: absolute; inset: 0; display: grid; place-items: center; background: var(--ink); color: var(--paper); font: 800 12.5px/1 var(--sans); letter-spacing: -.02em; opacity: 0; scale: .6; transition: opacity .35s, scale .45s var(--spring); }
 @media (max-width: 859px) {
   /* hero: one painted sky from edge to edge, no flat blue, no places bar */
-  .stage { background: #0E64B7 url("v2/h/sky.webp") 50% 0 / cover no-repeat !important; }
+  .stage { background:
+      radial-gradient(38% 9% at 18% 30%, rgba(255, 255, 255, .55), transparent 70%),
+      radial-gradient(30% 7% at 30% 27%, rgba(255, 255, 255, .45), transparent 70%),
+      radial-gradient(42% 10% at 82% 44%, rgba(255, 255, 255, .5), transparent 70%),
+      radial-gradient(28% 7% at 70% 41%, rgba(255, 255, 255, .4), transparent 70%),
+      radial-gradient(46% 9% at 40% 58%, rgba(255, 255, 255, .42), transparent 70%),
+      linear-gradient(180deg, #2B82D4 0%, #1A71C4 40%, #0E64B7 100%) !important; }
   :root[data-theme="dark"] .stage { background: #09090B !important; }
   .cam { -webkit-mask: linear-gradient(transparent, #000 9%); mask: linear-gradient(transparent, #000 9%); }
   .stage .places, #places { display: none !important; }
@@ -3883,6 +3889,99 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
 .sn-pg { background-image: radial-gradient(circle, rgba(19, 35, 58, .09) 1.2px, transparent 1.6px) !important; background-size: 22px 22px !important; }
 :root[data-theme="dark"] .sn-pg { background-image: radial-gradient(circle, rgba(255, 255, 255, .07) 1.2px, transparent 1.6px) !important; }
 @media (max-width: 600px) { .sn-more .c3-more > * { flex-basis: 100%; } }
+
+@media (max-width: 859px) {
+  .tell-box .sticky { display: none !important; }
+  .story-pin { padding: 9vh 0 7vh !important; }
+  .ll-rev-pin { padding: 9vh 0 !important; }
+}
+
+/* ===== EazyDiner on phones: tap, don't step ===== */
+.c3-pb { display: none; }
+@media (max-width: 859px) {
+  .c3-step { display: none !important; }
+  .c3-pb { display: inline-flex; align-items: center; justify-content: center; height: 48px; margin: 16px auto 0; padding: 0 22px; border: 0; border-radius: 999px; cursor: pointer; font: 700 15px/1 var(--sans); color: var(--ink);
+    background: rgba(255, 255, 255, .6); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 10px 24px -14px rgba(19, 35, 58, .45); }
+  .c3-pb[hidden] { display: none; }
+  :root[data-theme="dark"] .c3-pb { background: rgba(255, 255, 255, .08); color: #F2F2F2; }
+  #c3Chat .c3-pin > div, #c3Board .c3-pin > div { display: flex; flex-direction: column; align-items: center; }
+  .c3-typing { display: none !important; }
+  .c3-five div { cursor: pointer; }
+  .c3-sketch { display: flex; flex-direction: column; align-items: center; }
+  /* 100 diners: everything in one screen */
+  .c3-fun { gap: 10px !important; align-content: center; position: relative; }
+  .c3-fun .c3-steps { display: none; }
+  .c3-phone { width: 128px !important; height: 248px !important; border-width: 5px !important; border-radius: 24px !important; }
+  .c3-crowd { width: min(220px, 26vh) !important; gap: 2px 4px !important; }
+  .c3-count b { font-size: 34px !important; }
+  .c3-fnote { font-size: 15px !important; margin-top: 6px !important; }
+  .c3-fnav { position: absolute; left: 0; right: 0; top: 112px; display: flex; justify-content: space-between; padding: 0 calc(50% - 128px); pointer-events: none; }
+  .c3-fnav button { pointer-events: auto; width: 44px; height: 44px; border: 0; border-radius: 50%; cursor: pointer; font: 700 22px/1 var(--sans); color: var(--ink); background: rgba(255, 255, 255, .6); backdrop-filter: blur(12px); box-shadow: 0 8px 20px -12px rgba(19, 35, 58, .45); }
+  .c3-fnav button:disabled { opacity: .3; }
+  :root[data-theme="dark"] .c3-fnav button { background: rgba(255, 255, 255, .08); color: #F2F2F2; }
+  /* 50+ apps: one row of icons, then the screens as a peeking scroll */
+  .c3-logos { flex-wrap: nowrap !important; gap: 8px !important; }
+  .c3-logos img:nth-child(n+5) { display: none; }
+  .c3-logos img { width: 50px !important; height: 50px !important; }
+  #c3Strip, .c3-strip { margin-top: 32px !important; width: auto !important; overflow-x: auto !important; scroll-snap-type: x mandatory; padding: 10px 16px 24px !important; gap: 14px !important; transform: none !important; }
+  #c3Strip img { scroll-snap-align: center; height: auto !important; width: 62vw !important; }
+  /* iterations: all four rounds, stacked */
+  #c3Evo .c3-pin { position: relative !important; height: auto !important; top: auto !important; }
+  #c3Evo .c3-evo-in { height: auto !important; padding: 2vh 0 4vh !important; }
+  #c3Evo .c3-row { flex-direction: column; transform: none !important; gap: 8vh; }
+  #c3Evo .c3-slide { width: 100% !important; }
+  #c3Evo .c3-tabs { display: none !important; }
+  /* upfront coupon: four screens in a 2 × 2 grid */
+  .c3-b2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .c3-b2 span { display: block; aspect-ratio: 500 / 904; overflow: hidden; border-radius: 24px; }
+  .c3-b2 img { width: 400% !important; max-width: none !important; height: 100% !important; object-fit: cover; transform: translateX(calc(var(--k) * -25%)); }
+  .c3-booster .c3-zoomhint { display: none; }
+  /* the paths section stays on desktop only */
+  .c3-paths { display: none !important; }
+  /* final screens: rounded, hairline, a peeking scroll that never clips */
+  .c3-galrow { justify-content: flex-start !important; overflow-x: auto !important; scroll-snap-type: x mandatory; padding: 14px 16px 30px !important; gap: 14px !important; }
+  .c3-galrow img { width: 64vw !important; scroll-snap-align: center; }
+}
+@media (max-width: 859px) { .cs img[data-z], .c3-galrow img, #c3Strip img, .c3-b2 span { border-radius: 40px !important; outline: 0 !important; box-shadow: 0 0 0 .8px rgba(19, 35, 58, .16), 0 16px 30px -22px rgba(19, 35, 58, .45) !important; } .c3-b2 img { box-shadow: none !important; border-radius: 0 !important; } }
+
+/* case studies: a thin neutral progress line at the very top; name and theme as two separate buttons */
+.cs-prog { position: sticky; top: 0; z-index: 6; height: 3px; margin-bottom: -3px; pointer-events: none; }
+.cs-prog i { display: block; height: 100%; background: color-mix(in srgb, var(--ink) 55%, transparent); transform: scaleX(0); transform-origin: 0 50%; }
+:root[data-theme="dark"] .cs-prog i { background: rgba(255, 255, 255, .6); }
+.c3-prog { display: none !important; }
+.cs-right { background: none !important; box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; padding: 0 !important; gap: 8px !important; }
+.cs-ttl { display: inline-flex; align-items: center; height: 48px; padding: 0 18px; border-radius: 999px; box-sizing: border-box;
+  background: rgba(255, 255, 255, .55); backdrop-filter: blur(14px) saturate(1.6); -webkit-backdrop-filter: blur(14px) saturate(1.6); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 8px 22px -14px rgba(19, 35, 58, .5); }
+.cs-theme { width: 48px !important; height: 48px !important; background: rgba(255, 255, 255, .55) !important; backdrop-filter: blur(14px) saturate(1.6); -webkit-backdrop-filter: blur(14px) saturate(1.6); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 8px 22px -14px rgba(19, 35, 58, .5); }
+:root[data-theme="dark"] .cs-ttl, :root[data-theme="dark"] .cs-theme { background: rgba(38, 38, 38, .55) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 8px 22px -14px rgba(0, 0, 0, .7); }
+
+.mm-desk { width: min(580px, 100%) !important; }
+.mm-desk .boy { transform: translate(560px, 294px); }
+.mm-desk.come .boy { transform: translate(335px, 294px); }
+.mm-desk.go .boy { transform: translate(620px, 294px); }
+@keyframes mmding2 { 0% { opacity: 0; transform: translate(170px, 150px) scale(.6); } 25% { opacity: 1; transform: translate(170px, 140px) scale(1); } 100% { opacity: 0; transform: translate(170px, 126px) scale(1.05); } }
+.mm-ring { left: 28% !important; top: 52% !important; width: 21% !important; height: 28% !important; }
+.mm-bub { top: 18% !important; right: 0 !important; left: auto !important; max-width: 190px; font-size: 13px !important; border-radius: 16px 16px 16px 4px !important; }
+:root[data-theme="dark"] .mm-desk .dk rect[fill="#14161A"] { fill: #3A3F48; }
+@media (prefers-reduced-motion: reduce) { .mm-desk .boy { transform: translate(335px, 294px) !important; } }
+
+/* results: a corridor of hotel doors, each with its room-number plaque. Light, quiet. */
+.cs .mm-bd { background: transparent !important; color: var(--ink) !important; box-shadow: none !important; padding: 0 !important; display: grid; gap: 18px; }
+.cs .mm-bdh { display: none !important; }
+.cs .mm-row { grid-template-columns: auto minmax(0, 1fr) !important; gap: clamp(18px, 3vw, 36px) !important; padding: 18px !important; border: 0 !important; border-radius: 22px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 18px 34px -28px rgba(19, 35, 58, .35); text-align: left; }
+.cs .mm-fx { position: relative; flex-direction: column; justify-content: center; gap: 8px !important; width: clamp(150px, 18vw, 200px); min-height: 190px; padding: 26px 14px 18px; box-sizing: border-box; border-radius: 14px 14px 4px 4px;
+  background: linear-gradient(180deg, #F3EADF, #EADCCB); box-shadow: inset 0 0 0 1px rgba(120, 90, 60, .14), inset 0 0 0 8px #F7F0E6, inset 0 0 0 9px rgba(120, 90, 60, .12); }
+.cs .mm-fx::after { content: ""; position: absolute; right: 14px; top: 56%; width: 9px; height: 9px; border-radius: 50%; background: #C9A35A; box-shadow: 0 1px 2px rgba(0, 0, 0, .25); }
+.cs .mm-fx > i { color: #A08A70 !important; transform: rotate(90deg); font-size: 16px !important; opacity: 1 !important; }
+.cs .mm-fx .sf { background: #FFFFFF; box-shadow: 0 1px 0 rgba(255, 255, 255, .8), 0 4px 10px -6px rgba(80, 60, 30, .45), inset 0 0 0 1px rgba(201, 163, 90, .55); padding: 5px 10px; border-radius: 8px; }
+.cs .mm-fx .sf::before, .cs .mm-fx .sf::after { background: #C9A35A; width: 3px; height: 3px; }
+.cs .mm-fx .sf i { color: #5A4630 !important; text-shadow: none; font-size: 18px !important; }
+.cs .mm-fx .sf.big i { color: #13233A !important; font-size: 26px !important; }
+.cs .mm-rt b { color: var(--ink) !important; letter-spacing: .04em; font-size: 15px !important; }
+.cs .mm-rt span { color: var(--ink-2) !important; }
+:root[data-theme="dark"] .cs .mm-fx { background: linear-gradient(180deg, #3A342D, #302A24); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06), inset 0 0 0 8px #353029, inset 0 0 0 9px rgba(255, 255, 255, .05); }
+:root[data-theme="dark"] .cs .mm-fx .sf { background: #F4ECDD; }
+@media (max-width: 859px) { .cs .mm-row { grid-template-columns: 1fr !important; justify-items: center; text-align: center; } .cs .mm-fx { width: 180px; min-height: 160px; } }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -5391,7 +5490,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
         <div class="c3-w" style="margin-top:12vh"><p class="c3-p" data-rv>And we agreed on how we’d know it worked:</p></div>
         <div class="c3-kpi" data-rv>${[['card', 'PayEazy conversion', 'New-user conversion, before and after the redesign.'], ['bell', 'Coupon engagement', 'How many people interact with the coupon section.'], ['ticket', 'Coupon redemption', 'How many successfully apply a coupon at checkout.'], ['head', 'Support tickets', 'Fewer tickets means more clarity and confidence.']].map(([ic, t, d], k) => `<div style="--r:${[-1.5, 1, -1, 1.5][k]}deg"><svg viewBox="0 0 24 24">${ICONS[ic]}</svg><b>${t}</b><p>${d}</p></div>`).join('')}</div></div></section>
 
-      <section class="c3-sec" data-ch="The paths"><div class="c3-w">${K('Chapter 9 · The paths')}
+      <section class="c3-sec c3-paths" data-ch="The paths"><div class="c3-w">${K('Chapter 9 · The paths')}
         ${edHead('Four ways to save,', 'zero guesswork.', '', 'b-sky')}
         <p class="c3-p" data-rv>However people like to pay, there’s now a clear route from the bill to the best saving. Pick a path and follow it screen by screen.</p></div>
         <div class="c3-wide"><div class="c3-ptabs" id="c3Pt" data-rv>${ED.paths.map(([id, c, t], k) => `<button type="button" data-path="${k}" style="--c:${c}"${k ? '' : ' class="on"'}>${t}</button>`).join('')}</div>
@@ -5523,30 +5622,40 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
         const m = landed === 15 ? 'And one app made it to the top right.' : ''; if (m !== S.m) { S.m = m; mxCap.textContent = m; }
       }
       const ep = prg(evo), n = tabs.length, et = ep * (n - 1), e0 = Math.min(n - 2, Math.floor(et)), ex = evoPick >= 0 ? evoPick : e0 + ss(clamp((et - e0 - .35) / .45));
-      row.style.transform = `translate3d(${(-ex * root.clientWidth).toFixed(1)}px, 0, 0)`;
+      if (!PHONE) row.style.transform = `translate3d(${(-ex * root.clientWidth).toFixed(1)}px, 0, 0)`;
       const ei = Math.round(ex); if (ei !== S.e) { S.e = ei; tabs.forEach((t, k) => t.classList.toggle('on', k === ei)); }
       const sr = strip.getBoundingClientRect(); if (!PHONE && sr.bottom > 0 && sr.top < vh) strip.style.transform = `translate3d(${(-(1 - (sr.top + sr.height) / (vh + sr.height)) * Math.max(0, strip.scrollWidth - root.clientWidth)).toFixed(1)}px, 0, 0)`;
     }
     root.addEventListener('scroll', initED.sc = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     // phones: each scene is one screen with Back / Next, nothing scrubs with the scroll
     if (PHONE) {
-      const L = msgs.length, EV = tabs.length;
-      const STEPS = [[comic, [0, .25, .5, .76], 'Next panel'], [fun, [0, .24, .47, .7], 'Next step'], [chat, Array.from({ length: L }, (_, k) => k / (L + .3) + .01), 'Next quote'],
-        [board, [0, .25, ...[0, 1, 2, 3, 4].map(k => .26 + (k + .5) / 5 * .74)], 'Next'], [mx, [0, .3, .44, .58, .72, .86, 1], 'Fly in'], [evo, Array.from({ length: EV }, (_, k) => k / Math.max(1, EV - 1)), 'Next round']];
-      STEPS.forEach(([el, ps, lab]) => {
-        el.style.height = '100svh'; el._p = 0; el._i = 0;
-        const bar = document.createElement('div'); bar.className = 'c3-step';
-        bar.innerHTML = `<button type="button" data-sd="-1" aria-label="Back" disabled>‹</button><span class="dots">${ps.map((_, k) => `<i${k ? '' : ' class="on"'}></i>`).join('')}</span><button type="button" data-sd="1">${lab} ›</button>`;
-        $('.c3-pin', el).appendChild(bar);
-        const go = i => { i = Math.max(0, Math.min(ps.length - 1, i)); el._i = i; const from = el._p, to = ps[i], t0 = performance.now();
-          $$('.dots i', bar).forEach((d, k) => d.classList.toggle('on', k === i)); bar.firstElementChild.disabled = i === 0; bar.lastElementChild.disabled = i === ps.length - 1;
-          if (el === evo) { evoPick = i; row.style.transition = 'transform .6s cubic-bezier(.22,1,.36,1)'; }
-          const tw = now => { const k = Math.min(1, (now - t0) / 700); el._p = from + (to - from) * ss(k); update(); if (k < 1) requestAnimationFrame(tw); }; requestAnimationFrame(tw); };
-        bar.addEventListener('click', e => { const b = e.target.closest('[data-sd]'); if (b && !b.disabled) go(el._i + +b.dataset.sd); });
-        let x0 = null; el.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
-        el.addEventListener('touchend', e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 50) go(el._i + (dx < 0 ? 1 : -1)); }, { passive: true });
-      });
-      tabs.forEach(t => t.addEventListener('click', () => { const bar = $('.c3-step', evo); evo._i = +t.dataset.evo; evoPick = evo._i; row.style.transition = 'transform .6s cubic-bezier(.22,1,.36,1)'; update(); $$('.dots i', bar).forEach((d, k) => d.classList.toggle('on', k === evo._i)); }));
+      // phones: no step carousels. Each scene is one screen you tap, or a simple button
+      const L = msgs.length;
+      const tw = (el, to, ms = 700) => { const from = el._p || 0, t0 = performance.now(); const f = now => { const k = Math.min(1, (now - t0) / ms); el._p = from + (to - from) * ss(k); update(); if (k < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); };
+      const btn = (lab, cls = '') => { const b = document.createElement('button'); b.type = 'button'; b.className = 'c3-pb ' + cls; b.textContent = lab; return b; };
+      [comic, fun, chat, board, mx].forEach(el => { el.style.height = '100svh'; el._p = 0; });
+      // 1 · the comic: tap a panel to play it
+      panels.forEach((p, k) => { p.style.cursor = 'pointer'; p.addEventListener('click', () => { comic._p = (k + .01) / 4.2; update(); }); });
+      comic._p = .001;
+      // 2 · the 100 diners: small arrows beside the phone
+      const fnav = document.createElement('div'); fnav.className = 'c3-fnav';
+      fnav.innerHTML = '<button type="button" data-d="-1" aria-label="Previous step" disabled>‹</button><button type="button" data-d="1" aria-label="Next step">›</button>';
+      $('.c3-phone', fun).after(fnav); let fi = 0;
+      fnav.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (!b) return; fi = Math.max(0, Math.min(3, fi + +b.dataset.d)); fun._p = (fi + .01) / 4.3; update(); fnav.children[0].disabled = fi === 0; fnav.children[1].disabled = fi === 3; });
+      // 3 · the quotes: one Next button, no dots
+      chat._p = .01; const nq = btn('Next quote →'); $('.c3-chat', chat).after(nq); let qi = 1;
+      nq.addEventListener('click', () => { qi = Math.min(L, qi + 1); chat._p = (qi - .99) / (L + .3); update(); if (qi >= L) nq.hidden = true; });
+      // 4 · the whiteboard: one button reveals the five problems; tap any to read it
+      const tb = btn('See the top 5 problems'); $('.c3-board', board).after(tb);
+      tb.addEventListener('click', () => { tw(board, .26 + .5 / 5 * .74, 900); tb.hidden = true; });
+      five.forEach((d, k) => { d.style.cursor = 'pointer'; d.addEventListener('click', () => { if (!tb.hidden) return; board._p = .26 + (k + .5) / 5 * .74; update(); }); });
+      // 6 · the matrix: one button drops every app into place
+      const mb = btn('Mark the apps'); $('.c3-sketch', mx).appendChild(mb);
+      mb.addEventListener('click', () => { tw(mx, 1, 1600); mb.hidden = true; });
+      // 7 · iterations: all four rounds stacked, read them as you scroll
+      evo.style.height = 'auto'; evoPick = 0;
+      // 8 · the upfront coupon screens: 2 × 2
+      const bo = $('.c3-booster img', root); if (bo) { const g = document.createElement('div'); g.className = 'c3-b2'; g.innerHTML = [0, 1, 2, 3].map(k => `<span style="--k:${k}"><img src="${bo.currentSrc || bo.src}" alt="${bo.alt}" data-z="${bo.dataset.z || ''}" ${bo.dataset.hi ? `data-hi="${bo.dataset.hi}"` : ''}></span>`).join(''); bo.replaceWith(g); }
     }
     // checkout paths
     const flow = $('#c3Flow', root); let pathI = 0, vert = null;
@@ -5691,18 +5800,20 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
         </div>
         <div class="mm-demo">
           <div class="mm-desk" id="mmFront">
-            <svg viewBox="0 0 440 250" aria-hidden="true">
-              <ellipse cx="200" cy="244" rx="190" ry="5" fill="#13233A" opacity=".08"/>
+            <svg viewBox="0 0 440 300" aria-hidden="true">
+              <ellipse cx="220" cy="294" rx="200" ry="5" fill="#13233A" opacity=".08"/>
               <g class="dk">
-                <rect x="70" y="150" width="240" height="14" rx="7" fill="#6E4A2E"/>
-                <rect x="82" y="164" width="216" height="80" rx="6" fill="#8A5A3B"/>
-                <rect x="96" y="176" width="88" height="56" rx="5" fill="none" stroke="#6E4A2E" stroke-width="3"/>
-                <rect x="196" y="176" width="88" height="56" rx="5" fill="none" stroke="#6E4A2E" stroke-width="3"/>
-                <rect x="160" y="196" width="60" height="16" rx="3" fill="#E3B04B"/><text x="190" y="207.5" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="8" letter-spacing="1.5" fill="#5A3B12">RECEPTION</text>
-                <g transform="translate(232 0)"><rect x="-6" y="132" width="34" height="18" rx="2" fill="#F4ECDD"/><rect x="-2" y="136" width="26" height="2" fill="#C9B994"/><rect x="-2" y="141" width="18" height="2" fill="#C9B994"/></g>
+                <rect x="88" y="8" width="164" height="284" rx="30" fill="#14161A"/>
+                <rect x="96" y="16" width="148" height="268" rx="23" fill="#FFFFFF"/>
+                <rect x="146" y="22" width="48" height="12" rx="6" fill="#14161A"/>
+                <rect x="153" y="48" width="34" height="34" rx="9" fill="#E4262C"/><text x="170" y="71" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="18" fill="#fff">my</text>
+                <text x="170" y="102" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="12" fill="#13233A">Special Requests</text>
+                <text x="170" y="118" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="500" font-size="9" fill="#6B7280">Ring for anything you need</text>
+                <circle cx="170" cy="196" r="46" fill="#FFF6E0"/>
+                <rect x="110" y="256" width="120" height="16" rx="8" fill="#F1F2F4"/>
               </g>
-              <g class="bell" transform="translate(150 150)"><g class="bl"><path d="M-22 -2a22 20 0 0 1 44 0z" fill="#E8B84A"/><path d="M-14 -10a16 14 0 0 1 10 -8" stroke="#FFF1C2" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="-4" y="-27" width="8" height="7" rx="2" fill="#C9962E" class="bt"/></g><rect x="-27" y="-3" width="54" height="5" rx="2.5" fill="#5A3B12"/></g>
-              <g class="ding" transform="translate(150 104)"><path d="M-30 6l-9-5M30 6l9-5M0 -2v-10" stroke="#E8B84A" stroke-width="3" stroke-linecap="round"/><text x="0" y="-18" text-anchor="middle" font-family="Gaegu, cursive" font-weight="700" font-size="18" fill="#C9962E">ding!</text></g>
+              <g class="bell" transform="translate(170 212) scale(1.45)"><g class="bl"><path d="M-22 -2a22 20 0 0 1 44 0z" fill="#E8B84A"/><path d="M-14 -10a16 14 0 0 1 10 -8" stroke="#FFF1C2" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="-4" y="-27" width="8" height="7" rx="2" fill="#C9962E" class="bt"/></g><rect x="-27" y="-3" width="54" height="5" rx="2.5" fill="#5A3B12"/></g>
+              <g class="ding" transform="translate(170 140)"><path d="M-30 6l-9-5M30 6l9-5M0 -2v-10" stroke="#E8B84A" stroke-width="3" stroke-linecap="round"/><text x="0" y="-18" text-anchor="middle" font-family="Gaegu, cursive" font-weight="700" font-size="18" fill="#C9962E">ding!</text></g>
               <g class="boy" id="mmBoy"><g class="bw">
                 <g class="lg l"><rect x="-11" y="-42" width="9" height="42" rx="3" fill="#2B2F3A"/><ellipse cx="-7" cy="0" rx="8" ry="3.5" fill="#15171C"/></g>
                 <g class="lg r"><rect x="2" y="-42" width="9" height="42" rx="3" fill="#2B2F3A"/><ellipse cx="7" cy="0" rx="8" ry="3.5" fill="#15171C"/></g>
@@ -6211,7 +6322,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
   // phones: sideways rows become one card at a time, stepped with buttons
   function phCar(root) {
     if (innerWidth >= 860) return;
-    [['.c3-phones'], ['.c3-galrow'], ['#c3Strip, .c3-strip'], ['.mm-fl', '.row'], ['.sw-hand'], ['.sw-bento'], ['.sw-strip']].forEach(([hs, rs]) => $$(hs, root).forEach(host => {
+    [['.c3-phones'], ['.mm-fl', '.row'], ['.sw-hand'], ['.sw-bento'], ['.sw-strip']].forEach(([hs, rs]) => $$(hs, root).forEach(host => {
       if (host._car) return; host._car = 1;
       const row = () => rs ? host.querySelector(rs) : host;
       const bar = document.createElement('div'); bar.className = 'ph-cb'; bar.innerHTML = '<button type="button" data-d="-1" aria-label="Previous">←</button><span>1 / 1</span><button type="button" data-d="1" aria-label="Next">→</button>';
@@ -6234,6 +6345,8 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
     const r = document.createElement('div'); r.className = 'cs-right';
     r.innerHTML = `<span class="cs-ttl">${CS_NAME[w.id] || w.name}</span><button type="button" class="cs-theme" aria-label="Switch theme"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>`;
     bar.appendChild(r);
+    if (!$('.cs-prog', csEl)) { const pg = document.createElement('div'); pg.className = 'cs-prog'; pg.innerHTML = '<i></i>'; csEl.prepend(pg); }
+    if (!csBar.sc) csEl.addEventListener('scroll', csBar.sc = () => { const pg = $('.cs-prog i', csEl); if (pg) pg.style.transform = `scaleX(${(csEl.scrollTop / Math.max(1, csEl.scrollHeight - csEl.clientHeight)).toFixed(4)})`; }, { passive: true });
     $('.cs-theme', r).addEventListener('click', () => { const t = $('#themeBtn'); if (t) t.click(); });
   }
   function csHTML(w) {
