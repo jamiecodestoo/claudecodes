@@ -931,6 +931,27 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .nw-go:disabled { opacity: .6; transform: none; }
 .nw-fine { margin: 10px 0 0; font: 500 12.5px/1.4 var(--sans); color: rgba(19, 35, 58, .65); text-align: center; }
 
+
+/* book a free call: a tiny brief first, then the Calendly slot picker */
+.bk-sheet { width: min(520px, 100%); }
+.bk-modal.cal .bk-sheet { width: min(760px, 100%); padding: 22px 16px 16px; }
+.bk-lead { margin: -6px 0 6px; font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
+.bk-lead b { color: var(--ink); }
+.bk-svc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.bk-svc button { padding: 10px 14px; border-radius: 999px; background: #F1ECE2; font: 700 14px/1 var(--sans); color: var(--ink); box-shadow: inset 0 0 0 1.5px transparent; transition: background .2s, box-shadow .2s, color .2s; }
+.bk-svc button:hover { background: #E8E1D3; }
+.bk-svc button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.bk-svc button[aria-pressed="true"]::before { content: "✓ "; }
+.bk-step2 { display: none; }
+.bk-modal.cal .bk-step1 { display: none; } .bk-modal.cal .bk-step2 { display: block; }
+.bk-slot { position: relative; border-radius: 14px; background: #fff; }
+.bk-slot::before { content: "Loading the calendar…"; position: absolute; inset: 0; display: grid; place-items: center; font: 600 14px/1 var(--sans); color: #6B7280; }
+.bk-cal { position: relative; display: block; width: 100%; height: min(680px, calc(100svh - 150px)); border: 0; border-radius: 14px; background: transparent; }
+.bk-back { margin: 0 0 10px; padding: 8px 12px; border-radius: 999px; background: rgba(19, 35, 58, .08); font: 700 13px/1 var(--sans); }
+.bk-out { display: block; margin-top: 10px; text-align: center; font: 600 13px/1.3 var(--sans); color: var(--ink-2); }
+:root[data-theme="dark"] .bk-svc button { background: rgba(255, 255, 255, .08); color: #F2F2F2; }
+:root[data-theme="dark"] .bk-svc button[aria-pressed="true"] { background: #F2F2F2; color: #1A1A1A; }
+:root[data-theme="dark"] .bk-back { background: rgba(255, 255, 255, .1); color: #F2F2F2; }
 /* torn-paper edges: each new sheet overlaps the one above it */
 .torn { z-index: 2; }
 .torn::before { content: ""; position: absolute; z-index: 6; left: 0; right: 0; top: -40px; height: 60px; pointer-events: none; background: var(--edge) 0 0 / 1600px 60px repeat-x; }
@@ -1781,7 +1802,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .c3-links a[href*="linkedin"]:hover { background: #0A66C2; }
 .c3-links a[href*="instagram"]:hover { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF); }
 .c3-links a[href^="mailto"]:hover { background: #EA4335; }
-.c3-links a[href*="topmate"]:hover { background: #E4402A; }
+.c3-links a[href*="topmate"]:hover, .c3-links a[data-book]:hover { background: #E4402A; }
 .c3-links button:hover { background: var(--ed); }
 /* other case study cards: no divider */
 .wc-go { border-top: 0; padding-top: 4px; }
@@ -3494,7 +3515,7 @@ div.mm { overflow-x: clip; }
   background: color-mix(in srgb, var(--gk) 15%, rgba(255, 255, 255, .58)) !important; color: var(--ink) !important; transform: translateY(-1px);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gk) 30%, rgba(255, 255, 255, .8)), inset 0 1px 0 rgba(255, 255, 255, .9), 0 18px 34px -18px color-mix(in srgb, var(--gk) 60%, transparent) !important; }
 /* each button keeps its own colour as the tint */
-.bh-cta, .c3-links a[href*="topmate"] { --gk: #E4402A; }
+.bh-cta, .c3-links a[href*="topmate"], .c3-links a[data-book] { --gk: #E4402A; }
 .c3-links a[href*="linkedin"] { --gk: #0A66C2; } .c3-links a[href*="instagram"] { --gk: #DD2A7B; } .c3-links a[href^="mailto"] { --gk: #EA4335; }
 .cbtn, .sn-drop, .sn-btn, .sn-done button, .c3-ptabs button { --gk: var(--c, #13233A); }
 .cs.ed .c3-links button, .cs.ed .fb-go { --gk: #EE5A2B; } .cs.mm .c3-links button, .cs.mm .fb-go, .mm-trc .ar button, .mm-tra button { --gk: #E4262C; }
@@ -4242,7 +4263,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
       <div class="bh-l">
         <h2>Brands &amp; <span class="hl b-coral" id="brandHl">websites</span></h2>
         <p class="bh-sub">I also design beautiful websites and brands that people remember, from the first sketch to launch day.</p>
-        <a class="bh-cta" href="https://topmate.io/jameschughh" target="_blank" rel="noopener"><i></i>Book a free call ↗</a>
+        <a class="bh-cta" href="https://calendly.com/jameschughh/30min" target="_blank" rel="noopener" data-book><i></i>Book a free call ↗</a>
       </div>
     </div>
     <div class="brand-car"><div class="brand-row" id="brandRow"></div><button type="button" class="bnav prev" id="bPrev" aria-label="Previous site">←</button><button type="button" class="bnav next" id="bNext" aria-label="Next site">→</button></div>
@@ -5571,7 +5592,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
         <div class="c3-w c3-fin"><p class="kicker c3-k" data-rv>${STAR}That’s the bill, settled</p>
           ${edHead('Thanks for', 'reading!', '', 'b-sun')}
           <p class="c3-p" data-rv>Designed with care by James Chugh.</p>
-          <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://topmate.io/jameschughh" target="_blank" rel="noopener">Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
+          <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://calendly.com/jameschughh/30min" target="_blank" rel="noopener" data-book>Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
           ${fbHTML('EazyDiner Coupon Hunter', ['The story', 'The drop-off', 'Listening', 'The paths', 'The whiteboard', 'Four rounds', 'Final screens', 'Results'])}
           <p class="c3-morek" data-rv>Got a minute for another story?</p>
           <div class="c3-more" data-rv>${WORK.filter(x => x.id !== 'coupon').map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div></div>
@@ -5992,7 +6013,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
         <div class="c3-w c3-fin"><p class="kicker c3-k" data-rv>${STAR}That’s checkout</p>
           ${edHead('Thanks for', 'staying!', '', 'b-coral')}
           <p class="c3-p" data-rv>Designed with care by James Chugh.</p>
-          <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://topmate.io/jameschughh" target="_blank" rel="noopener">Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
+          <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://calendly.com/jameschughh/30min" target="_blank" rel="noopener" data-book>Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
           ${fbHTML('MakeMyTrip Special Requests', ['The problem', 'Business objective', 'Design issues', 'User metrics', 'Competitors', 'Iterations', 'Final UI', 'Impact'])}
           <p class="c3-morek" data-rv>Got a minute for another story?</p>
           <div class="c3-more" data-rv>${WORK.filter(x => x.id !== 'requests').map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div></div>
@@ -6266,7 +6287,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
         <div class="c3-w c3-fin"><p class="kicker c3-k" data-rv>${STAR}That’s a wrap</p>
           ${edHead('Thanks for', 'swiping by!', '', 'b-lilac')}
           <p class="c3-p" data-rv>Designed with care by James Chugh.</p>
-          <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://topmate.io/jameschughh" target="_blank" rel="noopener">Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
+          <div class="c3-links" data-rv><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://calendly.com/jameschughh/30min" target="_blank" rel="noopener" data-book>Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
           ${fbHTML('Swipr.AI', ['The problem', 'Competitors', 'The data', 'The idea', 'How it works', 'Final UI', 'Expected impact'])}
           <p class="c3-morek" data-rv>Got a minute for another story?</p>
           <div class="c3-more" data-rv>${WORK.filter(x => x.id !== 'swipr').map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div></div>
@@ -6377,7 +6398,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
         <div class="c3-more">${WORK.filter(x => x.id !== w.id && x.id !== 'campusx').map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div>
       </section>
       <footer class="sn-foot"><p class="c3-morek">Say hello</p>
-        <div class="c3-links"><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://topmate.io/jameschughh" target="_blank" rel="noopener">Book a free call ↗</a><button type="button" data-close>Back to the box</button></div></footer>
+        <div class="c3-links"><a href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/jamieships" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:jameschughh@gmail.com">Email me</a><a href="https://calendly.com/jameschughh/30min" target="_blank" rel="noopener" data-book>Book a free call ↗</a><button type="button" data-close>Back to the box</button></div></footer>
     </div>`;
   }
   function soonCleanup() { (initSoon.tt || []).forEach(clearTimeout); initSoon.tt = []; }
@@ -6809,6 +6830,51 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
     db.collection('notes').orderBy('at', 'desc').limit(60).onSnapshot(snap => { wallNotes = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(n => n && typeof n.note === 'string'); renderWall(); }, () => {});
   })();
   // the form
+
+  /* ---------- book a free call: who you are and what you need, then pick a slot ---------- */
+  const BK_URL = 'https://calendly.com/jameschughh/30min';
+  const BK_SVC = ['Personal branding', 'Website', 'App building', 'Automated job outreach workflow', 'UX consultation', 'UX audit'];
+  let bkEl = null, bkLast = null;
+  const bkClose = () => { if (!bkEl) return; bkEl.classList.remove('open'); bkEl.setAttribute('aria-hidden', 'true'); const f = $('.bk-cal', bkEl); if (f) f.remove(); if (bkLast) bkLast.focus(); };
+  const bkBuild = () => {
+    bkEl = document.createElement('div'); bkEl.className = 'nw-modal bk-modal'; bkEl.setAttribute('role', 'dialog'); bkEl.setAttribute('aria-modal', 'true'); bkEl.setAttribute('aria-labelledby', 'bkTitle'); bkEl.dataset.lenisPrevent = '';
+    bkEl.innerHTML = `<form class="nw-sheet bk-sheet" novalidate>
+      <button class="nw-x" type="button" data-bk-x aria-label="Close">&times;</button>
+      <div class="bk-step1">
+        <p class="nw-k">Free 30-minute call</p>
+        <h3 id="bkTitle">Let’s talk about your project.</h3>
+        <p class="bk-lead">This call is about <b>your website, brand or product</b>. It isn’t a mentorship or learning session.</p>
+        <div class="nw-two">
+          <label class="nw-f"><span>Company name</span><input name="co" maxlength="60" autocomplete="organization" required></label>
+          <label class="nw-f"><span>Your designation</span><input name="role" maxlength="60" autocomplete="organization-title" required></label>
+        </div>
+        <div class="nw-f"><span>What are you looking for? <em>pick any</em></span><div class="bk-svc" role="group" aria-label="Services">${BK_SVC.map(t => `<button type="button" aria-pressed="false">${t}</button>`).join('')}</div></div>
+        <p class="nw-err" role="alert"></p>
+        <button class="nw-go" type="submit">Next: pick a time →</button>
+      </div>
+      <div class="bk-step2"><button type="button" class="bk-back">← Back</button><div class="bk-slot"></div><a class="bk-out" target="_blank" rel="noopener">Calendar not loading? Open it in a new tab ↗</a></div>
+    </form>`;
+    document.body.appendChild(bkEl);
+    const f = $('form', bkEl), err = $('.nw-err', bkEl);
+    bkEl.addEventListener('click', e => { if (e.target === bkEl || e.target.closest('[data-bk-x]')) bkClose(); });
+    $$('.bk-svc button', bkEl).forEach(b => b.addEventListener('click', () => { b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true'); err.textContent = ''; }));
+    $('.bk-back', bkEl).addEventListener('click', () => { bkEl.classList.remove('cal'); const fr = $('.bk-cal', bkEl); if (fr) fr.remove(); });
+    f.addEventListener('submit', e => { e.preventDefault();
+      const co = f.co.value.trim(), role = f.role.value.trim(), svc = $$('.bk-svc button[aria-pressed="true"]', bkEl).map(b => b.textContent);
+      if (!co) { err.textContent = 'Add your company name.'; f.co.focus(); return; }
+      if (!role) { err.textContent = 'Add your designation.'; f.role.focus(); return; }
+      if (!svc.length) { err.textContent = 'Pick at least one service.'; return; }
+      err.textContent = '';
+      const brief = `${co} · ${role} · ${svc.join(', ')}`;
+      if (noteDb && noteUid && noteCanWrite) { try { noteDb.collection('feedback/' + noteUid + '/items').add({ cs: 'Call request', parts: svc, text: brief, name: role, email: '', company: co, at: Date.now() }); } catch (_) {} }
+      const q = new URLSearchParams({ a1: brief, hide_gdpr_banner: '1' });
+      const url = `${BK_URL}?${q}`; $('.bk-out', bkEl).href = url;
+      const fr = document.createElement('iframe'); fr.className = 'bk-cal'; fr.title = 'Pick a time on Calendly'; fr.src = `${url}&embed_type=Inline&embed_domain=${encodeURIComponent(location.hostname || 'jameschugh.com')}`;
+      $('.bk-slot', bkEl).replaceChildren(fr); bkEl.classList.add('cal'); $('.nw-sheet', bkEl).scrollTop = 0; });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && bkEl.classList.contains('open')) bkClose(); });
+  };
+  document.addEventListener('click', e => { const a = e.target.closest('a[data-book]'); if (!a) return; e.preventDefault(); bkLast = a; if (!bkEl) bkBuild();
+    bkEl.classList.remove('cal'); bkEl.classList.add('open'); bkEl.setAttribute('aria-hidden', 'false'); setTimeout(() => $('input[name="co"]', bkEl).focus(), 60); });
   const nwModal = $('#nwModal'), nwForm = $('#nwForm'), nwAv = $('#nwAv'), nwErr = $('#nwErr'), nwFine = $('#nwFine');
   document.body.appendChild(nwModal); // lifted out of the section so no stacking context can clip it
   let nwSeed = Math.random().toString(36).slice(2, 9), nwPhoto = '';
