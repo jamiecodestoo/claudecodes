@@ -4107,6 +4107,9 @@ html:has(.cs.open) .np { z-index: 95; top: calc(env(safe-area-inset-top, 0px) + 
 }
 @keyframes phpin { from { opacity: 0; margin-top: 10px; } to { opacity: 1; margin-top: 0; } }
 
+/* inside a case study the site's own top bar and navbar step away completely */
+html:has(.cs.open) :is(header.bar, nav.nav, .mnav) { visibility: hidden !important; pointer-events: none !important; }
+
 /* phone hero: crisp headline, flat illustrated clouds instead of blurry blobs */
 @media (max-width: 859px) {
   .hero-copy h1 { text-shadow: 0 1px 2px rgba(10, 40, 90, .25) !important; }
