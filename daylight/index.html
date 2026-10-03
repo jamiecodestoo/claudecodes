@@ -3797,6 +3797,13 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
 .bdg img.lg { width: 100% !important; height: 100% !important; object-fit: cover; border-radius: inherit; }
 .bdg svg.gen { width: 30px; height: 30px; }
 @media (max-width: 860px) { .bdg svg.gen { width: 24px; height: 24px; } }
+
+/* results: captions sit on one baseline across a row, clear of the illustration */
+.c3-rc { display: flex !important; flex-direction: column; }
+.c3-rc .rf { margin-top: auto !important; padding-top: 0; min-height: 3.6em; }
+.c3-rc .c3-dots, .c3-rc .c3-tbar { margin-bottom: 24px !important; }
+.c3-rc.tray .c3-tray { margin-bottom: 0; }
+.c3-rc .c3-dots, .c3-rc .c3-tray, .c3-rc .c3-tbar { flex: none; }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
