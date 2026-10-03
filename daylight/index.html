@@ -3774,6 +3774,18 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
 .c3-tbar i { background: #2FA36B !important; }
 :root[data-theme="dark"] .c3-rc .rd { background: rgba(91, 214, 154, .16) !important; color: #5BD69A !important; }
 :root[data-theme="dark"] .c3-tbar i { background: #5BD69A !important; }
+
+/* the baked map: one bitmap, moved by the GPU */
+.world3 > canvas.mapbake { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+.world3 { backface-visibility: hidden; }
+@media (max-width: 1100px) { .spot2 { display: none !important; } }
+
+/* sections that are off screen hold their ambient animations, so nothing repaints out of view */
+.offscreen, .offscreen *, .offscreen *::before, .offscreen *::after { animation-play-state: paused !important; }
+.me-tip { will-change: transform; }
+.kicker svg, .c3-k svg, .sw-bk img, .mk .halo { will-change: transform; }
+.jcard .jc-in, .jcard, .compass, .mapctl, .jcar, .jtl { will-change: transform, opacity; }
+.journey .pin-wrap, #jPin { contain: layout paint; }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -4769,6 +4781,29 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
     rtH += `<path id="ghostPath" d="${d}" fill="none" stroke="#4285F4" stroke-opacity=".8" stroke-width="3.5" stroke-dasharray="1 9" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`;
     rtH += `<path id="casing" d="${d}" fill="none" stroke="#1A5FD0" stroke-width="15" stroke-linecap="round"/><path id="carve" d="${d}" fill="none" stroke="#4285F4" stroke-width="10" stroke-linecap="round"/>`;
     mapArt.setAttribute('viewBox', `0 0 ${MW} ${MH}`); mapArt.innerHTML = h;
+    // the base map is drawn once into a bitmap (per theme), so moving the camera only slides an image and never repaints thousands of shapes
+    (function bakeMap() {
+      const DARK = { fill: { '#FDFCF9': '#1C1C1C', '#E3DED5': '#262626', '#CDE8C4': '#1E2B22', '#AAD3F2': '#1A2733', '#fff': '#2A2D32', '#8C9096': '#8A9099', '#6E9FCB': '#8A9099', '#8A6A1E': '#C9B27A' },
+        stroke: { '#E2DDD3': '#17181A', '#DCD5C9': '#17181A', '#FFFFFF': '#333333', '#AAD3F2': '#1A2733', '#EDC458': '#5C4A1F', '#FCDE86': '#7A6328', '#FDFCF9': '#1C1C1C', '#E4B847': '#7A6328' } };
+      const svgFor = dark => { let b = h.replace(/<defs><radialGradient id="hole">[\s\S]*?<\/defs>/, '');
+        if (dark) { const keep = []; b = b.replace(/<mask[\s\S]*?<\/mask>/g, m => (keep.push(m), `@@M${keep.length - 1}@@`));
+          b = b.replace(/(fill|stroke)="(#[0-9A-Fa-f]{3,6})"/g, (m, a, c) => { const t = DARK[a][c] || DARK[a][c.toUpperCase()]; return t ? `${a}="${t}"` : m; });
+          b = b.replace(/@@M(\d+)@@/g, (m, i) => keep[+i]); }
+        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${MW} ${MH}" width="${MW}" height="${MH}">${b}</svg>`; };
+      const cache = {}; let cv = null;
+      const R = Math.min(innerWidth < 860 ? .5 : .75, 4096 / MW);
+      const bake = () => { const dark = document.documentElement.dataset.theme === 'dark', key = dark ? 'd' : 'l';
+        const show = c => { if (cv && cv !== c) cv.remove(); cv = c; if (!c.isConnected) mapArt.after(c); mapArt.style.visibility = 'hidden'; };
+        if (cache[key]) return show(cache[key]);
+        const img = new Image(); img.decoding = 'async';
+        img.onload = () => { const c = document.createElement('canvas'); c.className = 'mapbake'; c.width = Math.round(MW * R); c.height = Math.round(MH * R);
+          const x = c.getContext('2d'); x.scale(R, R); x.drawImage(img, 0, 0, MW, MH); URL.revokeObjectURL(img.src); cache[key] = c;
+          if ((document.documentElement.dataset.theme === 'dark') === dark) show(c); };
+        img.onerror = () => { mapArt.style.visibility = ''; };
+        img.src = URL.createObjectURL(new Blob([svgFor(dark)], { type: 'image/svg+xml' }));
+      };
+      bake(); addEventListener('themechange', bake);
+    })();
     const layer = (id, html, z) => { const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); el.id = id; el.setAttribute('class', 'maplayer'); el.setAttribute('viewBox', `0 0 ${MW} ${MH}`); el.setAttribute('aria-hidden', 'true'); if (z) el.style.zIndex = z; el.innerHTML = html; world3.insertBefore(el, meTip); return el; };
     layer('routeArt', rtH);
     layer('lmArt', lmH);
@@ -4891,8 +4926,9 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
     cam3.x += (T.x - cam3.x) * e; cam3.y += (T.y - cam3.y) * e; cam3.s += (T.s - cam3.s) * e;
     world3.style.transform = `translate3d(${cam3.x.toFixed(1)}px, ${cam3.y.toFixed(1)}px, 0) scale(${cam3.s.toFixed(4)})`;
     const inv = Math.round(clamp(1 / cam3.s, .55, 3) * 20) / 20; if (inv !== frameJourney.inv) { frameJourney.inv = inv; world3.style.setProperty('--inv', inv.toFixed(3)); }
-    const carved = ph.pos < 0 ? stopL[0] * clamp(ph.pos + 1) : L;
-    const off = (pathLen - carved).toFixed(1);
+    // phones: the route jumps straight to the next stop instead of repainting on every frame of the glide
+    const carved = jCar && mobile ? (jposT < 0 ? 0 : lenAt(jposT)) : ph.pos < 0 ? stopL[0] * clamp(ph.pos + 1) : L;
+    const q = mobile ? 14 : 4, off = (Math.round((pathLen - carved) / q) * q).toFixed(0);
     if (off !== frameJourney.off) { frameJourney.off = off; carve.style.strokeDashoffset = off; casing.style.strokeDashoffset = off; }
     const go = (1 - ph.k * .8 + ph.out * .8).toFixed(2); if (go !== frameJourney.go) { frameJourney.go = go; ghost.style.opacity = go; }
     const settled = ph.k > .95 && !ph.out && Math.abs(ph.pos - Math.round(ph.pos)) < .06;
@@ -4909,7 +4945,7 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
     spot.classList.toggle('on', active >= 0 && ph.k > .9);
     showPols(-1);
     meTip.style.opacity = ph.pos > -.5 && ph.out < .5 ? 1 : 0;
-    meTip.style.left = tip.x + 'px'; meTip.style.top = tip.y + 'px';
+    { const mt = `translate3d(${tip.x.toFixed(1)}px, ${tip.y.toFixed(1)}px, 0) translate(-50%, -50%) scale(var(--inv, 1))`; if (mt !== frameJourney.mt) { frameJourney.mt = mt; meTip.style.transform = mt; } }
     const ahead = carve.getPointAtLength(Math.min(pathLen, L + 40)), want = ph.pos < 0 || ph.out ? 0 : Math.atan2(ahead.x - tip.x, -(ahead.y - tip.y)) * 180 / Math.PI;
     let dh = ((want - heading + 540) % 360) - 180; heading += dh * (reduce ? 1 : clamp(dt * 4));
     needle.style.transform = `rotate(${heading.toFixed(1)}deg)`; meTip.style.setProperty('--hd', heading.toFixed(1) + 'deg');
@@ -6759,4 +6795,7 @@ function initLost(root) {
   addEventListener('keydown', e => { if (e.key === 'Escape' && document.querySelector('.lost.open')) hide(); });
 })();
 (() => { const r = document.documentElement; let on = null; const f = () => { const v = scrollY > 60; if (v !== on) { on = v; r.classList.toggle('scrolled', v); } }; addEventListener('scroll', f, { passive: true }); f(); })();
+(() => { if (!('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('offscreen', !e.isIntersecting)), { rootMargin: '120px 0px' });
+  document.querySelectorAll('#top, #story, #journey, #work, #brand, #lastlook, #stack, #process, #life, #notes, #hello').forEach(el => io.observe(el)); })();
 </script>
