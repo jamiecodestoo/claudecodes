@@ -4630,7 +4630,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
       title: 'Then OYO, and the whole stay.',
       txt: 'At <b>OYO</b>, a hospitality chain, I design the moments between booking a room and walking into it: <b>self check-in, room selection and cancellations</b>.',
       stats: [['500', 'properties validated'], ['6,000+', 'approved next']],
-      photos: [['logo-oyo', 'December: OYO'], ['', 'Self check-in'], ['', 'Picking your room']],
+      photos: [['oyo-floor', 'The OYO floor'], ['oyo-building', 'Spaze Palazo, by night'], ['oyo-prism-figma', 'Designing PRISM'], ['oyo-prism-wall', 'PRISM, live on the wall']],
       pois: [[160, 100, 'key', 'Self check-in, straight to your room.']] },
     { id: 'lastlook', when: '2026', place: 'On the App Store', logo: 'logo-lastlook', c: '#9A6A3E', at: [4380, 940], lift: 190, name: 'LastLook',
       title: 'Then I built something of my own.',
@@ -5150,7 +5150,8 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
     const st = STOPS[i], left = false;
     showPols.t = setTimeout(() => {
       polsEl.style.left = st.at[0] + 'px'; polsEl.style.top = (st.at[1] - st.lift + 20) + 'px';
-      const spots = left ? [[-330, 30, -8], [-190, -30, 4], [-60, 40, -5]] : mobile ? [[-190, 10, -8], [-150, 50, 4], [-110, 0, 9]] : [[235, 20, -7], [360, -40, 4], [485, 30, 9]];
+      const spots = left ? [[-470, -20, 6], [-330, 30, -8], [-190, -30, 4], [-60, 40, -5]] : mobile ? [[-190, 10, -8], [-150, 50, 4], [-110, 0, 9], [-70, 40, -5]] : [[235, 20, -7], [360, -40, 4], [485, 30, 9], [610, -30, -5]];
+      if (left && st.photos.length < 4) spots.shift();
       polsEl.innerHTML = st.photos.map((ph, k) => `<button class="pol" type="button" style="--k:${k};--x:${spots[k][0]}px;--y:${spots[k][1]}px;--r:${spots[k][2]}deg;--g:${grad(st.c)}" data-i="${k}" aria-label="Open photo: ${ph[1]}"><span class="ph${ph[0] ? '' : ' empty'}">${photoHTML(st, ph)}</span><span>${ph[1]}</span></button>`).join('');
       requestAnimationFrame(() => requestAnimationFrame(() => polsEl.classList.add('in')));
     }, 280);
