@@ -3792,6 +3792,11 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
 .story-pin { position: relative !important; height: auto !important; padding: 16vh 0 14vh; overflow: visible; }
 .ll-rev-track { height: auto !important; }
 .ll-rev-pin { position: relative !important; height: auto !important; padding: 16vh 0; }
+
+.bdg { overflow: hidden; }
+.bdg img.lg { width: 100% !important; height: 100% !important; object-fit: cover; border-radius: inherit; }
+.bdg svg.gen { width: 30px; height: 30px; }
+@media (max-width: 860px) { .bdg svg.gen { width: 24px; height: 24px; } }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -5245,7 +5250,7 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
           <div class="q win" data-q="1"><i class="slot" data-s="1"></i><small>great UI, great UX</small><b>EazyDiner</b><p>You’ll be convinced by the end of this case study.</p></div>
           <div class="q" data-q="2"><i class="slot" data-s="2"></i><small>bad UI, bad UX</small><b>Some apps</b><p>They made me wonder how anyone managed to apply a coupon at all.</p></div>
           <div class="q" data-q="3"><i class="slot" data-s="3"></i><small>great UI, bad UX</small><b>District</b><p>The visual hierarchy guided my eyes perfectly, but essential information was missing.</p></div></div>
-        ${badge('bms', '<b>book<em>my</em>show</b>', '#F84464', 0)}${badge('ed', '<b>eazy<br>diner</b>', '#F4511E', 1)}${badge('q1', '<b>?</b>', '#C9CDD4', 2)}${badge('q2', '<b>?</b>', '#B5BAC3', 2)}${badge('dst', '<b>district</b>', '#111', 3)}
+        ${badge('bms', '<img class="lg" src="v2/cs/logo-bms.webp" alt="BookMyShow">', '#F84464', 0)}${badge('ed', '<img class="lg" src="v2/cs/logo-ed-word.webp" alt="EazyDiner">', '#F4511E', 1)}${badge('q1', '<svg viewBox="0 0 24 24" class="gen"><path d="M4 12.5V5a1 1 0 0 1 1-1h7.5L20 11.5 12.5 19z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><circle cx="8.5" cy="8.5" r="1.6" fill="#fff"/></svg>', 'linear-gradient(145deg, #7B61FF, #4B3BD6)', 2)}${badge('q2', '<svg viewBox="0 0 24 24" class="gen"><rect x="3.5" y="6" width="17" height="13" rx="3" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M3.5 10h17" stroke="#fff" stroke-width="2.2"/><circle cx="16.5" cy="14.5" r="1.4" fill="#fff"/></svg>', 'linear-gradient(145deg, #1FC7A3, #0E8F86)', 2)}${badge('dst', '<img class="lg" src="v2/cs/logo-district.webp" alt="District">', '#5A1FD1', 3)}
         <p class="c3-mxcap" id="c3MxCap"></p></div></div></div>
       <div class="c3-w"><p class="c3-p" data-rv>I took inspiration from these, but crafted a design that solved <b>our specific problems</b>, something no other app had done yet.</p></div>
 
