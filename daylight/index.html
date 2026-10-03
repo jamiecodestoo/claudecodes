@@ -4073,6 +4073,17 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
   html:root .cs .c3-links > :not(.soc) { flex: 1 1 100% !important; width: 100% !important; justify-content: center; }
 }
 
+/* polaroid captions: always dark ink on the white card (night mode too), two lines instead of cut off */
+.pol { padding-bottom: 50px !important; }
+.pol span { color: #13233A !important; white-space: normal !important; text-overflow: clip !important; font-size: 14px !important; line-height: 1.1 !important; bottom: 8px !important; height: 2.2em; display: grid !important; place-items: center; }
+.jc-ph { padding-bottom: 30px !important; }
+.jc-ph small { color: #13233A !important; white-space: normal !important; text-overflow: clip !important; line-height: 1.1 !important; bottom: 3px !important; height: 2.2em; display: grid !important; place-items: center; text-align: center; font-size: 11px !important; }
+
+/* a two-photo gallery uses the whole row: two big prints instead of two small ones */
+html:root .jc-gal > div[style*="--n:2"], html:root .journey.jcm .jc-gal > div[style*="--n:2"], html:root .s-gal > div[style*="--n:2"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 16px !important; }
+.jc-gal > div[style*="--n:2"] .jc-ph .ph { aspect-ratio: 1; }
+.jc-gal > div[style*="--n:2"] .jc-ph small { font-size: 13px !important; }
+
 /* phone hero: crisp headline, flat illustrated clouds instead of blurry blobs */
 @media (max-width: 859px) {
   .hero-copy h1 { text-shadow: 0 1px 2px rgba(10, 40, 90, .25) !important; }
@@ -4605,7 +4616,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
     { id: 'iitd', when: '2022 – 2023', place: 'New Delhi', icon: 'bulb', logo: 'logo-iit', c: '#2E9E6B', at: [1520, 1320], lift: 165, name: 'IIT Delhi',
       title: 'I started chasing that feeling.',
       txt: 'I began teaching myself design and got an internship at <b>IIT Delhi</b>. For the first time, the things I was learning at night were solving problems for someone beyond myself. I realised I didn’t just enjoy designing. I enjoyed figuring things out.',
-      photos: [['', 'Self-taught, one tutorial at a time'], ['', 'IIT Delhi internship'], ['', 'Figuring things out']],
+      photos: [],
       pois: [[170, 90, 'book', 'Learning at night, designing by day.']] },
     { id: 'ht', when: '2024', place: 'New Delhi', icon: 'news', logo: 'logo-ht', c: '#1E7FC8', at: [2080, 880], lift: 272, name: 'Hindustan Times',
       title: 'HT Media made it real.',
@@ -4624,7 +4635,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
       txt: 'Millions of users. Complicated journeys. Tiny decisions that suddenly mattered a lot more. <b>MakeMyTrip</b> showed me what product design looked like at scale, and pushed me to think beyond individual screens.',
       stats: [['4,500+', 'bookings a day use it'], ['16 → 35%', 'hotels replying']],
       work: CS + 'requests',
-      photos: [['mmt-day1', 'Day 1 at HQ'], ['mmt-view', 'My desk view'], ['mmt1', 'Shipped']],
+      photos: [['mmt-day1', 'Day 1 at HQ'], ['mmt-view', 'My desk view']],
       pois: [[160, 100, 'bell', 'Hotels now reply: 16% → 35%.'], [-170, 110, 'heart', 'Swipr.AI: swipe right on a hotel.']] },
     { id: 'oyo', when: 'Dec 2025', place: 'Gurgaon', logo: 'logo-oyo', c: '#DC402A', at: [3820, 1460], lift: 200, name: 'OYO',
       title: 'Then OYO, and the whole stay.',
@@ -4637,7 +4648,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
       txt: '<b>LastLook</b> started as a problem I wanted to solve for myself: I kept forgetting my things. So I designed it, built it and launched it on iOS.',
       stats: [['400+', 'downloads'], ['10', 'paying subscribers'], ['500K+', 'organic views']],
       work: APP,
-      photos: [['ll1', 'Never forget your things'], ['ll2', 'Find your lost devices'], ['ll3', 'Link items to places']],
+      photos: [['ll-testflight', 'First testers on TestFlight'], ['ll-builds', '15 builds to get it right'], ['ll-approved', 'Approved for the App Store']],
       pois: [[160, 100, 'rocket', 'Idea to App Store, solo.']] },
     { id: 'creator', when: 'Always on', place: 'Instagram & LinkedIn', icon: 'camera', c: '#E1306C', at: [4940, 1260], lift: 150, name: 'Creator corner',
       title: 'And I share it all along the way.',
