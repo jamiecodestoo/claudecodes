@@ -399,7 +399,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .lb-track::-webkit-scrollbar { display: none; }
 .lb-slide { flex: none; width: 100%; height: 100%; scroll-snap-align: center; display: grid; place-items: center; align-content: center; gap: 14px; }
 .lb-slide .frame { position: relative; max-width: min(88vw, 900px); padding: 18px 18px 84px; background: #FDFDFB; border-radius: 3px; box-shadow: 0 50px 90px -30px rgba(0, 0, 0, .65); transform: rotate(var(--rot, -1.5deg)) scale(.94); transition: transform .6s var(--spring); }
-.lb-slide .frame figcaption { position: absolute; left: 18px; right: 18px; bottom: 22px; font: italic 26px/1 var(--serif); color: var(--ink); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lb-slide .frame figcaption { position: absolute; left: 18px; right: 18px; bottom: 22px; font: italic 26px/1 var(--serif); color: #13233A; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .lb.open .lb-slide .frame { transform: rotate(var(--rot, -1.5deg)); }
 .lb-slide img { display: block; max-width: 100%; max-height: calc(70vh - 94px); width: auto; height: auto; border-radius: 1px; }
 .lb-slide .empty { width: min(76vw, 560px); aspect-ratio: 1; max-height: calc(70vh - 94px); border-radius: 6px; display: grid; place-items: center; align-content: center; gap: 10px; background: var(--g); color: #fff; font: 600 15px/1 var(--sans); }
@@ -4081,7 +4081,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
 
 /* a two-photo gallery uses the whole row: two big prints instead of two small ones */
 html:root .jc-gal > div[style*="--n:2"], html:root .journey.jcm .jc-gal > div[style*="--n:2"], html:root .s-gal > div[style*="--n:2"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 16px !important; }
-.jc-gal > div[style*="--n:2"] .jc-ph .ph { aspect-ratio: 1; }
+.jc-gal > div[style*="--n:2"] .jc-ph .ph { aspect-ratio: 4 / 3; }
 .jc-gal > div[style*="--n:2"] .jc-ph small { font-size: 13px !important; }
 
 /* the music pill stays with you inside a case study, next to the back button */
@@ -4634,7 +4634,7 @@ html:has(.cs.open) .np { z-index: 95; top: calc(env(safe-area-inset-top, 0px) + 
     { id: 'app', when: 'April 2022', place: 'New Delhi', icon: 'phone', logo: 'logo-campusx', c: '#7B5CD6', at: [960, 960], lift: 150, name: 'The failed app',
       title: 'A failed app changed my life.',
       txt: 'A friend and I tried building an app together. It didn’t work, but somewhere along the way I opened <b>Figma</b> and got completely hooked. The app failed. I accidentally found UX, and, eventually, the career I wanted.',
-      photos: [['', 'The app that didn’t work'], ['', 'My first Figma file'], ['', 'Late nights, 2022']],
+      photos: [['cx-first', 'The first screen I ever designed'], ['cx-attendance', 'Pivot: everyone’s attendance'], ['cx-beta', 'First beta test']],
       pois: [[160, 90, 'pen', 'Opened Figma. Never really closed it.']] },
     { id: 'iitd', when: '2022 – 2023', place: 'New Delhi', icon: 'bulb', logo: 'logo-iit', c: '#2E9E6B', at: [1520, 1320], lift: 165, name: 'IIT Delhi',
       title: 'I started chasing that feeling.',
@@ -4644,7 +4644,7 @@ html:has(.cs.open) .np { z-index: 95; top: calc(env(safe-area-inset-top, 0px) + 
     { id: 'ht', when: '2024', place: 'New Delhi', icon: 'news', logo: 'logo-ht', c: '#1E7FC8', at: [2080, 880], lift: 272, name: 'Hindustan Times',
       title: 'HT Media made it real.',
       txt: 'At <b>Hindustan Times</b>, design became a real job, not just something I was learning on the side. For the first time, the things I designed shipped to people I’d never meet.',
-      photos: [['', 'Design as a real job'], ['', 'The HT newsroom'], ['', 'New Delhi, 2024']],
+      photos: [['ht-desk', 'Day 1 at HT'], ['ht-month', 'One month at HT House']],
       pois: [[160, 90, 'news', 'Design became a real job here.']] },
     { id: 'eazydiner', when: 'Feb – Apr 2025', place: 'New Delhi', logo: 'logo-eazydiner', c: '#F4511E', at: [2640, 1400], lift: 150, name: 'EazyDiner',
       title: 'EazyDiner taught me to look beyond the screen.',
