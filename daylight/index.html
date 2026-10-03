@@ -3976,23 +3976,50 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
 .cs-theme { width: 48px !important; height: 48px !important; background: rgba(255, 255, 255, .55) !important; backdrop-filter: blur(14px) saturate(1.6); -webkit-backdrop-filter: blur(14px) saturate(1.6); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 8px 22px -14px rgba(19, 35, 58, .5); }
 :root[data-theme="dark"] .cs-ttl, :root[data-theme="dark"] .cs-theme { background: rgba(38, 38, 38, .55) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 8px 22px -14px rgba(0, 0, 0, .7); }
 
-/* results: a corridor of hotel doors, each with its room-number plaque. Light, quiet. */
-.cs .mm-bd { background: transparent !important; color: var(--ink) !important; box-shadow: none !important; padding: 0 !important; display: grid; gap: 18px; }
-.cs .mm-bdh { display: none !important; }
-.cs .mm-row { grid-template-columns: auto minmax(0, 1fr) !important; gap: clamp(18px, 3vw, 36px) !important; padding: 18px !important; border: 0 !important; border-radius: 22px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 18px 34px -28px rgba(19, 35, 58, .35); text-align: left; }
-.cs .mm-fx { position: relative; flex-direction: column; justify-content: center; gap: 8px !important; width: clamp(150px, 18vw, 200px); min-height: 190px; padding: 26px 14px 18px; box-sizing: border-box; border-radius: 14px 14px 4px 4px;
-  background: linear-gradient(180deg, #F3EADF, #EADCCB); box-shadow: inset 0 0 0 1px rgba(120, 90, 60, .14), inset 0 0 0 8px #F7F0E6, inset 0 0 0 9px rgba(120, 90, 60, .12); }
-.cs .mm-fx::after { content: ""; position: absolute; right: 14px; top: 56%; width: 9px; height: 9px; border-radius: 50%; background: #C9A35A; box-shadow: 0 1px 2px rgba(0, 0, 0, .25); }
-.cs .mm-fx > i { color: #A08A70 !important; transform: rotate(90deg); font-size: 16px !important; opacity: 1 !important; }
-.cs .mm-fx .sf { background: #FFFFFF; box-shadow: 0 1px 0 rgba(255, 255, 255, .8), 0 4px 10px -6px rgba(80, 60, 30, .45), inset 0 0 0 1px rgba(201, 163, 90, .55); padding: 5px 10px; border-radius: 8px; }
-.cs .mm-fx .sf::before, .cs .mm-fx .sf::after { background: #C9A35A; width: 3px; height: 3px; }
-.cs .mm-fx .sf i { color: #5A4630 !important; text-shadow: none; font-size: 18px !important; }
-.cs .mm-fx .sf.big i { color: #13233A !important; font-size: 26px !important; }
-.cs .mm-rt b { color: var(--ink) !important; letter-spacing: .04em; font-size: 15px !important; }
-.cs .mm-rt span { color: var(--ink-2) !important; }
-:root[data-theme="dark"] .cs .mm-fx { background: linear-gradient(180deg, #3A342D, #302A24); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06), inset 0 0 0 8px #353029, inset 0 0 0 9px rgba(255, 255, 255, .05); }
-:root[data-theme="dark"] .cs .mm-fx .sf { background: #F4ECDD; }
-@media (max-width: 859px) { .cs .mm-row { grid-template-columns: 1fr !important; justify-items: center; text-align: center; } .cs .mm-fx { width: 180px; min-height: 160px; } }
+/* results: five hotel windows, three then two; the curtains draw open and the numbers flip in */
+.cs .mm-wins { display: grid !important; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(14px, 2vw, 26px) !important; max-width: 940px; margin: 0 auto; background: none !important; box-shadow: none !important; padding: 0 !important; color: var(--ink) !important; }
+.mm-win { grid-column: span 2; display: flex; flex-direction: column; padding: 14px 14px 20px; border-radius: 24px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 22px 40px -30px rgba(19, 35, 58, .45); text-align: center; }
+.mm-win:nth-child(4) { grid-column: 2 / span 2; } .mm-win:nth-child(5) { grid-column: 4 / span 2; }
+.mm-glass { position: relative; aspect-ratio: 3 / 3.5; overflow: hidden; border-radius: 999px 999px 8px 8px; border: 9px solid #EFE5D6;
+  background: radial-gradient(70% 40% at 50% 100%, rgba(255, 214, 140, .55), transparent 70%), linear-gradient(180deg, #A9D8FF 0%, #DCEFFF 58%, #FFF3DC 100%);
+  box-shadow: inset 0 0 0 1px rgba(120, 90, 60, .18), 0 1px 0 rgba(120, 90, 60, .15); }
+.mm-glass::before { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(255, 255, 255, .75), rgba(255, 255, 255, .75)) 50% 0 / 3px 100% no-repeat, linear-gradient(rgba(255, 255, 255, .75), rgba(255, 255, 255, .75)) 0 42% / 100% 3px no-repeat; }
+.mm-glass::after { content: ""; position: absolute; left: -20%; top: -10%; width: 40%; height: 140%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .35), transparent); transform: rotate(18deg); }
+.cs .mm-wins .mm-fx { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px !important; width: auto; min-height: 0; padding: 18px 8px 10px; background: none; box-shadow: none; border-radius: 0; }
+.cs .mm-wins .mm-fx::after { display: none; }
+.cs .mm-wins .mm-fx > i { transform: none; color: #6E86A3 !important; font-size: 15px !important; font-style: normal; }
+.cs .mm-wins .mm-fx .sf { background: rgba(255, 255, 255, .92); padding: 5px 10px; border-radius: 10px; box-shadow: 0 6px 14px -8px rgba(19, 35, 58, .45); font: 800 17px/1.1 var(--sans); color: #4B5D72; }
+.cs .mm-wins .mm-fx .sf.big { font-size: clamp(22px, 2.4vw, 30px); color: #13233A; }
+.cs .mm-wins .mm-fx .sf::before, .cs .mm-wins .mm-fx .sf::after { display: none; }
+.cs .mm-wins .mm-fx .sf i { color: #4B5D72 !important; font-size: 17px !important; text-shadow: none; }
+.cs .mm-wins .mm-fx .sf.big { padding: 7px 12px; }
+.cs .mm-wins .sf { display: inline-flex !important; gap: 0 !important; grid-template-columns: none !important; }
+.cs .mm-wins .sf i { display: inline-block !important; flex: none !important; min-width: 0 !important; width: auto !important; height: auto; background: none !important; box-shadow: none; border-radius: 0; font-family: var(--sans) !important; font-weight: 800; letter-spacing: 0 !important; margin: 0 !important; padding: 0 !important; }
+.cs .mm-wins .sf i::after { display: none; }
+.cs .mm-wins .mm-fx > i { width: auto; height: auto; background: none !important; box-shadow: none !important; line-height: 1; }
+.cs .mm-wins .mm-fx .sf.big i { color: #13233A !important; font-size: clamp(22px, 2.4vw, 30px) !important; }
+.mm-glass .cur { position: absolute; top: 0; bottom: 0; z-index: 2; width: 51%; background: repeating-linear-gradient(90deg, #E4262C 0 10px, #C8161E 10px 13px, #E4262C 13px 22px); box-shadow: inset 0 -16px 18px -12px rgba(0, 0, 0, .25);
+  transition: width 1.3s var(--ease) calc(var(--i) * .14s), border-radius 1.3s var(--ease) calc(var(--i) * .14s); }
+.mm-glass .cur.l { left: 0; border-radius: 0 0 30% 0; } .mm-glass .cur.r { right: 0; border-radius: 0 0 0 30%; }
+.mm-bd.open .mm-glass .cur { width: 11%; }
+.mm-win .sill { display: block; height: 10px; margin: -3px -6px 0; border-radius: 4px; background: #E6D7C1; box-shadow: 0 4px 8px -4px rgba(80, 60, 30, .4); position: relative; z-index: 1; }
+.mm-win .mm-rt { display: grid; gap: 6px; padding: 16px 4px 0; text-align: center; }
+.cs .mm-wins .mm-rt b { color: var(--ink) !important; font: 800 16px/1.25 var(--sans) !important; letter-spacing: 0 !important; text-transform: none !important; }
+.cs .mm-wins .mm-rt span { color: var(--ink-2) !important; font: 400 14px/1.5 var(--sans) !important; }
+:root[data-theme="dark"] .mm-glass { border-color: #3A342D; background: radial-gradient(70% 45% at 50% 100%, rgba(255, 190, 100, .35), transparent 70%), linear-gradient(180deg, #13203A 0%, #22365C 60%, #3B3326 100%); }
+:root[data-theme="dark"] .mm-glass::before { background: linear-gradient(rgba(255, 255, 255, .14), rgba(255, 255, 255, .14)) 50% 0 / 3px 100% no-repeat, linear-gradient(rgba(255, 255, 255, .14), rgba(255, 255, 255, .14)) 0 42% / 100% 3px no-repeat; }
+:root[data-theme="dark"] .mm-win .sill { background: #4A4239; }
+:root[data-theme="dark"] .cs .mm-wins .mm-fx > i { color: #9FB3CC !important; }
+@media (max-width: 859px) {
+  .cs .mm-wins { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px !important; }
+  .mm-win, .mm-win:nth-child(4) { grid-column: auto; padding: 10px 10px 16px; border-radius: 20px; }
+  .mm-win:nth-child(5) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 6px); box-sizing: border-box; }
+  .mm-glass { border-width: 7px; }
+  .cs .mm-wins .mm-fx { padding: 14px 4px 8px; } .cs .mm-wins .mm-fx .sf { padding: 4px 8px; } .cs .mm-wins .mm-fx .sf.big { padding: 6px 9px; }
+  .cs .mm-wins .mm-fx .sf, .cs .mm-wins .mm-fx .sf i { font-size: 12.5px !important; } .cs .mm-wins .mm-fx .sf.big, .cs .mm-wins .mm-fx .sf.big i { font-size: 18px !important; }
+  .cs .mm-wins .mm-rt b { font-size: 14px !important; } .cs .mm-wins .mm-rt span { font-size: 12.5px !important; }
+}
+@media (prefers-reduced-motion: reduce) { .mm-glass .cur { transition: none; } }
 
 /* phone hero: crisp headline, flat illustrated clouds instead of blurry blobs */
 @media (max-width: 859px) {
@@ -5940,9 +5967,8 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
       <section class="mm-sec" id="mmBoard">
         ${plaque(8, 'Impact of the project')}
         <h3 class="mm-h" data-rv>Checking in: the results.</h3>
-        <div class="mm-bd" data-rv>
-          <div class="mm-bdh"><span>🛎 Front desk</span><span>Special Requests</span></div>
-          ${MM.board.map(([a, b, t, d]) => `<div class="mm-row"><div class="mm-fx">${a ? `<span class="sf" data-t="${a}"></span><i>→</i>` : ''}<span class="sf big" data-t="${b}"></span></div><div class="mm-rt"><b>${t}</b><span>${d}</span></div></div>`).join('')}
+        <div class="mm-bd mm-wins" data-rv>
+          ${MM.board.map(([a, b, t, d], i) => `<div class="mm-win" style="--i:${i}"><div class="mm-glass"><div class="mm-fx">${a ? `<span class="sf" data-t="${a}"></span><i>↓</i>` : ''}<span class="sf big" data-t="${b}"></span></div><i class="cur l"></i><i class="cur r"></i></div><i class="sill"></i><div class="mm-rt"><b>${t}</b><span>${d}</span></div></div>`).join('')}
         </div>
       </section>
 
@@ -6034,9 +6060,9 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
     drawFloor(0); $$('.mm-pan button', root)[0].classList.add('on');
     // the split-flap board
     const CHARS = ' 0123456789%/,+';
-    $('.mm-bd', root)._on = () => $$('.sf', root).forEach((s, k) => { const t = s.dataset.t; s.innerHTML = [...t].map(() => '<i> </i>').join(''); const cells = $$('i', s);
-      cells.forEach((c, j) => { let n = 0; const stop = 10 + j * 3 + k * 4; const iv = setInterval(() => { n++; c.textContent = n >= stop ? t[j] : CHARS[Math.floor(Math.random() * CHARS.length)]; c.classList.toggle('flip', n % 2 === 0); if (n >= stop) { clearInterval(iv); c.classList.remove('flip'); } }, reduce ? 1 : 55); initMM.ts.push(iv); }); });
-    $$('.sf', root).forEach(s => { s.innerHTML = [...s.dataset.t].map(ch => `<i>${ch}</i>`).join(''); });
+    $('.mm-bd', root)._on = () => { $('.mm-bd', root).classList.add('open'); $$('.sf', root).forEach((s, k) => { const t = s.dataset.t; s.innerHTML = [...t].map(() => '<i> </i>').join(''); const cells = $$('i', s);
+      cells.forEach((c, j) => { let n = 0; const stop = 10 + j * 3 + k * 4; const iv = setInterval(() => { n++; c.textContent = n >= stop ? t[j] : CHARS[Math.floor(Math.random() * CHARS.length)]; c.classList.toggle('flip', n % 2 === 0); if (n >= stop) { clearInterval(iv); c.classList.remove('flip'); if (j === cells.length - 1) later(() => { s.textContent = t; }, 60); } }, reduce ? 1 : 55); initMM.ts.push(iv); }); }); };
+    $$('.sf', root).forEach(s => { s.textContent = s.dataset.t; });
     // the signature writes itself
     const sig = $('#mmSig', root); if (innerWidth < 860) { sig.classList.add('ph'); new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { sig.style.setProperty('--sp', 1); o.disconnect(); } }), { root, threshold: .6 }).observe(sig); } else csEl.addEventListener('scroll', initMM.sc = () => { const r = sig.getBoundingClientRect(), p = clamp((innerHeight * .92 - r.top) / (innerHeight * .42)); sig.style.setProperty('--sp', p.toFixed(3)); }, { passive: true }); initMM.sc && initMM.sc();
     // tap any screen to look closer
