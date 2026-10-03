@@ -3804,6 +3804,14 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
 .c3-rc .c3-dots, .c3-rc .c3-tbar { margin-bottom: 24px !important; }
 .c3-rc.tray .c3-tray { margin-bottom: 0; }
 .c3-rc .c3-dots, .c3-rc .c3-tray, .c3-rc .c3-tbar { flex: none; }
+
+/* MakeMyTrip: logo on no white plate; lift screens one size, centred, never stretched */
+.mm-logo { background: transparent !important; box-shadow: none !important; padding: 0 !important; }
+:root[data-theme="dark"] .bsign img[alt="MakeMyTrip"] { background: transparent !important; padding: 0 !important; }
+.mm-fl .row { justify-content: safe center; }
+.mm-fl .row img { aspect-ratio: 720 / 1780; height: 100%; width: auto; object-fit: contain; }
+.mm-fl .row img[src*="desk"] { aspect-ratio: auto; }
+:root[data-theme="dark"] .mm-bk img, .mm-bk img { background: transparent !important; padding: 0 !important; box-shadow: none !important; }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -5558,9 +5566,9 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
       ['Tabs for second-level choices', 'Tabs and icons for choices like a check-in time.', [], ['Too many tabs and icons to process', 'Big tabs meant sideways scrolling', 'New requests would need new icons'], ['l2-1', 'l2-2', 'l2-3']],
       ['Shipped', 'Each try sharpened the card: easy to find, reliable, and lean enough to scan in a glance.', ['🎯 A precise list', '⏱️ Quicker decisions', '💡 Less time spent'], [], ['ui01']]],
     floors: [['Entry points', 'Guests can discover and start adding requests from every relevant touchpoint.', ['ui01', 'ui02', 'ui03', 'ui04']],
-      ['Placing a request', 'Adding special requests is now quicker, clearer and more intuitive.', ['ui05', 'ui06', 'ui07', 'ui08']],
-      ['Custom request field', 'Guests can type specific needs beyond the predefined options.', ['ui09', 'ui10', 'ui11', 'ui12', 'ui13']],
-      ['Chat with hotelier', 'A new chat, so requests and questions get resolved with the hotel team instantly.', ['ui14', 'ui15', 'ui16', 'ui17', 'ui18'], 'New'],
+      ['Placing a request', 'Adding special requests is now quicker, clearer and more intuitive.', ['n3', 'n4', 'ui05', 'ui06', 'ui07', 'ui08']],
+      ['Custom request field', 'Guests can type specific needs beyond the predefined options.', ['n2', 'ui09', 'ui10', 'ui11', 'ui12', 'ui13']],
+      ['Chat with hotelier', 'A new chat, so requests and questions get resolved with the hotel team instantly.', ['n1', 'ui14', 'ui15', 'ui16', 'ui17', 'ui18'], 'New'],
       ['Desktop', 'The redesign, extended to desktop for one seamless experience across platforms.', ['desk1', 'desk2']]],
     board: [['16%', '25%', 'Guests reaching Special Requests', 'More guests now find and use it: funnel access jumped from 16% to 25% within two weeks, a 56% rise.'],
       ['20/80', '80/20', 'Multiple vs single requests', 'Guests now place several requests per booking. The split flipped from 20/80 to 80/20.'],
@@ -5661,7 +5669,7 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
         ${plaque(5, 'Competitor analysis')}
         <h3 class="mm-h" data-rv>What the neighbours got right.</h3>
         <div class="mm-tags">${MM.comps.map(([k, n, d], i) => `<button type="button" class="mm-tag" style="--i:${i}" data-rv><span class="mm-tin"><span class="f"><img src="${mi('lg-' + k)}" alt=""><b>${n}</b><small>Flip me</small></span><span class="b"><b>${n}</b><span>${d}</span></span></span></button>`).join('')}</div>
-        <figure class="mm-cimg" data-rv>${Z('comp', 'How Swiggy, Zomato and other apps handle notes and special requests', 'comp')}<figcaption>Tap to look closer</figcaption></figure>
+        <figure class="mm-cimg" data-rv>${Z('comp', 'How Swiggy, Zomato and other apps handle notes and special requests', 'comp')}</figure>
       </section>
 
       <section class="mm-sec" id="mmIt">
