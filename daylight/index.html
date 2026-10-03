@@ -3788,7 +3788,9 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
 .journey .pin-wrap, #jPin { contain: layout paint; }
 
 /* reveal text never pins the page: it plays by itself once it scrolls into view */
-.story { margin-top: 0 !important; height: auto !important; }
+/* the story never pins, but on desktop it still slides up over the valley like a sheet of paper */
+.story { height: auto !important; }
+@media (max-width: 859px) { .story { margin-top: 0 !important; } }
 .story-pin { position: relative !important; height: auto !important; padding: 16vh 0 14vh; overflow: visible; }
 .ll-rev-track { height: auto !important; }
 .ll-rev-pin { position: relative !important; height: auto !important; padding: 16vh 0; }
@@ -3978,8 +3980,8 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
 
 /* results: five hotel windows, three then two; the curtains draw open and the numbers flip in */
 .cs .mm-wins { display: grid !important; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(14px, 2vw, 26px) !important; max-width: 940px; margin: 0 auto; background: none !important; box-shadow: none !important; padding: 0 !important; color: var(--ink) !important; }
-.mm-win { grid-column: span 2; display: flex; flex-direction: column; padding: 14px 14px 20px; border-radius: 24px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 22px 40px -30px rgba(19, 35, 58, .45); text-align: center; }
-.mm-win:nth-child(4) { grid-column: 2 / span 2; } .mm-win:nth-child(5) { grid-column: 4 / span 2; }
+.mm-rw { grid-column: span 2; display: flex; flex-direction: column; padding: 14px 14px 20px; border-radius: 24px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 22px 40px -30px rgba(19, 35, 58, .45); text-align: center; }
+.mm-rw:nth-child(4) { grid-column: 2 / span 2; } .mm-rw:nth-child(5) { grid-column: 4 / span 2; }
 .mm-glass { position: relative; aspect-ratio: 3 / 3.5; overflow: hidden; border-radius: 999px 999px 8px 8px; border: 9px solid #EFE5D6;
   background: radial-gradient(70% 40% at 50% 100%, rgba(255, 214, 140, .55), transparent 70%), linear-gradient(180deg, #A9D8FF 0%, #DCEFFF 58%, #FFF3DC 100%);
   box-shadow: inset 0 0 0 1px rgba(120, 90, 60, .18), 0 1px 0 rgba(120, 90, 60, .15); }
@@ -4002,18 +4004,18 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
   transition: width 1.3s var(--ease) calc(var(--i) * .14s), border-radius 1.3s var(--ease) calc(var(--i) * .14s); }
 .mm-glass .cur.l { left: 0; border-radius: 0 0 30% 0; } .mm-glass .cur.r { right: 0; border-radius: 0 0 0 30%; }
 .mm-bd.open .mm-glass .cur { width: 11%; }
-.mm-win .sill { display: block; height: 10px; margin: -3px -6px 0; border-radius: 4px; background: #E6D7C1; box-shadow: 0 4px 8px -4px rgba(80, 60, 30, .4); position: relative; z-index: 1; }
-.mm-win .mm-rt { display: grid; gap: 6px; padding: 16px 4px 0; text-align: center; }
+.mm-rw .sill { display: block; height: 10px; margin: -3px -6px 0; border-radius: 4px; background: #E6D7C1; box-shadow: 0 4px 8px -4px rgba(80, 60, 30, .4); position: relative; z-index: 1; }
+.mm-rw .mm-rt { display: grid; gap: 6px; padding: 16px 4px 0; text-align: center; }
 .cs .mm-wins .mm-rt b { color: var(--ink) !important; font: 800 16px/1.25 var(--sans) !important; letter-spacing: 0 !important; text-transform: none !important; }
 .cs .mm-wins .mm-rt span { color: var(--ink-2) !important; font: 400 14px/1.5 var(--sans) !important; }
 :root[data-theme="dark"] .mm-glass { border-color: #3A342D; background: radial-gradient(70% 45% at 50% 100%, rgba(255, 190, 100, .35), transparent 70%), linear-gradient(180deg, #13203A 0%, #22365C 60%, #3B3326 100%); }
 :root[data-theme="dark"] .mm-glass::before { background: linear-gradient(rgba(255, 255, 255, .14), rgba(255, 255, 255, .14)) 50% 0 / 3px 100% no-repeat, linear-gradient(rgba(255, 255, 255, .14), rgba(255, 255, 255, .14)) 0 42% / 100% 3px no-repeat; }
-:root[data-theme="dark"] .mm-win .sill { background: #4A4239; }
+:root[data-theme="dark"] .mm-rw .sill { background: #4A4239; }
 :root[data-theme="dark"] .cs .mm-wins .mm-fx > i { color: #9FB3CC !important; }
 @media (max-width: 859px) {
   .cs .mm-wins { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px !important; }
-  .mm-win, .mm-win:nth-child(4) { grid-column: auto; padding: 10px 10px 16px; border-radius: 20px; }
-  .mm-win:nth-child(5) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 6px); box-sizing: border-box; }
+  .mm-rw, .mm-rw:nth-child(4) { grid-column: auto; padding: 10px 10px 16px; border-radius: 20px; }
+  .mm-rw:nth-child(5) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 6px); box-sizing: border-box; }
   .mm-glass { border-width: 7px; }
   .cs .mm-wins .mm-fx { padding: 14px 4px 8px; } .cs .mm-wins .mm-fx .sf { padding: 4px 8px; } .cs .mm-wins .mm-fx .sf.big { padding: 6px 9px; }
   .cs .mm-wins .mm-fx .sf, .cs .mm-wins .mm-fx .sf i { font-size: 12.5px !important; } .cs .mm-wins .mm-fx .sf.big, .cs .mm-wins .mm-fx .sf.big i { font-size: 18px !important; }
@@ -5968,7 +5970,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
         ${plaque(8, 'Impact of the project')}
         <h3 class="mm-h" data-rv>Checking in: the results.</h3>
         <div class="mm-bd mm-wins" data-rv>
-          ${MM.board.map(([a, b, t, d], i) => `<div class="mm-win" style="--i:${i}"><div class="mm-glass"><div class="mm-fx">${a ? `<span class="sf" data-t="${a}"></span><i>↓</i>` : ''}<span class="sf big" data-t="${b}"></span></div><i class="cur l"></i><i class="cur r"></i></div><i class="sill"></i><div class="mm-rt"><b>${t}</b><span>${d}</span></div></div>`).join('')}
+          ${MM.board.map(([a, b, t, d], i) => `<div class="mm-rw" style="--i:${i}"><div class="mm-glass"><div class="mm-fx">${a ? `<span class="sf" data-t="${a}"></span><i>↓</i>` : ''}<span class="sf big" data-t="${b}"></span></div><i class="cur l"></i><i class="cur r"></i></div><i class="sill"></i><div class="mm-rt"><b>${t}</b><span>${d}</span></div></div>`).join('')}
         </div>
       </section>
 
