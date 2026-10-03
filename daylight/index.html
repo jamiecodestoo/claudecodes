@@ -3786,6 +3786,12 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
 .kicker svg, .c3-k svg, .sw-bk img, .mk .halo { will-change: transform; }
 .jcard .jc-in, .jcard, .compass, .mapctl, .jcar, .jtl { will-change: transform, opacity; }
 .journey .pin-wrap, #jPin { contain: layout paint; }
+
+/* reveal text never pins the page: it plays by itself once it scrolls into view */
+.story { margin-top: 0 !important; height: auto !important; }
+.story-pin { position: relative !important; height: auto !important; padding: 16vh 0 14vh; overflow: visible; }
+.ll-rev-track { height: auto !important; }
+.ll-rev-pin { position: relative !important; height: auto !important; padding: 16vh 0; }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -4598,7 +4604,7 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
   function layoutStory() { sTop = top(story); sRange = Math.max(1, story.offsetHeight - vh); buildDoodles(); lastQ = -1; }
   let lastQ = -1;
   function frameStory(y) {
-    const q = mobile ? playIn(tell, 'st', 2800) : clamp((y - sTop + vh * .25) / (sRange * .85));
+    const q = playIn(tell, 'st', 2800);
     if (Math.abs(q - lastQ) < .001) return; lastQ = q;
     const lit = q * words.length * 1.05;
     const b0 = DIMW(); words.forEach((w, i) => { w.el.style.opacity = (b0 + (1 - b0) * clamp(lit - i)).toFixed(3); });
@@ -4797,7 +4803,11 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
         if (cache[key]) return show(cache[key]);
         const img = new Image(); img.decoding = 'async';
         img.onload = () => { const c = document.createElement('canvas'); c.className = 'mapbake'; c.width = Math.round(MW * R); c.height = Math.round(MH * R);
-          const x = c.getContext('2d'); x.scale(R, R); x.drawImage(img, 0, 0, MW, MH); URL.revokeObjectURL(img.src); cache[key] = c;
+          const x = c.getContext('2d'); x.scale(R, R); x.drawImage(img, 0, 0, MW, MH); URL.revokeObjectURL(img.src);
+          // the edges dissolve into the page: solid in the middle, fading out towards every side
+          x.globalCompositeOperation = 'destination-in'; x.save(); x.translate(MW / 2, MH / 2); x.scale(MW / 2, MH / 2);
+          const g = x.createRadialGradient(0, 0, 0, 0, 0, 1); g.addColorStop(0, '#000'); g.addColorStop(.58, '#000'); g.addColorStop(.8, 'rgba(0,0,0,.55)'); g.addColorStop(.97, 'rgba(0,0,0,0)');
+          x.fillStyle = g; x.fillRect(-1, -1, 2, 2); x.restore(); x.globalCompositeOperation = 'source-over'; cache[key] = c;
           if ((document.documentElement.dataset.theme === 'dark') === dark) show(c); };
         img.onerror = () => { mapArt.style.visibility = ''; };
         img.src = URL.createObjectURL(new Blob([svgFor(dark)], { type: 'image/svg+xml' }));
@@ -5395,7 +5405,7 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
       const H = root.scrollHeight - root.clientHeight; prog.style.setProperty('--p', (root.scrollTop / Math.max(1, H) * 100).toFixed(2) + '%');
       let name = 'The story'; chs.forEach(c => { if (c.getBoundingClientRect().top < vh * .5) name = c.dataset.ch; }); if (chEl.textContent !== name) chEl.textContent = name;
       // big lines light up word by word as they cross the screen
-      scrubs.forEach(s => { const r = s.el.getBoundingClientRect(); if (!PHONE && (r.bottom < -50 || r.top > vh + 50)) return; const f = PHONE ? 1 : clamp((vh * .82 - r.top) / (vh * .5)), k = Math.round(f * s.w.length); if (k !== s.n) { s.n = k; s.w.forEach((w, i) => w.classList.toggle('lit', i < k)); } });
+      scrubs.forEach(s => { if (s.n >= s.w.length) return; if (!s.t0) { const r = s.el.getBoundingClientRect(); if (r.top > vh * .85 || r.bottom < 0) return; s.t0 = performance.now(); } const f = clamp((performance.now() - s.t0) / Math.max(900, s.w.length * 90)), k = Math.round(f * s.w.length); if (k !== s.n) { s.n = k; s.w.forEach((w, i) => w.classList.toggle('lit', i < k)); } });
       const c = Math.min(3, Math.floor(prg(comic) * 4.2)); if (c !== S.c) { S.c = c;
         panels.forEach((p, k) => { p.classList.toggle('on', k === c); p.classList.toggle('seen', k < c); });
         cap.innerHTML = `${ED.comic[c][1]}<small>${ED.comic[c][2]}</small>`; }
@@ -6419,7 +6429,7 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
   const llRoles = $('#llRoles');
   function frameLL(y) {
     if (!llRoles.classList.contains('in') && llRoles.getBoundingClientRect().top < vh * .82) llRoles.classList.add('in');
-    const p = mobile ? playIn(llRevEl, 'll', 2600) : clamp((y - rvTop + vh * .25) / (rvRange * .85)), lit = p * llWords.length * 1.05;
+    const p = playIn(llRevEl, 'll', 2600), lit = p * llWords.length * 1.05;
     if (Math.abs(lit - llLit) < .05) return; llLit = lit;
     const b1 = DIMW(); llWords.forEach((w, i) => { w.style.opacity = (b1 + (1 - b1) * clamp(lit - i)).toFixed(3); });
     llMarks.forEach(m => m.el.classList.toggle('on', lit >= m.last + 1));
