@@ -2,7 +2,7 @@
 // has its own tab title and its own preview card when shared. Run: node build.mjs
 import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from 'node:fs';
 
-const SITE = 'https://jameschugh.com';
+const SITE = 'https://www.jameschugh.com';
 const NAME = 'James Chugh';
 const HEAD = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n';
 const src = readFileSync('index.html', 'utf8');
