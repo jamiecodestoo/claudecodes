@@ -3776,7 +3776,7 @@ html:root[data-theme="dark"] :is(.btn-ink, .btn-ghost, .cs-close, .bh-cta, .mail
 :root[data-theme="dark"] .c3-tbar i { background: #5BD69A !important; }
 
 /* the baked map: one bitmap, moved by the GPU */
-.world3 > canvas.mapbake { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+.world3 > .mapbake { position: absolute; max-width: none; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
 .world3 { backface-visibility: hidden; }
 @media (max-width: 1100px) { .spot2 { display: none !important; } }
 
@@ -3936,12 +3936,22 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
   .c3-galrow { justify-content: flex-start !important; overflow-x: auto !important; scroll-snap-type: x mandatory; padding: 14px 16px 30px !important; gap: 14px !important; }
   .c3-galrow img { width: 64vw !important; scroll-snap-align: center; }
 }
+@media (max-width: 859px) {
+  .c3-msgs .c3-pb.in { align-self: flex-start; margin: 2px 0 0 52px; padding: 10px 16px; font-size: 14px; }
+  /* iterations: the phones stand on their own, no card, no corner marks, inside the gutter */
+  #c3Evo .c3-card { padding: 0; background: none !important; box-shadow: none; border-radius: 0; }
+  #c3Evo .c3-card .cm { display: none; }
+  #c3Evo .c3-slide { padding: 0 16px !important; }
+  #c3Evo .c3-slide .c3-card img { width: auto; max-width: 100%; max-height: 50svh; border-radius: 0 !important; box-shadow: none !important; filter: drop-shadow(0 14px 22px rgba(19, 35, 58, .18)); }
+  /* screen rows: nothing gets cut, shadows and the hairline breathe */
+  /* screen rows run edge to edge: they scroll under the gutter instead of being cut 16px early */
+  #c3Strip, .c3-strip, .c3-galrow { box-sizing: border-box; width: 100vw !important; max-width: none !important; margin-left: calc(50% - 50vw) !important; margin-right: 0 !important; scroll-padding-inline: 16px; clip-path: none !important; mask: none !important; -webkit-mask: none !important; }
+}
 @media (max-width: 859px) { .cs img[data-z], .c3-galrow img, #c3Strip img, .c3-b2 span { border-radius: 40px !important; outline: 0 !important; box-shadow: 0 0 0 .8px rgba(19, 35, 58, .16), 0 16px 30px -22px rgba(19, 35, 58, .45) !important; } .c3-b2 img { box-shadow: none !important; border-radius: 0 !important; } }
 
 /* case studies: a thin neutral progress line at the very top; name and theme as two separate buttons */
 .cs-prog { position: sticky; top: 0; z-index: 6; height: 3px; margin-bottom: -3px; pointer-events: none; }
-.cs-prog i { display: block; height: 100%; background: color-mix(in srgb, var(--ink) 55%, transparent); transform: scaleX(0); transform-origin: 0 50%; }
-:root[data-theme="dark"] .cs-prog i { background: rgba(255, 255, 255, .6); }
+.cs-prog i { display: block; height: 100%; background: var(--pc, var(--coral)); transform: scaleX(0); transform-origin: 0 50%; border-radius: 0 3px 3px 0; }
 .c3-prog { display: none !important; }
 .cs-right { background: none !important; box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; padding: 0 !important; gap: 8px !important; }
 .cs-ttl { display: inline-flex; align-items: center; height: 48px; padding: 0 18px; border-radius: 999px; box-sizing: border-box;
@@ -4991,20 +5001,26 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
         if (dark) { const keep = []; b = b.replace(/<mask[\s\S]*?<\/mask>/g, m => (keep.push(m), `@@M${keep.length - 1}@@`));
           b = b.replace(/(fill|stroke)="(#[0-9A-Fa-f]{3,6})"/g, (m, a, c) => { const t = DARK[a][c] || DARK[a][c.toUpperCase()]; return t ? `${a}="${t}"` : m; });
           b = b.replace(/@@M(\d+)@@/g, (m, i) => keep[+i]); }
-        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${MW} ${MH}" width="${MW}" height="${MH}">${b}</svg>`; };
+        // decode the svg straight at the bitmap size: a full-size decode is ~75MB and can kill a phone's tab
+        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${MW} ${MH}" width="${Math.round(MW * R)}" height="${Math.round(MH * R)}">${b}</svg>`; };
       const cache = {}; let cv = null;
-      const R = Math.min(innerWidth < 860 ? .5 : .75, 4096 / MW);
+      const R = Math.min(innerWidth < 860 ? .42 : .75, 4096 / MW);
       const bake = () => { const dark = document.documentElement.dataset.theme === 'dark', key = dark ? 'd' : 'l';
         const show = c => { if (cv && cv !== c) cv.remove(); cv = c; if (!c.isConnected) mapArt.after(c); mapArt.style.visibility = 'hidden'; };
         if (cache[key]) return show(cache[key]);
         const img = new Image(); img.decoding = 'async';
         img.onload = () => { const c = document.createElement('canvas'); c.className = 'mapbake'; c.width = Math.round(MW * R); c.height = Math.round(MH * R);
-          const x = c.getContext('2d'); x.scale(R, R); x.drawImage(img, 0, 0, MW, MH); URL.revokeObjectURL(img.src);
+          const x = c.getContext('2d'); if (!x) { mapArt.style.visibility = ''; return; } x.drawImage(img, 0, 0, c.width, c.height); x.scale(R, R); URL.revokeObjectURL(img.src);
           // the edges dissolve into the page: solid in the middle, fading out towards every side
           x.globalCompositeOperation = 'destination-in'; x.save(); x.translate(MW / 2, MH / 2); x.scale(MW / 2, MH / 2);
           const g = x.createRadialGradient(0, 0, 0, 0, 0, 1); g.addColorStop(0, '#000'); g.addColorStop(.58, '#000'); g.addColorStop(.8, 'rgba(0,0,0,.55)'); g.addColorStop(.97, 'rgba(0,0,0,0)');
-          x.fillStyle = g; x.fillRect(-1, -1, 2, 2); x.restore(); x.globalCompositeOperation = 'source-over'; cache[key] = c;
-          if ((document.documentElement.dataset.theme === 'dark') === dark) show(c); };
+          x.fillStyle = g; x.fillRect(-1, -1, 2, 2); x.restore(); x.globalCompositeOperation = 'source-over';
+          // hand the pixels to a plain image and free the canvas: the browser can drop and re-decode an image under memory pressure, a canvas it can't
+          c.toBlob(b => { const out = new Image(); out.className = 'mapbake'; out.alt = ''; out.decoding = 'async';
+            const done = () => { c.width = c.height = 0; if (innerWidth < 860) for (const k in cache) if (k !== key) { URL.revokeObjectURL(cache[k].src); delete cache[k]; }
+              cache[key] = out; if ((document.documentElement.dataset.theme === 'dark') === dark) show(out); };
+            if (!b) { cache[key] = c; if ((document.documentElement.dataset.theme === 'dark') === dark) show(c); return; }
+            out.onload = done; out.onerror = () => { mapArt.style.visibility = ''; }; out.src = URL.createObjectURL(b); }, 'image/webp', .9); };
         img.onerror = () => { mapArt.style.visibility = ''; };
         img.src = URL.createObjectURL(new Blob([svgFor(dark)], { type: 'image/svg+xml' }));
       };
@@ -5649,7 +5665,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
       $('.c3-phone', fun).after(fnav); let fi = 0;
       fnav.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (!b) return; fi = Math.max(0, Math.min(3, fi + +b.dataset.d)); fun._p = (fi + .01) / 4.3; update(); fnav.children[0].disabled = fi === 0; fnav.children[1].disabled = fi === 3; });
       // 3 · the quotes: one Next button, no dots
-      chat._p = .01; const nq = btn('Next quote →'); $('.c3-chat', chat).after(nq); let qi = 1;
+      chat._p = .01; const nq = btn('Next quote →', 'in'); $('.c3-msgs', chat).append(nq); let qi = 1;
       nq.addEventListener('click', () => { qi = Math.min(L, qi + 1); chat._p = (qi - .99) / (L + .3); update(); if (qi >= L) nq.hidden = true; });
       // 4 · the whiteboard: one button reveals the five problems; tap any to read it
       const tb = btn('See the top 5 problems'); $('.c3-board', board).after(tb);
@@ -6352,7 +6368,12 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
     r.innerHTML = `<span class="cs-ttl">${CS_NAME[w.id] || w.name}</span><button type="button" class="cs-theme" aria-label="Switch theme"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>`;
     bar.appendChild(r);
     if (!$('.cs-prog', csEl)) { const pg = document.createElement('div'); pg.className = 'cs-prog'; pg.innerHTML = '<i></i>'; csEl.prepend(pg); }
-    if (!csBar.sc) csEl.addEventListener('scroll', csBar.sc = () => { const pg = $('.cs-prog i', csEl); if (pg) pg.style.transform = `scaleX(${(csEl.scrollTop / Math.max(1, csEl.scrollHeight - csEl.clientHeight)).toFixed(4)})`; }, { passive: true });
+    $('.cs-prog', csEl).style.setProperty('--pc', w.c || 'var(--coral)'); csBar.p = 0; csBar.y = 0;
+    // the page grows as sections load, so only let the bar slide back when you scroll up
+    if (!csBar.sc) csEl.addEventListener('scroll', csBar.sc = () => { const pg = $('.cs-prog i', csEl); if (!pg) return;
+      const y = csEl.scrollTop, max = Math.max(1, csEl.scrollHeight - csEl.clientHeight), raw = y >= max - 2 ? 1 : y / max;
+      csBar.p = y < csBar.y - 1 || y < 2 ? raw : Math.max(csBar.p, raw); csBar.y = y;
+      pg.style.transform = `scaleX(${csBar.p.toFixed(4)})`; }, { passive: true });
     $('.cs-theme', r).addEventListener('click', () => { const t = $('#themeBtn'); if (t) t.click(); });
   }
   function csHTML(w) {
