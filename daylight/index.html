@@ -6550,13 +6550,13 @@ html:has(.cs.open) .np { z-index: 95; top: calc(env(safe-area-inset-top, 0px) + 
       { left: '0px', top: '0px', width: innerWidth + 'px', height: innerHeight + 'px', borderRadius: '0px', opacity: 1, offset: .6 },
       { left: '0px', top: '0px', width: innerWidth + 'px', height: innerHeight + 'px', borderRadius: '0px', opacity: 0 }], { duration: reduce ? 1 : 1300, easing: 'cubic-bezier(.7, 0, .2, 1)', fill: 'forwards' });
     ga.onfinish = () => g.remove();
-    lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden';
+    lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; setRoute(k.w);
     setTimeout(() => { csEl.classList.add('ready'); $('#csClose').focus({ preventScroll: true }); }, 520);
   }
   let csFrom = null;
   function openCaseAt(id, from) {
     const k = wks.find(x => x.w.id === id); if (!k || picked) return;
-    picked = k; csFrom = from; const r = from.getBoundingClientRect();
+    picked = k; csFrom = from; const r = from.getBoundingClientRect(); setRoute(k.w);
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
     csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
     csEl.style.transition = 'none'; csEl.style.clipPath = rectClip(r); csEl.classList.add('open'); csEl.offsetWidth;
@@ -6565,7 +6565,7 @@ html:has(.cs.open) .np { z-index: 95; top: calc(env(safe-area-inset-top, 0px) + 
     setTimeout(() => { csEl.classList.add('ready'); $('#csClose').focus({ preventScroll: true }); }, 520);
   }
   function closeCase() {
-    if (!picked) return; const k = picked;
+    if (!picked) return; const k = picked; setRoute(null, 'replace');
     if (csFrom) { const from = csFrom; csFrom = null; csEl.classList.remove('ready');
       const r = from.getBoundingClientRect(); csEl.style.transition = 'clip-path .7s cubic-bezier(.7, 0, .2, 1)'; csEl.style.clipPath = rectClip(r);
       setTimeout(() => { csEl.classList.remove('open', 'ed', 'mm', 'sw', 'soon'); csEl.innerHTML = ''; edCleanup(); document.documentElement.style.overflow = ''; lenis && lenis.start();
@@ -6585,11 +6585,41 @@ html:has(.cs.open) .np { z-index: 95; top: calc(env(safe-area-inset-top, 0px) + 
   function switchCase(id) {
     const k = wks.find(x => x.w.id === id); if (!k || !picked || k === picked) return;
     edCleanup(); picked.el.style.opacity = 1; picked.el.style.transform = stand(0); rim(picked, 0); picked.z = 0;
-    picked = k; k.el.style.transform = faced(k); k.el.style.opacity = 0;
+    picked = k; k.el.style.transform = faced(k); k.el.style.opacity = 0; setRoute(k.w, 'replace');
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
     csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
     $('#csClose').focus({ preventScroll: true });
   }
+  /* ---------- addresses: every case study and section gets its own link and tab title ---------- */
+  const SITE = 'James Chugh';
+  const CS_SLUG = { coupon: 'eazydiner', requests: 'makemytrip', swipr: 'swipr', lastlook: 'lastlook', campusx: 'campusx' };
+  const SEC_PATH = { journey: ['journey', 'The journey'], work: ['work', 'Work'], life: ['about', 'About me'], hello: ['contact', 'Say hi'] };
+  const ROUTED = location.protocol.startsWith('http') && /(^|\.)jameschugh\.com$|\.vercel\.app$|^localhost$|^127\./.test(location.hostname);
+  const HOME_TITLE = SITE;
+  const csTitle = w => `${CS_NAME[w.id] || w.name} · ${w.co.split(' · ')[0]} | ${SITE}`;
+  const idFromPath = () => { const m = location.pathname.match(/^\/work\/([a-z0-9-]+)\/?$/); if (!m) return null; return Object.keys(CS_SLUG).find(k => CS_SLUG[k] === m[1]) || null; };
+  const setRoute = (w, how = 'push') => {
+    document.title = w ? csTitle(w) : HOME_TITLE;
+    if (!ROUTED) return;
+    const path = w ? `/work/${CS_SLUG[w.id]}` : '/';
+    if (location.pathname === path) return;
+    try { history[how === 'push' ? 'pushState' : 'replaceState']({ cs: w ? w.id : null }, '', path + (w ? '' : location.search)); } catch (_) {}
+  };
+  // a still point in the middle of the screen for links that open a case study directly
+  const csAnchor = () => { let a = document.getElementById('csAnchor'); if (!a) { a = document.createElement('i'); a.id = 'csAnchor'; a.setAttribute('aria-hidden', 'true'); Object.assign(a.style, { position: 'fixed', left: '50%', top: '50%', width: '2px', height: '2px', pointerEvents: 'none' }); document.body.appendChild(a); } return a; };
+  addEventListener('popstate', () => {
+    const id = idFromPath();
+    if (id) { if (!picked) openCaseAt(id, csAnchor()); else if (picked.w.id !== id) switchCase(id); document.title = csTitle(wks.find(x => x.w.id === id).w); }
+    else { if (picked) closeCase(); document.title = HOME_TITLE; }
+  });
+  // sections: /journey, /work, /about, /contact
+  $$('[data-go]').forEach(a => a.addEventListener('click', () => { const sp = SEC_PATH[a.dataset.go]; document.title = sp ? `${sp[1]} | ${SITE}` : HOME_TITLE;
+    if (ROUTED) { try { history.replaceState(null, '', sp ? '/' + sp[0] : '/'); } catch (_) {} } }));
+  if (ROUTED) addEventListener('load', () => setTimeout(() => {
+    const id = idFromPath(); if (id) { openCaseAt(id, csAnchor()); document.title = csTitle(wks.find(x => x.w.id === id).w); return; }
+    const sec = Object.keys(SEC_PATH).find(k => location.pathname.replace(/\/$/, '') === '/' + SEC_PATH[k][0]);
+    if (sec) { const el = sec === 'work' ? $('#boxTrack') : $('#' + sec); if (el) { goTo(top(el) + (sec === 'journey' ? 4 : 0)); document.title = `${SEC_PATH[sec][1]} | ${SITE}`; } }
+  }, 350));
   csEl.addEventListener('click', e => { if (e.target.closest('#csClose, [data-close]')) closeCase(); const sw = e.target.closest('[data-switch]'); if (sw) switchCase(sw.dataset.switch); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && picked) closeCase(); });
   function frameWork(dt) {
