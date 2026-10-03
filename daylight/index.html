@@ -3686,13 +3686,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
 .logo .jc { position: absolute; inset: 0; display: grid; place-items: center; background: var(--ink); color: var(--paper); font: 800 12.5px/1 var(--sans); letter-spacing: -.02em; opacity: 0; scale: .6; transition: opacity .35s, scale .45s var(--spring); }
 @media (max-width: 859px) {
   /* hero: one painted sky from edge to edge, no flat blue, no places bar */
-  .stage { background:
-      radial-gradient(38% 9% at 18% 30%, rgba(255, 255, 255, .55), transparent 70%),
-      radial-gradient(30% 7% at 30% 27%, rgba(255, 255, 255, .45), transparent 70%),
-      radial-gradient(42% 10% at 82% 44%, rgba(255, 255, 255, .5), transparent 70%),
-      radial-gradient(28% 7% at 70% 41%, rgba(255, 255, 255, .4), transparent 70%),
-      radial-gradient(46% 9% at 40% 58%, rgba(255, 255, 255, .42), transparent 70%),
-      linear-gradient(180deg, #2B82D4 0%, #1A71C4 40%, #0E64B7 100%) !important; }
+  .stage { background: linear-gradient(180deg, #2C86D8 0%, #1C74C6 45%, #0E64B7 100%) !important; }
   :root[data-theme="dark"] .stage { background: #09090B !important; }
   .cam { -webkit-mask: linear-gradient(transparent, #000 9%); mask: linear-gradient(transparent, #000 9%); }
   .stage .places, #places { display: none !important; }
@@ -3982,6 +3976,18 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
 :root[data-theme="dark"] .cs .mm-fx { background: linear-gradient(180deg, #3A342D, #302A24); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06), inset 0 0 0 8px #353029, inset 0 0 0 9px rgba(255, 255, 255, .05); }
 :root[data-theme="dark"] .cs .mm-fx .sf { background: #F4ECDD; }
 @media (max-width: 859px) { .cs .mm-row { grid-template-columns: 1fr !important; justify-items: center; text-align: center; } .cs .mm-fx { width: 180px; min-height: 160px; } }
+
+/* phone hero: crisp headline, flat illustrated clouds instead of blurry blobs */
+@media (max-width: 859px) {
+  .hero-copy h1 { text-shadow: 0 1px 2px rgba(10, 40, 90, .25) !important; }
+  .hero-copy .sub, .hero-copy .hey { text-shadow: 0 1px 2px rgba(10, 40, 90, .3) !important; }
+  .hero-copy .sub .br { display: block; }
+  .stage::before { content: ""; position: absolute; inset: 0 0 auto; height: 70%; z-index: 0; pointer-events: none; opacity: .9;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 44'%3E%3Cpath d='M14 40h92a14 14 0 0 0 0-28 20 20 0 0 0-36-8A18 18 0 0 0 38 14 13 13 0 0 0 14 40z' fill='%23fff'/%3E%3C/svg%3E") 10% 78% / 104px auto no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 44'%3E%3Cpath d='M14 40h92a14 14 0 0 0 0-28 20 20 0 0 0-36-8A18 18 0 0 0 38 14 13 13 0 0 0 14 40z' fill='%23fff'/%3E%3C/svg%3E") 88% 90% / 136px auto no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 44'%3E%3Cpath d='M14 40h92a14 14 0 0 0 0-28 20 20 0 0 0-36-8A18 18 0 0 0 38 14 13 13 0 0 0 14 40z' fill='%23fff'/%3E%3C/svg%3E") 58% 70% / 60px auto no-repeat;
+    animation: phcloud 40s ease-in-out infinite alternate; }
+  :root[data-theme="dark"] .stage::before { display: none; }
+}
+@keyframes phcloud { to { transform: translateX(14px); } }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -4077,7 +4083,7 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
         <span class="ln"><span>Designing so you</span></span>
         <span class="ln" style="--dl:1.9s"><span>don't <span class="rq b-sun" style="--b:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath d='M7 33C18 12 58 8 108 9c42 1 78-2 87 14 5 11-4 24-35 27-40 4-100 5-137 1C6 49 1 43 7 33z' fill='%23FFD23F'/%3E%3C/svg%3E&quot;)">rage quit.<svg viewBox="0 0 220 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 18C40 8 80 22 118 12s70 8 98-4"/></svg></span></span></span>
       </h1>
-      <p class="sub">Product designer. Mechanical engineer who Googled his way here.</p>
+      <p class="sub">Product designer. Mechanical engineer who <span class="br">Googled his way here.</span></p>
     </div>
     <div class="scroll-cue" id="cue"><i></i>scroll to fly in</div>
 
