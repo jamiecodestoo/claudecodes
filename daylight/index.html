@@ -4175,6 +4175,25 @@ html:root .move-hint.in { transform: rotate(-3deg); }
 html:root .move-hint.done { opacity: 0 !important; }
 html:root .move-hint svg { width: 30px; height: 22px; stroke: var(--coral, #FF6B4A); stroke-width: 2; }
 html:root[data-theme="dark"] .move-hint { color: #F2F2F2; background: rgba(24, 24, 24, .45); border-color: rgba(255, 255, 255, .2); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 14px 30px -16px rgba(0, 0, 0, .7); }
+/* About me: fun facts in tabs, and links instead of "Say hi" */
+.s-fun { margin: 14px 0 4px; }
+.sf-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.sf-tabs button { padding: 7px 13px; border-radius: 999px; font: 700 13px/1 var(--sans); color: var(--ink-2); background: rgba(19, 35, 58, .06); transition: background .25s, color .25s, transform .25s var(--ease); }
+.sf-tabs button:hover { transform: translateY(-1px); }
+.sf-tabs button[aria-selected="true"] { color: #fff; background: var(--fc); }
+.sf-pane { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; animation: sfIn .4s var(--ease); }
+.sf-pane li { padding: 10px 12px 10px 14px; border-radius: 14px; background: rgba(19, 35, 58, .04); border-left: 3px solid var(--fc); }
+.sf-pane b { display: block; font: 700 14.5px/1.3 var(--sans); }
+.sf-pane span { display: block; margin-top: 2px; font-size: 13.5px; line-height: 1.4; color: var(--ink-2); }
+@keyframes sfIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+:root[data-theme="dark"] .sf-tabs button:not([aria-selected="true"]), :root[data-theme="dark"] .sf-pane li { background: rgba(255, 255, 255, .07); }
+.s-link { flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 12px; border-radius: 999px; font: 700 13.5px/1 var(--sans); color: var(--ink); background: var(--card); box-shadow: 0 0 0 1px var(--line), 0 6px 16px -10px rgba(19, 35, 58, .5); transition: transform .25s var(--ease); white-space: nowrap; }
+.s-link:hover { transform: translateY(-2px); }
+.sheet .row:has(.s-link) { flex-wrap: nowrap; gap: 8px; }
+.s-link, .s-link:hover { text-decoration: none; }
+@media (max-width: 520px) { .s-link { padding: 9px 6px; gap: 6px; font-size: 12.5px; } .s-link i { width: 20px; height: 20px; } }
+.s-link i { width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center; flex: none; }
+.s-link svg { width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 html:root .scroll-cue { left: 50%; right: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 112px); padding: 10px 20px 10px 12px; border-radius: 999px; gap: 10px;
   font: italic 18px/1 var(--serif); color: #fff; text-shadow: 0 1px 6px rgba(10, 30, 50, .35);
   background: rgba(255, 255, 255, .16); backdrop-filter: blur(16px) saturate(1.5); -webkit-backdrop-filter: blur(16px) saturate(1.5);
@@ -4290,6 +4309,7 @@ html:root .scroll-cue i::after { top: 5px; }
       <p class="role" id="s-r"></p>
       <p class="lead" id="s-l"></p>
       <div class="did" id="s-d"></div>
+      <div class="s-fun" id="s-f" hidden></div>
       <div class="s-gal" id="s-p"></div>
       <ul class="nums" id="s-n"></ul>
       <div class="row" id="s-row"></div>
@@ -4657,9 +4677,15 @@ html:root .scroll-cue i::after { top: 5px; }
       n: [['500', 'properties validated'], ['6,000+', 'approved next']], j: 6, mail: 'mailto:jameschughh@gmail.com?subject=Your%20OYO%20work', csL: 'Ask me about it' },
     me: { c: '#F2B705', side: 'left', tag: 'About me', t: 'Hey, I’m James', r: '23 · Product designer · Builder · Engineer',
       h: 'I design so people don’t rage quit.',
-      st: ['Two years across dining, travel and hospitality, designing products used by millions.', 'I started as a mechanical engineer, so I still like knowing how things work under the hood.'],
+      st: [],
+      fun: [
+        ['School', '#D2553A', [['Mechanical Engineering, NSUT', '7 CGPA. Never liked it. Graduated anyway.'], ['Cleared JEE and Waterloo Maths', 'Then picked Delhi. Still think I was right.'], ['Found design by accident', 'A friend’s app flopped. I opened Figma and never closed it.']]],
+        ['Work', '#2F7FD8', [['2 years, 4 logos', 'Hindustan Times → EazyDiner → MakeMyTrip → OYO. Products used by millions.'], ['+41% payment success', 'My coupon redesign at EazyDiner.'], ['LastLook, my own iOS app', 'Designed, built and shipped it solo. 400+ downloads.']]],
+        ['Off the clock', '#4F9E4A', [['Drums, piano and guitar', 'The happy noise. Apple Music is on. Always.'], ['Olive, my roommate', 'A golden retriever. She runs the flat.'], ['Delhi ⇄ Dubai', 'Long drives, music way too loud. Gym is my reset button.']]]
+      ],
       n: [['2 yrs', 'industry experience'], ['3', 'products shipped at scale']], j: 7,
-      photos: [['photo', 'Me, mid-laugh'], ['life-coldplay', 'Coldplay. Best night ever.']], mail: 'mailto:jameschughh@gmail.com', csL: 'Say hi', about: true }
+      photos: [['photo', 'Me, mid-laugh'], ['life-coldplay', 'Coldplay. Best night ever.'], ['life-olive', 'My roommate, Olive']],
+      links: true, about: true }
   };
 
   const ICONS = {
@@ -4852,13 +4878,17 @@ html:root .scroll-cue i::after { top: 5px; }
     const P = PLACES[id], S = STOPS[P.j];
     sheet.style.setProperty('--c', P.c);
     $('#s-tag').textContent = P.tag; $('#s-t').textContent = P.t; $('#s-r').textContent = P.r; $('#s-l').textContent = P.h;
-    $('#s-d').innerHTML = P.st.map(t => `<p>${t}</p>`).join('');
+    $('#s-d').innerHTML = P.st.map(t => `<p>${t}</p>`).join(''); $('#s-d').hidden = !P.st.length;
+    const fun = P.fun || [];
+    $('#s-f').innerHTML = fun.length ? `<div class="sf-tabs" role="tablist">${fun.map(([t, c], k) => `<button type="button" role="tab" data-ft="${k}" style="--fc:${c}" aria-selected="${!k}">${t}</button>`).join('')}</div>`
+      + fun.map(([, c, items], k) => `<ul class="sf-pane" data-fp="${k}" style="--fc:${c}"${k ? ' hidden' : ''}>${items.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>`).join('') : '';
+    $('#s-f').hidden = !fun.length;
     $('#s-n').innerHTML = P.n.map(([b, s]) => `<li><b>${b}</b><span>${s}</span></li>`).join('');
     const ph = P.photos || (S && S.photos) || [];
     $('#s-p').innerHTML = ph.length ? `<p>Gallery</p><div style="--n:${ph.length}">${ph.map(([src, cap], k) => `<button type="button" class="jc-ph" data-sg="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div>` : '';
     $('#s-p').hidden = !ph.length;
     $('#s-n').hidden = !P.n.length;
-    const cta = P.cs ? `<button type="button" class="btn btn-ink s-cta" data-case="${P.cs}">${P.csL} <span aria-hidden="true">→</span></button>` : P.mail ? `<a class="btn btn-ink s-cta" href="${P.mail}">${P.csL} <span aria-hidden="true">↗</span></a>` : '';
+    const cta = P.links ? `<a class="s-link" href="${LI}" target="_blank" rel="noopener"><i style="background:#0A66C2"><svg viewBox="0 0 24 24">${ICONS.in}</svg></i>LinkedIn</a><a class="s-link" href="${IG}" target="_blank" rel="noopener"><i style="background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF)"><svg viewBox="0 0 24 24">${ICONS.ig}</svg></i>Instagram</a><a class="s-link" href="mailto:jameschughh@gmail.com"><i style="background:#EA4335"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2"/><path d="M3.5 6.5L12 13l8.5-6.5" fill="none" stroke="#fff" stroke-width="2"/></svg></i>Gmail</a>` : P.cs ? `<button type="button" class="btn btn-ink s-cta" data-case="${P.cs}">${P.csL} <span aria-hidden="true">→</span></button>` : P.mail ? `<a class="btn btn-ink s-cta" href="${P.mail}">${P.csL} <span aria-hidden="true">↗</span></a>` : '';
     $('#s-row').innerHTML = cta; $('#s-row').hidden = !cta;
   }
 
@@ -4898,7 +4928,7 @@ html:root .scroll-cue i::after { top: 5px; }
   stage.appendChild(places);
   $$('#places button').forEach(b => b.addEventListener('click', () => focusId === b.dataset.id ? unfocus() : focus(b.dataset.id)));
   $('#s-x').addEventListener('click', unfocus);
-  sheet.addEventListener('click', e => { const w = e.target.closest('[data-walk]'); if (w) { unfocus(); walkTo(+w.dataset.walk); return; } const g = e.target.closest('[data-sg]'); if (g && focusId) { const P = PLACES[focusId]; openLB(P.j, +g.dataset.sg, P.photos && { c: P.c, when: P.tag, place: 'off the clock', title: 'That’s me', photos: P.photos }); return; } const c = e.target.closest('[data-case]'); if (c) openCaseAt(c.dataset.case, c); });
+  sheet.addEventListener('click', e => { const ft = e.target.closest('[data-ft]'); if (ft) { const k = ft.dataset.ft; $$('[data-ft]', sheet).forEach(b => b.setAttribute('aria-selected', b === ft)); $$('[data-fp]', sheet).forEach(u => u.hidden = u.dataset.fp !== k); return; } const w = e.target.closest('[data-walk]'); if (w) { unfocus(); walkTo(+w.dataset.walk); return; } const g = e.target.closest('[data-sg]'); if (g && focusId) { const P = PLACES[focusId]; openLB(P.j, +g.dataset.sg, P.photos && { c: P.c, when: P.tag, place: 'off the clock', title: 'That’s me', photos: P.photos }); return; } const c = e.target.closest('[data-case]'); if (c) openCaseAt(c.dataset.case, c); });
   addEventListener('keydown', e => { if (e.key === 'Escape') unfocus(); });
   stage.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') { ptr.x = e.clientX / vw * 2 - 1; ptr.y = e.clientY / vh * 2 - 1; } });
   stage.addEventListener('click', e => { if (focusId && !e.target.closest('.hot, .pin, .sheet, .places')) unfocus(); });
