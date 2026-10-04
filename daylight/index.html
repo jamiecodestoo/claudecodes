@@ -4282,6 +4282,7 @@ html:root .scroll-cue i::after { top: 5px; }
       <p class="sub">Product designer. Mechanical engineer who <span class="br">Googled his way here.</span></p>
     </div>
     <div class="scroll-cue" id="cue"><i></i>scroll to fly in</div>
+    <script>setTimeout(() => { const c = document.getElementById('cue'); if (c && scrollY < 4 && !document.hidden) c.classList.add('idle'); }, Math.max(0, 2000 - performance.now()));</script>
 
     <aside class="sheet" id="sheet" aria-live="polite">
       <div class="sh-top"><span class="tag" id="s-tag"></span><button class="x" id="s-x" aria-label="Close">×</button></div>
@@ -4819,13 +4820,13 @@ html:root .scroll-cue i::after { top: 5px; }
   let SW = 0, SH = 0, baseX = 0, baseY = 0, ax = .5, vTop = 0, vRange = 1, pV = 0;
   const cur = { x: 0, y: 0, s: 1.18 }, ptr = { x: 0, y: 0, sx: 0, sy: 0 };
   let focusId = null, rate = 2;
-  // "scroll to fly in" appears shortly after the page opens; it hides once you scroll and returns if you settle back at the top
+  // "scroll to fly in" appears 2s after the page opens (or at once, if loading took longer); it hides once you scroll and returns if you settle back at the top
   let cueT = 0;
   const cueArm = (wait = 1500) => { clearTimeout(cueT);
     cueT = setTimeout(() => { if (pV < .002 && !focusId && !document.hidden) cue.classList.add('idle'); }, wait); };
   ['scroll', 'wheel', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, () => cueArm(), { passive: true }));
   document.addEventListener('visibilitychange', () => { if (!document.hidden) cueArm(); });
-  cueArm();
+  cueArm(Math.max(0, 2000 - performance.now()));
 
   function layoutValley() {
     // phones: the whole valley fits the width and sits above the places bar, so every place is in view
