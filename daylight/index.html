@@ -4819,13 +4819,13 @@ html:root .scroll-cue i::after { top: 5px; }
   let SW = 0, SH = 0, baseX = 0, baseY = 0, ax = .5, vTop = 0, vRange = 1, pV = 0;
   const cur = { x: 0, y: 0, s: 1.18 }, ptr = { x: 0, y: 0, sx: 0, sy: 0 };
   let focusId = null, rate = 2;
-  // "scroll to fly in" appears only once the visitor has sat still on the first screen for a few seconds
+  // "scroll to fly in" appears shortly after the page opens; it hides once you scroll and returns if you settle back at the top
   let cueT = 0;
-  const cueArm = e => { if (e && e.type === 'pointermove' && cue.classList.contains('idle')) return; cue.classList.remove('idle'); clearTimeout(cueT);
-    cueT = setTimeout(() => { if (pV < .002 && !focusId && !document.hidden) cue.classList.add('idle'); }, 3500); };
-  ['scroll', 'wheel', 'keydown', 'pointerdown', 'touchstart', 'pointermove'].forEach(ev => addEventListener(ev, cueArm, { passive: true }));
+  const cueArm = (wait = 1500) => { clearTimeout(cueT);
+    cueT = setTimeout(() => { if (pV < .002 && !focusId && !document.hidden) cue.classList.add('idle'); }, wait); };
+  ['scroll', 'wheel', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, () => cueArm(), { passive: true }));
   document.addEventListener('visibilitychange', () => { if (!document.hidden) cueArm(); });
-  cueArm(); addEventListener('load', () => cueArm(), { once: true });
+  cueArm();
 
   function layoutValley() {
     // phones: the whole valley fits the width and sits above the places bar, so every place is in view
