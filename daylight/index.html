@@ -4658,7 +4658,8 @@ html:root .scroll-cue i::after { top: 5px; }
     me: { c: '#F2B705', side: 'left', tag: 'About me', t: 'Hey, I’m James', r: '23 · Product designer · Builder · Engineer',
       h: 'I design so people don’t rage quit.',
       st: ['Two years across dining, travel and hospitality, designing products used by millions.', 'I started as a mechanical engineer, so I still like knowing how things work under the hood.'],
-      n: [['2 yrs', 'industry experience'], ['3', 'products shipped at scale']], j: 7, mail: 'mailto:jameschughh@gmail.com', csL: 'Say hi', about: true }
+      n: [['2 yrs', 'industry experience'], ['3', 'products shipped at scale']], j: 7,
+      photos: [['photo', 'Me, mid-laugh'], ['life-coldplay', 'Coldplay. Best night ever.']], mail: 'mailto:jameschughh@gmail.com', csL: 'Say hi', about: true }
   };
 
   const ICONS = {
@@ -4853,7 +4854,7 @@ html:root .scroll-cue i::after { top: 5px; }
     $('#s-tag').textContent = P.tag; $('#s-t').textContent = P.t; $('#s-r').textContent = P.r; $('#s-l').textContent = P.h;
     $('#s-d').innerHTML = P.st.map(t => `<p>${t}</p>`).join('');
     $('#s-n').innerHTML = P.n.map(([b, s]) => `<li><b>${b}</b><span>${s}</span></li>`).join('');
-    const ph = (S && S.photos) || [];
+    const ph = P.photos || (S && S.photos) || [];
     $('#s-p').innerHTML = ph.length ? `<p>Gallery</p><div style="--n:${ph.length}">${ph.map(([src, cap], k) => `<button type="button" class="jc-ph" data-sg="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div>` : '';
     $('#s-p').hidden = !ph.length;
     $('#s-n').hidden = !P.n.length;
@@ -4897,7 +4898,7 @@ html:root .scroll-cue i::after { top: 5px; }
   stage.appendChild(places);
   $$('#places button').forEach(b => b.addEventListener('click', () => focusId === b.dataset.id ? unfocus() : focus(b.dataset.id)));
   $('#s-x').addEventListener('click', unfocus);
-  sheet.addEventListener('click', e => { const w = e.target.closest('[data-walk]'); if (w) { unfocus(); walkTo(+w.dataset.walk); return; } const g = e.target.closest('[data-sg]'); if (g && focusId) { openLB(PLACES[focusId].j, +g.dataset.sg); return; } const c = e.target.closest('[data-case]'); if (c) openCaseAt(c.dataset.case, c); });
+  sheet.addEventListener('click', e => { const w = e.target.closest('[data-walk]'); if (w) { unfocus(); walkTo(+w.dataset.walk); return; } const g = e.target.closest('[data-sg]'); if (g && focusId) { const P = PLACES[focusId]; openLB(P.j, +g.dataset.sg, P.photos && { c: P.c, when: P.tag, place: 'off the clock', title: 'That’s me', photos: P.photos }); return; } const c = e.target.closest('[data-case]'); if (c) openCaseAt(c.dataset.case, c); });
   addEventListener('keydown', e => { if (e.key === 'Escape') unfocus(); });
   stage.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') { ptr.x = e.clientX / vw * 2 - 1; ptr.y = e.clientY / vh * 2 - 1; } });
   stage.addEventListener('click', e => { if (focusId && !e.target.closest('.hot, .pin, .sheet, .places')) unfocus(); });
@@ -5289,8 +5290,8 @@ html:root .scroll-cue i::after { top: 5px; }
   // photo viewer
   const lb = $('#lb'), lbTrack = $('#lbTrack'), lbCount = $('#lbCount');
   let lbN = 0;
-  function openLB(i, start) {
-    const st = STOPS[i]; lbN = st.photos.length;
+  function openLB(i, start, alt) {
+    const st = alt || STOPS[i]; lbN = st.photos.length;
     lb.style.setProperty('--g', grad(st.c));
     $('#lbWhen').textContent = `${st.when} · ${st.place}`; $('#lbTitle').textContent = st.title;
     lbTrack.innerHTML = st.photos.map(([src, cap], n) => `<figure class="lb-slide" style="margin:0"><div class="frame" style="--rot:${[-1.6, 1.2, -.8][n % 3]}deg">${src ? `<img src="${img(src)}" alt="${cap}">` : `<div class="empty"><svg viewBox="0 0 24 24">${ICONS.camera}</svg>Photo coming soon</div>`}<figcaption>${cap}</figcaption></div></figure>`).join('');
