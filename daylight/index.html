@@ -48,6 +48,9 @@ a { color: inherit; }
 img { display: block; max-width: none; user-select: none; -webkit-user-drag: none; }
 :focus-visible { outline: 2.5px solid var(--coral); outline-offset: 3px; border-radius: 10px; }
 .it { font-family: var(--serif); font-style: normal; font-weight: 400; font-size-adjust: .46; letter-spacing: -.01em; }
+/* no lonely word on a line of its own: paragraphs wrap "pretty", short lines are balanced */
+p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
+.sec-head p, .sub, .role, .lead, .bi-p, .tag, figcaption, small, h1, h2, h3, h4, h5, li b, li span { text-wrap: balance; }
 .wrap { width: min(76rem, 100%); margin-inline: auto; padding-inline: clamp(16px, 4vw, 48px); box-sizing: border-box; }
 
 /* brush highlights */
@@ -422,7 +425,7 @@ img { display: block; max-width: none; user-select: none; -webkit-user-drag: non
 .wk.wk-ghost { position: fixed; z-index: 91; margin: 0; pointer-events: none; transform: none !important; }
 .sec-head { display: grid; gap: 10px; margin-bottom: 7vh; }
 .sec-head h2 { margin: 0; font: 800 clamp(2.6rem, 6.4vw, 6.2rem)/.94 var(--sans); letter-spacing: -.055em; text-wrap: balance; max-width: 16ch; }
-.sec-head p:not(.kicker) { margin: 0; font: 400 clamp(20px, 1.8vw, 26px)/1.3 var(--serif); font-size-adjust: .46; color: var(--ink-2); max-width: 38ch; }
+.sec-head p:not(.kicker) { margin: 0; font: 400 clamp(20px, 1.8vw, 26px)/1.3 var(--serif); font-size-adjust: .46; color: var(--ink-2); max-width: 64ch; }
 .box-track { position: relative; height: 230vh; margin-top: -2vh; }
 .box-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .box-fit { position: absolute; left: 50%; top: 65%; width: 0; height: 0; perspective: 2400px; perspective-origin: 50% 25%; will-change: transform; }
@@ -2284,7 +2287,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 .box-info .bi-head { display: grid; justify-items: center; gap: 8px; margin: 0 auto; text-align: center; }
 .box-info .bi-head .kicker { margin: 0; }
 .box-info .bi-head h2 { max-width: 22ch; font-size: clamp(2rem, 3.6vw, 3.5rem); text-wrap: balance; }
-.box-info .bi-head p:not(.kicker) { max-width: 44ch; font-size: clamp(17px, 1.35vw, 21px); }
+.box-info .bi-head p:not(.kicker) { max-width: 64ch; font-size: clamp(17px, 1.35vw, 21px); }
 @media (max-width: 860px) { .box-info .bi-head { padding: 0 16px; } .box-info .bi-head h2 { font-size: clamp(1.7rem, 7vw, 2.3rem); } .box-info .bi-head p:not(.kicker) { font-size: 15.5px; } }
 
 /* map: the opening overview stays clean until you start scrolling */
@@ -7209,6 +7212,14 @@ html:root .scroll-cue i::after { top: 5px; }
   });
 
 
+
+  /* ---------- browsers without text-wrap: pretty: glue the last two words of each line of copy ---------- */
+  if (!(window.CSS && CSS.supports && CSS.supports('text-wrap', 'pretty'))) {
+    const glue = root => root.querySelectorAll('p, li, figcaption, blockquote, small, h1, h2, h3, h4, h5').forEach(el => {
+      const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let last = null; for (let n; (n = w.nextNode());) if (n.textContent.trim()) last = n;
+      if (last && /\S \S+\s*$/.test(last.textContent)) last.textContent = last.textContent.replace(/ (\S+\s*)$/, '\u00A0$1'); });
+    glue(document); new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => n.nodeType === 1 && glue(n)))).observe(document.body, { childList: true, subtree: true });
+  }
 
   /* ---------- visitors: counted once per browser ---------- */
   (() => {
