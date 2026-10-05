@@ -7183,6 +7183,8 @@ html:root .scroll-cue i::after { top: 5px; }
         if (r.status === 429) { nwErr.textContent = 'You’ve pinned a few already. Try again in an hour.'; go.disabled = false; return; }
         if (r.ok) { const d = await r.json(); if (d && d.note) { wallNotes = [d.note, ...wallNotes.filter(n => n.id !== d.note.id)]; freshId = d.note.id; saved = true; } }
       } catch (_) {}
+      // the live wall is there but this note didn't make it: say so, rather than pinning it only in this browser
+      if (!saved) { nwErr.textContent = 'Couldn’t pin it right now. Try again in a minute.'; go.disabled = false; return; }
     }
     if (!saved) { const id = 'local-' + body.at; localNotes = [{ id, ...body }, ...localNotes].slice(0, 5); freshId = id; try { localStorage.setItem('jc-notes', JSON.stringify(localNotes)); } catch (_) {} }
     renderWall(); go.disabled = false; nwForm.reset(); setBrand(null); nwPhoto = ''; $('#nwCount').textContent = '0 / 200'; closeNotes();

@@ -65,7 +65,7 @@ module.exports = async (req, res) => {
 
       const ip = String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'x').split(',')[0].trim();
       const rl = `notes:rl:${ip}`;
-      const [count] = await redis([['INCR', rl], ['EXPIRE', rl, 3600, 'NX']]);
+      const [, count] = await redis([['SET', rl, 0, 'EX', 3600, 'NX'], ['INCR', rl]]);  // works on every Redis version
       if (count > PER_HOUR) return res.status(429).json({ error: 'slow_down' });
 
       await redis([
