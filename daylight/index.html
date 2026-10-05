@@ -7209,10 +7209,10 @@ html:root .scroll-cue i::after { top: 5px; }
 
 
 
-  /* ---------- visitors so far: counted once per browser, shown once there's a crowd worth showing ---------- */
+  /* ---------- visitors: counted once per browser ---------- */
   (() => {
     const el = document.getElementById('vc'); if (!el || !location.protocol.startsWith('http') || (window.claude && window.claude.use)) return;
-    const MIN = 50; let counted = false; try { counted = !!localStorage.getItem('jc-counted'); } catch (_) {}
+    const MIN = 1; let counted = false; try { counted = !!localStorage.getItem('jc-counted'); } catch (_) {}
     let show = n => { if (!(n >= MIN)) return; const b = el.querySelector('b'), t0 = performance.now(), D = reduce ? 0 : 1200;
       el.classList.add('in'); const tick = now => { const k = D ? Math.min(1, (now - t0) / D) : 1, e = 1 - Math.pow(1 - k, 3); b.textContent = Math.round(n * e).toLocaleString('en-IN'); if (k < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); };
     // sits just left of the theme button (and of the music pill while it's showing), centred on the same row
