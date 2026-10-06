@@ -16,4 +16,15 @@ A design challenge to redesign [8x.life](https://8x.life/), 8x's life-at-8x site
 | `research/video/` | Screen recording of e2.vc in motion, plus contact sheets |
 | `groundwork/index.html` | The review page: audit, teardown, concepts and the live design system |
 
-## Phase 2: the homepage, section by section (next)
+## Phase 2: the homepage, section by section (in progress)
+
+`site/index.html` is the homepage build.
+
+- [x] 1. Opening claim: the page edits "We're hiring." into "Show us your work. Here's ours." You can strike five more clichés.
+- [x] 2. What 8x is: a scroll-scrubbed correction from "250k+ humans managed" to a dated figure, then the network vs the core team, then the products.
+- [ ] 3. The bet
+- [ ] 4. What you'd own
+- [ ] 5. Who you'd work with
+- [ ] 6. How you get in
+- [ ] 7. Is this for you?
+- [ ] 8. Roles and apply

@@ -1,0 +1,454 @@
+<title>8x.life Homepage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&display=swap">
+<script>
+  /* Arm the opening edit before first paint. Failsafe: never stay hidden longer than 4 s. */
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var d = document.documentElement;
+    d.classList.add('js-intro');
+    window.__introFailsafe = setTimeout(function () { d.classList.remove('js-intro'); }, 4000);
+  })();
+</script>
+<style>
+/* Layout concept: a page that edits itself. Big claims in the main column, proof marks in a narrow ruled margin. */
+:root {
+  --paper: #FBFBF8;
+  --ink: #141412;
+  --ink-2: #5F5F58;
+  --ink-3: #8C8C84;
+  --rule: #E2E2DA;
+  --pen: #C73D20;
+  --mark: #E8EF9A;
+  --mark-ink: #141412;
+
+  --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --h1: clamp(3.2rem, 0.5rem + 6.5vw, 6.6rem);
+  --fig: clamp(3rem, 0.6rem + 8.2vw, 9.4rem);
+  --h2: clamp(1.9rem, 1.1rem + 2.7vw, 3.9rem);
+  --lead: clamp(1.2rem, 1.06rem + .55vw, 1.55rem);
+  --strike: max(2px, .062em);
+
+  --ease-pen: cubic-bezier(.65, 0, .35, 1);
+  --ease-settle: cubic-bezier(.2, .8, .2, 1);
+
+  --gutter: max(16px, 4vw);
+  --max: 1360px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121311; --ink: #EDEDE7; --ink-2: #A3A39B; --ink-3: #74746D; --rule: #2C2D29;
+    --pen: #F0603F; --mark: #3B4113; --mark-ink: #EDEDE7; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121311; --ink: #EDEDE7; --ink-2: #A3A39B; --ink-3: #74746D; --rule: #2C2D29;
+  --pen: #F0603F; --mark: #3B4113; --mark-ink: #EDEDE7; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--serif); font-size: 1.125rem; line-height: 1.55;
+  font-optical-sizing: auto; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+::selection { background: var(--mark); color: var(--mark-ink); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--pen); outline-offset: 4px; border-radius: 1px; }
+h1, h2, h3, p { margin: 0; font-weight: 400; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wrap { padding-inline: var(--gutter); max-width: var(--max); margin-inline: auto; }
+
+.mono { font-family: var(--mono); }
+.label { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+
+/* the pen: a strike that can be drawn, line by line, in reading order */
+.ink-strike {
+  text-decoration: none;
+  background-image: linear-gradient(var(--pen), var(--pen));
+  background-repeat: no-repeat;
+  background-position: 0 58%;
+  background-size: 100% var(--strike);
+  box-decoration-break: slice; -webkit-box-decoration-break: slice;
+}
+
+/* ---------------- nav ---------------- */
+.nav { display: flex; align-items: center; gap: 28px; padding-block: 22px; }
+.wordmark { font-weight: 700; font-size: 1.75rem; line-height: 1; letter-spacing: -.025em; text-decoration: none; font-variation-settings: "opsz" 72; }
+.nav ul { list-style: none; margin: 0 0 0 auto; padding: 0; display: flex; gap: 28px; align-items: center; }
+.nav a.l { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; color: var(--ink-2); position: relative; padding-block: 4px; }
+.nav a.l::after, .cta-text::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--pen);
+  transform: scaleX(0); transform-origin: left; transition: transform 320ms var(--ease-pen);
+}
+.nav a.l:hover { color: var(--ink); }
+.nav a.l:hover::after, .cta-text:hover::after { transform: scaleX(1); }
+.nav .count-pill { color: var(--ink); }
+.nav .count-pill b { font-weight: 500; color: var(--pen); }
+@media (max-width: 640px) { .nav ul li.hide-sm { display: none; } .nav ul { gap: 18px; } }
+
+/* ---------------- hero ---------------- */
+.hero { padding-block: clamp(56px, 11vh, 136px) clamp(72px, 12vh, 140px); }
+.hero__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+@media (min-width: 1040px) { .hero__grid { grid-template-columns: minmax(0, 9fr) minmax(0, 3fr); gap: 56px; } }
+
+.stage { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; }
+.was { grid-row: 1; grid-column: 1; font-size: calc(var(--h1) * .3); line-height: 1.15; color: var(--ink-2); margin-bottom: calc(var(--h1) * .16); letter-spacing: -.01em; min-height: 1.15em; }
+.was del { color: inherit; }
+.now, .ghost {
+  grid-row: 2; grid-column: 1;
+  font-size: var(--h1); line-height: .94; letter-spacing: -.034em; font-weight: 370;
+  font-variation-settings: "opsz" 72; text-wrap: balance;
+}
+.now .ln { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+.now .ln > span { display: block; }
+.ghost { visibility: hidden; pointer-events: none; color: var(--ink); align-self: start; }
+.lead { grid-row: 3; grid-column: 1; margin-top: clamp(28px, 4.2vw, 56px); font-size: var(--lead); line-height: 1.42; max-width: 33em; text-wrap: pretty; }
+.ctas { grid-row: 4; grid-column: 1; margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 500;
+  padding: 15px 18px 14px; border: 1px solid var(--ink); border-radius: 2px;
+  background: var(--ink); color: var(--paper); text-decoration: none;
+  transition: background 160ms ease, color 160ms ease, transform 160ms var(--ease-settle);
+}
+.btn:hover { background: transparent; color: var(--ink); }
+.btn:active { transform: translateY(1px); }
+.btn .arr { color: var(--pen); display: inline-block; transition: transform 240ms var(--ease-settle); }
+.btn:hover .arr { transform: translateX(3px); }
+.cta-text { position: relative; font-family: var(--mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; padding-block: 6px; border-bottom: 1px solid var(--rule); }
+
+/* margin: proof marks */
+.marks { display: grid; gap: 28px; align-content: start; font-family: var(--mono); font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+@media (min-width: 1040px) {
+  .marks { border-left: 1px solid var(--rule); padding-left: 28px; padding-top: 6px; }
+}
+.mk { display: grid; gap: 8px; }
+.mk__tag { color: var(--pen); font-weight: 500; letter-spacing: .04em; }
+.mk q { color: var(--ink); quotes: "“" "”"; }
+.mk__src { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.mini {
+  justify-self: start; font: inherit; font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink); background: none; border: 0; border-bottom: 1px solid var(--rule); padding: 4px 0; cursor: pointer;
+  transition: border-color 160ms ease;
+}
+.mini:hover { border-color: var(--pen); }
+.mini:disabled { color: var(--ink-3); cursor: default; border-color: transparent; }
+.mini .n { color: var(--pen); }
+@media (max-width: 1039px) {
+  .marks { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 24px 32px; padding-top: 24px; border-top: 1px solid var(--rule); }
+}
+
+/* intro states (only while the opening edit plays) */
+.js-intro .ghost { visibility: visible; }
+.js-intro .now .ln > span { transform: translateY(125%); }
+.js-intro .was { opacity: 0; }
+.js-intro .mk { opacity: 0; }
+.js-intro .ghost .ink-strike { background-size: 0% var(--strike); }
+
+/* ---------------- section 2: what 8x is ---------------- */
+.what { border-top: 1px solid var(--rule); padding-top: clamp(72px, 10vw, 140px); }
+.what__head { display: grid; gap: 28px; max-width: 64rem; }
+.what__head h2 { font-size: var(--h2); line-height: 1.06; letter-spacing: -.022em; text-wrap: balance; font-variation-settings: "opsz" 60; }
+.what__head h2 span { color: var(--ink-2); }
+
+.count { position: relative; margin-top: clamp(48px, 8vw, 110px); }
+.count__pin { padding-block: 24px; }
+.count.is-scrub { height: 290svh; }
+.count.is-scrub .count__pin { position: sticky; top: 0; height: 100svh; display: grid; align-content: center; padding-block: 0; }
+
+.board { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; position: relative; }
+.board__lead { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--rule); margin-bottom: clamp(20px, 3vw, 40px); }
+.board__lead p { font-size: var(--lead); font-style: italic; }
+.board__prog { flex: 1; max-width: 220px; height: 1px; background: var(--rule); position: relative; overflow: hidden; }
+.board__prog i { position: absolute; inset: 0; background: var(--pen); transform-origin: left; transform: scaleX(var(--p, 1)); }
+.fig { font-size: var(--fig); line-height: .98; letter-spacing: -.04em; font-weight: 360; font-variation-settings: "opsz" 72; font-variant-numeric: lining-nums; }
+.fig--old { color: var(--ink-2); }
+.fig--old del { color: inherit; }
+.fig--new { color: var(--ink); margin-top: .06em; }
+.fig--new .mask { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.fig--new .mask > span { display: block; }
+.board__meta { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: clamp(22px, 3vw, 40px); }
+@media (min-width: 1040px) { .board__meta { grid-template-columns: minmax(0, 9fr) minmax(0, 3fr); gap: 56px; align-items: start; } }
+.fig-sub { font-size: var(--lead); line-height: 1.35; }
+.fig-sub .date { font-family: var(--mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); background: var(--mark); color: var(--mark-ink); padding: 3px 7px 2px; border-radius: 1px; margin-left: 6px; white-space: nowrap; vertical-align: .12em; }
+.fig-countries { font-size: var(--lead); line-height: 1.35; color: var(--ink); margin-top: 6px; font-variant-numeric: lining-nums; }
+.fig-countries del { color: var(--ink-2); margin-right: .3em; }
+.receipt { font-family: var(--mono); font-size: 13px; line-height: 1.55; color: var(--ink-2); display: grid; gap: 8px; }
+@media (min-width: 1040px) { .receipt { border-left: 1px solid var(--rule); padding-left: 28px; } }
+.receipt q { color: var(--ink); quotes: "“" "”"; }
+.receipt .tbc { color: var(--pen); }
+
+/* network vs core */
+.split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px; margin-top: clamp(72px, 9vw, 128px); }
+@media (min-width: 900px) { .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; } }
+.split__col { display: grid; gap: 16px; align-content: start; padding-top: 22px; border-top: 1px solid var(--ink); }
+.split__col h3 { font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.5rem); line-height: 1.1; letter-spacing: -.016em; text-wrap: balance; font-variation-settings: "opsz" 48; }
+.split__col p { max-width: 34em; color: var(--ink); }
+.split__col p.you { margin-top: 4px; }
+.split__col p.you span { background: var(--mark); color: var(--mark-ink); padding: 1px 4px; border-radius: 1px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+/* products */
+.prods { margin-top: clamp(64px, 8vw, 112px); }
+.prods__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; padding-bottom: 14px; border-bottom: 1px solid var(--ink); }
+.prod { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px 32px; padding-block: 20px; border-bottom: 1px solid var(--rule); text-decoration: none; align-items: baseline; position: relative; }
+@media (min-width: 760px) { .prod { grid-template-columns: minmax(10rem, 3fr) minmax(0, 6fr) minmax(8rem, 3fr); } }
+.prod__name { font-size: 1.45rem; line-height: 1.2; letter-spacing: -.01em; }
+.prod__what { color: var(--ink-2); }
+.prod__dom { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); justify-self: start; }
+@media (min-width: 760px) { .prod__dom { justify-self: end; } }
+a.prod .prod__dom .arr { display: inline-block; color: var(--pen); transition: transform 240ms var(--ease-settle); }
+a.prod:hover .prod__name { color: var(--ink); }
+a.prod:hover .prod__dom .arr { transform: translate(2px, -2px); }
+a.prod::before { content: ""; position: absolute; left: 0; bottom: -1px; height: 1px; width: 100%; background: var(--pen); transform: scaleX(0); transform-origin: left; transition: transform 420ms var(--ease-pen); }
+a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
+.prod--new .prod__dom { color: var(--pen); }
+.prod--locked .prod__name, .prod--locked .prod__what { color: var(--ink-3); }
+
+.end { margin-top: clamp(96px, 12vw, 160px); padding-block: 28px 56px; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+}
+</style>
+
+<div class="wrap">
+  <nav class="nav" aria-label="Main">
+    <a class="wordmark" href="#top">8x</a>
+    <ul>
+      <li class="hide-sm"><a class="l" href="#what">What 8x is</a></li>
+      <li class="hide-sm"><a class="l" href="https://8x.life/manifesto">Manifesto</a></li>
+      <li><a class="l count-pill" href="https://www.8x.careers/join">Open roles <b>20</b></a></li>
+    </ul>
+  </nav>
+</div>
+
+<main id="top">
+  <!-- ========== 1 · The page corrects itself ========== -->
+  <section class="hero wrap" aria-labelledby="hero-h">
+    <div class="hero__grid">
+      <div class="stage">
+        <p class="was" id="was"><del class="ink-strike"><span class="vh">Struck out: </span><span data-cliche>We’re hiring.</span></del></p>
+        <h1 class="now" id="hero-h">
+          <span class="ln"><span>Show us your work.</span></span>
+          <span class="ln"><span>Here’s ours.</span></span>
+        </h1>
+        <p class="ghost" id="ghost" aria-hidden="true"><span class="ink-strike">We’re hiring.</span></p>
+        <p class="lead">8x supplies and runs the people AI still needs in the loop. We hire on work, not CVs. So everything this page says about working here comes with its receipt.</p>
+        <div class="ctas">
+          <a class="btn" href="https://www.8x.careers/join">See the 20 open roles <span class="arr" aria-hidden="true">→</span></a>
+          <a class="cta-text" href="#what">What 8x is</a>
+        </div>
+      </div>
+
+      <aside class="marks" aria-label="Proof marks">
+        <div class="mk">
+          <span class="mk__tag">del.</span>
+          <span>Every company says it. It tells you nothing about the work.</span>
+          <button class="mini" type="button" id="strike-another">Strike another <span class="n" id="strike-n">1 / 6</span></button>
+        </div>
+        <div class="mk">
+          <span class="mk__tag">ins.</span>
+          <span>8x asks every applicant for real work. This page shows 8x’s.</span>
+        </div>
+        <div class="mk">
+          <span class="mk__src">Receipt · 8x.careers</span>
+          <q>A practical assignment arrives the moment you submit, and a person reads what you send back.</q>
+          <button class="mini" type="button" id="replay">↺ Replay the edit</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ========== 2 · What 8x is, and a number that isn't rounded up ========== -->
+  <section class="what" id="what" aria-labelledby="what-h">
+    <div class="wrap">
+      <div class="what__head">
+        <p class="label">What 8x is</p>
+        <h2 id="what-h">Companies come to 8x for outcomes. <span>Posts that get watched. Meetings that get booked. Interviews that get run.</span> We organise the people who do that work.</h2>
+      </div>
+
+      <div class="count" id="count">
+        <div class="count__pin">
+          <div class="board" id="board">
+            <div class="board__lead">
+              <p>We don’t round up.</p>
+              <span class="board__prog" aria-hidden="true"><i></i></span>
+            </div>
+            <p class="fig fig--old"><del class="ink-strike" id="old-strike"><span class="vh">Struck out: </span>250k+ humans managed</del></p>
+            <p class="fig fig--new"><span class="mask"><span id="new-fig">121,000 people</span></span></p>
+            <div class="board__meta">
+              <div>
+                <p class="fig-sub" id="fig-sub">on the 8x platform <span class="date">June 2026</span></p>
+                <p class="fig-countries" id="fig-countries"><del class="ink-strike" id="c-strike"><span class="vh">Struck out: </span>50+</del><span id="c-new">30+ countries</span></p>
+              </div>
+              <div class="receipt" id="fig-receipt">
+                <span class="label">Receipt</span>
+                <q>121,000 people on the platform.</q>
+                <span>Jaka Bavdek, CEO, June 2026. Counts everyone with an 8x account: creators, sales reps and research participants.</span>
+                <span class="tbc">Figure for 8x to confirm.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="split__col">
+          <p class="label">The network</p>
+          <h3>121,000 people do the work, on demand.</h3>
+          <p>Creators post. Sales reps call. Research participants talk. They’re paid per post, per hour on the phone, per session.</p>
+        </div>
+        <div class="split__col">
+          <p class="label">The core team</p>
+          <h3>A small team builds the rest.</h3>
+          <p>The products, the markets, the platform the network runs on. Each person owns a whole piece of it.</p>
+          <p class="you"><span>This page is about joining the core team.</span></p>
+        </div>
+      </div>
+
+      <div class="prods">
+        <div class="prods__head"><span class="label">Running on the network today</span><span class="label">6 live · 2 locked</span></div>
+        <a class="prod" href="https://8x.social"><span class="prod__name">8x Social</span><span class="prod__what">Consumer brands. TikTok, Instagram, YouTube.</span><span class="prod__dom">8x.social <span class="arr">↗</span></span></a>
+        <a class="prod" href="https://8x.business"><span class="prod__name">8x LinkedIn</span><span class="prod__what">B2B demand, on LinkedIn.</span><span class="prod__dom">8x.business <span class="arr">↗</span></span></a>
+        <a class="prod" href="https://8xresearch.com"><span class="prod__name">8x Research</span><span class="prod__what">User interviews and market research.</span><span class="prod__dom">8xresearch.com <span class="arr">↗</span></span></a>
+        <a class="prod" href="https://8x.sale"><span class="prod__name">8x Sales</span><span class="prod__what">Outbound and cold calling.</span><span class="prod__dom">8x.sale <span class="arr">↗</span></span></a>
+        <a class="prod" href="https://www.8x.careers"><span class="prod__name">8x Hiring</span><span class="prod__what">Evidence-first hiring, at 8x and partner companies.</span><span class="prod__dom">8x.careers <span class="arr">↗</span></span></a>
+        <div class="prod prod--new"><span class="prod__name">8x Karma</span><span class="prod__what">Reddit growth. From idea to launch in 17 days.</span><span class="prod__dom">New · Sept 2026</span></div>
+        <div class="prod prod--locked"><span class="prod__name">8x Email</span><span class="prod__what">Not unlocked yet.</span><span class="prod__dom">—</span></div>
+        <div class="prod prod--locked"><span class="prod__name">8x Global</span><span class="prod__what">Not unlocked yet.</span><span class="prod__dom">—</span></div>
+      </div>
+
+      <div class="end">
+        <span class="label">Sections 1 and 2 of 8</span>
+        <span class="label">Next · The bet</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+  var PEN = 'cubic-bezier(.65, 0, .35, 1)';
+  var SETTLE = 'cubic-bezier(.2, .8, .2, 1)';
+  var STRIKE_H = 'max(2px, .062em)';
+  function $(s, c) { return (c || document).querySelector(s); }
+  function tok(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
+  function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+
+  /* ================= 1 · The opening edit ================= */
+  var ghost = $('#ghost'), was = $('#was');
+  var lines = $$('.now .ln > span'), marks = $$('.mk');
+  var running = [];
+
+  function anim(el, kf, opts) { var a = el.animate(kf, Object.assign({ fill: 'both' }, opts)); running.push(a); return a; }
+  function clearRunning() { running.forEach(function (a) { a.cancel(); }); running = []; }
+
+  function playIntro() {
+    if (reduce || !ghost.animate) { root.classList.remove('js-intro'); return; }
+    clearRunning();
+    ghost.querySelector('.ink-strike').textContent = was.querySelector('[data-cliche]').textContent;
+    root.classList.add('js-intro');
+    var gs = ghost.querySelector('.ink-strike');
+    var INK = tok('--ink'), INK2 = tok('--ink-2');
+    var last = [
+      anim(gs, [{ backgroundSize: '0% ' + STRIKE_H }, { backgroundSize: '100% ' + STRIKE_H }], { duration: 560, delay: 260, easing: PEN }),
+      anim(ghost, [{ opacity: 1, transform: 'translateY(0)', color: INK }, { opacity: 1, transform: 'translateY(0)', color: INK2, offset: .35 }, { opacity: 0, transform: 'translateY(-.32em)', color: INK2 }], { duration: 760, delay: 820, easing: SETTLE }),
+      anim(was, [{ opacity: 0, transform: 'translateY(.5em)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 640, delay: 1060, easing: SETTLE })
+    ];
+    lines.forEach(function (l, i) {
+      last.push(anim(l, [{ transform: 'translateY(125%)' }, { transform: 'translateY(0)' }], { duration: 980, delay: 1080 + i * 110, easing: SETTLE }));
+    });
+    marks.forEach(function (m, i) {
+      last.push(anim(m, [{ opacity: 0, transform: 'translateX(-8px)' }, { opacity: 1, transform: 'translateX(0)' }], { duration: 520, delay: 1650 + i * 90, easing: SETTLE }));
+    });
+    Promise.all(last.map(function (a) { return a.finished; })).then(function () {
+      root.classList.remove('js-intro');
+      clearRunning();
+    }).catch(function () {});
+  }
+
+  function start() { clearTimeout(window.__introFailsafe); playIntro(); }
+  if (root.classList.contains('js-intro')) {
+    var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    Promise.race([fontsReady, new Promise(function (r) { setTimeout(r, 900); })]).then(start);
+  }
+  $('#replay').addEventListener('click', function () { if (!reduce) playIntro(); });
+
+  /* Strike another cliché */
+  var cliches = ['We’re hiring.', 'Join a world-class team.', 'We’re a family here.', 'Work hard, play hard.', 'Fast-paced. Dynamic. Fun.', 'Make an impact from day one.'];
+  var struck = 1;
+  var btn = $('#strike-another'), counter = $('#strike-n');
+  var wasStrike = was.querySelector('.ink-strike'), wasText = was.querySelector('[data-cliche]');
+  btn.addEventListener('click', function () {
+    if (struck >= cliches.length) return;
+    var next = cliches[struck];
+    struck += 1;
+    counter.textContent = struck + ' / ' + cliches.length;
+    if (struck >= cliches.length) { btn.firstChild.textContent = 'Every one struck '; btn.disabled = true; }
+    if (reduce || !was.animate) { wasText.textContent = next; return; }
+    var INK = tok('--ink'), INK2 = tok('--ink-2');
+    was.getAnimations().forEach(function (a) { a.cancel(); });
+    var fadeOut = was.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease-out', fill: 'forwards' });
+    fadeOut.finished.then(function () {
+      wasText.textContent = next;
+      var fadeIn = was.animate([{ opacity: 0, transform: 'translateY(.3em)', color: INK }, { opacity: 1, transform: 'translateY(0)', color: INK }], { duration: 260, easing: SETTLE, fill: 'forwards' });
+      fadeOut.cancel();
+      var s = wasStrike.animate([{ backgroundSize: '0% ' + STRIKE_H }, { backgroundSize: '100% ' + STRIKE_H }], { duration: 460, delay: 240, easing: PEN, fill: 'backwards' });
+      s.finished.then(function () {
+        fadeIn.cancel();
+        was.animate([{ color: INK }, { color: INK2 }], { duration: 360, easing: 'ease-out' });
+      });
+    }).catch(function () {});
+  });
+
+  /* ================= 2 · The number, scrubbed by scroll ================= */
+  var count = $('#count'), board = $('#board');
+  var oldStrike = $('#old-strike'), oldFig = $('.fig--old'), newFig = $('#new-fig');
+  var sub = $('#fig-sub'), countries = $('#fig-countries'), cStrike = $('#c-strike'), cNew = $('#c-new'), receipt = $('#fig-receipt');
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function seg(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
+  function out3(t) { return 1 - Math.pow(1 - t, 3); }
+  function mixInk(t) { return 'color-mix(in srgb, var(--ink-2) ' + Math.round(t * 100) + '%, var(--ink))'; }
+
+  if (!reduce) {
+    count.classList.add('is-scrub');
+    var ticking = false;
+    var render = function () {
+      ticking = false;
+      var r = count.getBoundingClientRect();
+      var total = count.offsetHeight - window.innerHeight;
+      var p = total > 0 ? clamp(-r.top / total, 0, 1) : 1;
+      board.style.setProperty('--p', p.toFixed(4));
+
+      var s1 = out3(seg(p, .06, .30));
+      oldStrike.style.backgroundSize = (s1 * 100).toFixed(2) + '% ' + STRIKE_H;
+      oldFig.style.color = mixInk(seg(p, .26, .38));
+
+      var n = out3(seg(p, .36, .58));
+      newFig.style.transform = 'translateY(' + ((1 - n) * 130).toFixed(2) + '%)';
+
+      var m = out3(seg(p, .56, .70));
+      sub.style.opacity = m; sub.style.transform = 'translateY(' + ((1 - m) * 12).toFixed(1) + 'px)';
+      countries.style.opacity = m; countries.style.transform = 'translateY(' + ((1 - m) * 12).toFixed(1) + 'px)';
+
+      var c = out3(seg(p, .68, .82));
+      cStrike.style.backgroundSize = (c * 100).toFixed(2) + '% ' + STRIKE_H;
+      cNew.style.opacity = .25 + .75 * out3(seg(p, .76, .86));
+
+      var q = out3(seg(p, .82, .94));
+      receipt.style.opacity = q; receipt.style.transform = 'translateX(' + ((1 - q) * -10).toFixed(1) + 'px)';
+    };
+    var onScroll = function () { if (!ticking) { ticking = true; requestAnimationFrame(render); } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    render();
+  }
+})();
+</script>
