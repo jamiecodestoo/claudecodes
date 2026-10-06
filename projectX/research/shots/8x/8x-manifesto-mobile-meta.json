@@ -1,0 +1,19 @@
+{
+  "title": "Manifesto — 8x",
+  "scrollHeight": 910,
+  "fonts": [
+    "Newsreader, \"Newsreader Fallback\", \"Iowan Old Style\", Georgia, serif"
+  ],
+  "colors": [
+    "rgb(0, 0, 0)",
+    "rgba(0, 0, 0, 0.5)"
+  ],
+  "bgs": [
+    "rgba(0, 0, 0, 0)"
+  ],
+  "links": [
+    "←\nBACK -> https://8x.life/"
+  ],
+  "shots": 2,
+  "logs": []
+}

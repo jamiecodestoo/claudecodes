@@ -1,0 +1,27 @@
+{
+  "title": "8x — the human company",
+  "scrollHeight": 951,
+  "fonts": [
+    "Newsreader, \"Newsreader Fallback\", \"Iowan Old Style\", Georgia, serif"
+  ],
+  "colors": [
+    "rgb(0, 0, 0)",
+    "rgba(0, 0, 0, 0.5)",
+    "rgba(0, 0, 0, 0.7)"
+  ],
+  "bgs": [
+    "rgba(0, 0, 0, 0)"
+  ],
+  "links": [
+    "8x Social\nConsumer brands. TikTok, Instagram, YouTube. · 8x. -> https://8x.social/",
+    "8x LinkedIn\nB2B demand, on LinkedIn. · 8x.business -> https://8x.business/",
+    "8x Research\nMarket and niche research. · 8xresearch.com -> https://8xresearch.com/",
+    "8x Sales\nOutbound and cold calling. · 8x.sale -> https://8x.sale/",
+    "8x Hiring\nEvidence-first hiring, at 8x and partner companies -> https://www.8x.careers/",
+    "MANIFESTO -> https://8x.life/manifesto",
+    "TEAM -> https://8x.life/team",
+    "JOBS -> https://www.8x.careers/join"
+  ],
+  "shots": 2,
+  "logs": []
+}

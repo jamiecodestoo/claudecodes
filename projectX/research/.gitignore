@@ -1,0 +1,5 @@
+# Third-party page source and scraped text stay local; only the written findings are committed.
+raw/*
+!raw/context/
+raw/context/*
+!raw/context/findings.md

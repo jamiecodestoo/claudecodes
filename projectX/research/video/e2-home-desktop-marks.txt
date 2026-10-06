@@ -1,0 +1,15 @@
+2.1s loaded
+8.1s after loader wait
+10.9s mouse sweep hero
+19.6s scrollY~2387
+29.7s scrollY~4782
+43.5s scrollY~7174
+56.3s scrollY~9590
+69.6s scrollY~10002
+75.6s reached end
+80.7s drag footer
+84.2s spacejump
+86.8s reset
+89.3s hover clocks
+90.8s idle start
+97.8s idle end

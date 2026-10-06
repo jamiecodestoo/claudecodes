@@ -1,0 +1,22 @@
+{
+  "title": "Team — 8x",
+  "scrollHeight": 665,
+  "fonts": [
+    "Newsreader, \"Newsreader Fallback\", \"Iowan Old Style\", Georgia, serif"
+  ],
+  "colors": [
+    "rgb(0, 0, 0)",
+    "rgba(0, 0, 0, 0.5)"
+  ],
+  "bgs": [
+    "rgba(0, 0, 0, 0)"
+  ],
+  "links": [
+    "←\nBACK -> https://8x.life/",
+    "Jaka Bavdek -> https://jakabavdek.com/",
+    "Theo Bui -> https://www.theobui.com/",
+    "We're hiring. -> https://www.8x.careers/join"
+  ],
+  "shots": 2,
+  "logs": []
+}

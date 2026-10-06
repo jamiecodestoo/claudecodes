@@ -1,0 +1,72 @@
+{
+  "title": "Open roles | 8x Hiring",
+  "scrollHeight": 6571,
+  "fonts": [
+    "figtree, \"figtree Fallback\", ui-sans-serif, system-ui, sans-serif",
+    "Geist, Arial, sans-serif",
+    "\"Instrument Serif\", Georgia, serif"
+  ],
+  "colors": [
+    "rgb(14, 18, 27)",
+    "rgb(37, 39, 34)",
+    "rgb(255, 255, 255)",
+    "rgb(240, 240, 235)",
+    "rgba(0, 0, 0, 0)",
+    "rgb(85, 94, 77)",
+    "rgb(181, 186, 170)"
+  ],
+  "bgs": [
+    "rgba(0, 0, 0, 0)",
+    "rgb(37, 39, 34)",
+    "rgb(240, 240, 235)",
+    "rgb(199, 61, 32)",
+    "rgb(255, 255, 255)",
+    "rgb(233, 236, 226)"
+  ],
+  "links": [
+    "Skip to content -> https://www.8x.careers/join#main",
+    "Hiring for your team?\nHire with 8x -> https://www.8x.careers/client",
+    " -> https://www.8x.careers/",
+    "Open roles -> https://www.8x.careers/join",
+    "Portfolios -> https://www.8x.careers/portfolios",
+    "Referrals -> https://www.8x.careers/referrals",
+    "About -> https://www.8x.careers/about",
+    "Login -> https://www.8x.careers/auth/sign-in",
+    "Login -> https://www.8x.careers/auth/sign-in",
+    "Hire with 8x -> https://www.8x.careers/client",
+    "Find your role -> https://www.8x.careers/join",
+    "Market Lead Intern - Poland -> https://www.8x.careers/join/market-lead-intern-poland",
+    "Market Lead Intern - Japan -> https://www.8x.careers/join/market-lead-intern-japan",
+    "Market Lead Intern - Portugal & Brazil -> https://www.8x.careers/join/market-lead-intern-portugal-brazil",
+    "Market Lead Intern - Southeast Asia -> https://www.8x.careers/join/market-lead-southeast-asia",
+    "Market Lead Intern - Germany -> https://www.8x.careers/join/market-lead-intern-germany",
+    "Market Lead Intern - UK -> https://www.8x.careers/join/market-lead-intern-uk",
+    "Market Lead Intern - Spain -> https://www.8x.careers/join/market-lead-intern-spain",
+    "GTM Intern - 8x Social (Poland) -> https://www.8x.careers/join/gtm-intern-8x-social-poland",
+    "GTM Intern - 8x Social (Turkey) -> https://www.8x.careers/join/gtm-intern-8x-social-turkey",
+    "Video Editor -> https://www.8x.careers/join/video-editor",
+    "Graphic Designer -> https://www.8x.careers/join/merch-graphic-designer",
+    "Paid Ads Manager -> https://www.8x.careers/join/paid-ads-manager",
+    "Software Engineer -> https://www.8x.careers/join/software-engineer",
+    "Global Sales Intern - 8x LinkedIn (US & EU) -> https://www.8x.careers/join/global-sales-intern-8x-linkedin",
+    "Growth Engineer (LATAM) -> https://www.8x.careers/join/growth-engineer",
+    "Creator Partnerships & Campaigns Manager -> https://www.8x.careers/join/creator-partnership-campaign-manager",
+    "Hiring Manager -> https://www.8x.careers/join/hiring-manager",
+    "Builder in Residence at 8x -> https://www.8x.careers/join/builder-in-residence-at-8x",
+    "Product Designer -> https://www.8x.careers/join/product-designer",
+    "Intrapreneur -> https://www.8x.careers/join/intrapreneur",
+    "Find your role -> https://www.8x.careers/join",
+    " -> https://www.8x.careers/",
+    "Open roles -> https://www.8x.careers/join",
+    "Portfolios -> https://www.8x.careers/portfolios",
+    "Referrals -> https://www.8x.careers/referrals",
+    "About 8x -> https://www.8x.careers/about",
+    "Back to the beginning -> https://www.8x.careers/join#main"
+  ],
+  "shots": 12,
+  "logs": [
+    "error: Access to fetch at 'https://playmakers.dev/client' (redirected from 'https://www.8x.careers/client?_rsc=-D3Jb5zEawfMPTX6') from origin 'https://www.8x.careers' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: Redirect is not allowed for a preflight request.",
+    "error: Failed to load resource: net::ERR_FAILED",
+    "warning: The resource https://www.8x.careers/_next/static/immutable/chunks/0a_wc49kga05w.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+  ]
+}

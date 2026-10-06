@@ -1,0 +1,57 @@
+{
+  "title": "tribe - e2vc",
+  "scrollHeight": 7037,
+  "fonts": [
+    "\"Inter Tight\", system-ui, sans-serif",
+    "\"Inter Tight\", Arial, sans-serif"
+  ],
+  "colors": [
+    "rgb(28, 33, 33)",
+    "rgb(252, 247, 240)",
+    "rgb(52, 81, 245)"
+  ],
+  "bgs": [
+    "rgba(0, 0, 0, 0)",
+    "rgb(28, 33, 33)",
+    "rgb(252, 247, 240)",
+    "rgba(28, 33, 33, 0.1)",
+    "rgb(196, 196, 196)",
+    "rgb(52, 81, 245)",
+    "rgb(0, 0, 0)"
+  ],
+  "links": [
+    " -> https://e2.vc/",
+    "friends -> https://e2.vc/friends",
+    "tribe -> https://e2.vc/tribe",
+    "talent -> https://e2.vc/talent",
+    "chill -> https://e2.vc/chill",
+    "content -> https://e2.vc/content",
+    "impact -> https://e2.vc/impact",
+    "team -> https://e2.vc/team",
+    "nextgen -> https://e2.vc/nextgen",
+    "FRIENDS -> https://e2.vc/friends",
+    "TRIBE -> https://e2.vc/tribe",
+    "TALENT -> https://e2.vc/talent",
+    "CHILL -> https://e2.vc/chill",
+    "CONTENT -> https://e2.vc/content",
+    "IMPACT -> https://e2.vc/impact",
+    "TEAM -> https://e2.vc/team",
+    "NEXTGEN -> https://e2.vc/nextgen",
+    "DISCLAIMER -> https://e2.vc/disclaimer",
+    "LINKEDIN ↗ -> https://www.linkedin.com/company/e2-vc/",
+    "EMAIL ↗ -> mailto:team@e2.vc?subject=Hi%20from%20website%20",
+    "PERKHUB ↗ -> https://e2.vc/perkhub"
+  ],
+  "shots": 10,
+  "logs": [
+    "log: https://e2.vc/friends",
+    "log: https://e2.vc/tribe",
+    "log: https://e2.vc/talent",
+    "log: https://e2.vc/chill",
+    "log: https://e2.vc/content",
+    "log: https://e2.vc/impact",
+    "log: https://e2.vc/team",
+    "log: https://e2.vc/nextgen",
+    "error: Failed to load resource: the server responded with a status of 502 (Bad Gateway)"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "title": "team - e2vc",
+  "scrollHeight": 3773,
+  "fonts": [
+    "\"Inter Tight\", system-ui, sans-serif",
+    "\"Inter Tight\", Arial, sans-serif"
+  ],
+  "colors": [
+    "rgb(252, 247, 240)",
+    "rgb(52, 81, 245)"
+  ],
+  "bgs": [
+    "rgba(0, 0, 0, 0)",
+    "rgb(252, 247, 240)",
+    "rgb(28, 33, 33)",
+    "rgba(252, 247, 240, 0.07)",
+    "rgb(52, 81, 245)",
+    "rgb(0, 0, 0)"
+  ],
+  "links": [
+    " -> https://e2.vc/",
+    "friends -> https://e2.vc/friends",
+    "tribe -> https://e2.vc/tribe",
+    "talent -> https://e2.vc/talent",
+    "chill -> https://e2.vc/chill",
+    "content -> https://e2.vc/content",
+    "impact -> https://e2.vc/impact",
+    "team -> https://e2.vc/team",
+    "nextgen -> https://e2.vc/nextgen",
+    "analyst intern\nipar kurt -> https://www.linkedin.com/in/ipar-kurt-b51ba4335/",
+    "analyst intern\ngulbin atli -> https://www.linkedin.com/in/gulbin-atli",
+    "analyst intern\nnazli cam -> https://www.linkedin.com/in/nazlicam/",
+    "general partner\narin ozkula -> https://www.linkedin.com/in/aozkula/",
+    "general partner\nenis hulli -> https://www.linkedin.com/in/enishulli/",
+    "partner, growth\nserra alkoçlar alp -> https://www.linkedin.com/in/serra-alkoclar-alp/",
+    "associate\ndilan sisu -> https://www.linkedin.com/in/gdilansisu/",
+    "talent associate\nzeynep gungor -> https://www.linkedin.com/in/zeynep-gungor-ba3944126/",
+    "coo\nesat acar -> https://www.linkedin.com/in/esatacar/",
+    "analyst intern\nenes celep -> https://www.linkedin.com/in/enescelep/",
+    "partner\nkaan eren -> https://www.linkedin.com/in/kaanerenn/",
+    "principal\nbasak zorlutuna -> https://www.linkedin.com/in/basakzorlutuna/",
+    "FRIENDS -> https://e2.vc/friends",
+    "TRIBE -> https://e2.vc/tribe",
+    "TALENT -> https://e2.vc/talent",
+    "CHILL -> https://e2.vc/chill",
+    "CONTENT -> https://e2.vc/content",
+    "IMPACT -> https://e2.vc/impact",
+    "TEAM -> https://e2.vc/team",
+    "NEXTGEN -> https://e2.vc/nextgen",
+    "DISCLAIMER -> https://e2.vc/disclaimer",
+    "LINKEDIN ↗ -> https://www.linkedin.com/company/e2-vc/",
+    "EMAIL ↗ -> mailto:team@e2.vc?subject=Hi%20from%20website%20",
+    "PERKHUB ↗ -> https://e2.vc/perkhub"
+  ],
+  "shots": 5,
+  "logs": [
+    "log: https://e2.vc/friends",
+    "log: https://e2.vc/tribe",
+    "log: https://e2.vc/talent",
+    "log: https://e2.vc/chill",
+    "log: https://e2.vc/content",
+    "log: https://e2.vc/impact",
+    "log: https://e2.vc/team",
+    "log: https://e2.vc/nextgen"
+  ]
+}
