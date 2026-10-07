@@ -298,31 +298,32 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .team__head { text-align: center; display: grid; gap: 12px; justify-items: center; padding-inline: var(--gutter); }
 .team__head h3 { font-size: clamp(1.7rem, 1.1rem + 2vw, 3rem); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; font-variation-settings: "opsz" 60; }
 .team__head p:not(.label) { color: var(--ink-2); font-size: var(--lead); }
-.seats { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: clamp(6px, 1.2vw, 20px); width: min(100% - 2 * var(--gutter), 1500px); position: relative; z-index: 1; }
+.seats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(6px, 1.2vw, 20px); width: min(100% - 2 * var(--gutter), 1500px); position: relative; z-index: 1; }
 .seat { width: 100%; aspect-ratio: 3 / 4; border-radius: 12px; overflow: hidden; position: relative; flex: none; background: var(--rule);
   transform: scale(.94); opacity: .38; filter: grayscale(1); transition: transform 700ms var(--ease-settle), opacity 600ms ease, filter 600ms ease, box-shadow 600ms ease; }
 .seat img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.seat.on { transform: scale(1.06); opacity: 1; filter: none; box-shadow: 0 22px 44px -22px var(--desk-shadow); }
+.mate { margin: 0; display: grid; gap: 14px; align-content: start; }
+.mate.on .seat { transform: scale(1.04); opacity: 1; filter: none; box-shadow: 0 22px 44px -22px var(--desk-shadow); }
+.mate figcaption { display: grid; gap: 6px; justify-items: start; text-align: left; opacity: .4; transition: opacity 500ms ease; }
+.mate.on figcaption { opacity: 1; }
+.mate__name { font-size: clamp(.95rem, .7rem + .9vw, 1.5rem); line-height: 1.15; letter-spacing: -.01em; }
+.mate__role { font-family: var(--mono); font-size: clamp(9px, .5rem + .35vw, 12px); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px; padding-bottom: 5px; transition: background-size 620ms var(--ease-pen) 140ms, color 400ms ease; }
+.mate.on .mate__role { background-size: 100% 2px; color: var(--ink); }
 .seat--you { background: var(--rule); display: block; color: var(--ink-3); }
 .seat--you svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .seat--you span { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); line-height: 1.6; }
 .seat--you b { display: block; font-family: var(--serif); font-weight: 400; font-size: 2.4em; line-height: 1; color: var(--pen); letter-spacing: 0; margin-bottom: 6px; }
-.seat--you.on { box-shadow: 0 0 0 2px var(--paper), 0 0 0 3.5px var(--pen), 0 22px 44px -22px var(--desk-shadow); }
-.team.is-hover .seat { cursor: pointer; }
+.mate--you.on .seat--you { box-shadow: 0 0 0 2px var(--paper), 0 0 0 3.5px var(--pen), 0 22px 44px -22px var(--desk-shadow); }
+.team.is-hover .mate { cursor: pointer; }
 /* the light: a soft cone from above that follows the active seat */
 .beam { position: absolute; top: 0; height: 0; width: var(--bw, 240px); left: 0; pointer-events: none; z-index: 0;
   background: radial-gradient(ellipse 50% 42% at 50% 62%, color-mix(in srgb, var(--mark) 55%, transparent), transparent 70%), linear-gradient(180deg, transparent, color-mix(in srgb, var(--mark) 22%, transparent) 40%, transparent 85%);
   clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%); opacity: .9; transition: transform 700ms var(--ease-settle); }
-.who { display: grid; justify-items: center; text-align: center; gap: 8px; min-height: 5.6em; position: relative; z-index: 1; padding-inline: var(--gutter); }
-.who__name { font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.4rem); line-height: 1.1; letter-spacing: -.02em; }
-.who__role:empty { display: none; }
-.who__role { font-family: var(--mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink);
   background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px; padding-bottom: 5px; }
-.who.is-in .who__role { background-size: 100% 2px; transition: background-size 620ms var(--ease-pen) 160ms; }
-.who__name, .who__role { transition: opacity 260ms ease, transform 420ms var(--ease-settle); }
-.who.is-out .who__name, .who.is-out .who__role { opacity: 0; transform: translateY(8px); }
 .team .btn { margin-top: 2px; }
 .team:not(.is-scrub) .seat { opacity: 1; filter: none; transform: none; }
+.team:not(.is-scrub) .mate figcaption { opacity: 1; }
+@media (max-width: 700px) { .mate__role { letter-spacing: .02em; display: none; } .mate.on .mate__role { display: block; } .mate { gap: 8px; } .mate__name { font-size: .82rem; } }
 
 /* people → globe: one pinned canvas scene */
 .crowd { position: relative; margin-top: clamp(24px, 4vw, 60px); }
@@ -523,8 +524,7 @@ html.lenis, html.lenis body { height: auto; }
             <h3>A small team builds the rest.</h3>
             <p>Each person owns a whole piece of it.</p>
           </div>
-          <div class="seats" id="seats"><div class="seat" data-name="Maya Okafor" data-role="Market lead · Poland"><img src="img/people/p6.jpg" alt="Placeholder portrait for Maya Okafor, Market lead · Poland" loading="lazy"></div><div class="seat" data-name="Ravi Menon" data-role="Engineer · Platform"><img src="img/people/p2.jpg" alt="Placeholder portrait for Ravi Menon, Engineer · Platform" loading="lazy"></div><div class="seat" data-name="Lena Park" data-role="Designer · Brand"><img src="img/people/p3.jpg" alt="Placeholder portrait for Lena Park, Designer · Brand" loading="lazy"></div><div class="seat" data-name="Tomás Silva" data-role="Paid growth · 10 markets"><img src="img/people/p8.jpg" alt="Placeholder portrait for Tomás Silva, Paid growth · 10 markets" loading="lazy"></div><div class="seat" data-name="Amara Diallo" data-role="Operations · Payouts"><img src="img/people/p1.jpg" alt="Placeholder portrait for Amara Diallo, Operations · Payouts" loading="lazy"></div><div class="seat" data-name="Jonah Weiss" data-role="Builder in residence"><img src="img/people/p11.jpg" alt="Placeholder portrait for Jonah Weiss, Builder in residence" loading="lazy"></div><div class="seat seat--you" data-name="You?" data-role="" aria-label="An empty seat"><svg viewBox="0 0 120 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="60" cy="62" r="24" fill="currentColor" opacity=".22"/><path d="M14 160c4-34 22-52 46-52s42 18 46 52z" fill="currentColor" opacity=".22"/></svg></div></div>
-          <div class="who is-in" id="who" aria-live="polite"><p class="who__name" id="who-name">Maya Okafor</p><p class="who__role" id="who-role">Market lead · Poland</p></div>
+          <div class="seats" id="seats"><figure class="mate"><div class="seat"><img src="img/people/p6.jpg" alt="Placeholder portrait for Maya Okafor" loading="lazy"></div><figcaption><span class="mate__name">Maya Okafor</span><span class="mate__role">Market lead · Poland</span></figcaption></figure><figure class="mate"><div class="seat"><img src="img/people/p2.jpg" alt="Placeholder portrait for Ravi Menon" loading="lazy"></div><figcaption><span class="mate__name">Ravi Menon</span><span class="mate__role">Engineer · Platform</span></figcaption></figure><figure class="mate"><div class="seat"><img src="img/people/p3.jpg" alt="Placeholder portrait for Lena Park" loading="lazy"></div><figcaption><span class="mate__name">Lena Park</span><span class="mate__role">Designer · Brand</span></figcaption></figure><figure class="mate"><div class="seat"><img src="img/people/p8.jpg" alt="Placeholder portrait for Tomás Silva" loading="lazy"></div><figcaption><span class="mate__name">Tomás Silva</span><span class="mate__role">Paid growth · 10 markets</span></figcaption></figure><figure class="mate"><div class="seat"><img src="img/people/p1.jpg" alt="Placeholder portrait for Amara Diallo" loading="lazy"></div><figcaption><span class="mate__name">Amara Diallo</span><span class="mate__role">Operations · Payouts</span></figcaption></figure><figure class="mate mate--you"><div class="seat seat--you" aria-label="An empty seat"><svg viewBox="0 0 120 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="60" cy="62" r="24" fill="currentColor" opacity=".22"/><path d="M14 160c4-34 22-52 46-52s42 18 46 52z" fill="currentColor" opacity=".22"/></svg></div><figcaption><span class="mate__name">You?</span></figcaption></figure></div>
         </div>
       </div>
 
@@ -797,13 +797,12 @@ html.lenis, html.lenis body { height: auto; }
   function renderNet() {}
 
   /* ================= CORE TEAM: a spotlight walks the seats ================= */
-  var team = $('#team'), seats = $$('#seats .seat'), seatRow = $('#seats'), beam = $('#beam');
-  var who = $('#who'), whoName = $('#who-name'), whoRole = $('#who-role'), activeSeat = -1, swapT = null;
+  var team = $('#team'), seats = $$('#seats .mate'), seatRow = $('#seats'), beam = $('#beam'), activeSeat = -1;
   team.classList.add('is-scrub');
   window.addEventListener('resize', function () { placeBeam(); activeSeat = -1; });
   function placeBeam() {
     /* the light starts just above the seats and ends under the name, so it never tints the heading */
-    var top = seatRow.offsetTop - 70, bottom = who.offsetTop + who.offsetHeight + 30;
+    var top = seatRow.offsetTop - 70, bottom = seatRow.offsetTop + seatRow.offsetHeight + 20;
     beam.style.top = top + 'px'; beam.style.height = (bottom - top) + 'px';
   }
   var teamDone = false;
@@ -813,16 +812,9 @@ html.lenis, html.lenis body { height: auto; }
     seats.forEach(function (el, i) { el.classList.toggle('on', i === idx); });
     var el = seats[idx], pr = el.offsetParent === seatRow ? 0 : 0;
     /* the light moves to sit over the lit seat */
-    var bw = el.offsetWidth * 1.9;
+    var bw = el.offsetWidth * 1.7;
     beam.style.setProperty('--bw', bw.toFixed(0) + 'px');
     beam.style.transform = 'translateX(' + (seatRow.offsetLeft + el.offsetLeft + el.offsetWidth / 2 - bw / 2).toFixed(1) + 'px)';
-    who.classList.remove('is-in'); who.classList.add('is-out');
-    clearTimeout(swapT);
-    swapT = setTimeout(function () {
-      whoName.textContent = el.getAttribute('data-name');
-      whoRole.textContent = el.getAttribute('data-role');
-      who.classList.remove('is-out'); void who.offsetWidth; who.classList.add('is-in');
-    }, 220);
   }
   function renderTeam() {
     var p = progress(team), n = seats.length;
