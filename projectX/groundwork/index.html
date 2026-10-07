@@ -1,7 +1,7 @@
 <title>8x.life Redesign Groundwork</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300..800&display=swap">
 <style>
 /* Layout concept: a document under review. Claims run in the main column; their receipts sit in a ruled margin, the way a reader marks up a piece of work. */
 :root {
@@ -53,6 +53,7 @@
 }
 
 * { box-sizing: border-box; }
+em, i, cite, q { font-style: normal; }
 body {
   background: var(--paper);
   color: var(--ink);
@@ -204,7 +205,7 @@ figcaption b { color: var(--ink); font-weight: 500; }
 /* ---------- reader cards ---------- */
 .readers { display: grid; gap: var(--s5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
 .reader { display: grid; gap: var(--s3); align-content: start; padding-top: var(--s4); border-top: 2px solid var(--ink); }
-.reader p { font-style: italic; font-size: 1.12rem; line-height: 1.45; }
+.reader p { font-size: 1.12rem; line-height: 1.45; }
 
 /* two-column compare */
 .twocol { display: grid; gap: var(--s6); grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }

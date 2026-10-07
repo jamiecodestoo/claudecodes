@@ -1,7 +1,7 @@
 <title>8x.life Homepage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300..800&display=swap">
 <style>
 /* Layout concept: one centred column of rows. Under the headline, a pile of CVs falls away and the work for each open role rises in its place. */
 :root {
@@ -49,6 +49,7 @@
 }
 
 * { box-sizing: border-box; }
+em, i, cite, q { font-style: normal; }
 html, body { overflow-x: clip; }
 body {
   background: var(--paper); color: var(--ink);
@@ -117,7 +118,7 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .stage { position: relative; width: min(1200px, calc(100vw - 32px)); height: 31em; font-size: calc(min(1200px, 100vw - 32px) / 68); margin-inline: auto; }
 @media (max-width: 760px) { .stage { font-size: calc((100vw - 32px) / 40); height: 32em; --spread: .62; } .stage .card--far { display: none; } }
 .stage__cap { display: grid; text-align: center; padding-inline: var(--gutter); }
-.stage__cap span { grid-area: 1 / 1; font-size: var(--lead); font-style: italic; color: var(--ink-2); transition: opacity 260ms ease; }
+.stage__cap span { grid-area: 1 / 1; font-size: var(--lead); color: var(--ink-2); transition: opacity 260ms ease; }
 .stage__cap .c2 { opacity: 0; color: var(--ink); }
 .stage__cap.is-swapped .c1 { opacity: 0; }
 .stage__cap.is-swapped .c2 { opacity: 1; }
@@ -232,7 +233,7 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .ads .rw.kill > span:first-child { color: #A3A39B; text-decoration: line-through; text-decoration-color: #C73D20; text-decoration-thickness: 1.5px; }
 .ads .rw.kill polyline { stroke: #C9C8C0; stroke-dasharray: 3 3; }
 .ads .rw.kill .chip { background: #FBE9E4; color: #B0361C; }
-.ads .foot { margin-top: .7em; font-style: italic; font-size: .64em; color: #C73D20; }
+.ads .foot { margin-top: .7em; font-size: .64em; color: #C73D20; }
 
 /* E · vertical creator video in an editor */
 .ed { display: grid; grid-template-rows: 1fr auto; background: #1A1A18; }
@@ -320,11 +321,8 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .seats.is-in .mate { opacity: 1; transform: none; transition: opacity 700ms ease, transform 900ms var(--ease-settle); transition-delay: calc(var(--k, 0) * 90ms); }
 .mate--you { display: block; text-decoration: none; color: var(--ink); background: linear-gradient(170deg, var(--paper), color-mix(in srgb, var(--rule) 70%, var(--paper))); box-shadow: inset 0 0 0 1px var(--rule); transition: box-shadow 400ms ease; }
 .mate--you svg { position: absolute; left: 50%; top: 14%; width: 62%; height: auto; transform: translateX(-50%); color: var(--ink-3); transition: transform 600ms var(--ease-settle), color 400ms ease; }
-.mate--you .seat-tag { position: absolute; top: clamp(12px, 1.4vw, 18px); left: clamp(12px, 1.4vw, 18px); font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--pen); display: inline-flex; align-items: center; gap: 6px; }
-.mate--you .seat-tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--pen); box-shadow: 0 0 0 0 color-mix(in srgb, var(--pen) 45%, transparent); animation: seatPulse 2.2s ease-out infinite; }
-@keyframes seatPulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pen) 45%, transparent); } 100% { box-shadow: 0 0 0 9px transparent; } }
 .mate--you figcaption { color: var(--ink); opacity: 1; transform: none; }
-.mate--you .mate__name { color: var(--ink); font-style: italic; }
+.mate--you .mate__name { color: var(--ink); }
 .mate--you .mate__role { color: var(--ink-2); background-size: 0% 2px; }
 .mate--you:hover, .mate--you:focus-visible { box-shadow: inset 0 0 0 1.5px var(--pen); }
 .mate--you:hover svg, .mate--you:focus-visible svg { transform: translate(-50%, -4%); color: var(--pen); }
@@ -371,7 +369,7 @@ a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
-.ghost-word { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none; font-size: 26em; line-height: .8; letter-spacing: -.06em; font-weight: 300; font-style: italic; color: transparent; -webkit-text-stroke: 1px var(--rule); opacity: 0; white-space: nowrap; font-variation-settings: "opsz" 72; }
+.ghost-word { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none; font-size: 26em; line-height: .8; letter-spacing: -.06em; font-weight: 300; color: transparent; -webkit-text-stroke: 1px var(--rule); opacity: 0; white-space: nowrap; font-variation-settings: "opsz" 72; }
 .show:not(.is-scrub) .ghost-word { display: none; }
 [data-par] { will-change: transform; }
 
@@ -527,7 +525,7 @@ html.lenis, html.lenis body { height: auto; }
           <h3>A small team builds the rest.</h3>
           <p>Each person owns a whole piece of it.</p>
         </div>
-        <div class="seats" id="seats"><figure class="mate" tabindex="0"><img src="img/people/p6.jpg" alt="Placeholder portrait for Maya Okafor" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Maya Okafor</span><span class="mate__role">Market lead · Poland</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p2.jpg" alt="Placeholder portrait for Ravi Menon" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Ravi Menon</span><span class="mate__role">Engineer · Platform</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p3.jpg" alt="Placeholder portrait for Lena Park" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Lena Park</span><span class="mate__role">Designer · Brand</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p8.jpg" alt="Placeholder portrait for Tomás Silva" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Tomás Silva</span><span class="mate__role">Paid growth · 10 markets</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p1.jpg" alt="Placeholder portrait for Amara Diallo" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Amara Diallo</span><span class="mate__role">Operations · Payouts</span></figcaption></figure><a class="mate mate--you" href="https://www.8x.careers/join"><span class="seat-tag">Open seat</span><svg viewBox="0 0 120 130" aria-hidden="true"><circle cx="60" cy="40" r="26" fill="currentColor" opacity=".28"/><path d="M8 130c4-38 25-58 52-58s48 20 52 58z" fill="currentColor" opacity=".28"/></svg><figcaption><span class="mate__name">You?</span><span class="mate__role">Pick a role · 20 open</span></figcaption></a></div>
+        <div class="seats" id="seats"><figure class="mate" tabindex="0"><img src="img/people/p6.jpg" alt="Placeholder portrait for Maya Okafor" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Maya Okafor</span><span class="mate__role">Market lead · Poland</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p2.jpg" alt="Placeholder portrait for Ravi Menon" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Ravi Menon</span><span class="mate__role">Engineer · Platform</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p3.jpg" alt="Placeholder portrait for Lena Park" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Lena Park</span><span class="mate__role">Designer · Brand</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p8.jpg" alt="Placeholder portrait for Tomás Silva" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Tomás Silva</span><span class="mate__role">Paid growth · 10 markets</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p1.jpg" alt="Placeholder portrait for Amara Diallo" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Amara Diallo</span><span class="mate__role">Operations · Payouts</span></figcaption></figure><a class="mate mate--you" href="https://www.8x.careers/join"><svg viewBox="0 0 120 130" aria-hidden="true"><circle cx="60" cy="40" r="26" fill="currentColor" opacity=".28"/><path d="M8 130c4-38 25-58 52-58s48 20 52 58z" fill="currentColor" opacity=".28"/></svg><figcaption><span class="mate__name">You?</span><span class="mate__role">Pick a role · 20 open</span></figcaption></a></div>
       </div>
 
       <div class="prods" data-par="-0.04">
