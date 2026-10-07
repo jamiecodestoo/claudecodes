@@ -266,24 +266,20 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .what__head h2 .w.key, .what__head h2 em { font-style: normal; }
 .what__head h2 .w.key { background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 92%; background-size: calc(var(--u, 1) * 100%) max(2px, .06em); padding-bottom: .04em; }
 
-/* crowd → globe: one pinned canvas scene */
+/* people → globe: one pinned canvas scene */
 .crowd { position: relative; margin-top: clamp(24px, 4vw, 60px); }
-.crowd.is-scrub { height: 340svh; }
-.crowd__pin { position: relative; display: grid; place-items: center; min-height: 80svh; }
-.crowd.is-scrub .crowd__pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.crowd.is-scrub { height: 320svh; }
+.crowd__pin { position: relative; display: grid; place-items: center; min-height: 90svh; }
+.crowd.is-scrub .crowd__pin { position: sticky; top: 0; height: 100svh; }
 .crowd canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.crowd__copy { position: relative; z-index: 2; transform-origin: 50% 50%; display: grid; justify-items: center; text-align: center; gap: 14px; pointer-events: none; padding-inline: var(--gutter); }
-.crowd__num { font-size: clamp(3.4rem, 1rem + 8.5vw, 9.6rem); line-height: .9; letter-spacing: -.045em; font-weight: 360; font-variation-settings: "opsz" 72; font-variant-numeric: lining-nums tabular-nums; background: color-mix(in srgb, var(--paper) 78%, transparent); padding: .06em .16em .02em; border-radius: .08em; }
-.crowd__line { display: grid; }
-.crowd__line span { grid-area: 1 / 1; font-size: var(--lead); line-height: 1.35; transition: opacity 360ms ease, transform 420ms var(--ease-settle); background: color-mix(in srgb, var(--paper) 78%, transparent); padding: 2px 10px; border-radius: 3px; }
-.crowd__line .l2 { opacity: 0; transform: translateY(8px); }
-.crowd__line.is-globe .l1 { opacity: 0; transform: translateY(-8px); }
-.crowd__line.is-globe .l2 { opacity: 1; transform: none; }
-.crowd__line b { font-weight: 500; background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 95%; background-size: 100% 2px; }
-.crowd .date { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; background: var(--mark); color: var(--mark-ink); padding: 3px 7px 2px; border-radius: 1px; }
-.crowd .src { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-2); margin-top: 4px; }
-.crowd .src .tbc { color: var(--pen); }
-.crowd:not(.is-scrub) .crowd__copy { padding-block: 60px; }
+.crowd__num { position: absolute; left: 50%; top: 50%; z-index: 2; margin: 0; white-space: nowrap; transform: translate(-50%, -50%); transform-origin: 50% 50%;
+  font-size: clamp(2.6rem, 1rem + 5vw, 6.2rem); line-height: 1; letter-spacing: -.04em; font-weight: 370; font-variation-settings: "opsz" 72; font-variant-numeric: lining-nums tabular-nums; pointer-events: none; }
+.crowd__cty { position: absolute; left: 50%; top: 50%; z-index: 2; margin: 0; white-space: nowrap; transform: translate(-50%, 0); opacity: 0;
+  font-size: clamp(1.4rem, 1rem + 1.6vw, 2.4rem); line-height: 1.1; letter-spacing: -.02em; pointer-events: none;
+  background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: calc(var(--u, 0) * 100%) 2px; padding-bottom: .1em; }
+.crowd:not(.is-scrub) .crowd__num { position: static; transform: none; }
+.crowd:not(.is-scrub) .crowd__cty { position: static; transform: none; opacity: 1; --u: 1; }
+.crowd:not(.is-scrub) .crowd__pin { gap: 16px; padding-block: 60px; }
 
 
 .rows { margin-top: clamp(80px, 10vw, 140px); display: grid; max-width: 60rem; margin-inline: auto; }
@@ -444,15 +440,8 @@ html.lenis, html.lenis body { height: auto; }
       <div class="crowd" id="crowd">
         <div class="crowd__pin">
           <canvas id="crowd-canvas" aria-hidden="true"></canvas>
-          <div class="crowd__copy">
-            <p class="crowd__num" id="crowd-num">121,000</p>
-            <p class="crowd__line" id="crowd-line">
-              <span class="l1">people on the 8x platform</span>
-              <span class="l2">working with 8x across <b>30+ countries</b></span>
-            </p>
-            <span class="date">June 2026</span>
-            <p class="src">Creators, sales reps and research participants. <span class="tbc">Figures for 8x to confirm.</span></p>
-          </div>
+          <p class="crowd__num" id="crowd-num">121,000 people</p>
+          <p class="crowd__cty" id="crowd-cty">30+ countries</p>
         </div>
       </div>
 
@@ -578,7 +567,7 @@ html.lenis, html.lenis body { height: auto; }
 
   /* ================= CROWD → GLOBE ================= */
   var crowd = $('#crowd'), cv = $('#crowd-canvas'), cx = cv.getContext('2d');
-  var numEl = $('#crowd-num'), lineEl = $('#crowd-line'), copy = $('.crowd__copy');
+  var numEl = $('#crowd-num'), ctyEl = $('#crowd-cty');
   crowd.classList.add('is-scrub');
   /* land on a 2° grid (lat 88 → -88, lon -180 → 178), 1 bit per cell */
   var LAND = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/+ev7UAAAAAAAAAAAAAAAAAAAAAAC//h///0AALwAAAADgAAAAAAAAAAADCg+////wAAdAAAAAAIAAAAAAAAAAA+xMAA///wAAAAAAcAB/4ABAAAAAAADwBUAAP//gAAAAADAAv/gAIAAAAAAADfTC+AH/9gAAAAAMBi///+D4AAAH/gYP8434F//gAAA4AAj///////wAwP///4Zcj8D/wAAAP/xb/v////////+f/////+h7B+geAAf/H///////////AD/////908B8AcAA+/v///////////AP/////wPAA4AAAH5///////////98Af0P///gDgAAAAAH8D//////////EAAAgC///wD+AAAACA4f////////+AMAACAA///+D/AAAACBx/////////4A8AAAAA////n/wAAAZBv/////////6AwAAAAAP///3/4AAAbn///////////AQAAAAAH////4AAAAAf//////////+AAAAAAAD////4cAAAD///////////8AAAAAAAB////8gAAAA//9f///////5EAAAAAAD////0AAAAA+v4P///////xgAAAAAAD////gAAAAPwz4H//////+AAAAAAAAD///+AAAAAPoLv///////eCAAAAAAAB///+AAAAAPAZv///////GCAAAAAAAA///8AAAAAAfAA///////iOAAAAAAAAf//8AAAAAH/AA///////g4AAAAAAAAP//wAAAAAP/zg///////gAAAAAAAAAD/8QAAAAAP////v/////gAAAAAAAAAF/AQAAAAA/////v/////gAAAAAAAAAC/AAAAAAB////fx/////AAAAAAAAAABfAAAAAAB////P2D///+AAAAAAAAAAAPAoAAAAD////v/B///4AAAAAAAAAAAPGCAAAAD////n+Afx/AAAAAAAAAAAAH8AEAAAD////3+AfA/AQAAAAAAAAAAA8AAAAAD////74AeAfggAAAAAAAAAAAHgAAAAD////7AAOAPgAAAAAAAAAAAABgwAAAD////8AAMADgoAAAAAAAAAAAAheAAAB/////wAEABAAAAAAAAAAAAAAH/gAAA/////gACAIAMAAAAAAAAAAAAD/wAAAfn///gAAAEBAAAAAAAAAAAAAD/+AAAAB///AAAAUmAAAAAAAAAAAAAH/+AAAAB//+AAAAKOAAAAAAAAAAAAAP//AAAAB//8AAAAMegAAAAAAAAAAAAP//wAAAB//4AAAAHOh0AAAAAAAAAAAP//+AAAA//wAAAACAwPgAAAAAAAAAAP///gAAAf/wAAAABAAD0AAAAAAAAAAH///gAAAf/wAAAAAMAHQAAAAAAAAAAH///AAAAf/wAAAAAAoAIAAAAAAAAAAD///AAAAf/4AAAAAAARAAAAAAAAAAAD//+AAAAf/4wAAAAABxAAAAAAAAAAAB//+AAAA//5gAAAAAH5gAAAAAAAAAAAf/+AAAA//hgAAAAAP/wABAAAAAAAAAf/8AAAAf/BgAAAAA//4AAAAAAAAAAAf/8AAAAP/DgAAAAH//4AAAAAAAAAAAf/gAAAAP/DAAAAAH//8AAAAAAAAAAAf/AAAAAP+AAAAAAD//+AAAAAAAAAAAf/AAAAAP+AAAAAAD//+AAAAAAAAAAAf+AAAAAH8AAAAAAD//+AAAAAAAAAAAf+AAAAAD4AAAAAAD+f+AAAAAAAAAAAf8AAAAADgAAAAAADAP8AAAAAAAAAAA/wAAAAAAAAAAAAAAAD8AEAAAAAAAAA/wAAAAAAAAAAAAAAABwADAAAAAAAAA+AAAAAAAAAAAAAAAAAoACAAAAAAAAB8AAAAAAAAAAAAAAAAAYAMAAAAAAAAA8AAAAAAAAAAAAAAAAAAAQAAAAAAAAB4AAAAAAAAAAAAAAAAAAAwAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAABwgAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAMAAAGIAAAAAAAAAAAAAAEAAAAAAAAD/+B/////wAAAAAAAAAAAeAAAAAAIB//+f//////4AAAAAAAGABWAAAAf//////////////wAAAADAH///AAAB//////////////+AAAB//////4AAB///////////////8AAB//////zAAwf///////////////+AAAD/////8AB4D///////////////4AAAP//////4Bn////////////////8AAD///////////////////////////+////////////////////////////////////////////////////////////A=';
@@ -597,7 +586,7 @@ html.lenis, html.lenis body { height: auto; }
   var hubs = [[37.77,-122.42],[52.23,21.01],[35.68,139.69],[52.52,13.40],[51.51,-0.13],[40.42,-3.70],[38.72,-9.14],[-23.55,-46.63],[41.01,28.98],[46.06,14.51],[31.55,74.34],[28.61,77.21],[1.35,103.82],[3.14,101.69],[13.76,100.50],[14.60,120.98],[-6.21,106.85],[40.71,-74.01],[19.43,-99.13],[-34.60,-58.38],[4.71,-74.07],[6.52,3.38],[30.04,31.24],[25.20,55.27],[-33.87,151.21],[37.57,126.98],[48.86,2.35],[45.46,9.19],[59.33,18.07],[50.45,30.52],[-26.20,28.05],[24.86,67.01]].map(function (h) { return [h[0] * Math.PI / 180, h[1] * Math.PI / 180]; });
 
   /* avatar sprites: little head-and-shoulders portraits in varied tones */
-  var DPR = Math.min(2, window.devicePixelRatio || 1), SP = 44;
+  var DPR = Math.min(2, window.devicePixelRatio || 1), SP = 160;
   var bgs = ['#E8E4DA','#DCE3D3','#E9DCCF','#D8DEE6','#EAE1C8','#E2D6DE','#D6E1DE','#F0D9CF'];
   var skins = ['#F1C9A5','#E0AC80','#C68B5E','#9A6440','#6B4429','#F3D2B8','#B7825A','#82553A'];
   var hair = ['#2B201A','#4A3326','#141210','#7A5233','#B8925A','#3A2A22'];
@@ -614,78 +603,85 @@ html.lenis, html.lenis body { height: auto; }
     g.restore(); sprites.push(o);
   }
 
-  var W = 0, H = 0, parts = [], R = 0;
-  function seeded(i) { var x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); }
+  var W = 0, H = 0, R = 0, GY = 0, RING = 0, RX = 0, AV = 0, TILT = -.38;
+  /* twelve people, each pinned to a place 8x hires from */
+  var PEOPLE = [0, 17, 7, 6, 1, 8, 21, 10, 11, 12, 2, 24];
   function setup() {
     W = cv.clientWidth; H = cv.clientHeight; cv.width = W * DPR; cv.height = H * DPR;
-    R = Math.min(W * .42, H * .33);
-    var n = W < 700 ? 260 : 620; parts = [];
-    for (var i = 0; i < n; i++) {
-      var a = seeded(i + 1), b = seeded(i + 101), c = seeded(i + 201);
-      parts.push({ x: a * W, y: b * H, s: (W < 700 ? 18 : 24) + c * 14, sp: sprites[i % sprites.length], t: land[Math.floor(seeded(i + 301) * land.length)], d: seeded(i + 401) });
-    }
+    R = Math.min(W * .34, H * .27);
+    RING = Math.min(W * .4, H * .36);
+    RX = W < 700 ? W * .42 : RING;
+    AV = W < 700 ? 44 : 64;
   }
-  var TILT = -.38, GY = 0;
   function project(lat, lon, rot) {
     var l = lon + rot, cl = Math.cos(lat);
     var x = cl * Math.sin(l), y = Math.sin(lat), z = cl * Math.cos(l);
     var y2 = y * Math.cos(TILT) - z * Math.sin(TILT), z2 = y * Math.sin(TILT) + z * Math.cos(TILT);
     return [W / 2 + x * R, GY - y2 * R, z2];
   }
-  var inkC = '#141412', penC = '#C73D20', dotC = 'rgba(20,20,18,.18)';
-  function readColors() { var cs = getComputedStyle(document.documentElement); inkC = cs.getPropertyValue('--ink').trim(); penC = cs.getPropertyValue('--pen').trim(); dotC = cs.getPropertyValue('--ink-3').trim(); }
+  var inkC = '#141412', penC = '#C73D20', dotC = '#8C8C84', paperC = '#FBFBF8';
+  function readColors() { var cs = getComputedStyle(document.documentElement); inkC = cs.getPropertyValue('--ink').trim(); penC = cs.getPropertyValue('--pen').trim(); dotC = cs.getPropertyValue('--ink-3').trim(); paperC = cs.getPropertyValue('--paper').trim(); }
   readColors();
-  var nf = new Intl.NumberFormat('en-US');
+  function drawPin(x, y, size, sp, pin, alpha) {
+    cx.globalAlpha = alpha;
+    var r = size / 2;
+    if (pin > 0) { /* a teardrop pin: the face sits above its point */
+      cx.fillStyle = penC; cx.beginPath();
+      cx.moveTo(x - r * .45, y - r * .2); cx.lineTo(x, y + r * .9 * pin); cx.lineTo(x + r * .45, y - r * .2); cx.closePath(); cx.fill();
+    }
+    var cy = y - r * 1.15 * pin;
+    cx.fillStyle = pin > 0 ? penC : paperC; cx.beginPath(); cx.arc(x, cy, r + 2.5, 0, Math.PI * 2); cx.fill();
+    cx.save(); cx.beginPath(); cx.arc(x, cy, r, 0, Math.PI * 2); cx.clip(); cx.drawImage(sp, x - r, cy - r, size, size); cx.restore();
+  }
   function renderCrowd(time) {
     var p = progress(crowd);
-    /* 0 – .30 the crowd arrives and the count climbs */
-    var arrive = seg(p, 0, .26), fly = inOut(seg(p, .30, .62)), globeIn = seg(p, .40, .66);
-    numEl.textContent = nf.format(Math.round(121000 * out3(seg(p, .02, .28)) / 10) * 10);
-    lineEl.classList.toggle('is-globe', p > .58);
-    var rot = -2.6 + p * 2.3 + (time || 0) * .00004;
-    GY = H * (.5 + .14 * fly);
-    copy.style.transform = 'translateY(' + (-H * .33 * fly).toFixed(1) + 'px) scale(' + (1 - .32 * fly).toFixed(3) + ')';
+    var centerY = H / 2;
+    /* .00 – .48 the twelve travel round the ring from the top; just before it closes they leave for the globe */
+    var sweep = out3(seg(p, .02, .5));
+    var fly = inOut(seg(p, .42, .64));
+    var globeIn = seg(p, .40, .6);
+    var spin = inOut(seg(p, .5, 1));
+    GY = H * .56;
+    var rot = -0.6 - spin * Math.PI * 2;
+    /* the headline lifts above the globe */
+    var lift = inOut(seg(p, .42, .62));
+    var topY = Math.max(64, GY - R - (W < 700 ? 56 : 84));
+    numEl.style.transform = 'translate(-50%, calc(-50% + ' + ((topY - centerY) * lift).toFixed(1) + 'px)) scale(' + (1 - .42 * lift).toFixed(3) + ')';
+    var under = seg(p, .6, .72);
+    ctyEl.style.top = (GY + R + (W < 700 ? 24 : 34)).toFixed(0) + 'px';
+    ctyEl.style.opacity = under.toFixed(3);
+    ctyEl.style.setProperty('--u', out3(seg(p, .66, .8)).toFixed(3));
+
     cx.setTransform(DPR, 0, 0, DPR, 0, 0); cx.clearRect(0, 0, W, H);
-    /* the globe's land, faint */
     if (globeIn > 0) {
       cx.fillStyle = dotC;
-      for (var i = 0; i < land.length; i += 1) {
-        var q = project(land[i][0], land[i][1], rot);
-        if (q[2] <= 0) continue;
-        cx.globalAlpha = globeIn * (.35 + .65 * q[2]);
-        cx.fillRect(q[0] - 1.1, q[1] - 1.1, 2.2, 2.2);
+      for (var i = 0; i < land.length; i++) {
+        var q = project(land[i][0], land[i][1], rot); if (q[2] <= 0) continue;
+        cx.globalAlpha = globeIn * (.3 + .6 * q[2]); cx.fillRect(q[0] - 1.1, q[1] - 1.1, 2.2, 2.2);
       }
-      cx.globalAlpha = globeIn * .5; cx.strokeStyle = dotC; cx.lineWidth = 1;
+      cx.globalAlpha = globeIn * .6; cx.strokeStyle = dotC; cx.lineWidth = 1;
       cx.beginPath(); cx.arc(W / 2, GY, R, 0, Math.PI * 2); cx.stroke();
-    }
-    /* people: scattered portraits that shrink into dots on the globe */
-    for (var j = 0; j < parts.length; j++) {
-      var pt = parts[j];
-      var show = clamp((arrive - pt.d * .7) / .3, 0, 1);
-      if (show <= 0) continue;
-      var tg = project(pt.t[0], pt.t[1], rot);
-      var f = clamp((fly - pt.d * .25) / .75, 0, 1); f = f * f * (3 - 2 * f);
-      var x = pt.x + (tg[0] - pt.x) * f, y = pt.y + (tg[1] - pt.y) * f;
-      var size = pt.s * (1 - f) + 3.2 * f;
-      var back = tg[2] <= 0 ? f : 0;
-      cx.globalAlpha = show * (1 - back * .9) * (1 - f * .15);
-      if (size > 6) {
-        var pop = .6 + .4 * Math.min(1, show * 1.4);
-        cx.drawImage(pt.sp, x - size * pop / 2, y - size * pop / 2, size * pop, size * pop);
-      } else {
-        cx.fillStyle = inkC; cx.beginPath(); cx.arc(x, y, size / 2, 0, Math.PI * 2); cx.fill();
-      }
-    }
-    /* where 8x works: pulsing pen markers */
-    var hub = seg(p, .6, .78);
-    if (hub > 0) {
+      /* every other place 8x works: a small pen dot */
       for (var k = 0; k < hubs.length; k++) {
+        if (PEOPLE.indexOf(k) > -1) continue;
         var h = project(hubs[k][0], hubs[k][1], rot); if (h[2] <= 0) continue;
-        var ph = ((time || 0) / 1400 + k * .37) % 1;
-        cx.globalAlpha = hub * (1 - ph) * .5; cx.strokeStyle = penC; cx.lineWidth = 1.2;
-        cx.beginPath(); cx.arc(h[0], h[1], 4 + ph * 12, 0, Math.PI * 2); cx.stroke();
-        cx.globalAlpha = hub; cx.fillStyle = penC; cx.beginPath(); cx.arc(h[0], h[1], 3.4, 0, Math.PI * 2); cx.fill();
+        cx.globalAlpha = globeIn * h[2]; cx.fillStyle = penC; cx.beginPath(); cx.arc(h[0], h[1], 2.6, 0, Math.PI * 2); cx.fill();
       }
+    }
+    /* the twelve */
+    var n = PEOPLE.length;
+    for (var j = 0; j < n; j++) {
+      /* half-step offset keeps every face clear of the headline's left and right ends */
+      var ang = -Math.PI / 2 + ((j + .5) / n) * Math.PI * 2 * sweep;
+      var rx = W / 2 + Math.cos(ang) * RX, ry = centerY + Math.sin(ang) * RING;
+      var f = clamp((fly - j * .025) / .7, 0, 1); f = f * f * (3 - 2 * f);
+      var hp = project(hubs[PEOPLE[j]][0], hubs[PEOPLE[j]][1], rot);
+      var x = rx + (hp[0] - rx) * f, y = ry + (hp[1] - ry) * f;
+      var size = AV * (1 - f) + (AV * .5) * f;
+      var vis = f < 1 ? 1 : (hp[2] > 0 ? Math.min(1, hp[2] * 4) : 0);
+      var appear = clamp(p * 40 - j * .4, 0, 1);
+      if (vis * appear <= 0) continue;
+      drawPin(x, y, size, sprites[(j * 5) % sprites.length], f, vis * appear);
     }
     cx.globalAlpha = 1;
   }
