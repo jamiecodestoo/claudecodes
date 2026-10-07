@@ -279,11 +279,43 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .track { display: flex; gap: clamp(12px, 1.6vw, 22px); width: max-content; animation: marquee var(--dur, 60s) linear infinite; }
 .lane:nth-child(2) .track { animation-direction: reverse; --dur: 72s; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.tile { flex: none; width: clamp(150px, 15vw, 240px); aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; position: relative; background: var(--rule); }
+.tile { flex: none; width: clamp(118px, 11vw, 176px); aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; position: relative; background: var(--rule); }
 .tile img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(.92); opacity: .45; transform: scale(1.04); transition: filter 700ms ease, opacity 700ms ease, transform 900ms var(--ease-settle); }
 .tile.on img { filter: none; opacity: 1; transform: scale(1); }
 .lanes:hover .track { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .track { animation: none; } }
+
+
+/* the core team: a spotlight moves across six people and lands on an empty seat */
+.team { position: relative; margin-top: clamp(80px, 10vw, 140px); width: 100vw; margin-left: calc(50% - 50vw); }
+.team.is-scrub { height: 380svh; }
+.team__pin { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; align-content: center; gap: clamp(22px, 4vh, 44px); padding-block: 40px; overflow: hidden; position: relative; }
+.team.is-scrub .team__pin { position: sticky; top: 0; height: 100svh; padding-block: 64px 24px; }
+.team__head { text-align: center; display: grid; gap: 12px; justify-items: center; padding-inline: var(--gutter); }
+.team__head h3 { font-size: clamp(1.7rem, 1.1rem + 2vw, 3rem); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; font-variation-settings: "opsz" 60; }
+.team__head p { color: var(--ink-2); font-size: var(--lead); }
+.seats { display: flex; gap: clamp(12px, 1.4vw, 20px); width: max-content; transition: transform 700ms var(--ease-settle); position: relative; z-index: 1; }
+.seat { width: clamp(118px, 12vw, 172px); aspect-ratio: 3 / 4; border-radius: 12px; overflow: hidden; position: relative; flex: none; background: var(--rule);
+  transform: scale(.94); opacity: .38; filter: grayscale(1); transition: transform 700ms var(--ease-settle), opacity 600ms ease, filter 600ms ease, box-shadow 600ms ease; }
+.seat img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.seat.on { transform: scale(1.06); opacity: 1; filter: none; box-shadow: 0 22px 44px -22px var(--desk-shadow); }
+.seat--you { background: transparent; border: 1.5px dashed var(--ink-3); display: grid; place-items: center; text-align: center; padding: 10px; }
+.seat--you span { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); line-height: 1.6; }
+.seat--you b { display: block; font-family: var(--serif); font-weight: 400; font-size: 2.4em; line-height: 1; color: var(--pen); letter-spacing: 0; margin-bottom: 6px; }
+.seat--you.on { border-color: var(--pen); filter: none; }
+/* the light: a soft cone from above that follows the active seat */
+.beam { position: absolute; top: 0; height: 0; width: clamp(220px, 22vw, 340px); left: 50%; margin-left: calc(clamp(220px, 22vw, 340px) / -2); pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 50% 42% at 50% 62%, color-mix(in srgb, var(--mark) 55%, transparent), transparent 70%), linear-gradient(180deg, transparent, color-mix(in srgb, var(--mark) 22%, transparent) 40%, transparent 85%);
+  clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%); opacity: .9; transition: transform 700ms var(--ease-settle); }
+.who { display: grid; justify-items: center; text-align: center; gap: 8px; min-height: 5.6em; position: relative; z-index: 1; padding-inline: var(--gutter); }
+.who__name { font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.4rem); line-height: 1.1; letter-spacing: -.02em; }
+.who__role { font-family: var(--mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink);
+  background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px; padding-bottom: 5px; }
+.who.is-in .who__role { background-size: 100% 2px; transition: background-size 620ms var(--ease-pen) 160ms; }
+.who__name, .who__role { transition: opacity 260ms ease, transform 420ms var(--ease-settle); }
+.who.is-out .who__name, .who.is-out .who__role { opacity: 0; transform: translateY(8px); }
+.team .btn { margin-top: 2px; }
+.team:not(.is-scrub) .seat { opacity: 1; filter: none; transform: none; }
 
 /* people → globe: one pinned canvas scene */
 .crowd { position: relative; margin-top: clamp(24px, 4vw, 60px); }
@@ -476,12 +508,16 @@ html.lenis, html.lenis body { height: auto; }
         </div>
       </div>
 
-      <div class="rows" data-par="-0.06">
-        <div class="row">
-          <p class="label">The core team</p>
-          <h3>A small team builds the rest.</h3>
-          <p>The products, the markets, the platform the network runs on. Each person owns a whole piece of it.</p>
-          <p><span class="you">This page is about joining the core team.</span></p>
+      <div class="team" id="team">
+        <div class="team__pin">
+          <span class="beam" id="beam" aria-hidden="true"></span>
+          <div class="team__head">
+            <p class="label">The core team</p>
+            <h3>A small team builds the rest.</h3>
+            <p>Each person owns a whole piece of it.</p>
+          </div>
+          <div class="seats" id="seats"><div class="seat" data-name="Maya Okafor" data-role="Market lead · Poland"><img src="img/people/p6.jpg" alt="Placeholder portrait for Maya Okafor, Market lead · Poland" loading="lazy"></div><div class="seat" data-name="Ravi Menon" data-role="Engineer · Platform"><img src="img/people/p2.jpg" alt="Placeholder portrait for Ravi Menon, Engineer · Platform" loading="lazy"></div><div class="seat" data-name="Lena Park" data-role="Designer · Brand"><img src="img/people/p3.jpg" alt="Placeholder portrait for Lena Park, Designer · Brand" loading="lazy"></div><div class="seat" data-name="Tomás Silva" data-role="Paid growth · 10 markets"><img src="img/people/p8.jpg" alt="Placeholder portrait for Tomás Silva, Paid growth · 10 markets" loading="lazy"></div><div class="seat" data-name="Amara Diallo" data-role="Operations · Payouts"><img src="img/people/p1.jpg" alt="Placeholder portrait for Amara Diallo, Operations · Payouts" loading="lazy"></div><div class="seat" data-name="Jonah Weiss" data-role="Builder in residence"><img src="img/people/p11.jpg" alt="Placeholder portrait for Jonah Weiss, Builder in residence" loading="lazy"></div><div class="seat seat--you" data-name="You?" data-role="The piece you'll own"><span><b>+</b>This seat<br>is open</span></div></div>
+          <div class="who is-in" id="who" aria-live="polite"><p class="who__name" id="who-name">Maya Okafor</p><p class="who__role" id="who-role">Market lead · Poland</p></div>
         </div>
       </div>
 
@@ -752,6 +788,36 @@ html.lenis, html.lenis body { height: auto; }
   }
   pulse(); setInterval(pulse, 1100);
   function renderNet() {}
+
+  /* ================= CORE TEAM: a spotlight walks the seats ================= */
+  var team = $('#team'), seats = $$('#seats .seat'), seatRow = $('#seats'), beam = $('#beam');
+  var who = $('#who'), whoName = $('#who-name'), whoRole = $('#who-role'), activeSeat = -1, swapT = null;
+  team.classList.add('is-scrub');
+  window.addEventListener('resize', function () { placeBeam(); activeSeat = -1; });
+  function placeBeam() {
+    /* the light starts just above the seats and ends under the name, so it never tints the heading */
+    var top = seatRow.offsetTop - 70, bottom = who.offsetTop + who.offsetHeight + 30;
+    beam.style.top = top + 'px'; beam.style.height = (bottom - top) + 'px';
+  }
+  function renderTeam() {
+    var p = progress(team), n = seats.length;
+    if (!beam.style.height || beam.style.height === '0px') placeBeam();
+    var idx = Math.min(n - 1, Math.floor(clamp((p - .04) / .9, 0, .999) * n));
+    if (idx === activeSeat) return;
+    activeSeat = idx;
+    seats.forEach(function (el, i) { el.classList.toggle('on', i === idx); });
+    /* keep the lit seat in the middle of the screen; the light stays centred above it */
+    var el = seats[idx], mid = el.offsetLeft + el.offsetWidth / 2;
+    seatRow.style.transform = 'translateX(' + (seatRow.offsetWidth / 2 - mid).toFixed(1) + 'px)';
+    who.classList.remove('is-in'); who.classList.add('is-out');
+    clearTimeout(swapT);
+    swapT = setTimeout(function () {
+      whoName.textContent = el.getAttribute('data-name');
+      whoRole.textContent = el.getAttribute('data-role');
+      who.classList.remove('is-out'); void who.offsetWidth; who.classList.add('is-in');
+    }, 240);
+  }
+
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
   var pars = $$('[data-par]');
   function renderPar() {
@@ -763,7 +829,7 @@ html.lenis, html.lenis body { height: auto; }
       el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
     });
   }
-  function frame(t) { renderHero(); renderSay(); renderCrowd(t); renderNet(); renderPar(); }
+  function frame(t) { renderHero(); renderSay(); renderCrowd(t); renderNet(); renderTeam(); renderPar(); }
 
   /* smooth, delayed scroll: the page eases toward where you scrolled */
   var crowdLive = false;
