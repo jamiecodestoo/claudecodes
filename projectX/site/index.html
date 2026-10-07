@@ -476,25 +476,15 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .bet.is-scrub .bet__lines { grid-template-areas: "l"; grid-template-columns: minmax(0, 1fr); gap: 0; font-size: var(--bet-fs, 4rem); }
 .bet.is-scrub .bet__l { grid-area: l; white-space: nowrap; text-wrap: nowrap; opacity: 0; will-change: opacity, transform, filter; }
 
-/* ---------------- what you'd own: a sentence whose parts roll over ---------------- */
-.own { position: relative; margin-top: clamp(96px, 11vw, 150px); display: grid; justify-items: center; text-align: center; gap: clamp(20px, 3vw, 32px); }
-.own__poster { position: relative; width: min(560px, 100%); aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden; background: var(--rule); margin-block: 4px clamp(16px, 2.4vw, 28px); box-shadow: 0 30px 60px -32px rgba(20, 20, 18, .35); }
-.own__poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.08); transition: opacity 900ms ease, transform 4200ms cubic-bezier(.2, .6, .2, 1); }
-.own__poster img.is-on { opacity: 1; transform: scale(1); }
-.own__line { margin: 0; white-space: nowrap; font-size: clamp(2rem, .9rem + 4.2vw, 4.8rem); line-height: 1.1; letter-spacing: -.028em; font-weight: 380; font-variation-settings: "opsz" 72; }
-.roll { display: inline-grid; vertical-align: baseline; overflow: hidden; padding: .08em .03em .2em; margin: -.08em -.03em -.2em; text-align: left; }
+/* ---------------- what you'd own: "Join as a" stays, a photo and the role roll over ---------------- */
+.own { position: relative; margin-top: clamp(96px, 11vw, 150px); display: grid; justify-items: center; text-align: center; gap: clamp(18px, 2.6vw, 28px); }
+.own__line { margin: 0; white-space: nowrap; font-size: clamp(1.8rem, .8rem + 3.4vw, 4rem); line-height: 1.15; letter-spacing: -.026em; font-weight: 380; font-variation-settings: "opsz" 72; }
+.roll { display: inline-grid; vertical-align: baseline; overflow: hidden; padding: .1em .03em .2em; margin: -.1em -.03em -.2em; text-align: left; }
 .roll__i { grid-area: 1 / 1; justify-self: start; white-space: nowrap; transition: transform 720ms var(--ease-settle), opacity 520ms ease, filter 520ms ease; }
 .roll__i.is-in { transform: translateY(110%); opacity: 0; filter: blur(4px); transition: none; }
 .roll__i.is-out { transform: translateY(-110%); opacity: 0; filter: blur(4px); }
-.own__sub { margin: 0; max-width: 34rem; min-height: 3em; font-size: var(--lead); line-height: 1.45; color: var(--ink-2); text-wrap: balance; transition: opacity 320ms ease, filter 320ms ease; }
-.own__sub.is-swap { opacity: 0; filter: blur(4px); }
-.own__tabs { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 0; margin-top: 4px; }
-.own__tabs span { color: var(--pen); margin-inline: .7em; }
-.own__tab { appearance: none; border: 0; background: none; padding: 4px 0 7px; font: inherit; font-size: 1.02rem; color: var(--ink-3); cursor: pointer; position: relative; transition: color 240ms ease; }
-.own__tab::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--pen); transform: scaleX(var(--p, 0)); transform-origin: left; }
-.own__tab:hover { color: var(--ink-2); }
-.own__tab[aria-selected="true"] { color: var(--ink); }
-@media (max-width: 600px) { .own__line { white-space: normal; } .own__fixed { display: block; } }
+.own__img { display: inline-block; height: .86em; width: 1.29em; object-fit: cover; border-radius: .14em; vertical-align: -.1em; margin-right: .22em; background: var(--rule); }
+@media (max-width: 600px) { .own__line { white-space: normal; } .own__fixed { display: block; } .own .roll__i { justify-self: center; } }
 
 .end { margin-top: clamp(96px, 12vw, 160px); padding-block: 28px 56px; border-top: 1px solid var(--rule); text-align: center; }
 
@@ -771,12 +761,7 @@ html.lenis, html.lenis body { height: auto; }
 
       <section class="own" id="own" aria-labelledby="own-h">
         <p class="label" id="own-h">What you&rsquo;d own</p>
-        <div class="own__poster" id="own-poster" aria-hidden="true">
-          <img src="img/own/r1.jpg" alt="" class="is-on" loading="lazy"><img src="img/own/r2.jpg" alt="" loading="lazy"><img src="img/own/r3.jpg" alt="" loading="lazy"><img src="img/own/r4.jpg" alt="" loading="lazy"><img src="img/own/r5.jpg" alt="" loading="lazy">
-        </div>
-        <h3 class="own__line"><span class="own__fixed">Join as</span> <span class="roll" id="own-role"><span class="roll__i">a Market Lead.</span></span></h3>
-        <p class="own__sub" id="own-sub" aria-live="polite">Own a country launch, from the playbook to the first clients.</p>
-        <div class="own__tabs" id="own-tabs" role="tablist" aria-label="Roles"></div>
+        <h3 class="own__line" aria-live="polite"><span class="own__fixed">Join as a</span> <span class="roll" id="own-role"><span class="roll__i"><img src="img/own/s1.jpg" alt="" class="own__img">Market Lead.</span></span></h3>
       </section>
 
       <div class="end"><span class="label">Sections 1–4 · Next: how you get in</span></div>
@@ -798,63 +783,43 @@ html.lenis, html.lenis body { height: auto; }
     var r = el.getBoundingClientRect(), total = el.offsetHeight - window.innerHeight;
     return total > 0 ? clamp(-r.top / total, 0, 1) : 1;
   }
-  /* ================= WHAT YOU'D OWN: "Join as" stays put, the role rolls over ================= */
+  /* ================= WHAT YOU'D OWN: "Join as a" stays put, a photo and the role roll over ================= */
   (function () {
-    var ROLES = [
-      { tab: 'Market Lead', role: 'a Market Lead.', sub: 'Own a country launch, from the playbook to the first clients.' },
-      { tab: 'Designer', role: 'a Designer.', sub: 'Own all of the design. You are the first one, so the taste is yours.' },
-      { tab: 'Engineer', role: 'an Engineer.', sub: 'Own a whole product, end to end.' },
-      { tab: 'Ads Manager', role: 'an Ads Manager.', sub: 'Own the ad account: four products, ten markets, five channels.' },
-      { tab: 'Builder in Residence', role: 'a Builder in Residence.', sub: 'Own a blank page, with some of the biggest brands in the world.' }
-    ];
-    var HOLD = 3400;
-    var sec = $('#own'), roleEl = $('#own-role'), subEl = $('#own-sub'), tabsEl = $('#own-tabs'), posters = $$('#own-poster img');
-    var tabs = ROLES.map(function (r, i) {
-      if (i) { var dot = document.createElement('span'); dot.textContent = '·'; dot.setAttribute('aria-hidden', 'true'); tabsEl.appendChild(dot); }
-      var b = document.createElement('button'); b.className = 'own__tab'; b.type = 'button'; b.setAttribute('role', 'tab'); b.textContent = r.tab;
-      b.addEventListener('click', function () { go(i, true); });
-      tabsEl.appendChild(b); return b;
-    });
-    /* the slot is as wide as the longest role, so "Join as" never moves */
-    function fit() {
-      var m = document.createElement('span'); m.className = 'roll__i'; m.style.visibility = 'hidden'; roleEl.appendChild(m);
-      var w = 0; ROLES.forEach(function (r) { m.textContent = r.role; w = Math.max(w, m.offsetWidth); });
-      roleEl.removeChild(m); roleEl.style.width = Math.ceil(w) + 'px';
+    var ROLES = ['Market Lead.', 'Designer.', 'Software Engineer.', 'Paid Ads Manager.', 'Builder in Residence.'];
+    var HOLD = 2600;
+    var sec = $('#own'), roleEl = $('#own-role');
+    function item(i) {
+      var sp = document.createElement('span'); sp.className = 'roll__i';
+      var im = document.createElement('img'); im.className = 'own__img'; im.alt = ''; im.src = 'img/own/s' + (i + 1) + '.jpg';
+      sp.appendChild(im); sp.appendChild(document.createTextNode(ROLES[i])); return sp;
     }
-    function roll(text) {
-      var cur = roleEl.querySelector('.roll__i:not(.is-out)');
-      if (cur && cur.textContent === text) return;
-      var nx = document.createElement('span'); nx.className = 'roll__i' + (reduce ? '' : ' is-in'); nx.textContent = text; roleEl.appendChild(nx);
+    ROLES.forEach(function (r, i) { (new Image()).src = 'img/own/s' + (i + 1) + '.jpg'; });
+    /* the slot is as wide as the longest role, so "Join as a" never moves */
+    function fit() {
+      var w = 0;
+      ROLES.forEach(function (r, i) { var m = item(i); m.style.visibility = 'hidden'; roleEl.appendChild(m); w = Math.max(w, m.offsetWidth); roleEl.removeChild(m); });
+      roleEl.style.width = Math.ceil(w) + 'px';
+    }
+    var ri = 0;
+    function go(i) {
+      ri = i;
+      var cur = roleEl.querySelector('.roll__i:not(.is-out)'), nx = item(i);
+      if (!reduce) nx.classList.add('is-in');
+      roleEl.appendChild(nx);
       if (cur) { if (reduce) cur.remove(); else { cur.classList.add('is-out'); setTimeout(function () { cur.remove(); }, 760); } }
       if (!reduce) { void nx.offsetWidth; nx.classList.remove('is-in'); }
     }
-    var ri = 0, t0 = 0, paused = false, live = false, hold = false, holdUntil = 0;
-    function go(i, byHand) {
-      var changed = i !== ri; ri = i; t0 = performance.now();
-      if (byHand) { hold = true; holdUntil = t0 + 6000; }
-      tabs.forEach(function (b, k) { b.setAttribute('aria-selected', k === ri ? 'true' : 'false'); b.style.setProperty('--p', k === ri && (hold || reduce) ? 1 : 0); });
-      roll(ROLES[ri].role);
-      posters.forEach(function (im, k) { im.classList.toggle('is-on', k === ri); });
-      if (changed) {
-        subEl.classList.add('is-swap');
-        setTimeout(function () { subEl.textContent = ROLES[ri].sub; subEl.classList.remove('is-swap'); }, reduce ? 0 : 320);
-      }
-    }
-    fit(); go(0, false);
+    fit();
     window.addEventListener('resize', fit);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
     if (reduce) return;
+    var live = false, paused = false, t0 = performance.now(), last = t0;
     sec.addEventListener('mouseenter', function () { paused = true; });
     sec.addEventListener('mouseleave', function () { paused = false; });
-    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { live = es[0].isIntersecting; if (live) t0 = performance.now(); }, { threshold: .35 }).observe(sec);
-    var last = performance.now();
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { live = es[0].isIntersecting; }, { threshold: .35 }).observe(sec);
     (function tick(now) {
-      if (hold && !paused && now > holdUntil) hold = false;
-      if (live && !paused && !hold) {
-        var el = now - t0;
-        tabs[ri].style.setProperty('--p', Math.min(1, el / HOLD).toFixed(3));
-        if (el >= HOLD) go((ri + 1) % ROLES.length, false);
-      } else if (paused || hold) { t0 += now - last; }
+      if (live && !paused) { if (now - t0 >= HOLD) { t0 = now; go((ri + 1) % ROLES.length); } }
+      else t0 += now - last;
       last = now;
       requestAnimationFrame(tick);
     })(last);
