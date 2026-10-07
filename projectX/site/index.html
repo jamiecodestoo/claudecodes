@@ -85,7 +85,7 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .nav { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20; }
 .nav__in { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding-block: var(--s3); }
 .wordmark { font-weight: 700; font-size: 1.75rem; line-height: 1; letter-spacing: -.025em; text-decoration: none; font-variation-settings: "opsz" 72; }
-.nav a.l { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; color: var(--ink); position: relative; padding-block: 4px; }
+.nav a.l { font-size: 1.0625rem; text-decoration: none; color: var(--ink); position: relative; padding-block: 4px; }
 .nav a.l b { font-weight: 500; color: var(--pen); }
 .nav a.l::after, .cta-text::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--pen); transform: scaleX(0); transform-origin: left; transition: transform 320ms var(--ease-pen); }
 .nav a.l:hover::after, .cta-text:hover::after { transform: scaleX(1); }
@@ -93,15 +93,14 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 /* ---------------- hero: the headline, then the team on a globe ---------------- */
 .hero { padding-top: 128px; }
 .hero__head { display: grid; justify-items: center; text-align: center; gap: var(--s3); max-width: 1100px; margin-inline: auto; padding-inline: var(--gutter); }
-.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--pen); }
-.hero h1 span { display: block; }
-.hero h1 { font-size: clamp(2.4rem, .6rem + 4.2vw, 5.2rem); line-height: 1.02; letter-spacing: -.036em; font-weight: 370; font-variation-settings: "opsz" 72; text-wrap: balance; }
-.hero .sub { font-size: var(--lead); line-height: 1.45; color: var(--ink-2); max-width: 31em; text-wrap: pretty; }
+.hero h1 span { display: block; white-space: nowrap; }
+.hero h1 { font-size: min(clamp(3rem, 1rem + 6.4vw, 8rem), calc((100vw - 32px) / 7.4)); line-height: 1; letter-spacing: -.036em; font-weight: 370; font-variation-settings: "opsz" 72; text-wrap: balance; }
+.hero .sub { font-size: min(clamp(1.0625rem, .9rem + .7vw, 1.5rem), calc((100vw - 32px) / 22.5)); line-height: 1.45; color: var(--ink-2); white-space: nowrap; }
 .hero .sub b { color: var(--ink); font-weight: 500; }
 .ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s2) var(--s4); align-items: center; margin-top: var(--s1); }
 .btn {
   display: inline-flex; align-items: center; gap: var(--s1);
-  font-family: var(--mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; font-weight: 500;
+  font-size: 1.0625rem; font-weight: 450; line-height: 1;
   padding: 16px 24px; border: 1px solid var(--ink); border-radius: 2px;
   background: var(--ink); color: var(--paper); text-decoration: none;
   transition: background 160ms ease, color 160ms ease, transform 160ms var(--ease-settle);
@@ -110,25 +109,55 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .btn:active { transform: translateY(1px); }
 .btn .arr { color: var(--pen); display: inline-block; transition: transform 240ms var(--ease-settle); }
 .btn:hover .arr { transform: translateX(3px); }
-.cta-text { position: relative; font-family: var(--mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; padding-block: 6px; border-bottom: 1px solid var(--rule); }
+.cta-text { position: relative; text-decoration: none; padding-block: 6px; border-bottom: 1px solid var(--rule); }
 
-/* the globe: the core team pinned where they live, with their local time */
+/* the globe: the core team pinned where they live. On scroll they lift off it and land as the team grid */
 .globe { position: relative; height: clamp(440px, 72svh, 760px); margin-top: var(--s4); }
 .globe canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.globe::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 24%; background: linear-gradient(transparent, var(--paper)); pointer-events: none; }
+.crew { position: relative; }
+.crew__head { display: grid; justify-items: center; gap: var(--s2); text-align: center; padding-inline: var(--gutter); }
+.crew__head h2 { font-size: clamp(2rem, 1.1rem + 2.8vw, 3.6rem); line-height: 1.04; letter-spacing: -.028em; font-weight: 380; font-variation-settings: "opsz" 72; text-wrap: balance; }
+.crew__head p { color: var(--ink-2); font-size: var(--lead); }
+.seats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--grid); max-width: 960px; margin: var(--s4) auto 0; padding-inline: var(--gutter); }
+@media (max-width: 640px) { .seats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.mate { margin: 0; position: relative; aspect-ratio: 4 / 5; display: block; color: #fff; text-decoration: none; }
+.mate__ph { position: absolute; inset: 0; overflow: hidden; border-radius: 14px; background: var(--rule); }
+.mate__ph img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 900ms var(--ease-settle); }
+.mate__ph::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 55%; background: linear-gradient(to bottom, transparent, rgba(12, 12, 10, .62)); opacity: var(--cap, 1); pointer-events: none; }
+.mate:hover .mate__ph img, .mate:focus-visible .mate__ph img { transform: scale(1.05); }
+.mate__cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: grid; gap: 4px; justify-items: start; text-align: left; padding: var(--s2); opacity: var(--cap, 1); transform: translateY(calc((1 - var(--cap, 1)) * 12px)); }
+.mate__name { font-size: clamp(1rem, .8rem + .7vw, 1.4rem); line-height: 1.1; letter-spacing: -.01em; }
+.mate__role { font-size: max(12px, .8125rem); line-height: 1.3; color: rgba(255, 255, 255, .84); }
+@media (max-width: 640px) { .mate__cap { padding: 10px; gap: 2px; } .mate__name { font-size: 15px; white-space: nowrap; } .mate__job { display: none; } }
+.mate--you { color: var(--ink); }
+.mate--you .mate__ph { background: var(--paper); border: 1.5px dashed var(--pen); border-radius: 14px; transition: border-color 300ms ease; }
+.mate--you .mate__ph::after { display: none; }
+.mate--you svg { position: absolute; left: 50%; top: 14%; width: 62%; height: auto; transform: translateX(-50%); color: var(--ink-3); opacity: var(--cap, 1); transition: transform 600ms var(--ease-settle), color 400ms ease; }
+.mate--you .mate__role { color: var(--ink-2); }
+.mate--you:hover .mate__ph, .mate--you:focus-visible .mate__ph { border-style: solid; }
+.mate--you:hover svg, .mate--you:focus-visible svg { transform: translate(-50%, -4%); color: var(--pen); }
+.mate__you { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--pen); line-height: 1; opacity: 0; pointer-events: none; }
+.crew.is-scrub { height: 250svh; }
+.crew.is-scrub .crew__pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.crew.is-scrub .globe { position: absolute; inset: 0; height: auto; margin: 0; }
+.crew.is-scrub .globe::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 18%; background: linear-gradient(transparent, var(--paper)); pointer-events: none; opacity: var(--fade, 1); }
+.crew.is-scrub .crew__head { position: absolute; left: 0; right: 0; top: 0; z-index: 3; will-change: transform, opacity; }
+.crew.is-scrub .seats { position: absolute; inset: 0; display: block; max-width: none; margin: 0; padding: 0; z-index: 2; pointer-events: none; }
+.crew.is-scrub .mate { position: absolute; left: 0; top: 0; aspect-ratio: auto; transform-origin: 50% 50%; visibility: hidden; will-change: transform; pointer-events: auto; }
+.crew.is-scrub .mate__ph { inset: auto; left: 0; }
 
 /* ---------------- a week at 8x: a photo card rolls through the days, then narrows into the week ---------------- */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: -1px; padding: 0; }
 .week { position: relative; margin-top: var(--week-top, var(--sec)); }
 .week__pin { display: grid; justify-items: center; gap: var(--s3); }
-.week__label { margin: 0; }
+.week__label { margin: 0; font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem); line-height: 1.1; letter-spacing: -.02em; font-weight: 400; font-variation-settings: "opsz" 60; }
 .wk__card { position: relative; width: min(1120px, 100%); aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: #1B1B18; display: grid; place-items: center; text-align: center; color: #fff; }
 .wk__imgs img, .wk__mini img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .wk__imgs img { opacity: 0; transform: scale(1.08); transition: opacity 1000ms ease, transform 5200ms cubic-bezier(.2, .6, .2, 1); }
 .wk__imgs img.is-on { opacity: 1; transform: scale(1); }
 .wk__card::after, .wk__mini::after { content: ""; position: absolute; inset: 0; background: radial-gradient(110% 85% at 50% 52%, rgba(10, 10, 9, .62), rgba(10, 10, 9, .4) 62%, rgba(10, 10, 9, .52)); pointer-events: none; }
 .wk__line { position: relative; z-index: 1; margin: 0; display: grid; justify-items: center; gap: var(--s2); white-space: nowrap; font-weight: 380; font-variation-settings: "opsz" 72; text-shadow: 0 2px 24px rgba(0, 0, 0, .25); }
-.wk__day { font-family: var(--mono); font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .82); text-shadow: none; }
+.wk__day { font-size: clamp(1.0625rem, 1rem + .3vw, 1.25rem); letter-spacing: 0; color: rgba(255, 255, 255, .82); text-shadow: none; }
 .wk__say { display: block; font-size: var(--wk-fs, clamp(2.2rem, 1rem + 4.6vw, 5.4rem)); line-height: 1.1; letter-spacing: -.03em; }
 .roll { display: inline-grid; vertical-align: baseline; overflow: hidden; padding: .12em .06em .24em; margin: -.12em -.06em -.24em; text-align: center; }
 .roll__i { grid-area: 1 / 1; justify-self: center; white-space: nowrap; transition: transform 720ms var(--ease-settle), opacity 520ms ease, filter 520ms ease; }
@@ -136,7 +165,7 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .roll__i.is-out { transform: translateY(-110%); opacity: 0; filter: blur(4px); }
 .wk__mini { display: none; }
 .wk__ml { position: relative; z-index: 1; margin: 0; display: grid; justify-items: center; gap: var(--s1); white-space: nowrap; font-weight: 380; font-variation-settings: "opsz" 72; text-shadow: 0 2px 24px rgba(0, 0, 0, .25); }
-.wk__ml span { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .82); text-shadow: none; }
+.wk__ml span { font-size: max(13px, calc(var(--mini-fr, 24px) * .6)); color: rgba(255, 255, 255, .82); text-shadow: none; }
 .wk__ml b { font-weight: 380; font-size: var(--mini-fr, 24px); line-height: 1.1; letter-spacing: -.03em; }
 .week.is-scrub .week__scroll { height: calc(100svh + 260svh); }
 .week.is-scrub .week__pin { position: sticky; top: 0; height: 100svh; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; display: block; }
@@ -154,7 +183,6 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .stories__scroll::before { content: ""; position: absolute; inset: 0; border-radius: 32px; background: var(--st-bg); }
 .stories__pin { position: relative; display: grid; justify-items: center; gap: var(--s4); padding: var(--sec) var(--s2); }
 .stories__head { position: relative; display: grid; justify-items: center; gap: var(--s2); text-align: center; color: var(--st-ink); }
-.stories__head .label { color: var(--st-ink-2); }
 .stories__head h3 { margin: 0; font-size: clamp(2.2rem, 1rem + 3.8vw, 4.6rem); line-height: 1.04; letter-spacing: -.03em; font-weight: 380; font-variation-settings: "opsz" 72; }
 .stories__head h3 span { color: #F0603F; }
 .stories__cards { display: grid; gap: var(--s3); justify-items: center; width: 100%; }
@@ -163,7 +191,7 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .story--mark { --sc: #E8EF9A; } .story--peach { --sc: #F6C9B9; } .story--mint { --sc: #CFE5D6; } .story--lilac { --sc: #DCD3F2; } .story--cream { --sc: #EFEADF; }
 .story__text { display: grid; align-content: space-between; gap: var(--s3); padding: var(--s4); min-height: 320px; }
 .story--quote .story__text { min-height: 240px; }
-.story__who { margin: 0; display: grid; gap: 4px; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: rgba(26, 26, 23, .64); }
+.story__who { margin: 0; display: grid; gap: 2px; font-size: 15px; line-height: 1.35; color: rgba(26, 26, 23, .64); }
 .story__who b { font-weight: 500; color: #1A1A17; }
 .story__q { margin: 0; font-size: clamp(1.25rem, 1rem + .9vw, 1.75rem); line-height: 1.22; letter-spacing: -.014em; text-wrap: pretty; }
 .story--quote .story__q { font-size: clamp(1.6rem, 1rem + 1.8vw, 2.5rem); line-height: 1.1; letter-spacing: -.022em; }
@@ -183,13 +211,9 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
   .story--quote .story__text { min-height: 200px; }
 }
 
-/* the line that winds down behind the stories */
-.sl { display: none; }
-.stories.is-scrub .sl { display: block; position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 0; will-change: transform; }
-.sl path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-.sl__base { stroke: #F0603F; stroke-opacity: .5; stroke-width: 2; }
-.sl__comet { stroke: #FF9B80; stroke-width: 3; filter: drop-shadow(0 0 6px rgba(240, 96, 63, .9)); }
-.sl__head { fill: #FFB59F; filter: drop-shadow(0 0 10px rgba(240, 96, 63, 1)); }
+/* the network drifts past behind the stories */
+.field { display: none; }
+.stories.is-scrub .field { display: block; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 
 /* things rise in softly as they come into view */
 .rv { opacity: 0; transform: translateY(24px); transition: opacity 900ms ease, transform 1100ms var(--ease-settle); transition-delay: calc(var(--d, 0) * 90ms); }
@@ -198,10 +222,6 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .hero__head > * { animation: riseIn 1100ms var(--ease-settle) both; }
 .hero__head > :nth-child(2) { animation-delay: 120ms; } .hero__head > :nth-child(3) { animation-delay: 240ms; }
 .globe { animation: riseIn 1600ms var(--ease-settle) 320ms both; }
-
-/* a big, faint wordmark rises into the footer */
-.foot { position: relative; overflow: hidden; }
-.foot__mark { font-weight: 700; font-size: clamp(8rem, 4rem + 18vw, 22rem); line-height: .8; letter-spacing: -.06em; color: var(--rule); margin-top: var(--s4); order: 9; user-select: none; }
 
 /* ---------------- section 2: rows, centred ---------------- */
 .what { padding-top: 0; }
@@ -234,42 +254,6 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 
 
 /* the core team: a 3 × 2 grid; hover brings each person's details up over a progressive blur */
-.team { position: relative; margin-top: var(--sec); }
-.team__head { text-align: center; display: grid; gap: var(--s2); justify-items: center; margin-bottom: var(--s4); }
-.team__head h3 { font-size: clamp(1.7rem, 1.1rem + 2vw, 3rem); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; font-variation-settings: "opsz" 60; }
-.team__head p:not(.label) { color: var(--ink-2); font-size: var(--lead); }
-.seats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--grid); max-width: 860px; margin-inline: auto; }
-@media (max-width: 640px) { .seats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.mate { margin: 0; position: relative; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; background: var(--rule); isolation: isolate; }
-.mate img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 900ms var(--ease-settle); }
-.mate:hover img { transform: scale(1.04); }
-/* progressive blur: three stacked layers, each blurrier and masked lower */
-.mate__blur { position: absolute; left: 0; right: 0; bottom: 0; height: 46%; pointer-events: none; z-index: 1; transform: translateY(101%); transition: transform 460ms var(--ease-settle); will-change: transform; }
-.mate__blur i { position: absolute; inset: 0; }
-.mate__blur i:nth-child(1) { backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 35%); mask-image: linear-gradient(to bottom, transparent 0%, #000 35%); }
-.mate__blur i:nth-child(2) { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); -webkit-mask-image: linear-gradient(to bottom, transparent 25%, #000 60%); mask-image: linear-gradient(to bottom, transparent 25%, #000 60%); }
-.mate__blur i:nth-child(3) { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); -webkit-mask-image: linear-gradient(to bottom, transparent 50%, #000 85%); mask-image: linear-gradient(to bottom, transparent 50%, #000 85%); }
-.mate__blur::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(12,12,10,.42)); }
-.mate figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: grid; gap: var(--s1); justify-items: start; text-align: left; padding: var(--s2); color: #fff; opacity: 0; transform: translateY(14px); transition: opacity 300ms ease 60ms, transform 460ms var(--ease-settle) 40ms; }
-.mate__name { font-size: clamp(1.1rem, .8rem + 1vw, 1.7rem); line-height: 1.1; letter-spacing: -.01em; }
-.mate__role { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.88);
-  background-image: linear-gradient(#F0603F, #F0603F); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px; padding-bottom: 5px; transition: background-size 620ms var(--ease-pen) 160ms; }
-.mate:hover .mate__blur, .mate:focus-within .mate__blur { transform: none; }
-.mate:hover figcaption, .mate:focus-within figcaption { opacity: 1; transform: none; }
-.mate:hover .mate__role, .mate:focus-within .mate__role { background-size: 100% 2px; }
-@media (hover: none) { .mate .mate__blur, .mate figcaption { opacity: 1; transform: none; } .mate .mate__role { background-size: 100% 2px; } }
-/* soft entrance, once, as the grid comes into view */
-.seats.is-armed .mate { opacity: 0; transform: translateY(28px) scale(.98); }
-.seats.is-in .mate { opacity: 1; transform: none; transition: opacity 700ms ease, transform 900ms var(--ease-settle); transition-delay: calc(var(--k, 0) * 90ms); }
-.mate--you { display: block; text-decoration: none; color: var(--ink); background: linear-gradient(170deg, var(--paper), color-mix(in srgb, var(--rule) 70%, var(--paper))); box-shadow: inset 0 0 0 1px var(--rule); transition: box-shadow 400ms ease; }
-.mate--you svg { position: absolute; left: 50%; top: 14%; width: 62%; height: auto; transform: translateX(-50%); color: var(--ink-3); transition: transform 600ms var(--ease-settle), color 400ms ease; }
-.mate--you figcaption { color: var(--ink); opacity: 1; transform: none; }
-.mate--you .mate__name { color: var(--ink); }
-.mate--you .mate__role { color: var(--ink-2); background-size: 0% 2px; }
-.mate--you:hover, .mate--you:focus-visible { box-shadow: inset 0 0 0 1.5px var(--pen); }
-.mate--you:hover svg, .mate--you:focus-visible svg { transform: translate(-50%, -4%); color: var(--pen); }
-.mate--you:hover .mate__role, .mate--you:focus-visible .mate__role { background-size: 100% 2px; color: var(--ink); }
-
 /* ---------------- what 8x sells: a pinned deck of product cards ---------------- */
 .deck { position: relative; margin-top: var(--sec); --card: #F3F2EC; --card-2: #FFFFFF; --card-rule: #E3E2DA; --card-shadow: 0 30px 60px -28px rgba(20, 20, 18, .28), 0 2px 6px rgba(20, 20, 18, .05); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .deck { --card: #1B1C19; --card-2: #24251F; --card-rule: #33342F; --card-shadow: 0 30px 60px -26px rgba(0, 0, 0, .8), 0 2px 6px rgba(0, 0, 0, .4); } }
@@ -319,7 +303,7 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .phone2::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.6)); }
 .phone2 .views { position: absolute; left: 1em; bottom: 1em; z-index: 1; color: #fff; font-family: var(--mono); font-size: max(12px, .6em); letter-spacing: .04em; display: flex; gap: .4em; align-items: center; }
 .phone2 .views::before { content: ""; width: 0; height: 0; border-left: .75em solid #fff; border-top: .45em solid transparent; border-bottom: .45em solid transparent; }
-.phone2 .tag { position: absolute; left: .9em; top: .9em; z-index: 1; font-family: var(--mono); font-size: max(12px, .52em); letter-spacing: .06em; text-transform: uppercase; color: #fff; background: rgba(0,0,0,.35); backdrop-filter: blur(6px); padding: .35em .6em; border-radius: 99px; }
+.phone2 .tag { position: absolute; left: .9em; top: .9em; z-index: 1; font-family: var(--mono); font-size: max(12px, .52em); letter-spacing: .06em; color: #fff; background: rgba(0,0,0,.35); backdrop-filter: blur(6px); padding: .35em .6em; border-radius: 99px; }
 
 /* linkedin: one post */
 .post { width: min(27em, 100%); background: var(--card-2); border-radius: 1em; padding: 1.2em 1.3em; box-shadow: inset 0 0 0 1px var(--card-rule); display: grid; gap: .8em; }
@@ -329,12 +313,12 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .post__body { display: grid; gap: .5em; } .post__body .sk:nth-child(2) { width: 92%; } .post__body .sk:nth-child(3) { width: 64%; }
 .post__foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--card-rule); padding-top: .75em; }
 .reacts { display: flex; } .reacts i { width: 1.1em; height: 1.1em; border-radius: 50%; border: 2px solid var(--card-2); margin-left: -.35em; background: #0A66C2; } .reacts i:first-child { margin-left: 0; } .reacts i:nth-child(2) { background: #DF704D; } .reacts i:nth-child(3) { background: #6DAE4F; }
-.chip { font-family: var(--mono); font-size: max(12px, .58em); letter-spacing: .06em; text-transform: uppercase; padding: .4em .7em; border-radius: 99px; background: var(--mark); color: var(--mark-ink); }
+.chip { font-family: var(--mono); font-size: max(12px, .58em); letter-spacing: .06em; padding: .4em .7em; border-radius: 99px; background: var(--mark); color: var(--mark-ink); }
 
 /* research: transcript */
 .chat { width: min(28em, 100%); display: grid; gap: .7em; }
 .msg { max-width: 85%; padding: .7em .95em; border-radius: 1em; font-size: max(12px, .78em); line-height: 1.4; background: var(--card-2); box-shadow: inset 0 0 0 1px var(--card-rule); }
-.msg small { display: block; font-family: var(--mono); font-size: max(12px, .72em); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .25em; }
+.msg small { display: block; font-family: var(--mono); font-size: max(12px, .72em); letter-spacing: .06em; color: var(--ink-3); margin-bottom: .25em; }
 .msg--me { justify-self: end; background: var(--ink); color: var(--paper); box-shadow: none; } .msg--me small { color: color-mix(in srgb, var(--paper) 60%, transparent); }
 .msg .typed { display: inline; }
 .wave { display: flex; gap: .22em; align-items: center; height: 1.6em; justify-self: end; }
@@ -368,7 +352,7 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .vote { display: grid; justify-items: center; gap: .15em; font-family: var(--mono); font-size: max(12px, .66em); }
 .vote::before { content: ""; width: 0; height: 0; border-left: .55em solid transparent; border-right: .55em solid transparent; border-bottom: .7em solid #FF4500; }
 .tpost div { display: grid; gap: .45em; } .tpost div .sk:nth-child(2) { width: 86%; } .tpost div .sk:nth-child(3) { width: 60%; }
-.tpost small { font-family: var(--mono); font-size: max(12px, .58em); letter-spacing: .06em; color: var(--ink-3); text-transform: uppercase; }
+.tpost small { font-family: var(--mono); font-size: max(12px, .58em); letter-spacing: .06em; color: var(--ink-3); }
 .days { display: grid; grid-template-columns: repeat(17, 1fr); gap: .22em; }
 .days i { height: .7em; border-radius: 2px; background: var(--card-rule); transition: background 200ms ease; transition-delay: calc(var(--k) * 70ms); }
 .pc.is-front .days i { background: var(--ink); } .pc.is-front .days i:last-child { background: var(--pen); }
@@ -409,23 +393,28 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .fit__no:hover, .fit__no:focus-visible { background-size: 100% 1.5px; }
 
 /* ---------------- the close: one quiet line ---------------- */
-.close { margin-top: var(--sec); text-align: center; }
-.close p { margin: 0; font-size: clamp(1.5rem, 1rem + 1.4vw, 2.3rem); line-height: 1.2; letter-spacing: -.016em; color: var(--ink-2); }
-.close a { color: var(--ink); text-decoration: none; background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 92%; background-size: 100% max(2px, .05em); transition: color 200ms ease; }
-.close a:hover, .close a:focus-visible { color: var(--pen); }
-
-.foot { margin-top: var(--sec); padding: var(--s4) 0 48px; border-top: 1px solid var(--rule); display: grid; justify-items: center; gap: var(--s1); text-align: center; color: var(--ink-2); font-size: .98rem; }
-.foot p { margin: 0; }
-.foot .wordmark { font-size: 1.6rem; text-decoration: none; color: var(--ink); }
-.foot__links { display: flex; gap: var(--s3); }
-.foot__links a { color: var(--ink); text-decoration: none; background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; padding-bottom: 2px; transition: background-size 420ms var(--ease-pen); }
+/* ---------------- footer: a dark panel, the team's clocks, and a big wordmark that rises out of the bottom ---------------- */
+.foot { --f-bg: #141412; --f-ink: #EDEDE7; --f-ink-2: #A3A39B; --f-rule: rgba(237, 237, 231, .14);
+  position: relative; overflow: hidden; margin: var(--sec) 16px 16px; border-radius: 32px; background: var(--f-bg); color: var(--f-ink);
+  display: grid; justify-items: center; text-align: center; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .foot { --f-bg: #1D1E1A; } }
+:root[data-theme="dark"] .foot { --f-bg: #1D1E1A; }
+.foot__in { display: grid; justify-items: center; gap: var(--s4); padding: var(--sec) var(--gutter) 0; width: 100%; }
+.foot__line { font-size: clamp(1.75rem, 1rem + 2.6vw, 3.5rem); line-height: 1.08; letter-spacing: -.026em; font-weight: 380; font-variation-settings: "opsz" 72; color: var(--f-ink-2); text-wrap: balance; }
+.foot__line a { color: var(--f-ink); text-decoration: none; background-image: linear-gradient(#F0603F, #F0603F); background-repeat: no-repeat; background-position: 0 94%; background-size: 100% max(2px, .05em); transition: color 200ms ease; }
+.foot__line a:hover, .foot__line a:focus-visible { color: #F0603F; }
+.foot__clocks { list-style: none; margin: 0; padding: var(--s3) 0 0; border-top: 1px solid var(--f-rule); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s2) var(--s4); max-width: 920px; }
+.foot__clocks li { display: grid; gap: 2px; justify-items: center; min-width: 88px; }
+@media (max-width: 640px) { .foot__clocks { gap: var(--s2) 0; } .foot__clocks li { min-width: 0; flex: 0 0 33.333%; } .foot__clocks span { font-size: 12px; white-space: nowrap; } .foot__clocks time { font-size: 1.25rem; } }
+.foot__clocks span { font-size: 14px; color: var(--f-ink-2); }
+.foot__clocks time { font-size: 1.5rem; line-height: 1.1; letter-spacing: -.01em; font-variant-numeric: tabular-nums; color: var(--f-ink); }
+.foot__links { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s1) var(--s4); }
+.foot__links a { font-size: 1.125rem; color: var(--f-ink); text-decoration: none; background-image: linear-gradient(#F0603F, #F0603F); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; padding-bottom: 2px; transition: background-size 420ms var(--ease-pen); }
 .foot__links a:hover, .foot__links a:focus-visible { background-size: 100% 1px; }
-
-
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-stopped { overflow: hidden; }
-[data-par] { will-change: transform; }
+.foot__mark { width: 100%; height: clamp(120px, 23vw, 360px); margin-top: var(--s4); overflow: hidden; position: relative; user-select: none; }
+.foot__mark span { position: absolute; left: 50%; top: 0; transform: translate3d(-50%, var(--my, 0%), 0); font-weight: 700; font-size: clamp(11rem, 36vw, 36rem); line-height: .78; letter-spacing: -.07em; font-variation-settings: "opsz" 72;
+  background: linear-gradient(to bottom, rgba(237, 237, 231, .2), rgba(237, 237, 231, 0) 78%); -webkit-background-clip: text; background-clip: text; color: transparent; will-change: transform; }
+.foot__base { margin-top: calc(var(--s2) * -1); font-size: 14px; color: var(--f-ink-2); text-wrap: balance; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0ms !important; animation: none !important; }
@@ -443,13 +432,22 @@ html.lenis, html.lenis body { height: auto; }
 <main id="top">
   <!-- ========== HERO · life at 8x, on a globe ========== -->
   <section class="hero" id="hero" aria-labelledby="hero-h">
-    <div class="hero__head" data-par="-.22">
-      <p class="eyebrow">Life at 8x</p>
-      <h1 id="hero-h"><span>250,000+ people. 50+ countries.</span> <span>One small team in the middle.</span></h1>
-      <p class="sub">8x is a small core team running a network of more than 250,000 people. This is what working at the centre of it is actually like.</p>
+    <div class="hero__head">
+      <h1 id="hero-h"><span>250,000+ people.</span> <span>One small team.</span></h1>
+      <p class="sub">Across 50+ countries. This is life in the middle.</p>
     </div>
-    <div class="globe" id="globe">
-      <canvas id="globe-canvas" role="img" aria-label="A globe dotted with the 8x network, with the core team pinned in San Francisco, Ljubljana, Istanbul, Lahore and Bengaluru, each showing their local time"></canvas>
+    <!-- the team lifts off the globe and lands as a grid -->
+    <div class="crew" id="crew">
+      <div class="crew__pin" id="crew-pin">
+        <div class="globe" id="globe">
+          <canvas id="globe-canvas" role="img" aria-label="A globe dotted with the 8x network, with the core team pinned where they live, each showing their local time"></canvas>
+        </div>
+        <div class="crew__head" id="crew-head">
+          <h2 id="team-h">A small team builds the rest.</h2>
+          <p>Each person owns a whole piece of it.</p>
+        </div>
+        <div class="seats" id="seats"><figure class="mate" tabindex="0"><span class="mate__ph"><img src="img/team/t1.jpg" alt="Placeholder portrait for Maya Okafor" loading="lazy"></span><figcaption class="mate__cap"><span class="mate__name">Maya Okafor</span><span class="mate__role"><span class="mate__job">Head of operations, </span>San Francisco</span></figcaption></figure><figure class="mate" tabindex="0"><span class="mate__ph"><img src="img/net/n8.jpg" alt="Placeholder portrait for Daniel Cho" loading="lazy"></span><figcaption class="mate__cap"><span class="mate__name">Daniel Cho</span><span class="mate__role"><span class="mate__job">Growth engineer, </span>Lisbon</span></figcaption></figure><figure class="mate" tabindex="0"><span class="mate__ph"><img src="img/team/t3.jpg" alt="Placeholder portrait for Lena Park" loading="lazy"></span><figcaption class="mate__cap"><span class="mate__name">Lena Park</span><span class="mate__role"><span class="mate__job">Market lead, </span>Ljubljana</span></figcaption></figure><figure class="mate" tabindex="0"><span class="mate__ph"><img src="img/team/t4.jpg" alt="Placeholder portrait for Tom&aacute;s Silva" loading="lazy"></span><figcaption class="mate__cap"><span class="mate__name">Tom&aacute;s Silva</span><span class="mate__role"><span class="mate__job">Software engineer, </span>Istanbul</span></figcaption></figure><figure class="mate" tabindex="0"><span class="mate__ph"><img src="img/net/n13.jpg" alt="Placeholder portrait for Elena Novak" loading="lazy"></span><figcaption class="mate__cap"><span class="mate__name">Elena Novak</span><span class="mate__role"><span class="mate__job">Paid ads manager, </span>Nairobi</span></figcaption></figure><figure class="mate" tabindex="0"><span class="mate__ph"><img src="img/team/t5.jpg" alt="Placeholder portrait for Amara Diallo" loading="lazy"></span><figcaption class="mate__cap"><span class="mate__name">Amara Diallo</span><span class="mate__role"><span class="mate__job">Account manager, </span>Lahore</span></figcaption></figure><figure class="mate" tabindex="0"><span class="mate__ph"><img src="img/team/t2.jpg" alt="Placeholder portrait for Ravi Menon" loading="lazy"></span><figcaption class="mate__cap"><span class="mate__name">Ravi Menon</span><span class="mate__role"><span class="mate__job">Software engineer, </span>Bengaluru</span></figcaption></figure><a class="mate mate--you" href="https://www.8x.careers"><span class="mate__ph"><svg viewBox="0 0 120 130" aria-hidden="true"><circle cx="60" cy="40" r="26" fill="currentColor" opacity=".28"/><path d="M8 130c4-38 25-58 52-58s48 20 52 58z" fill="currentColor" opacity=".28"/></svg></span><span class="mate__you" aria-hidden="true">You</span><span class="mate__cap"><span class="mate__name">You?</span><span class="mate__role">The open seat</span></span></a></div>
+      </div>
     </div>
   </section>
 
@@ -466,9 +464,8 @@ html.lenis, html.lenis body { height: auto; }
 
       <div class="net" id="net">
         <div class="net__head">
-          <p class="label">The network</p>
           <h3>250,000+ people do the work, on demand.</h3>
-          <p class="net__who"><em>Creators post</em><span>·</span><em>Sales reps call</em><span>·</span><em>Participants talk</em></p>
+          <p class="net__who">Creators post. Reps call. Participants talk.</p>
         </div>
         <div class="lanes" id="lanes" aria-hidden="true">
           <div class="lane"><div class="track"><div class="tile"><img src="img/net/n1.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n2.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n3.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n4.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n5.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n6.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n7.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n8.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n9.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n10.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n11.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n12.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n1.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n2.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n3.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n4.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n5.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n6.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n7.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n8.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n9.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n10.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n11.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/net/n12.jpg" alt="" loading="lazy"></div></div></div>
@@ -478,7 +475,6 @@ html.lenis, html.lenis body { height: auto; }
 
       <section class="deck" id="deck" aria-labelledby="deck-h">
         <div class="deck__head">
-          <p class="label">What 8x sells</p>
           <h3 id="deck-h">Every product is the network at work.</h3>
           <p>Here is what you would be helping sell.</p>
         </div>
@@ -588,7 +584,7 @@ html.lenis, html.lenis body { height: auto; }
       <section class="week" id="week" aria-labelledby="week-h">
         <div class="week__scroll">
           <div class="week__pin" id="week-pin">
-            <p class="label week__label" id="week-h">A week at 8x</p>
+            <h3 class="week__label" id="week-h">A week at 8x</h3>
             <ul class="sr-only"><li>Monday: You decide what ships.</li><li>Tuesday: Your hours, your city.</li><li>Wednesday: Feedback, written down.</li><li>Thursday: Small budgets, fast tests.</li><li>Friday: The numbers decide.</li></ul>
             <div class="wk__card" aria-hidden="true">
               <div class="wk__imgs"><img src="img/week/d1.jpg" alt="" class="is-on" loading="lazy"><img src="img/week/d2.jpg" alt="" loading="lazy"><img src="img/week/d3.jpg" alt="" loading="lazy"><img src="img/week/d4.jpg" alt="" loading="lazy"><img src="img/week/d5.jpg" alt="" loading="lazy"></div>
@@ -602,21 +598,11 @@ html.lenis, html.lenis body { height: auto; }
         </div>
       </section>
 
-      <div class="team" id="team">
-        <div class="team__head">
-          <p class="label">The core team</p>
-          <h3>A small team builds the rest.</h3>
-          <p>Each person owns a whole piece of it.</p>
-        </div>
-        <div class="seats" id="seats"><figure class="mate" tabindex="0"><img src="img/team/t1.jpg" alt="Placeholder portrait for Maya Okafor" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Maya Okafor</span><span class="mate__role">Market lead · Poland</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/team/t2.jpg" alt="Placeholder portrait for Ravi Menon" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Ravi Menon</span><span class="mate__role">Engineer · Platform</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/team/t3.jpg" alt="Placeholder portrait for Lena Park" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Lena Park</span><span class="mate__role">Designer · Brand</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/team/t4.jpg" alt="Placeholder portrait for Tomás Silva" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Tomás Silva</span><span class="mate__role">Paid growth · 10 markets</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/team/t5.jpg" alt="Placeholder portrait for Amara Diallo" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Amara Diallo</span><span class="mate__role">Operations · Payouts</span></figcaption></figure><a class="mate mate--you" href="https://www.8x.careers"><svg viewBox="0 0 120 130" aria-hidden="true"><circle cx="60" cy="40" r="26" fill="currentColor" opacity=".28"/><path d="M8 130c4-38 25-58 52-58s48 20 52 58z" fill="currentColor" opacity=".28"/></svg><figcaption><span class="mate__name">You?</span><span class="mate__role">The open seat</span></figcaption></a></div>
-      </div>
-
       <section class="stories" id="stories" aria-labelledby="stories-h">
         <div class="stories__scroll">
           <div class="stories__pin">
-            <svg class="sl" id="stories-line" aria-hidden="true"><path class="sl__base"></path><path class="sl__comet"></path><circle class="sl__head" r="4"></circle></svg>
+            <canvas class="field" id="stories-field" aria-hidden="true"></canvas>
             <div class="stories__head">
-              <p class="label">From the work</p>
               <h3 id="stories-h">From the people<br><span>who do the work.</span></h3>
             </div>
             <div class="stories__cards" id="stories-cards">
@@ -676,7 +662,6 @@ html.lenis, html.lenis body { height: auto; }
       </section>
 
       <section class="fit" id="fit" aria-labelledby="fit-h">
-        <p class="label">Is this for you?</p>
         <h3 class="fit__h" id="fit-h">Six honest questions. Answer for yourself.</h3>
         <div class="fit__deck" id="fit-deck" aria-live="polite">
           <div class="fit__card"><p class="fit__q">I would rather show my work than describe it.</p></div>
@@ -696,19 +681,19 @@ html.lenis, html.lenis body { height: auto; }
         </div>
       </section>
 
-      <section class="close" aria-label="Open roles">
-        <p data-par="-.1">Open roles live on <a href="https://www.8x.careers">8x.careers</a>.</p>
-      </section>
-
-      <footer class="foot">
-        <div class="foot__mark" aria-hidden="true">8x</div>
-        <a class="wordmark" href="#top">8x</a>
-        <p>Remote-first, built from San Francisco.</p>
-        <p class="foot__links"><a href="https://8x.life/manifesto">Manifesto</a><a href="https://www.8x.careers">8x.careers</a><a href="https://www.linkedin.com/company/8x-human/">LinkedIn</a></p>
-      </footer>
     </div>
   </section>
 </main>
+
+<footer class="foot" id="foot">
+  <div class="foot__in">
+    <p class="foot__line">Open roles live on <a href="https://www.8x.careers">8x.careers</a>.</p>
+    <ul class="foot__clocks" aria-label="Local time where the team lives"><li><span>San Francisco</span><time data-tz="America/Los_Angeles">--:--</time></li><li><span>Lisbon</span><time data-tz="Europe/Lisbon">--:--</time></li><li><span>Ljubljana</span><time data-tz="Europe/Ljubljana">--:--</time></li><li><span>Istanbul</span><time data-tz="Europe/Istanbul">--:--</time></li><li><span>Nairobi</span><time data-tz="Africa/Nairobi">--:--</time></li><li><span>Lahore</span><time data-tz="Asia/Karachi">--:--</time></li><li><span>Bengaluru</span><time data-tz="Asia/Kolkata">--:--</time></li></ul>
+    <p class="foot__links"><a href="https://8x.life/manifesto">Manifesto</a><a href="https://www.8x.careers">Careers</a><a href="https://www.linkedin.com/company/8x-human/">LinkedIn</a></p>
+    <p class="foot__base">Remote-first, built from San Francisco. &copy; 2026 8x</p>
+  </div>
+  <div class="foot__mark" aria-hidden="true"><span id="foot-mark">8x</span></div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
@@ -838,6 +823,8 @@ html.lenis, html.lenis body { height: auto; }
   /* ================= HERO GLOBE: the core team, pinned where they live, with their local time ================= */
   (function () {
     var wrap = $('#globe'), cv = $('#globe-canvas'), g = cv.getContext('2d'), hero = $('#hero');
+    var crew = $('#crew'), crewPin = $('#crew-pin'), crewHead = $('#crew-head'), mates = $$('#seats .mate'), scrub = !reduce;
+    if (scrub) crew.classList.add('is-scrub');
   var LAND = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/+ev7UAAAAAAAAAAAAAAAAAAAAAAC//h///0AALwAAAADgAAAAAAAAAAADCg+////wAAdAAAAAAIAAAAAAAAAAA+xMAA///wAAAAAAcAB/4ABAAAAAAADwBUAAP//gAAAAADAAv/gAIAAAAAAADfTC+AH/9gAAAAAMBi///+D4AAAH/gYP8434F//gAAA4AAj///////wAwP///4Zcj8D/wAAAP/xb/v////////+f/////+h7B+geAAf/H///////////AD/////908B8AcAA+/v///////////AP/////wPAA4AAAH5///////////98Af0P///gDgAAAAAH8D//////////EAAAgC///wD+AAAACA4f////////+AMAACAA///+D/AAAACBx/////////4A8AAAAA////n/wAAAZBv/////////6AwAAAAAP///3/4AAAbn///////////AQAAAAAH////4AAAAAf//////////+AAAAAAAD////4cAAAD///////////8AAAAAAAB////8gAAAA//9f///////5EAAAAAAD////0AAAAA+v4P///////xgAAAAAAD////gAAAAPwz4H//////+AAAAAAAAD///+AAAAAPoLv///////eCAAAAAAAB///+AAAAAPAZv///////GCAAAAAAAA///8AAAAAAfAA///////iOAAAAAAAAf//8AAAAAH/AA///////g4AAAAAAAAP//wAAAAAP/zg///////gAAAAAAAAAD/8QAAAAAP////v/////gAAAAAAAAAF/AQAAAAA/////v/////gAAAAAAAAAC/AAAAAAB////fx/////AAAAAAAAAABfAAAAAAB////P2D///+AAAAAAAAAAAPAoAAAAD////v/B///4AAAAAAAAAAAPGCAAAAD////n+Afx/AAAAAAAAAAAAH8AEAAAD////3+AfA/AQAAAAAAAAAAA8AAAAAD////74AeAfggAAAAAAAAAAAHgAAAAD////7AAOAPgAAAAAAAAAAAABgwAAAD////8AAMADgoAAAAAAAAAAAAheAAAB/////wAEABAAAAAAAAAAAAAAH/gAAA/////gACAIAMAAAAAAAAAAAAD/wAAAfn///gAAAEBAAAAAAAAAAAAAD/+AAAAB///AAAAUmAAAAAAAAAAAAAH/+AAAAB//+AAAAKOAAAAAAAAAAAAAP//AAAAB//8AAAAMegAAAAAAAAAAAAP//wAAAB//4AAAAHOh0AAAAAAAAAAAP//+AAAA//wAAAACAwPgAAAAAAAAAAP///gAAAf/wAAAABAAD0AAAAAAAAAAH///gAAAf/wAAAAAMAHQAAAAAAAAAAH///AAAAf/wAAAAAAoAIAAAAAAAAAAD///AAAAf/4AAAAAAARAAAAAAAAAAAD//+AAAAf/4wAAAAABxAAAAAAAAAAAB//+AAAA//5gAAAAAH5gAAAAAAAAAAAf/+AAAA//hgAAAAAP/wABAAAAAAAAAf/8AAAAf/BgAAAAA//4AAAAAAAAAAAf/8AAAAP/DgAAAAH//4AAAAAAAAAAAf/gAAAAP/DAAAAAH//8AAAAAAAAAAAf/AAAAAP+AAAAAAD//+AAAAAAAAAAAf/AAAAAP+AAAAAAD//+AAAAAAAAAAAf+AAAAAH8AAAAAAD//+AAAAAAAAAAAf+AAAAAD4AAAAAAD+f+AAAAAAAAAAAf8AAAAADgAAAAAADAP8AAAAAAAAAAA/wAAAAAAAAAAAAAAAD8AEAAAAAAAAA/wAAAAAAAAAAAAAAABwADAAAAAAAAA+AAAAAAAAAAAAAAAAAoACAAAAAAAAB8AAAAAAAAAAAAAAAAAYAMAAAAAAAAA8AAAAAAAAAAAAAAAAAAAQAAAAAAAAB4AAAAAAAAAAAAAAAAAAAwAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAABwgAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAMAAAGIAAAAAAAAAAAAAAEAAAAAAAAD/+B/////wAAAAAAAAAAAeAAAAAAIB//+f//////4AAAAAAAGABWAAAAf//////////////wAAAADAH///AAAB//////////////+AAAB//////4AAB///////////////8AAB//////zAAwf///////////////+AAAD/////8AB4D///////////////4AAAP//////4Bn////////////////8AAD///////////////////////////+////////////////////////////////////////////////////////////A=';
     var land = [];
     (function () {
@@ -852,10 +839,13 @@ html.lenis, html.lenis body { height: auto; }
     })();
     function vec(lat, lon) { var a = lat * Math.PI / 180, b = lon * Math.PI / 180, ca = Math.cos(a); return [ca * Math.sin(b), Math.sin(a), ca * Math.cos(b)]; }
     /* placeholder people: to be replaced with the real 8x team and where they actually live */
+    /* in the same order as the cards in #seats, west to east */
     var PINS = [
       { city: 'San Francisco', tz: 'America/Los_Angeles', v: vec(37.77, -122.42), src: 'img/team/t1.jpg' },
+      { city: 'Lisbon', tz: 'Europe/Lisbon', v: vec(38.72, -9.14), src: 'img/net/n8.jpg' },
       { city: 'Ljubljana', tz: 'Europe/Ljubljana', v: vec(46.06, 14.51), src: 'img/team/t3.jpg' },
       { city: 'Istanbul', tz: 'Europe/Istanbul', v: vec(41.01, 28.98), src: 'img/team/t4.jpg' },
+      { city: 'Nairobi', tz: 'Africa/Nairobi', v: vec(-1.29, 36.82), src: 'img/net/n13.jpg' },
       { city: 'Lahore', tz: 'Asia/Karachi', v: vec(31.55, 74.34), src: 'img/team/t5.jpg' },
       { city: 'Bengaluru', tz: 'Asia/Kolkata', v: vec(12.97, 77.59), src: 'img/team/t2.jpg' }
     ];
@@ -865,7 +855,7 @@ html.lenis, html.lenis body { height: auto; }
     (function () {
       var lat = 22, lon = -new Date().getTimezoneOffset() / 60 * 15;
       for (var tries = 0; tries < 6; tries++) {
-        var v = vec(lat, lon), near = PINS.some(function (pn) { return Math.acos(Math.min(1, v[0] * pn.v[0] + v[1] * pn.v[1] + v[2] * pn.v[2])) < .2; });
+        var v = vec(lat, lon), near = PINS.some(function (pn) { return Math.acos(Math.min(1, v[0] * pn.v[0] + v[1] * pn.v[1] + v[2] * pn.v[2])) < .36; });
         if (!near) break; lat -= 12;
       }
       YOU.v = vec(lat, lon);
@@ -885,8 +875,9 @@ html.lenis, html.lenis body { height: auto; }
     function size() {
       DPR = Math.min(2, window.devicePixelRatio || 1); W = wrap.clientWidth; H = wrap.clientHeight; phone = W < 700;
       cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
-      R = phone ? Math.min(W * .44, H * .42) : Math.min(W * .4, 520);
+      R = phone ? Math.min(W * .44, 330) : Math.min(W * .4, 520);
       CX = W / 2;
+      if (scrub) layout();
     }
     var rot0 = -.95;
     function proj(v, rot) {
@@ -914,28 +905,39 @@ html.lenis, html.lenis body { height: auto; }
       if (!W) size();
       var sp = clamp(-hero.getBoundingClientRect().top / window.innerHeight, 0, 1);
       var rot = rot0 + (reduce ? 0 : now * .00005) + sp * .45;
-      CY = phone ? R + 40 : R + 56;
+      /* crew: 0 while the globe is a globe, 1 once the team has landed as a grid */
+      var cp = scrub ? progress(crew) : 0, sink = inOut(seg(cp, .04, .72));
+      if (cp > 0) {
+        /* turn the globe so most of the team faces you before they lift off */
+        var target = -.26, k = inOut(seg(cp, 0, .3));
+        target += Math.round((rot - target) / 6.2832) * 6.2832;
+        rot += (target - rot) * k;
+      }
+      var body = 1 - seg(cp, .1, .62), pinA = cp > 0 ? 0 : 1, labA = 1 - seg(cp, 0, .06);
+      CY = (phone ? R + 72 : R + 96) + sink * R * .55;
+      if (scrub) crewPin.style.setProperty('--fade', body.toFixed(3));
       g.setTransform(DPR, 0, 0, DPR, 0, 0); g.clearRect(0, 0, W, H);
       /* the sphere: a soft body and a fine rim */
       var grd = g.createRadialGradient(CX - R * .3, CY - R * .45, R * .1, CX, CY, R);
       grd.addColorStop(0, col.paper); grd.addColorStop(1, col.rule);
-      g.globalAlpha = .55; g.fillStyle = grd; g.beginPath(); g.arc(CX, CY, R, 0, 6.2832); g.fill();
-      g.globalAlpha = .9; g.strokeStyle = col.rule; g.lineWidth = 1; g.stroke();
+      if (body <= 0) { place(rot, pr0(), cp); g.globalAlpha = 1; return; }
+      g.globalAlpha = .55 * body; g.fillStyle = grd; g.beginPath(); g.arc(CX, CY, R, 0, 6.2832); g.fill();
+      g.globalAlpha = .9 * body; g.strokeStyle = col.rule; g.lineWidth = 1; g.stroke();
       /* land */
       g.fillStyle = col['ink-3'];
       for (var i = 0; i < land.length; i++) {
         var q = proj(land[i], rot); if (q[2] <= 0) continue;
-        var d = 1.4 + q[2] * 1.4; g.globalAlpha = .24 + .66 * q[2]; g.fillRect(q[0] - d / 2, q[1] - d / 2, d, d);
+        var d = 1.4 + q[2] * 1.4; g.globalAlpha = (.24 + .66 * q[2]) * body; g.fillRect(q[0] - d / 2, q[1] - d / 2, d, d);
       }
       /* the network: people everywhere, switching on and off */
       g.fillStyle = col.pen;
       for (var n = 0; n < land.length; n += 9) {
         var qn = proj(land[n], rot); if (qn[2] <= .05) continue;
         var tw = reduce ? .6 : .5 + .5 * Math.sin(now * .0016 + n * 1.7);
-        g.globalAlpha = qn[2] * tw * .85; g.beginPath(); g.arc(qn[0], qn[1], 1.6 + tw * .9, 0, 6.2832); g.fill();
+        g.globalAlpha = qn[2] * tw * .85 * body; g.beginPath(); g.arc(qn[0], qn[1], 1.6 + tw * .9, 0, 6.2832); g.fill();
       }
       /* arcs */
-      if (!reduce) {
+      if (!reduce && cp < .2) {
         if (now > nextArc) { spawn(now, rot); nextArc = now + 1300 + Math.random() * 900; }
         arcs = arcs.filter(function (ac) { return now - ac.t0 < ac.dur * 1.6; });
         arcs.forEach(function (ac) {
@@ -944,24 +946,28 @@ html.lenis, html.lenis body { height: auto; }
           g.strokeStyle = col.pen; g.lineWidth = 1.6; g.lineCap = 'round';
           for (var k = 0; k <= steps; k++) {
             var u = ut + (uh - ut) * k / steps, pt = proj(slerp(ac.a, ac.b, u), rot);
-            if (pt[2] > -.05 && prev) { g.globalAlpha = .25 + .75 * (k / steps); g.beginPath(); g.moveTo(prev[0], prev[1]); g.lineTo(pt[0], pt[1]); g.stroke(); }
+            if (pt[2] > -.05 && prev) { g.globalAlpha = (.25 + .75 * (k / steps)) * body; g.beginPath(); g.moveTo(prev[0], prev[1]); g.lineTo(pt[0], pt[1]); g.stroke(); }
             prev = pt[2] > -.05 ? pt : null;
           }
           var hd = proj(slerp(ac.a, ac.b, uh), rot);
-          if (uh < 1 && hd[2] > 0) { g.globalAlpha = 1; g.fillStyle = col.pen; g.beginPath(); g.arc(hd[0], hd[1], 3, 0, 6.2832); g.fill(); }
+          if (uh < 1 && hd[2] > 0) { g.globalAlpha = body; g.fillStyle = col.pen; g.beginPath(); g.arc(hd[0], hd[1], 3, 0, 6.2832); g.fill(); }
         });
       }
       /* pins: a face above its place, the city and its time below */
-      var pr = phone ? 15 : 24, stem = phone ? 10 : 16;
+      var pr = pr0(), stem = phone ? 10 : 16;
+      place(rot, pr, cp);
       var placed = [];
       var order = ALL.map(function (pn) { return { pn: pn, q: proj(pn.v, rot) }; }).sort(function (a, b) { return a.q[2] - b.q[2]; });
       order.forEach(function (o) {
         var q = o.q, pn = o.pn; if (q[2] <= .02) return;
-        var al = clamp((q[2] - .02) / .25, 0, 1), x = q[0], y = q[1], top = y - stem - pr;
+        var al = clamp((q[2] - .02) / .25, 0, 1) * labA, x = q[0], y = q[1], top = y - stem - pr;
+        if (al <= 0) return;
         g.globalAlpha = al;
         g.strokeStyle = col.pen; g.lineWidth = 1.5; g.beginPath(); g.moveTo(x, y); g.lineTo(x, y - stem); g.stroke();
         g.fillStyle = col.pen; g.beginPath(); g.arc(x, y, 3, 0, 6.2832); g.fill();
-        if (pn.you) {
+        g.globalAlpha = al * pinA;
+        if (pinA <= 0) { /* the cards have taken over the faces */ }
+        else if (pn.you) {
           g.fillStyle = col.paper; g.beginPath(); g.arc(x, top, pr, 0, 6.2832); g.fill();
           g.setLineDash([3, 3]); g.strokeStyle = col.pen; g.lineWidth = 1.5; g.stroke(); g.setLineDash([]);
           g.fillStyle = col.pen; g.font = '400 ' + (phone ? 12 : 14) + 'px Newsreader, Georgia, serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('You', x, top + 1);
@@ -969,13 +975,14 @@ html.lenis, html.lenis body { height: auto; }
           g.save(); g.shadowColor = 'rgba(20,20,18,.22)'; g.shadowBlur = 12; g.shadowOffsetY = 4;
           g.fillStyle = col.paper; g.beginPath(); g.arc(x, top, pr + 3, 0, 6.2832); g.fill(); g.restore();
           g.save(); g.beginPath(); g.arc(x, top, pr, 0, 6.2832); g.clip();
-          if (pn.im.complete && pn.im.naturalWidth) g.drawImage(pn.im, x - pr, top - pr, pr * 2, pr * 2); else { g.fillStyle = col.rule; g.fill(); }
+          if (pn.im.complete && pn.im.naturalWidth) { var iw = pn.im.naturalWidth, ih = pn.im.naturalHeight, cw0 = Math.min(iw, ih) * .8; g.drawImage(pn.im, (iw - cw0) / 2, (ih - cw0) / 2, cw0, cw0, x - pr, top - pr, pr * 2, pr * 2); } else { g.fillStyle = col.rule; g.fill(); }
           g.restore();
         }
+        g.globalAlpha = al;
         if (phone && !pn.you && q[2] < .55) return;
-        var label = (pn.you ? 'YOU' : pn.city.toUpperCase()) + '  ' + localTime(pn.tz);
-        g.font = '400 12px "Geist Mono", ui-monospace, monospace'; g.textAlign = 'center'; g.textBaseline = 'middle';
-        var tw = g.measureText(label).width + 16, ly = y + 16;
+        var label = (pn.you ? 'You' : pn.city) + '  ' + localTime(pn.tz);
+        g.font = '400 ' + (phone ? 13 : 14) + 'px Newsreader, Georgia, serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+        var tw = g.measureText(label).width + 20, ly = y + 16;
         for (var guard = 0; guard < 4 && placed.some(function (b) { return Math.abs(b[0] - x) < (b[2] + tw) / 2 + 4 && Math.abs(b[1] - ly) < 26; }); guard++) ly += 28;
         placed.push([x, ly, tw]);
         g.fillStyle = col.paper; rr(x - tw / 2, ly - 12, tw, 24, 12); g.fill();
@@ -984,6 +991,63 @@ html.lenis, html.lenis body { height: auto; }
       });
       g.globalAlpha = 1;
     }
+    function pr0() { return phone ? 15 : 24; }
+    /* where each card lands: a centred grid under the heading, sized to fit the screen */
+    var slots = [];
+    function layout() {
+      var vh = window.innerHeight, phoneL = W < 640, cols = phoneL ? 3 : 4, gap = phoneL ? 16 : 24, n = mates.length, rows = Math.ceil(n / cols);
+      var gut = phoneL ? 16 : Math.max(16, Math.min(80, W * .046)), sec = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sec')) || 96;
+      var headH = crewHead.offsetHeight, top0 = phoneL ? 80 : 96;
+      var byW = (Math.min(W - gut * 2, 1000) - (cols - 1) * gap) / cols;
+      var byH = ((vh - top0 - 32 - headH - 40) - (rows - 1) * gap) / rows / 1.25;
+      var cw = Math.max(72, Math.min(byW, byH)), ch = cw * 1.25, blockH = headH + 32 + rows * ch + (rows - 1) * gap;
+      var top = clamp(vh - sec - blockH, top0, Math.max(top0, (vh - blockH) / 2));
+      crewHead.style.transform = 'translate3d(0,' + top.toFixed(1) + 'px,0)';
+      crewHead.dataset.y = top;
+      slots = [];
+      for (var i = 0; i < n; i++) {
+        var r = Math.floor(i / cols), inRow = Math.min(cols, n - r * cols), c = i - r * cols, rowW = inRow * cw + (inRow - 1) * gap;
+        slots.push({ x: (W - rowW) / 2 + c * (cw + gap), y: top + headH + 32 + r * (ch + gap), w: cw, h: ch });
+      }
+      mates.forEach(function (m, i) { var sl = slots[i]; m.style.left = sl.x.toFixed(1) + 'px'; m.style.top = sl.y.toFixed(1) + 'px'; m.style.width = sl.w.toFixed(1) + 'px'; m.style.height = sl.h.toFixed(1) + 'px'; m._ph = m.querySelector('.mate__ph'); m._you = m.querySelector('.mate__you'); });
+      /* the next section starts one section gap below the grid */
+      var bottom = vh - (top + blockH);
+      $('#what').style.marginTop = (-Math.min(bottom, sec)).toFixed(1) + 'px';
+    }
+    /* each card starts as its face on the globe, then flies to its seat and opens into a card */
+    function place(rot, pr, cp) {
+      if (!scrub || !slots.length) return;
+      var stem = phone ? 10 : 16, ring = phone ? 2 : 3;
+      var hk = seg(cp, .5, .8);
+      crewHead.style.opacity = out3(hk).toFixed(3);
+      crewHead.style.transform = 'translate3d(0,' + ((+crewHead.dataset.y || 0) + (1 - out3(hk)) * 32).toFixed(1) + 'px,0)';
+      mates.forEach(function (m, i) {
+        var pn = ALL[i], sl = slots[i];
+        if (cp <= 0 || !pn) { m.style.visibility = 'hidden'; return; }
+        var q = proj(pn.v, rot), x = q[0], y = q[1] - stem - pr, a0 = clamp((q[2] - .02) / .25, 0, 1);
+        if (q[2] <= .02) { var dx = q[0] - CX, dy = q[1] - CY, dl = Math.hypot(dx, dy) || 1; x = CX + dx / dl * R; y = CY + dy / dl * R; a0 = 0; }
+        var e = inOut(seg(cp, .04 + i * .035, .5 + i * .035)), fcx = sl.x + sl.w / 2, fcy = sl.y + sl.h / 2;
+        var s0 = pr * 2 / sl.w, sc = s0 + (1 - s0) * e;
+        var cx = x + (fcx - x) * e, cy = y + (fcy - y) * out3(e) - Math.sin(Math.PI * e) * sl.h * .18;
+        m.style.visibility = 'visible';
+        m.style.opacity = (a0 + (1 - a0) * seg(e, 0, .25)).toFixed(3);
+        m.style.transform = 'translate3d(' + (cx - fcx).toFixed(1) + 'px,' + (cy - fcy).toFixed(1) + 'px,0) scale(' + sc.toFixed(4) + ')';
+        /* the window opens from a circle to the full card */
+        var V = (sl.h - sl.w) / 2 * (1 - e), rad = sl.w / 2 * (1 - e) + 14 * e, ph = m._ph;
+        ph.style.top = V.toFixed(2) + 'px'; ph.style.height = (sl.h - V * 2).toFixed(2) + 'px'; ph.style.width = sl.w.toFixed(1) + 'px';
+        ph.style.borderRadius = rad.toFixed(2) + 'px';
+        var img = ph.firstElementChild; if (img) { img.style.top = (-V).toFixed(2) + 'px'; img.style.height = sl.h.toFixed(1) + 'px'; }
+        var k = 1 - e;
+        if (m._you) {
+          ph.style.borderWidth = (1.5 / sc).toFixed(2) + 'px';
+          m._you.style.fontSize = ((phone ? 12 : 14) / sc).toFixed(1) + 'px';
+          m._you.style.opacity = (1 - seg(e, .1, .45)).toFixed(3);
+        } else {
+          ph.style.boxShadow = k > .001 ? '0 0 0 ' + (ring / sc).toFixed(2) + 'px ' + col.paper + ', 0 ' + (4 / sc).toFixed(1) + 'px ' + (12 / sc).toFixed(1) + 'px rgba(20,20,18,' + (.22 * k).toFixed(3) + ')' : 'none';
+        }
+        m.style.setProperty('--cap', seg(e, .82, 1).toFixed(3));
+      });
+    }
     size();
     window.addEventListener('resize', function () { size(); draw(performance.now()); });
     PINS.forEach(function (pn) { pn.im.onload = function () { draw(performance.now()); }; });
@@ -991,8 +1055,16 @@ html.lenis, html.lenis body { height: auto; }
     draw(performance.now());
     if (reduce) { setInterval(function () { draw(performance.now()); }, 30000); return; }
     var live = true;
-    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { live = es[0].isIntersecting; }).observe(wrap);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { live = es[0].isIntersecting; }).observe(scrub ? crew : wrap);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (scrub) layout(); });
     (function tick(now) { if (live) draw(now); requestAnimationFrame(tick); })(performance.now());
+  })();
+
+  /* the footer clocks: local time wherever the team is */
+  (function () {
+    var ts = $$('#foot time[data-tz]');
+    function tick() { ts.forEach(function (t) { try { t.textContent = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: t.getAttribute('data-tz') }).format(new Date()); } catch (e) {} }); }
+    tick(); setInterval(tick, 15000);
   })();
 
   if (reduce) return; /* static, finished composition */
@@ -1041,7 +1113,7 @@ html.lenis, html.lenis body { height: auto; }
   }
   /* headings and small blocks rise in once as they come into view */
   (function () {
-    var els = $$('.net__head > *, .deck__head > *, .team__head > *, #fit > .label, #fit .fit__h, .close p, .foot > *');
+    var els = $$('.net__head > *, .deck__head > *, #fit .fit__h, .foot__in > *');
     if (!('IntersectionObserver' in window)) return;
     els.forEach(function (el) {
       if (el.getBoundingClientRect().top < window.innerHeight) return;
@@ -1051,20 +1123,6 @@ html.lenis, html.lenis body { height: auto; }
     var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { threshold: .15, rootMargin: '0px 0px -8% 0px' });
     els.forEach(function (el) { if (el.classList.contains('rv')) io.observe(el); });
   })();
-
-  /* team grid: a soft staggered entrance, once */
-  var seatsGrid = $('#seats');
-  $$('#seats .mate').forEach(function (m, i) { m.style.setProperty('--k', i); });
-  if (seatsGrid.getBoundingClientRect().top > window.innerHeight && 'IntersectionObserver' in window) {
-    seatsGrid.classList.add('is-armed');
-    var seatIO = new IntersectionObserver(function (es) {
-      if (!es[0].isIntersecting) return;
-      seatIO.disconnect();
-      seatsGrid.classList.add('is-in'); seatsGrid.classList.remove('is-armed');
-      setTimeout(function () { seatsGrid.classList.remove('is-in'); }, 1800);
-    }, { threshold: .15 });
-    seatIO.observe(seatsGrid);
-  }
 
   /* ================= WHAT 8X SELLS: the deck ================= */
   var deck = $('#deck'), deckScroll = $('#deck .deck__scroll'), deckStack = $('#deck-stack');
@@ -1173,32 +1231,35 @@ html.lenis, html.lenis body { height: auto; }
 
   /* ================= FROM THE WORK: stories flow through the panel ================= */
   var stories = $('#stories'), stScroll = $('#stories .stories__scroll'), stHead = $('#stories .stories__head'), stCards = $$('#stories-cards .story');
-  var sl = $('#stories-line'), slBase = $('#stories-line .sl__base'), slComet = $('#stories-line .sl__comet'), slHead = $('#stories-line .sl__head');
-  var SL_K = 4, slPts = [], slLen = 0, slW = 0, slVh = 0;
-  /* a long, gently winding line: built once per size, then scrolled and drawn */
-  function buildLine() {
-    var W = stScroll.clientWidth, vh = window.innerHeight, Hh = vh * SL_K, per = vh * 1.15, d = '', len = 0, prev = null;
-    slPts = [];
-    for (var y = -20; y <= Hh + 20; y += 10) {
-      var amp = W * (W < 640 ? .3 : .26) * (.62 + .38 * Math.sin(y / (per * 2.3) + 1.1));
-      var x = W / 2 + amp * Math.sin(y / per * Math.PI * 2 + .6);
-      if (prev) len += Math.hypot(x - prev[0], y - prev[1]);
-      slPts.push([x, y, len]); prev = [x, y];
-      d += (d ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
-    }
-    slBase.setAttribute('d', d); slComet.setAttribute('d', d);
-    sl.setAttribute('width', W); sl.setAttribute('height', Hh); sl.style.width = W + 'px'; sl.style.height = Hh + 'px';
-    slLen = len; slW = W; slVh = vh;
-    slBase.style.strokeDasharray = len + ' ' + len;
-    slComet.style.strokeDasharray = '160 ' + (len + 200);
+  /* behind the stories: the network drifting past, coming forward as you scroll */
+  var field = $('#stories-field'), fg = field.getContext('2d'), FW = 0, FH = 0, FDPR = 1, dots = [], fieldLive = false;
+  function fieldSize() {
+    FDPR = Math.min(2, window.devicePixelRatio || 1); FW = field.clientWidth; FH = field.clientHeight;
+    field.width = Math.round(FW * FDPR); field.height = Math.round(FH * FDPR);
+    var n = FW < 640 ? 240 : 520; dots = [];
+    for (var i = 0; i < n; i++) dots.push({ x: (Math.random() * 2 - 1) * 1.4, y: (Math.random() * 2 - 1), z: Math.random(), w: Math.random() < .13 });
   }
-  function lineAt(y) { var lo = 0, hi = slPts.length - 1; while (lo < hi) { var m = (lo + hi) >> 1; if (slPts[m][1] < y) lo = m + 1; else hi = m; } return slPts[lo]; }
   stories.classList.add('is-scrub');
-  buildLine();
-  window.addEventListener('resize', buildLine);
-  var slHeadLen = 0;
-  /* a brighter streak keeps running down the drawn part of the line */
-  (function comet(now) { if (slLen) { var run = Math.max(1, slHeadLen); slComet.style.strokeDashoffset = (-((now * .32) % run)).toFixed(1); } requestAnimationFrame(comet); })(performance.now());
+  fieldSize();
+  window.addEventListener('resize', fieldSize);
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { fieldLive = es[0].isIntersecting; }).observe(stScroll); else fieldLive = true;
+  (function drawField(now) {
+    if (fieldLive && FW) {
+      var cam = progress(stScroll) * 2.4 + now * .000035, cx = FW / 2, cy = FH / 2, f = Math.max(FW, FH) * .32;
+      fg.setTransform(FDPR, 0, 0, FDPR, 0, 0); fg.clearRect(0, 0, FW, FH);
+      for (var i = 0; i < dots.length; i++) {
+        var d = dots[i], z = d.z - cam; z -= Math.floor(z); var depth = .06 + z * 1.6;
+        var x = cx + d.x * f / depth, y = cy + d.y * f / depth;
+        if (x < -20 || x > FW + 20 || y < -20 || y > FH + 20) continue;
+        var a = Math.min(1, (1 - z) * 3) * Math.min(1, z * 6), r = Math.min(3.2, (d.w ? 1.6 : 1.1) / depth);
+        fg.globalAlpha = a * (d.w ? .95 : .5);
+        fg.fillStyle = d.w ? '#F0603F' : '#EDEDE7';
+        fg.beginPath(); fg.arc(x, y, r, 0, 6.2832); fg.fill();
+      }
+      fg.globalAlpha = 1;
+    }
+    requestAnimationFrame(drawField);
+  })(performance.now());
   function renderStories() {
     var r = stScroll.getBoundingClientRect(), vh = window.innerHeight;
     if (r.top > vh || r.bottom < 0) return;
@@ -1207,12 +1268,6 @@ html.lenis, html.lenis body { height: auto; }
     var raw = -1 + progress(stScroll) * (N + .4), base = Math.floor(raw), fr = raw - base;
     var f = base + inOut(seg(fr, .14, .86));
     var hp = clamp(f + 1, 0, 1);
-    /* the line scrolls up through the panel; its head stays just below the middle and it is drawn up to there */
-    var pp = progress(stScroll), oy = pp * (SL_K - 1) * slVh, hpnt = lineAt(oy + slVh * .6);
-    sl.style.transform = 'translate3d(0,' + (-oy).toFixed(1) + 'px,0)';
-    slBase.style.strokeDashoffset = (slLen - hpnt[2]).toFixed(1);
-    slHead.setAttribute('cx', hpnt[0].toFixed(1)); slHead.setAttribute('cy', hpnt[1].toFixed(1));
-    slHeadLen = hpnt[2];
     stHead.style.transform = 'translate3d(0, calc(-50% - ' + (hp * vh * .34).toFixed(1) + 'px), 0)';
     stHead.style.opacity = clamp(1 - hp * 1.25, 0, 1).toFixed(3);
     var dx = phone ? W * .2 : Math.min(W * .26, 380), dy = vh * (phone ? .66 : .62);
@@ -1233,11 +1288,19 @@ html.lenis, html.lenis body { height: auto; }
     var sec = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sec')) || 96, G = wkGeom();
     var top = (G.H - G.bigH) / 2 - 24 - wkLabel.offsetHeight, bottom = (G.H - G.ch) / 2;
     week.style.setProperty('--week-top', (sec - top).toFixed(1) + 'px');
-    $('#team').style.marginTop = (sec - bottom).toFixed(1) + 'px';
+    $('#stories').style.marginTop = (sec - bottom).toFixed(1) + 'px';
   }
   fixGaps();
   window.addEventListener('resize', fixGaps);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fixGaps);
+
+  /* footer: the big wordmark rises out of the bottom edge as you arrive */
+  var foot = $('#foot'), footMark = $('#foot-mark');
+  function renderFoot() {
+    var r = foot.getBoundingClientRect(), vh = window.innerHeight;
+    var k = out3(clamp((vh - r.top) / r.height, 0, 1));
+    footMark.style.setProperty('--my', ((1 - k) * 70).toFixed(2) + '%');
+  }
 
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
   var pars = $$('[data-par]');
@@ -1250,7 +1313,7 @@ html.lenis, html.lenis body { height: auto; }
       el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
     });
   }
-  function frame(t) { renderSay(); renderNet(); renderDeck(); renderBet(); renderWeek(); renderStories(); renderPar(); }
+  function frame(t) { renderSay(); renderNet(); renderDeck(); renderBet(); renderWeek(); renderStories(); renderPar(); renderFoot(); }
 
   /* smooth, delayed scroll: the page eases toward where you scrolled */
   var lenis = window.Lenis ? new Lenis({ lerp: .075, wheelMultiplier: .9, smoothWheel: true }) : null;
