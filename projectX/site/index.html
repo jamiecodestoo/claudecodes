@@ -365,20 +365,14 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 /* one product card */
 .pc { position: relative; display: grid; gap: clamp(16px, 2.4vw, 24px); justify-items: center; }
 .pc__card { position: relative; width: 100%; aspect-ratio: 16 / 10; border-radius: 20px; overflow: hidden; background: var(--card); box-shadow: var(--card-shadow), inset 0 0 0 1px var(--card-rule);
-  font-size: 2.5cqi; display: grid; grid-template-rows: auto 1fr; transition: transform 520ms var(--ease-settle); }
+  font-size: 2.5cqi; display: grid; grid-template-rows: 1fr; transition: transform 520ms var(--ease-settle); }
 .pc__card::after { content: ""; position: absolute; inset: 0; background: var(--paper); opacity: var(--veil, 0); pointer-events: none; z-index: 5; }
-.pc__bar { display: flex; justify-content: space-between; align-items: center; padding: 1.1em 1.4em 0; font-family: var(--mono); font-size: .62em; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
-.pc__bar b { font-weight: 400; display: inline-flex; align-items: center; gap: .6em; }
-.pc__bar b::before { content: ""; width: .6em; height: .6em; border-radius: 50%; background: #3BA55D; box-shadow: 0 0 0 .25em rgba(59, 165, 93, .18); }
-.pc--new .pc__bar b { color: var(--pen); } .pc--new .pc__bar b::before { background: var(--pen); box-shadow: 0 0 0 .25em color-mix(in srgb, var(--pen) 20%, transparent); }
-.pc--locked .pc__bar b::before { background: var(--ink-3); box-shadow: none; }
-.pc__scene { position: relative; display: grid; place-items: center; padding: .6em 1.4em 1.4em; min-height: 0; }
+.pc--new .pc--locked .pc__scene { position: relative; display: grid; place-items: center; padding: 1.6em; min-height: 0; }
 
 .pc__cap > * { margin: 0; }
+.deck.is-scrub .deck__caps .pc__cap { top: auto; bottom: 0; }
 .pc__cap { display: grid; gap: 8px; justify-items: center; text-align: center; max-width: 34em; }
-.pc__n { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); }
-.pc__n b { color: var(--ink); font-weight: 400; }
-.pc__name { font-size: clamp(1.5rem, 1.2rem + 1vw, 2.1rem); line-height: 1.1; letter-spacing: -.016em; font-variation-settings: "opsz" 48; }
+.pc__name { font-size: clamp(1.7rem, 1.2rem + 1.5vw, 2.6rem); line-height: 1.08; letter-spacing: -.02em; font-weight: 400; font-variation-settings: "opsz" 60; }
 .pc__what { color: var(--ink-2); font-size: var(--lead); line-height: 1.4; text-wrap: balance; }
 .pc__dom { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); text-decoration: none; position: relative; padding-bottom: 3px; margin-top: 4px;
   background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size 420ms var(--ease-pen); }
@@ -394,7 +388,7 @@ span.pc__dom { color: var(--pen); }
 .deck.is-scrub .pc__cap { display: none; }
 .deck.is-scrub .pc.is-front .pc__card:hover { transform: translateY(-.5em); }
 .deck__caps { display: none; }
-.deck.is-scrub .deck__caps { display: grid; position: relative; width: min(880px, 100%); margin-top: clamp(28px, 4.5vh, 48px); height: 8.5rem; }
+.deck.is-scrub .deck__caps { display: grid; position: relative; width: min(880px, 100%); margin-bottom: clamp(40px, 6vh, 64px); height: 7.4rem; order: -1; }
 .deck.is-scrub .deck__caps .pc__cap { display: grid; position: absolute; left: 50%; top: 0; width: 100%; transform: translate(-50%, 10px); opacity: 0; visibility: hidden; margin: 0;
   transition: opacity 360ms ease, transform 520ms var(--ease-settle), visibility 0s linear 520ms; }
 .deck.is-scrub .deck__caps .pc__cap.is-on { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity 420ms ease 80ms, transform 620ms var(--ease-settle) 80ms, visibility 0s; }
@@ -407,15 +401,15 @@ span.pc__dom { color: var(--pen); }
 .mini-n { font-family: var(--mono); font-size: .62em; letter-spacing: .06em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 
 /* social: three phones */
-.sc-social { grid-auto-flow: column; gap: 1.2em; align-items: center; }
-.phone2 { position: relative; width: 8.4em; aspect-ratio: 9 / 16; border-radius: 1.3em; overflow: hidden; background: #111; box-shadow: 0 0 0 .3em var(--card-2), 0 1.2em 2em -1em rgba(0,0,0,.35); }
+.sc-social { grid-auto-flow: column; justify-content: center; gap: 2.2em; align-items: center; }
+.phone2 { position: relative; width: 8.4em; aspect-ratio: 9 / 16; border-radius: 1.1em; overflow: hidden; background: #111; box-shadow: 0 0 0 .14em var(--card-2), 0 0 0 calc(.14em + 1px) var(--card-rule), 0 1.4em 2.2em -1.2em rgba(0,0,0,.35); }
 .phone2:nth-child(2) { width: 9.8em; }
 .phone2:nth-child(1), .phone2:nth-child(3) { opacity: .92; }
 .phone2 img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .phone2::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.6)); }
-.phone2 .views { position: absolute; left: .7em; bottom: .7em; z-index: 1; color: #fff; font-family: var(--mono); font-size: .6em; letter-spacing: .04em; display: flex; gap: .4em; align-items: center; }
+.phone2 .views { position: absolute; left: 1em; bottom: 1em; z-index: 1; color: #fff; font-family: var(--mono); font-size: .6em; letter-spacing: .04em; display: flex; gap: .4em; align-items: center; }
 .phone2 .views::before { content: ""; width: 0; height: 0; border-left: .75em solid #fff; border-top: .45em solid transparent; border-bottom: .45em solid transparent; }
-.phone2 .tag { position: absolute; left: .7em; top: .7em; z-index: 1; font-family: var(--mono); font-size: .52em; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: rgba(0,0,0,.35); backdrop-filter: blur(6px); padding: .35em .6em; border-radius: 99px; }
+.phone2 .tag { position: absolute; left: .9em; top: .9em; z-index: 1; font-family: var(--mono); font-size: .52em; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: rgba(0,0,0,.35); backdrop-filter: blur(6px); padding: .35em .6em; border-radius: 99px; }
 
 /* linkedin: one post */
 .post { width: min(27em, 100%); background: var(--card-2); border-radius: 1em; padding: 1.2em 1.3em; box-shadow: inset 0 0 0 1px var(--card-rule); display: grid; gap: .8em; }
@@ -471,12 +465,12 @@ span.pc__dom { color: var(--pen); }
 .days-l { display: flex; justify-content: space-between; } .days-l .mini-n:last-child { color: var(--pen); }
 
 /* locked */
-.sc-locked { grid-auto-flow: column; gap: 1.2em; }
+.sc-locked { grid-auto-flow: column; justify-content: center; gap: 1.6em; }
 .lockd { width: 12em; aspect-ratio: 4 / 5; border-radius: 1em; background: var(--card-2); box-shadow: inset 0 0 0 1px var(--card-rule); display: grid; place-items: center; align-content: center; gap: .8em; position: relative; overflow: hidden; }
 .lockd .sk { width: 70%; filter: blur(2px); } .lockd .sk + .sk { width: 50%; }
 .lockd b { font-weight: 400; font-size: 1em; filter: blur(3px); color: var(--ink-2); }
 .lockd svg { width: 1.6em; height: 1.6em; color: var(--ink-3); }
-@container (max-width: 560px) { .sc-social .phone2:nth-child(3), .sc-social .phone2:nth-child(1) { width: 7em; } .sc-social .phone2:nth-child(2) { width: 9em; } .sc-locked { grid-auto-flow: row; } .lockd { width: 14em; aspect-ratio: 5 / 3; } }
+@container (max-width: 560px) { .sc-social { gap: 1.1em; } .sc-social .phone2:nth-child(3), .sc-social .phone2:nth-child(1) { width: 6.6em; } .sc-social .phone2:nth-child(2) { width: 9em; } .sc-locked { grid-auto-flow: row; } .lockd { width: 14em; aspect-ratio: 5 / 3; } }
 
 .end { margin-top: clamp(96px, 12vw, 160px); padding-block: 28px 56px; border-top: 1px solid var(--rule); text-align: center; }
 
@@ -654,31 +648,28 @@ html.lenis, html.lenis body { height: auto; }
 
               <article class="pc">
                 <div class="pc__card" aria-hidden="true">
-                  <div class="pc__bar"><span>8x Social</span><b>Live</b></div>
                   <div class="pc__scene"><div class="sc sc-social">
                     <div class="phone2"><img src="img/net/n4.jpg" alt="" loading="lazy"><span class="tag">Skincare</span><span class="views" data-count="48210">48,210</span></div>
                     <div class="phone2"><img src="img/net/n9.jpg" alt="" loading="lazy"><span class="tag">Fintech app</span><span class="views" data-count="126480">126,480</span></div>
                     <div class="phone2"><img src="img/net/n14.jpg" alt="" loading="lazy"><span class="tag">Coffee</span><span class="views" data-count="31907">31,907</span></div>
                   </div></div>
                 </div>
-                <div class="pc__cap"><span class="pc__n"><b>01</b> / 06</span><h4 class="pc__name">8x Social</h4><p class="pc__what">Creators post about consumer brands on TikTok, Instagram and YouTube.</p><a class="pc__dom" href="https://8x.social">8x.social</a></div>
+                <div class="pc__cap"><h4 class="pc__name">8x Social</h4><p class="pc__what">Creators post about consumer brands on TikTok, Instagram and YouTube.</p><a class="pc__dom" href="https://8x.social">8x.social</a></div>
               </article>
 
               <article class="pc">
                 <div class="pc__card" aria-hidden="true">
-                  <div class="pc__bar"><span>8x LinkedIn</span><b>Live</b></div>
                   <div class="pc__scene"><div class="sc"><div class="post">
                     <div class="post__who"><img src="img/net/n20.jpg" alt="" loading="lazy"><span>Head of Growth<small>Posting for a B2B brand · 2h</small></span></div>
                     <div class="post__body"><span class="sk"></span><span class="sk"></span><span class="sk"></span></div>
                     <div class="post__foot"><span style="display:flex;gap:.6em;align-items:center"><span class="reacts"><i></i><i></i><i></i></span><span class="mini-n" data-count="1204">1,204</span></span><span class="chip">Paid per post</span></div>
                   </div></div></div>
                 </div>
-                <div class="pc__cap"><span class="pc__n"><b>02</b> / 06</span><h4 class="pc__name">8x LinkedIn</h4><p class="pc__what">LinkedIn creators post for B2B brands, paid per post.</p><a class="pc__dom" href="https://8x.business">8x.business</a></div>
+                <div class="pc__cap"><h4 class="pc__name">8x LinkedIn</h4><p class="pc__what">LinkedIn creators post for B2B brands, paid per post.</p><a class="pc__dom" href="https://8x.business">8x.business</a></div>
               </article>
 
               <article class="pc">
                 <div class="pc__card" aria-hidden="true">
-                  <div class="pc__bar"><span>8x Research</span><b>Live</b></div>
                   <div class="pc__scene"><div class="sc"><div class="chat">
                     <div class="msg"><small>AI moderator</small>Walk me through the last time you tried to cancel a subscription.</div>
                     <div class="msg msg--me"><small>Participant 18</small><span class="typed" data-type="Honestly? I gave up and just deleted the card.">Honestly? I gave up and just deleted the card.</span></div>
@@ -686,12 +677,11 @@ html.lenis, html.lenis body { height: auto; }
                     <span class="mini-n" style="justify-self:center">Session 18 of 40 · participant paid</span>
                   </div></div></div>
                 </div>
-                <div class="pc__cap"><span class="pc__n"><b>03</b> / 06</span><h4 class="pc__name">8x Research</h4><p class="pc__what">Real people talk through a product in interviews run by AI.</p><a class="pc__dom" href="https://8xresearch.com">8xresearch.com</a></div>
+                <div class="pc__cap"><h4 class="pc__name">8x Research</h4><p class="pc__what">Real people talk through a product in interviews run by AI.</p><a class="pc__dom" href="https://8xresearch.com">8xresearch.com</a></div>
               </article>
 
               <article class="pc">
                 <div class="pc__card" aria-hidden="true">
-                  <div class="pc__bar"><span>8x Sales</span><b>Live</b></div>
                   <div class="pc__scene"><div class="sc"><div class="call">
                     <img src="img/net/n6.jpg" alt="" loading="lazy">
                     <b>Outbound call</b>
@@ -700,12 +690,11 @@ html.lenis, html.lenis body { height: auto; }
                     <div class="toast">Meeting booked · Thu 10:30</div>
                   </div></div></div>
                 </div>
-                <div class="pc__cap"><span class="pc__n"><b>04</b> / 06</span><h4 class="pc__name">8x Sales</h4><p class="pc__what">Remote reps make the cold calls and book the meetings.</p><a class="pc__dom" href="https://8x.sale">8x.sale</a></div>
+                <div class="pc__cap"><h4 class="pc__name">8x Sales</h4><p class="pc__what">Remote reps make the cold calls and book the meetings.</p><a class="pc__dom" href="https://8x.sale">8x.sale</a></div>
               </article>
 
               <article class="pc">
                 <div class="pc__card" aria-hidden="true">
-                  <div class="pc__bar"><span>8x Hiring</span><b>Live</b></div>
                   <div class="pc__scene"><div class="sc"><div class="doc">
                     <span class="mini-n">Assignment · sent on apply</span>
                     <h4>Write the go-to-market plan for Poland.</h4>
@@ -714,30 +703,28 @@ html.lenis, html.lenis body { height: auto; }
                     <span class="stamp">Read by a person</span>
                   </div></div></div>
                 </div>
-                <div class="pc__cap"><span class="pc__n"><b>05</b> / 06</span><h4 class="pc__name">8x Hiring</h4><p class="pc__what">Candidates do a real assignment, and a person reads it.</p><a class="pc__dom" href="https://www.8x.careers">8x.careers</a></div>
+                <div class="pc__cap"><h4 class="pc__name">8x Hiring</h4><p class="pc__what">Candidates do a real assignment, and a person reads it.</p><a class="pc__dom" href="https://www.8x.careers">8x.careers</a></div>
               </article>
 
               <article class="pc pc--new">
                 <div class="pc__card" aria-hidden="true">
-                  <div class="pc__bar"><span>8x Karma</span><b>New</b></div>
                   <div class="pc__scene"><div class="sc"><div class="thread">
                     <div class="tpost"><span class="vote" data-count="2318">2,318</span><div><small>r/startups · 5h</small><span class="sk"></span><span class="sk"></span></div></div>
                     <div class="days"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i><i style="--k:6"></i><i style="--k:7"></i><i style="--k:8"></i><i style="--k:9"></i><i style="--k:10"></i><i style="--k:11"></i><i style="--k:12"></i><i style="--k:13"></i><i style="--k:14"></i><i style="--k:15"></i><i style="--k:16"></i></div>
                     <div class="days-l"><span class="mini-n">Day 1 · idea</span><span class="mini-n">Day 17 · launched</span></div>
                   </div></div></div>
                 </div>
-                <div class="pc__cap"><span class="pc__n"><b>06</b> / 06</span><h4 class="pc__name">8x Karma</h4><p class="pc__what">Reddit growth. From idea to launch in 17 days.</p><span class="pc__dom">New · Sept 2026</span></div>
+                <div class="pc__cap"><h4 class="pc__name">8x Karma</h4><p class="pc__what">Reddit growth. From idea to launch in 17 days.</p><span class="pc__dom">New · Sept 2026</span></div>
               </article>
 
               <article class="pc pc--locked">
                 <div class="pc__card" aria-hidden="true">
-                  <div class="pc__bar"><span>Next</span><b>Locked</b></div>
                   <div class="pc__scene"><div class="sc sc-locked">
                     <div class="lockd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>8x Email</b><span class="sk"></span><span class="sk"></span></div>
                     <div class="lockd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>8x Global</b><span class="sk"></span><span class="sk"></span></div>
                   </div></div>
                 </div>
-                <div class="pc__cap"><span class="pc__n">Next</span><h4 class="pc__name">8x Email and 8x Global</h4><p class="pc__what">Two more, not unlocked yet.</p></div>
+                <div class="pc__cap"><h4 class="pc__name">8x Email and 8x Global</h4><p class="pc__what">Two more, not unlocked yet.</p></div>
               </article>
 
             </div>
