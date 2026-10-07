@@ -470,8 +470,9 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .bet__l { margin: 0; line-height: 1.15; letter-spacing: -.025em; font-weight: 380; font-variation-settings: "opsz" 72; text-wrap: balance; }
 .bet__l .w { opacity: var(--o, 1); }
 .bet__l .key { background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 92%; background-size: calc(var(--u, 1) * 100%) max(2px, .05em); }
-.bet.is-scrub .bet__scroll { height: calc(100svh + 4 * 80svh); }
-.bet.is-scrub .bet__pin { position: sticky; top: 0; height: 100svh; padding-block: 0; align-content: start; padding-top: var(--bet-pad, 96px); }
+.bet.is-scrub { margin-top: -12svh; }
+.bet.is-scrub .bet__scroll { height: calc(24svh + 4 * 80svh); }
+.bet.is-scrub .bet__pin { position: sticky; top: 38svh; height: 24svh; padding-block: 0; align-content: center; }
 .bet.is-scrub .bet__lines { grid-template-areas: "l"; grid-template-columns: minmax(0, 1fr); gap: 0; font-size: var(--bet-fs, 4rem); }
 .bet.is-scrub .bet__l { grid-area: l; white-space: nowrap; text-wrap: nowrap; opacity: 0; will-change: opacity, transform, filter; }
 
@@ -1082,7 +1083,7 @@ html.lenis, html.lenis body { height: auto; }
 
   /* ================= THE BET: one line at a time, revealed word by word ================= */
   var bet = $('#bet'), betScroll = $('#bet .bet__scroll'), betLines = $$('#bet-lines .bet__l');
-  var betBox = $('#bet-lines'), betPin = $('#bet .bet__pin');
+  var betBox = $('#bet-lines');
   var betWords = betLines.map(function (l) { return $$('#bet-lines .bet__l:nth-child(' + (betLines.indexOf(l) + 1) + ') .w'); });
   bet.classList.add('is-scrub');
   /* one shared size, so the longest line still fits on one line */
@@ -1099,7 +1100,8 @@ html.lenis, html.lenis body { height: auto; }
     var r = betScroll.getBoundingClientRect(), vh = window.innerHeight;
     if (r.top > vh || r.bottom < 0) return;
     if (betFit !== window.innerWidth) fitBet();
-    var p = progress(betScroll), L = betLines.length;
+    /* the line sits in a short band pinned through the middle of the screen */
+    var p = clamp((vh * .38 - r.top) / (betScroll.offsetHeight - vh * .24), 0, 1), L = betLines.length;
     /* the first line is already arriving as the section comes up */
     var x = .2 + p * (L - .2);
     betLines.forEach(function (line, i) {
@@ -1120,9 +1122,6 @@ html.lenis, html.lenis body { height: auto; }
         if (w.classList.contains('key')) w.style.setProperty('--u', inOut(clamp((t - w1 + .04) / .2, 0, 1)).toFixed(3));
       });
     });
-    /* arrive close under the cards, then settle into the middle of the screen */
-    var pad0 = Math.max(96, vh * .11), mid = Math.max(pad0, (vh - betBox.offsetHeight) / 2);
-    betPin.style.setProperty('--bet-pad', (pad0 + (mid - pad0) * inOut(seg(p, 0, .12))).toFixed(1) + 'px');
   }
 
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
