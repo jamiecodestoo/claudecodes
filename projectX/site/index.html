@@ -484,6 +484,17 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .roll__i { grid-area: 1 / 1; justify-self: center; white-space: nowrap; transition: transform 720ms var(--ease-settle), opacity 520ms ease, filter 520ms ease; }
 .roll__i.is-in { transform: translateY(110%); opacity: 0; filter: blur(4px); transition: none; }
 .roll__i.is-out { transform: translateY(-110%); opacity: 0; filter: blur(4px); }
+.own__mini { display: none; }
+.own.is-scrub .own__scroll { height: calc(100svh + 260svh); }
+.own.is-scrub .own__pin { position: sticky; top: 0; height: 100svh; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; }
+.own.is-scrub .own__card { position: absolute; margin: 0; aspect-ratio: auto; will-change: left, top, width, height; }
+.own.is-scrub .own__line { position: absolute; left: 50%; top: 50%; width: max-content; transform-origin: 50% 50%; will-change: transform; }
+.own.is-scrub .own__mini { display: grid; place-items: center; position: absolute; top: 0; left: 0; overflow: hidden; border-radius: 16px; background: #1b1b18; color: #fff; text-align: center; will-change: transform, opacity; }
+.own__mini img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.own__mini::after { content: ""; position: absolute; inset: 0; background: radial-gradient(110% 85% at 50% 52%, rgba(10, 10, 9, .62), rgba(10, 10, 9, .4) 62%, rgba(10, 10, 9, .52)); }
+.own__ml { position: relative; z-index: 1; margin: 0; display: grid; justify-items: center; gap: .14em; font-weight: 380; font-variation-settings: "opsz" 72; white-space: nowrap; text-shadow: 0 2px 24px rgba(0, 0, 0, .25); }
+.own__ml span { font-size: var(--mini-fx, 14px); color: rgba(255, 255, 255, .82); letter-spacing: -.01em; }
+.own__ml b { font-weight: 380; font-size: var(--mini-fr, 30px); line-height: 1.1; letter-spacing: -.032em; }
 @media (max-width: 600px) { .own__card { aspect-ratio: 4 / 5; border-radius: 16px; } }
 
 .end { margin-top: clamp(96px, 12vw, 160px); padding-block: 28px 56px; border-top: 1px solid var(--rule); text-align: center; }
@@ -760,9 +771,17 @@ html.lenis, html.lenis body { height: auto; }
       </section>
 
       <section class="own" id="own" aria-label="Roles you could join as">
-        <div class="own__card">
-          <div class="own__imgs" aria-hidden="true"><img src="img/join/j1.jpg" alt="" class="is-on" loading="lazy"><img src="img/join/j2.jpg" alt="" loading="lazy"><img src="img/join/j3.jpg" alt="" loading="lazy"><img src="img/join/j4.jpg" alt="" loading="lazy"><img src="img/join/j5.jpg" alt="" loading="lazy"></div>
-          <h3 class="own__line" aria-live="polite"><span class="own__fixed">Join as a</span> <span class="own__role"><span class="roll" id="own-role"><span class="roll__i">Market Lead</span></span></span></h3>
+        <div class="own__scroll">
+          <div class="own__pin" id="own-pin">
+            <div class="own__card">
+              <div class="own__imgs" aria-hidden="true"><img src="img/join/j1.jpg" alt="" class="is-on" loading="lazy"><img src="img/join/j2.jpg" alt="" loading="lazy"><img src="img/join/j3.jpg" alt="" loading="lazy"><img src="img/join/j4.jpg" alt="" loading="lazy"><img src="img/join/j5.jpg" alt="" loading="lazy"></div>
+              <h3 class="own__line" aria-live="polite"><span class="own__fixed">Join as a</span> <span class="own__role"><span class="roll" id="own-role"><span class="roll__i">Market Lead</span></span></span></h3>
+            </div>
+            <div class="own__mini" aria-hidden="true"><img src="img/join/j2.jpg" alt="" loading="lazy"><p class="own__ml"><span>Join as a</span><b>Designer</b></p></div>
+            <div class="own__mini" aria-hidden="true"><img src="img/join/j3.jpg" alt="" loading="lazy"><p class="own__ml"><span>Join as a</span><b>Software Engineer</b></p></div>
+            <div class="own__mini" aria-hidden="true"><img src="img/join/j4.jpg" alt="" loading="lazy"><p class="own__ml"><span>Join as a</span><b>Paid Ads Manager</b></p></div>
+            <div class="own__mini" aria-hidden="true"><img src="img/join/j5.jpg" alt="" loading="lazy"><p class="own__ml"><span>Join as a</span><b>Builder in Residence</b></p></div>
+          </div>
         </div>
       </section>
 
@@ -786,6 +805,7 @@ html.lenis, html.lenis body { height: auto; }
     return total > 0 ? clamp(-r.top / total, 0, 1) : 1;
   }
   /* ================= JOIN AS: a photo card, the role big and rolling over ================= */
+  var ownCtl = null;
   (function () {
     var ROLES = ['Market Lead', 'Designer', 'Software Engineer', 'Paid Ads Manager', 'Builder in Residence'];
     var HOLD = 3200;
@@ -814,12 +834,13 @@ html.lenis, html.lenis body { height: auto; }
     window.addEventListener('resize', fit);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
     if (reduce) return;
-    var live = false, paused = false, t0 = performance.now(), last = t0;
+    var live = false, paused = false, frozen = false, t0 = performance.now(), last = t0;
+    ownCtl = { go: go, now: function () { return ri; }, freeze: function (b) { frozen = b; t0 = performance.now(); } };
     sec.addEventListener('mouseenter', function () { paused = true; });
     sec.addEventListener('mouseleave', function () { paused = false; });
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { live = es[0].isIntersecting; }, { threshold: .35 }).observe(sec);
     (function tick(now) {
-      if (live && !paused) { if (now - t0 >= HOLD) { t0 = now; go((ri + 1) % ROLES.length); } }
+      if (live && !paused && !frozen) { if (now - t0 >= HOLD) { t0 = now; go((ri + 1) % ROLES.length); } }
       else t0 += now - last;
       last = now;
       requestAnimationFrame(tick);
@@ -1152,6 +1173,48 @@ html.lenis, html.lenis body { height: auto; }
     });
   }
 
+  /* ================= JOIN AS on scroll: the card narrows into a carousel of every role ================= */
+  var own = $('#own'), ownScroll = $('#own .own__scroll'), ownPin = $('#own-pin'), ownCard = $('#own .own__card'), ownLine = $('#own .own__line');
+  var ownMinis = $$('#own .own__mini'), ownRole = $('#own .own__role'), ownFixed = $('#own .own__fixed');
+  own.classList.add('is-scrub');
+  function renderOwn() {
+    var r = ownScroll.getBoundingClientRect(), vh = window.innerHeight;
+    if (r.top > vh || r.bottom < 0) return;
+    var p = progress(ownScroll), W = ownPin.clientWidth, H = ownPin.clientHeight, phone = W < 640;
+    /* once it is held on screen, settle on the first role so the row can start from it */
+    if (ownCtl) {
+      if (p > .005) { ownCtl.freeze(true); if (ownCtl.now() !== 0) ownCtl.go(0); }
+      else ownCtl.freeze(false);
+    }
+    var gut = phone ? 16 : Math.max(16, Math.min(80, W * .046));
+    var bigW = Math.min(1120, W - gut * 2), bigH = bigW * (phone ? 1.25 : 9 / 16);
+    if (bigH > H * .82) { bigH = H * .82; bigW = bigH / (phone ? 1.25 : 9 / 16); }
+    var cw = phone ? W * .72 : Math.min(360, W * .25), ch = Math.min(cw * 4 / 3, H * .72), gap = phone ? 12 : 24, step = cw + gap;
+    var B = inOut(seg(p, .06, .34)), C = inOut(seg(p, .4, .96)), shift = C * (ownMinis.length) * step;
+    /* the big card becomes the first card of the row */
+    var w = bigW + (cw - bigW) * B, h = bigH + (ch - bigH) * B, cx0 = W / 2 - shift;
+    var d0 = Math.min(1, Math.abs(cx0 - W / 2) / step), sc0 = 1 - d0 * .07 * B;
+    ownCard.style.width = w.toFixed(1) + 'px'; ownCard.style.height = h.toFixed(1) + 'px';
+    ownCard.style.left = (cx0 - w / 2).toFixed(1) + 'px'; ownCard.style.top = ((H - h) / 2).toFixed(1) + 'px';
+    ownCard.style.borderRadius = (20 - 4 * B).toFixed(1) + 'px';
+    ownCard.style.transform = 'scale(' + sc0.toFixed(4) + ')';
+    ownCard.style.opacity = (1 - d0 * .22 * B).toFixed(3);
+    /* the words scale down with it, to the size the other cards use */
+    var bigFr = parseFloat(getComputedStyle(ownRole).fontSize), bigFx = parseFloat(getComputedStyle(ownFixed).fontSize);
+    var miniFr = Math.min(bigFr, cw * (phone ? .1 : .095)), k = miniFr / bigFr;
+    ownLine.style.transform = 'translate(-50%,-50%) scale(' + (1 + (k - 1) * B).toFixed(4) + ')';
+    ownPin.style.setProperty('--mini-fr', miniFr.toFixed(1) + 'px'); ownPin.style.setProperty('--mini-fx', (bigFx * k).toFixed(1) + 'px');
+    /* the others slide in beside it, then the row glides past */
+    ownMinis.forEach(function (m, j) {
+      var i = j + 1, cx = W / 2 + i * step - shift, inn = clamp((B - .68 - j * .05) / .3, 0, 1);
+      var d = Math.min(1, Math.abs(cx - W / 2) / step), sc = 1 - d * .07;
+      var x = cx - cw / 2 + (1 - out3(inn)) * W * .18;
+      m.style.width = cw.toFixed(1) + 'px'; m.style.height = ch.toFixed(1) + 'px';
+      m.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + ((H - ch) / 2).toFixed(1) + 'px,0) scale(' + sc.toFixed(4) + ')';
+      m.style.opacity = (out3(inn) * (1 - d * .22)).toFixed(3);
+    });
+  }
+
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
   var pars = $$('[data-par]');
   function renderPar() {
@@ -1163,7 +1226,7 @@ html.lenis, html.lenis body { height: auto; }
       el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
     });
   }
-  function frame(t) { renderNav(); renderHero(); renderSay(); renderCrowd(t); renderNet(); renderDeck(); renderBet(); renderPar(); }
+  function frame(t) { renderNav(); renderHero(); renderSay(); renderCrowd(t); renderNet(); renderDeck(); renderBet(); renderOwn(); renderPar(); }
 
   /* smooth, delayed scroll: the page eases toward where you scrolled */
   var crowdLive = false;
