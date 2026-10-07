@@ -140,10 +140,9 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .card { position: absolute; left: 50%; top: 50%; width: 19em; height: 24em; margin: -13em 0 0 -9.5em; border-radius: .6em; overflow: hidden; text-decoration: none; color: #1A1A17;
   background: #fff; display: flex; flex-direction: column;
   box-shadow: 0 0 0 1px rgba(20,20,18,.06), 0 .1em .2em rgba(20,20,18,.06), 0 1.2em 2.4em -1em var(--desk-shadow), 0 3.4em 5em -2.6em var(--desk-shadow);
-  transform: translate(calc(var(--x) * var(--open, 1) * var(--spread, 1)), calc(var(--rise, 0em) + var(--y) * var(--open, 1) + var(--py, 0em) - var(--lift) * 2.4em)) rotate(calc(var(--a) * var(--open, 1) * (1 - var(--lift)))) scale(calc(1 + var(--lift) * .07));
-  transition: --lift 520ms cubic-bezier(.34, 1.56, .64, 1), box-shadow 400ms ease, filter 300ms ease; }
-.card:hover, .card:focus-visible { --lift: 1; z-index: 10 !important; box-shadow: 0 0 0 1px rgba(20,20,18,.06), 0 .2em .4em rgba(20,20,18,.08), 0 2em 3.6em -1.2em var(--desk-shadow), 0 5em 7em -3em var(--desk-shadow); }
-.stage:has(.card:hover) .card:not(:hover) { filter: saturate(.7) brightness(.97); }
+  transform: translate(calc(var(--x) * var(--open, 1) * var(--spread, 1)), calc(var(--rise, 0em) + var(--y) * var(--open, 1) + var(--py, 0em) - var(--lift) * .9em)) rotate(calc(var(--a) * var(--open, 1)));
+  transition: --lift 640ms cubic-bezier(.25, 1.25, .4, 1), box-shadow 400ms ease, filter 300ms ease; }
+.card:hover, .card:focus-visible { --lift: 1; box-shadow: 0 0 0 1px rgba(20,20,18,.06), 0 .2em .4em rgba(20,20,18,.08), 0 2em 3.6em -1.2em var(--desk-shadow), 0 5em 7em -3em var(--desk-shadow); }
 .win { display: flex; align-items: center; gap: .45em; height: 2.3em; padding: 0 .9em; flex: none; background: #F6F5F0; border-bottom: 1px solid #E9E8E1; font-family: var(--mono); font-size: .54em; color: #74746D; letter-spacing: .02em; }
 .win i { width: .62em; height: .62em; border-radius: 50%; background: #DEDDD5; flex: none; }
 .win span { margin-left: .5em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
