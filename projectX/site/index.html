@@ -49,6 +49,7 @@
 }
 
 * { box-sizing: border-box; }
+html, body { overflow-x: clip; }
 body {
   background: var(--paper); color: var(--ink);
   font-family: var(--serif); font-size: 1.125rem; line-height: 1.55;
@@ -267,49 +268,22 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .what__head h2 .w.key { background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 92%; background-size: calc(var(--u, 1) * 100%) max(2px, .06em); padding-bottom: .04em; }
 
 
-/* the network: three lanes of people who switch on when work arrives */
-.net { position: relative; margin-top: clamp(40px, 6vw, 90px); }
-.net.is-scrub { height: 260svh; }
-.net__pin { display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; justify-items: center; gap: clamp(18px, 3vh, 34px); padding-block: 60px; overflow: hidden; }
-.net.is-scrub .net__pin { position: sticky; top: 0; height: 100svh; padding-block: 64px 24px; }
-.net__head { text-align: center; display: grid; gap: 10px; justify-items: center; padding-inline: var(--gutter); }
+/* the network: two edge-to-edge rows of people, auto-scrolling, lighting up on demand */
+.net { position: relative; margin-top: clamp(64px, 9vw, 130px); width: 100vw; margin-left: calc(50% - 50vw); }
+.net__head { text-align: center; display: grid; gap: 14px; justify-items: center; padding-inline: var(--gutter); margin-bottom: clamp(32px, 5vw, 64px); }
 .net__head h3 { font-size: clamp(1.7rem, 1.1rem + 2vw, 3rem); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; font-variation-settings: "opsz" 60; }
-.lanes { display: grid; gap: clamp(14px, 2.4vh, 26px); width: 100%; }
-.lane { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 8px; width: 100%; overflow: hidden; padding-bottom: 18px; }
-.lane__name { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
-.lane__name b { color: var(--pen); font-weight: 500; }
-.track { display: flex; gap: var(--tg); width: max-content; will-change: transform; padding-top: var(--job-h); }
-.net { --t: 76px; --tg: 16px; --job-h: 44px; }
-@media (max-width: 700px) { .net { --t: 52px; --tg: 10px; --job-h: 36px; } }
-.tile { position: relative; width: var(--t); height: var(--t); flex: none; }
-.tile img { width: 100%; height: 100%; object-fit: cover; border-radius: 7px; display: block; filter: grayscale(1) contrast(.9); opacity: .32; transform: scale(.92); transition: filter 420ms ease, opacity 420ms ease, transform 520ms cubic-bezier(.25, 1.25, .4, 1), box-shadow 420ms ease; }
-.tile.on img { filter: none; opacity: 1; transform: scale(1); box-shadow: 0 0 0 2px var(--paper), 0 0 0 3.5px var(--pen), 0 10px 22px -10px var(--desk-shadow); }
-/* the job floats above the person while they're on */
-.job { position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translate(-50%, 6px) scale(.9); opacity: 0; transition: opacity 320ms ease, transform 460ms cubic-bezier(.25, 1.25, .4, 1); pointer-events: none; }
-.tile.on .job { opacity: 1; transform: translate(-50%, 0) scale(1); }
-.paid { position: absolute; left: 50%; top: calc(100% + 6px); transform: translate(-50%, -4px); opacity: 0; white-space: nowrap; font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--pen); transition: opacity 300ms ease 220ms, transform 400ms var(--ease-settle) 220ms; }
-.tile.on .paid { opacity: 1; transform: translate(-50%, 0); }
-/* post: a little post card with a growing view bar */
-.j-post { width: calc(var(--t) * .78); height: calc(var(--job-h) - 4px); border-radius: 5px; background: linear-gradient(150deg, #E9C9A8, #C73D20 70%); box-shadow: 0 6px 14px -8px var(--desk-shadow); overflow: hidden; }
-.j-post::after { content: "▶"; position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); color: #fff; font-size: 11px; opacity: .9; }
-.j-post i { position: absolute; left: 4px; right: 4px; bottom: 4px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.35); overflow: hidden; }
-.j-post i::after { content: ""; position: absolute; inset: 0; width: 0; background: #fff; transition: width 1.4s ease-out 200ms; }
-.tile.on .j-post i::after { width: 100%; }
-/* call: a live line with a moving waveform */
-.j-call { display: flex; align-items: center; gap: 5px; height: 26px; padding: 0 9px; border-radius: 20px; background: var(--ink); color: var(--paper); box-shadow: 0 6px 14px -8px var(--desk-shadow); }
-.j-call em { width: 6px; height: 6px; border-radius: 50%; background: #5BD27A; flex: none; }
-.j-call span { display: flex; gap: 2px; align-items: center; height: 12px; }
-.j-call span i { width: 2px; height: 30%; background: currentColor; border-radius: 1px; }
-.tile.on .j-call span i { animation: wave 900ms ease-in-out infinite; }
-.j-call span i:nth-child(2) { animation-delay: -.2s; } .j-call span i:nth-child(3) { animation-delay: -.5s; } .j-call span i:nth-child(4) { animation-delay: -.1s; } .j-call span i:nth-child(5) { animation-delay: -.7s; }
-@keyframes wave { 0%, 100% { height: 25%; } 50% { height: 100%; } }
-/* talk: two speech bubbles, question and answer */
-.j-talk { display: grid; gap: 3px; justify-items: start; }
-.j-talk i { display: block; height: 12px; border-radius: 8px 8px 8px 2px; background: var(--rule); }
-.j-talk i:first-child { width: 34px; }
-.j-talk i:last-child { width: 48px; justify-self: end; border-radius: 8px 8px 2px 8px; background: var(--mark); transform: scale(.4); transform-origin: right bottom; opacity: 0; transition: transform 380ms cubic-bezier(.25, 1.25, .4, 1) 260ms, opacity 200ms ease 260ms; }
-.tile.on .j-talk i:last-child { transform: scale(1); opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .tile.on .j-call span i { animation: none; height: 70%; } }
+.net__who { font-size: var(--lead); color: var(--ink-2); }
+.net__who span { color: var(--pen); margin-inline: .35em; }
+.net__who em { font-style: normal; white-space: nowrap; }
+.lanes { display: grid; gap: clamp(12px, 1.6vw, 22px); overflow: hidden; }
+.track { display: flex; gap: clamp(12px, 1.6vw, 22px); width: max-content; animation: marquee var(--dur, 60s) linear infinite; }
+.lane:nth-child(2) .track { animation-direction: reverse; --dur: 72s; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.tile { flex: none; width: clamp(150px, 15vw, 240px); aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; position: relative; background: var(--rule); }
+.tile img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(.92); opacity: .45; transform: scale(1.04); transition: filter 700ms ease, opacity 700ms ease, transform 900ms var(--ease-settle); }
+.tile.on img { filter: none; opacity: 1; transform: scale(1); }
+.lanes:hover .track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .track { animation: none; } }
 
 /* people → globe: one pinned canvas scene */
 .crowd { position: relative; margin-top: clamp(24px, 4vw, 60px); }
@@ -491,17 +465,14 @@ html.lenis, html.lenis body { height: auto; }
       </div>
 
       <div class="net" id="net">
-        <div class="net__pin">
-          <div class="net__head">
-            <p class="label">The network</p>
-            <h3>121,000 people do the work, on demand.</h3>
-          </div>
-          <div class="lanes" id="lanes" aria-hidden="true">
-            <div class="lane" data-kind="post"><span class="lane__name"><b>●</b> Creators post</span><div class="track"></div></div>
-            <div class="lane" data-kind="call"><span class="lane__name"><b>●</b> Sales reps call</span><div class="track"></div></div>
-            <div class="lane" data-kind="talk"><span class="lane__name"><b>●</b> Participants talk</span><div class="track"></div></div>
-          </div>
-          <p class="vh">Creators post, sales reps call and research participants talk. Each is paid per post, per hour on the phone or per session.</p>
+        <div class="net__head">
+          <p class="label">The network</p>
+          <h3>121,000 people do the work, on demand.</h3>
+          <p class="net__who"><em>Creators post</em><span>·</span><em>Sales reps call</em><span>·</span><em>Participants talk</em></p>
+        </div>
+        <div class="lanes" id="lanes" aria-hidden="true">
+          <div class="lane"><div class="track"><div class="tile"><img src="img/people/p1.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p6.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p11.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p4.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p9.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p2.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p7.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p12.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p5.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p10.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p3.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p8.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p1.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p6.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p11.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p4.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p9.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p2.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p7.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p12.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p5.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p10.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p3.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p8.jpg" alt="" loading="lazy"></div></div></div>
+          <div class="lane"><div class="track"><div class="tile"><img src="img/people/p8.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p1.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p6.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p11.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p4.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p9.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p2.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p7.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p12.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p5.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p10.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p3.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p8.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p1.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p6.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p11.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p4.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p9.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p2.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p7.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p12.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p5.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p10.jpg" alt="" loading="lazy"></div><div class="tile"><img src="img/people/p3.jpg" alt="" loading="lazy"></div></div></div>
         </div>
       </div>
 
@@ -772,39 +743,15 @@ html.lenis, html.lenis body { height: auto; }
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readColors);
 
 
-  /* ================= THE NETWORK: lanes of people switching on ================= */
-  var net = $('#net'), lanes = $$('#lanes .lane');
-  var JOB = {
-    post: '<span class="job j-post"><i></i></span><span class="paid">Paid per post</span>',
-    call: '<span class="job j-call"><em></em><span><i></i><i></i><i></i><i></i><i></i></span></span><span class="paid">Paid per hour</span>',
-    talk: '<span class="job j-talk"><i></i><i></i></span><span class="paid">Paid per session</span>'
-  };
-  var PER_LANE = 18;
-  lanes.forEach(function (lane, li) {
-    var html = '', kind = lane.getAttribute('data-kind');
-    for (var i = 0; i < PER_LANE; i++) {
-      var ph = ((i * 5 + li * 7) % 12) + 1;
-      html += '<div class="tile"><img src="img/people/p' + ph + '.jpg" alt="" loading="lazy">' + JOB[kind] + '</div>';
-    }
-    lane.querySelector('.track').innerHTML = html;
-  });
-  var laneTiles = lanes.map(function (l) { return Array.prototype.slice.call(l.querySelectorAll('.tile')); });
-  net.classList.add('is-scrub');
-  function renderNet() {
-    var p = progress(net);
-    lanes.forEach(function (lane, li) {
-      var track = lane.querySelector('.track'), dir = li % 2 ? 1 : -1;
-      /* rows drift in opposite directions, like a slow conveyor */
-      track.style.transform = 'translateX(' + (dir * (p - .5) * 26).toFixed(2) + 'vw)';
-      /* people switch on when work reaches them: a few at a time, staggered per lane */
-      var tiles = laneTiles[li], n = tiles.length;
-      tiles.forEach(function (t, i) {
-        var phase = (p * 5.2 + li * .37 + ((i * 7) % n) / n) % 1;
-        t.classList.toggle('on', p > .04 && p < .985 && phase < .22);
-      });
-    });
+  /* ================= THE NETWORK: people switch on when work reaches them ================= */
+  var allTiles;
+  allTiles = $$('#lanes .tile');
+  function pulse() {
+    /* a few people at a time take a job, then go off duty */
+    allTiles.forEach(function (t) { if (Math.random() < .35) t.classList.toggle('on', Math.random() < .45); });
   }
-
+  pulse(); setInterval(pulse, 1100);
+  function renderNet() {}
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
   var pars = $$('[data-par]');
   function renderPar() {

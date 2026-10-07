@@ -21,7 +21,7 @@ A design challenge to redesign [8x.life](https://8x.life/), 8x's life-at-8x site
 `site/index.html` is the homepage build.
 
 - [x] 1. Hero: "We hire on work, not CVs." with the open-roles button, a pile of CVs that is blacked out in one quick shot, then on scroll the CVs fall while five role work scenes rise and fan out on a semicircle (design, code review, playbook, ads review, video edit). Each card pops forward on hover.
-- [x] 2. What 8x is: a big text-only statement revealed word by word on scroll, then twelve square portrait photos (placeholders) travel round "121,000 people" without touching it and pin themselves onto a globe that turns once, with "30+ countries" underneath, then "The network": three drifting lanes of people (creators post, reps call, participants talk) who switch on as work reaches them and get paid per piece, then the core team row, then the products.
+- [x] 2. What 8x is: a big text-only statement revealed word by word on scroll, then twelve square portrait photos (placeholders) travel round "121,000 people" without touching it and pin themselves onto a globe that turns once, with "30+ countries" underneath, then "The network": two big edge-to-edge auto-scrolling rows of people photos that light up on demand, under "Creators post · Sales reps call · Participants talk", then the core team row, then the products.
 - [ ] 3. The bet
 - [ ] 4. What you'd own
 - [ ] 5. Who you'd work with
