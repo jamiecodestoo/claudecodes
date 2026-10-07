@@ -34,8 +34,8 @@
   --ease-pen: cubic-bezier(.65, 0, .35, 1);
   --ease-settle: cubic-bezier(.2, .8, .2, 1);
 
-  --gutter: max(16px, 4vw);
-  --max: 1360px;
+  --gutter: clamp(16px, 4.6vw, 80px); /* about 64px on a 1440 laptop */
+  --max: 100%;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
