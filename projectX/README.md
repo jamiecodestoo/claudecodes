@@ -30,3 +30,13 @@ Spacing runs on an 8px grid: 8 / 16 / 24 / 32 inside a section, and one section 
 - [x] 5. How you get in: pinned; one big line per step crossfades in the middle with a one-line subline (You apply. No CV. / The assignment arrives. / A person reads it. / Two weeks on the real work. / Then you both decide.). Under it, a fourteen-day ruler with quarter-day ticks: an orange playhead glides along with the scroll carrying the current stage label (Day 0, Minute one, Within days, Two-week trial, Day 14), passed ticks and stage markers light up, and the two-week trial span fills in orange.
 - [x] 6. Is this for you?: six honest statements on a stack of cards, answered one at a time with "That's me" or "Not really"; each card flies off to the side and the next comes forward. The last card gives an honest verdict (fit right in / some of this will stretch you / probably not for you, and that's fine) with a link to the roles and "Start again". Works without motion too. The next questions sit stacked under the front card, smaller and blurred. The cards carry no small captions. The verdict ends with only "Start again", 24px below the card; the one primary call to action is the apply button below, and the header button steps aside while it is on screen.
 - [x] 7. The close: "Show us the work." and the apply button, then a simple footer (wordmark, "Remote-first, built from San Francisco.", Manifesto / 8x.careers / LinkedIn). The roles list was removed.
+
+## Deploying on Vercel
+
+The homepage is a static site (`projectX/site/index.html` plus `img/`), with no build step. `vercel.json` at the repo root points Vercel at `projectX/site`, caches images for a year and adds two basic security headers.
+
+1. On vercel.com, choose **Add New → Project** and import `jamiecodestoo/claudecodes`.
+2. Leave **Framework Preset** on **Other** and **Root Directory** on the repo root; `vercel.json` sets the output folder.
+3. Deploy. Pushes to the production branch redeploy automatically, and other branches (such as `claude/lucid-rubin-4cv0gf`) get preview URLs.
+
+From a terminal instead: `npx vercel` in the repo root, then `npx vercel --prod`.
