@@ -110,7 +110,7 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .stage-pin { display: grid; justify-items: center; gap: 18px; }
 .show.is-scrub .stage-pin { position: sticky; top: 0; height: 100svh; align-content: start; padding-top: clamp(56px, 7vh, 76px); overflow: hidden; }
 .stage { position: relative; width: min(1200px, calc(100vw - 32px)); height: 31em; font-size: calc(min(1200px, 100vw - 32px) / 68); margin-inline: auto; }
-@media (max-width: 760px) { .stage { font-size: calc((100vw - 32px) / 40); height: 32em; --spread: 1; } .stage .card--far { display: none; } }
+@media (max-width: 760px) { .stage { font-size: calc((100vw - 32px) / 40); height: 32em; --spread: .62; } .stage .card--far { display: none; } }
 .stage__cap { display: grid; text-align: center; padding-inline: var(--gutter); }
 .stage__cap span { grid-area: 1 / 1; font-size: var(--lead); font-style: italic; color: var(--ink-2); transition: opacity 260ms ease; }
 .stage__cap .c2 { opacity: 0; color: var(--ink); }
@@ -140,8 +140,7 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .card { position: absolute; left: 50%; top: 50%; width: 19em; height: 24em; margin: -13em 0 0 -9.5em; border-radius: .6em; overflow: hidden; text-decoration: none; color: #1A1A17;
   background: #fff; display: flex; flex-direction: column;
   box-shadow: 0 0 0 1px rgba(20,20,18,.06), 0 .1em .2em rgba(20,20,18,.06), 0 1.2em 2.4em -1em var(--desk-shadow), 0 3.4em 5em -2.6em var(--desk-shadow);
-  transform-origin: 50% 230%;
-  transform: translateY(var(--rise, 0em)) rotate(calc(var(--a) * var(--open, 1) * var(--spread, 1))) translateY(calc(var(--py, 0em) - var(--lift) * 2.4em)) scale(calc(1 + var(--lift) * .07));
+  transform: translate(calc(var(--x) * var(--open, 1) * var(--spread, 1)), calc(var(--rise, 0em) + var(--y) * var(--open, 1) + var(--py, 0em) - var(--lift) * 2.4em)) rotate(calc(var(--a) * var(--open, 1) * (1 - var(--lift)))) scale(calc(1 + var(--lift) * .07));
   transition: --lift 520ms cubic-bezier(.34, 1.56, .64, 1), box-shadow 400ms ease, filter 300ms ease; }
 .card:hover, .card:focus-visible { --lift: 1; z-index: 10 !important; box-shadow: 0 0 0 1px rgba(20,20,18,.06), 0 .2em .4em rgba(20,20,18,.08), 0 2em 3.6em -1.2em var(--desk-shadow), 0 5em 7em -3em var(--desk-shadow); }
 .stage:has(.card:hover) .card:not(:hover) { filter: saturate(.7) brightness(.97); }
@@ -359,7 +358,7 @@ html.lenis, html.lenis body { height: auto; }
           </div>
 
           <!-- the work: one piece per open role -->
-          <a class="card card--far" href="https://www.8x.careers/join" style="--a:-30deg;z-index:1" data-card>
+          <a class="card card--far" href="https://www.8x.careers/join" style="--x:-28em;--y:6em;--a:-7deg;z-index:1" data-card>
             <div class="win"><i></i><i></i><i></i><span>creator-drop-01</span><em>Design</em></div>
             <div class="card__body dz">
               <div class="layers"><span>▾ Drop 01</span><span>&nbsp; Tee · front</span><span class="on">&nbsp; Print</span><span>&nbsp; Sun</span><span>&nbsp; Wordmark</span></div>
@@ -367,7 +366,7 @@ html.lenis, html.lenis body { height: auto; }
             </div>
             <span class="card__tag"><b>●</b> Graphic Designer</span><span class="go">Open →</span>
           </a>
-          <a class="card card--dark" href="https://www.8x.careers/join" style="--a:-15deg;z-index:2" data-card>
+          <a class="card card--dark" href="https://www.8x.careers/join" style="--x:-15.5em;--y:2.2em;--a:-3.5deg;z-index:2" data-card>
             <div class="win"><i></i><i></i><i></i><span>Pull request #142</span><em>Code</em></div>
             <div class="card__body pr">
               <h4>Rank applicants by their work<small>#142</small></h4>
@@ -383,7 +382,7 @@ html.lenis, html.lenis body { height: auto; }
             </div>
             <span class="card__tag"><b>●</b> Software Engineer</span><span class="go">Open →</span>
           </a>
-          <a class="card" href="https://www.8x.careers/join" style="--a:0deg;z-index:5" data-card>
+          <a class="card" href="https://www.8x.careers/join" style="--x:0em;--y:0em;--a:0deg;z-index:5" data-card>
             <div class="win"><i></i><i></i><i></i><span>playbook-poland</span><em>Docs</em></div>
             <div class="card__body pb">
               <div class="prog"><span>Trial · week 2 of 2</span><i></i></div>
@@ -398,7 +397,7 @@ html.lenis, html.lenis body { height: auto; }
             </div>
             <span class="card__tag"><b>●</b> Market Lead Intern · Poland</span><span class="go">Open →</span>
           </a>
-          <a class="card" href="https://www.8x.careers/join" style="--a:15deg;z-index:2" data-card>
+          <a class="card" href="https://www.8x.careers/join" style="--x:15.5em;--y:2.2em;--a:3.5deg;z-index:2" data-card>
             <div class="win"><i></i><i></i><i></i><span>paid-channels-review</span><em>Sheets</em></div>
             <div class="card__body ads">
               <div class="hd"><span>Channel</span><span>Last 14 days</span></div>
@@ -411,7 +410,7 @@ html.lenis, html.lenis body { height: auto; }
             </div>
             <span class="card__tag"><b>●</b> Paid Ads Manager</span><span class="go">Open →</span>
           </a>
-          <a class="card card--far card--ed" href="https://www.8x.careers/join" style="--a:30deg;z-index:1" data-card>
+          <a class="card card--far card--ed" href="https://www.8x.careers/join" style="--x:28em;--y:6em;--a:7deg;z-index:1" data-card>
             <div class="win"><i></i><i></i><i></i><span>creator-cut-v3</span><em>Edit</em></div>
             <div class="card__body ed">
               <div class="view"><div class="phone"><div class="scr"><span class="who"></span><p class="cap">so I made <em>the thing</em> instead</p><span class="bar"><i></i></span></div></div></div>
@@ -536,7 +535,7 @@ html.lenis, html.lenis body { height: auto; }
     });
     var rise = out3(seg(p, .04, .52));
     var open = inOut(seg(p, .26, .78));
-    var depth = [6, 3, 1, 3, 6];
+    var depth = [2, 2, 2, 2, 2];
     cards.forEach(function (el, i) {
       var k = Math.abs(i - 2);
       var t = out3(seg(p, .04 + k * .04, .52 + k * .04));
