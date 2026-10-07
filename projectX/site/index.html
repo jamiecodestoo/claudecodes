@@ -351,18 +351,132 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .row p { max-width: 34em; }
 .row .you { background: var(--mark); color: var(--mark-ink); padding: 1px 5px; border-radius: 1px; }
 
-.prods { margin-top: clamp(64px, 8vw, 112px); max-width: 60rem; margin-inline: auto; }
-.prods__head { text-align: center; padding-bottom: 16px; border-bottom: 1px solid var(--ink); }
-.prod { display: grid; justify-items: center; text-align: center; gap: 4px; padding-block: 20px; border-bottom: 1px solid var(--rule); text-decoration: none; position: relative; }
-.prod__name { font-size: 1.5rem; line-height: 1.2; letter-spacing: -.01em; }
-.prod__what { color: var(--ink-2); font-size: 1.02rem; }
-.prod__dom { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); margin-top: 4px; }
-a.prod .arr { display: inline-block; color: var(--pen); transition: transform 240ms var(--ease-settle); }
-a.prod:hover .arr { transform: translate(2px, -2px); }
-a.prod::before { content: ""; position: absolute; left: 0; bottom: -1px; height: 1px; width: 100%; background: var(--pen); transform: scaleX(0); transform-origin: center; transition: transform 420ms var(--ease-pen); }
-a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
-.prod--new .prod__dom { color: var(--pen); }
-.prod--locked .prod__name, .prod--locked .prod__what { color: var(--ink-3); }
+/* ---------------- what 8x sells: a pinned deck of product cards ---------------- */
+.deck { position: relative; margin-top: clamp(96px, 12vw, 168px); --card: #F3F2EC; --card-2: #FFFFFF; --card-rule: #E3E2DA; --card-shadow: 0 30px 60px -28px rgba(20, 20, 18, .28), 0 2px 6px rgba(20, 20, 18, .05); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .deck { --card: #1B1C19; --card-2: #24251F; --card-rule: #33342F; --card-shadow: 0 30px 60px -26px rgba(0, 0, 0, .8), 0 2px 6px rgba(0, 0, 0, .4); } }
+:root[data-theme="dark"] .deck { --card: #1B1C19; --card-2: #24251F; --card-rule: #33342F; --card-shadow: 0 30px 60px -26px rgba(0, 0, 0, .8), 0 2px 6px rgba(0, 0, 0, .4); }
+.deck__head { text-align: center; display: grid; gap: 12px; justify-items: center; margin-bottom: clamp(28px, 4vw, 52px); }
+.deck__head h3 { font-size: clamp(1.7rem, 1.1rem + 2vw, 3rem); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; font-variation-settings: "opsz" 60; }
+.deck__head p:not(.label) { color: var(--ink-2); font-size: var(--lead); }
+
+.deck__pin { display: grid; justify-items: center; gap: clamp(36px, 5vw, 56px); }
+.deck__stack { position: relative; width: min(880px, 100%); display: grid; gap: clamp(36px, 5vw, 56px); container-type: inline-size; }
+
+/* one product card */
+.pc { position: relative; display: grid; gap: clamp(16px, 2.4vw, 24px); justify-items: center; }
+.pc__card { position: relative; width: 100%; aspect-ratio: 16 / 10; border-radius: 20px; overflow: hidden; background: var(--card); box-shadow: var(--card-shadow), inset 0 0 0 1px var(--card-rule);
+  font-size: 2.5cqi; display: grid; grid-template-rows: auto 1fr; transition: transform 520ms var(--ease-settle); }
+.pc__card::after { content: ""; position: absolute; inset: 0; background: var(--paper); opacity: var(--veil, 0); pointer-events: none; z-index: 5; }
+.pc__bar { display: flex; justify-content: space-between; align-items: center; padding: 1.1em 1.4em 0; font-family: var(--mono); font-size: .62em; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.pc__bar b { font-weight: 400; display: inline-flex; align-items: center; gap: .6em; }
+.pc__bar b::before { content: ""; width: .6em; height: .6em; border-radius: 50%; background: #3BA55D; box-shadow: 0 0 0 .25em rgba(59, 165, 93, .18); }
+.pc--new .pc__bar b { color: var(--pen); } .pc--new .pc__bar b::before { background: var(--pen); box-shadow: 0 0 0 .25em color-mix(in srgb, var(--pen) 20%, transparent); }
+.pc--locked .pc__bar b::before { background: var(--ink-3); box-shadow: none; }
+.pc__scene { position: relative; display: grid; place-items: center; padding: .6em 1.4em 1.4em; min-height: 0; }
+
+.pc__cap > * { margin: 0; }
+.pc__cap { display: grid; gap: 8px; justify-items: center; text-align: center; max-width: 34em; }
+.pc__n { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-3); }
+.pc__n b { color: var(--ink); font-weight: 400; }
+.pc__name { font-size: clamp(1.5rem, 1.2rem + 1vw, 2.1rem); line-height: 1.1; letter-spacing: -.016em; font-variation-settings: "opsz" 48; }
+.pc__what { color: var(--ink-2); font-size: var(--lead); line-height: 1.4; text-wrap: balance; }
+.pc__dom { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); text-decoration: none; position: relative; padding-bottom: 3px; margin-top: 4px;
+  background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size 420ms var(--ease-pen); }
+a.pc__dom:hover, a.pc__dom:focus-visible { background-size: 100% 1px; }
+span.pc__dom { color: var(--pen); }
+
+/* pinned mode (JS on, motion allowed) */
+.deck.is-scrub .deck__scroll { height: calc(100svh + 6 * 62svh); }
+.deck.is-scrub .deck__pin { position: sticky; top: 0; height: 100svh; align-content: center; gap: 0; overflow: hidden; }
+.deck.is-scrub .deck__stack { width: min(880px, 100%, 92svh); aspect-ratio: 16 / 10; display: block; z-index: 2; }
+.deck.is-scrub .pc { position: absolute; inset: 0; display: block; will-change: transform, filter; transform-origin: 50% 0; }
+.deck.is-scrub .pc__card { height: 100%; }
+.deck.is-scrub .pc__cap { display: none; }
+.deck.is-scrub .pc.is-front .pc__card:hover { transform: translateY(-.5em); }
+.deck__caps { display: none; }
+.deck.is-scrub .deck__caps { display: grid; position: relative; width: min(880px, 100%); margin-top: clamp(28px, 4.5vh, 48px); height: 8.5rem; }
+.deck.is-scrub .deck__caps .pc__cap { display: grid; position: absolute; left: 50%; top: 0; width: 100%; transform: translate(-50%, 10px); opacity: 0; visibility: hidden; margin: 0;
+  transition: opacity 360ms ease, transform 520ms var(--ease-settle), visibility 0s linear 520ms; }
+.deck.is-scrub .deck__caps .pc__cap.is-on { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity 420ms ease 80ms, transform 620ms var(--ease-settle) 80ms, visibility 0s; }
+@container (max-width: 560px) { .pc__card { font-size: 3.4cqi; aspect-ratio: 4 / 5; } }
+@media (max-width: 600px) { .deck.is-scrub .deck__stack { aspect-ratio: 4 / 5; width: min(100%, 52svh); } .deck.is-scrub .deck__caps { height: 8.5rem; } }
+
+/* ---- the scenes: each product, shown doing its work ---- */
+.sc { width: 100%; height: 100%; display: grid; place-items: center; }
+.sk { display: block; height: .5em; border-radius: 99px; background: var(--card-rule); }
+.mini-n { font-family: var(--mono); font-size: .62em; letter-spacing: .06em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+/* social: three phones */
+.sc-social { grid-auto-flow: column; gap: 1.2em; align-items: center; }
+.phone2 { position: relative; width: 8.4em; aspect-ratio: 9 / 16; border-radius: 1.3em; overflow: hidden; background: #111; box-shadow: 0 0 0 .3em var(--card-2), 0 1.2em 2em -1em rgba(0,0,0,.35); }
+.phone2:nth-child(2) { width: 9.8em; }
+.phone2:nth-child(1), .phone2:nth-child(3) { opacity: .92; }
+.phone2 img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.phone2::after { content: ""; position: absolute; inset: 55% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.6)); }
+.phone2 .views { position: absolute; left: .7em; bottom: .7em; z-index: 1; color: #fff; font-family: var(--mono); font-size: .6em; letter-spacing: .04em; display: flex; gap: .4em; align-items: center; }
+.phone2 .views::before { content: ""; width: 0; height: 0; border-left: .75em solid #fff; border-top: .45em solid transparent; border-bottom: .45em solid transparent; }
+.phone2 .tag { position: absolute; left: .7em; top: .7em; z-index: 1; font-family: var(--mono); font-size: .52em; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: rgba(0,0,0,.35); backdrop-filter: blur(6px); padding: .35em .6em; border-radius: 99px; }
+
+/* linkedin: one post */
+.post { width: min(27em, 100%); background: var(--card-2); border-radius: 1em; padding: 1.2em 1.3em; box-shadow: inset 0 0 0 1px var(--card-rule); display: grid; gap: .8em; }
+.post__who { display: flex; gap: .7em; align-items: center; }
+.post__who img { width: 2.6em; height: 2.6em; border-radius: 50%; object-fit: cover; }
+.post__who span { display: grid; line-height: 1.25; font-size: .85em; } .post__who small { color: var(--ink-3); font-size: .82em; }
+.post__body { display: grid; gap: .5em; } .post__body .sk:nth-child(2) { width: 92%; } .post__body .sk:nth-child(3) { width: 64%; }
+.post__foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--card-rule); padding-top: .75em; }
+.reacts { display: flex; } .reacts i { width: 1.1em; height: 1.1em; border-radius: 50%; border: 2px solid var(--card-2); margin-left: -.35em; background: #0A66C2; } .reacts i:first-child { margin-left: 0; } .reacts i:nth-child(2) { background: #DF704D; } .reacts i:nth-child(3) { background: #6DAE4F; }
+.chip { font-family: var(--mono); font-size: .58em; letter-spacing: .06em; text-transform: uppercase; padding: .4em .7em; border-radius: 99px; background: var(--mark); color: var(--mark-ink); }
+
+/* research: transcript */
+.chat { width: min(28em, 100%); display: grid; gap: .7em; }
+.msg { max-width: 85%; padding: .7em .95em; border-radius: 1em; font-size: .78em; line-height: 1.4; background: var(--card-2); box-shadow: inset 0 0 0 1px var(--card-rule); }
+.msg small { display: block; font-family: var(--mono); font-size: .72em; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: .25em; }
+.msg--me { justify-self: end; background: var(--ink); color: var(--paper); box-shadow: none; } .msg--me small { color: color-mix(in srgb, var(--paper) 60%, transparent); }
+.msg .typed { display: inline; }
+.wave { display: flex; gap: .22em; align-items: center; height: 1.6em; justify-self: end; }
+.wave i { width: .22em; border-radius: 99px; background: var(--pen); height: 30%; }
+.pc.is-front .wave i { animation: wv 1s ease-in-out infinite alternate; animation-delay: calc(var(--k) * -130ms); }
+@keyframes wv { to { height: 100%; } }
+
+/* sales: a call */
+.call { width: min(24em, 100%); background: var(--card-2); border-radius: 1.2em; padding: 1.3em; box-shadow: inset 0 0 0 1px var(--card-rule); display: grid; justify-items: center; gap: .55em; position: relative; }
+.call img { width: 4.2em; height: 4.2em; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 .3em color-mix(in srgb, #3BA55D 25%, transparent); }
+.pc.is-front .call img { animation: ring 1.6s ease-out infinite; }
+@keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(59,165,93,.45); } 100% { box-shadow: 0 0 0 1em rgba(59,165,93,0); } }
+.call b { font-weight: 400; font-size: .95em; } .call .mini-n { font-size: .72em; }
+.call .wave { justify-self: center; } .call .wave i { background: #3BA55D; }
+.toast { position: absolute; left: 50%; bottom: -1.1em; transform: translate(-50%, .6em); opacity: 0; white-space: nowrap; background: var(--ink); color: var(--paper); font-size: .7em; padding: .7em 1em; border-radius: .8em; display: flex; gap: .6em; align-items: center; transition: opacity 400ms ease, transform 600ms var(--ease-settle); }
+.toast::before { content: "✓"; color: #7FD49A; }
+.pc.is-booked .toast { opacity: 1; transform: translate(-50%, 0); }
+
+/* hiring: assignment */
+.doc { width: min(26em, 100%); background: var(--card-2); border-radius: .8em; padding: 1.3em 1.4em 1.5em; box-shadow: inset 0 0 0 1px var(--card-rule); display: grid; gap: .6em; position: relative; }
+.doc h4 { font-weight: 400; font-size: 1em; line-height: 1.25; letter-spacing: -.01em; margin-bottom: .2em; }
+.doc .sk:nth-of-type(2) { width: 88%; } .doc .sk:nth-of-type(3) { width: 94%; } .doc .sk:nth-of-type(4) { width: 58%; }
+.doc .mini-n { margin-top: .4em; }
+.stamp { position: absolute; right: 1em; bottom: 1em; font-family: var(--mono); font-size: .6em; letter-spacing: .1em; text-transform: uppercase; color: var(--pen); border: 1.5px solid var(--pen); padding: .5em .7em; border-radius: .4em; transform: rotate(-6deg) scale(1.6); opacity: 0; }
+.pc.is-front .stamp { animation: stamp 520ms var(--ease-settle) 700ms forwards; }
+@keyframes stamp { to { opacity: 1; transform: rotate(-6deg) scale(1); } }
+
+/* karma: thread + 17 days */
+.thread { width: min(28em, 100%); display: grid; gap: 1.1em; }
+.tpost { display: grid; grid-template-columns: auto 1fr; gap: .9em; background: var(--card-2); border-radius: .9em; padding: 1em 1.1em; box-shadow: inset 0 0 0 1px var(--card-rule); }
+.vote { display: grid; justify-items: center; gap: .15em; font-family: var(--mono); font-size: .66em; }
+.vote::before { content: ""; width: 0; height: 0; border-left: .55em solid transparent; border-right: .55em solid transparent; border-bottom: .7em solid #FF4500; }
+.tpost div { display: grid; gap: .45em; } .tpost div .sk:nth-child(2) { width: 86%; } .tpost div .sk:nth-child(3) { width: 60%; }
+.tpost small { font-family: var(--mono); font-size: .58em; letter-spacing: .06em; color: var(--ink-3); text-transform: uppercase; }
+.days { display: grid; grid-template-columns: repeat(17, 1fr); gap: .22em; }
+.days i { height: .7em; border-radius: 2px; background: var(--card-rule); transition: background 200ms ease; transition-delay: calc(var(--k) * 70ms); }
+.pc.is-front .days i { background: var(--ink); } .pc.is-front .days i:last-child { background: var(--pen); }
+.days-l { display: flex; justify-content: space-between; } .days-l .mini-n:last-child { color: var(--pen); }
+
+/* locked */
+.sc-locked { grid-auto-flow: column; gap: 1.2em; }
+.lockd { width: 12em; aspect-ratio: 4 / 5; border-radius: 1em; background: var(--card-2); box-shadow: inset 0 0 0 1px var(--card-rule); display: grid; place-items: center; align-content: center; gap: .8em; position: relative; overflow: hidden; }
+.lockd .sk { width: 70%; filter: blur(2px); } .lockd .sk + .sk { width: 50%; }
+.lockd b { font-weight: 400; font-size: 1em; filter: blur(3px); color: var(--ink-2); }
+.lockd svg { width: 1.6em; height: 1.6em; color: var(--ink-3); }
+@container (max-width: 560px) { .sc-social .phone2:nth-child(3), .sc-social .phone2:nth-child(1) { width: 7em; } .sc-social .phone2:nth-child(2) { width: 9em; } .sc-locked { grid-auto-flow: row; } .lockd { width: 14em; aspect-ratio: 5 / 3; } }
 
 .end { margin-top: clamp(96px, 12vw, 160px); padding-block: 28px 56px; border-top: 1px solid var(--rule); text-align: center; }
 
@@ -528,17 +642,109 @@ html.lenis, html.lenis body { height: auto; }
         <div class="seats" id="seats"><figure class="mate" tabindex="0"><img src="img/team/t1.jpg" alt="Placeholder portrait for Maya Okafor" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Maya Okafor</span><span class="mate__role">Market lead · Poland</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/team/t2.jpg" alt="Placeholder portrait for Ravi Menon" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Ravi Menon</span><span class="mate__role">Engineer · Platform</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/team/t3.jpg" alt="Placeholder portrait for Lena Park" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Lena Park</span><span class="mate__role">Designer · Brand</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/team/t4.jpg" alt="Placeholder portrait for Tomás Silva" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Tomás Silva</span><span class="mate__role">Paid growth · 10 markets</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/team/t5.jpg" alt="Placeholder portrait for Amara Diallo" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Amara Diallo</span><span class="mate__role">Operations · Payouts</span></figcaption></figure><a class="mate mate--you" href="https://www.8x.careers/join"><svg viewBox="0 0 120 130" aria-hidden="true"><circle cx="60" cy="40" r="26" fill="currentColor" opacity=".28"/><path d="M8 130c4-38 25-58 52-58s48 20 52 58z" fill="currentColor" opacity=".28"/></svg><figcaption><span class="mate__name">You?</span><span class="mate__role">Pick a role · 20 open</span></figcaption></a></div>
       </div>
 
-      <div class="prods" data-par="-0.04">
-        <div class="prods__head"><span class="label">Running on the network today · 6 live · 2 locked</span></div>
-        <a class="prod" href="https://8x.social"><span class="prod__name">8x Social</span><span class="prod__what">Consumer brands. TikTok, Instagram, YouTube.</span><span class="prod__dom">8x.social <span class="arr">↗</span></span></a>
-        <a class="prod" href="https://8x.business"><span class="prod__name">8x LinkedIn</span><span class="prod__what">B2B demand, on LinkedIn.</span><span class="prod__dom">8x.business <span class="arr">↗</span></span></a>
-        <a class="prod" href="https://8xresearch.com"><span class="prod__name">8x Research</span><span class="prod__what">User interviews and market research.</span><span class="prod__dom">8xresearch.com <span class="arr">↗</span></span></a>
-        <a class="prod" href="https://8x.sale"><span class="prod__name">8x Sales</span><span class="prod__what">Outbound and cold calling.</span><span class="prod__dom">8x.sale <span class="arr">↗</span></span></a>
-        <a class="prod" href="https://www.8x.careers"><span class="prod__name">8x Hiring</span><span class="prod__what">Evidence-first hiring, at 8x and partner companies.</span><span class="prod__dom">8x.careers <span class="arr">↗</span></span></a>
-        <div class="prod prod--new"><span class="prod__name">8x Karma</span><span class="prod__what">Reddit growth. From idea to launch in 17 days.</span><span class="prod__dom">New · Sept 2026</span></div>
-        <div class="prod prod--locked"><span class="prod__name">8x Email</span><span class="prod__what">Not unlocked yet.</span></div>
-        <div class="prod prod--locked"><span class="prod__name">8x Global</span><span class="prod__what">Not unlocked yet.</span></div>
-      </div>
+      <section class="deck" id="deck" aria-labelledby="deck-h">
+        <div class="deck__head">
+          <p class="label">What 8x sells</p>
+          <h3 id="deck-h">Every product is the network at work.</h3>
+          <p>Here is what you would be helping sell.</p>
+        </div>
+        <div class="deck__scroll">
+          <div class="deck__pin">
+            <div class="deck__stack" id="deck-stack">
+
+              <article class="pc">
+                <div class="pc__card" aria-hidden="true">
+                  <div class="pc__bar"><span>8x Social</span><b>Live</b></div>
+                  <div class="pc__scene"><div class="sc sc-social">
+                    <div class="phone2"><img src="img/net/n4.jpg" alt="" loading="lazy"><span class="tag">Skincare</span><span class="views" data-count="48210">48,210</span></div>
+                    <div class="phone2"><img src="img/net/n9.jpg" alt="" loading="lazy"><span class="tag">Fintech app</span><span class="views" data-count="126480">126,480</span></div>
+                    <div class="phone2"><img src="img/net/n14.jpg" alt="" loading="lazy"><span class="tag">Coffee</span><span class="views" data-count="31907">31,907</span></div>
+                  </div></div>
+                </div>
+                <div class="pc__cap"><span class="pc__n"><b>01</b> / 06</span><h4 class="pc__name">8x Social</h4><p class="pc__what">Creators post about consumer brands on TikTok, Instagram and YouTube.</p><a class="pc__dom" href="https://8x.social">8x.social</a></div>
+              </article>
+
+              <article class="pc">
+                <div class="pc__card" aria-hidden="true">
+                  <div class="pc__bar"><span>8x LinkedIn</span><b>Live</b></div>
+                  <div class="pc__scene"><div class="sc"><div class="post">
+                    <div class="post__who"><img src="img/net/n20.jpg" alt="" loading="lazy"><span>Head of Growth<small>Posting for a B2B brand · 2h</small></span></div>
+                    <div class="post__body"><span class="sk"></span><span class="sk"></span><span class="sk"></span></div>
+                    <div class="post__foot"><span style="display:flex;gap:.6em;align-items:center"><span class="reacts"><i></i><i></i><i></i></span><span class="mini-n" data-count="1204">1,204</span></span><span class="chip">Paid per post</span></div>
+                  </div></div></div>
+                </div>
+                <div class="pc__cap"><span class="pc__n"><b>02</b> / 06</span><h4 class="pc__name">8x LinkedIn</h4><p class="pc__what">LinkedIn creators post for B2B brands, paid per post.</p><a class="pc__dom" href="https://8x.business">8x.business</a></div>
+              </article>
+
+              <article class="pc">
+                <div class="pc__card" aria-hidden="true">
+                  <div class="pc__bar"><span>8x Research</span><b>Live</b></div>
+                  <div class="pc__scene"><div class="sc"><div class="chat">
+                    <div class="msg"><small>AI moderator</small>Walk me through the last time you tried to cancel a subscription.</div>
+                    <div class="msg msg--me"><small>Participant 18</small><span class="typed" data-type="Honestly? I gave up and just deleted the card.">Honestly? I gave up and just deleted the card.</span></div>
+                    <div class="wave"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i><i style="--k:6"></i></div>
+                    <span class="mini-n" style="justify-self:center">Session 18 of 40 · participant paid</span>
+                  </div></div></div>
+                </div>
+                <div class="pc__cap"><span class="pc__n"><b>03</b> / 06</span><h4 class="pc__name">8x Research</h4><p class="pc__what">Real people talk through a product in interviews run by AI.</p><a class="pc__dom" href="https://8xresearch.com">8xresearch.com</a></div>
+              </article>
+
+              <article class="pc">
+                <div class="pc__card" aria-hidden="true">
+                  <div class="pc__bar"><span>8x Sales</span><b>Live</b></div>
+                  <div class="pc__scene"><div class="sc"><div class="call">
+                    <img src="img/net/n6.jpg" alt="" loading="lazy">
+                    <b>Outbound call</b>
+                    <span class="mini-n" data-timer>02:41</span>
+                    <div class="wave"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i><i style="--k:6"></i><i style="--k:7"></i><i style="--k:8"></i></div>
+                    <div class="toast">Meeting booked · Thu 10:30</div>
+                  </div></div></div>
+                </div>
+                <div class="pc__cap"><span class="pc__n"><b>04</b> / 06</span><h4 class="pc__name">8x Sales</h4><p class="pc__what">Remote reps make the cold calls and book the meetings.</p><a class="pc__dom" href="https://8x.sale">8x.sale</a></div>
+              </article>
+
+              <article class="pc">
+                <div class="pc__card" aria-hidden="true">
+                  <div class="pc__bar"><span>8x Hiring</span><b>Live</b></div>
+                  <div class="pc__scene"><div class="sc"><div class="doc">
+                    <span class="mini-n">Assignment · sent on apply</span>
+                    <h4>Write the go-to-market plan for Poland.</h4>
+                    <span class="sk"></span><span class="sk"></span><span class="sk"></span>
+                    <span class="mini-n">Timer tracked, never enforced</span>
+                    <span class="stamp">Read by a person</span>
+                  </div></div></div>
+                </div>
+                <div class="pc__cap"><span class="pc__n"><b>05</b> / 06</span><h4 class="pc__name">8x Hiring</h4><p class="pc__what">Candidates do a real assignment, and a person reads it.</p><a class="pc__dom" href="https://www.8x.careers">8x.careers</a></div>
+              </article>
+
+              <article class="pc pc--new">
+                <div class="pc__card" aria-hidden="true">
+                  <div class="pc__bar"><span>8x Karma</span><b>New</b></div>
+                  <div class="pc__scene"><div class="sc"><div class="thread">
+                    <div class="tpost"><span class="vote" data-count="2318">2,318</span><div><small>r/startups · 5h</small><span class="sk"></span><span class="sk"></span></div></div>
+                    <div class="days"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i><i style="--k:6"></i><i style="--k:7"></i><i style="--k:8"></i><i style="--k:9"></i><i style="--k:10"></i><i style="--k:11"></i><i style="--k:12"></i><i style="--k:13"></i><i style="--k:14"></i><i style="--k:15"></i><i style="--k:16"></i></div>
+                    <div class="days-l"><span class="mini-n">Day 1 · idea</span><span class="mini-n">Day 17 · launched</span></div>
+                  </div></div></div>
+                </div>
+                <div class="pc__cap"><span class="pc__n"><b>06</b> / 06</span><h4 class="pc__name">8x Karma</h4><p class="pc__what">Reddit growth. From idea to launch in 17 days.</p><span class="pc__dom">New · Sept 2026</span></div>
+              </article>
+
+              <article class="pc pc--locked">
+                <div class="pc__card" aria-hidden="true">
+                  <div class="pc__bar"><span>Next</span><b>Locked</b></div>
+                  <div class="pc__scene"><div class="sc sc-locked">
+                    <div class="lockd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>8x Email</b><span class="sk"></span><span class="sk"></span></div>
+                    <div class="lockd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><b>8x Global</b><span class="sk"></span><span class="sk"></span></div>
+                  </div></div>
+                </div>
+                <div class="pc__cap"><span class="pc__n">Next</span><h4 class="pc__name">8x Email and 8x Global</h4><p class="pc__what">Two more, not unlocked yet.</p></div>
+              </article>
+
+            </div>
+            <div class="deck__caps" id="deck-caps"></div>
+          </div>
+        </div>
+      </section>
 
       <div class="end"><span class="label">Hero and section 2 · Next: the bet</span></div>
     </div>
@@ -822,6 +1028,59 @@ html.lenis, html.lenis body { height: auto; }
     seatIO.observe(seatsGrid);
   }
 
+  /* ================= WHAT 8X SELLS: the deck ================= */
+  var deck = $('#deck'), deckScroll = $('#deck .deck__scroll'), deckStack = $('#deck-stack'), deckCaps = $('#deck-caps');
+  var pcs = $$('#deck-stack .pc'), N = pcs.length, deckFront = -1;
+  deck.classList.add('is-scrub');
+  /* captions move out of the cards into one line under the stack */
+  var caps = pcs.map(function (pc) { var c = pc.querySelector('.pc__cap'); deckCaps.appendChild(c); return c; });
+  function fmt(n) { return Math.round(n).toLocaleString('en-US'); }
+  function playCard(pc) {
+    /* numbers count up to their value */
+    pc.querySelectorAll('[data-count]').forEach(function (el) {
+      var to = +el.getAttribute('data-count'), from = to * .82, t0 = performance.now();
+      (function tick(now) { var k = Math.min(1, (now - t0) / 1400); el.textContent = fmt(from + (to - from) * out3(k)); if (k < 1 && pc.classList.contains('is-front')) requestAnimationFrame(tick); else el.textContent = fmt(to); })(t0);
+    });
+    /* the participant's answer types itself out */
+    pc.querySelectorAll('[data-type]').forEach(function (el) {
+      var s = el.getAttribute('data-type'), i = 0; el.textContent = '';
+      clearInterval(el._t); el._t = setInterval(function () { i++; el.textContent = s.slice(0, i); if (i >= s.length) clearInterval(el._t); }, 34);
+    });
+    /* the call runs, then the meeting lands */
+    var tm = pc.querySelector('[data-timer]');
+    if (tm) {
+      var sec = 161; pc.classList.remove('is-booked');
+      clearInterval(tm._t); tm._t = setInterval(function () { sec++; tm.textContent = String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0'); }, 1000);
+      clearTimeout(pc._b); pc._b = setTimeout(function () { pc.classList.add('is-booked'); }, 1500);
+    }
+  }
+  function renderDeck() {
+    var r = deckStack.getBoundingClientRect(), vh = window.innerHeight;
+    if (deckScroll.getBoundingClientRect().top > vh || deckScroll.getBoundingClientRect().bottom < 0) return;
+    var raw = progress(deckScroll) * (N - 1), base = Math.floor(raw), fr = raw - base;
+    /* each card rests a moment before the next one comes up */
+    var f = Math.min(N - 1, base + inOut(seg(fr, .18, .82)));
+    var below = vh - r.top + 24;
+    pcs.forEach(function (pc, i) {
+      var d = f - i, ty, sc = 1, bl = 0, veil = 0, op = 1;
+      if (d < 0) { var k = clamp(-d, 0, 1); ty = below * k; if (k >= 1) op = 0; }
+      else { ty = -d * Math.min(30, r.height * .055); sc = 1 - d * .055; bl = Math.min(d * 5, 12); veil = Math.min(d * .22, .5); op = d > 2.6 ? Math.max(0, 3.4 - d) / .8 : 1; }
+      pc.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0) scale(' + sc.toFixed(4) + ')';
+      pc.style.filter = bl > .05 ? 'blur(' + bl.toFixed(2) + 'px)' : 'none';
+      pc.style.opacity = op;
+      pc.style.zIndex = i;
+      pc.style.visibility = op <= 0 ? 'hidden' : 'visible';
+      pc.querySelector('.pc__card').style.setProperty('--veil', veil.toFixed(3));
+    });
+    var front = Math.round(f);
+    if (front !== deckFront) {
+      deckFront = front;
+      pcs.forEach(function (pc, i) { pc.classList.toggle('is-front', i === front); });
+      caps.forEach(function (c, i) { c.classList.toggle('is-on', i === front); });
+      playCard(pcs[front]);
+    }
+  }
+
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
   var pars = $$('[data-par]');
   function renderPar() {
@@ -833,7 +1092,7 @@ html.lenis, html.lenis body { height: auto; }
       el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
     });
   }
-  function frame(t) { renderNav(); renderHero(); renderSay(); renderCrowd(t); renderNet(); renderPar(); }
+  function frame(t) { renderNav(); renderHero(); renderSay(); renderCrowd(t); renderNet(); renderDeck(); renderPar(); }
 
   /* smooth, delayed scroll: the page eases toward where you scrolled */
   var crowdLive = false;
