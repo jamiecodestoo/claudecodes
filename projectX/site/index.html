@@ -476,6 +476,27 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .bet.is-scrub .bet__lines { grid-template-areas: "l"; grid-template-columns: minmax(0, 1fr); gap: 0; font-size: var(--bet-fs, 4rem); }
 .bet.is-scrub .bet__l { grid-area: l; white-space: nowrap; text-wrap: nowrap; opacity: 0; will-change: opacity, transform, filter; }
 
+/* ---------------- what you'd own: a sentence whose parts roll over ---------------- */
+.own { position: relative; margin-top: clamp(96px, 11vw, 150px); display: grid; justify-items: center; text-align: center; gap: clamp(20px, 3vw, 32px); }
+.own__line { margin: 0; display: grid; justify-items: center; gap: .04em; font-size: clamp(2rem, .9rem + 4.2vw, 4.8rem); line-height: 1.1; letter-spacing: -.028em; font-weight: 380; font-variation-settings: "opsz" 72; }
+.own__row { display: block; white-space: nowrap; }
+.roll { display: inline-grid; vertical-align: baseline; overflow: hidden; padding: .08em .03em .2em; margin: -.08em -.03em -.2em; transition: width 560ms var(--ease-settle); }
+.roll__i { grid-area: 1 / 1; justify-self: center; white-space: nowrap; transition: transform 720ms var(--ease-settle), opacity 520ms ease, filter 520ms ease; }
+.roll__i.is-in { transform: translateY(110%); opacity: 0; filter: blur(4px); transition: none; }
+.roll__i.is-out { transform: translateY(-110%); opacity: 0; filter: blur(4px); }
+.roll--own .roll__i { background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 94%; background-size: 100% max(2px, .05em); }
+.own__proof { display: grid; gap: 10px; justify-items: center; max-width: 36rem; min-height: 6.2em; align-content: start; transition: opacity 320ms ease, filter 320ms ease, transform 420ms var(--ease-settle); }
+.own__proof.is-swap { opacity: 0; filter: blur(4px); transform: translateY(6px); }
+.own__q { margin: 0; font-size: var(--lead); line-height: 1.45; color: var(--ink-2); text-wrap: balance; }
+.own__src { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.own__tabs { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 0; margin-top: 4px; }
+.own__tabs span { color: var(--pen); margin-inline: .7em; }
+.own__tab { appearance: none; border: 0; background: none; padding: 4px 0 7px; font: inherit; font-size: 1.02rem; color: var(--ink-3); cursor: pointer; position: relative; transition: color 240ms ease; }
+.own__tab::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--pen); transform: scaleX(var(--p, 0)); transform-origin: left; }
+.own__tab:hover { color: var(--ink-2); }
+.own__tab[aria-selected="true"] { color: var(--ink); }
+@media (max-width: 600px) { .own__row { white-space: normal; text-wrap: balance; } .roll__i { white-space: nowrap; } }
+
 .end { margin-top: clamp(96px, 12vw, 160px); padding-block: 28px 56px; border-top: 1px solid var(--rule); text-align: center; }
 
 html.lenis, html.lenis body { height: auto; }
@@ -749,7 +770,20 @@ html.lenis, html.lenis body { height: auto; }
         </div>
       </section>
 
-      <div class="end"><span class="label">Sections 1–3 · Next: what you&rsquo;d own</span></div>
+      <section class="own" id="own" aria-labelledby="own-h">
+        <p class="label" id="own-h">What you&rsquo;d own</p>
+        <h3 class="own__line" aria-live="polite">
+          <span class="own__row">Join as <span class="roll" id="own-role"><span class="roll__i">a Market Lead</span></span>.</span>
+          <span class="own__row">Own <span class="roll roll--own" id="own-what"><span class="roll__i">Poland</span></span>.</span>
+        </h3>
+        <div class="own__proof" id="own-proof">
+          <p class="own__q" id="own-q">&ldquo;Write the go-to-market playbook, build your own outreach, close the first clients.&rdquo;</p>
+          <span class="own__src" id="own-src">From the Market Lead listing &middot; interns</span>
+        </div>
+        <div class="own__tabs" id="own-tabs" role="tablist" aria-label="Roles"></div>
+      </section>
+
+      <div class="end"><span class="label">Sections 1–4 · Next: how you get in</span></div>
     </div>
   </section>
 </main>
@@ -768,6 +802,68 @@ html.lenis, html.lenis body { height: auto; }
     var r = el.getBoundingClientRect(), total = el.offsetHeight - window.innerHeight;
     return total > 0 ? clamp(-r.top / total, 0, 1) : 1;
   }
+  /* ================= WHAT YOU'D OWN: the role and what you own roll over ================= */
+  (function () {
+    var ROLES = [
+      { tab: 'Market Lead', role: 'a Market Lead', own: ['Poland', 'Japan', 'Germany', 'Brazil', 'Turkey'], q: 'Write the go-to-market playbook, build your own outreach, close the first clients.', src: 'From the Market Lead listing · interns' },
+      { tab: 'Designer', role: 'a Designer', own: ['all of the design'], q: 'You are the first dedicated designer, so the taste and the output are yours.', src: 'From the Graphic Designer listing' },
+      { tab: 'Engineer', role: 'an Engineer', own: ['a whole product'], q: 'Own a full product end to end.', src: 'From the Software Engineer listing' },
+      { tab: 'Ads Manager', role: 'an Ads Manager', own: ['the ad account'], q: '4 products. 10 markets. 5 channels. One person.', src: 'From the Paid Ads Manager listing' },
+      { tab: 'Builder in Residence', role: 'a Builder in Residence', own: ['a blank page'], q: 'One role. One person. A blank page and the biggest brands in the world.', src: 'From the Builder in Residence listing' }
+    ];
+    var STEP = 1400, HOLD = 3600;
+    var sec = $('#own'), roleEl = $('#own-role'), whatEl = $('#own-what'), proof = $('#own-proof'), qEl = $('#own-q'), srcEl = $('#own-src'), tabsEl = $('#own-tabs');
+    var tabs = ROLES.map(function (r, i) {
+      if (i) { var dot = document.createElement('span'); dot.textContent = '·'; dot.setAttribute('aria-hidden', 'true'); tabsEl.appendChild(dot); }
+      var b = document.createElement('button'); b.className = 'own__tab'; b.type = 'button'; b.setAttribute('role', 'tab'); b.textContent = r.tab;
+      b.addEventListener('click', function () { go(i, true); });
+      tabsEl.appendChild(b); return b;
+    });
+    function setW(el) { var w = 0; el.querySelectorAll('.roll__i:not(.is-out)').forEach(function (c) { w = Math.max(w, c.offsetWidth); }); el.style.width = w + 'px'; }
+    function roll(el, text) {
+      var cur = el.querySelector('.roll__i:not(.is-out)');
+      if (cur && cur.textContent === text) return;
+      var nx = document.createElement('span'); nx.className = 'roll__i' + (reduce ? '' : ' is-in'); nx.textContent = text; el.appendChild(nx);
+      /* make room first, so nothing is clipped mid-roll; settle to the new width once the old word has left */
+      var wOld = cur ? cur.offsetWidth : 0, wNew = nx.offsetWidth;
+      if (wNew > (parseFloat(el.style.width) || 0)) { el.style.transition = 'none'; el.style.width = wNew + 'px'; void el.offsetWidth; el.style.transition = ''; }
+      if (cur) { if (reduce) cur.remove(); else { cur.classList.add('is-out'); clearTimeout(el._t); el._t = setTimeout(function () { cur.remove(); setW(el); }, 320); } }
+      if (reduce || !cur) setW(el);
+      if (!reduce) { void nx.offsetWidth; nx.classList.remove('is-in'); }
+    }
+    var ri = 0, oi = 0, t0 = 0, paused = false, live = false, hold = false, holdUntil = 0;
+    function dwell() { return ROLES[ri].own.length > 1 ? STEP * ROLES[ri].own.length + 600 : HOLD; }
+    function go(i, byHand) {
+      var changed = i !== ri; ri = i; oi = 0; t0 = performance.now();
+      if (byHand) { hold = true; holdUntil = performance.now() + 6000; }
+      tabs.forEach(function (b, k) { b.setAttribute('aria-selected', k === ri ? 'true' : 'false'); b.style.setProperty('--p', k === ri && (hold || reduce) ? 1 : 0); });
+      roll(roleEl, ROLES[ri].role); roll(whatEl, ROLES[ri].own[0]);
+      if (changed) {
+        proof.classList.add('is-swap');
+        setTimeout(function () { qEl.innerHTML = '&ldquo;' + ROLES[ri].q + '&rdquo;'; srcEl.textContent = ROLES[ri].src; proof.classList.remove('is-swap'); }, reduce ? 0 : 320);
+      }
+    }
+    setW(roleEl); setW(whatEl); go(0, false);
+    window.addEventListener('resize', function () { setW(roleEl); setW(whatEl); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setW(roleEl); setW(whatEl); });
+    if (reduce) return;
+    sec.addEventListener('mouseenter', function () { paused = true; });
+    sec.addEventListener('mouseleave', function () { paused = false; hold = false; t0 = performance.now() - (ROLES[ri].own.length > 1 ? STEP * oi : 0); });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { live = es[0].isIntersecting; if (live) t0 = performance.now(); }, { threshold: .35 }).observe(sec);
+    var last = performance.now();
+    (function tick(now) {
+      if (hold && !paused && now > holdUntil) hold = false;
+      if (live && !paused && !hold) {
+        var el = now - t0, d = dwell(), r = ROLES[ri];
+        if (r.own.length > 1) { var k = Math.min(r.own.length - 1, Math.floor(el / STEP)); if (k !== oi) { oi = k; roll(whatEl, r.own[k]); } }
+        tabs[ri].style.setProperty('--p', Math.min(1, el / d).toFixed(3));
+        if (el >= d) go((ri + 1) % ROLES.length, false);
+      } else if (paused || hold) { t0 += now - last; }
+      last = now;
+      requestAnimationFrame(tick);
+    })(last);
+  })();
+
   if (reduce) return; /* static, finished composition */
 
   /* ================= HERO ================= */
