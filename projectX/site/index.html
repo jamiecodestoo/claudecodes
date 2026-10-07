@@ -259,13 +259,12 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .what { padding-top: 0; }
 /* big statement, revealed word by word against the scroll */
 .say { position: relative; }
-.say.is-scrub { height: 260svh; }
-.say__pin { display: grid; place-items: center; padding-block: clamp(80px, 12vw, 160px); }
-.say.is-scrub .say__pin { position: sticky; top: 0; height: 100svh; padding-block: 0; }
+.say__pin { display: grid; place-items: center; padding-block: clamp(96px, 14vw, 200px) clamp(40px, 6vw, 80px); }
 .what__head { display: grid; justify-items: center; text-align: center; gap: clamp(20px, 3vw, 36px); max-width: 1180px; margin-inline: auto; }
-.what__head h2 { font-size: clamp(2.6rem, 1rem + 5.6vw, 7.4rem); line-height: 1.01; letter-spacing: -.03em; font-weight: 380; text-wrap: balance; font-variation-settings: "opsz" 72; }
+.what__head h2 { font-size: clamp(2.1rem, 1.2rem + 3vw, 4.4rem); line-height: 1.08; letter-spacing: -.024em; font-weight: 380; max-width: 17em; text-wrap: balance; font-variation-settings: "opsz" 72; }
 .what__head h2 .w { color: var(--ink); opacity: var(--o, 1); transition: none; }
-.what__head h2 .w.key, .what__head h2 em { font-style: italic; }
+.what__head h2 .w.key, .what__head h2 em { font-style: normal; }
+.what__head h2 .w.key { background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 92%; background-size: calc(var(--u, 1) * 100%) max(2px, .06em); padding-bottom: .04em; }
 
 .count { position: relative; margin-top: clamp(40px, 7vw, 100px); }
 .count__pin { padding-block: 24px; }
@@ -441,7 +440,6 @@ html.lenis, html.lenis body { height: auto; }
       <div class="say" id="say">
         <div class="say__pin">
           <div class="what__head">
-            <p class="label">What 8x is</p>
             <h2 id="what-h" data-reveal>Companies come to 8x for <em>outcomes.</em> Posts that get watched. Meetings that get booked. Interviews that get run. We organise <em>the people</em> who do that work.</h2>
           </div>
         </div>
@@ -576,14 +574,14 @@ html.lenis, html.lenis body { height: auto; }
     sayH.innerHTML = html.join(' ');
   })();
   var words = $$('[data-reveal] .w');
-  say.classList.add('is-scrub');
   function renderSay() {
-    var p = progress(say), n = words.length;
-    /* .05 – .85 of the pin: each word fades from faint to ink in reading order */
-    var span = .8 / n;
+    /* starts the moment the text enters the viewport, done by the time it reaches the upper third */
+    var r = sayH.getBoundingClientRect(), vh = window.innerHeight;
+    var p = clamp((vh - r.top) / (vh * .72), 0, 1), n = words.length, span = .82 / n;
     words.forEach(function (w, i) {
-      var a = .05 + i * span, t = clamp((p - a) / (span * 2.2), 0, 1);
-      w.style.setProperty('--o', (.12 + .88 * t).toFixed(3));
+      var a = i * span, t = clamp((p - a) / (span * 2.4), 0, 1);
+      w.style.setProperty('--o', (.14 + .86 * t).toFixed(3));
+      if (w.classList.contains('key')) w.style.setProperty('--u', out3(clamp((p - a - span) / (span * 3), 0, 1)).toFixed(3));
     });
   }
 
