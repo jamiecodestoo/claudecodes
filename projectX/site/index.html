@@ -471,15 +471,20 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .bet__l .w { opacity: var(--o, 1); }
 .bet__l .key { background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 92%; background-size: calc(var(--u, 1) * 100%) max(2px, .05em); }
 
-/* ---------------- what you'd own: "Join as a" stays, a photo and the role roll over ---------------- */
-.own { position: relative; margin-top: clamp(96px, 11vw, 150px); display: grid; justify-items: center; text-align: center; gap: clamp(18px, 2.6vw, 28px); }
-.own__line { margin: 0; display: grid; justify-items: center; gap: .1em; width: 100%; white-space: nowrap; font-weight: 380; font-variation-settings: "opsz" 72; }
-.own__fixed { font-size: clamp(1.3rem, 1rem + 1.2vw, 2rem); letter-spacing: -.012em; color: var(--ink-2); }
-.own__role { display: block; width: 100%; font-size: var(--own-fs, clamp(2.8rem, 1rem + 6vw, 6.4rem)); line-height: 1.1; letter-spacing: -.032em; }
+/* ---------------- join as: a big photo card, the role rolls over on it ---------------- */
+.own { position: relative; margin-top: clamp(96px, 11vw, 150px); }
+.own__card { position: relative; width: min(1120px, 100%); margin-inline: auto; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: #1b1b18; display: grid; place-items: center; text-align: center; color: #fff; container-type: inline-size; }
+.own__imgs img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.08); transition: opacity 1000ms ease, transform 5200ms cubic-bezier(.2, .6, .2, 1); }
+.own__imgs img.is-on { opacity: 1; transform: scale(1); }
+.own__card::after { content: ""; position: absolute; inset: 0; background: radial-gradient(110% 85% at 50% 52%, rgba(10, 10, 9, .62), rgba(10, 10, 9, .4) 62%, rgba(10, 10, 9, .52)); pointer-events: none; }
+.own__line { position: relative; z-index: 1; margin: 0; display: grid; justify-items: center; gap: .14em; width: 100%; white-space: nowrap; font-weight: 380; font-variation-settings: "opsz" 72; text-shadow: 0 2px 24px rgba(0, 0, 0, .25); }
+.own__fixed { font-size: clamp(1.1rem, .8rem + 1.2vw, 1.9rem); letter-spacing: -.01em; color: rgba(255, 255, 255, .82); }
+.own__role { display: block; width: 100%; font-size: var(--own-fs, clamp(2.4rem, 1rem + 5.4vw, 6rem)); line-height: 1.1; letter-spacing: -.032em; }
 .roll { display: inline-grid; vertical-align: baseline; overflow: hidden; padding: .12em .06em .24em; margin: -.12em -.06em -.24em; text-align: center; }
 .roll__i { grid-area: 1 / 1; justify-self: center; white-space: nowrap; transition: transform 720ms var(--ease-settle), opacity 520ms ease, filter 520ms ease; }
 .roll__i.is-in { transform: translateY(110%); opacity: 0; filter: blur(4px); transition: none; }
 .roll__i.is-out { transform: translateY(-110%); opacity: 0; filter: blur(4px); }
+@media (max-width: 600px) { .own__card { aspect-ratio: 4 / 5; border-radius: 16px; } }
 
 .end { margin-top: clamp(96px, 12vw, 160px); padding-block: 28px 56px; border-top: 1px solid var(--rule); text-align: center; }
 
@@ -754,9 +759,11 @@ html.lenis, html.lenis body { height: auto; }
         </div>
       </section>
 
-      <section class="own" id="own" aria-labelledby="own-h">
-        <p class="label" id="own-h">What you&rsquo;d own</p>
-        <h3 class="own__line" aria-live="polite"><span class="own__fixed">Join as a</span> <span class="own__role"><span class="roll" id="own-role"><span class="roll__i">Market Lead</span></span></span></h3>
+      <section class="own" id="own" aria-label="Roles you could join as">
+        <div class="own__card">
+          <div class="own__imgs" aria-hidden="true"><img src="img/join/j1.jpg" alt="" class="is-on" loading="lazy"><img src="img/join/j2.jpg" alt="" loading="lazy"><img src="img/join/j3.jpg" alt="" loading="lazy"><img src="img/join/j4.jpg" alt="" loading="lazy"><img src="img/join/j5.jpg" alt="" loading="lazy"></div>
+          <h3 class="own__line" aria-live="polite"><span class="own__fixed">Join as a</span> <span class="own__role"><span class="roll" id="own-role"><span class="roll__i">Market Lead</span></span></span></h3>
+        </div>
       </section>
 
       <div class="end"><span class="label">Sections 1–4 · Next: how you get in</span></div>
@@ -778,19 +785,19 @@ html.lenis, html.lenis body { height: auto; }
     var r = el.getBoundingClientRect(), total = el.offsetHeight - window.innerHeight;
     return total > 0 ? clamp(-r.top / total, 0, 1) : 1;
   }
-  /* ================= WHAT YOU'D OWN: a small "Join as a", the role big and rolling over ================= */
+  /* ================= JOIN AS: a photo card, the role big and rolling over ================= */
   (function () {
     var ROLES = ['Market Lead', 'Designer', 'Software Engineer', 'Paid Ads Manager', 'Builder in Residence'];
-    var HOLD = 2600;
-    var sec = $('#own'), roleEl = $('#own-role'), roleBox = $('#own .own__role');
+    var HOLD = 3200;
+    var sec = $('#own'), card = $('#own .own__card'), roleEl = $('#own-role'), roleBox = $('#own .own__role'), pics = $$('#own .own__imgs img');
     function item(i) { var sp = document.createElement('span'); sp.className = 'roll__i'; sp.textContent = ROLES[i]; return sp; }
     /* one size for every role, so the longest still fits; the slot is that wide, so nothing shifts */
     function fit() {
       roleBox.style.removeProperty('--own-fs');
-      var avail = sec.clientWidth, w = 0;
+      var avail = card.clientWidth * .86, w = 0;
       ROLES.forEach(function (r, i) { var m = item(i); m.style.visibility = 'hidden'; roleEl.appendChild(m); w = Math.max(w, m.offsetWidth); roleEl.removeChild(m); });
       var fs = parseFloat(getComputedStyle(roleBox).fontSize);
-      if (w > avail * .94) { fs = fs * avail * .94 / w; roleBox.style.setProperty('--own-fs', fs.toFixed(1) + 'px'); w = avail * .94; }
+      if (w > avail) { fs = fs * avail / w; roleBox.style.setProperty('--own-fs', fs.toFixed(1) + 'px'); w = avail; }
       roleEl.style.width = Math.ceil(w) + 'px';
     }
     var ri = 0;
@@ -801,6 +808,7 @@ html.lenis, html.lenis body { height: auto; }
       roleEl.appendChild(nx);
       if (cur) { if (reduce) cur.remove(); else { cur.classList.add('is-out'); setTimeout(function () { cur.remove(); }, 760); } }
       if (!reduce) { void nx.offsetWidth; nx.classList.remove('is-in'); }
+      pics.forEach(function (im, k) { im.classList.toggle('is-on', k === i); });
     }
     fit();
     window.addEventListener('resize', fit);
