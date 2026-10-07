@@ -266,29 +266,25 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .what__head h2 .w.key, .what__head h2 em { font-style: normal; }
 .what__head h2 .w.key { background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 92%; background-size: calc(var(--u, 1) * 100%) max(2px, .06em); padding-bottom: .04em; }
 
-.count { position: relative; margin-top: clamp(40px, 7vw, 100px); }
-.count__pin { padding-block: 24px; }
-.count.is-scrub { height: 290svh; }
-.count.is-scrub .count__pin { position: sticky; top: 0; height: 100svh; display: grid; align-content: center; padding-block: 0; }
-.board { display: grid; justify-items: center; text-align: center; }
-.board__lead { display: grid; justify-items: center; gap: 14px; margin-bottom: clamp(20px, 3vw, 40px); }
-.board__lead p { font-size: var(--lead); font-style: italic; }
-.board__prog { width: 160px; height: 1px; background: var(--rule); position: relative; overflow: hidden; }
-.board__prog i { position: absolute; inset: 0; background: var(--pen); transform-origin: left; transform: scaleX(var(--p, 1)); }
-.fig { font-size: var(--fig); line-height: .98; letter-spacing: -.04em; font-weight: 360; font-variation-settings: "opsz" 72; font-variant-numeric: lining-nums; text-wrap: balance; }
-.fig--old { color: var(--ink-2); }
-.fig--old del { color: inherit; }
-.fig--new { margin-top: .06em; }
-.fig--new .mask { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
-.fig--new .mask > span { display: block; }
-.board__meta { display: grid; justify-items: center; gap: 22px; margin-top: clamp(22px, 3vw, 40px); }
-.fig-sub { font-size: var(--lead); line-height: 1.35; }
-.fig-sub .date { font-family: var(--mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; background: var(--mark); color: var(--mark-ink); padding: 3px 7px 2px; border-radius: 1px; margin-left: 6px; white-space: nowrap; vertical-align: .12em; }
-.fig-countries { font-size: var(--lead); line-height: 1.35; margin-top: 6px; font-variant-numeric: lining-nums; }
-.fig-countries del { color: var(--ink-2); margin-right: .3em; }
-.receipt2 { font-family: var(--mono); font-size: 12px; line-height: 1.6; color: var(--ink-2); max-width: 40em; }
-.receipt2 q { color: var(--ink); quotes: "“" "”"; }
-.receipt2 .tbc { color: var(--pen); }
+/* crowd → globe: one pinned canvas scene */
+.crowd { position: relative; margin-top: clamp(24px, 4vw, 60px); }
+.crowd.is-scrub { height: 340svh; }
+.crowd__pin { position: relative; display: grid; place-items: center; min-height: 80svh; }
+.crowd.is-scrub .crowd__pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.crowd canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.crowd__copy { position: relative; z-index: 2; transform-origin: 50% 50%; display: grid; justify-items: center; text-align: center; gap: 14px; pointer-events: none; padding-inline: var(--gutter); }
+.crowd__num { font-size: clamp(3.4rem, 1rem + 8.5vw, 9.6rem); line-height: .9; letter-spacing: -.045em; font-weight: 360; font-variation-settings: "opsz" 72; font-variant-numeric: lining-nums tabular-nums; background: color-mix(in srgb, var(--paper) 78%, transparent); padding: .06em .16em .02em; border-radius: .08em; }
+.crowd__line { display: grid; }
+.crowd__line span { grid-area: 1 / 1; font-size: var(--lead); line-height: 1.35; transition: opacity 360ms ease, transform 420ms var(--ease-settle); background: color-mix(in srgb, var(--paper) 78%, transparent); padding: 2px 10px; border-radius: 3px; }
+.crowd__line .l2 { opacity: 0; transform: translateY(8px); }
+.crowd__line.is-globe .l1 { opacity: 0; transform: translateY(-8px); }
+.crowd__line.is-globe .l2 { opacity: 1; transform: none; }
+.crowd__line b { font-weight: 500; background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 95%; background-size: 100% 2px; }
+.crowd .date { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; background: var(--mark); color: var(--mark-ink); padding: 3px 7px 2px; border-radius: 1px; }
+.crowd .src { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-2); margin-top: 4px; }
+.crowd .src .tbc { color: var(--pen); }
+.crowd:not(.is-scrub) .crowd__copy { padding-block: 60px; }
+
 
 .rows { margin-top: clamp(80px, 10vw, 140px); display: grid; max-width: 60rem; margin-inline: auto; }
 .row { display: grid; justify-items: center; text-align: center; gap: 14px; padding-block: clamp(36px, 5vw, 56px); border-top: 1px solid var(--rule); }
@@ -445,22 +441,17 @@ html.lenis, html.lenis body { height: auto; }
         </div>
       </div>
 
-      <div class="count" id="count">
-        <div class="count__pin">
-          <div class="board" id="board">
-            <div class="board__lead">
-              <p>We don’t round up.</p>
-              <span class="board__prog" aria-hidden="true"><i></i></span>
-            </div>
-            <p class="fig fig--old"><del class="ink-strike" id="old-strike"><span class="vh">Struck out: </span>250k+ humans managed</del></p>
-            <p class="fig fig--new"><span class="mask"><span id="new-fig">121,000 people</span></span></p>
-            <div class="board__meta">
-              <div>
-                <p class="fig-sub" id="fig-sub">on the 8x platform <span class="date">June 2026</span></p>
-                <p class="fig-countries" id="fig-countries"><del class="ink-strike" id="c-strike"><span class="vh">Struck out: </span>50+</del><span id="c-new">30+ countries</span></p>
-              </div>
-              <p class="receipt2" id="fig-receipt">Receipt · <q>121,000 people on the platform.</q> Jaka Bavdek, CEO, June 2026. Counts everyone with an 8x account: creators, sales reps and research participants. <span class="tbc">Figure for 8x to confirm.</span></p>
-            </div>
+      <div class="crowd" id="crowd">
+        <div class="crowd__pin">
+          <canvas id="crowd-canvas" aria-hidden="true"></canvas>
+          <div class="crowd__copy">
+            <p class="crowd__num" id="crowd-num">121,000</p>
+            <p class="crowd__line" id="crowd-line">
+              <span class="l1">people on the 8x platform</span>
+              <span class="l2">working with 8x across <b>30+ countries</b></span>
+            </p>
+            <span class="date">June 2026</span>
+            <p class="src">Creators, sales reps and research participants. <span class="tbc">Figures for 8x to confirm.</span></p>
           </div>
         </div>
       </div>
@@ -585,26 +576,122 @@ html.lenis, html.lenis body { height: auto; }
     });
   }
 
-  /* ================= SECTION 2 ================= */
-  var count = $('#count'), board = $('#board');
-  var oldStrike = $('#old-strike'), oldFig = $('.fig--old'), newFig = $('#new-fig');
-  var sub = $('#fig-sub'), countries = $('#fig-countries'), cStrike = $('#c-strike'), cNew = $('#c-new'), receipt = $('#fig-receipt');
-  var STRIKE_H = 'max(2px, .062em)';
-  count.classList.add('is-scrub');
-  function mixInk(t) { return 'color-mix(in srgb, var(--ink-2) ' + Math.round(t * 100) + '%, var(--ink))'; }
-  function renderCount() {
-    var p = progress(count);
-    board.style.setProperty('--p', p.toFixed(4));
-    oldStrike.style.backgroundSize = (out3(seg(p, .06, .30)) * 100).toFixed(2) + '% ' + STRIKE_H;
-    oldFig.style.color = mixInk(seg(p, .26, .38));
-    newFig.style.transform = 'translateY(' + ((1 - out3(seg(p, .36, .58))) * 130).toFixed(2) + '%)';
-    var m = out3(seg(p, .56, .70));
-    [sub, countries].forEach(function (el) { el.style.opacity = m; el.style.transform = 'translateY(' + ((1 - m) * 12).toFixed(1) + 'px)'; });
-    cStrike.style.backgroundSize = (out3(seg(p, .68, .82)) * 100).toFixed(2) + '% ' + STRIKE_H;
-    cNew.style.opacity = .25 + .75 * out3(seg(p, .76, .86));
-    var q = out3(seg(p, .82, .94));
-    receipt.style.opacity = q; receipt.style.transform = 'translateY(' + ((1 - q) * 10).toFixed(1) + 'px)';
+  /* ================= CROWD → GLOBE ================= */
+  var crowd = $('#crowd'), cv = $('#crowd-canvas'), cx = cv.getContext('2d');
+  var numEl = $('#crowd-num'), lineEl = $('#crowd-line'), copy = $('.crowd__copy');
+  crowd.classList.add('is-scrub');
+  /* land on a 2° grid (lat 88 → -88, lon -180 → 178), 1 bit per cell */
+  var LAND = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/+ev7UAAAAAAAAAAAAAAAAAAAAAAC//h///0AALwAAAADgAAAAAAAAAAADCg+////wAAdAAAAAAIAAAAAAAAAAA+xMAA///wAAAAAAcAB/4ABAAAAAAADwBUAAP//gAAAAADAAv/gAIAAAAAAADfTC+AH/9gAAAAAMBi///+D4AAAH/gYP8434F//gAAA4AAj///////wAwP///4Zcj8D/wAAAP/xb/v////////+f/////+h7B+geAAf/H///////////AD/////908B8AcAA+/v///////////AP/////wPAA4AAAH5///////////98Af0P///gDgAAAAAH8D//////////EAAAgC///wD+AAAACA4f////////+AMAACAA///+D/AAAACBx/////////4A8AAAAA////n/wAAAZBv/////////6AwAAAAAP///3/4AAAbn///////////AQAAAAAH////4AAAAAf//////////+AAAAAAAD////4cAAAD///////////8AAAAAAAB////8gAAAA//9f///////5EAAAAAAD////0AAAAA+v4P///////xgAAAAAAD////gAAAAPwz4H//////+AAAAAAAAD///+AAAAAPoLv///////eCAAAAAAAB///+AAAAAPAZv///////GCAAAAAAAA///8AAAAAAfAA///////iOAAAAAAAAf//8AAAAAH/AA///////g4AAAAAAAAP//wAAAAAP/zg///////gAAAAAAAAAD/8QAAAAAP////v/////gAAAAAAAAAF/AQAAAAA/////v/////gAAAAAAAAAC/AAAAAAB////fx/////AAAAAAAAAABfAAAAAAB////P2D///+AAAAAAAAAAAPAoAAAAD////v/B///4AAAAAAAAAAAPGCAAAAD////n+Afx/AAAAAAAAAAAAH8AEAAAD////3+AfA/AQAAAAAAAAAAA8AAAAAD////74AeAfggAAAAAAAAAAAHgAAAAD////7AAOAPgAAAAAAAAAAAABgwAAAD////8AAMADgoAAAAAAAAAAAAheAAAB/////wAEABAAAAAAAAAAAAAAH/gAAA/////gACAIAMAAAAAAAAAAAAD/wAAAfn///gAAAEBAAAAAAAAAAAAAD/+AAAAB///AAAAUmAAAAAAAAAAAAAH/+AAAAB//+AAAAKOAAAAAAAAAAAAAP//AAAAB//8AAAAMegAAAAAAAAAAAAP//wAAAB//4AAAAHOh0AAAAAAAAAAAP//+AAAA//wAAAACAwPgAAAAAAAAAAP///gAAAf/wAAAABAAD0AAAAAAAAAAH///gAAAf/wAAAAAMAHQAAAAAAAAAAH///AAAAf/wAAAAAAoAIAAAAAAAAAAD///AAAAf/4AAAAAAARAAAAAAAAAAAD//+AAAAf/4wAAAAABxAAAAAAAAAAAB//+AAAA//5gAAAAAH5gAAAAAAAAAAAf/+AAAA//hgAAAAAP/wABAAAAAAAAAf/8AAAAf/BgAAAAA//4AAAAAAAAAAAf/8AAAAP/DgAAAAH//4AAAAAAAAAAAf/gAAAAP/DAAAAAH//8AAAAAAAAAAAf/AAAAAP+AAAAAAD//+AAAAAAAAAAAf/AAAAAP+AAAAAAD//+AAAAAAAAAAAf+AAAAAH8AAAAAAD//+AAAAAAAAAAAf+AAAAAD4AAAAAAD+f+AAAAAAAAAAAf8AAAAADgAAAAAADAP8AAAAAAAAAAA/wAAAAAAAAAAAAAAAD8AEAAAAAAAAA/wAAAAAAAAAAAAAAABwADAAAAAAAAA+AAAAAAAAAAAAAAAAAoACAAAAAAAAB8AAAAAAAAAAAAAAAAAYAMAAAAAAAAA8AAAAAAAAAAAAAAAAAAAQAAAAAAAAB4AAAAAAAAAAAAAAAAAAAwAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAABwgAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAMAAAGIAAAAAAAAAAAAAAEAAAAAAAAD/+B/////wAAAAAAAAAAAeAAAAAAIB//+f//////4AAAAAAAGABWAAAAf//////////////wAAAADAH///AAAB//////////////+AAAB//////4AAB///////////////8AAB//////zAAwf///////////////+AAAD/////8AB4D///////////////4AAAP//////4Bn////////////////8AAD///////////////////////////+////////////////////////////////////////////////////////////A=';
+  var land = [];
+  (function () {
+    var bin = atob(LAND), W = 180, H = 89;
+    for (var r = 0; r < H; r++) for (var c = 0; c < W; c++) {
+      var k = r * W + c;
+      var lat = 88 - r * 2; if (lat < -58) continue;
+      /* keep density even: fewer cells towards the poles */
+      if (((r * 7 + c * 13) % 100) / 100 > Math.cos(lat * Math.PI / 180)) continue;
+      if ((bin.charCodeAt(k >> 3) >> (7 - (k & 7))) & 1) land.push([lat * Math.PI / 180, (-180 + c * 2) * Math.PI / 180]);
+    }
+  })();
+  /* places 8x hires or works from (public listings and team): lat, lon */
+  var hubs = [[37.77,-122.42],[52.23,21.01],[35.68,139.69],[52.52,13.40],[51.51,-0.13],[40.42,-3.70],[38.72,-9.14],[-23.55,-46.63],[41.01,28.98],[46.06,14.51],[31.55,74.34],[28.61,77.21],[1.35,103.82],[3.14,101.69],[13.76,100.50],[14.60,120.98],[-6.21,106.85],[40.71,-74.01],[19.43,-99.13],[-34.60,-58.38],[4.71,-74.07],[6.52,3.38],[30.04,31.24],[25.20,55.27],[-33.87,151.21],[37.57,126.98],[48.86,2.35],[45.46,9.19],[59.33,18.07],[50.45,30.52],[-26.20,28.05],[24.86,67.01]].map(function (h) { return [h[0] * Math.PI / 180, h[1] * Math.PI / 180]; });
+
+  /* avatar sprites: little head-and-shoulders portraits in varied tones */
+  var DPR = Math.min(2, window.devicePixelRatio || 1), SP = 44;
+  var bgs = ['#E8E4DA','#DCE3D3','#E9DCCF','#D8DEE6','#EAE1C8','#E2D6DE','#D6E1DE','#F0D9CF'];
+  var skins = ['#F1C9A5','#E0AC80','#C68B5E','#9A6440','#6B4429','#F3D2B8','#B7825A','#82553A'];
+  var hair = ['#2B201A','#4A3326','#141210','#7A5233','#B8925A','#3A2A22'];
+  var shirts = ['#141412','#C73D20','#3F4A5A','#5F6B4A','#8C8C84','#2D4F7A','#7A3E52','#D9A441'];
+  var sprites = [];
+  for (var v = 0; v < 24; v++) {
+    var o = document.createElement('canvas'); o.width = o.height = SP; var g = o.getContext('2d');
+    g.save(); g.beginPath(); g.arc(SP / 2, SP / 2, SP / 2, 0, Math.PI * 2); g.clip();
+    g.fillStyle = bgs[v % bgs.length]; g.fillRect(0, 0, SP, SP);
+    g.fillStyle = shirts[(v * 3) % shirts.length]; g.beginPath(); g.ellipse(SP / 2, SP * 1.02, SP * .36, SP * .3, 0, 0, Math.PI * 2); g.fill();
+    g.fillStyle = skins[(v * 5) % skins.length]; g.beginPath(); g.ellipse(SP / 2, SP * .44, SP * .17, SP * .2, 0, 0, Math.PI * 2); g.fill();
+    g.fillStyle = hair[(v * 7) % hair.length]; g.beginPath(); g.ellipse(SP / 2, SP * .33, SP * .19, SP * (v % 3 === 0 ? .14 : .1), 0, Math.PI, Math.PI * 2); g.fill();
+    if (v % 4 === 1) { g.fillRect(SP * .31, SP * .3, SP * .06, SP * .24); g.fillRect(SP * .63, SP * .3, SP * .06, SP * .24); }
+    g.restore(); sprites.push(o);
   }
+
+  var W = 0, H = 0, parts = [], R = 0;
+  function seeded(i) { var x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); }
+  function setup() {
+    W = cv.clientWidth; H = cv.clientHeight; cv.width = W * DPR; cv.height = H * DPR;
+    R = Math.min(W * .42, H * .33);
+    var n = W < 700 ? 260 : 620; parts = [];
+    for (var i = 0; i < n; i++) {
+      var a = seeded(i + 1), b = seeded(i + 101), c = seeded(i + 201);
+      parts.push({ x: a * W, y: b * H, s: (W < 700 ? 18 : 24) + c * 14, sp: sprites[i % sprites.length], t: land[Math.floor(seeded(i + 301) * land.length)], d: seeded(i + 401) });
+    }
+  }
+  var TILT = -.38, GY = 0;
+  function project(lat, lon, rot) {
+    var l = lon + rot, cl = Math.cos(lat);
+    var x = cl * Math.sin(l), y = Math.sin(lat), z = cl * Math.cos(l);
+    var y2 = y * Math.cos(TILT) - z * Math.sin(TILT), z2 = y * Math.sin(TILT) + z * Math.cos(TILT);
+    return [W / 2 + x * R, GY - y2 * R, z2];
+  }
+  var inkC = '#141412', penC = '#C73D20', dotC = 'rgba(20,20,18,.18)';
+  function readColors() { var cs = getComputedStyle(document.documentElement); inkC = cs.getPropertyValue('--ink').trim(); penC = cs.getPropertyValue('--pen').trim(); dotC = cs.getPropertyValue('--ink-3').trim(); }
+  readColors();
+  var nf = new Intl.NumberFormat('en-US');
+  function renderCrowd(time) {
+    var p = progress(crowd);
+    /* 0 – .30 the crowd arrives and the count climbs */
+    var arrive = seg(p, 0, .26), fly = inOut(seg(p, .30, .62)), globeIn = seg(p, .40, .66);
+    numEl.textContent = nf.format(Math.round(121000 * out3(seg(p, .02, .28)) / 10) * 10);
+    lineEl.classList.toggle('is-globe', p > .58);
+    var rot = -2.6 + p * 2.3 + (time || 0) * .00004;
+    GY = H * (.5 + .14 * fly);
+    copy.style.transform = 'translateY(' + (-H * .33 * fly).toFixed(1) + 'px) scale(' + (1 - .32 * fly).toFixed(3) + ')';
+    cx.setTransform(DPR, 0, 0, DPR, 0, 0); cx.clearRect(0, 0, W, H);
+    /* the globe's land, faint */
+    if (globeIn > 0) {
+      cx.fillStyle = dotC;
+      for (var i = 0; i < land.length; i += 1) {
+        var q = project(land[i][0], land[i][1], rot);
+        if (q[2] <= 0) continue;
+        cx.globalAlpha = globeIn * (.35 + .65 * q[2]);
+        cx.fillRect(q[0] - 1.1, q[1] - 1.1, 2.2, 2.2);
+      }
+      cx.globalAlpha = globeIn * .5; cx.strokeStyle = dotC; cx.lineWidth = 1;
+      cx.beginPath(); cx.arc(W / 2, GY, R, 0, Math.PI * 2); cx.stroke();
+    }
+    /* people: scattered portraits that shrink into dots on the globe */
+    for (var j = 0; j < parts.length; j++) {
+      var pt = parts[j];
+      var show = clamp((arrive - pt.d * .7) / .3, 0, 1);
+      if (show <= 0) continue;
+      var tg = project(pt.t[0], pt.t[1], rot);
+      var f = clamp((fly - pt.d * .25) / .75, 0, 1); f = f * f * (3 - 2 * f);
+      var x = pt.x + (tg[0] - pt.x) * f, y = pt.y + (tg[1] - pt.y) * f;
+      var size = pt.s * (1 - f) + 3.2 * f;
+      var back = tg[2] <= 0 ? f : 0;
+      cx.globalAlpha = show * (1 - back * .9) * (1 - f * .15);
+      if (size > 6) {
+        var pop = .6 + .4 * Math.min(1, show * 1.4);
+        cx.drawImage(pt.sp, x - size * pop / 2, y - size * pop / 2, size * pop, size * pop);
+      } else {
+        cx.fillStyle = inkC; cx.beginPath(); cx.arc(x, y, size / 2, 0, Math.PI * 2); cx.fill();
+      }
+    }
+    /* where 8x works: pulsing pen markers */
+    var hub = seg(p, .6, .78);
+    if (hub > 0) {
+      for (var k = 0; k < hubs.length; k++) {
+        var h = project(hubs[k][0], hubs[k][1], rot); if (h[2] <= 0) continue;
+        var ph = ((time || 0) / 1400 + k * .37) % 1;
+        cx.globalAlpha = hub * (1 - ph) * .5; cx.strokeStyle = penC; cx.lineWidth = 1.2;
+        cx.beginPath(); cx.arc(h[0], h[1], 4 + ph * 12, 0, Math.PI * 2); cx.stroke();
+        cx.globalAlpha = hub; cx.fillStyle = penC; cx.beginPath(); cx.arc(h[0], h[1], 3.4, 0, Math.PI * 2); cx.fill();
+      }
+    }
+    cx.globalAlpha = 1;
+  }
+  setup();
+  window.addEventListener('resize', function () { setup(); readColors(); });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readColors);
 
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
   var pars = $$('[data-par]');
@@ -617,15 +704,18 @@ html.lenis, html.lenis body { height: auto; }
       el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
     });
   }
-  function frame() { renderHero(); renderSay(); renderCount(); renderPar(); }
+  function frame(t) { renderHero(); renderSay(); renderCrowd(t); renderPar(); }
 
   /* smooth, delayed scroll: the page eases toward where you scrolled */
+  var crowdLive = false;
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { crowdLive = es[0].isIntersecting; }).observe(crowd);
   var lenis = window.Lenis ? new Lenis({ lerp: .075, wheelMultiplier: .9, smoothWheel: true }) : null;
   var last = -1;
   function loop(t) {
     if (lenis) lenis.raf(t);
     var y = window.scrollY;
-    if (y !== last) { last = y; frame(); }
+    if (y !== last) { last = y; frame(t); }
+    else if (crowdLive) renderCrowd(t);
     requestAnimationFrame(loop);
   }
   function onResize() { last = -1; if (lenis) lenis.resize(); }
