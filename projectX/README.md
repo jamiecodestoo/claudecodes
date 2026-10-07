@@ -20,7 +20,7 @@ A design challenge to redesign [8x.life](https://8x.life/), 8x's life-at-8x site
 
 `site/index.html` is the homepage build.
 
-- [x] 1. Hero: "We hire on work, not CVs." with the open-roles button, a pile of CVs that is blacked out in one quick shot, then on scroll the CVs fall and five role work scenes rise (design, code review, playbook, ads review, video edit). Each card pops forward on hover.
+- [x] 1. Hero: "We hire on work, not CVs." with the open-roles button, a pile of CVs that is blacked out in one quick shot, then on scroll the CVs fall while five role work scenes rise and fan out on a semicircle (design, code review, playbook, ads review, video edit). Each card pops forward on hover.
 - [x] 2. What 8x is: a scroll-scrubbed correction from "250k+ humans managed" to a dated figure, then the network vs the core team, then the products.
 - [ ] 3. The bet
 - [ ] 4. What you'd own
