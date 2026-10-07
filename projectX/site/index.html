@@ -272,8 +272,8 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .crowd__pin { position: relative; display: grid; place-items: center; min-height: 90svh; }
 .crowd.is-scrub .crowd__pin { position: sticky; top: 0; height: 100svh; }
 .crowd canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.crowd__num { position: absolute; left: 50%; top: 50%; z-index: 2; margin: 0; white-space: nowrap; transform: translate(-50%, -50%); transform-origin: 50% 50%;
-  font-size: clamp(2.6rem, 1rem + 5vw, 6.2rem); line-height: 1; letter-spacing: -.04em; font-weight: 370; font-variation-settings: "opsz" 72; font-variant-numeric: lining-nums tabular-nums; pointer-events: none; }
+.crowd__num { position: absolute; max-width: calc(100vw - 32px); left: 50%; top: 50%; z-index: 2; margin: 0; white-space: nowrap; transform: translate(-50%, -50%); transform-origin: 50% 50%;
+  font-size: clamp(2.1rem, 1rem + 5vw, 6.2rem); line-height: 1; letter-spacing: -.04em; font-weight: 370; font-variation-settings: "opsz" 72; font-variant-numeric: lining-nums tabular-nums; pointer-events: none; }
 .crowd__cty { position: absolute; left: 50%; top: 50%; z-index: 2; margin: 0; white-space: nowrap; transform: translate(-50%, 0); opacity: 0;
   font-size: clamp(1.4rem, 1rem + 1.6vw, 2.4rem); line-height: 1.1; letter-spacing: -.02em; pointer-events: none;
   background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: calc(var(--u, 0) * 100%) 2px; padding-bottom: .1em; }
@@ -603,15 +603,17 @@ html.lenis, html.lenis body { height: auto; }
     g.restore(); sprites.push(o);
   }
 
-  var W = 0, H = 0, R = 0, GY = 0, RING = 0, RX = 0, AV = 0, TILT = -.38;
+  var W = 0, H = 0, R = 0, GY = 0, RING = 0, RX = 0, AV = 0, TW = 0, TH = 0, TILT = -.38;
   /* twelve people, each pinned to a place 8x hires from */
   var PEOPLE = [0, 17, 7, 6, 1, 8, 21, 10, 11, 12, 2, 24];
   function setup() {
     W = cv.clientWidth; H = cv.clientHeight; cv.width = W * DPR; cv.height = H * DPR;
     R = Math.min(W * .34, H * .27);
-    RING = Math.min(W * .4, H * .36);
-    RX = W < 700 ? W * .42 : RING;
-    AV = W < 700 ? 44 : 64;
+    AV = W < 700 ? 54 : Math.min(108, H * .12);
+    var tb = { width: numEl.offsetWidth, height: numEl.offsetHeight }; TW = tb.width; TH = tb.height;
+    /* keep every photo clear of the headline: the ring is an ellipse sized around it */
+    RX = Math.min(W / 2 - AV / 2 - 8, Math.max(tb.width / 2 + AV + 60, H * .36));
+    RING = Math.min(H / 2 - AV / 2 - 70, Math.max(tb.height / 2 + AV + 40, H * .34));
   }
   function project(lat, lon, rot) {
     var l = lon + rot, cl = Math.cos(lat);
@@ -622,6 +624,28 @@ html.lenis, html.lenis body { height: auto; }
   var inkC = '#141412', penC = '#C73D20', dotC = '#8C8C84', paperC = '#FBFBF8';
   function readColors() { var cs = getComputedStyle(document.documentElement); inkC = cs.getPropertyValue('--ink').trim(); penC = cs.getPropertyValue('--pen').trim(); dotC = cs.getPropertyValue('--ink-3').trim(); paperC = cs.getPropertyValue('--paper').trim(); }
   readColors();
+  /* placeholder portraits (to be replaced with real 8x people) */
+  var photos = [];
+  for (var ph = 1; ph <= 12; ph++) { var im = new Image(); im.src = 'img/people/p' + ph + '.jpg'; im.onload = function () { last = -1; }; photos.push(im); }
+  function rrect(x, y, w, h, r) { cx.beginPath(); cx.moveTo(x + r, y); cx.arcTo(x + w, y, x + w, y + h, r); cx.arcTo(x + w, y + h, x, y + h, r); cx.arcTo(x, y + h, x, y, r); cx.arcTo(x, y, x + w, y, r); cx.closePath(); }
+  function drawPhoto(x, y, size, im, pin, alpha) {
+    cx.globalAlpha = alpha;
+    var h = size / 2, rad = Math.max(3, size * .08), frame = 2 + pin * 1.5;
+    var cyy = y - (h + size * .32) * pin; /* as it becomes a pin, the photo rises above its point */
+    if (pin > 0) {
+      cx.fillStyle = penC; cx.beginPath();
+      cx.moveTo(x - size * .14, cyy + h); cx.lineTo(x, y); cx.lineTo(x + size * .14, cyy + h); cx.closePath(); cx.fill();
+      cx.beginPath(); cx.arc(x, y, 2.6, 0, Math.PI * 2); cx.fill();
+    }
+    cx.save();
+    cx.shadowColor = 'rgba(20,20,18,' + (.18 * (1 - pin) + .1).toFixed(2) + ')'; cx.shadowBlur = 18 * (1 - pin) + 6; cx.shadowOffsetY = 6 * (1 - pin) + 2;
+    cx.fillStyle = pin > .5 ? penC : paperC;
+    rrect(x - h - frame, cyy - h - frame, size + frame * 2, size + frame * 2, rad + frame); cx.fill();
+    cx.restore();
+    cx.save(); rrect(x - h, cyy - h, size, size, rad); cx.clip();
+    if (im && im.complete && im.naturalWidth) cx.drawImage(im, x - h, cyy - h, size, size); else { cx.fillStyle = dotC; cx.fillRect(x - h, cyy - h, size, size); }
+    cx.restore();
+  }
   function drawPin(x, y, size, sp, pin, alpha) {
     cx.globalAlpha = alpha;
     var r = size / 2;
@@ -674,14 +698,17 @@ html.lenis, html.lenis body { height: auto; }
       /* half-step offset keeps every face clear of the headline's left and right ends */
       var ang = -Math.PI / 2 + ((j + .5) / n) * Math.PI * 2 * sweep;
       var rx = W / 2 + Math.cos(ang) * RX, ry = centerY + Math.sin(ang) * RING;
+      /* keep-out zone: a photo never comes within GAP of the headline */
+      var GAP = W < 700 ? 18 : 32, kx = TW / 2 + AV / 2 + GAP, ky = TH / 2 + AV / 2 + GAP;
+      if (Math.abs(rx - W / 2) < kx && Math.abs(ry - centerY) < ky) ry = centerY + (Math.sin(ang) < 0 ? -ky : ky);
       var f = clamp((fly - j * .025) / .7, 0, 1); f = f * f * (3 - 2 * f);
       var hp = project(hubs[PEOPLE[j]][0], hubs[PEOPLE[j]][1], rot);
       var x = rx + (hp[0] - rx) * f, y = ry + (hp[1] - ry) * f;
-      var size = AV * (1 - f) + (AV * .5) * f;
+      var size = AV * (1 - f) + (W < 700 ? 30 : 44) * f;
       var vis = f < 1 ? 1 : (hp[2] > 0 ? Math.min(1, hp[2] * 4) : 0);
       var appear = clamp(p * 40 - j * .4, 0, 1);
       if (vis * appear <= 0) continue;
-      drawPin(x, y, size, sprites[(j * 5) % sprites.length], f, vis * appear);
+      drawPhoto(x, y, size, photos[j], f, vis * appear);
     }
     cx.globalAlpha = 1;
   }
