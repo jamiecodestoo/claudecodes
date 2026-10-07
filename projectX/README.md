@@ -46,3 +46,5 @@ The homepage is a static site (`projectX/site/index.html` plus `img/`), with no 
 3. Deploy. Pushes to the production branch redeploy automatically, and other branches (such as `claude/lucid-rubin-4cv0gf`) get preview URLs.
 
 From a terminal instead: `npx vercel` in the repo root, then `npx vercel --prod`.
+
+Pushing to `claude/lucid-rubin-4cv0gf` deploys production automatically (Vercel Branch Tracking).
