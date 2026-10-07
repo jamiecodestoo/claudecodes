@@ -513,24 +513,34 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .path.is-scrub .path__steps { display: grid; grid-template-areas: "s"; min-height: 2.9em; font-size: clamp(2rem, 1rem + 3.6vw, 4.4rem); }
 .path.is-scrub .path__s { grid-area: s; align-content: start; opacity: 0; will-change: opacity, transform, filter; }
 .path.is-scrub .path__s h3 { font-size: 1em; }
-.path.is-scrub .path__track { display: block; position: relative; width: min(720px, calc(100% - 56px)); height: 44px; margin-top: clamp(8px, 2vh, 20px); }
-.path__rail { position: absolute; left: 0; right: 0; top: 7px; height: 2px; border-radius: 2px; background: var(--rule); overflow: hidden; }
-.path__fill { position: absolute; inset: 0; background: var(--pen); transform-origin: left; transform: scaleX(var(--f, 0)); }
-.path__stop { position: absolute; top: 3px; left: calc(var(--k) * 25%); width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--paper); box-shadow: inset 0 0 0 2px var(--rule); transition: box-shadow 300ms ease; }
-.path__stop.is-past { box-shadow: inset 0 0 0 2px var(--pen); }
-.path__stop em { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-style: normal; white-space: nowrap; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); transition: color 300ms ease; }
-.path__stop.is-on em { color: var(--ink); }
-.path__dot { position: absolute; top: 1px; left: 0; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: var(--pen); box-shadow: 0 0 0 5px color-mix(in srgb, var(--pen) 18%, transparent); transform: translateX(var(--x, 0px)); will-change: transform; }
-@media (max-width: 600px) { .path__stop em { font-size: 9.5px; letter-spacing: .04em; } .path__stop:nth-of-type(odd) em { top: -20px; } }
+.path.is-scrub .path__track { display: block; position: relative; width: min(820px, calc(100% - 48px)); height: 112px; margin-top: clamp(12px, 3vh, 32px); }
+.path__s p { white-space: nowrap; }
+.path__head { position: absolute; left: 0; top: 0; height: 64px; transform: translateX(var(--x, 0px)); will-change: transform; z-index: 2; }
+.path__line { position: absolute; left: -1px; top: 26px; width: 2px; height: 38px; border-radius: 2px; background: var(--pen); }
+.path__line::before { content: ""; position: absolute; left: 50%; top: -4px; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%; background: var(--pen); }
+.path__tag { position: absolute; left: 0; top: 0; transform: translateX(var(--tx, -50%)); white-space: nowrap; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.path__ticks { position: absolute; left: 0; right: 0; top: 40px; height: 24px; }
+.path__ticks i { position: absolute; bottom: 0; width: 1px; height: 10px; background: var(--rule); transition: background 240ms ease; }
+.path__ticks i.is-day { height: 18px; }
+.path__ticks i.is-past { background: var(--ink-3); }
+.path__ticks b { position: absolute; bottom: -3px; width: 7px; height: 7px; margin-left: -3px; border-radius: 50%; background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--ink-3); transition: box-shadow 240ms ease, background 240ms ease; }
+.path__ticks b.is-past { background: var(--pen); box-shadow: inset 0 0 0 1.5px var(--pen); }
+.path__trial { position: absolute; top: 74px; height: 22px; }
+.path__trial::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--rule); border-radius: 2px; }
+.path__trial-fill { position: absolute; left: 0; top: 0; height: 2px; width: 100%; background: var(--pen); border-radius: 2px; transform-origin: left; transform: scaleX(var(--f, 0)); }
+.path__trial span { position: absolute; left: 50%; top: 9px; transform: translateX(-50%); white-space: nowrap; font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.path__scale { position: absolute; left: 0; right: 0; top: 74px; display: flex; justify-content: space-between; pointer-events: none; }
+.path__scale span { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); transform: translateY(18px); }
+@media (max-width: 700px) { .path__s p { white-space: normal; } }
 
 /* ---------------- is this for you: one honest question at a time ---------------- */
 .fit { position: relative; margin-top: clamp(40px, 6vw, 80px); display: grid; justify-items: center; text-align: center; gap: clamp(16px, 2.4vw, 24px); --fc: #F3F2EC; --fc-rule: #E3E2DA; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .fit { --fc: #1B1C19; --fc-rule: #33342F; } }
 :root[data-theme="dark"] .fit { --fc: #1B1C19; --fc-rule: #33342F; }
 .fit__h { margin: 0; font-size: clamp(1.7rem, 1.1rem + 2vw, 3rem); line-height: 1.08; letter-spacing: -.02em; font-weight: 400; font-variation-settings: "opsz" 60; text-wrap: balance; }
-.fit__deck { position: relative; width: min(600px, 100%); height: clamp(230px, 30vw, 300px); margin-top: clamp(12px, 2vw, 24px); }
+.fit__deck { position: relative; width: min(600px, 100%); height: clamp(230px, 30vw, 300px); margin-top: clamp(12px, 2vw, 24px); margin-bottom: 44px; }
 .fit__card { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; gap: 14px; padding: 28px clamp(24px, 4vw, 48px); border-radius: 20px; background: var(--fc); box-shadow: 0 30px 60px -32px rgba(20, 20, 18, .3), inset 0 0 0 1px var(--fc-rule); transform-origin: 50% 100%;
-  transition: transform 640ms var(--ease-settle), opacity 480ms ease; }
+  transition: transform 640ms var(--ease-settle), opacity 480ms ease, filter 480ms ease; }
 .fit__n { margin: 0; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
 .fit__q { margin: 0; font-size: clamp(1.4rem, 1rem + 1.4vw, 2.2rem); line-height: 1.2; letter-spacing: -.018em; text-wrap: balance; }
 .fit__why { margin: 0; color: var(--ink-2); font-size: var(--lead); line-height: 1.4; text-wrap: balance; }
@@ -847,20 +857,17 @@ html.lenis, html.lenis body { height: auto; }
           <div class="path__pin">
             <p class="label" id="path-h">How you get in</p>
             <div class="path__steps" id="path-steps">
-              <div class="path__s"><h3>You apply. No CV.</h3><p>Pick a role and tell us who you are.</p></div>
-              <div class="path__s"><h3>The assignment arrives.</h3><p>The moment you apply. A real piece of the job, not a quiz.</p></div>
-              <div class="path__s"><h3>A person reads it.</h3><p>Not a filter. The timer is tracked and never enforced.</p></div>
-              <div class="path__s"><h3>Two weeks on the real work.</h3><p>A trial on the actual job, with the people you would work with.</p></div>
-              <div class="path__s"><h3>Then you both decide.</h3><p>If it fits, you stay. If not, you leave with real work to show.</p></div>
+              <div class="path__s"><h3>You apply. No CV.</h3><p>Pick a role. Tell us who you are.</p></div>
+              <div class="path__s"><h3>The assignment arrives.</h3><p>A real piece of the job, the moment you apply.</p></div>
+              <div class="path__s"><h3>A person reads it.</h3><p>No filter. The timer is tracked, never enforced.</p></div>
+              <div class="path__s"><h3>Two weeks on the real work.</h3><p>The actual job, with the people you would work with.</p></div>
+              <div class="path__s"><h3>Then you both decide.</h3><p>If it fits, you stay. Either way, you keep the work.</p></div>
             </div>
             <div class="path__track" id="path-track" aria-hidden="true">
-              <span class="path__rail"><i class="path__fill"></i></span>
-              <span class="path__stop" style="--k:0"><em>Day 0</em></span>
-              <span class="path__stop" style="--k:1"><em>Minute one</em></span>
-              <span class="path__stop" style="--k:2"><em>Your pace</em></span>
-              <span class="path__stop" style="--k:3"><em>Two weeks</em></span>
-              <span class="path__stop" style="--k:4"><em>Decision</em></span>
-              <b class="path__dot"></b>
+              <div class="path__head" id="path-head"><span class="path__tag" id="path-tag">Day 0</span><i class="path__line"></i></div>
+              <div class="path__ticks" id="path-ticks"></div>
+              <div class="path__trial" id="path-trial"><i class="path__trial-fill"></i><span>Two-week trial</span></div>
+              <div class="path__scale"><span>Day 0</span><span>Day 14</span></div>
             </div>
           </div>
         </div>
@@ -876,14 +883,13 @@ html.lenis, html.lenis body { height: auto; }
           <div class="fit__card"><p class="fit__n">4 of 6</p><p class="fit__q">I work well remote and async, across time zones.</p></div>
           <div class="fit__card"><p class="fit__n">5 of 6</p><p class="fit__q">I would rather find what works on a small budget than wait for a big one.</p></div>
           <div class="fit__card"><p class="fit__n">6 of 6</p><p class="fit__q">I want in early, at a company that is one year old.</p></div>
-          <div class="fit__card fit__result" id="fit-result"><p class="fit__n">Your answer</p><p class="fit__q" id="fit-verdict">You would fit right in.</p><p class="fit__why" id="fit-why">Pick a role and send us the work.</p></div>
+          <div class="fit__card fit__result" id="fit-result"><p class="fit__n">Your answer</p><p class="fit__q" id="fit-verdict">You would fit right in.</p><p class="fit__why" id="fit-why">Pick a role below and send us the work.</p></div>
         </div>
         <div class="fit__btns" id="fit-btns">
           <button class="btn fit__yes" type="button" data-a="1">That&rsquo;s me</button>
           <button class="fit__no" type="button" data-a="0">Not really</button>
         </div>
         <div class="fit__after" id="fit-after" hidden>
-          <a class="btn" href="https://www.8x.careers/join">See the open roles</a>
           <button class="fit__no" type="button" id="fit-again">Start again</button>
         </div>
       </section>
@@ -975,7 +981,7 @@ html.lenis, html.lenis body { height: auto; }
     var deck = $('#fit-deck'), cards = $$('#fit-deck .fit__card:not(.fit__result)'), result = $('#fit-result');
     var btns = $('#fit-btns'), after = $('#fit-after'), verdict = $('#fit-verdict'), why = $('#fit-why');
     var VERDICTS = [
-      [5, 'You would fit right in.', 'Pick a role and send us the work.'],
+      [5, 'You would fit right in.', 'Pick a role below and send us the work.'],
       [3, 'Some of this will stretch you.', 'That is the point, if you want it. The trial is two weeks either way.'],
       [0, 'Honestly, this is probably not for you.', 'That is fine. Better to know now than two weeks in.']
     ];
@@ -983,12 +989,13 @@ html.lenis, html.lenis body { height: auto; }
     function lay() {
       cards.concat([result]).forEach(function (c, i) {
         var d = i - at;
-        if (c === result) d = at >= cards.length ? 0 : 3;
+        if (c === result) d = at >= cards.length ? 0 : 4;
         if (c._gone) return;
-        var depth = Math.min(Math.max(d, 0), 3);
+        var depth = Math.min(Math.max(d, 0), 4);
         c.style.zIndex = 10 - depth;
-        c.style.opacity = d < 0 ? 0 : depth >= 3 ? 0 : 1;
-        c.style.transform = 'translateY(' + (-depth * 12) + 'px) scale(' + (1 - depth * .045) + ')';
+        c.style.opacity = d < 0 || depth >= 4 ? 0 : (1 - depth * .18).toFixed(2);
+        c.style.transform = 'translateY(' + (depth * 16) + 'px) scale(' + (1 - depth * .05).toFixed(3) + ')';
+        c.style.filter = depth ? 'blur(' + (depth * 1.6).toFixed(1) + 'px)' : 'none';
         c.setAttribute('aria-hidden', d === 0 ? 'false' : 'true');
         c.style.pointerEvents = d === 0 ? 'auto' : 'none';
       });
@@ -999,6 +1006,7 @@ html.lenis, html.lenis body { height: auto; }
       c._gone = true;
       c.style.zIndex = 20;
       c.style.opacity = 0;
+      c.style.filter = 'none';
       c.style.transform = 'translate(' + (a ? 120 : -120) + '%, -20px) rotate(' + (a ? 8 : -8) + 'deg)';
       at++;
       if (at >= cards.length) {
@@ -1259,9 +1267,10 @@ html.lenis, html.lenis body { height: auto; }
   function renderNet() {}
 
   /* the header button appears once the hero's own button has scrolled away */
-  var navCta = $('#nav-cta'), heroBtn = $('.hero .btn');
+  var navCta = $('#nav-cta'), heroBtn = $('.hero .btn'), closeBtn = $('#roles .btn');
   function renderNav() {
-    var on = heroBtn.getBoundingClientRect().bottom < 0;
+    var cb = closeBtn.getBoundingClientRect();
+    var on = heroBtn.getBoundingClientRect().bottom < 0 && !(cb.top < window.innerHeight && cb.bottom > 0);
     if (navCta.classList.contains('is-on') !== on) {
       navCta.classList.toggle('is-on', on);
       navCta.setAttribute('aria-hidden', on ? 'false' : 'true');
@@ -1398,7 +1407,15 @@ html.lenis, html.lenis body { height: auto; }
 
   /* ================= HOW YOU GET IN: a dot travels the line, one step at a time ================= */
   var path = $('#path'), pathScroll = $('#path .path__scroll'), pathSteps = $$('#path-steps .path__s');
-  var pathTrack = $('#path-track'), pathStops = $$('#path-track .path__stop'), pathFill = $('#path-track .path__fill'), pathDot = $('#path-track .path__dot');
+  var pathTrack = $('#path-track'), pathHead = $('#path-head'), pathTag = $('#path-tag'), pathTicks = $('#path-ticks'), pathTrial = $('#path-trial');
+  /* fourteen days in quarter-day ticks; where each step sits on that ruler */
+  var PATH_AT = [0, .03, .1, .55, 1], PATH_TAG = ['Day 0', 'Minute one', 'Within days', 'Two-week trial', 'Day 14'], TRIAL = [.12, .97];
+  var pathTickEls = [], pathMarkEls = [];
+  (function () {
+    for (var q = 0; q <= 56; q++) { var t = document.createElement('i'); if (q % 4 === 0) t.className = 'is-day'; t.style.left = (q / 56 * 100) + '%'; t._at = q / 56; pathTicks.appendChild(t); pathTickEls.push(t); }
+    [0, 2, 4].forEach(function (k) { var m = document.createElement('b'); m.style.left = (PATH_AT[k] * 100) + '%'; m._at = PATH_AT[k]; pathTicks.appendChild(m); pathMarkEls.push(m); });
+    pathTrial.style.left = (TRIAL[0] * 100) + '%'; pathTrial.style.width = ((TRIAL[1] - TRIAL[0]) * 100) + '%';
+  })();
   path.classList.add('is-scrub');
   var pathOn = -1;
   function renderPath() {
@@ -1415,15 +1432,17 @@ html.lenis, html.lenis body { height: auto; }
       var b = Math.min(1, Math.abs(d) * 2.2) * 8;
       st.style.filter = b > .05 ? 'blur(' + b.toFixed(2) + 'px)' : 'none';
     });
-    var w = pathTrack.clientWidth, t = f / (N - 1);
-    pathFill.style.setProperty('--f', t.toFixed(4));
-    pathDot.style.setProperty('--x', (t * w).toFixed(1) + 'px');
+    /* the playhead moves between the stages on a fourteen-day ruler */
+    var w = pathTrack.clientWidth, k0 = Math.min(N - 2, Math.floor(f)), at = PATH_AT[k0] + (PATH_AT[k0 + 1] - PATH_AT[k0]) * (f - k0);
+    pathHead.style.setProperty('--x', (at * w).toFixed(1) + 'px');
     var on = Math.round(f);
-    if (on !== pathOn) {
-      pathOn = on;
-      pathStops.forEach(function (s2, i) { s2.classList.toggle('is-on', i === on); });
-    }
-    pathStops.forEach(function (s2, i) { s2.classList.toggle('is-past', i <= f + .001); });
+    if (on !== pathOn) { pathOn = on; pathTag.textContent = PATH_TAG[on]; }
+    /* keep the label inside the ruler at both ends */
+    var tw = pathTag.offsetWidth, tx = clamp(-tw / 2, -at * w, w - at * w - tw);
+    pathTag.style.setProperty('--tx', tx.toFixed(1) + 'px');
+    pathTickEls.forEach(function (t) { var past = t._at <= at + .0005; if (t._p !== past) { t._p = past; t.classList.toggle('is-past', past); } });
+    pathMarkEls.forEach(function (m) { var past = m._at <= at + .0005; if (m._p !== past) { m._p = past; m.classList.toggle('is-past', past); } });
+    pathTrial.style.setProperty('--f', clamp((at - TRIAL[0]) / (TRIAL[1] - TRIAL[0]), 0, 1).toFixed(4));
   }
 
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
