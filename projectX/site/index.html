@@ -484,6 +484,9 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .roll__i { grid-area: 1 / 1; justify-self: center; white-space: nowrap; transition: transform 720ms var(--ease-settle), opacity 520ms ease, filter 520ms ease; }
 .roll__i.is-in { transform: translateY(110%); opacity: 0; filter: blur(4px); transition: none; }
 .roll__i.is-out { transform: translateY(-110%); opacity: 0; filter: blur(4px); }
+.own__dock { display: none; }
+.own.is-scrub .own__dock { display: block; position: absolute; left: 0; top: 0; z-index: 3; margin: 0; font-size: clamp(1.5rem, 1rem + 1.5vw, 2.3rem); line-height: 1.1; letter-spacing: -.02em; font-weight: 380; font-variation-settings: "opsz" 60; white-space: nowrap; transform-origin: 0 0; pointer-events: none; will-change: transform, opacity; }
+.own.is-scrub .own__fixed { opacity: 0; }
 .own__mini { display: none; }
 .own.is-scrub .own__scroll { height: calc(100svh + 260svh); }
 .own.is-scrub .own__pin { position: sticky; top: 0; height: 100svh; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; }
@@ -493,7 +496,6 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .own__mini img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .own__mini::after { content: ""; position: absolute; inset: 0; background: radial-gradient(110% 85% at 50% 52%, rgba(10, 10, 9, .62), rgba(10, 10, 9, .4) 62%, rgba(10, 10, 9, .52)); }
 .own__ml { position: relative; z-index: 1; margin: 0; display: grid; justify-items: center; gap: .14em; font-weight: 380; font-variation-settings: "opsz" 72; white-space: nowrap; text-shadow: 0 2px 24px rgba(0, 0, 0, .25); }
-.own__ml span { font-size: var(--mini-fx, 14px); color: rgba(255, 255, 255, .82); letter-spacing: -.01em; }
 .own__ml b { font-weight: 380; font-size: var(--mini-fr, 30px); line-height: 1.1; letter-spacing: -.032em; }
 @media (max-width: 600px) { .own__card { aspect-ratio: 4 / 5; border-radius: 16px; } }
 
@@ -777,10 +779,11 @@ html.lenis, html.lenis body { height: auto; }
               <div class="own__imgs" aria-hidden="true"><img src="img/join/j1.jpg" alt="" class="is-on" loading="lazy"><img src="img/join/j2.jpg" alt="" loading="lazy"><img src="img/join/j3.jpg" alt="" loading="lazy"><img src="img/join/j4.jpg" alt="" loading="lazy"><img src="img/join/j5.jpg" alt="" loading="lazy"></div>
               <h3 class="own__line" aria-live="polite"><span class="own__fixed">Join as a</span> <span class="own__role"><span class="roll" id="own-role"><span class="roll__i">Market Lead</span></span></span></h3>
             </div>
-            <div class="own__mini" aria-hidden="true"><img src="img/join/j2.jpg" alt="" loading="lazy"><p class="own__ml"><span>Join as a</span><b>Designer</b></p></div>
-            <div class="own__mini" aria-hidden="true"><img src="img/join/j3.jpg" alt="" loading="lazy"><p class="own__ml"><span>Join as a</span><b>Software Engineer</b></p></div>
-            <div class="own__mini" aria-hidden="true"><img src="img/join/j4.jpg" alt="" loading="lazy"><p class="own__ml"><span>Join as a</span><b>Paid Ads Manager</b></p></div>
-            <div class="own__mini" aria-hidden="true"><img src="img/join/j5.jpg" alt="" loading="lazy"><p class="own__ml"><span>Join as a</span><b>Builder in Residence</b></p></div>
+            <p class="own__dock" aria-hidden="true">Join as a</p>
+            <div class="own__mini" aria-hidden="true"><img src="img/join/j2.jpg" alt="" loading="lazy"><p class="own__ml"><b>Designer</b></p></div>
+            <div class="own__mini" aria-hidden="true"><img src="img/join/j3.jpg" alt="" loading="lazy"><p class="own__ml"><b>Software Engineer</b></p></div>
+            <div class="own__mini" aria-hidden="true"><img src="img/join/j4.jpg" alt="" loading="lazy"><p class="own__ml"><b>Paid Ads Manager</b></p></div>
+            <div class="own__mini" aria-hidden="true"><img src="img/join/j5.jpg" alt="" loading="lazy"><p class="own__ml"><b>Builder in Residence</b></p></div>
           </div>
         </div>
       </section>
@@ -1175,7 +1178,7 @@ html.lenis, html.lenis body { height: auto; }
 
   /* ================= JOIN AS on scroll: the card narrows into a carousel of every role ================= */
   var own = $('#own'), ownScroll = $('#own .own__scroll'), ownPin = $('#own-pin'), ownCard = $('#own .own__card'), ownLine = $('#own .own__line');
-  var ownMinis = $$('#own .own__mini'), ownRole = $('#own .own__role'), ownFixed = $('#own .own__fixed');
+  var ownMinis = $$('#own .own__mini'), ownRole = $('#own .own__role'), ownFixed = $('#own .own__fixed'), ownDock = $('#own .own__dock');
   own.classList.add('is-scrub');
   function renderOwn() {
     var r = ownScroll.getBoundingClientRect(), vh = window.innerHeight;
@@ -1204,6 +1207,16 @@ html.lenis, html.lenis body { height: auto; }
     var miniFr = Math.min(bigFr, cw * (phone ? .1 : .095)), k = miniFr / bigFr;
     ownLine.style.transform = 'translate(-50%,-50%) scale(' + (1 + (k - 1) * B).toFixed(4) + ')';
     ownPin.style.setProperty('--mini-fr', miniFr.toFixed(1) + 'px'); ownPin.style.setProperty('--mini-fx', (bigFx * k).toFixed(1) + 'px');
+    /* "Join as a" leaves the photo and settles above the row, written once for every card */
+    var D = inOut(seg(p, .1, .32)), pr = ownPin.getBoundingClientRect(), fr = ownFixed.getBoundingClientRect();
+    var dw = ownDock.offsetWidth, dh = ownDock.offsetHeight;
+    var s0 = fr.width / dw, sx = fr.left - pr.left, sy = fr.top - pr.top + (fr.height - dh * s0) / 2;
+    var tx = (W - dw) / 2, ty = Math.max(phone ? 72 : 88, (H - ch) / 2 - (phone ? 20 : 30) - dh);
+    var dx = sx + (tx - sx) * D, dy = sy + (ty - sy) * D, ds = s0 + (1 - s0) * D;
+    ownDock.style.transform = 'translate3d(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px,0) scale(' + ds.toFixed(4) + ')';
+    ownDock.style.color = D >= 1 ? 'var(--ink)' : 'color-mix(in srgb, var(--ink) ' + (D * 100).toFixed(1) + '%, #fff)';
+    ownDock.style.opacity = (.82 + .18 * D).toFixed(3);
+    ownDock.style.textShadow = D >= 1 ? 'none' : '0 2px 24px rgba(0,0,0,' + (.25 * (1 - D)).toFixed(3) + ')';
     /* the others slide in beside it, then the row glides past */
     ownMinis.forEach(function (m, j) {
       var i = j + 1, cx = W / 2 + i * step - shift, inn = clamp((B - .68 - j * .05) / .3, 0, 1);
