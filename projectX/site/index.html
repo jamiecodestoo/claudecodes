@@ -471,20 +471,23 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .bet__l .w { opacity: var(--o, 1); }
 .bet__l .key { background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 92%; background-size: calc(var(--u, 1) * 100%) max(2px, .05em); }
 .bet.is-scrub { margin-top: -12svh; }
-.bet.is-scrub .bet__scroll { height: calc(24svh + 4 * 80svh); }
-.bet.is-scrub .bet__pin { position: sticky; top: 38svh; height: 24svh; padding-block: 0; align-content: center; }
+.bet.is-scrub .bet__scroll { height: calc(100svh + 4 * 85svh); }
+.bet.is-scrub .bet__pin { position: sticky; top: 0; height: 100svh; padding-block: 0; align-content: center; gap: clamp(14px, 2.6vh, 28px); }
+.bet__stage { position: relative; width: min(960px, 100%); height: min(60svh, 580px); }
+.bet__stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.bet:not(.is-scrub) .bet__stage { display: none; }
 .bet.is-scrub .bet__lines { grid-template-areas: "l"; grid-template-columns: minmax(0, 1fr); gap: 0; font-size: var(--bet-fs, 4rem); }
 .bet.is-scrub .bet__l { grid-area: l; white-space: nowrap; text-wrap: nowrap; opacity: 0; will-change: opacity, transform, filter; }
 
 /* ---------------- what you'd own: "Join as a" stays, a photo and the role roll over ---------------- */
 .own { position: relative; margin-top: clamp(96px, 11vw, 150px); display: grid; justify-items: center; text-align: center; gap: clamp(18px, 2.6vw, 28px); }
-.own__line { margin: 0; white-space: nowrap; font-size: clamp(1.8rem, .8rem + 3.4vw, 4rem); line-height: 1.15; letter-spacing: -.026em; font-weight: 380; font-variation-settings: "opsz" 72; }
+.own__line { margin: 0; display: grid; justify-items: center; gap: .12em; white-space: nowrap; font-size: clamp(2.6rem, 1rem + 5.4vw, 6rem); line-height: 1.05; letter-spacing: -.03em; font-weight: 380; font-variation-settings: "opsz" 72; }
+.own__role { font-size: .5em; letter-spacing: -.016em; color: var(--ink); }
 .roll { display: inline-grid; vertical-align: baseline; overflow: hidden; padding: .1em .03em .2em; margin: -.1em -.03em -.2em; text-align: left; }
-.roll__i { grid-area: 1 / 1; justify-self: start; white-space: nowrap; transition: transform 720ms var(--ease-settle), opacity 520ms ease, filter 520ms ease; }
+.roll__i { grid-area: 1 / 1; justify-self: center; white-space: nowrap; transition: transform 720ms var(--ease-settle), opacity 520ms ease, filter 520ms ease; }
 .roll__i.is-in { transform: translateY(110%); opacity: 0; filter: blur(4px); transition: none; }
 .roll__i.is-out { transform: translateY(-110%); opacity: 0; filter: blur(4px); }
 .own__img { display: inline-block; height: .86em; width: 1.29em; object-fit: cover; border-radius: .14em; vertical-align: -.1em; margin-right: .22em; background: var(--rule); }
-@media (max-width: 600px) { .own__line { white-space: normal; } .own__fixed { display: block; } .own .roll__i { justify-self: center; } }
 
 .end { margin-top: clamp(96px, 12vw, 160px); padding-block: 28px 56px; border-top: 1px solid var(--rule); text-align: center; }
 
@@ -749,6 +752,7 @@ html.lenis, html.lenis body { height: auto; }
       <section class="bet" id="bet" aria-label="What 8x believes">
         <div class="bet__scroll">
           <div class="bet__pin">
+            <div class="bet__stage" aria-hidden="true"><canvas id="bet-canvas"></canvas></div>
             <div class="bet__lines" id="bet-lines">
               <p class="bet__l"><span class="w">Building</span> <span class="w">is</span> <span class="w key">cheap</span> <span class="w">now.</span></p>
               <p class="bet__l"><span class="w">Getting</span> <span class="w">it</span> <span class="w key">in front of people</span> <span class="w">isn&rsquo;t.</span></p>
@@ -761,7 +765,7 @@ html.lenis, html.lenis body { height: auto; }
 
       <section class="own" id="own" aria-labelledby="own-h">
         <p class="label" id="own-h">What you&rsquo;d own</p>
-        <h3 class="own__line" aria-live="polite"><span class="own__fixed">Join as a</span> <span class="roll" id="own-role"><span class="roll__i"><img src="img/own/s1.jpg" alt="" class="own__img">Market Lead.</span></span></h3>
+        <h3 class="own__line" aria-live="polite"><span class="own__fixed">Join as a</span> <span class="own__role"><span class="roll" id="own-role"><span class="roll__i"><img src="img/own/s1.jpg" alt="" class="own__img">Market Lead</span></span></span></h3>
       </section>
 
       <div class="end"><span class="label">Sections 1–4 · Next: how you get in</span></div>
@@ -785,7 +789,7 @@ html.lenis, html.lenis body { height: auto; }
   }
   /* ================= WHAT YOU'D OWN: "Join as a" stays put, a photo and the role roll over ================= */
   (function () {
-    var ROLES = ['Market Lead.', 'Designer.', 'Software Engineer.', 'Paid Ads Manager.', 'Builder in Residence.'];
+    var ROLES = ['Market Lead', 'Designer', 'Software Engineer', 'Paid Ads Manager', 'Builder in Residence'];
     var HOLD = 2600;
     var sec = $('#own'), roleEl = $('#own-role');
     function item(i) {
@@ -794,7 +798,7 @@ html.lenis, html.lenis body { height: auto; }
       sp.appendChild(im); sp.appendChild(document.createTextNode(ROLES[i])); return sp;
     }
     ROLES.forEach(function (r, i) { (new Image()).src = 'img/own/s' + (i + 1) + '.jpg'; });
-    /* the slot is as wide as the longest role, so "Join as a" never moves */
+    /* the slot is as wide as the longest role, so nothing around it moves */
     function fit() {
       var w = 0;
       ROLES.forEach(function (r, i) { var m = item(i); m.style.visibility = 'hidden'; roleEl.appendChild(m); w = Math.max(w, m.offsetWidth); roleEl.removeChild(m); });
@@ -1149,7 +1153,7 @@ html.lenis, html.lenis body { height: auto; }
     var avail = betBox.clientWidth, widest = 0;
     betBox.style.setProperty('--bet-fs', '100px');
     betLines.forEach(function (l) { widest = Math.max(widest, l.scrollWidth); });
-    var fs = Math.min(80, Math.floor(100 * avail * .94 / widest));
+    var fs = Math.min(40, Math.floor(100 * avail * .94 / widest));
     betBox.style.setProperty('--bet-fs', fs + 'px');
     betFit = window.innerWidth;
   }
@@ -1157,10 +1161,10 @@ html.lenis, html.lenis body { height: auto; }
     var r = betScroll.getBoundingClientRect(), vh = window.innerHeight;
     if (r.top > vh || r.bottom < 0) return;
     if (betFit !== window.innerWidth) fitBet();
-    /* the line sits in a short band pinned through the middle of the screen */
-    var p = clamp((vh * .38 - r.top) / (betScroll.offsetHeight - vh * .24), 0, 1), L = betLines.length;
+    var p = progress(betScroll), L = betLines.length;
     /* the first line is already arriving as the section comes up */
     var x = .2 + p * (L - .2);
+    betX = x;
     betLines.forEach(function (line, i) {
       var t = x - i, last = i === L - 1;
       var inn = inOut(clamp(t / .18, 0, 1));
@@ -1179,7 +1183,84 @@ html.lenis, html.lenis body { height: auto; }
         if (w.classList.contains('key')) w.style.setProperty('--u', inOut(clamp((t - w1 + .04) / .2, 0, 1)).toFixed(3));
       });
     });
+    drawBet(performance.now());
   }
+
+
+  /* the picture behind the four lines: products, the crowd, the people in between, and the one that matters */
+  var bc = $('#bet-canvas'), bx = bc.getContext('2d'), BW = 0, BH = 0, bdpr = 1, betX = 0, betLive = false;
+  var bcol = {};
+  function betColors() { var cs = getComputedStyle(document.documentElement); ['ink', 'ink-2', 'ink-3', 'rule', 'pen', 'paper'].forEach(function (k) { bcol[k] = cs.getPropertyValue('--' + k).trim(); }); }
+  betColors();
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', betColors);
+  function sizeBet() { var r = bc.getBoundingClientRect(); bdpr = Math.min(2, window.devicePixelRatio || 1); BW = r.width; BH = r.height; bc.width = Math.round(BW * bdpr); bc.height = Math.round(BH * bdpr); }
+  function rnd(i) { var v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); }
+  var COLS = 16, ROWS = 4, NP = COLS * ROWS, KEEP = [5, 18, 23, 36, 41, 58, 12, 49, 30], ONE = 23, NPE = 9, NAU = 54;
+  var keep = {}; KEEP.forEach(function (k, j) { keep[k] = j; });
+  var faces = []; for (var fi = 0; fi < NPE; fi++) { var fim = new Image(); fim.src = 'img/net/n' + (fi + 2) + '.jpg'; faces.push(fim); }
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { betLive = es[0].isIntersecting; }).observe(bet);
+  function rr(x, y, w, h, r) { bx.beginPath(); if (bx.roundRect) bx.roundRect(x, y, w, h, r); else bx.rect(x, y, w, h); }
+  function seg2(a, b, f) { return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f]; }
+  function line(a, b, f, col, al, lw) { if (f <= 0 || al <= 0) return; var e = seg2(a, b, f); bx.globalAlpha = al; bx.strokeStyle = col; bx.lineWidth = lw || 1; bx.beginPath(); bx.moveTo(a[0], a[1]); bx.lineTo(e[0], e[1]); bx.stroke(); }
+  function drawBet(now) {
+    if (!BW || bc.width !== Math.round(bc.getBoundingClientRect().width * bdpr)) sizeBet();
+    if (!BW || !BH) return;
+    var x = betX;
+    bx.setTransform(bdpr, 0, 0, bdpr, 0, 0); bx.clearRect(0, 0, BW, BH);
+    var gap = Math.min(BW * .78 / COLS, 54), ps = Math.min(gap * .52, 22);
+    var yP = BH * .1, yPe = BH * .56, yA = BH * .9;
+    var B = inOut(seg(x, 1.0, 1.7)), D = inOut(seg(x, 3.0, 3.6));
+    /* positions */
+    var P = []; for (var i = 0; i < NP; i++) { var c = i % COLS, r = Math.floor(i / COLS); P.push([BW / 2 + (c - (COLS - 1) / 2) * gap, yP + r * gap]); }
+    var one0 = P[ONE], oneC = [BW / 2, BH * .24], oneP = seg2(one0, oneC, D);
+    var PE = []; for (var j = 0; j < NPE; j++) PE.push([BW * .12 + j * (BW * .76 / (NPE - 1)), yPe + Math.sin(j / (NPE - 1) * Math.PI) * -BH * .04]);
+    var AU = []; for (var k = 0; k < NAU; k++) AU.push([BW * .05 + k * (BW * .9 / (NAU - 1)), yA + (k % 2) * 8]);
+    var audA = out3(seg(x, .9, 1.4));
+    /* links: each person takes a product, then reaches six people in the crowd */
+    var lit = {};
+    for (j = 0; j < NPE; j++) {
+      var pj = out3(clamp((x - 2.0 - j * .04) / .22, 0, 1));
+      var src = KEEP[j % KEEP.length], sp = src === ONE ? oneP : P[src];
+      var f1 = inOut(clamp((x - 2.12 - j * .03) / .3, 0, 1)), f2 = inOut(clamp((x - 2.4 - j * .03) / .3, 0, 1));
+      var fade = src === ONE ? 1 : 1 - D * .8;
+      line(sp, PE[j], f1 * (1 - D), bcol['ink-3'], .55 * fade, 1);
+      line(oneP, PE[j], D, bcol.pen, .7, 1.2);
+      var a0 = Math.round(j * (NAU - 6) / (NPE - 1));
+      for (var q = 0; q < 6; q++) { line(PE[j], AU[a0 + q], f2, bcol['ink-3'], .4, 1); if (f2 >= 1) lit[a0 + q] = 1; }
+      /* pulses once the network is running */
+      if (f2 >= 1 && pj >= 1) {
+        var ph = ((now / 1700) + j * .137) % 1, pa = ph < .5 ? seg2(sp, PE[j], ph * 2) : seg2(PE[j], AU[a0 + Math.floor(rnd(j * 7 + Math.floor(now / 1700)) * 6)], (ph - .5) * 2);
+        if (D > .5) pa = seg2(PE[j], oneP, 1 - ((now / 1700 + j * .137) % 1));
+        bx.globalAlpha = .9; bx.fillStyle = bcol.pen; bx.beginPath(); bx.arc(pa[0], pa[1], 2.4, 0, 6.283); bx.fill();
+      }
+    }
+    /* the crowd */
+    for (k = 0; k < NAU; k++) { bx.globalAlpha = audA * (lit[k] ? .95 : .35); bx.fillStyle = lit[k] ? bcol.ink : bcol['ink-3']; bx.beginPath(); bx.arc(AU[k][0], AU[k][1], lit[k] ? 3.4 : 2.8, 0, 6.283); bx.fill(); }
+    /* products: cheap to build, most never reach anyone */
+    for (i = 0; i < NP; i++) {
+      var ap = out3(clamp((x - (i / NP) * .55) / .14, 0, 1)); if (ap <= 0) continue;
+      var kept = i in keep, s0 = rnd(i), pos = P[i], al = 1, sz = ps * ap;
+      if (!kept) { pos = [pos[0], pos[1] + B * BH * .2 * (.4 + .6 * s0)]; al = 1 - B * .92; }
+      else al = 1 - D * (i === ONE ? 0 : .8);
+      if (i === ONE) { pos = oneP; sz = ps * ap * (1 + D * 1.7); }
+      if (al <= .01) continue;
+      bx.globalAlpha = al; bx.fillStyle = i === ONE && D > 0 ? bcol.pen : (kept && B > .5 ? bcol.ink : bcol['ink-2']);
+      rr(pos[0] - sz / 2, pos[1] - sz / 2, sz, sz, sz * .24); bx.fill();
+    }
+    if (D > 0) { bx.globalAlpha = D; bx.strokeStyle = bcol.pen; bx.lineWidth = 1.5; bx.beginPath(); bx.arc(oneP[0], oneP[1], ps * 2.7 * (.8 + .2 * D), 0, 6.283); bx.stroke(); }
+    /* the people in between */
+    var pr = Math.min(24, BW / 30);
+    for (j = 0; j < NPE; j++) {
+      var pj2 = out3(clamp((x - 2.0 - j * .04) / .22, 0, 1)); if (pj2 <= 0) continue;
+      var rad = pr * pj2, cx2 = PE[j][0], cy2 = PE[j][1];
+      bx.globalAlpha = 1; bx.save(); bx.beginPath(); bx.arc(cx2, cy2, rad, 0, 6.283); bx.closePath(); bx.clip();
+      if (faces[j].complete && faces[j].naturalWidth) bx.drawImage(faces[j], cx2 - rad, cy2 - rad, rad * 2, rad * 2); else { bx.fillStyle = bcol.rule; bx.fill(); }
+      bx.restore();
+      bx.strokeStyle = bcol.paper; bx.lineWidth = 2; bx.beginPath(); bx.arc(cx2, cy2, rad, 0, 6.283); bx.stroke();
+    }
+    bx.globalAlpha = 1;
+  }
+  window.addEventListener('resize', function () { BW = 0; });
 
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
   var pars = $$('[data-par]');
@@ -1203,7 +1284,7 @@ html.lenis, html.lenis body { height: auto; }
     if (lenis) lenis.raf(t);
     var y = window.scrollY;
     if (y !== last) { last = y; frame(t); }
-    else if (crowdLive) renderCrowd(t);
+    else { if (crowdLive) renderCrowd(t); if (betLive) drawBet(t); }
     requestAnimationFrame(loop);
   }
   function onResize() { last = -1; if (lenis) lenis.resize(); }
