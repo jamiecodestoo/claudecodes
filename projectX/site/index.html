@@ -807,6 +807,14 @@ html.lenis, html.lenis body { height: auto; }
     var r = el.getBoundingClientRect(), total = el.offsetHeight - window.innerHeight;
     return total > 0 ? clamp(-r.top / total, 0, 1) : 1;
   }
+  /* the size the big Join card takes, worked out the same way everywhere */
+  function ownBigW() {
+    var pin = document.getElementById('own-pin'), W = (pin && pin.clientWidth) || document.documentElement.clientWidth, H = window.innerHeight, phone = W < 640;
+    var gut = phone ? 16 : Math.max(16, Math.min(80, W * .046)), r = phone ? 1.25 : 9 / 16;
+    var bw = Math.min(1120, W - gut * 2);
+    if (bw * r > H * .82) bw = H * .82 / r;
+    return bw;
+  }
   /* ================= JOIN AS: a photo card, the role big and rolling over ================= */
   var ownCtl = null;
   (function () {
@@ -817,7 +825,7 @@ html.lenis, html.lenis body { height: auto; }
     /* one size for every role, so the longest still fits; the slot is that wide, so nothing shifts */
     function fit() {
       roleBox.style.removeProperty('--own-fs');
-      var avail = card.clientWidth * .86, w = 0;
+      var avail = ownBigW() * .86, w = 0;
       ROLES.forEach(function (r, i) { var m = item(i); m.style.visibility = 'hidden'; roleEl.appendChild(m); w = Math.max(w, m.offsetWidth); roleEl.removeChild(m); });
       var fs = parseFloat(getComputedStyle(roleBox).fontSize);
       if (w > avail) { fs = fs * avail / w; roleBox.style.setProperty('--own-fs', fs.toFixed(1) + 'px'); w = avail; }
@@ -1189,9 +1197,7 @@ html.lenis, html.lenis body { height: auto; }
       if (p > .005) { ownCtl.freeze(true); if (ownCtl.now() !== 0) ownCtl.go(0); }
       else ownCtl.freeze(false);
     }
-    var gut = phone ? 16 : Math.max(16, Math.min(80, W * .046));
-    var bigW = Math.min(1120, W - gut * 2), bigH = bigW * (phone ? 1.25 : 9 / 16);
-    if (bigH > H * .82) { bigH = H * .82; bigW = bigH / (phone ? 1.25 : 9 / 16); }
+    var bigW = ownBigW(), bigH = bigW * (phone ? 1.25 : 9 / 16);
     var cw = phone ? W * .72 : Math.min(360, W * .25), ch = Math.min(cw * 4 / 3, H * .72), gap = phone ? 12 : 24, step = cw + gap;
     var B = inOut(seg(p, .06, .34)), C = inOut(seg(p, .4, .96)), shift = C * (ownMinis.length) * step;
     /* the big card becomes the first card of the row */
