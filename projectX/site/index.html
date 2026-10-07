@@ -819,7 +819,7 @@ html.lenis, html.lenis body { height: auto; }
   function renderTeam() {
     var p = progress(team), n = seats.length;
     if (!beam.style.height || beam.style.height === '0px') placeBeam();
-    if (teamDone && p >= .97) return; /* after the walk-through, hover takes over */
+    if (teamDone) return; /* the walk-through plays once; after that, hover takes over, even when scrolling back */
     lightSeat(Math.min(n - 1, Math.floor(clamp((p - .04) / .9, 0, .999) * n)));
     if (p >= .97 && !teamDone) { teamDone = true; team.classList.add('is-hover'); }
   }
