@@ -4234,6 +4234,127 @@ html:root .scroll-cue { left: 50%; right: auto; bottom: calc(env(safe-area-inset
 html:root .scroll-cue.idle { opacity: 1 !important; transform: translate(-50%, 0); }
 html:root .scroll-cue i { width: 18px; height: 28px; border-radius: 10px; }
 html:root .scroll-cue i::after { top: 5px; }
+/* ===== Special Requests hero: the guest's phone and the hotel's front desk, one request at a time ===== */
+.sr { --sr-red: #E4262C; --sr-red2: #C8161E; --sr-ink: #101828; --sr-ink2: #667085; --sr-line: #EAECF0; --sr-ok: #12B76A; --sr-blue: #2E90FA;
+  --sr-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Geist, system-ui, sans-serif;
+  position: relative; width: min(1000px, 100%); margin: 0 auto; text-align: left; letter-spacing: normal; }
+.sr-in { position: absolute; left: 0; top: 0; width: 1000px; height: 560px; transform-origin: 0 0; }
+.sr.narrow .sr-in { width: 420px; height: 800px; }
+.sr * { box-sizing: border-box; }
+/* devices */
+.sr-ph { position: absolute; left: 30px; top: 10px; width: 262px; height: 540px; padding: 11px; border-radius: 52px; background: linear-gradient(145deg, #2A2D34, #0E0F12 55%, #1C1E23);
+  box-shadow: inset 0 0 0 1.5px #3A3E47, inset 0 0 0 3px #0B0C0E, 0 50px 80px -34px rgba(16, 24, 40, .55), 0 18px 30px -18px rgba(16, 24, 40, .35); z-index: 3; }
+.sr-ph::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(120deg, rgba(255,255,255,.12), transparent 30%); }
+.sr-tb { position: absolute; left: 380px; top: 60px; width: 590px; height: 420px; padding: 14px; border-radius: 34px; background: linear-gradient(145deg, #2B2E35, #101114 60%, #1D1F24);
+  box-shadow: inset 0 0 0 1.5px #3A3E47, 0 60px 90px -40px rgba(16, 24, 40, .5), 0 20px 34px -20px rgba(16, 24, 40, .3); z-index: 2; }
+.sr.narrow .sr-ph { left: 79px; top: 0; }
+.sr.narrow .sr-tb { left: 15px; top: 518px; transform: scale(.66); transform-origin: 0 0; z-index: 4; }
+.sr-scr { position: relative; width: 100%; height: 100%; overflow: hidden; background: #fff; font-family: var(--sr-ui); color: var(--sr-ink); -webkit-font-smoothing: antialiased; }
+.sr-ph .sr-scr { border-radius: 41px; background: #F6F7F9; }
+.sr-tb .sr-scr { border-radius: 20px; display: grid; grid-template-columns: 54px 1fr; grid-template-rows: 46px 1fr; background: #F8F9FB; }
+/* phone: status bar + header */
+.sr-isl { position: absolute; left: 50%; top: 10px; width: 86px; height: 25px; margin-left: -43px; border-radius: 14px; background: #000; z-index: 5; }
+.sr-sb { position: absolute; left: 0; right: 0; top: 0; height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 6px 24px 0 28px; font: 600 12.5px/1 var(--sr-ui); color: #fff; z-index: 4; }
+.sr-sb i { display: inline-block; width: 15px; height: 9px; margin-left: 4px; border-radius: 2px; border: 1.3px solid #fff; position: relative; }
+.sr-sb i::after { content: ""; position: absolute; inset: 1px 3px 1px 1px; background: #fff; border-radius: 1px; }
+.sr-sb s { display: inline-flex; gap: 1.5px; align-items: flex-end; height: 9px; } .sr-sb s b { width: 2.5px; background: #fff; border-radius: 1px; } 
+.sr-hd { position: relative; height: 118px; padding: 52px 18px 0; background: radial-gradient(120% 140% at 85% 0%, #F04A4F 0%, var(--sr-red) 45%, var(--sr-red2) 100%); color: #fff; }
+.sr-hd small { display: block; font: 500 10.5px/1.3 var(--sr-ui); opacity: .82; }
+.sr-hd h4 { margin: 3px 0 0; font: 700 18px/1.15 var(--sr-ui); letter-spacing: -.01em; }
+.sr-hd svg { position: absolute; right: 16px; top: 54px; width: 26px; height: 26px; padding: 5px; border-radius: 50%; background: rgba(255,255,255,.18); stroke: #fff; fill: none; stroke-width: 2; }
+.sr-body { position: absolute; left: 0; right: 0; top: 104px; bottom: 0; border-radius: 18px 18px 0 0; background: #F6F7F9; }
+.sr-list { position: absolute; inset: 0; padding: 16px 12px 0; transition: transform .55s cubic-bezier(.65,0,.35,1), opacity .4s; }
+.sr-lab { margin: 0 4px 8px; font: 600 10px/1 var(--sr-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--sr-ink2); }
+.sr-row { position: relative; display: grid; grid-template-columns: 30px 1fr 18px; align-items: center; gap: 10px; margin-bottom: 7px; padding: 8px 10px; border-radius: 13px; background: #fff;
+  box-shadow: 0 0 0 1px var(--sr-line), 0 1px 2px rgba(16,24,40,.04); cursor: pointer; transition: box-shadow .3s, background .3s; }
+.sr-row .ic { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: var(--t, #F2F4F7); }
+.sr-row .ic svg { width: 17px; height: 17px; fill: none; stroke: var(--c, #344054); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.sr-row b { display: block; font: 600 12.5px/1.25 var(--sr-ui); }
+.sr-row small { display: block; margin-top: 1px; font: 500 10px/1.3 var(--sr-ui); color: var(--sr-ink2); }
+.sr-row .rd { width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px #D0D5DD; display: grid; place-items: center; transition: background .25s, box-shadow .25s; }
+.sr-row .rd svg { width: 11px; height: 11px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transform: scale(.4); transition: opacity .2s, transform .35s cubic-bezier(.34,1.56,.64,1); }
+.sr-row.on { background: #FFF6F6; box-shadow: 0 0 0 1.5px var(--sr-red), 0 6px 16px -10px rgba(228,38,44,.6); }
+.sr-row.on .rd { background: var(--sr-red); box-shadow: none; } .sr-row.on .rd svg { opacity: 1; transform: none; }
+.sr-more { grid-column: 1 / -1; height: 0; overflow: hidden; transition: height .45s cubic-bezier(.65,0,.35,1); }
+.sr-chips { display: flex; gap: 5px; padding-top: 9px; }
+.sr-chips span { flex: 1; padding: 6px 0; border-radius: 8px; text-align: center; font: 600 10.5px/1 var(--sr-ui); color: #344054; background: #F2F4F7; transition: background .25s, color .25s, box-shadow .25s; }
+.sr-chips span.on { background: var(--sr-red); color: #fff; box-shadow: 0 4px 10px -6px rgba(228,38,44,.8); }
+.sr-field { margin-top: 9px; padding: 8px 9px; min-height: 46px; border-radius: 9px; background: #F9FAFB; box-shadow: inset 0 0 0 1px var(--sr-line); font: 500 11px/1.4 var(--sr-ui); color: var(--sr-ink); }
+.sr-field .ph { color: #98A2B3; } .sr-field .ca { display: inline-block; width: 1.5px; height: 12px; margin-left: 1px; vertical-align: -2px; background: var(--sr-red); animation: srblink 1s steps(1) infinite; }
+@keyframes srblink { 50% { opacity: 0; } }
+.sr-cta { position: absolute; left: 12px; right: 12px; bottom: 26px; height: 42px; border-radius: 12px; display: grid; place-items: center; font: 700 13px/1 var(--sr-ui); color: #98A2B3; background: #E9EBEF; transition: background .3s, color .3s, transform .15s; }
+.sr-cta.ok { background: linear-gradient(180deg, #EC3B40, var(--sr-red2)); color: #fff; box-shadow: 0 10px 20px -12px rgba(228,38,44,.9); }
+.sr-cta.press { transform: scale(.96); }
+.sr.sent .sr-cta { transform: translateY(70px); opacity: 0; transition: transform .5s cubic-bezier(.65,0,.35,1) .1s, opacity .3s .1s; }
+.sr-home { position: absolute; left: 50%; bottom: 7px; width: 96px; height: 4px; margin-left: -48px; border-radius: 2px; background: #101828; opacity: .85; }
+/* phone: status view */
+.sr-st { position: absolute; inset: 0; padding: 18px 16px 0; transform: translateX(105%); transition: transform .55s cubic-bezier(.65,0,.35,1); background: #F6F7F9; }
+.sr.sent .sr-list { transform: translateX(-30%); opacity: 0; } .sr.sent .sr-st { transform: none; }
+.sr-card { padding: 14px; border-radius: 16px; background: #fff; box-shadow: 0 0 0 1px var(--sr-line), 0 8px 20px -14px rgba(16,24,40,.25); }
+.sr-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 999px; font: 600 9.5px/1 var(--sr-ui); color: #B42318; background: #FEF3F2; }
+.sr-pill::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.sr-card h5 { margin: 9px 0 2px; font: 700 15px/1.2 var(--sr-ui); letter-spacing: -.01em; }
+.sr-card > small { display: block; font: 500 10.5px/1.3 var(--sr-ui); color: var(--sr-ink2); }
+.sr-tl { margin: 14px 0 0; padding: 0; list-style: none; }
+.sr-tl li { position: relative; padding: 0 0 13px 24px; font: 600 11.5px/1.25 var(--sr-ui); color: #98A2B3; transition: color .3s; }
+.sr-tl li small { display: block; margin-top: 2px; font: 500 9.5px/1.2 var(--sr-ui); color: #98A2B3; }
+.sr-tl li::before { content: ""; position: absolute; left: 3px; top: 1px; width: 11px; height: 11px; border-radius: 50%; box-shadow: inset 0 0 0 2px #D0D5DD; background: #fff; transition: all .35s cubic-bezier(.34,1.56,.64,1); }
+.sr-tl li::after { content: ""; position: absolute; left: 8px; top: 15px; bottom: 0; width: 1.5px; background: #EAECF0; }
+.sr-tl li:last-child::after { display: none; }
+.sr-tl li.on { color: var(--sr-ink); } .sr-tl li.on::before { background: var(--sr-ok); box-shadow: 0 0 0 3px rgba(18,183,106,.15); }
+.sr-tl li.now::before { background: #fff; box-shadow: inset 0 0 0 3px var(--sr-blue), 0 0 0 4px rgba(46,144,250,.15); }
+.sr-bar { height: 4px; margin-top: 6px; border-radius: 2px; background: #EAECF0; overflow: hidden; } .sr-bar i { display: block; height: 100%; width: var(--p, 0%); border-radius: 2px; background: linear-gradient(90deg, var(--sr-blue), #53B1FD); transition: width .2s linear; }
+.sr-done { margin-top: 12px; display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: #ECFDF3; color: #067647; font: 600 11px/1.3 var(--sr-ui); opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .45s cubic-bezier(.34,1.56,.64,1); }
+.sr-done.on { opacity: 1; transform: none; }
+.sr-done svg { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.sr-nc { margin: 12px 4px 0; font: 500 10px/1.4 var(--sr-ui); color: var(--sr-ink2); text-align: center; }
+/* tablet: front desk */
+.sr-top { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; padding: 0 16px 0 14px; background: #fff; box-shadow: 0 1px 0 var(--sr-line); }
+.sr-top .lg { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; background: var(--sr-ink); color: #fff; font: 800 11px/1 var(--sr-ui); }
+.sr-top b { font: 700 13px/1.1 var(--sr-ui); } .sr-top small { display: block; font: 500 10px/1.2 var(--sr-ui); color: var(--sr-ink2); }
+.sr-top .sp { flex: 1; }
+.sr-live { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 999px; background: #ECFDF3; color: #067647; font: 600 10px/1 var(--sr-ui); }
+.sr-live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--sr-ok); animation: srlive 2s ease-out infinite; }
+@keyframes srlive { 0% { box-shadow: 0 0 0 0 rgba(18,183,106,.5); } 70%, 100% { box-shadow: 0 0 0 6px rgba(18,183,106,0); } }
+.sr-av { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: #F4EBFF; color: #6941C6; font: 700 10px/1 var(--sr-ui); }
+.sr-nav { display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 14px; background: #fff; box-shadow: 1px 0 0 var(--sr-line); }
+.sr-nav i { position: relative; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; color: #98A2B3; }
+.sr-nav i.on { background: #FEF3F2; color: var(--sr-red); }
+.sr-nav svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sr-nav .dot { position: absolute; right: 5px; top: 5px; width: 7px; height: 7px; border-radius: 50%; background: var(--sr-red); box-shadow: 0 0 0 2px #fff; opacity: 0; transform: scale(.3); transition: all .35s cubic-bezier(.34,1.56,.64,1); }
+.sr.ping .sr-nav .dot { opacity: 1; transform: none; }
+.sr-main { position: relative; padding: 14px 16px 0; overflow: hidden; }
+.sr-mh { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.sr-mh b { font: 700 15px/1 var(--sr-ui); letter-spacing: -.01em; } .sr-mh em { font-style: normal; padding: 3px 7px; border-radius: 999px; background: #F2F4F7; font: 600 10px/1 var(--sr-ui); color: #344054; }
+.sr-mh .sp { flex: 1; } .sr-mh span { padding: 5px 9px; border-radius: 7px; font: 600 10px/1 var(--sr-ui); color: var(--sr-ink2); } .sr-mh span.on { background: #fff; color: var(--sr-ink); box-shadow: 0 0 0 1px var(--sr-line); }
+.sr-rows { position: relative; }
+.sr-q { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 11px; height: 56px; margin-bottom: 7px; padding: 0 12px; border-radius: 12px; background: #fff;
+  box-shadow: 0 0 0 1px var(--sr-line), 0 1px 2px rgba(16,24,40,.04); transition: box-shadow .5s, transform .6s cubic-bezier(.34,1.3,.64,1), opacity .5s, margin .6s, height .6s; }
+.sr-q .rm { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: #F2F4F7; font: 700 11.5px/1 var(--sr-ui); color: #344054; }
+.sr-q b { display: block; font: 600 12.5px/1.25 var(--sr-ui); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .sr-q small { display: block; margin-top: 2px; font: 500 10px/1.2 var(--sr-ui); color: var(--sr-ink2); }
+.sr-q .s { padding: 5px 9px; border-radius: 999px; font: 600 10px/1 var(--sr-ui); white-space: nowrap; }
+.sr-q .s.done { background: #ECFDF3; color: #067647; } .sr-q .s.prog { background: #EFF8FF; color: #175CD3; } .sr-q .s.new { background: #FEF3F2; color: #B42318; }
+.sr-q .acc { padding: 7px 12px; border-radius: 8px; background: var(--sr-ink); color: #fff; font: 700 10.5px/1 var(--sr-ui); transition: transform .15s; } .sr-q .acc.press { transform: scale(.94); }
+.sr-q.fresh { background: #FFFBFA; box-shadow: 0 0 0 1.5px rgba(228,38,44,.55), 0 14px 26px -16px rgba(228,38,44,.55); }
+.sr-q.fresh .rm { background: var(--sr-red); color: #fff; }
+.sr-q.in { transform: translateY(-14px) scale(.98); opacity: 0; height: 0; margin-bottom: 0; }
+.sr-q.old { opacity: .55; }
+.sr-toast { position: absolute; right: 14px; top: 10px; display: flex; align-items: center; gap: 8px; padding: 8px 12px 8px 9px; border-radius: 12px; background: var(--sr-ink); color: #fff; font: 600 10.5px/1.2 var(--sr-ui);
+  box-shadow: 0 14px 28px -14px rgba(16,24,40,.6); transform: translateY(-140%); opacity: 0; transition: transform .5s cubic-bezier(.34,1.3,.64,1), opacity .3s; z-index: 3; }
+.sr-toast svg { width: 15px; height: 15px; fill: none; stroke: #FDA29B; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.sr.ping .sr-toast { transform: none; opacity: 1; }
+/* the request in flight + taps */
+.sr-fx { position: absolute; inset: 0; pointer-events: none; z-index: 6; overflow: visible; }
+.sr-arc { fill: none; stroke: rgba(228,38,44,.35); stroke-width: 1.5; stroke-dasharray: 3 6; stroke-linecap: round; opacity: 0; transition: opacity .4s; }
+.sr.fly .sr-arc { opacity: 1; }
+.sr-tok { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 6px; padding: 7px 11px 7px 8px; border-radius: 999px; background: #fff; color: var(--sr-ink); font: 700 10.5px/1 var(--sr-ui); white-space: nowrap;
+  box-shadow: 0 0 0 1px rgba(228,38,44,.25), 0 12px 26px -10px rgba(228,38,44,.55), 0 0 0 6px rgba(228,38,44,.06); offset-rotate: 0deg; offset-distance: 0%; opacity: 0; translate: -50% -50%; z-index: 7; }
+.sr-tok i { width: 16px; height: 16px; border-radius: 50%; background: var(--sr-red); display: grid; place-items: center; } .sr-tok svg { width: 9px; height: 9px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.sr-tap { position: absolute; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; background: rgba(16,24,40,.18); box-shadow: 0 0 0 1.5px rgba(255,255,255,.85); opacity: 0; z-index: 8; pointer-events: none; }
+.sr-tap.go { animation: srtap .6s cubic-bezier(.2,.7,.3,1); }
+@keyframes srtap { 0% { opacity: 0; transform: scale(.4); } 25% { opacity: 1; transform: scale(.85); } 100% { opacity: 0; transform: scale(1.6); } }
+:root[data-theme="dark"] .sr-ph, :root[data-theme="dark"] .sr-tb { box-shadow: inset 0 0 0 1.5px #4A4F59, 0 50px 90px -34px rgba(0,0,0,.85); }
+@media (prefers-reduced-motion: reduce) { .sr * { transition: none !important; animation: none !important; } }
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -6092,51 +6213,111 @@ html:root .scroll-cue i::after { top: 5px; }
       </g></g>
     </svg>`;
   };
-  // MakeMyTrip hero: ask on the phone, the bell rings, and the hotel brings it
-  const MM_REQ = [['bed', '🛏️', 'Extra bed', 'Rollaway for one more', '#E8F1FF'], ['blanket', '🧣', 'Extra blankets', 'Two more, please', '#FFF1E2'], ['taxi', '🚕', 'Hotel transfer', 'Pick-up at the airport', '#FFF8D6']];
-  function mmFrontHTML() {
-    const RY = [176, 240, 304];
-    const boy = (hands = '') => `<g class="bw"><g class="lg l"><rect x="-11" y="-42" width="9" height="42" rx="3" fill="#2B2F3A"/><ellipse cx="-7" cy="0" rx="8" ry="3.5" fill="#15171C"/></g><g class="lg r"><rect x="2" y="-42" width="9" height="42" rx="3" fill="#2B2F3A"/><ellipse cx="7" cy="0" rx="8" ry="3.5" fill="#15171C"/></g>
-      <rect x="-18" y="-92" width="36" height="54" rx="11" fill="#C8161E"/><path d="M-4 -92l4 10 4 -10" fill="#FFF"/>
-      <circle cx="0" cy="-104" r="15" fill="#E9B98C"/><circle cx="-5" cy="-105" r="1.8" fill="#2A1C12"/><circle cx="5" cy="-105" r="1.8" fill="#2A1C12"/><path d="M-5 -98q5 4 10 0" stroke="#2A1C12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-      <rect x="-13" y="-126" width="26" height="11" rx="3" fill="#C8161E"/><rect x="-13" y="-118" width="26" height="3" fill="#E3B04B"/>${hands}</g>`;
-    const hands = '<circle cx="-27" cy="-62" r="5" fill="#E9B98C"/><circle cx="27" cy="-62" r="5" fill="#E9B98C"/>';
-    const blanket = boy(`<g class="stack"><rect x="-26" y="-86" width="52" height="11" rx="4" fill="#F3E7D3"/><rect x="-26" y="-75" width="52" height="11" rx="4" fill="#9FC4E8"/><rect x="-26" y="-64" width="52" height="11" rx="4" fill="#F2B8B0"/><path d="M-20 -80.5h40M-20 -69.5h40M-20 -58.5h40" stroke="rgba(0,0,0,.12)" stroke-width="1.4"/></g>${hands}`);
-    const bed = `<g class="cart"><path d="M-40 -66v-14" stroke="#8C95A3" stroke-width="4" stroke-linecap="round"/><rect x="-158" y="-44" width="124" height="8" rx="3" fill="#8C95A3"/>
-      <rect x="-156" y="-60" width="120" height="17" rx="7" fill="#FFFFFF" stroke="#D5DAE1" stroke-width="1.5"/><rect x="-150" y="-70" width="34" height="13" rx="6" fill="#E8F1FF" stroke="#C9D7EE" stroke-width="1.2"/><rect x="-110" y="-62" width="72" height="19" rx="6" fill="#9FC4E8"/>
-      <path d="M-150 -36v24M-44 -36v24" stroke="#8C95A3" stroke-width="4"/><path d="M-40 -66h12" stroke="#8C95A3" stroke-width="4" stroke-linecap="round"/>
-      <g transform="translate(-150 -7)"><g class="wh"><circle r="7" fill="#2B2F3A"/><circle r="2.4" fill="#C9CED6"/></g></g><g transform="translate(-44 -7)"><g class="wh"><circle r="7" fill="#2B2F3A"/><circle r="2.4" fill="#C9CED6"/></g></g></g>` + boy(hands);
-    const taxi = boy('<circle cx="-27" cy="-62" r="5" fill="#E9B98C"/><g class="wave"><path d="M22 -80l10 -26" stroke="#C8161E" stroke-width="9" stroke-linecap="round"/><circle cx="33" cy="-110" r="5" fill="#E9B98C"/></g>') +
-      `<g class="mm-cab"><g transform="translate(254 0) scale(-1 1)"><path d="M6 -16v-30q0-10 10-12l26-4 22-26q4-4 10-4h62q7 0 11 5l22 25 22 5q9 2 9 12v29z" fill="#FFC93C"/><path d="M54 -62l20-22h28v22zM108 -84h30l18 22h-48z" fill="#BFE0F7"/>
-      <path d="M6 -36h194" stroke="#13233A" stroke-width="5" stroke-dasharray="9 9" opacity=".85"/><rect x="190" y="-50" width="10" height="7" rx="2" fill="#FFF1B8"/>
-      <g transform="translate(48 -14)"><g class="wh"><circle r="14" fill="#2B2F3A"/><circle r="5.5" fill="#C9CED6"/></g></g><g transform="translate(162 -14)"><g class="wh"><circle r="14" fill="#2B2F3A"/><circle r="5.5" fill="#C9CED6"/></g></g></g><rect x="132" y="-104" width="38" height="14" rx="4" fill="#13233A"/><text x="151" y="-93.5" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="10" fill="#FFC93C">TAXI</text></g>`;
-    return `<div class="mm-desk mm-req" id="mmFront">
-      <svg viewBox="0 0 600 400" aria-hidden="true">
-        <defs><clipPath id="mmScr"><rect x="29" y="15" width="212" height="370" rx="28"/></clipPath></defs>
-        <ellipse cx="320" cy="392" rx="300" ry="6" fill="#13233A" opacity=".07"/>
-        <g class="dk"><rect x="20" y="6" width="230" height="388" rx="38" fill="#14161A"/>
-          <g clip-path="url(#mmScr)"><rect x="29" y="15" width="212" height="370" fill="#FFFFFF"/><rect x="29" y="15" width="212" height="92" fill="#E4262C"/>
-            <rect x="46" y="52" width="38" height="38" rx="10" fill="#fff"/><text x="65" y="77" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="19" fill="#E4262C">my</text>
-            <text x="94" y="68" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="15" fill="#fff">Special Requests</text><text x="94" y="84" font-family="Bricolage Grotesque, sans-serif" font-weight="500" font-size="10.5" fill="#FFD9D9">Room 204 · Your stay</text></g>
-          <rect x="105" y="22" width="60" height="16" rx="8" fill="#14161A"/>
-          <g class="q"><text x="44" y="134" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="17" fill="#13233A">What do you need?</text>
-            <text x="44" y="153" font-family="Bricolage Grotesque, sans-serif" font-weight="500" font-size="11" fill="#6B7280">Tap one. We’ll ring the hotel.</text></g>
-          ${MM_REQ.map(([k, e, t, d, c], i) => `<g class="opt" data-k="${k}" style="--dy:${222 - RY[i]}px"><rect x="42" y="${RY[i]}" width="186" height="54" rx="15" fill="#fff" stroke="#E3E6EB" stroke-width="1.5"/>
-            <circle cx="68" cy="${RY[i] + 27}" r="16" fill="${c}"/><text x="68" y="${RY[i] + 33}" text-anchor="middle" font-size="16">${e}</text>
-            <text x="92" y="${RY[i] + 24}" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="13.5" fill="#13233A">${t}</text><text x="92" y="${RY[i] + 40}" font-family="Bricolage Grotesque, sans-serif" font-weight="500" font-size="10" fill="#6B7280">${d}</text>
-            <path class="chev" d="M210 ${RY[i] + 21}l6 6-6 6" stroke="#9AA1AD" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <g class="ok"><circle cx="212" cy="${RY[i] + 27}" r="10" fill="#1F9D55"/><path d="M207 ${RY[i] + 27}l3.5 3.5 6-7" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></g>`).join('')}
-          <g class="st"><text x="135" y="306" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="12" fill="#1F9D55">Sent to the hotel · on its way</text></g>
-          <g class="pbell" transform="translate(135 238)"><circle r="44" fill="#FFF6E0"/><g transform="scale(1.5)"><g class="bl"><path d="M-22 -2a22 20 0 0 1 44 0z" fill="#E8B84A"/><path d="M-14 -10a16 14 0 0 1 10 -8" stroke="#FFF1C2" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="-4" y="-27" width="8" height="7" rx="2" fill="#C9962E"/></g><rect x="-27" y="-3" width="54" height="5" rx="2.5" fill="#5A3B12"/></g>
-            <text class="dg" x="0" y="-56" text-anchor="middle" font-family="Gaegu, cursive" font-weight="700" font-size="20" fill="#C9962E">ding!</text></g>
-        </g>
-        <g class="act" data-k="blanket" style="--x:350"><g transform="scale(1.3)">${blanket}</g></g>
-        <g class="act" data-k="bed" style="--x:478"><g transform="scale(1.3)">${bed}</g></g>
-        <g class="act" data-k="taxi" style="--x:286"><g transform="scale(1.2)">${taxi}</g></g>
-      </svg>
-      ${MM_REQ.map(([k, , t], i) => `<button type="button" class="mm-opt" data-k="${k}" style="top:${RY[i] / 4}%" aria-label="Request: ${t}"></button>`).join('')}
-      <p class="mm-bub" id="mmBub" aria-live="polite"></p>
-    </div>`;
+  // ---- Special Requests hero: the guest's phone and the hotel's front desk ----
+  const SR_I = {
+    blanket: '<path d="M4 7.5h14.5a1.5 1.5 0 0 1 1.5 1.5v7a1.5 1.5 0 0 1-1.5 1.5H4z"/><path d="M4 11.5h16M8.5 7.5v10"/>',
+    checkin: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4.2l2.8 1.8"/>',
+    pickup: '<path d="M5 15.5V12l1.7-4.2A2 2 0 0 1 8.6 6.5h6.8a2 2 0 0 1 1.9 1.3L19 12v3.5"/><path d="M4 15.5h16v1.8a.7.7 0 0 1-.7.7H4.7a.7.7 0 0 1-.7-.7z"/>',
+    custom: '<path d="M14.5 5.5l4 4L9 19H5v-4z"/><path d="M12.5 7.5l4 4"/>',
+    check: '<path d="M5 12.5l4.2 4L19 7"/>', bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+    inbox: '<path d="M4 13l2.5-7h11L20 13v5H4z"/><path d="M4 13h4.5l1 2h5l1-2H20"/>', bed: '<path d="M3 18v-8M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11.5" r="1.6"/>',
+    chart: '<path d="M5 19V9M12 19V5M19 19v-7"/>', chat: '<path d="M5 18.5l1.2-3.6A7 7 0 1 1 9.2 18.4z"/>' };
+  const srSvg = (k, cls = '') => `<svg viewBox="0 0 24 24" class="${cls}" aria-hidden="true">${SR_I[k]}</svg>`;
+  const SR_ROWS = [['blanket', 'Extra blankets', 'Brought to your room', '#FFF4ED', '#E8590C'], ['checkin', 'Early check-in', 'Pick a time', '#EFF8FF', '#1570EF'],
+    ['pickup', 'Airport pickup', 'From the terminal', '#ECFDF3', '#079455'], ['custom', 'Something else', 'Write to the hotel', '#F4F3FF', '#6938EF']];
+  const SR_STORY = {
+    blanket: { title: 'Extra blankets × 2', desk: 'Extra blankets × 2', who: 'Ananya R.', team: 'Housekeeping', s3: 'On its way', s3s: 'About 8 min', tok: 'Extra blankets × 2', s4: 'Delivered to room 204', done: 'Delivered. No calls, no waiting on hold.' },
+    checkin: { title: 'Early check-in at 11:00', desk: 'Early check-in · 11:00', who: 'Ananya R.', team: 'Front desk', s3: 'Room being prepared', s3s: 'Ready by 11:00', tok: 'Early check-in · 11:00', s4: 'Confirmed for 11:00', done: 'You’re all set. Check in at 11:00.' },
+    custom: { title: 'A small anniversary cake', desk: '“It’s our anniversary. Could…”', who: 'Ananya R.', team: 'Kitchen', s3: 'Being arranged', s3s: 'Tonight, 8 PM', tok: 'Anniversary cake', s4: 'Arranged for 8 PM', done: 'The hotel has it covered. Happy anniversary.', text: 'It’s our anniversary. Could you arrange a small cake tonight?' } };
+  const SR_SEED = [['412', 'Airport drop · 6:30 AM', 'Rohan M. · Concierge', 'prog', 'In progress'], ['118', 'Late checkout · 1 PM', 'Kavya S. · Front desk', 'done', 'Done'], ['305', 'Baby cot', 'Meera & Arjun · Housekeeping', 'done', 'Done']];
+  function srHTML() {
+    const row = ([k, t, d, bg, c]) => `<div class="sr-row" data-k="${k}" style="--t:${bg};--c:${c}"><span class="ic">${srSvg(k)}</span><span><b>${t}</b><small>${d}</small></span><span class="rd">${srSvg('check')}</span>
+      ${k === 'checkin' ? '<div class="sr-more"><div class="sr-chips"><span>10:00</span><span>11:00</span><span>12:00</span><span>1 PM</span></div></div>' : ''}
+      ${k === 'custom' ? '<div class="sr-more"><div class="sr-field"><span class="tx"></span><span class="ca"></span><span class="ph">Tell the hotel what you need…</span></div></div>' : ''}</div>`;
+    const q = ([rm, t, who, s, l]) => `<div class="sr-q old"><span class="rm">${rm}</span><span><b>${t}</b><small>Room ${rm} · ${who}</small></span><span class="s ${s}">${l}</span></div>`;
+    return `<div class="sr" id="srHero" role="img" aria-label="A guest asks for extra blankets on the MakeMyTrip app; the request lands at the hotel's front desk, gets accepted and is delivered, with the guest tracking it live.">
+      <div class="sr-in">
+        <div class="sr-tb"><div class="sr-scr">
+          <div class="sr-top"><span class="lg">HV</span><span><b>Front desk</b><small>Hotel Valley · Special requests</small></span><span class="sp"></span><span class="sr-live">Live</span><span class="sr-av">PK</span></div>
+          <div class="sr-nav"><i class="on">${srSvg('inbox')}<span class="dot"></span></i><i>${srSvg('bed')}</i><i>${srSvg('chat')}</i><i>${srSvg('chart')}</i></div>
+          <div class="sr-main"><div class="sr-mh"><b>Guest requests</b><em class="n">3</em><span class="sp"></span><span class="on">All</span><span>New</span><span>In progress</span></div>
+            <div class="sr-rows">${SR_SEED.map(q).join('')}</div>
+            <div class="sr-toast">${srSvg('bell')}<span>New request · Room 204</span></div></div>
+        </div></div>
+        <div class="sr-ph"><div class="sr-scr">
+          <span class="sr-isl"></span><div class="sr-sb"><span>9:41</span><span><s><b style="height:3px"></b><b style="height:5px"></b><b style="height:7px"></b><b style="height:9px"></b></s><i></i></span></div>
+          <div class="sr-hd"><small>Hotel Valley · Room 204 · 12–14 Oct</small><h4>Special requests</h4>${srSvg('chat')}</div>
+          <div class="sr-body">
+            <div class="sr-list"><p class="sr-lab">Popular with guests</p>${SR_ROWS.map(row).join('')}</div>
+            <div class="sr-st"><div class="sr-card"><span class="sr-pill">Request sent</span><h5 class="tt"></h5><small>Hotel Valley · Room 204</small>
+              <ol class="sr-tl"><li>Sent to the hotel<small>Just now</small></li><li>Accepted by the <span class="tm"></span><small>Just now</small></li><li class="s3"><span class="l3"></span><small class="s3s"></small><div class="sr-bar"><i></i></div></li><li class="s4"></li></ol></div>
+              <div class="sr-done">${srSvg('check')}<span class="dt"></span></div><p class="sr-nc">Track it here. No calls needed.</p></div>
+            <div class="sr-cta">Send to hotel</div>
+          </div><span class="sr-home"></span>
+        </div></div>
+        <svg class="sr-fx" aria-hidden="true"><path class="sr-arc"/></svg>
+        <div class="sr-tok"><i>${srSvg('check')}</i><span></span></div><span class="sr-tap"></span>
+      </div></div>`;
+  }
+  // later(fn, ms) is the page's cleanup-aware timer; returns nothing we need
+  function srInit(wrap, track) {
+    const $s = s => wrap.querySelector(s), $$s = s => [...wrap.querySelectorAll(s)], inner = $s('.sr-in');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let tids = []; const T = (ms, f) => { const id = setTimeout(f, ms); tids.push(id); track && track(id); };
+    const clear = () => { tids.forEach(clearTimeout); tids = []; };
+    // fit the fixed-size stage to the page
+    let W = 1000, H = 560, sc = 1;
+    const fit = () => { const narrow = wrap.clientWidth < 640; wrap.classList.toggle('narrow', narrow); W = narrow ? 420 : 1000; H = narrow ? 800 : 560;
+      sc = wrap.clientWidth / W; inner.style.transform = `scale(${sc})`; wrap.style.height = Math.round(H * sc) + 'px'; $s('.sr-fx').setAttribute('viewBox', `0 0 ${W} ${H}`); };
+    fit(); if (window.ResizeObserver) new ResizeObserver(fit).observe(wrap); else addEventListener('resize', fit);
+    const pt = el => { const r = el.getBoundingClientRect(), R = inner.getBoundingClientRect(); return [(r.left - R.left + r.width / 2) / sc, (r.top - R.top + r.height / 2) / sc]; };
+    const tap = el => { const [x, y] = pt(el), t = $s('.sr-tap'); t.style.left = x + 'px'; t.style.top = y + 'px'; t.classList.remove('go'); void t.offsetWidth; t.classList.add('go'); };
+    const press = el => { el.classList.add('press'); T(160, () => el.classList.remove('press')); };
+    const rowsEl = $s('.sr-rows'), cta = $s('.sr-cta'), count = $s('.sr-mh .n');
+    const reset = () => { wrap.classList.remove('sent', 'ping', 'fly'); $$s('.sr-row').forEach(r => { r.classList.remove('on'); const m = r.querySelector('.sr-more'); if (m) m.style.height = '0px'; });
+      $$s('.sr-chips span').forEach(c => c.classList.remove('on')); const f = $s('.sr-field'); if (f) { f.querySelector('.tx').textContent = ''; f.querySelector('.ph').style.display = ''; }
+      cta.classList.remove('ok'); $$s('.sr-tl li').forEach(l => l.classList.remove('on', 'now')); $s('.sr-bar i').style.cssText = '--p:0%'; $s('.sr-done').classList.remove('on'); };
+    const fly = (from, to, label) => {
+      const ph = $s('.sr-ph').getBoundingClientRect(), R = inner.getBoundingClientRect(); let [x1, y1] = pt(from);
+      if (W > 600) x1 = (ph.right - R.left) / sc + 4;  // leave from the phone's edge, not across its screen
+      const [x2, y2] = to, top = Math.min(y1, y2) - (W > 600 ? 150 : 90);
+      const d = `M ${x1} ${y1} C ${x1 + (x2 - x1) * .15} ${top}, ${x2 - (x2 - x1) * .25} ${top + 20}, ${x2} ${y2}`;
+      const arc = $s('.sr-arc'), tok = $s('.sr-tok'); arc.setAttribute('d', d); tok.querySelector('span').textContent = label;
+      const len = arc.getTotalLength(); arc.style.transition = 'none'; arc.style.strokeDasharray = `3 6`; arc.style.strokeDashoffset = 0;
+      tok.style.transition = 'none'; tok.style.offsetPath = `path('${d}')`; tok.style.offsetDistance = '0%'; tok.style.opacity = '0'; tok.style.scale = '.6'; void tok.offsetWidth;
+      wrap.classList.add('fly'); tok.style.transition = 'offset-distance .95s cubic-bezier(.65,0,.35,1), opacity .25s, scale .4s cubic-bezier(.34,1.56,.64,1)';
+      tok.style.opacity = '1'; tok.style.scale = '1'; tok.style.offsetDistance = '100%';
+      T(950, () => { tok.style.transition = 'opacity .3s, scale .3s'; tok.style.opacity = '0'; tok.style.scale = '.7'; wrap.classList.remove('fly'); }); };
+    const addRow = s => { const el = document.createElement('div'); el.className = 'sr-q in fresh';
+      el.innerHTML = `<span class="rm">204</span><span><b>${s.desk}</b><small>Room 204 · ${s.who} · just now</small></span><span class="acc">Accept</span>`;
+      rowsEl.prepend(el); void el.offsetWidth; el.classList.remove('in'); count.textContent = rowsEl.children.length;
+      const extra = [...rowsEl.children].slice(4); extra.forEach(x => { x.classList.add('in'); T(600, () => x.remove()); }); return el; };
+    const story = (k, then) => {
+      clear(); reset(); const s = SR_STORY[k], row = $s(`.sr-row[data-k="${k}"]`), more = row.querySelector('.sr-more'); let t = 450;
+      $s('.tt').textContent = s.title; $s('.tm').textContent = s.team === 'Front desk' ? 'front desk' : s.team.toLowerCase() + ' team'; $s('.l3').textContent = s.s3; $s('.s3s').textContent = s.s3s; $s('.s4').textContent = s.s4; $s('.dt').textContent = s.done;
+      T(t, () => tap(row)); T(t + 120, () => { row.classList.add('on'); cta.classList.add('ok'); });
+      if (k === 'checkin') { T(t + 500, () => { more.style.height = '40px'; }); const chip = row.querySelectorAll('.sr-chips span')[1]; T(t + 1150, () => tap(chip)); T(t + 1270, () => chip.classList.add('on')); t += 1100; }
+      if (k === 'custom') { T(t + 500, () => { more.style.height = '64px'; }); const tx = row.querySelector('.tx'), ph = row.querySelector('.ph');
+        [...s.text].forEach((ch, i) => T(t + 950 + i * 38, () => { ph.style.display = 'none'; tx.textContent += ch; })); t += 950 + s.text.length * 38; }
+      const S = t + 750;
+      T(S, () => { tap(cta); press(cta); });
+      let row2;
+      T(S + 160, () => { const r = rowsEl.getBoundingClientRect(), R = inner.getBoundingClientRect(); fly(cta, [(r.left - R.left) / sc + 120, (r.top - R.top) / sc + 28], 'Room 204 · ' + s.tok); });
+      T(S + 700, () => { wrap.classList.add('sent'); $s('.sr-tl li').classList.add('on'); });
+      T(S + 1080, () => { row2 = addRow(s); wrap.classList.add('ping'); });
+      T(S + 2100, () => { const a = row2.querySelector('.acc'); tap(a); press(a); });
+      T(S + 2260, () => { const a = row2.querySelector('.acc'); a.outerHTML = `<span class="s prog">Accepted · ${s.team}</span>`; row2.classList.remove('fresh'); wrap.classList.remove('ping'); $$s('.sr-tl li')[1].classList.add('on'); });
+      T(S + 2900, () => { $s('.sr-tl .s3').classList.add('now'); row2.querySelector('.s').textContent = s.s3; const b = $s('.sr-bar i'); b.style.transition = 'width 2.2s cubic-bezier(.4,0,.2,1)'; void b.offsetWidth; b.style.setProperty('--p', '100%'); });
+      T(S + 5200, () => { const l3 = $s('.sr-tl .s3'); l3.classList.remove('now'); l3.classList.add('on'); $s('.sr-tl .s4').classList.add('on'); $s('.sr-done').classList.add('on');
+        const st = row2.querySelector('.s'); st.className = 's done'; st.textContent = 'Done'; row2.classList.add('old'); });
+      T(S + 7300, () => then && then()); };
+    const ORDER = ['blanket', 'checkin', 'custom']; let n = 0;
+    const loop = () => story(ORDER[n++ % ORDER.length], loop);
+    $$s('.sr-row').forEach(r => r.addEventListener('click', () => { n = ORDER.indexOf(r.dataset.k) + 1; story(r.dataset.k, loop); }));
+    if (reduce) { // a calm still: the blankets, delivered
+      const s = SR_STORY.blanket; $s('.tt').textContent = s.title; $s('.tm').textContent = 'housekeeping team'; $s('.l3').textContent = s.s3; $s('.s3s').textContent = s.s3s; $s('.s4').textContent = s.s4; $s('.dt').textContent = s.done;
+      wrap.classList.add('sent'); $$s('.sr-tl li').forEach(l => l.classList.add('on')); $s('.sr-bar i').style.setProperty('--p', '100%'); $s('.sr-done').classList.add('on'); return clear; }
+    T(900, loop); return clear;
   }
   function mmHTML(w) {
     const Z = (n, a, g) => `<img src="${mi(n)}" alt="${a}" loading="lazy" data-mz="${g}">`;
@@ -6152,8 +6333,8 @@ html:root .scroll-cue i::after { top: 5px; }
           <ul class="mm-meta"><li><b>Role</b>Product Design Intern</li><li><b>Timeline</b>1.5 months</li><li><b>Live on</b>App and desktop</li></ul>
         </div>
         <div class="mm-demo">
-          ${mmFrontHTML()}
-          <p class="mm-dcap" id="mmDcap">Tap a request on the phone. Someone’s already on the way.</p>
+          ${srHTML()}
+          <p class="mm-dcap" id="mmDcap">One tap from the guest. The hotel sees it, accepts it, and the guest tracks it live.</p>
         </div>
       </header>
 
@@ -6255,26 +6436,9 @@ html:root .scroll-cue i::after { top: 5px; }
     mmCleanup(); initMM.ts = []; initMM.tt = [];
     const root = csEl, later = (f, ms) => initMM.tt.push(setTimeout(f, ms));
     const obs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); $$('.hl', e.target).forEach(h => h.classList.add('on')); obs.unobserve(e.target); if (e.target._on) e.target._on(); }), { root, threshold: .18 });
-    // the hero phone: ring the bell, pick a service, it goes to the hotel
-    // pick a request: the other two step aside, the bell rings, your request stays and the hotel brings it
-    const desk = $("#mmFront", root), bub = $('#mmBub', root), cap = $('#mmDcap', root);
-    const SAY = { bed: 'Extra bed for room 204 ✓', blanket: 'Two more blankets, room 204 ✓', taxi: 'Your cab is waiting downstairs ✓' };
-    let busy = false, auto = true, nAsk = 0;
-    const ask = k => { if (busy) return; busy = true;
-      desk.className = 'mm-desk mm-req asking'; desk.dataset.k = k;
-      $$('.opt, .act', desk).forEach(g => g.classList.toggle('sel', g.dataset.k === k));
-      cap.textContent = 'Ringing the hotel…';
-      later(() => desk.classList.add('ring'), 350);
-      later(() => { desk.classList.remove('ring'); desk.classList.add('chosen', 'come'); cap.textContent = 'Someone’s already on the way.'; }, 1450);
-      later(() => { desk.classList.add('here'); bub.textContent = SAY[k]; cap.textContent = 'Requests reach the hotel and get done, no calls needed.'; }, 3500);
-      later(() => { desk.classList.remove('here'); desk.classList.add('go'); }, 6200);
-      later(() => { desk.className = 'mm-desk mm-req'; busy = false; cap.textContent = 'Tap a request on the phone. Someone’s already on the way.'; }, 8200); };
-    // narrow screens: frame the stage tighter so the phone reads big; the cab can peek in from the edge
-    if (innerWidth < 600) { const X0 = 12, VW = 470; $('svg', desk).setAttribute('viewBox', `${X0} 0 ${VW} 400`); $('.act[data-k="bed"]', desk).style.setProperty('--x', 452);
-      $$('.mm-opt', desk).forEach(b => { b.style.left = (42 - X0) / VW * 100 + '%'; b.style.width = 186 / VW * 100 + '%'; }); }
-    $$('.mm-opt', desk).forEach(b => b.addEventListener('click', () => { auto = false; ask(b.dataset.k); }));
-    const demo = () => { if (!auto) return; ask(['blanket', 'bed', 'taxi'][nAsk++ % 3]); later(demo, 9600); };
-    later(() => $('#mmHero', root).classList.add('in'), 80); later(demo, 2000);
+    // the hero: a request goes from the guest's phone to the hotel's front desk, and the guest tracks it back
+    const srWrap = $('#srHero', root); if (srWrap) srInit(srWrap, id => initMM.tt.push(id));
+    later(() => $('#mmHero', root).classList.add('in'), 80);
     // keys come off the rack one by one
     $('.mm-rack', root)._on = () => $$('.mm-key', root).forEach((k, i) => later(() => k.classList.add('on'), 250 + i * 650));
     // the hotel facade
