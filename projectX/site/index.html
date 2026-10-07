@@ -256,10 +256,16 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .reasons span { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--rule); border-radius: 2px; padding: 5px 8px 4px; }
 
 /* ---------------- section 2: rows, centred ---------------- */
-.what { border-top: 1px solid var(--rule); padding-top: clamp(80px, 11vw, 150px); }
-.what__head { display: grid; justify-items: center; text-align: center; gap: 26px; max-width: 60rem; margin-inline: auto; }
-.what__head h2 { font-size: var(--h2); line-height: 1.08; letter-spacing: -.022em; text-wrap: balance; font-variation-settings: "opsz" 60; }
-.what__head h2 span { color: var(--ink-2); }
+.what { padding-top: 0; }
+/* big statement, revealed word by word against the scroll */
+.say { position: relative; }
+.say.is-scrub { height: 260svh; }
+.say__pin { display: grid; place-items: center; padding-block: clamp(80px, 12vw, 160px); }
+.say.is-scrub .say__pin { position: sticky; top: 0; height: 100svh; padding-block: 0; }
+.what__head { display: grid; justify-items: center; text-align: center; gap: clamp(20px, 3vw, 36px); max-width: 1180px; margin-inline: auto; }
+.what__head h2 { font-size: clamp(2.6rem, 1rem + 5.6vw, 7.4rem); line-height: 1.01; letter-spacing: -.03em; font-weight: 380; text-wrap: balance; font-variation-settings: "opsz" 72; }
+.what__head h2 .w { color: var(--ink); opacity: var(--o, 1); transition: none; }
+.what__head h2 .w.key, .what__head h2 em { font-style: italic; }
 
 .count { position: relative; margin-top: clamp(40px, 7vw, 100px); }
 .count__pin { padding-block: 24px; }
@@ -432,9 +438,13 @@ html.lenis, html.lenis body { height: auto; }
   <!-- ========== 2 · What 8x is ========== -->
   <section class="what" id="what" aria-labelledby="what-h">
     <div class="wrap">
-      <div class="what__head" data-par="-0.12">
-        <p class="label">What 8x is</p>
-        <h2 id="what-h">Companies come to 8x for outcomes. <span>Posts that get watched. Meetings that get booked. Interviews that get run.</span> We organise the people who do that work.</h2>
+      <div class="say" id="say">
+        <div class="say__pin">
+          <div class="what__head">
+            <p class="label">What 8x is</p>
+            <h2 id="what-h" data-reveal>Companies come to 8x for <em>outcomes.</em> Posts that get watched. Meetings that get booked. Interviews that get run. We organise <em>the people</em> who do that work.</h2>
+          </div>
+        </div>
       </div>
 
       <div class="count" id="count">
@@ -551,6 +561,32 @@ html.lenis, html.lenis body { height: auto; }
     head.style.transform = 'translateY(' + (y * .38).toFixed(1) + 'px)';
     head.style.opacity = Math.max(0, 1 - y / (window.innerHeight * .75)).toFixed(3);
   }
+
+  /* ================= SAY: word-by-word reveal tied to scroll ================= */
+  var say = $('#say'), sayH = $('[data-reveal]');
+  (function split() {
+    var html = [];
+    Array.prototype.forEach.call(sayH.childNodes, function (node) {
+      var key = node.nodeType === 1;
+      node.textContent.split(/\s+/).filter(Boolean).forEach(function (w) {
+        html.push('<span class="w' + (key ? ' key' : '') + '">' + w + '</span>');
+      });
+    });
+    sayH.setAttribute('aria-label', sayH.textContent.replace(/\s+/g, ' ').trim());
+    sayH.innerHTML = html.join(' ');
+  })();
+  var words = $$('[data-reveal] .w');
+  say.classList.add('is-scrub');
+  function renderSay() {
+    var p = progress(say), n = words.length;
+    /* .05 – .85 of the pin: each word fades from faint to ink in reading order */
+    var span = .8 / n;
+    words.forEach(function (w, i) {
+      var a = .05 + i * span, t = clamp((p - a) / (span * 2.2), 0, 1);
+      w.style.setProperty('--o', (.12 + .88 * t).toFixed(3));
+    });
+  }
+
   /* ================= SECTION 2 ================= */
   var count = $('#count'), board = $('#board');
   var oldStrike = $('#old-strike'), oldFig = $('.fig--old'), newFig = $('#new-fig');
@@ -583,7 +619,7 @@ html.lenis, html.lenis body { height: auto; }
       el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
     });
   }
-  function frame() { renderHero(); renderCount(); renderPar(); }
+  function frame() { renderHero(); renderSay(); renderCount(); renderPar(); }
 
   /* smooth, delayed scroll: the page eases toward where you scrolled */
   var lenis = window.Lenis ? new Lenis({ lerp: .075, wheelMultiplier: .9, smoothWheel: true }) : null;
