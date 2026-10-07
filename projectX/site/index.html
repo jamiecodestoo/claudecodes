@@ -117,38 +117,34 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .globe canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .globe::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 24%; background: linear-gradient(transparent, var(--paper)); pointer-events: none; }
 
-/* ---------------- a week at 8x: the calendar fills in day by day ---------------- */
-.week { position: relative; margin-top: var(--week-top, var(--sec)); --wc: #F3F2EC; --wc-2: #FFFFFF; --wc-rule: #E3E2DA; --wt: #F6C9B9; --wt-ink: #3B1A10; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .week { --wc: #1B1C19; --wc-2: #24251F; --wc-rule: #33342F; --wt: #5A2E22; --wt-ink: #F6C9B9; } }
-:root[data-theme="dark"] .week { --wc: #1B1C19; --wc-2: #24251F; --wc-rule: #33342F; --wt: #5A2E22; --wt-ink: #F6C9B9; }
-.week__pin { display: grid; justify-items: center; text-align: center; gap: var(--s3); }
-.week__lines { display: grid; gap: var(--s2); justify-items: center; width: 100%; }
-.week__l { margin: 0; font-size: clamp(1.8rem, 1rem + 2.6vw, 3.4rem); line-height: 1.1; letter-spacing: -.024em; font-weight: 380; font-variation-settings: "opsz" 72; text-wrap: balance; }
-.cal { width: min(960px, 100%); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s1); padding: var(--s2); border-radius: 20px; background: var(--wc); box-shadow: 0 30px 60px -32px rgba(20, 20, 18, .3), inset 0 0 0 1px var(--wc-rule); text-align: left; }
-.cal__day { display: grid; align-content: start; gap: var(--s1); min-height: 248px; padding: var(--s2) var(--s1); border-radius: 12px; transition: background 400ms ease, box-shadow 400ms ease; }
-.cal__h { margin: 0 0 var(--s1); display: flex; align-items: center; justify-content: space-between; padding-inline: var(--s1); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); transition: color 300ms ease; }
-.cal__h i { width: 8px; height: 8px; border-radius: 50%; background: var(--pen); opacity: 0; transform: scale(.4); transition: opacity 300ms ease, transform 400ms var(--ease-settle); }
-.cal__day.is-now { background: var(--wc-2); box-shadow: inset 0 0 0 1px var(--wc-rule); }
-.cal__day.is-now .cal__h { color: var(--ink); }
-.cal__day.is-now .cal__h i { opacity: 1; transform: none; }
-.ev { display: grid; gap: 4px; padding: var(--s1); border-radius: 8px; font-size: 14px; line-height: 1.3; }
-.ev b { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: .04em; opacity: .72; }
-.ev--ship { background: var(--ink); color: var(--paper); }
-.ev--plan { background: var(--wc-2); color: var(--ink); box-shadow: inset 0 0 0 1px var(--wc-rule); }
-.ev--review { background: var(--mark); color: var(--mark-ink); }
-.ev--test { background: var(--wt); color: var(--wt-ink); }
-.ev--async { background: transparent; color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--wc-rule); }
-.week.is-scrub .week__scroll { height: calc(100svh + 4 * 70svh); }
-.week.is-scrub .week__pin { position: sticky; top: 0; height: 100svh; align-content: center; }
-.week.is-scrub .week__lines { grid-template-areas: "l"; grid-template-columns: minmax(0, 1fr); gap: 0; }
-.week.is-scrub .week__l { grid-area: l; opacity: 0; will-change: opacity, transform, filter; }
-.week.is-scrub .ev { opacity: 0; transform: translateY(8px) scale(.98); transition: opacity 420ms ease, transform 560ms var(--ease-settle); transition-delay: calc(var(--k, 0) * 120ms); }
-.week.is-scrub .ev.is-in { opacity: 1; transform: none; }
-@media (max-width: 700px) {
-  .cal { grid-template-columns: minmax(0, 1fr); width: min(400px, 100%); }
-  .week.is-scrub .cal__day:not(.is-now) { display: none; }
-  .cal__day { min-height: 200px; }
-}
+/* ---------------- a week at 8x: a photo card rolls through the days, then narrows into the week ---------------- */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: -1px; padding: 0; }
+.week { position: relative; margin-top: var(--week-top, var(--sec)); }
+.week__pin { display: grid; justify-items: center; gap: var(--s3); }
+.week__label { margin: 0; }
+.wk__card { position: relative; width: min(1120px, 100%); aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: #1B1B18; display: grid; place-items: center; text-align: center; color: #fff; }
+.wk__imgs img, .wk__mini img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.wk__imgs img { opacity: 0; transform: scale(1.08); transition: opacity 1000ms ease, transform 5200ms cubic-bezier(.2, .6, .2, 1); }
+.wk__imgs img.is-on { opacity: 1; transform: scale(1); }
+.wk__card::after, .wk__mini::after { content: ""; position: absolute; inset: 0; background: radial-gradient(110% 85% at 50% 52%, rgba(10, 10, 9, .62), rgba(10, 10, 9, .4) 62%, rgba(10, 10, 9, .52)); pointer-events: none; }
+.wk__line { position: relative; z-index: 1; margin: 0; display: grid; justify-items: center; gap: var(--s2); white-space: nowrap; font-weight: 380; font-variation-settings: "opsz" 72; text-shadow: 0 2px 24px rgba(0, 0, 0, .25); }
+.wk__day { font-family: var(--mono); font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .82); text-shadow: none; }
+.wk__say { display: block; font-size: var(--wk-fs, clamp(2.2rem, 1rem + 4.6vw, 5.4rem)); line-height: 1.1; letter-spacing: -.03em; }
+.roll { display: inline-grid; vertical-align: baseline; overflow: hidden; padding: .12em .06em .24em; margin: -.12em -.06em -.24em; text-align: center; }
+.roll__i { grid-area: 1 / 1; justify-self: center; white-space: nowrap; transition: transform 720ms var(--ease-settle), opacity 520ms ease, filter 520ms ease; }
+.roll__i.is-in { transform: translateY(110%); opacity: 0; filter: blur(4px); transition: none; }
+.roll__i.is-out { transform: translateY(-110%); opacity: 0; filter: blur(4px); }
+.wk__mini { display: none; }
+.wk__ml { position: relative; z-index: 1; margin: 0; display: grid; justify-items: center; gap: var(--s1); white-space: nowrap; font-weight: 380; font-variation-settings: "opsz" 72; text-shadow: 0 2px 24px rgba(0, 0, 0, .25); }
+.wk__ml span { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .82); text-shadow: none; }
+.wk__ml b { font-weight: 380; font-size: var(--mini-fr, 24px); line-height: 1.1; letter-spacing: -.03em; }
+.week.is-scrub .week__scroll { height: calc(100svh + 260svh); }
+.week.is-scrub .week__pin { position: sticky; top: 0; height: 100svh; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; display: block; }
+.week.is-scrub .week__label { position: absolute; left: 0; right: 0; top: 0; text-align: center; transform: translateY(var(--wk-label-y, 96px)); will-change: transform; }
+.week.is-scrub .wk__card { position: absolute; margin: 0; aspect-ratio: auto; will-change: left, top, width, height; }
+.week.is-scrub .wk__line { position: absolute; left: 50%; top: 50%; width: max-content; transform: translate(-50%, -50%); }
+.week.is-scrub .wk__mini { display: grid; place-items: center; position: absolute; top: 0; left: 0; overflow: hidden; border-radius: 16px; background: #1B1B18; color: #fff; text-align: center; will-change: transform, opacity; }
+@media (max-width: 600px) { .wk__card { aspect-ratio: 4 / 5; border-radius: 16px; } }
 
 /* ---------------- from the work: stories flow through a dark panel ---------------- */
 .stories { position: relative; margin-top: var(--sec); --st-bg: #141412; --st-ink: #EDEDE7; --st-ink-2: #A3A39B; }
@@ -186,6 +182,26 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
   .story__text { min-height: 0; gap: var(--s2); padding: var(--s3); }
   .story--quote .story__text { min-height: 200px; }
 }
+
+/* the line that winds down behind the stories */
+.sl { display: none; }
+.stories.is-scrub .sl { display: block; position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 0; will-change: transform; }
+.sl path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.sl__base { stroke: #F0603F; stroke-opacity: .5; stroke-width: 2; }
+.sl__comet { stroke: #FF9B80; stroke-width: 3; filter: drop-shadow(0 0 6px rgba(240, 96, 63, .9)); }
+.sl__head { fill: #FFB59F; filter: drop-shadow(0 0 10px rgba(240, 96, 63, 1)); }
+
+/* things rise in softly as they come into view */
+.rv { opacity: 0; transform: translateY(24px); transition: opacity 900ms ease, transform 1100ms var(--ease-settle); transition-delay: calc(var(--d, 0) * 90ms); }
+.rv.is-in { opacity: 1; transform: none; }
+@keyframes riseIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.hero__head > * { animation: riseIn 1100ms var(--ease-settle) both; }
+.hero__head > :nth-child(2) { animation-delay: 120ms; } .hero__head > :nth-child(3) { animation-delay: 240ms; }
+.globe { animation: riseIn 1600ms var(--ease-settle) 320ms both; }
+
+/* a big, faint wordmark rises into the footer */
+.foot { position: relative; overflow: hidden; }
+.foot__mark { font-weight: 700; font-size: clamp(8rem, 4rem + 18vw, 22rem); line-height: .8; letter-spacing: -.06em; color: var(--rule); margin-top: var(--s4); order: 9; user-select: none; }
 
 /* ---------------- section 2: rows, centred ---------------- */
 .what { padding-top: 0; }
@@ -427,13 +443,13 @@ html.lenis, html.lenis body { height: auto; }
 <main id="top">
   <!-- ========== HERO · life at 8x, on a globe ========== -->
   <section class="hero" id="hero" aria-labelledby="hero-h">
-    <div class="hero__head">
+    <div class="hero__head" data-par="-.22">
       <p class="eyebrow">Life at 8x</p>
-      <h1 id="hero-h"><span>Seven people. Five time zones.</span> <span>One very big job.</span></h1>
-      <p class="sub">A small core team, spread across the world, running a network of 121,000 people. This is what working here is actually like.</p>
+      <h1 id="hero-h"><span>250,000+ people. 50+ countries.</span> <span>One small team in the middle.</span></h1>
+      <p class="sub">8x is a small core team running a network of more than 250,000 people. This is what working at the centre of it is actually like.</p>
     </div>
     <div class="globe" id="globe">
-      <canvas id="globe-canvas" role="img" aria-label="A globe with the 8x team pinned in San Francisco, Ljubljana, Istanbul, Lahore and Bengaluru, each showing their local time"></canvas>
+      <canvas id="globe-canvas" role="img" aria-label="A globe dotted with the 8x network, with the core team pinned in San Francisco, Ljubljana, Istanbul, Lahore and Bengaluru, each showing their local time"></canvas>
     </div>
   </section>
 
@@ -451,7 +467,7 @@ html.lenis, html.lenis body { height: auto; }
       <div class="net" id="net">
         <div class="net__head">
           <p class="label">The network</p>
-          <h3>121,000 people do the work, on demand.</h3>
+          <h3>250,000+ people do the work, on demand.</h3>
           <p class="net__who"><em>Creators post</em><span>·</span><em>Sales reps call</em><span>·</span><em>Participants talk</em></p>
         </div>
         <div class="lanes" id="lanes" aria-hidden="true">
@@ -560,10 +576,10 @@ html.lenis, html.lenis body { height: auto; }
         <div class="bet__scroll">
           <div class="bet__pin">
             <div class="bet__lines" id="bet-lines">
-              <p class="bet__l"><span class="w">Building</span> <span class="w">is</span> <span class="w key">cheap</span> <span class="w">now.</span></p>
-              <p class="bet__l"><span class="w">Getting</span> <span class="w">it</span> <span class="w key">in front of people</span> <span class="w">isn&rsquo;t.</span></p>
-              <p class="bet__l"><span class="w">That</span> <span class="w">takes</span> <span class="w">people.</span> <span class="w">8x</span> <span class="w key">organises</span> <span class="w">them.</span></p>
-              <p class="bet__l"><span class="w">So</span> <span class="w">here,</span> <span class="w">your</span> <span class="w key">judgement</span> <span class="w">is</span> <span class="w">the</span> <span class="w">product.</span></p>
+              <p class="bet__l" data-par="-.05"><span class="w">Building</span> <span class="w">is</span> <span class="w key">cheap</span> <span class="w">now.</span></p>
+              <p class="bet__l" data-par="-.018"><span class="w">Getting</span> <span class="w">it</span> <span class="w key">in front of people</span> <span class="w">isn&rsquo;t.</span></p>
+              <p class="bet__l" data-par=".018"><span class="w">That</span> <span class="w">takes</span> <span class="w">people.</span> <span class="w">8x</span> <span class="w key">organises</span> <span class="w">them.</span></p>
+              <p class="bet__l" data-par=".05"><span class="w">So</span> <span class="w">here,</span> <span class="w">your</span> <span class="w key">judgement</span> <span class="w">is</span> <span class="w">the</span> <span class="w">product.</span></p>
             </div>
           </div>
         </div>
@@ -571,37 +587,17 @@ html.lenis, html.lenis body { height: auto; }
 
       <section class="week" id="week" aria-labelledby="week-h">
         <div class="week__scroll">
-          <div class="week__pin">
-            <p class="label" id="week-h">A week at 8x</p>
-            <div class="week__lines" id="week-lines">
-              <p class="week__l">You decide what ships this week.</p>
-              <p class="week__l">Your hours, your city, your time zone.</p>
-              <p class="week__l">Feedback is written, so it crosses time zones.</p>
-              <p class="week__l">Small budgets. Test fast, kill what does not work.</p>
-              <p class="week__l">Show the work. The numbers decide.</p>
+          <div class="week__pin" id="week-pin">
+            <p class="label week__label" id="week-h">A week at 8x</p>
+            <ul class="sr-only"><li>Monday: You decide what ships.</li><li>Tuesday: Your hours, your city.</li><li>Wednesday: Feedback, written down.</li><li>Thursday: Small budgets, fast tests.</li><li>Friday: The numbers decide.</li></ul>
+            <div class="wk__card" aria-hidden="true">
+              <div class="wk__imgs"><img src="img/week/d1.jpg" alt="" class="is-on" loading="lazy"><img src="img/week/d2.jpg" alt="" loading="lazy"><img src="img/week/d3.jpg" alt="" loading="lazy"><img src="img/week/d4.jpg" alt="" loading="lazy"><img src="img/week/d5.jpg" alt="" loading="lazy"></div>
+              <p class="wk__line"><span class="wk__day"><span class="roll" id="wk-day"><span class="roll__i">Monday</span></span></span><span class="wk__say"><span class="roll" id="wk-say"><span class="roll__i">You decide what ships.</span></span></span></p>
             </div>
-            <div class="cal" id="cal" aria-hidden="true">
-              <div class="cal__day"><p class="cal__h"><span>Mon</span><i></i></p>
-                <div class="ev ev--plan"><b>9:00 &middot; San Francisco</b>Plan: Poland launch</div>
-                <div class="ev ev--ship"><b>11:00</b>Write the 40-lead list</div>
-              </div>
-              <div class="cal__day"><p class="cal__h"><span>Tue</span><i></i></p>
-                <div class="ev ev--async"><b>9:00 &middot; Lahore</b>Deep work, no meetings</div>
-                <div class="ev ev--plan"><b>17:00</b>Hand off to San Francisco</div>
-              </div>
-              <div class="cal__day"><p class="cal__h"><span>Wed</span><i></i></p>
-                <div class="ev ev--review"><b>Async</b>Review: playbook, draft two</div>
-                <div class="ev ev--async"><b>Ljubljana</b>Comments left overnight</div>
-              </div>
-              <div class="cal__day"><p class="cal__h"><span>Thu</span><i></i></p>
-                <div class="ev ev--test"><b>$40 budget</b>Ad test: three variants</div>
-                <div class="ev ev--test"><b>15:00</b>Kill variant B</div>
-              </div>
-              <div class="cal__day"><p class="cal__h"><span>Fri</span><i></i></p>
-                <div class="ev ev--ship"><b>Shipped</b>Landing page live</div>
-                <div class="ev ev--review"><b>Result</b>12 meetings booked</div>
-              </div>
-            </div>
+            <div class="wk__mini" aria-hidden="true"><img src="img/week/d2.jpg" alt="" loading="lazy"><p class="wk__ml"><span>Tuesday</span><b>Your hours, your city.</b></p></div>
+            <div class="wk__mini" aria-hidden="true"><img src="img/week/d3.jpg" alt="" loading="lazy"><p class="wk__ml"><span>Wednesday</span><b>Feedback, written down.</b></p></div>
+            <div class="wk__mini" aria-hidden="true"><img src="img/week/d4.jpg" alt="" loading="lazy"><p class="wk__ml"><span>Thursday</span><b>Small budgets, fast tests.</b></p></div>
+            <div class="wk__mini" aria-hidden="true"><img src="img/week/d5.jpg" alt="" loading="lazy"><p class="wk__ml"><span>Friday</span><b>The numbers decide.</b></p></div>
           </div>
         </div>
       </section>
@@ -618,6 +614,7 @@ html.lenis, html.lenis body { height: auto; }
       <section class="stories" id="stories" aria-labelledby="stories-h">
         <div class="stories__scroll">
           <div class="stories__pin">
+            <svg class="sl" id="stories-line" aria-hidden="true"><path class="sl__base"></path><path class="sl__comet"></path><circle class="sl__head" r="4"></circle></svg>
             <div class="stories__head">
               <p class="label">From the work</p>
               <h3 id="stories-h">From the people<br><span>who do the work.</span></h3>
@@ -700,10 +697,11 @@ html.lenis, html.lenis body { height: auto; }
       </section>
 
       <section class="close" aria-label="Open roles">
-        <p>Open roles live on <a href="https://www.8x.careers">8x.careers</a>.</p>
+        <p data-par="-.1">Open roles live on <a href="https://www.8x.careers">8x.careers</a>.</p>
       </section>
 
       <footer class="foot">
+        <div class="foot__mark" aria-hidden="true">8x</div>
         <a class="wordmark" href="#top">8x</a>
         <p>Remote-first, built from San Francisco.</p>
         <p class="foot__links"><a href="https://8x.life/manifesto">Manifesto</a><a href="https://www.8x.careers">8x.careers</a><a href="https://www.linkedin.com/company/8x-human/">LinkedIn</a></p>
@@ -726,6 +724,65 @@ html.lenis, html.lenis body { height: auto; }
     var r = el.getBoundingClientRect(), total = el.offsetHeight - window.innerHeight;
     return total > 0 ? clamp(-r.top / total, 0, 1) : 1;
   }
+  /* the size the big week card takes, worked out the same way everywhere */
+  function wkBigW() {
+    var pin = document.getElementById('week-pin'), W = (pin && pin.clientWidth) || document.documentElement.clientWidth, H = window.innerHeight, phone = W < 640;
+    var gut = phone ? 16 : Math.max(16, Math.min(80, W * .046)), r = phone ? 1.25 : 9 / 16;
+    var bw = Math.min(1120, W - gut * 2);
+    if (bw * r > H * .7) bw = H * .7 / r;
+    return bw;
+  }
+  /* ================= A WEEK AT 8X: the day and its line roll over on a photo ================= */
+  var wkCtl = null, wkBigFs = 0;
+  (function () {
+    var DAYS = [['Monday', 'You decide what ships.'], ['Tuesday', 'Your hours, your city.'], ['Wednesday', 'Feedback, written down.'], ['Thursday', 'Small budgets, fast tests.'], ['Friday', 'The numbers decide.']];
+    var HOLD = 3000;
+    var sec = $('#week'), dayEl = $('#wk-day'), sayEl = $('#wk-say'), sayBox = $('#week .wk__say'), pics = $$('#week .wk__imgs img');
+    function item(t) { var sp = document.createElement('span'); sp.className = 'roll__i'; sp.textContent = t; return sp; }
+    /* one size for every line so the longest fits; slots are sized in em, so they scale with the text */
+    function fit() {
+      sayBox.style.removeProperty('--wk-fs'); sayBox.style.removeProperty('font-size');
+      var fs = parseFloat(getComputedStyle(sayBox).fontSize), avail = wkBigW() * .86, w = 0, dw = 0;
+      DAYS.forEach(function (d) {
+        var m = item(d[1]); m.style.visibility = 'hidden'; sayEl.appendChild(m); w = Math.max(w, m.offsetWidth); sayEl.removeChild(m);
+        var n = item(d[0]); n.style.visibility = 'hidden'; dayEl.appendChild(n); dw = Math.max(dw, n.offsetWidth); dayEl.removeChild(n);
+      });
+      if (w > avail) { fs = fs * avail / w; w = avail; }
+      sayBox.style.setProperty('--wk-fs', fs.toFixed(1) + 'px');
+      sayEl.style.width = (w / fs).toFixed(3) + 'em';
+      dayEl.style.width = Math.ceil(dw) + 'px';
+      wkBigFs = fs;
+    }
+    function roll(el, text) {
+      var cur = el.querySelector('.roll__i:not(.is-out)'), nx = item(text);
+      if (!reduce) nx.classList.add('is-in');
+      el.appendChild(nx);
+      if (cur) { if (reduce) cur.remove(); else { cur.classList.add('is-out'); setTimeout(function () { cur.remove(); }, 760); } }
+      if (!reduce) { void nx.offsetWidth; nx.classList.remove('is-in'); }
+    }
+    var di = 0;
+    function go(i) {
+      if (i === di && dayEl.querySelector('.roll__i')) { return; }
+      di = i; roll(dayEl, DAYS[i][0]); roll(sayEl, DAYS[i][1]);
+      pics.forEach(function (im, k) { im.classList.toggle('is-on', k === i); });
+    }
+    fit();
+    window.addEventListener('resize', fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    if (reduce) return;
+    var live = false, paused = false, frozen = false, t0 = performance.now(), last = t0;
+    wkCtl = { go: function (i) { if (i !== di) go(i); }, now: function () { return di; }, freeze: function (b) { frozen = b; t0 = performance.now(); } };
+    sec.addEventListener('mouseenter', function () { paused = true; });
+    sec.addEventListener('mouseleave', function () { paused = false; });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { live = es[0].isIntersecting; }, { threshold: .25 }).observe(sec);
+    (function tick(now) {
+      if (live && !paused && !frozen) { if (now - t0 >= HOLD) { t0 = now; go((di + 1) % DAYS.length); } }
+      else t0 += now - last;
+      last = now;
+      requestAnimationFrame(tick);
+    })(last);
+  })();
+
   /* ================= IS THIS FOR YOU: six questions, one card at a time ================= */
   (function () {
     var deck = $('#fit-deck'), cards = $$('#fit-deck .fit__card:not(.fit__result)'), result = $('#fit-result');
@@ -870,6 +927,13 @@ html.lenis, html.lenis body { height: auto; }
         var q = proj(land[i], rot); if (q[2] <= 0) continue;
         var d = 1.4 + q[2] * 1.4; g.globalAlpha = .24 + .66 * q[2]; g.fillRect(q[0] - d / 2, q[1] - d / 2, d, d);
       }
+      /* the network: people everywhere, switching on and off */
+      g.fillStyle = col.pen;
+      for (var n = 0; n < land.length; n += 9) {
+        var qn = proj(land[n], rot); if (qn[2] <= .05) continue;
+        var tw = reduce ? .6 : .5 + .5 * Math.sin(now * .0016 + n * 1.7);
+        g.globalAlpha = qn[2] * tw * .85; g.beginPath(); g.arc(qn[0], qn[1], 1.6 + tw * .9, 0, 6.2832); g.fill();
+      }
       /* arcs */
       if (!reduce) {
         if (now > nextArc) { spawn(now, rot); nextArc = now + 1300 + Math.random() * 900; }
@@ -967,7 +1031,26 @@ html.lenis, html.lenis body { height: auto; }
   }
   allTiles.forEach(function (t) { if (Math.random() < .25) t.classList.add('off'); });
   setInterval(pulse, 900);
-  function renderNet() {}
+  var lanesEl = $$('#lanes .lane'), lanesBox = $('#lanes');
+  function renderNet() {
+    var r = lanesBox.getBoundingClientRect(), vh = window.innerHeight;
+    if (r.top > vh || r.bottom < 0) return;
+    var t = clamp((vh - r.top) / (vh + r.height), 0, 1) - .5;
+    if (lanesEl[0]) lanesEl[0].style.transform = 'translate3d(' + (-t * 220).toFixed(1) + 'px,0,0)';
+    if (lanesEl[1]) lanesEl[1].style.transform = 'translate3d(' + (t * 220).toFixed(1) + 'px,0,0)';
+  }
+  /* headings and small blocks rise in once as they come into view */
+  (function () {
+    var els = $$('.net__head > *, .deck__head > *, .team__head > *, #fit > .label, #fit .fit__h, .close p, .foot > *');
+    if (!('IntersectionObserver' in window)) return;
+    els.forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight) return;
+      var sib = Array.prototype.indexOf.call(el.parentElement.children, el);
+      el.style.setProperty('--d', sib); el.classList.add('rv');
+    });
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { threshold: .15, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { if (el.classList.contains('rv')) io.observe(el); });
+  })();
 
   /* team grid: a soft staggered entrance, once */
   var seatsGrid = $('#seats');
@@ -1046,38 +1129,76 @@ html.lenis, html.lenis body { height: auto; }
     });
   }
 
-  /* ================= A WEEK AT 8X: the calendar fills in, one day at a time ================= */
-  var week = $('#week'), weekScroll = $('#week .week__scroll'), weekLines = $$('#week-lines .week__l'), weekDays = $$('#cal .cal__day');
+  /* ================= A WEEK AT 8X on scroll: the card narrows into the five days ================= */
+  var week = $('#week'), wkScroll = $('#week .week__scroll'), wkPin = $('#week-pin'), wkCard = $('#week .wk__card'), wkLabel = $('#week .week__label');
+  var wkMinis = $$('#week .wk__mini'), wkSay = $('#week .wk__say');
   week.classList.add('is-scrub');
-  weekDays.forEach(function (d) { Array.prototype.forEach.call(d.querySelectorAll('.ev'), function (e, k) { e.style.setProperty('--k', k); }); });
-  var weekOn = 0;
-  /* start on Monday, so the layout (and the gaps around it) is measured with a day showing */
-  weekDays[0].classList.add('is-now');
-  Array.prototype.forEach.call(weekDays[0].querySelectorAll('.ev'), function (e) { e.classList.add('is-in'); });
+  function wkGeom() {
+    var W = wkPin.clientWidth || document.documentElement.clientWidth, H = window.innerHeight, phone = W < 640;
+    var bigW = wkBigW(), bigH = bigW * (phone ? 1.25 : 9 / 16);
+    var cw = phone ? W * .72 : Math.min(360, W * .25), ch = Math.min(cw * 4 / 3, H * .66);
+    return { W: W, H: H, phone: phone, bigW: bigW, bigH: bigH, cw: cw, ch: ch, gap: phone ? 12 : 24 };
+  }
   function renderWeek() {
-    var r = weekScroll.getBoundingClientRect(), vh = window.innerHeight;
+    var r = wkScroll.getBoundingClientRect(), vh = window.innerHeight;
     if (r.top > vh || r.bottom < 0) return;
-    var N = weekLines.length, raw = progress(weekScroll) * (N - 1), base = Math.floor(raw), fr = raw - base;
-    var f = Math.min(N - 1, base + inOut(seg(fr, .22, .78)));
-    weekLines.forEach(function (l, i) {
-      var d = f - i, a = clamp(1 - Math.abs(d) * 2.2, 0, 1), b = Math.min(1, Math.abs(d) * 2.2) * 8;
-      l.style.opacity = a.toFixed(3); l.style.visibility = a <= 0 ? 'hidden' : 'visible';
-      l.style.transform = 'translate3d(0,' + (-d * 16).toFixed(1) + 'px,0)';
-      l.style.filter = b > .05 ? 'blur(' + b.toFixed(2) + 'px)' : 'none';
-    });
-    var on = Math.round(f);
-    if (on !== weekOn) {
-      weekOn = on;
-      weekDays.forEach(function (dd, i) {
-        dd.classList.toggle('is-now', i === on);
-        Array.prototype.forEach.call(dd.querySelectorAll('.ev'), function (e) { e.classList.toggle('is-in', i <= on); });
-      });
+    var p = progress(wkScroll), G = wkGeom(), W = G.W, H = G.H, cw = G.cw, ch = G.ch, step = cw + G.gap;
+    if (wkCtl) {
+      if (p > .005) { wkCtl.freeze(true); wkCtl.go(0); }
+      else wkCtl.freeze(false);
     }
+    var B = inOut(seg(p, .06, .34)), C = inOut(seg(p, .4, .96)), shift = C * wkMinis.length * step;
+    var w = G.bigW + (cw - G.bigW) * B, h = G.bigH + (ch - G.bigH) * B, cx0 = W / 2 - shift;
+    var d0 = Math.min(1, Math.abs(cx0 - W / 2) / step), sc0 = 1 - d0 * .07 * B;
+    wkCard.style.width = w.toFixed(1) + 'px'; wkCard.style.height = h.toFixed(1) + 'px';
+    wkCard.style.left = (cx0 - w / 2).toFixed(1) + 'px'; wkCard.style.top = ((H - h) / 2).toFixed(1) + 'px';
+    wkCard.style.borderRadius = (20 - 4 * B).toFixed(1) + 'px';
+    wkCard.style.transform = 'scale(' + sc0.toFixed(4) + ')';
+    wkCard.style.opacity = (1 - d0 * .22 * B).toFixed(3);
+    /* the line shrinks to the size the other days use; the small day label keeps its size */
+    var miniFs = Math.min(wkBigFs || 40, cw * (G.phone ? .082 : .074));
+    wkSay.style.fontSize = ((wkBigFs || miniFs) + (miniFs - (wkBigFs || miniFs)) * B).toFixed(2) + 'px';
+    wkPin.style.setProperty('--mini-fr', miniFs.toFixed(1) + 'px');
+    /* the heading sits just above whichever card is showing */
+    wkLabel.style.setProperty('--wk-label-y', ((H - h) / 2 - 24 - wkLabel.offsetHeight).toFixed(1) + 'px');
+    wkMinis.forEach(function (m, j) {
+      var i = j + 1, cx = W / 2 + i * step - shift, inn = clamp((B - .68 - j * .05) / .3, 0, 1);
+      var d = Math.min(1, Math.abs(cx - W / 2) / step), sc = 1 - d * .07;
+      var x = cx - cw / 2 + (1 - out3(inn)) * W * .18;
+      m.style.width = cw.toFixed(1) + 'px'; m.style.height = ch.toFixed(1) + 'px';
+      m.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + ((H - ch) / 2).toFixed(1) + 'px,0) scale(' + sc.toFixed(4) + ')';
+      m.style.opacity = (out3(inn) * (1 - d * .22)).toFixed(3);
+    });
   }
 
   /* ================= FROM THE WORK: stories flow through the panel ================= */
   var stories = $('#stories'), stScroll = $('#stories .stories__scroll'), stHead = $('#stories .stories__head'), stCards = $$('#stories-cards .story');
+  var sl = $('#stories-line'), slBase = $('#stories-line .sl__base'), slComet = $('#stories-line .sl__comet'), slHead = $('#stories-line .sl__head');
+  var SL_K = 4, slPts = [], slLen = 0, slW = 0, slVh = 0;
+  /* a long, gently winding line: built once per size, then scrolled and drawn */
+  function buildLine() {
+    var W = stScroll.clientWidth, vh = window.innerHeight, Hh = vh * SL_K, per = vh * 1.15, d = '', len = 0, prev = null;
+    slPts = [];
+    for (var y = -20; y <= Hh + 20; y += 10) {
+      var amp = W * (W < 640 ? .3 : .26) * (.62 + .38 * Math.sin(y / (per * 2.3) + 1.1));
+      var x = W / 2 + amp * Math.sin(y / per * Math.PI * 2 + .6);
+      if (prev) len += Math.hypot(x - prev[0], y - prev[1]);
+      slPts.push([x, y, len]); prev = [x, y];
+      d += (d ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+    }
+    slBase.setAttribute('d', d); slComet.setAttribute('d', d);
+    sl.setAttribute('width', W); sl.setAttribute('height', Hh); sl.style.width = W + 'px'; sl.style.height = Hh + 'px';
+    slLen = len; slW = W; slVh = vh;
+    slBase.style.strokeDasharray = len + ' ' + len;
+    slComet.style.strokeDasharray = '160 ' + (len + 200);
+  }
+  function lineAt(y) { var lo = 0, hi = slPts.length - 1; while (lo < hi) { var m = (lo + hi) >> 1; if (slPts[m][1] < y) lo = m + 1; else hi = m; } return slPts[lo]; }
   stories.classList.add('is-scrub');
+  buildLine();
+  window.addEventListener('resize', buildLine);
+  var slHeadLen = 0;
+  /* a brighter streak keeps running down the drawn part of the line */
+  (function comet(now) { if (slLen) { var run = Math.max(1, slHeadLen); slComet.style.strokeDashoffset = (-((now * .32) % run)).toFixed(1); } requestAnimationFrame(comet); })(performance.now());
   function renderStories() {
     var r = stScroll.getBoundingClientRect(), vh = window.innerHeight;
     if (r.top > vh || r.bottom < 0) return;
@@ -1086,6 +1207,12 @@ html.lenis, html.lenis body { height: auto; }
     var raw = -1 + progress(stScroll) * (N + .4), base = Math.floor(raw), fr = raw - base;
     var f = base + inOut(seg(fr, .14, .86));
     var hp = clamp(f + 1, 0, 1);
+    /* the line scrolls up through the panel; its head stays just below the middle and it is drawn up to there */
+    var pp = progress(stScroll), oy = pp * (SL_K - 1) * slVh, hpnt = lineAt(oy + slVh * .6);
+    sl.style.transform = 'translate3d(0,' + (-oy).toFixed(1) + 'px,0)';
+    slBase.style.strokeDashoffset = (slLen - hpnt[2]).toFixed(1);
+    slHead.setAttribute('cx', hpnt[0].toFixed(1)); slHead.setAttribute('cy', hpnt[1].toFixed(1));
+    slHeadLen = hpnt[2];
     stHead.style.transform = 'translate3d(0, calc(-50% - ' + (hp * vh * .34).toFixed(1) + 'px), 0)';
     stHead.style.opacity = clamp(1 - hp * 1.25, 0, 1).toFixed(3);
     var dx = phone ? W * .2 : Math.min(W * .26, 380), dy = vh * (phone ? .66 : .62);
@@ -1103,10 +1230,10 @@ html.lenis, html.lenis body { height: auto; }
 
   /* keep the visible gap around the pinned week at exactly one --sec */
   function fixGaps() {
-    var vh = window.innerHeight, sec = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sec')) || 96;
-    var l = $('#week .label').getBoundingClientRect(), c = $('#cal').getBoundingClientRect(), blank = (vh - (c.bottom - l.top)) / 2;
-    week.style.setProperty('--week-top', (sec - blank).toFixed(1) + 'px');
-    $('#team').style.marginTop = (sec - blank).toFixed(1) + 'px';
+    var sec = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sec')) || 96, G = wkGeom();
+    var top = (G.H - G.bigH) / 2 - 24 - wkLabel.offsetHeight, bottom = (G.H - G.ch) / 2;
+    week.style.setProperty('--week-top', (sec - top).toFixed(1) + 'px');
+    $('#team').style.marginTop = (sec - bottom).toFixed(1) + 'px';
   }
   fixGaps();
   window.addEventListener('resize', fixGaps);
