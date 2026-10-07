@@ -140,7 +140,7 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .card { position: absolute; left: 50%; top: 50%; width: 19em; height: 24em; margin: -12em 0 0 -9.5em; border-radius: .6em; overflow: hidden; text-decoration: none; color: #1A1A17;
   background: #fff; display: flex; flex-direction: column;
   box-shadow: 0 0 0 1px rgba(20,20,18,.06), 0 .1em .2em rgba(20,20,18,.06), 0 1.2em 2.4em -1em var(--desk-shadow), 0 3.4em 5em -2.6em var(--desk-shadow);
-  transform: translate(calc(var(--x) * var(--spread, 1)), calc(var(--y) - var(--lift) * 2.2em)) rotate(calc(var(--rot) * (1 - var(--lift)))) scale(calc(1 + var(--lift) * .07));
+  transform: translate(calc(var(--x) * var(--spread, 1)), calc(var(--y) + var(--py, 0em) - var(--lift) * 2.2em)) rotate(calc(var(--rot) * (1 - var(--lift)))) scale(calc(1 + var(--lift) * .07));
   transition: --lift 520ms cubic-bezier(.34, 1.56, .64, 1), box-shadow 400ms ease, filter 300ms ease; }
 .card:hover, .card:focus-visible { --lift: 1; z-index: 10 !important; box-shadow: 0 0 0 1px rgba(20,20,18,.06), 0 .2em .4em rgba(20,20,18,.08), 0 2em 3.6em -1.2em var(--desk-shadow), 0 5em 7em -3em var(--desk-shadow); }
 .stage:has(.card:hover) .card:not(:hover) { filter: saturate(.7) brightness(.97); }
@@ -308,6 +308,13 @@ a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
 
 .end { margin-top: clamp(96px, 12vw, 160px); padding-block: 28px 56px; border-top: 1px solid var(--rule); text-align: center; }
 
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+.ghost-word { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none; font-size: 26em; line-height: .8; letter-spacing: -.06em; font-weight: 300; font-style: italic; color: transparent; -webkit-text-stroke: 1px var(--rule); opacity: 0; white-space: nowrap; font-variation-settings: "opsz" 72; }
+.show:not(.is-scrub) .ghost-word { display: none; }
+[data-par] { will-change: transform; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0ms !important; animation: none !important; }
 }
@@ -336,6 +343,7 @@ a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
     <div class="show" id="show">
       <div class="stage-pin">
         <div class="stage" id="stage" role="img" aria-label="A stack of near-identical CVs is blacked out and falls away. In its place rise five pieces of work, one for each open role: a launch playbook, a merch poster, a code change, a paid ads review and a video edit.">
+          <span class="ghost-word" id="ghostword" aria-hidden="true">work</span>
           <!-- the CVs: four of the same person -->
           <div class="cv" data-cv style="--i:3"><div class="cv__top"><span class="cv__ph"></span><div><p class="cv__nm">Sam Patel</p><p class="cv__rl">Strategy · London</p></div></div></div>
           <div class="cv" data-cv style="--i:2"><div class="cv__top"><span class="cv__ph"></span><div><p class="cv__nm">Alex Moreau</p><p class="cv__rl">Consulting · Paris</p></div></div></div>
@@ -425,7 +433,7 @@ a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
   <!-- ========== 2 · What 8x is ========== -->
   <section class="what" id="what" aria-labelledby="what-h">
     <div class="wrap">
-      <div class="what__head">
+      <div class="what__head" data-par="-0.12">
         <p class="label">What 8x is</p>
         <h2 id="what-h">Companies come to 8x for outcomes. <span>Posts that get watched. Meetings that get booked. Interviews that get run.</span> We organise the people who do that work.</h2>
       </div>
@@ -450,7 +458,7 @@ a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
         </div>
       </div>
 
-      <div class="rows">
+      <div class="rows" data-par="-0.06">
         <div class="row">
           <p class="label">The network</p>
           <h3>121,000 people do the work, on demand.</h3>
@@ -464,7 +472,7 @@ a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
         </div>
       </div>
 
-      <div class="prods">
+      <div class="prods" data-par="-0.04">
         <div class="prods__head"><span class="label">Running on the network today · 6 live · 2 locked</span></div>
         <a class="prod" href="https://8x.social"><span class="prod__name">8x Social</span><span class="prod__what">Consumer brands. TikTok, Instagram, YouTube.</span><span class="prod__dom">8x.social <span class="arr">↗</span></span></a>
         <a class="prod" href="https://8x.business"><span class="prod__name">8x LinkedIn</span><span class="prod__what">B2B demand, on LinkedIn.</span><span class="prod__dom">8x.business <span class="arr">↗</span></span></a>
@@ -481,6 +489,7 @@ a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
   </section>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -497,7 +506,7 @@ a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
   if (reduce) return; /* static, finished composition */
 
   /* ================= HERO ================= */
-  var show = $('#show'), cap = $('#cap'), notEl = $('#not');
+  var show = $('#show'), cap = $('#cap'), notEl = $('#not'), ghost = $('#ghostword'), head = $('.hero__head');
   var cvs = $$('[data-cv]'), cards = $$('[data-card]');
   var topBars = $$('[data-top] .rd');
   show.classList.add('is-scrub');
@@ -525,13 +534,21 @@ a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
     });
     /* .42 – .86 the work rises into a fan, centre first */
     var order = [2, 1, 3, 0, 4];
+    var depth = [7, 3.5, 1, 3.5, 7]; /* outer cards travel faster: they read as closer */
     cards.forEach(function (el, i) {
       var k = order.indexOf(i);
       var t = out3(seg(p, .27 + k * .07, .57 + k * .07));
       el.style.opacity = Math.min(1, t * 1.6).toFixed(3);
       el.style.marginTop = ((1 - t) * 30 - 12).toFixed(2) + 'em';
+      el.style.setProperty('--py', (-p * depth[i]).toFixed(2) + 'em');
     });
     cap.classList.toggle('is-swapped', p > .3);
+    ghost.style.opacity = (seg(p, .25, .5) * .9).toFixed(3);
+    ghost.style.transform = 'translate(-50%, calc(-50% + ' + ((.5 - p) * 10).toFixed(2) + 'em))';
+    /* the headline drifts up slower than the page and fades */
+    var y = window.scrollY;
+    head.style.transform = 'translateY(' + (y * .38).toFixed(1) + 'px)';
+    head.style.opacity = Math.max(0, 1 - y / (window.innerHeight * .75)).toFixed(3);
   }
   /* ================= SECTION 2 ================= */
   var count = $('#count'), board = $('#board');
@@ -554,13 +571,33 @@ a.prod:hover::before, a.prod:focus-visible::before { transform: scaleX(1); }
     receipt.style.opacity = q; receipt.style.transform = 'translateY(' + ((1 - q) * 10).toFixed(1) + 'px)';
   }
 
-  var ticking = false;
-  function frame() { ticking = false; renderHero(); renderCount(); }
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
-  function onResize() { onScroll(); }
-  window.addEventListener('scroll', onScroll, { passive: true });
+  /* generic depth: [data-par] blocks drift against the scroll by their factor */
+  var pars = $$('[data-par]');
+  function renderPar() {
+    var vh = window.innerHeight;
+    pars.forEach(function (el) {
+      var r = el.getBoundingClientRect(), f = parseFloat(el.getAttribute('data-par'));
+      var off = (r.top + r.height / 2 - vh / 2) - (parseFloat(el.dataset.ty) || 0);
+      var ty = off * f; el.dataset.ty = ty;
+      el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
+    });
+  }
+  function frame() { renderHero(); renderCount(); renderPar(); }
+
+  /* smooth, delayed scroll: the page eases toward where you scrolled */
+  var lenis = window.Lenis ? new Lenis({ lerp: .075, wheelMultiplier: .9, smoothWheel: true }) : null;
+  var last = -1;
+  function loop(t) {
+    if (lenis) lenis.raf(t);
+    var y = window.scrollY;
+    if (y !== last) { last = y; frame(); }
+    requestAnimationFrame(loop);
+  }
+  function onResize() { last = -1; if (lenis) lenis.resize(); }
   window.addEventListener('resize', onResize);
+  $$('a[href^="#"]').forEach(function (a) { a.addEventListener('click', function (e) { var id = a.getAttribute('href'); if (lenis && id.length > 1 && $(id)) { e.preventDefault(); lenis.scrollTo(id, { duration: 1.6 }); } }); });
   frame();
+  requestAnimationFrame(loop);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(onResize);
 })();
 </script>
