@@ -290,40 +290,35 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 @media (prefers-reduced-motion: reduce) { .track { animation: none; } }
 
 
-/* the core team: a spotlight moves across six people and lands on an empty seat */
-.team { position: relative; margin-top: clamp(80px, 10vw, 140px); width: 100vw; margin-left: calc(50% - 50vw); }
-.team.is-scrub { height: 380svh; }
-.team__pin { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; align-content: center; gap: clamp(22px, 4vh, 44px); padding-block: 40px; overflow: hidden; position: relative; }
-.team.is-scrub .team__pin { position: sticky; top: 0; height: 100svh; padding-block: 64px 24px; }
-.team__head { text-align: center; display: grid; gap: 12px; justify-items: center; padding-inline: var(--gutter); }
+/* the core team: a 3 × 2 grid; hover brings each person's details up over a progressive blur */
+.team { position: relative; margin-top: clamp(80px, 10vw, 140px); }
+.team__head { text-align: center; display: grid; gap: 12px; justify-items: center; margin-bottom: clamp(28px, 4vw, 52px); }
 .team__head h3 { font-size: clamp(1.7rem, 1.1rem + 2vw, 3rem); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; font-variation-settings: "opsz" 60; }
 .team__head p:not(.label) { color: var(--ink-2); font-size: var(--lead); }
-.seats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(6px, 1.2vw, 20px); width: min(100% - 2 * var(--gutter), 1500px); position: relative; z-index: 1; }
-.seat { width: 100%; aspect-ratio: 3 / 4; border-radius: 12px; overflow: hidden; position: relative; flex: none; background: var(--rule);
-  transform: scale(.94); opacity: .38; filter: grayscale(1); transition: transform 700ms var(--ease-settle), opacity 600ms ease, filter 600ms ease, box-shadow 600ms ease; }
-.seat img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.mate { margin: 0; display: grid; gap: 14px; align-content: start; }
-.mate.on .seat { transform: scale(1.04); opacity: 1; filter: none; box-shadow: 0 22px 44px -22px var(--desk-shadow); }
-.mate figcaption { display: grid; gap: 6px; justify-items: start; text-align: left; opacity: .4; transition: opacity 500ms ease; }
-.mate.on figcaption { opacity: 1; }
-.mate__name { font-size: clamp(.95rem, .7rem + .9vw, 1.5rem); line-height: 1.15; letter-spacing: -.01em; }
-.mate__role { font-family: var(--mono); font-size: clamp(9px, .5rem + .35vw, 12px); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px; padding-bottom: 5px; transition: background-size 620ms var(--ease-pen) 140ms, color 400ms ease; }
-.mate.on .mate__role { background-size: 100% 2px; color: var(--ink); }
-.seat--you { background: var(--rule); display: block; color: var(--ink-3); }
-.seat--you svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.seat--you span { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); line-height: 1.6; }
-.seat--you b { display: block; font-family: var(--serif); font-weight: 400; font-size: 2.4em; line-height: 1; color: var(--pen); letter-spacing: 0; margin-bottom: 6px; }
-.mate--you.on .seat--you { box-shadow: 0 0 0 2px var(--paper), 0 0 0 3.5px var(--pen), 0 22px 44px -22px var(--desk-shadow); }
-.team.is-hover .mate { cursor: pointer; }
-/* the light: a soft cone from above that follows the active seat */
-.beam { position: absolute; top: 0; height: 0; width: var(--bw, 240px); left: 0; pointer-events: none; z-index: 0;
-  background: radial-gradient(ellipse 50% 42% at 50% 62%, color-mix(in srgb, var(--mark) 55%, transparent), transparent 70%), linear-gradient(180deg, transparent, color-mix(in srgb, var(--mark) 22%, transparent) 40%, transparent 85%);
-  clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%); opacity: .9; transition: transform 700ms var(--ease-settle); }
-  background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px; padding-bottom: 5px; }
-.team .btn { margin-top: 2px; }
-.team:not(.is-scrub) .seat { opacity: 1; filter: none; transform: none; }
-.team:not(.is-scrub) .mate figcaption { opacity: 1; }
-@media (max-width: 700px) { .mate__role { letter-spacing: .02em; display: none; } .mate.on .mate__role { display: block; } .mate { gap: 8px; } .mate__name { font-size: .82rem; } }
+.seats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 24px); max-width: 1160px; margin-inline: auto; }
+@media (max-width: 640px) { .seats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.mate { margin: 0; position: relative; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; background: var(--rule); isolation: isolate; }
+.mate img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 900ms var(--ease-settle); }
+.mate:hover img { transform: scale(1.04); }
+/* progressive blur: three stacked layers, each blurrier and masked lower */
+.mate__blur { position: absolute; left: 0; right: 0; bottom: 0; height: 46%; pointer-events: none; z-index: 1; opacity: 0; transition: opacity 500ms ease; }
+.mate__blur i { position: absolute; inset: 0; }
+.mate__blur i:nth-child(1) { backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 35%); mask-image: linear-gradient(to bottom, transparent 0%, #000 35%); }
+.mate__blur i:nth-child(2) { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); -webkit-mask-image: linear-gradient(to bottom, transparent 25%, #000 60%); mask-image: linear-gradient(to bottom, transparent 25%, #000 60%); }
+.mate__blur i:nth-child(3) { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); -webkit-mask-image: linear-gradient(to bottom, transparent 50%, #000 85%); mask-image: linear-gradient(to bottom, transparent 50%, #000 85%); }
+.mate__blur::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(12,12,10,.42)); }
+.mate figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: grid; gap: 6px; justify-items: start; text-align: left; padding: clamp(14px, 1.6vw, 22px); color: #fff; opacity: 0; transform: translateY(10px); transition: opacity 400ms ease, transform 520ms var(--ease-settle); }
+.mate__name { font-size: clamp(1.1rem, .8rem + 1vw, 1.7rem); line-height: 1.1; letter-spacing: -.01em; }
+.mate__role { font-family: var(--mono); font-size: clamp(10px, .55rem + .3vw, 12px); letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.88);
+  background-image: linear-gradient(#F0603F, #F0603F); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px; padding-bottom: 5px; transition: background-size 620ms var(--ease-pen) 160ms; }
+.mate:hover .mate__blur, .mate:focus-within .mate__blur { opacity: 1; }
+.mate:hover figcaption, .mate:focus-within figcaption { opacity: 1; transform: none; }
+.mate:hover .mate__role, .mate:focus-within .mate__role { background-size: 100% 2px; }
+@media (hover: none) { .mate .mate__blur, .mate figcaption { opacity: 1; transform: none; } .mate .mate__role { background-size: 100% 2px; } }
+.mate--you { background: var(--rule); color: var(--ink-3); }
+.mate--you svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mate--you figcaption { color: var(--ink); opacity: 1; transform: none; }
+.mate--you .mate__name { color: var(--ink); }
 
 /* people → globe: one pinned canvas scene */
 .crowd { position: relative; margin-top: clamp(24px, 4vw, 60px); }
@@ -517,15 +512,12 @@ html.lenis, html.lenis body { height: auto; }
       </div>
 
       <div class="team" id="team">
-        <div class="team__pin">
-          <span class="beam" id="beam" aria-hidden="true"></span>
-          <div class="team__head">
-            <p class="label">The core team</p>
-            <h3>A small team builds the rest.</h3>
-            <p>Each person owns a whole piece of it.</p>
-          </div>
-          <div class="seats" id="seats"><figure class="mate"><div class="seat"><img src="img/people/p6.jpg" alt="Placeholder portrait for Maya Okafor" loading="lazy"></div><figcaption><span class="mate__name">Maya Okafor</span><span class="mate__role">Market lead · Poland</span></figcaption></figure><figure class="mate"><div class="seat"><img src="img/people/p2.jpg" alt="Placeholder portrait for Ravi Menon" loading="lazy"></div><figcaption><span class="mate__name">Ravi Menon</span><span class="mate__role">Engineer · Platform</span></figcaption></figure><figure class="mate"><div class="seat"><img src="img/people/p3.jpg" alt="Placeholder portrait for Lena Park" loading="lazy"></div><figcaption><span class="mate__name">Lena Park</span><span class="mate__role">Designer · Brand</span></figcaption></figure><figure class="mate"><div class="seat"><img src="img/people/p8.jpg" alt="Placeholder portrait for Tomás Silva" loading="lazy"></div><figcaption><span class="mate__name">Tomás Silva</span><span class="mate__role">Paid growth · 10 markets</span></figcaption></figure><figure class="mate"><div class="seat"><img src="img/people/p1.jpg" alt="Placeholder portrait for Amara Diallo" loading="lazy"></div><figcaption><span class="mate__name">Amara Diallo</span><span class="mate__role">Operations · Payouts</span></figcaption></figure><figure class="mate mate--you"><div class="seat seat--you" aria-label="An empty seat"><svg viewBox="0 0 120 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="60" cy="62" r="24" fill="currentColor" opacity=".22"/><path d="M14 160c4-34 22-52 46-52s42 18 46 52z" fill="currentColor" opacity=".22"/></svg></div><figcaption><span class="mate__name">You?</span></figcaption></figure></div>
+        <div class="team__head">
+          <p class="label">The core team</p>
+          <h3>A small team builds the rest.</h3>
+          <p>Each person owns a whole piece of it.</p>
         </div>
+        <div class="seats" id="seats"><figure class="mate" tabindex="0"><img src="img/people/p6.jpg" alt="Placeholder portrait for Maya Okafor" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Maya Okafor</span><span class="mate__role">Market lead · Poland</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p2.jpg" alt="Placeholder portrait for Ravi Menon" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Ravi Menon</span><span class="mate__role">Engineer · Platform</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p3.jpg" alt="Placeholder portrait for Lena Park" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Lena Park</span><span class="mate__role">Designer · Brand</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p8.jpg" alt="Placeholder portrait for Tomás Silva" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Tomás Silva</span><span class="mate__role">Paid growth · 10 markets</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p1.jpg" alt="Placeholder portrait for Amara Diallo" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Amara Diallo</span><span class="mate__role">Operations · Payouts</span></figcaption></figure><figure class="mate mate--you"><svg viewBox="0 0 120 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="60" cy="58" r="22" fill="currentColor" opacity=".25"/><path d="M16 150c4-32 21-50 44-50s40 18 44 50z" fill="currentColor" opacity=".25"/></svg><figcaption><span class="mate__name">You?</span></figcaption></figure></div>
       </div>
 
       <div class="prods" data-par="-0.04">
@@ -796,36 +788,6 @@ html.lenis, html.lenis body { height: auto; }
   pulse(); setInterval(pulse, 1100);
   function renderNet() {}
 
-  /* ================= CORE TEAM: a spotlight walks the seats ================= */
-  var team = $('#team'), seats = $$('#seats .mate'), seatRow = $('#seats'), beam = $('#beam'), activeSeat = -1;
-  team.classList.add('is-scrub');
-  window.addEventListener('resize', function () { placeBeam(); activeSeat = -1; });
-  function placeBeam() {
-    /* the light starts just above the seats and ends under the name, so it never tints the heading */
-    var top = seatRow.offsetTop - 70, bottom = seatRow.offsetTop + seatRow.offsetHeight + 20;
-    beam.style.top = top + 'px'; beam.style.height = (bottom - top) + 'px';
-  }
-  var teamDone = false;
-  function lightSeat(idx) {
-    if (idx === activeSeat) return;
-    activeSeat = idx;
-    seats.forEach(function (el, i) { el.classList.toggle('on', i === idx); });
-    var el = seats[idx], pr = el.offsetParent === seatRow ? 0 : 0;
-    /* the light moves to sit over the lit seat */
-    var bw = el.offsetWidth * 1.7;
-    beam.style.setProperty('--bw', bw.toFixed(0) + 'px');
-    beam.style.transform = 'translateX(' + (seatRow.offsetLeft + el.offsetLeft + el.offsetWidth / 2 - bw / 2).toFixed(1) + 'px)';
-  }
-  function renderTeam() {
-    var p = progress(team), n = seats.length;
-    if (!beam.style.height || beam.style.height === '0px') placeBeam();
-    if (teamDone) return; /* the walk-through plays once; after that, hover takes over, even when scrolling back */
-    lightSeat(Math.min(n - 1, Math.floor(clamp((p - .04) / .9, 0, .999) * n)));
-    if (p >= .97 && !teamDone) { teamDone = true; team.classList.add('is-hover'); }
-  }
-  seats.forEach(function (el, i) {
-    el.addEventListener('mouseenter', function () { if (teamDone) lightSeat(i); });
-  });
   /* the header button appears once the hero's own button has scrolled away */
   var navCta = $('#nav-cta'), heroBtn = $('.hero .btn');
   function renderNav() {
@@ -847,7 +809,7 @@ html.lenis, html.lenis body { height: auto; }
       el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
     });
   }
-  function frame(t) { renderNav(); renderHero(); renderSay(); renderCrowd(t); renderNet(); renderTeam(); renderPar(); }
+  function frame(t) { renderNav(); renderHero(); renderSay(); renderCrowd(t); renderNet(); renderPar(); }
 
   /* smooth, delayed scroll: the page eases toward where you scrolled */
   var crowdLive = false;
