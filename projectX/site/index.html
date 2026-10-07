@@ -540,22 +540,9 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
   background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1.5px; transition: background-size 420ms var(--ease-pen); }
 .fit__no:hover, .fit__no:focus-visible { background-size: 100% 1.5px; }
 
-/* ---------------- roles: rows that rise in, then the close ---------------- */
+/* ---------------- the close ---------------- */
 .roles { position: relative; margin-top: clamp(110px, 12vw, 170px); display: grid; justify-items: center; text-align: center; }
-.roles__h { margin: 10px 0 0; font-size: clamp(2.4rem, 1rem + 4.6vw, 5.4rem); line-height: 1.04; letter-spacing: -.03em; font-weight: 380; font-variation-settings: "opsz" 72; }
-.roles__group { width: min(44rem, 100%); margin-top: clamp(40px, 6vw, 72px); display: grid; }
-.roles__g { margin: 0 0 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
-.role { display: grid; justify-items: center; gap: 4px; padding: 18px 8px 17px; border-bottom: 1px solid var(--rule); text-decoration: none; color: var(--ink); }
-.role__n { font-size: clamp(1.3rem, 1rem + .9vw, 1.75rem); line-height: 1.2; letter-spacing: -.012em;
-  background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1.5px; padding-bottom: 2px; transition: background-size 460ms var(--ease-pen); }
-.role__m { font-family: var(--mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); transition: color 300ms ease; }
-.role:hover .role__n, .role:focus-visible .role__n { background-size: 100% 1.5px; }
-.role:hover .role__m, .role:focus-visible .role__m { color: var(--ink-2); }
-.role--more .role__n { color: var(--ink-2); font-size: 1.1rem; }
-.roles__group.is-armed .role, .roles__group.is-armed .roles__g { opacity: 0; transform: translateY(14px); }
-.roles .role, .roles .roles__g { transition: opacity 700ms ease, transform 900ms var(--ease-settle); transition-delay: calc(var(--k, 0) * 55ms); }
-.roles .role:hover { transition-delay: 0s; }
-.roles__end { display: grid; justify-items: center; gap: 18px; margin-top: clamp(80px, 10vw, 140px); }
+.roles__end { display: grid; justify-items: center; gap: 18px; }
 .roles__close { margin: 0; font-size: clamp(2.6rem, 1rem + 5.4vw, 6.4rem); line-height: 1; letter-spacing: -.035em; font-weight: 380; font-variation-settings: "opsz" 72; }
 .roles__note { margin: 0; color: var(--ink-2); font-size: 1rem; }
 
@@ -901,32 +888,7 @@ html.lenis, html.lenis body { height: auto; }
         </div>
       </section>
 
-      <section class="roles" id="roles" aria-labelledby="roles-h">
-        <p class="label">Open roles</p>
-        <h3 class="roles__h" id="roles-h">Twenty ways in.</h3>
-        <div class="roles__group">
-          <p class="roles__g">Launch a market &middot; internships</p>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Market Lead, Poland</span><span class="role__m">Internship &middot; Remote &middot; Two-week trial</span></a>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Market Lead, Japan</span><span class="role__m">Internship &middot; Remote &middot; Two-week trial</span></a>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Market Lead, Germany</span><span class="role__m">Internship &middot; Remote &middot; Two-week trial</span></a>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Market Lead, United Kingdom</span><span class="role__m">Internship &middot; Remote &middot; Two-week trial</span></a>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Market Lead, Spain</span><span class="role__m">Internship &middot; Remote &middot; Two-week trial</span></a>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Market Lead, Southeast Asia</span><span class="role__m">Internship &middot; Remote &middot; Two-week trial</span></a>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Market Lead, Portugal and Brazil</span><span class="role__m">Internship &middot; Remote &middot; Two-week trial</span></a>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Market Lead, Turkey</span><span class="role__m">Internship &middot; Remote &middot; Two-week trial</span></a>
-        </div>
-        <div class="roles__group">
-          <p class="roles__g">Build</p>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Software Engineer</span><span class="role__m">Own a product end to end &middot; Remote</span></a>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Graphic Designer</span><span class="role__m">The first dedicated designer &middot; Remote</span></a>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Builder in Residence</span><span class="role__m">A blank page &middot; Remote</span></a>
-        </div>
-        <div class="roles__group">
-          <p class="roles__g">Grow</p>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Paid Ads Manager</span><span class="role__m">Four products, ten markets, five channels &middot; Remote</span></a>
-          <a class="role" href="https://www.8x.careers/join"><span class="role__n">Intrapreneur</span><span class="role__m">From research to revenue &middot; Remote</span></a>
-          <a class="role role--more" href="https://www.8x.careers/join"><span class="role__n">Seven more on 8x.careers</span></a>
-        </div>
+      <section class="roles" id="roles" aria-label="Apply">
         <div class="roles__end">
           <p class="roles__close">Show us the work.</p>
           <a class="btn" href="https://www.8x.careers/join">Apply on 8x.careers</a>
@@ -1464,15 +1426,6 @@ html.lenis, html.lenis body { height: auto; }
     pathStops.forEach(function (s2, i) { s2.classList.toggle('is-past', i <= f + .001); });
   }
 
-  /* ================= ROLES: rows rise in once, group by group ================= */
-  var roleGroups = $$('#roles .roles__group');
-  roleGroups.forEach(function (g) { Array.prototype.forEach.call(g.querySelectorAll('.roles__g, .role'), function (el, i) { el.style.setProperty('--k', i); }); });
-  roleGroups.forEach(function (g) { if (g.getBoundingClientRect().top > window.innerHeight) g.classList.add('is-armed'); });
-  function renderRoles() {
-    var vh = window.innerHeight;
-    roleGroups.forEach(function (g) { if (g.classList.contains('is-armed') && g.getBoundingClientRect().top < vh * .9) g.classList.remove('is-armed'); });
-  }
-
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
   var pars = $$('[data-par]');
   function renderPar() {
@@ -1484,7 +1437,7 @@ html.lenis, html.lenis body { height: auto; }
       el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
     });
   }
-  function frame(t) { renderNav(); renderHero(); renderSay(); renderCrowd(t); renderNet(); renderDeck(); renderBet(); renderOwn(); renderPath(); renderRoles(); renderPar(); }
+  function frame(t) { renderNav(); renderHero(); renderSay(); renderCrowd(t); renderNet(); renderDeck(); renderBet(); renderOwn(); renderPath(); renderPar(); }
 
   /* smooth, delayed scroll: the page eases toward where you scrolled */
   var crowdLive = false;
