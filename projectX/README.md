@@ -20,7 +20,7 @@ A design challenge to redesign [8x.life](https://8x.life/), 8x's life-at-8x site
 
 `site/index.html` is the homepage build.
 
-- Header: the top-right link is gone; a "See the 20 open roles" button slides in once the hero's button scrolls away.
+- Header: the top-right link is gone; a "20 open roles" button slides in once the hero's button scrolls away.
 - [x] 1. Hero: "We hire on work, not CVs." with the open-roles button, a pile of CVs that is blacked out in one quick shot, then on scroll the CVs fall while five role work scenes rise and fan out on a semicircle (design, code review, playbook, ads review, video edit). Each card pops forward on hover.
 - [x] 2. What 8x is: a big text-only statement revealed word by word on scroll, then twelve square portrait photos (placeholders) travel round "121,000 people" without touching it and pin themselves onto a globe that turns once, with "30+ countries" underneath, then "The network": two big edge-to-edge auto-scrolling rows of people photos that light up on demand, under "Creators post · Sales reps call · Participants talk" (photos slightly smaller), then "The core team": a 3×2 grid of big photo cards (five people plus an "Open seat · You?" card linking to the roles); the grid fades up softly when it enters view; hovering a card slides its name and role up on the photo over a progressive blur, with an orange underline under the role (always shown on touch screens), then the products.
 - [ ] 3. The bet
