@@ -463,6 +463,21 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .lockd svg { width: 1.6em; height: 1.6em; color: var(--ink-3); }
 @container (max-width: 560px) { .sc-social { gap: 1.1em; } .sc-social .phone2:nth-child(3), .sc-social .phone2:nth-child(1) { width: 6.6em; } .sc-social .phone2:nth-child(2) { width: 9em; } .sc-locked { grid-auto-flow: row; } .lockd { width: 14em; aspect-ratio: 5 / 3; } }
 
+/* ---------------- the bet: lines type themselves, then step back ---------------- */
+.bet { position: relative; margin-top: clamp(96px, 12vw, 168px); }
+.bet__pin { display: grid; justify-items: center; align-content: center; gap: clamp(28px, 4vh, 44px); text-align: center; padding-block: 40px; }
+.bet__lines { display: grid; justify-items: center; gap: .1em; max-width: 15em; font-size: clamp(2.2rem, 1rem + 4.2vw, 5rem); }
+.bet__l { margin: 0; font-size: clamp(1.1rem, .9rem + .8vw, 1.6rem); line-height: 1.12; letter-spacing: -.02em; font-weight: 380; font-variation-settings: "opsz" 72; text-wrap: balance; color: var(--ink-3); }
+.bet__l--last { font-size: 1em; color: var(--ink); margin-top: .35em; }
+.bet__l .u { background-image: linear-gradient(var(--pen), var(--pen)); background-repeat: no-repeat; background-position: 0 92%; background-size: calc(var(--u, 1) * 100%) max(2px, .05em); }
+.bet .ch { position: relative; }
+.bet .ch.is-off { display: none; }
+.bet .ch.is-caret::after { content: ""; position: absolute; right: -.07em; top: .14em; bottom: .06em; width: max(2px, .06em); background: var(--pen); animation: caret 1s steps(1) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+.bet.is-scrub .bet__scroll { height: calc(100svh + 4 * 70svh); }
+.bet.is-scrub .bet__pin { position: sticky; top: 0; height: 100svh; padding-block: 0; }
+.bet.is-scrub .bet__l { will-change: font-size; }
+
 .end { margin-top: clamp(96px, 12vw, 160px); padding-block: 28px 56px; border-top: 1px solid var(--rule); text-align: center; }
 
 html.lenis, html.lenis body { height: auto; }
@@ -723,7 +738,21 @@ html.lenis, html.lenis body { height: auto; }
         </div>
       </section>
 
-      <div class="end"><span class="label">Hero and section 2 · Next: the bet</span></div>
+      <section class="bet" id="bet" aria-labelledby="bet-h">
+        <div class="bet__scroll">
+          <div class="bet__pin">
+            <p class="label" id="bet-h">The bet</p>
+            <div class="bet__lines" id="bet-lines">
+              <p class="bet__l">Building is cheap now.</p>
+              <p class="bet__l">Getting it in front of people isn&rsquo;t.</p>
+              <p class="bet__l">That takes people. 8x organises them.</p>
+              <p class="bet__l bet__l--last">So here, your <span class="u">judgement</span> is the product.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="end"><span class="label">Sections 1–3 · Next: what you&rsquo;d own</span></div>
     </div>
   </section>
 </main>
@@ -1055,6 +1084,55 @@ html.lenis, html.lenis body { height: auto; }
     }
   }
 
+  /* ================= THE BET: each line types itself as you scroll, then steps back ================= */
+  var bet = $('#bet'), betScroll = $('#bet .bet__scroll'), betLines = $$('#bet-lines .bet__l'), betU = $('#bet-lines .u');
+  bet.classList.add('is-scrub');
+  /* split every line into characters, keeping the underlined word's wrapper */
+  var betChars = betLines.map(function (line) {
+    var out = [];
+    (function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.textContent.split('').forEach(function (c) { var sp = document.createElement('span'); sp.className = 'ch is-off'; sp.textContent = c; frag.appendChild(sp); out.push(sp); });
+          node.replaceChild(frag, n);
+        } else walk(n);
+      });
+    })(line);
+    line.setAttribute('aria-label', line.textContent);
+    return out;
+  });
+  var betTyped = betLines.map(function () { return -1; }), betCaret = null;
+  function renderBet() {
+    var r = betScroll.getBoundingClientRect(), vh = window.innerHeight;
+    if (r.top > vh || r.bottom < 0) return;
+    var p = progress(betScroll), L = betLines.length, vw = window.innerWidth / 100;
+    var big = clamp(16 + 4.2 * vw, 35, 80), small = clamp(14.4 + .8 * vw, 17.6, 25.6);
+    var caretAt = null;
+    betLines.forEach(function (line, i) {
+      var t = clamp(p * L - i, 0, 1), last = i === L - 1;
+      /* grow in as it starts, step back as the next line starts */
+      var grow = out3(seg(t, 0, .22)), back = i < L - 1 ? out3(clamp((p * L - (i + 1)) / .22, 0, 1)) : 0;
+      var e = grow * (1 - back);
+      line.style.fontSize = (small + (big - small) * e).toFixed(2) + 'px';
+      line.style.color = last || e > .5 ? 'var(--ink)' : 'var(--ink-3)';
+      line.style.opacity = (last ? 1 : .55 + .45 * Math.max(e, back > 0 ? 0 : 1)).toFixed(3);
+      var chars = betChars[i], n = Math.round(seg(t, .08, last ? .7 : .8) * chars.length);
+      if (n !== betTyped[i]) {
+        chars.forEach(function (c, k) { c.classList.toggle('is-off', k >= n); });
+        betTyped[i] = n;
+      }
+      if (n > 0 && n < chars.length) caretAt = chars[n - 1];
+      if (n > 0 && n === chars.length && (last || t < 1) && !caretAt) caretAt = chars[n - 1];
+      if (last) betU.style.setProperty('--u', inOut(seg(t, .74, .96)).toFixed(3));
+    });
+    if (caretAt !== betCaret) {
+      if (betCaret) betCaret.classList.remove('is-caret');
+      if (caretAt) caretAt.classList.add('is-caret');
+      betCaret = caretAt;
+    }
+  }
+
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
   var pars = $$('[data-par]');
   function renderPar() {
@@ -1066,7 +1144,7 @@ html.lenis, html.lenis body { height: auto; }
       el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
     });
   }
-  function frame(t) { renderNav(); renderHero(); renderSay(); renderCrowd(t); renderNet(); renderDeck(); renderPar(); }
+  function frame(t) { renderNav(); renderHero(); renderSay(); renderCrowd(t); renderNet(); renderDeck(); renderBet(); renderPar(); }
 
   /* smooth, delayed scroll: the page eases toward where you scrolled */
   var crowdLive = false;
