@@ -301,24 +301,34 @@ h1, h2, h3, p { margin: 0; font-weight: 400; }
 .mate img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 900ms var(--ease-settle); }
 .mate:hover img { transform: scale(1.04); }
 /* progressive blur: three stacked layers, each blurrier and masked lower */
-.mate__blur { position: absolute; left: 0; right: 0; bottom: 0; height: 46%; pointer-events: none; z-index: 1; opacity: 0; transition: opacity 500ms ease; }
+.mate__blur { position: absolute; left: 0; right: 0; bottom: 0; height: 46%; pointer-events: none; z-index: 1; transform: translateY(101%); transition: transform 460ms var(--ease-settle); will-change: transform; }
 .mate__blur i { position: absolute; inset: 0; }
 .mate__blur i:nth-child(1) { backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 35%); mask-image: linear-gradient(to bottom, transparent 0%, #000 35%); }
 .mate__blur i:nth-child(2) { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); -webkit-mask-image: linear-gradient(to bottom, transparent 25%, #000 60%); mask-image: linear-gradient(to bottom, transparent 25%, #000 60%); }
 .mate__blur i:nth-child(3) { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); -webkit-mask-image: linear-gradient(to bottom, transparent 50%, #000 85%); mask-image: linear-gradient(to bottom, transparent 50%, #000 85%); }
 .mate__blur::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(12,12,10,.42)); }
-.mate figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: grid; gap: 6px; justify-items: start; text-align: left; padding: clamp(14px, 1.6vw, 22px); color: #fff; opacity: 0; transform: translateY(10px); transition: opacity 400ms ease, transform 520ms var(--ease-settle); }
+.mate figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: grid; gap: 6px; justify-items: start; text-align: left; padding: clamp(14px, 1.6vw, 22px); color: #fff; opacity: 0; transform: translateY(14px); transition: opacity 300ms ease 60ms, transform 460ms var(--ease-settle) 40ms; }
 .mate__name { font-size: clamp(1.1rem, .8rem + 1vw, 1.7rem); line-height: 1.1; letter-spacing: -.01em; }
 .mate__role { font-family: var(--mono); font-size: clamp(10px, .55rem + .3vw, 12px); letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.88);
   background-image: linear-gradient(#F0603F, #F0603F); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 2px; padding-bottom: 5px; transition: background-size 620ms var(--ease-pen) 160ms; }
-.mate:hover .mate__blur, .mate:focus-within .mate__blur { opacity: 1; }
+.mate:hover .mate__blur, .mate:focus-within .mate__blur { transform: none; }
 .mate:hover figcaption, .mate:focus-within figcaption { opacity: 1; transform: none; }
 .mate:hover .mate__role, .mate:focus-within .mate__role { background-size: 100% 2px; }
 @media (hover: none) { .mate .mate__blur, .mate figcaption { opacity: 1; transform: none; } .mate .mate__role { background-size: 100% 2px; } }
-.mate--you { background: var(--rule); color: var(--ink-3); }
-.mate--you svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* soft entrance, once, as the grid comes into view */
+.seats.is-armed .mate { opacity: 0; transform: translateY(28px) scale(.98); }
+.seats.is-in .mate { opacity: 1; transform: none; transition: opacity 700ms ease, transform 900ms var(--ease-settle); transition-delay: calc(var(--k, 0) * 90ms); }
+.mate--you { display: block; text-decoration: none; color: var(--ink); background: linear-gradient(170deg, var(--paper), color-mix(in srgb, var(--rule) 70%, var(--paper))); box-shadow: inset 0 0 0 1px var(--rule); transition: box-shadow 400ms ease; }
+.mate--you svg { position: absolute; left: 50%; top: 14%; width: 62%; height: auto; transform: translateX(-50%); color: var(--ink-3); transition: transform 600ms var(--ease-settle), color 400ms ease; }
+.mate--you .seat-tag { position: absolute; top: clamp(12px, 1.4vw, 18px); left: clamp(12px, 1.4vw, 18px); font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--pen); display: inline-flex; align-items: center; gap: 6px; }
+.mate--you .seat-tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--pen); box-shadow: 0 0 0 0 color-mix(in srgb, var(--pen) 45%, transparent); animation: seatPulse 2.2s ease-out infinite; }
+@keyframes seatPulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pen) 45%, transparent); } 100% { box-shadow: 0 0 0 9px transparent; } }
 .mate--you figcaption { color: var(--ink); opacity: 1; transform: none; }
-.mate--you .mate__name { color: var(--ink); }
+.mate--you .mate__name { color: var(--ink); font-style: italic; }
+.mate--you .mate__role { color: var(--ink-2); background-size: 0% 2px; }
+.mate--you:hover, .mate--you:focus-visible { box-shadow: inset 0 0 0 1.5px var(--pen); }
+.mate--you:hover svg, .mate--you:focus-visible svg { transform: translate(-50%, -4%); color: var(--pen); }
+.mate--you:hover .mate__role, .mate--you:focus-visible .mate__role { background-size: 100% 2px; color: var(--ink); }
 
 /* people → globe: one pinned canvas scene */
 .crowd { position: relative; margin-top: clamp(24px, 4vw, 60px); }
@@ -517,7 +527,7 @@ html.lenis, html.lenis body { height: auto; }
           <h3>A small team builds the rest.</h3>
           <p>Each person owns a whole piece of it.</p>
         </div>
-        <div class="seats" id="seats"><figure class="mate" tabindex="0"><img src="img/people/p6.jpg" alt="Placeholder portrait for Maya Okafor" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Maya Okafor</span><span class="mate__role">Market lead · Poland</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p2.jpg" alt="Placeholder portrait for Ravi Menon" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Ravi Menon</span><span class="mate__role">Engineer · Platform</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p3.jpg" alt="Placeholder portrait for Lena Park" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Lena Park</span><span class="mate__role">Designer · Brand</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p8.jpg" alt="Placeholder portrait for Tomás Silva" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Tomás Silva</span><span class="mate__role">Paid growth · 10 markets</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p1.jpg" alt="Placeholder portrait for Amara Diallo" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Amara Diallo</span><span class="mate__role">Operations · Payouts</span></figcaption></figure><figure class="mate mate--you"><svg viewBox="0 0 120 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="60" cy="58" r="22" fill="currentColor" opacity=".25"/><path d="M16 150c4-32 21-50 44-50s40 18 44 50z" fill="currentColor" opacity=".25"/></svg><figcaption><span class="mate__name">You?</span></figcaption></figure></div>
+        <div class="seats" id="seats"><figure class="mate" tabindex="0"><img src="img/people/p6.jpg" alt="Placeholder portrait for Maya Okafor" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Maya Okafor</span><span class="mate__role">Market lead · Poland</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p2.jpg" alt="Placeholder portrait for Ravi Menon" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Ravi Menon</span><span class="mate__role">Engineer · Platform</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p3.jpg" alt="Placeholder portrait for Lena Park" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Lena Park</span><span class="mate__role">Designer · Brand</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p8.jpg" alt="Placeholder portrait for Tomás Silva" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Tomás Silva</span><span class="mate__role">Paid growth · 10 markets</span></figcaption></figure><figure class="mate" tabindex="0"><img src="img/people/p1.jpg" alt="Placeholder portrait for Amara Diallo" loading="lazy"><span class="mate__blur" aria-hidden="true"><i></i><i></i><i></i></span><figcaption><span class="mate__name">Amara Diallo</span><span class="mate__role">Operations · Payouts</span></figcaption></figure><a class="mate mate--you" href="https://www.8x.careers/join"><span class="seat-tag">Open seat</span><svg viewBox="0 0 120 130" aria-hidden="true"><circle cx="60" cy="40" r="26" fill="currentColor" opacity=".28"/><path d="M8 130c4-38 25-58 52-58s48 20 52 58z" fill="currentColor" opacity=".28"/></svg><figcaption><span class="mate__name">You?</span><span class="mate__role">Pick a role · 20 open</span></figcaption></a></div>
       </div>
 
       <div class="prods" data-par="-0.04">
@@ -798,6 +808,21 @@ html.lenis, html.lenis body { height: auto; }
       navCta.tabIndex = on ? 0 : -1;
     }
   }
+
+  /* team grid: a soft staggered entrance, once */
+  var seatsGrid = $('#seats');
+  $$('#seats .mate').forEach(function (m, i) { m.style.setProperty('--k', i); });
+  if (seatsGrid.getBoundingClientRect().top > window.innerHeight && 'IntersectionObserver' in window) {
+    seatsGrid.classList.add('is-armed');
+    var seatIO = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      seatIO.disconnect();
+      seatsGrid.classList.add('is-in'); seatsGrid.classList.remove('is-armed');
+      setTimeout(function () { seatsGrid.classList.remove('is-in'); }, 1800);
+    }, { threshold: .15 });
+    seatIO.observe(seatsGrid);
+  }
+
   /* generic depth: [data-par] blocks drift against the scroll by their factor */
   var pars = $$('[data-par]');
   function renderPar() {
