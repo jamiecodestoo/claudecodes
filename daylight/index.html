@@ -4627,22 +4627,36 @@ html:root .scroll-cue i::after { top: 5px; }
 .tf-team .stamp { position: absolute; top: 16px; right: 16px; padding: 6px 10px; border: 2px solid var(--tr); border-radius: 8px; color: var(--tr); font: 800 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; rotate: 6deg; }
 
 /* 07 AI */
-.tf-ai { display: grid; grid-template-columns: .8fr 1.2fr; gap: 20px; align-items: start; margin: 0 auto 4vh; text-align: left; }
-.tf-ais { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.tf-ais button { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; width: 100%; padding: 16px; border: 0; border-radius: 18px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); font: 700 16px/1.3 var(--sans); text-align: left; cursor: pointer; transition: background .25s, box-shadow .25s; }
-.tf-ais small { display: block; margin-bottom: 4px; font: 700 11px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
-.tf-ais .ic { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--soft); color: var(--ink-2); transition: background .25s, color .25s; }
-.tf-ais button.on { background: var(--tbl); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--tb) 35%, transparent); } .tf-ais button.on .ic { background: var(--card); color: var(--tb); }
-.tf-aiv { display: grid; gap: 14px; padding: 18px; border-radius: 26px; background: var(--soft); }
-.tf-aiv .pane { display: none; min-height: 360px; } .tf-aiv .pane.on { display: grid; place-items: center; animation: tfin .45s var(--ease); }
-.tf-aiv .pane > img { display: block; max-width: 100%; max-height: 420px; border-radius: 14px; cursor: zoom-in; }
-.tf-aiv .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
-.tf-aiv .grid img { width: 100%; height: 170px; object-fit: cover; object-position: top; border-radius: 12px; background: #fff; cursor: zoom-in; animation: tfin .5s var(--ease) both; } .tf-aiv .grid img:nth-child(n+4) { object-fit: contain; }
-.tf-aiv .tm { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 28px; }
-.tf-aiv .tm .tf-phone { width: 200px; }
-.tf-aiv .clk { display: grid; gap: 8px; max-width: 220px; } .tf-aiv .clk b { font: 800 64px/1 var(--sans); letter-spacing: -.04em; font-variant-numeric: tabular-nums; color: var(--tb); } .tf-aiv .clk span { font: 500 15px/1.4 var(--sans); color: var(--ink-2); }
-.tf-aiv .clk i { display: block; height: 10px; border-radius: 99px; background: var(--card); overflow: hidden; } .tf-aiv .clk em { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, #9DCCF0, var(--tb)); }
-.tf-aiv .d { margin: 0; font: 400 16px/1.6 var(--sans); color: var(--ink-2); }
+.ai2 { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: start; max-width: 1060px; margin: 6vh auto 0; }
+.ai2 .st { display: grid; justify-items: center; gap: 8px; text-align: center; opacity: 0; translate: 0 14px; transition: opacity .6s calc(.2s + var(--i) * .45s), translate .6s calc(.2s + var(--i) * .45s) var(--ease); }
+.ai2.in .st { opacity: 1; translate: 0 0; }
+.ai2 .st > b { margin-top: 14px; font: 700 18px/1.25 var(--sans); } .ai2 .st > small { max-width: 24ch; font: 400 15px/1.45 var(--sans); color: var(--ink-2); }
+.ai2 .vis { display: grid; place-items: center; width: 100%; height: 200px; }
+.ai2 .cn { width: clamp(28px, 5vw, 72px); height: 2px; margin-top: 99px; background: repeating-linear-gradient(90deg, var(--ink-2) 0 5px, transparent 5px 10px); opacity: .35; animation: aicn 1s linear infinite; }
+@keyframes aicn { to { background-position: 10px 0; } }
+.ai2 svg .tr { fill: none; stroke: #EEEDE8; stroke-width: 7; stroke-linecap: round; } .ai2 svg .vl { fill: none; stroke-width: 7; stroke-linecap: round; }
+.ai-sys { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: center; width: 210px; padding: 18px; border-radius: 22px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 30px 50px -34px rgba(40, 30, 10, .45); box-sizing: border-box; }
+.ai-sys .sw { grid-column: 1 / -1; display: flex; gap: 6px; } .ai-sys .sw i { width: 22px; height: 22px; border-radius: 7px; background: #FFC61F; } .ai-sys .sw i:nth-child(2) { background: #16825A; } .ai-sys .sw i:nth-child(3) { background: #2F86C4; } .ai-sys .sw i:nth-child(4) { background: #E0533D; }
+.ai-sys .bt { justify-self: start; padding: 6px 14px; border-radius: 8px; box-shadow: inset 0 0 0 1.5px #24272C; color: #24272C; font: 700 12px/1 var(--sans); }
+.ai-sys .ch { justify-self: end; padding: 5px 8px; border-radius: 7px; background: #E3F4EC; color: #16825A; font: 700 11px/1 var(--sans); }
+.ai-sys svg { width: 72px; } .ai-sys .ln { display: grid; gap: 6px; } .ai-sys .ln i { height: 7px; border-radius: 9px; background: #EEEDE8; } .ai-sys .ln i + i { width: 60%; }
+.ai-fan { position: relative; width: 280px; height: 150px; }
+.ai-mc { position: absolute; left: 50%; top: 14px; display: grid; justify-items: center; width: 110px; padding: 16px 10px 12px; margin-left: -55px; border-radius: 18px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 24px 40px -26px rgba(40, 30, 10, .5); box-sizing: border-box; transition: transform .7s calc(.9s + var(--k) * .15s) var(--ease); }
+.ai-mc svg { width: 74px; } .ai-mc b { margin-top: -18px; font: 800 22px/1 var(--sans); color: #24272C; letter-spacing: -.03em; }
+.ai-mc:nth-child(1) { --k: 0; } .ai-mc:nth-child(2) { --k: 1; } .ai-mc:nth-child(3) { --k: 2; z-index: 1; }
+.ai2.in .ai-mc:nth-child(1) { transform: translate(-84px, 14px) rotate(-10deg) scale(.88); } .ai2.in .ai-mc:nth-child(2) { transform: translate(84px, 14px) rotate(10deg) scale(.88); } .ai2.in .ai-mc:nth-child(3) { transform: translateY(-4px); }
+.ai-fan em { position: absolute; z-index: 2; left: 50%; bottom: -6px; translate: -50% 0; display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; background: #24272C; color: #fff; font: 700 12px/1 var(--sans); font-style: normal; white-space: nowrap; } .ai-fan em svg { width: 14px; height: 14px; }
+.ai-dm { display: flex; align-items: center; gap: 14px; }
+.ai-dm .dk, .ai-dm .ph { display: grid; align-content: start; gap: 6px; padding: 12px 10px; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 24px 40px -26px rgba(40, 30, 10, .5); box-sizing: border-box; }
+.ai-dm .dk { grid-template-columns: 1.6fr 1fr; width: 130px; height: 88px; } .ai-dm .dk i:nth-child(1) { grid-row: span 3; }
+.ai-dm .ph { width: 64px; height: 124px; padding: 16px 7px; border-radius: 16px; box-shadow: 0 0 0 3px #2A2C30, 0 24px 40px -26px rgba(40, 30, 10, .5); }
+.ai-dm i { display: block; min-height: 10px; border-radius: 5px; background: #EEEDE8; } .ai-dm .dk i:nth-child(1) { background: #FFF3D1; } .ai-dm .dk i:nth-child(2) { background: #E3F4EC; }
+.ai-dm .ph i { height: 14px; transform: scaleX(0); transform-origin: left; transition: transform .45s calc(1.4s + var(--n, 0) * .25s) var(--ease); }
+.ai-dm .ph i:nth-child(1) { --n: 0; background: #E3F4EC; height: 26px; } .ai-dm .ph i:nth-child(2) { --n: 1; background: #FFF3D1; } .ai-dm .ph i:nth-child(3) { --n: 2; } .ai-dm .ph i:nth-child(4) { --n: 3; }
+.ai2.in .ai-dm .ph i { transform: scaleX(1); } .ai2.in .ai-dm .ph i.todo { transform: scaleX(.1); background: repeating-linear-gradient(90deg, #EEEDE8 0 4px, transparent 4px 7px); }
+.ai-dm .ar { font: 700 20px/1 var(--sans); color: var(--ink-2); }
+.ai2-st { display: grid; justify-items: center; gap: 8px; max-width: 560px; margin: 7vh auto 0; } #tfAi .tf-mid { margin-top: 10vh; }
+.ai2-st b { font: 800 clamp(44px, 5vw, 68px)/1 var(--sans); letter-spacing: -.045em; color: var(--tg); } .ai2-st span { font: 400 17px/1.5 var(--sans); color: var(--ink-2); text-wrap: balance; }
 
 /* 08 next */
 .nx-track { max-width: 920px; margin: 6vh auto 0; padding: 30px 20px 26px; border-radius: 28px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 30px 60px -44px rgba(40, 30, 10, .35); }
@@ -5145,7 +5159,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 :root[data-theme="dark"] .tf-lc { filter: brightness(.95); }
 
 @media (max-width: 980px) {
-  .tf-ex, .tf-gm, .tf-by, .tf-ai, .tf-evo, .tf-team, .tf-mvf { grid-template-columns: 1fr; }
+  .tf-ex, .tf-gm, .tf-by, .tf-evo, .tf-team, .tf-mvf { grid-template-columns: 1fr; }
   .tf-mvs { grid-template-columns: 1fr 1fr; }
   .tf-sea { grid-template-columns: 1fr; }
   .tf-tri { grid-template-columns: 1fr; }
@@ -5160,7 +5174,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   .tf-lc .lrow { grid-template-columns: auto 1fr; } .tf-lc .lrow > img { width: 72px; height: 64px; } .tf-lc .rt { grid-column: 1 / -1; grid-template-columns: auto auto; justify-content: space-between; align-items: center; } .tf-lc .recs { grid-template-columns: 1fr; } .tf-lc.open .recs { max-height: 420px; } .tf-lc .rc img { width: 60px; height: 60px; } .tf-lc .tx b { font-size: 16px; }
   .tf-by .list button { grid-template-columns: 96px 1fr; } .tf-by .list img { width: 96px; height: 70px; }
   .tf-fold { grid-template-columns: 1fr; justify-items: center; } .tf-phone.fold { width: 240px; } .tf-foldc { text-align: center; } .tf-foldc .tf-sw2 { justify-self: center; }
-  .tf-aiv .grid { grid-template-columns: 1fr 1fr; } .tf-aiv .grid img { height: 130px; }
+  .ai2 { grid-template-columns: 1fr; justify-items: center; gap: 0; } .ai2 .cn { width: 2px; height: 36px; margin: 14px 0; background: repeating-linear-gradient(180deg, var(--ink-2) 0 5px, transparent 5px 10px); animation: none; } .ai2 .vis { height: 180px; }
   .nx-tg { grid-template-columns: 1fr; } .nx-track { padding: 24px 6px 20px; } .nx-track b { font-size: 12px; } .nx-track em { font-size: 9px; padding: 3px 6px; } .nx-ms li { font-size: 14px; padding: 8px 13px; }
   .tf-phone.sm { width: 230px; }
   .tf-jrs li + li::before { display: none; }
@@ -7847,17 +7861,16 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <section class="tf-sec" id="tfAi">
         ${plq(10, 'Working with AI')}
         ${head('AI helped me spend less time', 'pushing pixels.')}
-        ${p('I didn’t want AI to generate more screens. I wanted it to take repetitive work off my plate, so I could spend more time on the problem itself.')}
-        <div class="tf-ai" data-rv id="tfAiw">
-          <ol class="tf-ais">${TF.ai.map(([i, t], k) => `<li><button type="button" data-a="${k}"${k ? '' : ' class="on"'}><span class="ic">${tfIc(i)}</span><span><small>Step ${k + 1}</small>${t}</span></button></li>`).join('')}</ol>
-          <div class="tf-aiv">
-            <div class="pane" data-a="0"><img src="${ti('comps')}" alt="The design system components used as constraints" loading="lazy"></div>
-            <div class="pane" data-a="1"><div class="grid">${['ai1', 'ai2', 'ai3', 'g1', 'g2', 'g3'].map(k => `<img src="${ti(k)}" alt="An AI-assisted exploration" loading="lazy">`).join('')}</div></div>
-            <div class="pane" data-a="2"><div class="tm">${tfPhone(`<img src="${ti('mobile')}" alt="The mobile UI">`, 'sm auto2')}<div class="clk"><b id="tfClk">0:00</b><span>to roughly 90% of the mobile direction</span><i><em id="tfClp"></em></i></div></div></div>
-            <p class="d" id="tfAid"></p>
-          </div>
+        ${p('Not more screens. Less repetitive work, so I had more time for the problem itself.')}
+        <div class="ai2" data-rv>
+          <div class="st" style="--i:0"><div class="vis"><div class="ai-sys"><span class="sw"><i></i><i></i><i></i><i></i></span><span class="bt">Add</span><span class="ch">↗ Good</span><svg viewBox="0 0 64 40"><path d="M6 36A26 26 0 0 1 58 36" class="tr"/><path d="M6 36A26 26 0 0 1 58 36" class="vl" pathLength="100" stroke="#16825A" style="stroke-dasharray:72 100"/></svg><span class="ln"><i></i><i></i></span></div></div><b>The design system</b><small>Real components, so every idea stays on-brand.</small></div>
+          <span class="cn" aria-hidden="true"></span>
+          <div class="st" style="--i:1"><div class="vis"><div class="ai-fan"><span class="ai-mc"><svg viewBox="0 0 64 40"><path d="M6 36A26 26 0 0 1 58 36" class="tr"/><path d="M6 36A26 26 0 0 1 58 36" class="vl" pathLength="100" stroke="#E0533D" style="stroke-dasharray:12 100"/></svg><b>12</b></span><span class="ai-mc"><svg viewBox="0 0 64 40"><path d="M6 36A26 26 0 0 1 58 36" class="tr"/><path d="M6 36A26 26 0 0 1 58 36" class="vl" pathLength="100" stroke="#E8A912" style="stroke-dasharray:53 100"/></svg><b>53</b></span><span class="ai-mc"><svg viewBox="0 0 64 40"><path d="M6 36A26 26 0 0 1 58 36" class="tr"/><path d="M6 36A26 26 0 0 1 58 36" class="vl" pathLength="100" stroke="#16825A" style="stroke-dasharray:72 100"/></svg><b>72</b></span><em>${tfIc('spark')} Claude</em></div></div><b>Claude explores</b><small>Many meter variations, without drawing each by hand.</small></div>
+          <span class="cn" aria-hidden="true"></span>
+          <div class="st" style="--i:2"><div class="vis"><div class="ai-dm"><span class="dk"><i></i><i></i><i></i><i></i></span><span class="ar">→</span><span class="ph"><i></i><i></i><i></i><i></i><i class="todo"></i></span></div></div><b>Desktop becomes mobile</b><small>The patterns already existed. AI did the re-layout.</small></div>
         </div>
-        <p class="tf-mid" data-rv>Let AI handle repetitive execution. Use the time you get back to solve harder problems.</p>
+        <p class="ai2-st" data-rv><b>Under 2 hours</b><span>to get the mobile UI about 90% there. The last 10% I reviewed and refined by hand.</span></p>
+        <p class="tf-mid" data-rv>Let AI handle the repetition. Spend the time on harder problems.</p>
       </section>
 
       <section class="tf-sec" id="tfFin">
@@ -8008,18 +8021,14 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       const go = () => { if (performance.now() - manual < 1000) return; const r = it.getBoundingClientRect(), span = r.height - innerHeight; show(Math.min(TF.evo.length - 1, Math.floor(clamp(-r.top / Math.max(1, span)) * TF.evo.length))); };
       csEl.addEventListener('scroll', initTF.sc5 = go, { passive: true }); show(0); }
     // the AI workflow, with a clock that runs
-    const aiw = $('#tfAiw', root); let clk = 0;
-    const drawAi = i => { $$('[data-a]', aiw).forEach(el => el.classList.toggle('on', +el.dataset.a === i)); $('#tfAid', root).textContent = TF.ai[i][2];
-      if (i === 2) { clearInterval(clk); let m = 0; const el = $('#tfClk', root), bar = $('#tfClp', root); clk = every(() => { m = Math.min(112, m + 3); el.textContent = `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`; bar.style.width = (m / 112 * 90) + '%'; if (m >= 112) clearInterval(clk); }, 30); } };
-    aiw.addEventListener('click', e => { const b = e.target.closest('button[data-a]'); if (b) drawAi(+b.dataset.a); }); drawAi(0);
     $$('.tf-phone.auto2 .scr', root).forEach(vp => drift(vp, 60));
     // look closer at any real screen
     const lb = $('#tfLb', root); const closeLb = () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); };
-    $('.tf-pg', root).addEventListener('click', e => { if (e.target.closest('#tfLb')) { closeLb(); return; } const im = e.target.closest('.tf-sti .d img, .tf-sea img, .tf-mvf img, .tf-aiv .grid img, .tf-aiv .pane[data-a="0"] img, .tf-by .list img'); if (!im) return;
+    $('.tf-pg', root).addEventListener('click', e => { if (e.target.closest('#tfLb')) { closeLb(); return; } const im = e.target.closest('.tf-sti .d img, .tf-sea img, .tf-mvf img, .tf-by .list img'); if (!im) return;
       $('img', lb).src = im.src; $('img', lb).alt = im.alt; lb.classList.toggle('tall', im.naturalHeight > im.naturalWidth * 1.2); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
     addEventListener('keydown', initTF.kd = e => { if (e.key === 'Escape' && lb.classList.contains('open')) { closeLb(); e.stopImmediatePropagation(); } }, true);
     // coach marks: a quiet tooltip, only after a few seconds of doing nothing
-    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfSh .sh-add', 'Tap Add, or keep scrolling'], ['#tfGm .m3-g', 'Drag the knob around the arc'], ['#tfEv .ev-nav', 'Tap a version or use the arrows'], ['#tfRt .rt-who', 'Switch owner, or tap Add'], ['#tfAb .ab-steps', 'Tap a step to replay the test'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvo .it-dots', 'Keep scrolling, or tap a version'], ['#tfAiw .tf-ais', 'Tap a step']];
+    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfSh .sh-add', 'Tap Add, or keep scrolling'], ['#tfGm .m3-g', 'Drag the knob around the arc'], ['#tfEv .ev-nav', 'Tap a version or use the arrows'], ['#tfRt .rt-who', 'Switch owner, or tap Add'], ['#tfAb .ab-steps', 'Tap a step to replay the test'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvo .it-dots', 'Keep scrolling, or tap a version']];
       const done = new Set(), tip = document.createElement('div'); tip.className = 'tf-tip'; tip.setAttribute('role', 'status'); document.body.appendChild(tip); initTF.tip = tip;
       let last = performance.now(), cur = null; const poke = () => { last = performance.now(); if (cur) { done.add(cur); cur = null; tip.classList.remove('on'); } };
       ['scroll', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => root.addEventListener(ev, poke, { passive: true }));
