@@ -4841,6 +4841,27 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .sh-stage[data-s="2"] .sh-cat, .sh-stage[data-s="3"] .sh-cat { opacity: 0; translate: 0 -40px; max-height: 0; padding-top: 0; padding-bottom: 0; }
 .sh-stage[data-s="3"] .sh-note { opacity: 1; translate: 0 0; scale: 1; }
 @media (max-width: 760px) { .sh-note { position: relative; right: auto; bottom: auto; margin-top: 4px; } .sh-cat div { grid-template-columns: 1fr 1fr; } .sh-top { grid-template-columns: auto 1fr; padding: 16px; } .sh-top img { width: 80px; height: 66px; } .sh-top b { font-size: 18px; } .sh-sc { position: absolute; right: 14px; top: 14px; } .sh-card { position: relative; } .sh-top > div { padding-right: 52px; } .sh-rec { grid-template-columns: auto 1fr; } .sh-rec img { width: 64px; height: 52px; } .sh-add { grid-column: 1 / -1; text-align: center; } .sh-steps li span { font-size: 13px; } .tf-sh { height: 240vh; } }
+/* meter evolution */
+.tf-ev { height: 300vh; }
+.ev-pin { position: sticky; top: max(80px, 11vh); display: grid; gap: 26px; justify-items: center; }
+.ev-rail { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: min(100%, 760px); margin: 0; padding: 0; list-style: none; position: relative; }
+.ev-rail::before { content: ""; position: absolute; left: 12.5%; right: 12.5%; top: 34px; height: 2px; background: var(--line); z-index: 0; }
+.ev-rail button { position: relative; z-index: 1; display: grid; justify-items: center; gap: 8px; width: 100%; padding: 0; border: 0; background: none; color: var(--ink-2); font: 600 13px/1.2 var(--sans); cursor: pointer; }
+.ev-rail img { width: 92px; height: 68px; object-fit: contain; border-radius: 14px; background: #fff; box-shadow: 0 0 0 1px var(--line); padding: 4px; box-sizing: border-box; opacity: .5; filter: grayscale(1); transition: opacity .4s, filter .4s, box-shadow .4s, scale .4s var(--ease); }
+.ev-rail li.past img { opacity: .8; filter: grayscale(.4); }
+.ev-rail li.on img { opacity: 1; filter: none; scale: 1.08; box-shadow: 0 0 0 3px var(--ty), 0 12px 24px -12px rgba(120, 80, 0, .5); } .ev-rail li.on button { color: var(--ink); }
+.ev-main { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(20px, 4vw, 56px); align-items: center; width: min(100%, 1000px); }
+.ev-shot { display: grid; place-items: center; padding: 26px; border-radius: 28px; background: var(--soft); min-height: 380px; box-sizing: border-box; }
+.ev-shot img { grid-area: 1 / 1; max-width: 100%; max-height: 400px; border-radius: 18px; box-shadow: 0 24px 50px -30px rgba(0, 0, 0, .4); opacity: 0; scale: .96; transition: opacity .5s, scale .6s var(--ease); }
+.ev-shot img.on { opacity: 1; scale: 1; }
+.ev-tx { display: grid; gap: 14px; text-align: left; }
+.ev-tx.in > * { animation: tfin .5s var(--ease) both; } .ev-tx.in > *:nth-child(2) { animation-delay: .05s; } .ev-tx.in > *:nth-child(3) { animation-delay: .12s; } .ev-tx.in > *:nth-child(4) { animation-delay: .2s; }
+.ev-k { margin: 0; font: 700 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ta); }
+.ev-tx > b { font: 800 clamp(26px, 3vw, 38px)/1.1 var(--sans); letter-spacing: -.03em; }
+.ev-good, .ev-bad { display: flex; gap: 10px; margin: 0; padding: 14px 16px; border-radius: 16px; font: 500 16px/1.45 var(--sans); }
+.ev-good { background: var(--tgl); } .ev-good .tf-i { color: var(--tg); margin-top: 3px; }
+.ev-bad { background: var(--trl); } .ev-bad .tf-i { color: var(--tr); margin-top: 3px; }
+@media (max-width: 760px) { .ev-main { grid-template-columns: 1fr; gap: 16px; } .ev-shot { min-height: 0; padding: 16px; } .ev-shot img { max-height: 230px; } .ev-rail img { width: 64px; height: 50px; } .ev-rail::before { top: 25px; } .ev-good, .ev-bad { font-size: 14px; padding: 10px 12px; } .ev-tx { gap: 10px; } .tf-ev { height: 280vh; } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -7331,6 +7352,10 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       cat: [['cam', 'Photography'], ['play', 'Virtual tour'], ['star', 'Top listing'], ['mail', 'Newsletter']]
     },
     bands: [[0, 49, 'Needs attention', 'r', 'Start with the free basics: photos, prices and an up-to-date calendar.'], [50, 79, 'Good', 'a', 'Great! Keep optimising to increase score to 80+ points.'], [80, 99, 'Great', 'g', 'You’re near the top. One or two improvements left.'], [100, 100, 'Max score', 'p', 'Maximum visibility. Every recommended action is done.']],
+    gev: [['Overall visibility score', 'Version 1', 'A score out of 100', 'A familiar gauge and a clear number.', 'The “/100” and the break in the arc read like an exam grade. Nothing said how to improve.'],
+      ['Overall visibility score', 'Version 2', 'Progress over time', '“+12 points this week” made improvement visible.', 'The boxed message competed with the score, and the arc still had no clear end point.'],
+      ['Overall visibility score', 'Version 3', 'One marker, calmer copy', 'A knob marks exactly where you are. The message sits free under the score.', 'Red to green still felt like judgement, and “visibility score” sounded like a grade.'],
+      ['Growth meter', 'Final', 'A growth meter', 'Renamed to “Growth meter”, with an info icon that explains the score, and one calm colour.', '']],
     meter: [['g1', 'Exploration', 'Score plus a row of stats', 'A speedometer with views, leads and rating beside it. Four numbers competed with the one that mattered.'],
       ['it-gauge', 'Iteration', 'A traffic-light arc', 'Red to green, inside the page layout. Readable at a glance, but the colour did all the talking, and red read like a failing grade.'],
       ['x-meter', 'Final', 'One calm green, and words', 'A single green arc, a “Good” label, and a sentence about the next milestone. Meaning never depends on colour alone.'],
@@ -7463,10 +7488,15 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         </div>
         ${p('The point wasn’t another number to stare at. It was to make progress easier to understand, for owners of every age: familiar patterns, restrained colour, clear type, and words that carry the meaning instead of colour alone.')}
         <div class="tf-honest" data-rv><b>A proxy, not a promise.</b> The score reflects listing quality and potential visibility. It isn’t a guarantee of search ranking or bookings, and the copy never pretends it is.</div>
-        <h4 class="tf-h4" data-rv>The meter, version by version.</h4>
-        <div class="tf-mv" data-rv id="tfMv">
-          <div class="tf-mvs" role="tablist">${TF.meter.map(([, k, t], i) => `<button type="button" data-m="${i}"${i ? '' : ' class="on"'}><small>${k}</small>${t}</button>`).join('')}</div>
-          <figure class="tf-mvf"><div class="im" id="tfMvI"></div><figcaption id="tfMvC"></figcaption></figure>
+        <h4 class="tf-h4" data-rv>How the meter grew up.</h4>
+        <div class="tf-ev" id="tfEv">
+          <div class="ev-pin">
+            <ol class="ev-rail">${TF.gev.map(([, k], i) => `<li data-k="${i}"><button type="button" data-k="${i}"><img src="${ti('gm' + (i + 1))}" alt=""><span>${k}</span></button></li>`).join('')}</ol>
+            <div class="ev-main">
+              <div class="ev-shot">${TF.gev.map(([, k], i) => `<img src="${ti('gm' + (i + 1))}" alt="Growth meter, ${k}" data-k="${i}"${i ? '' : ' class="on"'}>`).join('')}</div>
+              <div class="ev-tx"><p class="ev-k" id="tfEvK"></p><b id="tfEvT"></b><p class="ev-good" id="tfEvG"></p><p class="ev-bad" id="tfEvB"></p></div>
+            </div>
+          </div>
         </div>
         ${p('The real innovation wasn’t the gauge. It was what happened after someone saw their score.')}
       </section>
@@ -7580,7 +7610,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <div class="tf-lb" id="tfLb" aria-hidden="true"><button type="button" class="x" aria-label="Close">×</button><img alt=""></div>
     </div>`;
   }
-  function tfCleanup() { if (initTF.sc3) { csEl.removeEventListener('scroll', initTF.sc3); initTF.sc3 = null; } if (initTF.sc2) { csEl.removeEventListener('scroll', initTF.sc2); initTF.sc2 = null; } if (initTF.sc) { csEl.removeEventListener('scroll', initTF.sc); initTF.sc = null; } if (initTF.tip) { initTF.tip.remove(); initTF.tip = null; } (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); (initTF.raf || []).forEach(cancelAnimationFrame); (initTF.io || []).forEach(o => o.disconnect()); initTF.tt = []; initTF.ti = []; initTF.raf = []; initTF.io = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; }
+  function tfCleanup() { if (initTF.sc4) { csEl.removeEventListener('scroll', initTF.sc4); initTF.sc4 = null; } if (initTF.sc3) { csEl.removeEventListener('scroll', initTF.sc3); initTF.sc3 = null; } if (initTF.sc2) { csEl.removeEventListener('scroll', initTF.sc2); initTF.sc2 = null; } if (initTF.sc) { csEl.removeEventListener('scroll', initTF.sc); initTF.sc = null; } if (initTF.tip) { initTF.tip.remove(); initTF.tip = null; } (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); (initTF.raf || []).forEach(cancelAnimationFrame); (initTF.io || []).forEach(o => o.disconnect()); initTF.tt = []; initTF.ti = []; initTF.raf = []; initTF.io = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; }
   function initTF() {
     tfCleanup(); const root = csEl, later = (f, ms) => initTF.tt.push(setTimeout(f, ms)), every = (f, ms) => { const t = setInterval(f, ms); initTF.ti.push(t); return t; };
     const obs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); obs.unobserve(e.target); if (e.target._on) e.target._on(); }), { root, threshold: .18 }); initTF.io.push(obs);
@@ -7637,9 +7667,15 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       const r = $('#tfGring .tf-ring', root); r.style.setProperty('--v', v); r.style.setProperty('--rc', tfCol(v)); $('b', r).textContent = v;
       $$('#tfGm .bands li', root).forEach(li => li.classList.toggle('on', +li.dataset.b === band(v)[0])); };
     gr.addEventListener('input', () => drawG(+gr.value)); $('#tfGm', root)._on = () => { G._v = 0; drawG(72, true); };
-    // meter versions
-    const drawMv = i => { const [im, k, t, d] = TF.meter[i]; $$('#tfMv [data-m]', root).forEach(b => b.classList.toggle('on', +b.dataset.m === i)); $('#tfMvI', root).innerHTML = `<img src="${ti(im)}" alt="${t}">`; $('#tfMvC', root).innerHTML = `<b>${k}: ${t}.</b> ${d}`; };
-    $('#tfMv', root).addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b) drawMv(+b.dataset.m); }); drawMv(0);
+    // how the meter grew up: scroll lights each version
+    { const ev = $('#tfEv', root); let cur = -1, manual = 0;
+      const show = i => { if (i === cur) return; cur = i; const [, k, t, g, b] = TF.gev[i];
+        $$('.ev-shot img', ev).forEach(im => im.classList.toggle('on', +im.dataset.k === i)); $$('.ev-rail li', ev).forEach(l => { const n = +l.dataset.k; l.classList.toggle('on', n === i); l.classList.toggle('past', n < i); });
+        $('#tfEvK', root).textContent = k; $('#tfEvT', root).textContent = t; $('#tfEvG', root).innerHTML = `${tfIc('check')}<span>${g}</span>`; const bd = $('#tfEvB', root); bd.innerHTML = b ? `${tfIc('x')}<span>${b}</span>` : ''; bd.hidden = !b;
+        $('.ev-tx', ev).classList.remove('in'); void ev.offsetWidth; $('.ev-tx', ev).classList.add('in'); };
+      ev.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b) { manual = performance.now(); show(+b.dataset.k); } });
+      const go = () => { if (performance.now() - manual < 900) return; const r = ev.getBoundingClientRect(), span = r.height - innerHeight * .8; show(Math.min(3, Math.floor(clamp(-r.top / Math.max(1, span)) * 4))); };
+      csEl.addEventListener('scroll', initTF.sc4 = go, { passive: true }); show(0); }
     // score → gap → recommendation → action
     const lc = $('#tfLc', root), jrc = $('#tfJrc', root); let lv = 52, added = new Set();
     const JR = ['The score says where this property stands: 52 out of 100, in amber.', 'Two crosses show the gap: no up-to-date calendar, no Top advertisement.', 'The card opens two recommendations that fit this property, worth 35 points together.', 'One tap on Add, and the score moves. No menus, no catalogue.'];
@@ -7683,7 +7719,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       $('img', lb).src = im.src; $('img', lb).alt = im.alt; lb.classList.toggle('tall', im.naturalHeight > im.naturalWidth * 1.2); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
     addEventListener('keydown', initTF.kd = e => { if (e.key === 'Escape' && lb.classList.contains('open')) { closeLb(); e.stopImmediatePropagation(); } }, true);
     // coach marks: a quiet tooltip, only after a few seconds of doing nothing
-    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfGr', 'Drag to change the score'], ['#tfJp', 'Play the journey, or tap the steps'], ['#tfSt .tf-stn', 'Swipe or use the arrows'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
+    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfGr', 'Drag to change the score'], ['#tfEv .ev-rail', 'Scroll, or tap a version'], ['#tfJp', 'Play the journey, or tap the steps'], ['#tfSt .tf-stn', 'Swipe or use the arrows'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
       const done = new Set(), tip = document.createElement('div'); tip.className = 'tf-tip'; tip.setAttribute('role', 'status'); document.body.appendChild(tip); initTF.tip = tip;
       let last = performance.now(), cur = null; const poke = () => { last = performance.now(); if (cur) { done.add(cur); cur = null; tip.classList.remove('on'); } };
       ['scroll', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => root.addEventListener(ev, poke, { passive: true }));
