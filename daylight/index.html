@@ -5032,6 +5032,22 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .fs-ar { color: var(--c); } .fs-ar .tf-i { width: 22px; height: 22px; translate: -10px 0; transition: translate .6s var(--ease); transition-delay: calc(.4s + var(--i) * .15s); } .tf-fs.in .fs-ar .tf-i { translate: 0 0; }
 .fs-f { font: 600 16px/1.35 var(--sans); }
 @media (max-width: 640px) { .fs-k { display: none; } .fs-r { grid-template-columns: 1fr; gap: 6px; padding: 14px 16px; } .fs-ar { display: none; } .fs-f::before { content: "→ "; color: var(--c); } }
+/* iterations: single column, scroll-stepped */
+.tf-it { height: 360vh; margin-top: 10vh; }
+.it-pin { position: sticky; top: 0; height: 100vh; display: grid; align-content: center; justify-items: center; gap: 16px; padding-top: 50px; box-sizing: border-box; }
+.it-pin .tf-h4 { margin: 0; }
+.it-cap { display: grid; justify-items: center; gap: 4px; max-width: 60ch; min-height: 96px; }
+.it-cap.in > * { animation: tfin .45s var(--ease) both; } .it-cap.in > :nth-child(2) { animation-delay: .05s; } .it-cap.in > :nth-child(3) { animation-delay: .1s; }
+.it-k { font: 700 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ta); } .it-cap b { font: 800 clamp(20px, 2.2vw, 28px)/1.2 var(--sans); letter-spacing: -.02em; } .it-cap p { margin: 0; font: 400 16px/1.5 var(--sans); color: var(--ink-2); }
+.it-pin .tf-brw { width: min(100%, 980px); }
+.it-vp { position: relative; aspect-ratio: 16 / 8.6; max-height: 52vh; width: 100%; overflow: hidden; background: #F4F4F2; }
+.it-vp img { position: absolute; inset: 0; width: 100%; height: auto; opacity: 0; scale: 1.02; transition: opacity .5s, scale .7s var(--ease); }
+.it-vp img.on { opacity: 1; scale: 1; }
+.it-dots { display: flex; gap: 6px; padding: 4px; border-radius: 999px; background: var(--soft); }
+.it-dots button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 0; border-radius: 999px; background: none; color: var(--ink-2); font: 600 13px/1 var(--sans); cursor: pointer; transition: background .3s, color .3s; }
+.it-dots i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .35; } .it-dots .past i { opacity: .8; background: var(--tg); }
+.it-dots button.on { background: var(--card); color: var(--ink); box-shadow: 0 4px 12px -6px rgba(0, 0, 0, .25); } .it-dots button.on i { opacity: 1; background: var(--ty); }
+@media (max-width: 640px) { .it-pin { align-content: start; padding-top: 74px; } .it-dots span { display: none; } .it-dots button { padding: 8px; } .it-cap { min-height: 120px; } .it-cap p { font-size: 14px; } .tf-it { height: 320vh; } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -7737,10 +7753,13 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
             <p class="out"><b id="tfFn">2</b> listings visible before scrolling</p><p class="d" id="tfFd"></p></div>
         </div>
         <div class="tf-tri" data-rv>${[['For owners', 'Keep the hierarchy clear, the language understandable, and the colours purposeful.', 'sky'], ['For the business', 'Improve discovery of relevant offers, without showing every promotion at once.', 'sun'], ['For engineering', 'Reuse existing components wherever possible and avoid unnecessary complexity.', 'mint']].map(([t, d, c]) => `<div class="${c}"><b>${t}</b><p>${d}</p></div>`).join('')}</div>
-        <h4 class="tf-h4" data-rv>Iterating as the feedback came in.</h4>
-        <div class="tf-evo" data-rv id="tfEvo">
-          <div class="tf-evt">${tfBrw('s-it-a', 'Iteration 1')}</div>
-          <div class="tf-evn"><input type="range" id="tfEvr" min="0" max="${TF.evo.length - 1}" value="0" aria-label="Iteration"><div class="lb">${TF.evo.map(([, k]) => `<span>${k}</span>`).join('')}</div><p id="tfEvc"></p></div>
+        <div class="tf-it" id="tfEvo">
+          <div class="it-pin">
+            <h4 class="tf-h4">Iterating as the feedback came in.</h4>
+            <div class="it-cap"><span class="it-k" id="tfItK"></span><b id="tfItT"></b><p id="tfItD"></p></div>
+            <div class="tf-brw"><div class="tbar"><i></i><i></i><i></i><span>traum-ferienwohnungen.de/vermieterbereich/inserate</span></div><div class="it-vp">${TF.evo.map(([im, k, t], i) => `<img src="${ti(im)}" alt="${k}: ${t}" data-i="${i}" loading="lazy"${i ? '' : ' class="on"'}>`).join('')}</div></div>
+            <div class="it-dots">${TF.evo.map(([, k], i) => `<button type="button" data-i="${i}"><i></i><span>${k}</span></button>`).join('')}</div>
+          </div>
         </div>
         <div class="tf-team" data-rv>
           <div class="who"><p class="k">Approximately one month, together with</p><ul>${[['AP', 'Associate product manager'], ['DV', 'Developer'], ['DM', 'Design manager']].map(([a, t]) => `<li><i>${a}</i>${t}</li>`).join('')}</ul><p class="me">I owned the end-to-end design across desktop and mobile web.</p></div>
@@ -7793,7 +7812,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <div class="tf-lb" id="tfLb" aria-hidden="true"><button type="button" class="x" aria-label="Close">×</button><img alt=""></div>
     </div>`;
   }
-  function tfCleanup() { if (initTF.sc3) { csEl.removeEventListener('scroll', initTF.sc3); initTF.sc3 = null; } if (initTF.sc2) { csEl.removeEventListener('scroll', initTF.sc2); initTF.sc2 = null; } if (initTF.sc) { csEl.removeEventListener('scroll', initTF.sc); initTF.sc = null; } if (initTF.tip) { initTF.tip.remove(); initTF.tip = null; } (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); (initTF.raf || []).forEach(cancelAnimationFrame); (initTF.io || []).forEach(o => o.disconnect()); initTF.tt = []; initTF.ti = []; initTF.raf = []; initTF.io = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; }
+  function tfCleanup() { if (initTF.sc5) { csEl.removeEventListener('scroll', initTF.sc5); initTF.sc5 = null; } if (initTF.sc3) { csEl.removeEventListener('scroll', initTF.sc3); initTF.sc3 = null; } if (initTF.sc2) { csEl.removeEventListener('scroll', initTF.sc2); initTF.sc2 = null; } if (initTF.sc) { csEl.removeEventListener('scroll', initTF.sc); initTF.sc = null; } if (initTF.tip) { initTF.tip.remove(); initTF.tip = null; } (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); (initTF.raf || []).forEach(cancelAnimationFrame); (initTF.io || []).forEach(o => o.disconnect()); initTF.tt = []; initTF.ti = []; initTF.raf = []; initTF.io = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; }
   function initTF() {
     tfCleanup(); const root = csEl, later = (f, ms) => initTF.tt.push(setTimeout(f, ms)), every = (f, ms) => { const t = setInterval(f, ms); initTF.ti.push(t); return t; };
     const obs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); obs.unobserve(e.target); if (e.target._on) e.target._on(); }), { root, threshold: .18 }); initTF.io.push(obs);
@@ -7889,10 +7908,13 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     const fold = $('#tfFold', root); const FD = { s: [2, 'A compact meter keeps two listings in view. The score is still the first thing you see.'], m: [1, 'One listing left above the fold. The meter starts to cost more than it gives.'], l: [0, 'A hero meter, and no listings at all until you scroll. Beautiful, and in the way.'] };
     const setFold = z => { fold.dataset.z = z; $$('[data-z]', fold).forEach(b => { const on = b.dataset.z === z; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); count($('#tfFn', root), FD[z][0], 400); $('#tfFd', root).textContent = FD[z][1]; };
     fold.addEventListener('click', e => { const b = e.target.closest('[data-z]'); if (b) setFold(b.dataset.z); }); setFold('s');
-    // how the page evolved
-    const evr = $('#tfEvr', root), evImg = $('#tfEvo .vp img', root);
-    const drawEv = i => { const [im, k, t, d] = TF.evo[i]; evImg.style.opacity = 0; later(() => { evImg.src = ti(im); evImg.alt = `${k}: ${t}`; evImg.closest('.vp').scrollTop = 0; evImg.style.opacity = 1; }, 160); $('#tfEvc', root).innerHTML = `<b>${k}: ${t}.</b> ${d}`; $$('#tfEvo .lb span', root).forEach((s, j) => s.classList.toggle('on', j === i)); };
-    evr.addEventListener('input', () => drawEv(+evr.value)); $$('#tfEvo .lb span', root).forEach((s, j) => s.addEventListener('click', () => { evr.value = j; drawEv(j); })); drawEv(0);
+    // how the page evolved: one frame, scroll to step through
+    { const it = $('#tfEvo', root); let cur = -1, manual = 0;
+      const show = i => { if (i === cur) return; cur = i; const [, k, t, d] = TF.evo[i]; $$('.it-vp img', it).forEach(im => im.classList.toggle('on', +im.dataset.i === i)); $$('.it-dots button', it).forEach(b => { const n = +b.dataset.i; b.classList.toggle('on', n === i); b.classList.toggle('past', n < i); });
+        $('#tfItK', root).textContent = `${i + 1} of ${TF.evo.length} · ${k}`; $('#tfItT', root).textContent = t; $('#tfItD', root).textContent = d; const c = $('.it-cap', it); c.classList.remove('in'); void c.offsetWidth; c.classList.add('in'); };
+      it.addEventListener('click', e => { const b = e.target.closest('.it-dots button'); if (b) { manual = performance.now(); show(+b.dataset.i); } });
+      const go = () => { if (performance.now() - manual < 1000) return; const r = it.getBoundingClientRect(), span = r.height - innerHeight; show(Math.min(TF.evo.length - 1, Math.floor(clamp(-r.top / Math.max(1, span)) * TF.evo.length))); };
+      csEl.addEventListener('scroll', initTF.sc5 = go, { passive: true }); show(0); }
     // the AI workflow, with a clock that runs
     const aiw = $('#tfAiw', root); let clk = 0;
     const drawAi = i => { $$('[data-a]', aiw).forEach(el => el.classList.toggle('on', +el.dataset.a === i)); $('#tfAid', root).textContent = TF.ai[i][2];
@@ -7905,7 +7927,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       $('img', lb).src = im.src; $('img', lb).alt = im.alt; lb.classList.toggle('tall', im.naturalHeight > im.naturalWidth * 1.2); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
     addEventListener('keydown', initTF.kd = e => { if (e.key === 'Escape' && lb.classList.contains('open')) { closeLb(); e.stopImmediatePropagation(); } }, true);
     // coach marks: a quiet tooltip, only after a few seconds of doing nothing
-    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfSh .sh-add', 'Tap Add, or keep scrolling'], ['#tfGm .m3-g', 'Drag the knob around the arc'], ['#tfEv .ev-nav', 'Tap a version or use the arrows'], ['#tfRt .rt-who', 'Switch owner, or tap Add'], ['#tfAb .ab-steps', 'Tap a step to replay the test'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
+    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfSh .sh-add', 'Tap Add, or keep scrolling'], ['#tfGm .m3-g', 'Drag the knob around the arc'], ['#tfEv .ev-nav', 'Tap a version or use the arrows'], ['#tfRt .rt-who', 'Switch owner, or tap Add'], ['#tfAb .ab-steps', 'Tap a step to replay the test'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvo .it-dots', 'Keep scrolling, or tap a version'], ['#tfAiw .tf-ais', 'Tap a step']];
       const done = new Set(), tip = document.createElement('div'); tip.className = 'tf-tip'; tip.setAttribute('role', 'status'); document.body.appendChild(tip); initTF.tip = tip;
       let last = performance.now(), cur = null; const poke = () => { last = performance.now(); if (cur) { done.add(cur); cur = null; tip.classList.remove('on'); } };
       ['scroll', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => root.addEventListener(ev, poke, { passive: true }));
