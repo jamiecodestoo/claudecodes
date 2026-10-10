@@ -4497,7 +4497,7 @@ html:root .scroll-cue i::after { top: 5px; }
 .tf-gmc .msg { margin: 6px 0 16px; font: 500 15px/1.4 var(--sans); min-height: 2.8em; }
 .tf-gmc .drag { display: grid; gap: 8px; padding: 12px 14px; border-radius: 14px; background: var(--paper); font: 600 13px/1 var(--sans); color: var(--ink-2); text-align: left; } .tf-gmc .drag input { width: 100%; accent-color: var(--tg); }
 .tf-gmx { display: grid; align-content: start; gap: 14px; padding: 24px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
-.tf-gmx .k, .tf-why2 .k, .tf-plan .k, .tf-foldc .k, .tf-team .k { margin: 0; font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.tf-gmx .k, .tf-why2 .k, .tf-foldc .k, .tf-team .k { margin: 0; font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
 .tf-gmx .mini { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 12px; border-radius: 16px; background: var(--paper); }
 .tf-gmx .mini img { width: 60px; height: 48px; border-radius: 8px; object-fit: cover; } .tf-gmx .mini small { display: block; font: 500 11px/1 var(--sans); color: var(--ink-2); } .tf-gmx .mini b { font: 600 14px/1.3 var(--sans); }
 .tf-gmx .bands { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
@@ -4645,16 +4645,42 @@ html:root .scroll-cue i::after { top: 5px; }
 .tf-aiv .d { margin: 0; font: 400 16px/1.6 var(--sans); color: var(--ink-2); }
 
 /* 08 next */
-.tf-status { display: inline-flex; align-items: center; gap: 10px; margin: 0 auto 4vh; padding: 10px 16px; border-radius: 999px; background: var(--tgl); color: var(--tg); font: 700 14px/1 var(--sans); }
-.tf-status i { width: 10px; height: 10px; border-radius: 50%; background: var(--tg); box-shadow: 0 0 0 0 color-mix(in srgb, var(--tg) 50%, transparent); animation: tfping2 2s infinite; } @keyframes tfping2 { 70% { box-shadow: 0 0 0 10px transparent; } }
-.tf-tg { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 820px; margin: 0 auto; text-align: left; }
-.tf-tg > div { position: relative; padding: 26px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1.5px var(--line); border: 2px dashed color-mix(in srgb, var(--ta) 30%, transparent); }
-.tf-tg .lab { position: absolute; top: 18px; right: 18px; padding: 5px 10px; border-radius: 999px; background: var(--tal); color: var(--ta); font: 700 11px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
-.tf-tg b { display: block; font: 800 clamp(48px, 5vw, 72px)/1 var(--sans); letter-spacing: -.05em; color: var(--ta); } .tf-tg strong { display: block; margin: 8px 0 6px; font: 700 18px/1.2 var(--sans); } .tf-tg p { margin: 0; font: 400 15px/1.55 var(--sans); color: var(--ink-2); }
-.tf-plan { max-width: 820px; margin: 5vh auto 0; padding: 24px; border-radius: 24px; background: var(--tbl); text-align: left; }
-.tf-plan ul { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; margin: 14px 0 0; padding: 0; list-style: none; }
-.tf-plan li { display: flex; gap: 10px; align-items: center; font: 500 15px/1.4 var(--sans); }
-.tf-plan li i { flex: none; width: 18px; height: 18px; border-radius: 6px; box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--tb) 60%, transparent); }
+.nx-track { max-width: 920px; margin: 6vh auto 0; padding: 30px 20px 26px; border-radius: 28px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 30px 60px -44px rgba(40, 30, 10, .35); }
+.nx-track ol { position: relative; display: grid; align-items: start; grid-template-columns: repeat(5, 1fr); margin: 0; padding: 0; list-style: none; }
+.nx-track ol::before, .nx-track ol::after { content: ""; position: absolute; top: 15px; left: 10%; height: 2px; }
+.nx-track ol::before { right: 10%; background: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 11px); }
+.nx-track ol::after { width: 0; background: var(--tg); transition: width 1.4s .3s var(--ease); }
+.nx-track.in ol::after { width: 60%; }
+.nx-track li { position: relative; z-index: 1; display: grid; justify-items: center; gap: 10px; text-align: center; opacity: .35; transition: opacity .4s calc(.3s + var(--i) * .3s); }
+.nx-track.in li { opacity: 1; } .nx-track li:last-child { opacity: .6 !important; } .nx-track li:last-child .dot { box-shadow: none; border: 2px dashed color-mix(in srgb, var(--ink-2) 55%, transparent); box-sizing: border-box; }
+.nx-track .dot { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--card); box-shadow: inset 0 0 0 2px var(--line); color: #fff; }
+.nx-track .dot svg { width: 16px; height: 16px; }
+.nx-track .d .dot { background: var(--tg); box-shadow: none; }
+.nx-track .now .dot { background: var(--ty); box-shadow: 0 0 0 0 color-mix(in srgb, var(--ty) 60%, transparent); animation: nxping 2s 1.6s infinite; }
+.nx-track .now .dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #3A2A00; }
+@keyframes nxping { 70% { box-shadow: 0 0 0 12px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.nx-track b { font: 600 15px/1.25 var(--sans); }
+.nx-track em { margin-top: -4px; padding: 4px 9px; border-radius: 999px; background: var(--tal); color: var(--ta); font: 700 11px/1 var(--sans); font-style: normal; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+.tf-h4.nx-h { margin-top: 12vh; }
+.nx-tg { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 920px; margin: 3vh auto 0; text-align: left; }
+.nx-c { padding: 26px 26px 18px; border-radius: 28px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 30px 60px -44px rgba(40, 30, 10, .35); }
+.nx-c .t { display: grid; gap: 10px; }
+.nx-c .t b { white-space: nowrap; font: 800 clamp(48px, 5vw, 72px)/1 var(--sans); letter-spacing: -.05em; color: var(--tg); }
+.nx-c strong { display: block; font: 700 18px/1.2 var(--sans); } .nx-c small { display: block; margin-top: 4px; font: 400 14px/1.4 var(--sans); color: var(--ink-2); }
+.nx-c svg { display: block; width: 100%; margin-top: 18px; overflow: visible; }
+.nx-c .ax { stroke: var(--line); stroke-width: 1; } .nx-c .lx { stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.nx-c .tx { fill: var(--ink-2); font: 600 11px var(--sans); letter-spacing: .04em; }
+.nx-c .base { fill: none; stroke: var(--ink-2); stroke-width: 3; stroke-linecap: round; opacity: .55; }
+.nx-c .pj { clip-path: inset(0 100% 0 0); transition: clip-path 1.5s .5s var(--ease); } .nx-tg.in .pj { clip-path: inset(0 0 0 0); }
+.nx-c .area { fill: color-mix(in srgb, var(--tg) 14%, transparent); }
+.nx-c .proj { fill: none; stroke: var(--tg); stroke-width: 3; stroke-dasharray: 7 6; stroke-linecap: round; }
+.nx-c .rng { stroke: var(--tg); stroke-width: 4; stroke-linecap: round; } .nx-c .end { fill: var(--tg); }
+.nx-cap { margin: 18px auto 0; font: 400 14px/1.5 var(--sans); color: var(--ink-2); }
+.nx-ms { max-width: 920px; margin: 9vh auto 0; }
+.nx-ms p { margin: 0 0 14px; font: 600 15px/1.4 var(--sans); color: var(--ink-2); }
+.nx-ms ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.nx-ms li { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); font: 500 15px/1.2 var(--sans); }
+.nx-ms li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--tb); }
 .tf-end { max-width: 52rem; margin: 0 auto; padding: 20vh clamp(16px, 4vw, 48px) 0; box-sizing: border-box; }
 .tf-end .k { margin: 0 0 3vh; font: 700 13px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--tp); }
 .tf-last { margin: 2vh auto 0; max-width: 24ch; font: 800 clamp(30px, 4vw, 54px)/1.12 var(--sans); letter-spacing: -.045em; text-wrap: balance; }
@@ -5111,7 +5137,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   .tf-by .list button { grid-template-columns: 96px 1fr; } .tf-by .list img { width: 96px; height: 70px; }
   .tf-fold { grid-template-columns: 1fr; justify-items: center; } .tf-phone.fold { width: 240px; } .tf-foldc { text-align: center; } .tf-foldc .tf-sw2 { justify-self: center; }
   .tf-aiv .grid { grid-template-columns: 1fr 1fr; } .tf-aiv .grid img { height: 130px; }
-  .tf-tg, .tf-plan ul { grid-template-columns: 1fr; }
+  .nx-tg { grid-template-columns: 1fr; } .nx-track { padding: 24px 6px 20px; } .nx-track b { font-size: 12px; } .nx-track em { font-size: 9px; padding: 3px 6px; } .nx-ms li { font-size: 14px; padding: 8px 13px; }
   .tf-phone.sm { width: 230px; }
   .tf-jrs li + li::before { display: none; }
 }
@@ -7812,12 +7838,15 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 
       <section class="tf-sec" id="tfNx">
         ${plq(11, 'What happens next')}
-        ${head('The next milestone isn’t a', 'victory lap.')}
-        ${p('Desktop and mobile web designs are approved, and development is in progress. So the next step is validation.')}
-        <p class="tf-status" data-rv><i></i>Approved · In development</p>
-        <div class="tf-tg" data-rv>${[['+5%', 'Page engagement', 'An agreed target for engagement with the advertisement page.'], ['+3–4%', 'Renewals', 'Through clearer subscription states, more visible renewal actions, and more relevant offers.']].map(([n, t, d]) => `<div><span class="lab">Target</span><b>${n}</b><strong>${t}</strong><p>${d}</p></div>`).join('')}</div>
-        <p class="tf-cap" data-rv>Agreed with the product and business team. These are goals, not measured results.</p>
-        <div class="tf-plan" data-rv><p class="k">After launch, I’ll measure against a historical baseline</p><ul>${TF.measure.map((t, i) => `<li style="--i:${i}"><i></i>${t}</li>`).join('')}</ul></div>
+        ${head('Next up:', 'proving it works.')}
+        ${p('The designs are approved and being built. From here, the work is validation.')}
+        <div class="nx-track" data-rv><ol>${[['Research', 'd'], ['Design', 'd'], ['Approved', 'd'], ['In development', 'now'], ['Launch & measure', '']].map(([t, c], i) => `<li class="${c}" style="--i:${i}"><span class="dot">${c === 'd' ? tfIc('check') : ''}</span><b>${t}</b>${c === 'now' ? '<em>We are here</em>' : ''}</li>`).join('')}</ol></div>
+        <h4 class="tf-h4 nx-h" data-rv>What success looks like.</h4>
+        <div class="nx-tg" data-rv>${[['+5%', 'Page engagement', 'On the advertisement page', 0], ['+3–4%', 'Renewals', 'From clearer states and better offers', 1]].map(([n, t, d, r]) => `<div class="nx-c"><div class="t"><b>${n}</b><span><strong>${t}</strong><small>${d}</small></span></div>
+          <svg viewBox="-4 -6 328 122" aria-hidden="true"><line class="ax" x1="0" y1="96" x2="316" y2="96"/><text class="tx" x="0" y="70">Baseline</text><path class="base" d="M0 80 H160"/><line class="lx" x1="160" y1="8" x2="160" y2="96"/><text class="tx" x="168" y="16">Launch</text>
+            <g class="pj">${r ? '<path class="area" d="M160 80 C220 80 262 46 310 40 L310 24 C262 30 220 80 160 80Z"/><path class="proj" d="M160 80 C220 80 262 46 310 40"/><path class="proj" d="M160 80 C220 80 262 30 310 24"/><path class="rng" d="M310 24 V40"/>' : '<path class="area" d="M160 80 C220 80 262 40 310 32 V96 H160Z"/><path class="proj" d="M160 80 C220 80 262 40 310 32"/><circle class="end" cx="310" cy="32" r="5"/>'}</g></svg></div>`).join('')}</div>
+        <p class="nx-cap" data-rv>Targets agreed with product and business. Not results, yet.</p>
+        <div class="nx-ms" data-rv><p>After launch, measured against a historical baseline</p><ul>${TF.measure.map(t => `<li>${t}</li>`).join('')}</ul></div>
       </section>
 
       <section class="tf-end" id="tfEnd">
