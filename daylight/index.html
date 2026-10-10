@@ -4714,6 +4714,38 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .tf-cmp2 input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; }
 .tf-cmp2 .cm-cap { margin: 16px auto 0; max-width: 56ch; font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
 @media (max-width: 640px) { .tf-cmp2 .cm-cv { aspect-ratio: 4 / 3.4; } .tf-cmp2 .cm-hd i { width: 40px; height: 40px; } .tf-cmp2 .cm-tg { bottom: 10px; font-size: 12px; } .tf-cmp2 .cm-tg.l { left: 10px; } .tf-cmp2 .cm-tg.r { right: 10px; } }
+/* metrics v3 */
+.tf-mx { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 20px; align-items: stretch; margin: 0 auto 6vh; text-align: left; --c: #F2B705; }
+.tf-mxm { align-self: center; }
+.mx-map { background: #F4F4F2; }
+.mx-in { position: relative; }
+.mx-map img { display: block; width: 100%; filter: saturate(.7); }
+.mx-in::after { content: ""; position: absolute; inset: 0; background: rgba(247, 245, 240, .35); pointer-events: none; }
+.mx-hot { position: absolute; z-index: 2; padding: 0; border: 0; border-radius: 12px; background: color-mix(in srgb, var(--c) 18%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--c) 55%, transparent); cursor: pointer; transition: background .35s, box-shadow .35s, opacity .35s; }
+.mx-hot::before { content: ""; position: absolute; inset: -14px; border-radius: 20px; background: radial-gradient(closest-side, color-mix(in srgb, var(--c) 45%, transparent), transparent); opacity: 0; transition: opacity .4s; pointer-events: none; }
+.mx-hot span { position: absolute; top: -12px; right: -10px; padding: 5px 9px; border-radius: 999px; background: #fff; color: #24272C; font: 800 13px/1 var(--sans); box-shadow: 0 0 0 2px var(--c), 0 6px 14px -6px rgba(0, 0, 0, .35); white-space: nowrap; }
+.mx-hot.on { background: color-mix(in srgb, var(--c) 30%, transparent); box-shadow: 0 0 0 3px var(--c); } .mx-hot.on::before { opacity: 1; animation: mxp 1.8s ease-in-out infinite; }
+.tf-mx:has(.mx-hot.on) .mx-hot:not(.on) { opacity: .45; }
+@keyframes mxp { 50% { transform: scale(1.06); } }
+.tf-mxs { display: flex; flex-direction: column; gap: 14px; padding: 24px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.mx-k { margin: 0; font: 700 12px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.mx-big { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; } .mx-big b { font: 800 clamp(56px, 6vw, 84px)/.9 var(--sans); letter-spacing: -.05em; color: var(--c); font-variant-numeric: tabular-nums; transition: color .4s; } .mx-big span { font: 600 18px/1.2 var(--sans); }
+.mx-dots { display: grid; grid-template-columns: repeat(40, 1fr); gap: 2px; }
+.mx-dots i { aspect-ratio: 1; border-radius: 50%; background: var(--soft); transition: background .3s; }
+.mx-dots i.on { background: var(--c); } .mx-dots i.half { background: linear-gradient(90deg, var(--c) 50%, var(--soft) 50%); }
+.mx-say { margin: 0; min-height: 3em; font: 500 15px/1.5 var(--sans); color: var(--ink-2); } .mx-say b { color: var(--ink); }
+.mx-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; }
+.mx-tabs button { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: 2px 8px; align-items: center; padding: 10px 12px; border: 0; border-radius: 14px; background: var(--paper); color: var(--ink); text-align: left; cursor: pointer; transition: box-shadow .25s, background .25s; }
+.mx-tabs i { grid-row: span 2; width: 10px; height: 10px; border-radius: 50%; background: var(--c); } .mx-tabs span { font: 600 13px/1.2 var(--sans); color: var(--ink-2); } .mx-tabs b { font: 800 17px/1 var(--sans); font-variant-numeric: tabular-nums; }
+.mx-tabs button.on { background: var(--card); box-shadow: inset 0 0 0 2px var(--c); }
+.mx-ft { margin: 0; font: 400 12px/1.4 var(--sans); color: var(--ink-2); }
+/* coach-mark tooltip */
+.tf-tip { position: fixed; z-index: 130; padding: 10px 14px; border-radius: 12px; background: #FFF3C4; color: #4A3700; font: 600 14px/1.2 var(--sans); white-space: nowrap; box-shadow: 0 0 0 1px rgba(160, 110, 0, .2), 0 12px 28px -12px rgba(80, 55, 0, .45); translate: -50% calc(-100% - 14px); opacity: 0; scale: .9; pointer-events: none; transition: opacity .3s, scale .3s var(--ease); }
+.tf-tip::after { content: ""; position: absolute; left: 50%; bottom: -6px; width: 12px; height: 12px; translate: -50% 0; rotate: 45deg; background: #FFF3C4; box-shadow: 1px 1px 0 rgba(160, 110, 0, .2); }
+.tf-tip.on { opacity: 1; scale: 1; animation: tftip 2s ease-in-out .3s infinite; }
+@keyframes tftip { 50% { translate: -50% calc(-100% - 20px); } }
+@media (max-width: 980px) { .tf-mx { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .mx-hot span { font-size: 11px; padding: 4px 7px; top: -10px; right: -6px; } .tf-mxs { padding: 18px; } .mx-dots { gap: 1.5px; } .tf-tip { white-space: normal; max-width: 220px; text-align: center; } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -7183,7 +7215,10 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>', warn: '<path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4.5M12 17v.2"/>'
     },
     hero: [['cam', 'Photography', 15], ['play', 'Virtual tour', 10], ['star', 'Top listing', 20], ['mail', 'Newsletter', 10]],
-    ctr: [['Listing section', 34.65, 'list'], ['Statistics', 6.63, 'stat'], ['Renewal CTA', 1.40, 'ren'], ['Publish CTA', 0.45, 'pub']],
+    ctr: [['Listing section', 34.65, 'opened a listing', '#F2B705', [7, 27, 57, 50], 'Owners came to look at their properties.'],
+      ['Statistics', 6.63, 'checked statistics', '#2F86C4', [43.5, 2.2, 11, 4.4], 'Some wanted numbers, but numbers alone don’t say what to do.'],
+      ['Renew subscription', 1.40, 'renewed', '#E06A3F', [52, 33, 11.5, 5.5], 'Renewing was rare, and only loud once a listing had already expired.'],
+      ['Publish', 0.45, 'published a listing', '#D9476B', [55.5, 71, 7.8, 5.5], 'Almost nobody published. 288 listings sat offline.']],
     // regions on the old page (pixels on the 1600×1740 capture)
     old: [
       ['Owners couldn’t easily understand their listing quality or potential visibility.', 'Every card shows ticks, crosses and a yellow dash for pictures, prices and occupancy. There’s no total, no sense of “good”, and nothing that says what a better listing would earn.', [118, 282, 900, 116]],
@@ -7255,25 +7290,28 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
             <div class="cm-cv"><img src="${ti('cmp-after')}" alt="After: the redesigned Advertisements page" draggable="false"><div class="cm-bf"><img src="${ti('cmp-before')}" alt="Before: the old Advertisements page" draggable="false"></div>
               <span class="cm-tg l">Before</span><span class="cm-tg r">After</span><span class="cm-hd"><i>‹ ›</i></span>
               <input type="range" min="0" max="100" value="50" step=".1" aria-label="Drag to compare before and after"></div></div>
-          <p class="cm-cap">Drag to compare. Same owner, same listings: one page lists them, the other tells you what to do next.</p>
         </div>
-        <ol class="tf-3" data-rv>${['Give every property a score', 'Show what would improve it', 'Make the next step obvious'].map((t, i) => `<li><i>${i + 1}</i>${t}</li>`).join('')}</ol>
-        <p class="tf-catch" data-rv>The catch: it also had to lift renewals and revenue, without turning the page into a sales pitch.</p>
       </section>
 
       <section class="tf-sec" id="tfNum">
         ${plq(1, 'The numbers')}
         ${head('The numbers told me', 'where to look.')}
-        ${p('The problem wasn’t just an outdated interface. It was an unclear path to improvement: inconsistent hierarchy, important actions competing for attention, and too much left for owners to figure out themselves.')}
-        <ul class="tf-src" data-rv>${[['chart', 'Page analytics'], ['ticket', 'Support tickets'], ['people', 'Stakeholder sessions'], ['search', 'Competitor products']].map(([i, t], k) => `<li style="--i:${k}">${tfIc(i)}${t}</li>`).join('')}</ul>
-        <figure class="tf-ctr" data-rv id="tfCtr">
-          <figcaption><b>The existing experience, by the numbers</b><span>Click-through rate · 1–12 July 2026</span></figcaption>
-          <div class="rows">${TF.ctr.map(([t, v, k], i) => `<button type="button" class="r${i ? '' : ' base'}" data-c="${i}" style="--v:${(v / 34.65 * 100).toFixed(2)};--i:${i}"><span class="t">${t}</span><span class="b"><i></i></span><b data-n="${v}">0%</b></button>`).join('')}</div>
-          <p class="cmp" id="tfCmp" aria-live="polite"></p>
-          <p class="nt">Month-to-date snapshot. Historical baseline figures, not post-redesign results.</p>
-        </figure>
-        ${p('Owners clicked into their listings far more than any management action. That didn’t explain every problem, but it showed where they were already engaged. The fix had to live there.')}
-
+        ${p('I went through page analytics, support tickets, stakeholder sessions and competitor products. One pattern stood out.')}
+        <div class="tf-mx" data-rv id="tfMx">
+          <div class="tf-mxm">
+            <div class="tf-brw"><div class="tbar"><i></i><i></i><i></i><span>Where owners clicked · the old page</span></div>
+              <div class="mx-map"><div class="mx-in"><img src="${ti('cmp-before')}" alt="The old Advertisements page with click areas marked" loading="lazy">${TF.ctr.map(([t, v, , c, [x, y, w, h]], i) => `<button type="button" class="mx-hot" data-c="${i}" style="--c:${c};left:${x}%;top:${y}%;width:${w}%;height:${h}%" aria-label="${t}: ${v}%"><span>${v}%</span></button>`).join('')}</div></div></div>
+          </div>
+          <div class="tf-mxs">
+            <p class="mx-k">Out of every 1,000 visits to the page</p>
+            <div class="mx-big"><b id="tfMxN">0</b><span id="tfMxL">opened a listing</span></div>
+            <div class="mx-dots" id="tfMxD" aria-hidden="true">${'<i></i>'.repeat(1000)}</div>
+            <p class="mx-say" id="tfMxS"></p>
+            <div class="mx-tabs" role="tablist">${TF.ctr.map(([t, v, , c], i) => `<button type="button" role="tab" data-c="${i}" style="--c:${c}"><i></i><span>${t}</span><b>${v}%</b></button>`).join('')}</div>
+            <p class="mx-ft">Click-through rate, 1–12 July 2026. Baseline before the redesign.</p>
+          </div>
+        </div>
+        <p class="tf-mid" data-rv>People came to look at their listings. <span class="u">So that’s where the help had to live.</span></p>
         <h4 class="tf-h4" data-rv>Three problems kept coming up.</h4>
         ${p('Pick one to see where it lived on the old page.')}
         <div class="tf-ex" data-rv id="tfEx">
@@ -7433,7 +7471,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <div class="tf-lb" id="tfLb" aria-hidden="true"><button type="button" class="x" aria-label="Close">×</button><img alt=""></div>
     </div>`;
   }
-  function tfCleanup() { (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); (initTF.raf || []).forEach(cancelAnimationFrame); (initTF.io || []).forEach(o => o.disconnect()); initTF.tt = []; initTF.ti = []; initTF.raf = []; initTF.io = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; }
+  function tfCleanup() { if (initTF.tip) { initTF.tip.remove(); initTF.tip = null; } (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); (initTF.raf || []).forEach(cancelAnimationFrame); (initTF.io || []).forEach(o => o.disconnect()); initTF.tt = []; initTF.ti = []; initTF.raf = []; initTF.io = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; }
   function initTF() {
     tfCleanup(); const root = csEl, later = (f, ms) => initTF.tt.push(setTimeout(f, ms)), every = (f, ms) => { const t = setInterval(f, ms); initTF.ti.push(t); return t; };
     const obs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); obs.unobserve(e.target); if (e.target._on) e.target._on(); }), { root, threshold: .18 }); initTF.io.push(obs);
@@ -7446,11 +7484,16 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       const tick = t => { const dt = Math.min(.05, (t - last) / 1000); last = t; if (on && t > hold) { const max = vp.scrollHeight - vp.clientHeight; if (max > 4) { if (Math.abs(vp.scrollTop - pos) > 3) pos = vp.scrollTop; pos += dir * speed * dt; if (pos >= max) { pos = max; dir = -1; hold = t + 1600; } else if (pos <= 0) { pos = 0; dir = 1; hold = t + 1600; } vp.scrollTop = pos; } } else pos = vp.scrollTop; initTF.raf.push(requestAnimationFrame(tick)); };
       initTF.raf.push(requestAnimationFrame(tick)); };
     $$('.tf-brw.auto .vp, .tf-phone.auto .scr', root).forEach((vp, i) => drift(vp, i ? 40 : 30));
-    // CTR bars, and how many times bigger the listing section is
-    const ctr = $('#tfCtr', root), cmp = $('#tfCmp', root);
-    const showCmp = i => { if (!i) i = 2; const [t, v] = TF.ctr[i], x = TF.ctr[0][1] / v; $$('.r', ctr).forEach(r => r.classList.toggle('on', +r.dataset.c === i)); cmp.innerHTML = `The listing section got <b>${x >= 10 ? Math.round(x) : x.toFixed(1)}×</b> the clicks of the ${t.toLowerCase().replace('cta', 'CTA')}.`; };
-    ctr._on = () => { $$('.r b', ctr).forEach((b, i) => later(() => count(b, +b.dataset.n, 1000, 2, '%'), i * 120)); showCmp(2); };
-    ctr.addEventListener('click', e => { const r = e.target.closest('[data-c]'); if (r) showCmp(+r.dataset.c); });
+    // metrics: where clicks landed, per 1,000 visits
+    { const mx = $('#tfMx', root), dots = $$('#tfMxD i', root), N = $('#tfMxN', root); let cur = -1, auto = 0;
+      const show = (i, user) => { if (user) clearInterval(auto); if (i === cur) return; cur = i; const [t, v, verb, c] = TF.ctr[i], n = v * 10;
+        mx.style.setProperty('--c', c); $$('[data-c]', mx).forEach(b => { const o = +b.dataset.c === i; b.classList.toggle('on', o); if (b.getAttribute('role') === 'tab') b.setAttribute('aria-selected', o); });
+        count(N, n, 700, n < 10 ? 1 : 0); $('#tfMxL', root).textContent = verb;
+        dots.forEach((d, k) => { const on = k < Math.floor(n), part = k === Math.floor(n) && n % 1; d.className = on ? 'on' : part ? 'half' : ''; d.style.transitionDelay = on ? Math.min(600, k * 1.6) + 'ms' : '0ms'; });
+        $('#tfMxS', root).innerHTML = i ? `${TF.ctr[i][5]} The listing section got <b>${Math.round(TF.ctr[0][1] / v)}×</b> more clicks.` : TF.ctr[0][5] + ' Nothing else came close.'; };
+      mx.addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (b) show(+b.dataset.c, true); });
+      mx.addEventListener('pointerover', e => { const b = e.target.closest('.mx-hot'); if (b && matchMedia('(hover: hover)').matches) show(+b.dataset.c, true); });
+      mx._on = () => { show(0); let k = 0; auto = every(() => { k = (k + 1) % 4; show(k); if (k === 0) clearInterval(auto); }, 2600); }; }
     // the old page, spotlit
     const vp = $('#tfExVp', root), spot = $('#tfSpot', root), exd = $('#tfExD', root);
     const showOld = i => { const [, d, [x, y, w, h]] = TF.old[i]; $$('#tfEx [data-o]', root).forEach(b => b.classList.toggle('on', +b.dataset.o === i));
@@ -7534,6 +7577,14 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     $('.tf-pg', root).addEventListener('click', e => { if (e.target.closest('#tfLb')) { closeLb(); return; } const im = e.target.closest('.tf-sti .d img, .tf-sea img, .tf-mvf img, .tf-aiv .grid img, .tf-aiv .pane[data-a="0"] img, .tf-by .list img'); if (!im) return;
       $('img', lb).src = im.src; $('img', lb).alt = im.alt; lb.classList.toggle('tall', im.naturalHeight > im.naturalWidth * 1.2); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
     addEventListener('keydown', initTF.kd = e => { if (e.key === 'Escape' && lb.classList.contains('open')) { closeLb(); e.stopImmediatePropagation(); } }, true);
+    // coach marks: a quiet tooltip, only after a few seconds of doing nothing
+    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMx .mx-tabs', 'Tap a number, or a hot spot on the page'], ['#tfEx .tf-exl', 'Pick a problem to see where it lived'], ['#tfTwo .tf-sw2', 'Switch to see the difference'], ['#tfGr', 'Drag to change the score'], ['#tfJp', 'Play the journey, or tap the steps'], ['#tfSt .tf-stn', 'Swipe or use the arrows'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
+      const done = new Set(), tip = document.createElement('div'); tip.className = 'tf-tip'; tip.setAttribute('role', 'status'); document.body.appendChild(tip); initTF.tip = tip;
+      let last = performance.now(), cur = null; const poke = () => { last = performance.now(); if (cur) { done.add(cur); cur = null; tip.classList.remove('on'); } };
+      ['scroll', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => root.addEventListener(ev, poke, { passive: true }));
+      every(() => { if (cur || performance.now() - last < 3500 || !root.classList.contains('open')) return;
+        for (const [sel, t] of TIPS) { if (done.has(sel)) continue; const el = $(sel, root); if (!el) continue; const r = el.getBoundingClientRect(); if (r.top < innerHeight * .18 || r.bottom > innerHeight * .9 || !r.width) continue;
+          cur = sel; tip.textContent = t; tip.style.left = Math.min(innerWidth - 16, Math.max(16, r.left + r.width / 2)) + 'px'; tip.style.top = r.top + 'px'; tip.classList.add('on'); break; } }, 500); }
     $$('[data-rv]', root).forEach(el => obs.observe(el));
   }
   // ---------- coming soon: the case study is still being written ----------
