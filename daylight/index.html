@@ -4942,6 +4942,15 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .tf-pr b { font: 700 17px/1.25 var(--sans); } .tf-pr p { margin: 6px 0 0; font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
 @media (max-width: 980px) { .tf-gm2 { grid-template-columns: 1fr; max-width: 520px; } .g2-mid { order: -1; } .g2-col, .g2-col.l { text-align: left; } .g2-col.l .g2-a { justify-items: start; } .g2-col { grid-template-columns: 1fr 1fr; gap: 18px; } .tf-pr { grid-template-columns: 1fr; max-width: 520px; } }
 @media (max-width: 520px) { .g2-col { grid-template-columns: 1fr; } }
+.wf { display: grid; grid-template-columns: repeat(50, 1fr); gap: 3px; }
+.wf i { aspect-ratio: 1; border-radius: 2px; background: var(--soft); transition: background .3s; transition-delay: calc(var(--k) * 2.5ms); }
+.tf-bub.in .wf i.y { background: #E8A912; } .tf-bub.in .wf i.o { background: #E06A3F; } .tf-bub.in .wf i.p { background: #D9476B; } .tf-bub.in .wf i.h { background: linear-gradient(90deg, #D9476B 50%, var(--soft) 50%); }
+.wf-lg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 26px; text-align: left; }
+.wf-lg > div { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: 2px 10px; align-items: center; }
+.wf-lg i { grid-row: span 2; width: 14px; height: 14px; border-radius: 4px; } .wf-lg .y i { background: #E8A912; } .wf-lg .o i { background: #E06A3F; } .wf-lg .p i { background: #D9476B; } .wf-lg .n i { background: var(--soft); box-shadow: inset 0 0 0 1px var(--line); }
+.wf-lg b { font: 800 clamp(24px, 2.6vw, 34px)/1 var(--sans); letter-spacing: -.03em; font-variant-numeric: tabular-nums; } .wf-lg .y b { color: #C98E00; } .wf-lg .o b { color: #E06A3F; } .wf-lg .p b { color: #D9476B; } .wf-lg .n b { color: var(--ink-2); }
+.wf-lg span { font: 500 14px/1.2 var(--sans); color: var(--ink-2); }
+@media (max-width: 640px) { .wf { grid-template-columns: repeat(25, 1fr); gap: 2px; } .wf-lg { grid-template-columns: 1fr 1fr; } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -7528,7 +7537,8 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         <p class="tf-rv2" id="tfRv">${['Owners came to', '<k>look</k>,', 'not to', '<k>act.</k>'].join(' ').split(' ').map(w => w.startsWith('<k>') ? `<i class="k">${w.replace(/<\/?k>/g, '')}</i>` : `<i>${w}</i>`).join(' ')}</p>
         <div class="tf-bub" data-rv id="tfBub">
           <p class="bb-k">Out of every 1,000 visits</p>
-          <div class="bb-row">${[[347, 'opened a listing', '#E8A912'], [14, 'renewed', '#E06A3F'], [4.5, 'published', '#D9476B']].map(([n, t, c], i) => `<div class="bb" style="--d:${(Math.sqrt(n / 347) * 100).toFixed(1)}%;--c:${c};--i:${i}"><span class="ball"><b>${n}</b></span><small>${t}</small></div>`).join('')}</div>
+          <div class="wf" aria-label="Out of 1,000 visits: 347 opened a listing, 14 renewed, 4.5 published">${Array.from({ length: 1000 }, (_, k) => `<i class="${k < 347 ? 'y' : k < 361 ? 'o' : k < 365 ? 'p' : k === 365 ? 'p h' : ''}" style="--k:${k < 366 ? k : 0}"></i>`).join('')}</div>
+          <div class="wf-lg">${[[347, 'opened a listing', 'y'], [14, 'renewed', 'o'], [4.5, 'published', 'p']].map(([n, t, c]) => `<div class="${c}"><i></i><b>${n}</b><span>${t}</span></div>`).join('')}<div class="n"><i></i><b>634.5</b><span>the rest</span></div></div>
           <p class="bb-gap"><b>77×</b> more looking than publishing. The listing had their attention, and nothing to do with it.</p>
         </div>
         <div class="tf-eq" data-rv id="tfEq">
