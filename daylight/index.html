@@ -4685,7 +4685,7 @@ html:root .scroll-cue i::after { top: 5px; }
 .tf-li .tx b { font: 600 16px/1.3 var(--sans); }
 .tf-li small, .tf-li .m { color: #6B7177; }
 .tf-li .hf { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 0; font: 400 13px/1 var(--sans); }
-.tf-li .hf span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; } .tf-li .hf .tf-i { width: 14px; height: 14px; color: #13804F; } .tf-li .hf .x .tf-i { color: #C2410C; }
+.tf-li .hf span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; } .tf-li .hf .tf-i { width: 14px; height: 14px; color: #13804F; } .tf-li .hf .no .tf-i { color: #C2410C; }
 .tf-li .rt { display: grid; justify-items: end; align-content: space-between; gap: 10px; }
 .tf-li .cta { display: none; padding: 11px 20px; border-radius: 10px; font: 700 14px/1 var(--sans); white-space: nowrap; }
 .tf-li .cta.on { display: block; animation: tfin .4s var(--ease); }
@@ -4760,6 +4760,58 @@ html:root .scroll-cue i::after { top: 5px; }
 .tf-form { margin: 0; font: 500 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink-2); }
 .tf-doc .d-imp table { border-collapse: collapse; font: 400 15px/1.4 var(--sans); } .tf-doc .d-imp th, .tf-doc .d-imp td { padding: 8px 14px; border: 1px solid var(--line); text-align: left; } .tf-doc .d-imp th { background: color-mix(in srgb, var(--tb) 18%, var(--card)); font-weight: 700; }
 @media (max-width: 640px) { .tf-split2 .sb { flex-direction: column; height: auto; } .tf-split2 .pt, .tf-split2.in .pt { width: auto; } .tf-fac button { grid-template-columns: auto 1fr auto; } .tf-fac em { display: none; } }
+.tf-live { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; padding: 16px; border-radius: 28px; background: #F4F4F2; color: #1E1E1E; text-align: left; box-shadow: 0 0 0 1px var(--line), 0 40px 80px -46px rgba(0, 0, 0, .45);
+  --card: #fff; --ink: #1E1E1E; --ink-2: #5E6166; --soft: #EAEAE7; --line: rgba(30, 30, 30, .1); --tg: #16825A; --ta: #8A5A00; }
+.lv-card { padding: 18px; border-radius: 18px; background: #fff; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06); }
+.lv-h { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 12px; } .lv-h b { display: block; font: 600 18px/1.2 var(--sans); } .lv-h small { font: 400 13px/1.4 var(--sans); color: #5E6166; }
+.lv-main { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 12px; min-width: 0; }
+.tf-live > *, .lv-main > *, .lv-side > * { min-width: 0; }
+.lv-row { display: flex; gap: 10px; overflow-x: auto; padding: 2px 2px 8px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+.lv-rc { position: relative; flex: 0 0 172px; display: grid; align-content: start; gap: 4px; padding: 0 0 10px; border-radius: 14px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .08), 0 6px 14px -10px rgba(0, 0, 0, .3); overflow: hidden; scroll-snap-align: start; animation: tfin .4s var(--ease); }
+.lv-rc .im { position: relative; display: grid; place-items: center; height: 84px; background: #EAEAE7; color: #8A5A00; } .lv-rc .im img { width: 100%; height: 100%; object-fit: cover; } .lv-rc .im .tf-i { width: 34px; height: 34px; }
+.lv-rc .im em { position: absolute; top: 8px; left: 8px; padding: 4px 8px; border-radius: 999px; background: #DDF6EA; color: #0E6B43; font: 700 11px/1 var(--sans); font-style: normal; }
+.lv-rc > b { padding: 6px 10px 0; font: 600 14px/1.2 var(--sans); } .lv-rc > small { padding: 0 10px; font: 400 12px/1.35 var(--sans); color: #5E6166; min-height: 32px; }
+.lv-rc .w { position: absolute; inset: 0 0 46px; margin: 0; padding: 12px; background: #1E1E1E; color: #fff; font: 500 13px/1.45 var(--sans); opacity: 0; pointer-events: none; transition: opacity .25s; }
+.lv-rc.why .w { opacity: 1; }
+.lv-rc .bt { display: flex; gap: 6px; padding: 4px 10px 0; } .lv-rc .bt button, .lv-li .mr button, .lv-strip .act, #lvReset { padding: 8px 14px; border: 0; border-radius: 8px; font: 600 13px/1 var(--sans); cursor: pointer; }
+.lv-rc .ad { flex: 1; background: #fff; box-shadow: inset 0 0 0 1.5px #1E1E1E; color: #1E1E1E; } .lv-rc .ad:hover { background: #1E1E1E; color: #fff; }
+.lv-rc .wy { background: #FFF1C2; color: #6A4A00; }
+.lv-done { display: grid; justify-items: center; gap: 6px; width: 100%; padding: 22px; border-radius: 14px; background: #F2FBF6; text-align: center; animation: tfin .4s var(--ease); } .lv-done > span { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #DDF6EA; color: #16825A; } .lv-done .tf-i { width: 28px; height: 28px; } .lv-done b { font: 700 16px/1.2 var(--sans); } .lv-done small { font: 400 13px/1.4 var(--sans); color: #5E6166; }
+.lv-lh { margin: 6px 0 0; font: 600 20px/1.2 var(--sans); } .lv-lh span { color: #5E6166; font-weight: 400; }
+.lv-list { display: grid; gap: 10px; }
+.lv-li { border-radius: 16px; background: #fff; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06); overflow: hidden; }
+.lv-li .row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 12px; }
+.lv-li .ph { width: 84px; height: 66px; border-radius: 8px; object-fit: cover; }
+.lv-li .tx { display: grid; gap: 3px; min-width: 0; } .lv-li small { font: 500 11px/1 var(--sans); color: #6B7177; } .lv-li .tx b { font: 600 15px/1.25 var(--sans); } .lv-li .m { font: 400 12px/1 var(--sans); color: #6B7177; }
+.lv-li .hf { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 4px 0 0; font: 400 12px/1 var(--sans); } .lv-li .hf span { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; } .lv-li .hf .tf-i { width: 13px; height: 13px; color: #16825A; } .lv-li .hf .no .tf-i { color: #C2410C; }
+.lv-strip { font: 500 13px/1.4 var(--sans); }
+.lv-strip.y { background: #FFF1D6; color: #7A5300; }
+.lv-strip .hd { display: flex; justify-content: space-between; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; } .lv-strip .hd i { font: 700 18px/1 var(--sans); font-style: normal; }
+.lv-strip .bd { display: none; gap: 8px; padding: 0 12px 12px; overflow-x: auto; } .lv-strip.open .bd { display: flex; }
+.lv-li .mr { flex: 0 0 auto; display: grid; grid-template-columns: auto auto auto; gap: 8px; align-items: center; padding: 8px; border-radius: 12px; background: #fff; color: #1E1E1E; animation: tfin .3s var(--ease); }
+.lv-li .mr img { width: 52px; height: 40px; border-radius: 6px; object-fit: cover; } .lv-li .mr em { display: inline-block; padding: 2px 6px; border-radius: 5px; background: #DDF6EA; color: #0E6B43; font: 700 10px/1.2 var(--sans); font-style: normal; } .lv-li .mr b { display: block; font: 600 12px/1.2 var(--sans); white-space: nowrap; }
+.lv-li .mr button { padding: 7px 12px; background: #fff; box-shadow: inset 0 0 0 1.5px #1E1E1E; color: #1E1E1E; }
+.lv-strip.g { display: flex; justify-content: space-between; align-items: center; gap: 8px; background: #DDF6EA; color: #0E6B43; } .lv-strip.g .hd { cursor: default; } .lv-strip.g .hd { justify-content: flex-start; gap: 8px; } .lv-strip.g .tf-i { width: 16px; height: 16px; }
+.lv-strip .act { margin-right: 10px; background: #fff; box-shadow: inset 0 0 0 1.5px #16825A; color: #16825A; white-space: nowrap; }
+.lv-side { display: grid; align-content: start; gap: 12px; }
+.lv-meter { text-align: center; } .lv-meter .lv-h { text-align: left; } #lvReset { padding: 7px 12px; background: #EAEAE7; color: #1E1E1E; }
+.lv-meter .tf-gw { width: min(240px, 100%); margin-top: 0; } .lv-meter .tf-gv b { font-size: 50px; }
+.lv-wk { margin: 2px 0 0; font: 400 13px/1.4 var(--sans); color: #5E6166; } .lv-wk b { color: #16825A; }
+.lv-why { background: #1E1E1E; color: #fff; box-shadow: none; }
+.lv-why .k { margin: 0 0 10px; font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: #FFC61F; }
+.lv-why ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.lv-why li { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; align-items: center; font: 400 13px/1.35 var(--sans); opacity: .5; transition: opacity .3s; }
+.lv-why li.on, .lv-why li.slot { opacity: 1; }
+.lv-why li i { width: 10px; height: 10px; border-radius: 50%; background: #5E6166; } .lv-why li.on i { background: #FFC61F; box-shadow: 0 0 0 4px rgba(255, 198, 31, .2); } .lv-why li.slot i { background: #3CC48A; }
+.lv-why li em { grid-column: 2; font: 600 12px/1.2 var(--sans); font-style: normal; color: #FFC61F; } .lv-why li:not(.on):not(.slot) em { color: #A6A9AD; } .lv-why li.slot em { color: #7BE3B1; }
+.lv-why .f { margin: 14px 0 0; padding-top: 12px; border-top: 1px dashed rgba(255, 255, 255, .2); font: 400 12px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; color: #C9CCD0; } .lv-why .f b { color: #fff; }
+.lv-tw { position: sticky; bottom: 18px; z-index: 5; grid-column: 1 / -1; height: 0; margin-top: -16px; pointer-events: none; }
+.lv-toast { position: absolute; left: 50%; bottom: 0; padding: 12px 18px; border-radius: 999px; background: #16825A; color: #fff; font: 600 14px/1.2 var(--sans); white-space: nowrap; translate: -50% 20px; opacity: 0; pointer-events: none; box-shadow: 0 16px 30px -14px rgba(0, 60, 30, .6); }
+.lv-toast.on { animation: lvtoast 2.4s var(--ease) forwards; }
+@keyframes lvtoast { 0% { opacity: 0; translate: -50% 20px; } 12%, 80% { opacity: 1; translate: -50% 0; } 100% { opacity: 0; translate: -50% -6px; } }
+:root[data-theme="dark"] .tf-live { filter: brightness(.94); }
+@media (max-width: 980px) { .tf-live { grid-template-columns: minmax(0, 1fr); } .lv-side { display: contents; } .lv-meter { order: 0; } .lv-main { order: 1; } .lv-why { order: 2; } .lv-tw { order: 3; } }
+@media (max-width: 640px) { .tf-live { padding: 10px; border-radius: 22px; } .lv-li .row { grid-template-columns: auto 1fr; } .lv-li .tf-ring { position: absolute; right: 10px; top: 10px; } .lv-li { position: relative; } .lv-li .tx { padding-right: 46px; } .lv-li .ph { width: 64px; height: 56px; } .lv-toast { white-space: normal; width: 80%; text-align: center; border-radius: 16px; } }
 /* lightbox */
 .tf-lb { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 24px; background: rgba(10, 16, 13, .85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; pointer-events: none; transition: opacity .3s; cursor: zoom-out; }
 .tf-lb.open { opacity: 1; pointer-events: auto; }
@@ -7258,6 +7310,8 @@ html:root .scroll-cue i::after { top: 5px; }
     ],
     tiles: [['+5%', 'page engagement, the first target in the brief'], ['+3 pts', 'absolute lift in renewals of value-added services (VAS)'], ['47%', 'of daily active hosts came on mobile web, not desktop'], ['19', 'use cases to cover: 6 for hosts, 13 for product']],
     dau: [['Mobile web', 2928], ['Desktop web', 3275]],
+    live: { ls: [['Ferienwohnung Strandhuus, Wohnung 307 “Albatros”', 'Strandhuus', 343300, 'ph', 62, 0, 0, 0, 'August 2026'], ['Ferienwohnung Meerblick, Wohnung 204 “Osprey”', 'Meerblick', 343301, 'ph2', 90, 1, 0, 0, 'September 2026'], ['Alpenchalet, Wohnung 402 “Hawk”', 'Alpenchalet', 343303, 'ph3', 80, 0, 0, 0, 'November 2026']], tags: [0, 3],
+      vas: { photo: ['Photography Showcase', 'Pro photos lift your image score', 'rc-1', 'Purchase Photography'], top: ['Top Listing', 'Sit at the top of search results', 'rc-3', 'Buy Top Listing'], vt: ['Virtual Tour', 'Turn your photos into a walk-through', 'rc-2', 'Create Virtual Tour'], nl: ['Newsletter', 'Reach 50,000+ travellers in the next mailing', 'rc-4', 'Advertise in Newsletter'], tags: ['Traum Tags', 'Stand out in search with a badge', '', 'Buy Traum Tags'] } },
     factors: [['Top listing', 20, 'star', 'Buy Top Listing', 0, 'Share of listings with an active Top Listing'], ['Newsletter advertisement', 10, 'mail', 'Advertise in Newsletter', 0, 'Share of listings in the newsletter'], ['Virtual tour', 10, 'play', 'Create Virtual Tour', 0, 'Share of listings with an active tour'], ['Traum tags', 10, 'tag', 'Buy Traum Tags', 1, 'Tags bought out of tags you’re eligible for']],
     ai: [['ai1', 'The everything dashboard', 'One score up top. Nice.', 'Then four performance stats compete with it. Hosts read four numbers and act on none.'],
       ['ai2', 'The breakdown on every row', 'Each listing explains its own score.', 'Seven factor chips × 14 listings = a wall. Nobody reads a wall.'],
@@ -7414,8 +7468,27 @@ html:root .scroll-cue i::after { top: 5px; }
         ${p('Two rules from the brief made the score fair. Points only count while a product is active, and disappear when it expires (newsletter points after three months). And half the score is free: completeness costs a host nothing.')}
       </section>
 
+      <section class="tf-sec" id="tfLive">
+        ${plq(6, 'Try it')}
+        ${head('The page,', 'with the logic switched on.')}
+        ${p('This is the dashboard for a host with three listings, running the brief’s rules. Add a recommendation, open a listing’s nudge, tap “Why?” on anything. The panel on the right shows every rule as it fires.')}
+        <div class="tf-live" data-rv id="lv">
+          <div class="lv-main">
+            <div class="lv-card lv-recs"><div class="lv-h"><div><b>Recommended actions for you</b><small>Sorted by the points each one adds to your score</small></div></div><div class="lv-row" id="lvRecs"></div></div>
+            <p class="lv-lh">Your listings <span>(3)</span></p>
+            <div class="lv-list" id="lvList"></div>
+          </div>
+          <aside class="lv-side">
+            <div class="lv-card lv-meter"><div class="lv-h"><div><b>Growth meter</b><small>Your portfolio’s visibility at a glance.</small></div><button type="button" id="lvReset">Reset</button></div>
+              <div class="tf-gw">${tfGauge('lvG')}<div class="tf-gv"><b id="lvV">0</b><span class="tf-chip a" id="lvC">Needs attention</span></div></div><p class="lv-wk" id="lvWk"></p></div>
+            <div class="lv-card lv-why"><p class="k">Why you see what you see</p><ul id="lvRules"></ul><p class="f" id="lvF"></p></div>
+          </aside>
+          <div class="lv-tw"><div class="lv-toast" id="lvToast" aria-live="polite"></div></div>
+        </div>
+      </section>
+
       <section class="tf-sec" id="tfExp">
-        ${plq(6, 'Going wide')}
+        ${plq(7, 'Going wide')}
         ${head('Borrow, generate,', 'then throw most of it away.')}
         ${p('Progress you can see already exists in apps people love. I pulled from fitness trackers, course dashboards and profile-strength prompts, then used AI to sketch a dozen directions in a single day.')}
         <figure class="tf-refs tf-zoom" data-rv><img src="${ti('refs')}" alt="Reference board: a fitness progress tracker, a profile completion prompt and a classroom dashboard" loading="lazy"><figcaption>The reference board. Progress rings, completion prompts, “points this week”.</figcaption></figure>
@@ -7424,7 +7497,7 @@ html:root .scroll-cue i::after { top: 5px; }
       </section>
 
       <section class="tf-sec" id="tfMeter">
-        ${plq(7, 'The meter')}
+        ${plq(8, 'The meter')}
         ${head('Five tries at', 'one little gauge.')}
         ${p('The score needed a face. It took five rounds to get one that felt like encouragement instead of a report card.')}
         <div class="tf-mt" data-rv>
@@ -7437,7 +7510,7 @@ html:root .scroll-cue i::after { top: 5px; }
       </section>
 
       <section class="tf-sec" id="tfRounds">
-        ${plq(8, 'The page')}
+        ${plq(9, 'The page')}
         ${head('Six rounds,', 'one month.')}
         ${p('Drag through every version of the page, from the first sketch to the one that shipped. Each round answered a question the last one raised.')}
         <div class="tf-rd" data-rv>
@@ -7449,7 +7522,7 @@ html:root .scroll-cue i::after { top: 5px; }
       </section>
 
       <section class="tf-sec" id="tfRooms">
-        ${plq(9, 'Three rooms')}
+        ${plq(10, 'Three rooms')}
         ${head('Designed with business,', 'product and engineering.')}
         ${p('A B2B page has more owners than a consumer one. These are real questions and answers from the comments on the brief, and what each one changed in the design. Pick a room.')}
         <div class="tf-rm" data-rv>
@@ -7460,7 +7533,7 @@ html:root .scroll-cue i::after { top: 5px; }
       </section>
 
       <section class="tf-sec" id="tfNotes">
-        ${plq(10, 'The review')}
+        ${plq(11, 'The review')}
         ${head('Eight notes', 'from one review.')}
         ${p('After the first full walkthrough, product and business left these notes right on the Figma file. Tick them off the way I did.')}
         <div class="tf-sticky" data-rv>
@@ -7470,7 +7543,7 @@ html:root .scroll-cue i::after { top: 5px; }
       </section>
 
       <section class="tf-sec" id="tfDec">
-        ${plq(11, 'Decisions')}
+        ${plq(12, 'Decisions')}
         ${head('What shipped,', 'and what got overruled.')}
         ${p('Not every call went my way. Some of the best ones didn’t.')}
         <div class="tf-df" role="tablist" data-rv>${[['all', 'All'], ['ship', 'Shipped'], ['over', 'Overruled'], ['mid', 'Compromise']].map(([k, t], i) => `<button type="button" data-f="${k}"${i ? '' : ' class="on"'}>${t}</button>`).join('')}</div>
@@ -7478,7 +7551,7 @@ html:root .scroll-cue i::after { top: 5px; }
       </section>
 
       <section class="tf-sec" id="tfFinal">
-        ${plq(12, 'The final design')}
+        ${plq(13, 'The final design')}
         ${head('Calm, clear,', 'and a little bit fun.')}
         ${p('Tap the dots to walk through the page. Switch to mobile to see it on a phone, where most hosts actually check their listings.')}
         <div class="tf-dev" role="tablist" data-rv><button type="button" data-d="d" class="on" aria-selected="true">Desktop</button><button type="button" data-d="m">Mobile</button></div>
@@ -7495,7 +7568,7 @@ html:root .scroll-cue i::after { top: 5px; }
           <div class="tf-sch" role="tablist">${Object.entries(S).map(([k, [t]], i) => `<button type="button" data-s="${k}"${i ? '' : ' class="on" aria-selected="true"'}>${t}</button>`).join('')}</div>
           <div class="tf-li" id="tfLi">
             <div class="row"><span class="ph"></span><div class="tx"><small>NO. 343300</small><b>Ferienwohnung Strandhuus, Wohnung 307 “Albatros”</b><span class="m">End of term: August 2026</span>
-              <p class="hf"><span>${tfIc('check')}Photos</span><span>${tfIc('check')}Price</span><span>${tfIc('check')}Availability calendar</span><span class="x">${tfIc('x')}Top advertisement</span></p></div>
+              <p class="hf"><span>${tfIc('check')}Photos</span><span>${tfIc('check')}Price</span><span>${tfIc('check')}Availability calendar</span><span class="no">${tfIc('x')}Top advertisement</span></p></div>
               <div class="rt"><span class="cta"></span>${tfRing(80)}<div class="ics">${tfIc('mail')}${tfIc('bar')}${tfIc('clock')}${tfIc('pen')}</div></div></div>
             <div class="strip"><p></p><div class="recs">${[['Photography Showcase', '+25'], ['Virtual Tour', '+10']].map(([t, pt]) => `<span class="rc"><img src="${ti(pt === '+25' ? 'rc-1' : 'rc-2')}" alt=""><span><em>${pt} Points</em><b>${t}</b></span><u>Add</u></span>`).join('')}</div><span class="tmr">Ends in <b>02d</b><b>14h</b><b class="s">36m</b></span></div>
           </div>
@@ -7513,7 +7586,7 @@ html:root .scroll-cue i::after { top: 5px; }
       </section>
 
       <section class="tf-sec" id="tfImp">
-        ${plq(13, 'The impact')}
+        ${plq(14, 'The impact')}
         ${head('What we set', 'out to move.')}
         ${p('The targets from the brief, and what the design had to cover to hit them. Live results will go here once the numbers are in.')}
         <div class="tf-imp" data-rv>${TF.imp.map(([n, u, t, s], i) => `<div style="--i:${i}"><b><span>${s}</span><span class="n" data-n="${n}">0</span><span>${u}</span></b><p>${t}</p></div>`).join('')}</div>
@@ -7579,6 +7652,46 @@ html:root .scroll-cue i::after { top: 5px; }
     $('#tfFac', root).addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b || b.disabled) return; const i = +b.dataset.i; fac[i] = !fac[i]; b.classList.toggle('on', fac[i]); b.setAttribute('aria-checked', fac[i]); anat(); });
     cmp.addEventListener('input', anat); elig.addEventListener('change', anat);
     anat();
+    // the live dashboard: the brief's scoring, nudges and slot rules, all wired up
+    { const L = TF.live, lv = $('#lv', root); let st, open, why = new Set(), start;
+      const reset = () => { st = { ls: L.ls.map(l => ({ n: l[0], k: l[1], no: l[2], img: l[3], comp: l[4], top: l[5], vt: l[6], nl: l[7], end: l[8] })), photo: 0, tags: L.tags.slice(), stay: 0 }; open = 0; why.clear(); };
+      const N = () => st.ls.length, share = k => st.ls.filter(l => l[k]).length / N();
+      const parts = S => { const n = S.ls.length; return { c: S.ls.reduce((a, l) => a + l.comp, 0) / n * .5, top: S.ls.filter(l => l.top).length / n * 20, nl: S.ls.filter(l => l.nl).length / n * 10, vt: S.ls.filter(l => l.vt).length / n * 10, tags: S.tags[1] ? S.tags[0] / S.tags[1] * 10 : 0 }; };
+      const score = S => { const q = parts(S); return Math.round(q.c + q.top + q.nl + q.vt + q.tags); };
+      const lscore = l => Math.round(l.comp * .5 + (l.top ? 20 : 0) + (l.vt ? 10 : 0) + (l.nl ? 10 : 0) + (st.tags[1] ? st.tags[0] / st.tags[1] * 10 : 0));
+      const clone = () => JSON.parse(JSON.stringify(st));
+      const vasCount = () => (st.photo ? 1 : 0) + ['top', 'vt', 'nl'].filter(k => st.ls.some(l => l[k])).length + (st.tags[0] ? 1 : 0);
+      // one action = one purchase for the next listing that needs it
+      const apply = (S, k, li) => { if (k === 'photo') { const l = li != null ? S.ls[li] : S.ls.find(x => x.comp < 75); l.comp = 100; S.photo = 1; return l; } if (k === 'tags') { S.tags[0]++; return null; } const l = li != null ? S.ls[li] : S.ls.find(x => !x[k]); l[k] = 1; return l; };
+      const gain = (k, li) => { const S = clone(); apply(S, k, li); return score(S) - score(st); };
+      const recs = () => { const r = []; const low = st.ls.filter(l => l.comp < 75);
+        if (low.length) r.push(['photo', `“${low[0].k}” has an image score of ${low[0].comp}%. Anything under 75% triggers this.`]);
+        ['top', 'vt', 'nl'].forEach(k => { const m = st.ls.filter(l => !l[k]).length; if (m) r.push([k, `${m} of ${N()} listings don’t have ${L.vas[k][0]}. It’s ${k === 'top' ? 20 : 10}% of your score, shared across listings.`]); });
+        if (st.tags[0] < st.tags[1]) r.push(['tags', `You’ve bought ${st.tags[0]} of the ${st.tags[1]} tags you’re eligible for. Tags are 10% of your score.`]);
+        return r.map(([k, w]) => [k, w, gain(k)]).sort((a, b) => b[2] - a[2]); };
+      const lrecs = (l, i) => { const r = []; if (l.comp < 75) r.push('photo'); ['top', 'vt', 'nl'].forEach(k => { if (!l[k]) r.push(k); }); return r.map(k => [k, gain(k, i)]).sort((a, b) => b[1] - a[1]); };
+      const toast = t => { const el = $('#lvToast', root); el.textContent = t; el.classList.remove('on'); void el.offsetWidth; el.classList.add('on'); };
+      const draw = () => { const v = score(st), q = parts(st), R = recs(), vc = vasCount(), slot = vc <= 2 ? 'vas' : st.stay ? 'none' : 'stay';
+        setG($('#lvG', root), v); count($('#lvV', root), v, 600); chip($('#lvC', root), v);
+        $('#lvWk', root).innerHTML = v > start ? `<b>+${v - start} points</b> this session. ${v >= 80 ? 'Great! Keep going to 100.' : 'Keep optimising to reach 80+ points.'}` : 'Great things start here. Keep optimising to reach 80+ points.';
+        $('#lvRecs', root).innerHTML = R.length ? R.map(([k, w, g]) => { const [t, d, im] = L.vas[k]; return `<div class="lv-rc${why.has('r' + k) ? ' why' : ''}" data-k="${k}"><span class="im">${im ? `<img src="${ti(im)}" alt="">` : tfIc('tag')}<em>+${g} points</em></span><b>${t}</b><small>${d}</small><p class="w">${w}</p><span class="bt"><button type="button" class="ad" data-add="${k}">Add</button><button type="button" class="wy" data-why="r${k}">${why.has('r' + k) ? 'Close' : 'Why?'}</button></span></div>`; }).join('')
+          : `<div class="lv-done"><span>${tfIc('trophy')}</span><b>All actions completed</b><small>${v < 100 ? `The last ${100 - v} points are free: finish the photos on your other listings.` : 'Your portfolio has maximum visibility. You’re at the top!'}</small></div>`;
+        $('#lvList', root).innerHTML = st.ls.map((l, i) => { const ls = lscore(l), lr = lrecs(l, i), pts = lr.reduce((a, [, g]) => a + g, 0);
+          let strip = ''; if (slot === 'vas' && lr.length) strip = `<div class="lv-strip y${open === i ? ' open' : ''}"><button type="button" class="hd" data-open="${i}"><span>Complete ${lr.length} recommendation${lr.length > 1 ? 's' : ''} to improve your visibility score by ${pts} points.</span><i>${open === i ? '−' : '+'}</i></button><div class="bd">${lr.map(([k, g]) => `<span class="mr"><img src="${ti(L.vas[k][2])}" alt=""><span><em>+${g} Points</em><b>${L.vas[k][0]}</b></span><button type="button" data-add="${k}" data-li="${i}">Add</button></span>`).join('')}</div></div>`;
+          else if (slot === 'stay') strip = `<div class="lv-strip g"><span class="hd">${tfIc('shield')}Get stay support for just €99.00</span><button type="button" class="act" data-stay>Activate now</button></div>`;
+          else if (ls >= 90) strip = `<div class="lv-strip g"><span class="hd">${tfIc('check')}You have a stellar visibility score with this property!</span></div>`;
+          return `<div class="lv-li"><div class="row"><img class="ph" src="${ti(l.img)}" alt=""><div class="tx"><small>NO. ${l.no}</small><b>${l.n}</b><span class="m">End of term: ${l.end}</span><p class="hf"><span class="${l.comp >= 75 ? '' : 'no'}">${tfIc(l.comp >= 75 ? 'check' : 'x')}Photos ${l.comp}%</span><span>${tfIc('check')}Price</span><span>${tfIc('check')}Calendar</span><span class="${l.top ? '' : 'no'}">${tfIc(l.top ? 'check' : 'x')}Top listing</span></p></div>${tfRing(ls, ls < 50 ? 'a' : '')}</div>${strip}</div>`; }).join('');
+        const tr = [[st.ls.some(l => l.comp < 75), 'Image score under 75% on a listing', 'Purchase Photography'], [st.ls.some(l => !l.top), 'Top Listing missing on a listing', 'Buy Top Listing'], [st.ls.some(l => !l.vt), 'Virtual Tour missing on a listing', 'Create Virtual Tour'], [st.tags[0] < st.tags[1], 'Eligible Traum Tags left to buy', 'Buy Traum Tags'], [st.ls.some(l => !l.nl), 'Newsletter missing on a listing', 'Advertise in Newsletter']];
+        $('#lvRules', root).innerHTML = tr.map(([on, t, c]) => `<li class="${on ? 'on' : ''}"><i></i><span>${t}</span><em>${on ? c : 'Done'}</em></li>`).join('') +
+          `<li class="slot"><i></i><span>Add-ons bought: <b>${vc}</b> of 5</span><em>${slot === 'vas' ? 'Card slot: add-on nudge' : slot === 'stay' ? 'Card slot: Stay Support' : 'Card slot: empty'}</em></li>`;
+        $('#lvF', root).innerHTML = `Completeness <b>${q.c.toFixed(1)}</b> + Top <b>${q.top.toFixed(1)}</b> + Newsletter <b>${q.nl.toFixed(1)}</b> + Tour <b>${q.vt.toFixed(1)}</b> + Tags <b>${q.tags.toFixed(1)}</b> = <b>${v}</b>`; };
+      lv.addEventListener('click', e => { const a = e.target.closest('[data-add]'), w = e.target.closest('[data-why]'), o = e.target.closest('[data-open]'), sp = e.target.closest('[data-stay]');
+        if (a) { const k = a.dataset.add, li = a.dataset.li != null ? +a.dataset.li : null, g = gain(k, li), l = apply(st, k, li); why.delete('r' + k); draw(); toast(`${L.vas[k][0]} added${l ? ` to “${l.k}”` : ''}. +${g} points, score ${score(st)}`); }
+        else if (w) { const k = w.dataset.why; why.has(k) ? why.delete(k) : why.add(k); draw(); }
+        else if (o) { const i = +o.dataset.open; open = open === i ? -1 : i; draw(); }
+        else if (sp) { st.stay = 1; toast('Stay Support activated. The nudge slot is now empty.'); draw(); }
+        else if (e.target.closest('#lvReset')) { reset(); draw(); toast('Back to the start'); } });
+      reset(); start = score(st); lv._on = () => draw(); $('#lvV', root).textContent = 0; }
     // the meter, five tries
     const ms = $('#tfMs', root);
     const drawM = i => { const [k, t, d, ok, no] = TF.meter[i];
