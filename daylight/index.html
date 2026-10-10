@@ -4746,6 +4746,40 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 @keyframes tftip { 50% { translate: -50% calc(-100% - 20px); } }
 @media (max-width: 980px) { .tf-mx { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .mx-hot span { font-size: 11px; padding: 4px 7px; top: -10px; right: -6px; } .tf-mxs { padding: 18px; } .mx-dots { gap: 1.5px; } .tf-tip { white-space: normal; max-width: 220px; text-align: center; } }
+/* metrics v4: one card, four moments */
+.tf-mk { height: 300vh; margin: 0 auto 4vh; --c: #E8A912; }
+.mk-pin { position: sticky; top: 0; height: 100vh; display: grid; align-content: center; justify-items: center; gap: 22px; }
+.mk-steps { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 4px; padding: 4px; border-radius: 999px; background: var(--soft); }
+.mk-steps button { padding: 9px 16px; border: 0; border-radius: 999px; background: none; color: var(--ink-2); font: 600 14px/1 var(--sans); cursor: pointer; transition: background .3s, color .3s, box-shadow .3s; }
+.mk-steps button.on { background: var(--card); color: var(--ink); box-shadow: inset 0 0 0 2px var(--c); }
+.mk-card { position: relative; width: min(100%, 660px); padding: 16px; border-radius: 20px; background: #fff; color: #24272C; box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 30px 60px -40px rgba(60, 40, 0, .45); text-align: left; box-sizing: border-box; }
+.mk-card > * { transition: opacity .45s, filter .45s, scale .5s var(--ease), box-shadow .45s; }
+.mk-body { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; padding: 6px; border-radius: 14px; }
+.mk-body img { width: 96px; height: 76px; border-radius: 10px; object-fit: cover; }
+.mk-tx small { font: 500 12px/1 var(--sans); color: #6B6F75; } .mk-tx b { display: block; margin: 4px 0 8px; font: 600 18px/1.25 var(--sans); }
+.mk-tx p { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; font: 400 13px/1 var(--sans); } .mk-tx p span { display: inline-flex; align-items: center; gap: 4px; } .mk-tx .tf-i { width: 14px; height: 14px; color: #16825A; } .mk-tx .dash .tf-i { color: #C2410C; }
+.mk-act { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #EEECE6; }
+.mk-ic { position: relative; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; color: #4B5157; transition: background .4s, color .4s, scale .5s var(--ease), box-shadow .4s; }
+.mk-ic em { position: absolute; left: 50%; bottom: -22px; translate: -50% 0; font: 600 11px/1 var(--sans); font-style: normal; white-space: nowrap; opacity: 0; transition: opacity .3s; }
+.mk-sp { flex: 1; }
+.mk-ren, .mk-pub { padding: 10px 14px; border-radius: 10px; font: 600 13px/1 var(--sans); white-space: nowrap; transition: scale .5s var(--ease), box-shadow .45s, opacity .45s, filter .45s; }
+.mk-ren { background: #FFC61F; color: #3A2A00; } .mk-pub { box-shadow: inset 0 0 0 1.5px #5BA4D6; color: #2F86C4; }
+/* focus one part, quiet the rest */
+.mk-card[data-s="0"] .mk-act { opacity: .4; filter: grayscale(1); }
+.mk-card[data-s="0"] .mk-body { box-shadow: 0 0 0 3px var(--c), 0 18px 36px -18px color-mix(in srgb, var(--c) 70%, transparent); scale: 1.02; background: #fff; }
+.mk-card:not([data-s="0"]) .mk-body { opacity: .4; filter: grayscale(1); }
+.mk-card:not([data-s="0"]) :is(.mk-ic, .mk-ren, .mk-pub) { opacity: .35; filter: grayscale(1); }
+.mk-card[data-s="1"] .mk-stat { opacity: 1; filter: none; background: color-mix(in srgb, var(--c) 14%, #fff); color: var(--c); scale: 1.35; box-shadow: 0 0 0 3px var(--c); } .mk-card[data-s="1"] .mk-stat em { opacity: 1; color: var(--c); }
+.mk-card[data-s="2"] .mk-ren { opacity: 1; filter: none; scale: 1.15; box-shadow: 0 0 0 3px var(--c), 0 14px 28px -12px color-mix(in srgb, var(--c) 80%, transparent); }
+.mk-card[data-s="3"] .mk-pub { opacity: 1; filter: none; scale: 1.15; background: #fff; box-shadow: 0 0 0 3px var(--c), 0 14px 28px -12px color-mix(in srgb, var(--c) 80%, transparent); color: var(--c); }
+.mk-read { display: grid; justify-items: center; gap: 14px; width: min(100%, 620px); }
+.mk-num { display: grid; justify-items: center; gap: 4px; } .mk-num b { font: 800 clamp(56px, 7vw, 92px)/.95 var(--sans); letter-spacing: -.05em; color: var(--c); font-variant-numeric: tabular-nums; transition: color .4s; } .mk-num span { font: 600 18px/1.3 var(--sans); }
+.mk-ppl { display: flex; gap: clamp(4px, 1.2vw, 10px); }
+.mk-ppl i { position: relative; width: clamp(24px, 4.2vw, 40px); aspect-ratio: 1; --f: 0; }
+.mk-ppl svg { position: absolute; inset: 0; width: 100%; height: 100%; fill: var(--soft); }
+.mk-ppl i span { position: absolute; inset: 0; background: var(--c); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='7.5' r='4'/%3E%3Cpath d='M4 21c.8-4.6 4-7 8-7s7.2 2.4 8 7z'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='7.5' r='4'/%3E%3Cpath d='M4 21c.8-4.6 4-7 8-7s7.2 2.4 8 7z'/%3E%3C/svg%3E") center / contain no-repeat; clip-path: inset(0 calc((1 - var(--f)) * 100%) 0 0); transition: clip-path .6s var(--ease), background .4s; }
+.mk-one { max-width: 46ch; margin: 0; min-height: 3em; font: 400 16px/1.5 var(--sans); color: var(--ink-2); text-align: center; } .mk-one b { color: var(--ink); }
+@media (max-width: 640px) { .tf-mk { height: 280vh; } .mk-pin { gap: 16px; padding: 0 2px; } .mk-body img { width: 70px; height: 58px; } .mk-tx b { font-size: 16px; } .mk-act { gap: 6px; } .mk-ren .lg { display: none; } .mk-ren, .mk-pub { padding: 9px 14px; } .mk-steps button { padding: 8px 12px; font-size: 13px; } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -7215,9 +7249,9 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>', warn: '<path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4.5M12 17v.2"/>'
     },
     hero: [['cam', 'Photography', 15], ['play', 'Virtual tour', 10], ['star', 'Top listing', 20], ['mail', 'Newsletter', 10]],
-    ctr: [['Listing section', 34.65, 'opened a listing', '#F2B705', [7, 27, 57, 50], 'Owners came to look at their properties.'],
+    ctr: [['Listing', 34.65, 'opened a listing', '#E8A912', [7, 27, 57, 50], 'Owners came to look at their properties.'],
       ['Statistics', 6.63, 'checked statistics', '#2F86C4', [43.5, 2.2, 11, 4.4], 'Some wanted numbers, but numbers alone don’t say what to do.'],
-      ['Renew subscription', 1.40, 'renewed', '#E06A3F', [52, 33, 11.5, 5.5], 'Renewing was rare, and only loud once a listing had already expired.'],
+      ['Renew', 1.40, 'renewed', '#E06A3F', [52, 33, 11.5, 5.5], 'Renewing was rare, and only loud once a listing had already expired.'],
       ['Publish', 0.45, 'published a listing', '#D9476B', [55.5, 71, 7.8, 5.5], 'Almost nobody published. 288 listings sat offline.']],
     // regions on the old page (pixels on the 1600×1740 capture)
     old: [
@@ -7297,18 +7331,18 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         ${plq(1, 'The numbers')}
         ${head('The numbers told me', 'where to look.')}
         ${p('I went through page analytics, support tickets, stakeholder sessions and competitor products. One pattern stood out.')}
-        <div class="tf-mx" data-rv id="tfMx">
-          <div class="tf-mxm">
-            <div class="tf-brw"><div class="tbar"><i></i><i></i><i></i><span>Where owners clicked · the old page</span></div>
-              <div class="mx-map"><div class="mx-in"><img src="${ti('cmp-before')}" alt="The old Advertisements page with click areas marked" loading="lazy">${TF.ctr.map(([t, v, , c, [x, y, w, h]], i) => `<button type="button" class="mx-hot" data-c="${i}" style="--c:${c};left:${x}%;top:${y}%;width:${w}%;height:${h}%" aria-label="${t}: ${v}%"><span>${v}%</span></button>`).join('')}</div></div></div>
-          </div>
-          <div class="tf-mxs">
-            <p class="mx-k">Out of every 1,000 visits to the page</p>
-            <div class="mx-big"><b id="tfMxN">0</b><span id="tfMxL">opened a listing</span></div>
-            <div class="mx-dots" id="tfMxD" aria-hidden="true">${'<i></i>'.repeat(1000)}</div>
-            <p class="mx-say" id="tfMxS"></p>
-            <div class="mx-tabs" role="tablist">${TF.ctr.map(([t, v, , c], i) => `<button type="button" role="tab" data-c="${i}" style="--c:${c}"><i></i><span>${t}</span><b>${v}%</b></button>`).join('')}</div>
-            <p class="mx-ft">Click-through rate, 1–12 July 2026. Baseline before the redesign.</p>
+        <div class="tf-mk" id="tfMk">
+          <div class="mk-pin">
+            <div class="mk-steps" role="tablist">${TF.ctr.map(([t, , , c], i) => `<button type="button" role="tab" data-k="${i}" style="--c:${c}">${t}</button>`).join('')}</div>
+            <div class="mk-card" data-s="0">
+              <div class="mk-body"><img src="${ti('ph')}" alt=""><div class="mk-tx"><small>No. 343300</small><b>Holiday apartment Strandhuus</b><p><span>${tfIc('check')}Pictures</span><span>${tfIc('check')}Prices</span><span class="dash">${tfIc('x')}Occupancy plan</span></p></div></div>
+              <div class="mk-act"><span class="mk-ic">${tfIc('mail')}</span><span class="mk-ic mk-stat">${tfIc('chart')}<em>Statistics</em></span><span class="mk-sp"></span><span class="mk-ren">Renew<span class="lg"> subscription</span></span><span class="mk-pub">Publish</span></div>
+            </div>
+            <div class="mk-read" aria-live="polite">
+              <div class="mk-num"><b id="tfMkV">34.65%</b><span id="tfMkL">of visits opened a listing</span></div>
+              <div class="mk-ppl" id="tfMkP">${'<i><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="4"/><path d="M4 21c.8-4.6 4-7 8-7s7.2 2.4 8 7z"/></svg><span></span></i>'.repeat(10)}</div>
+              <p class="mk-one" id="tfMkO"></p>
+            </div>
           </div>
         </div>
         <p class="tf-mid" data-rv>People came to look at their listings. <span class="u">So that’s where the help had to live.</span></p>
@@ -7471,7 +7505,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <div class="tf-lb" id="tfLb" aria-hidden="true"><button type="button" class="x" aria-label="Close">×</button><img alt=""></div>
     </div>`;
   }
-  function tfCleanup() { if (initTF.tip) { initTF.tip.remove(); initTF.tip = null; } (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); (initTF.raf || []).forEach(cancelAnimationFrame); (initTF.io || []).forEach(o => o.disconnect()); initTF.tt = []; initTF.ti = []; initTF.raf = []; initTF.io = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; }
+  function tfCleanup() { if (initTF.sc) { csEl.removeEventListener('scroll', initTF.sc); initTF.sc = null; } if (initTF.tip) { initTF.tip.remove(); initTF.tip = null; } (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); (initTF.raf || []).forEach(cancelAnimationFrame); (initTF.io || []).forEach(o => o.disconnect()); initTF.tt = []; initTF.ti = []; initTF.raf = []; initTF.io = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; }
   function initTF() {
     tfCleanup(); const root = csEl, later = (f, ms) => initTF.tt.push(setTimeout(f, ms)), every = (f, ms) => { const t = setInterval(f, ms); initTF.ti.push(t); return t; };
     const obs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); obs.unobserve(e.target); if (e.target._on) e.target._on(); }), { root, threshold: .18 }); initTF.io.push(obs);
@@ -7484,16 +7518,16 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       const tick = t => { const dt = Math.min(.05, (t - last) / 1000); last = t; if (on && t > hold) { const max = vp.scrollHeight - vp.clientHeight; if (max > 4) { if (Math.abs(vp.scrollTop - pos) > 3) pos = vp.scrollTop; pos += dir * speed * dt; if (pos >= max) { pos = max; dir = -1; hold = t + 1600; } else if (pos <= 0) { pos = 0; dir = 1; hold = t + 1600; } vp.scrollTop = pos; } } else pos = vp.scrollTop; initTF.raf.push(requestAnimationFrame(tick)); };
       initTF.raf.push(requestAnimationFrame(tick)); };
     $$('.tf-brw.auto .vp, .tf-phone.auto .scr', root).forEach((vp, i) => drift(vp, i ? 40 : 30));
-    // metrics: where clicks landed, per 1,000 visits
-    { const mx = $('#tfMx', root), dots = $$('#tfMxD i', root), N = $('#tfMxN', root); let cur = -1, auto = 0;
-      const show = (i, user) => { if (user) clearInterval(auto); if (i === cur) return; cur = i; const [t, v, verb, c] = TF.ctr[i], n = v * 10;
-        mx.style.setProperty('--c', c); $$('[data-c]', mx).forEach(b => { const o = +b.dataset.c === i; b.classList.toggle('on', o); if (b.getAttribute('role') === 'tab') b.setAttribute('aria-selected', o); });
-        count(N, n, 700, n < 10 ? 1 : 0); $('#tfMxL', root).textContent = verb;
-        dots.forEach((d, k) => { const on = k < Math.floor(n), part = k === Math.floor(n) && n % 1; d.className = on ? 'on' : part ? 'half' : ''; d.style.transitionDelay = on ? Math.min(600, k * 1.6) + 'ms' : '0ms'; });
-        $('#tfMxS', root).innerHTML = i ? `${TF.ctr[i][5]} The listing section got <b>${Math.round(TF.ctr[0][1] / v)}×</b> more clicks.` : TF.ctr[0][5] + ' Nothing else came close.'; };
-      mx.addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (b) show(+b.dataset.c, true); });
-      mx.addEventListener('pointerover', e => { const b = e.target.closest('.mx-hot'); if (b && matchMedia('(hover: hover)').matches) show(+b.dataset.c, true); });
-      mx._on = () => { show(0); let k = 0; auto = every(() => { k = (k + 1) % 4; show(k); if (k === 0) clearInterval(auto); }, 2600); }; }
+    // metrics: one listing card, each part pops with its share of clicks (scroll or tap)
+    { const mk = $('#tfMk', root), card = $('.mk-card', mk), ppl = $$('#tfMkP i', root), V = $('#tfMkV', root); let cur = -1, manual = 0;
+      const ONE = ['About 1 in 3 visits', 'About 1 in 15 visits', 'About 1 in 71 visits', 'About 1 in 222 visits'];
+      const show = i => { if (i === cur) return; cur = i; const [t, v, verb, c] = TF.ctr[i]; mk.style.setProperty('--c', c); card.dataset.s = i;
+        $$('.mk-steps button', mk).forEach(b => { const o = +b.dataset.k === i; b.classList.toggle('on', o); b.setAttribute('aria-selected', o); });
+        count(V, v, 700, 2, '%'); $('#tfMkL', root).textContent = 'of visits ' + verb; $('#tfMkO', root).innerHTML = `<b>${ONE[i]}.</b> ${TF.ctr[i][5]}`;
+        const f = v / 10; ppl.forEach((p, k) => p.style.setProperty('--f', Math.max(0, Math.min(1, f - k)).toFixed(3))); };
+      mk.addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) { manual = performance.now(); show(+b.dataset.k); } });
+      const onScroll = () => { if (performance.now() - manual < 900) return; const r = mk.getBoundingClientRect(), span = r.height - innerHeight; if (span <= 0) return; const q = clamp(-r.top / span); show(Math.min(3, Math.floor(q * 4))); };
+      csEl.addEventListener('scroll', initTF.sc = onScroll, { passive: true }); show(0); }
     // the old page, spotlit
     const vp = $('#tfExVp', root), spot = $('#tfSpot', root), exd = $('#tfExD', root);
     const showOld = i => { const [, d, [x, y, w, h]] = TF.old[i]; $$('#tfEx [data-o]', root).forEach(b => b.classList.toggle('on', +b.dataset.o === i));
@@ -7578,7 +7612,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       $('img', lb).src = im.src; $('img', lb).alt = im.alt; lb.classList.toggle('tall', im.naturalHeight > im.naturalWidth * 1.2); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
     addEventListener('keydown', initTF.kd = e => { if (e.key === 'Escape' && lb.classList.contains('open')) { closeLb(); e.stopImmediatePropagation(); } }, true);
     // coach marks: a quiet tooltip, only after a few seconds of doing nothing
-    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMx .mx-tabs', 'Tap a number, or a hot spot on the page'], ['#tfEx .tf-exl', 'Pick a problem to see where it lived'], ['#tfTwo .tf-sw2', 'Switch to see the difference'], ['#tfGr', 'Drag to change the score'], ['#tfJp', 'Play the journey, or tap the steps'], ['#tfSt .tf-stn', 'Swipe or use the arrows'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
+    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfEx .tf-exl', 'Pick a problem to see where it lived'], ['#tfTwo .tf-sw2', 'Switch to see the difference'], ['#tfGr', 'Drag to change the score'], ['#tfJp', 'Play the journey, or tap the steps'], ['#tfSt .tf-stn', 'Swipe or use the arrows'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
       const done = new Set(), tip = document.createElement('div'); tip.className = 'tf-tip'; tip.setAttribute('role', 'status'); document.body.appendChild(tip); initTF.tip = tip;
       let last = performance.now(), cur = null; const poke = () => { last = performance.now(); if (cur) { done.add(cur); cur = null; tip.classList.remove('on'); } };
       ['scroll', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => root.addEventListener(ev, poke, { passive: true }));
