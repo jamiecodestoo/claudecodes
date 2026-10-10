@@ -5023,6 +5023,15 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .ab-cap { margin: 0; max-width: 56ch; min-height: 3em; font: 500 16px/1.5 var(--sans); color: var(--ink-2); }
 @media (max-width: 760px) { .tf-icp, .ab-pair { grid-template-columns: 1fr; } .icp-facts { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .tf-h .u { white-space: normal; } }
+/* findings → fixes */
+.tf-fs { display: grid; gap: 10px; max-width: 820px; margin: 0 auto 10vh; text-align: left; }
+.fs-k { display: grid; grid-template-columns: 1fr 48px 1.3fr; margin: 0 0 4px; padding: 0 20px; font: 700 11px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); } .fs-k span:last-child { grid-column: 3; }
+.fs-r { display: grid; grid-template-columns: 1fr 48px 1.3fr; align-items: center; padding: 16px 20px; border-radius: 18px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); opacity: 0; translate: 0 14px; transition: opacity .6s, translate .7s var(--ease); transition-delay: calc(var(--i) * .15s); }
+.tf-fs.in .fs-r { opacity: 1; translate: 0 0; }
+.fs-n { display: flex; align-items: baseline; gap: 10px; font: 500 15px/1.2 var(--sans); color: var(--ink-2); } .fs-n b { font: 800 30px/1 var(--sans); letter-spacing: -.03em; color: var(--c); font-variant-numeric: tabular-nums; }
+.fs-ar { color: var(--c); } .fs-ar .tf-i { width: 22px; height: 22px; translate: -10px 0; transition: translate .6s var(--ease); transition-delay: calc(.4s + var(--i) * .15s); } .tf-fs.in .fs-ar .tf-i { translate: 0 0; }
+.fs-f { font: 600 16px/1.35 var(--sans); }
+@media (max-width: 640px) { .fs-k { display: none; } .fs-r { grid-template-columns: 1fr; gap: 6px; padding: 14px 16px; } .fs-ar { display: none; } .fs-f::before { content: "→ "; color: var(--c); } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -7622,11 +7631,9 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <section class="tf-sec tf-find" id="tfFind">
         ${plq(3, 'What we found')}
         <p class="tf-rv2" id="tfRv">${['Owners came to', '<k>look</k>,', 'not to', '<k>act.</k>'].join(' ').split(' ').map(w => w.startsWith('<k>') ? `<i class="k">${w.replace(/<\/?k>/g, '')}</i>` : `<i>${w}</i>`).join(' ')}</p>
-        <div class="tf-bub" data-rv id="tfBub">
-          <p class="bb-k">Out of every 1,000 visits</p>
-          <div class="wf" aria-label="Out of 1,000 visits: 347 opened a listing, 14 renewed, 4.5 published">${Array.from({ length: 1000 }, (_, k) => `<i class="${k < 347 ? 'y' : k < 361 ? 'o' : k < 365 ? 'p' : k === 365 ? 'p h' : ''}" style="--k:${k < 366 ? k : 0}"></i>`).join('')}</div>
-          <div class="wf-lg">${[[347, 'opened a listing', 'y'], [14, 'renewed', 'o'], [4.5, 'published', 'p']].map(([n, t, c]) => `<div class="${c}"><i></i><b>${n}</b><span>${t}</span></div>`).join('')}<div class="n"><i></i><b>634.5</b><span>the rest</span></div></div>
-          <p class="bb-gap"><b>77×</b> more looking than publishing. The listing had their attention, and nothing to do with it.</p>
+        <div class="tf-fs" data-rv id="tfBub">
+          <p class="fs-k"><span>Per 1,000 visits</span><span>So the design</span></p>
+          ${[['347', 'opened a listing', '#E8A912', 'Puts the help on the listing itself'], ['14', 'renewed', '#E06A3F', 'Surfaces renewal before the deadline'], ['4.5', 'published', '#D9476B', 'Makes Publish the first action on offline listings']].map(([n, t, c, f], i) => `<div class="fs-r" style="--c:${c};--i:${i}"><span class="fs-n"><b>${n}</b>${t}</span><span class="fs-ar">${tfIc('arrow')}</span><span class="fs-f">${f}</span></div>`).join('')}
         </div>
         <div class="tf-eq" data-rv id="tfEq">
           <p class="eq-k">So the brief wrote itself</p>
