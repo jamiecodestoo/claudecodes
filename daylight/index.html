@@ -4918,6 +4918,28 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .rt-why { margin: 16px 0 0; font: 500 14px/1.45 var(--sans); color: #6B6F75; }
 @media (max-width: 640px) { .rt-who { flex-wrap: nowrap; justify-content: flex-start; width: 100%; overflow-x: auto; scrollbar-width: none; padding: 2px; } .rt-who button { flex: none; } .rt-tray { padding: 16px; } .rt-hd b { font-size: 17px; } }
 @media (max-width: 900px) { .rt-row { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; } .rt-c { flex: 0 0 72%; scroll-snap-align: start; } .rt-hd { flex-wrap: wrap; } }
+/* meter section v2 */
+.tf-gm2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 440px) minmax(0, 1fr); gap: clamp(18px, 3vw, 40px); align-items: center; max-width: 1180px; margin: 0 auto 8vh; text-align: left; }
+.g2-col { display: grid; gap: 28px; }
+.g2-col.l { text-align: right; } .g2-col.l .g2-a { justify-items: end; }
+.g2-a { display: grid; gap: 6px; } .g2-a i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--ty); color: #3A2A00; font: 800 13px/1 var(--sans); font-style: normal; }
+.g2-a b { font: 700 18px/1.25 var(--sans); } .g2-a span { font: 400 15px/1.5 var(--sans); color: var(--ink-2); max-width: 26ch; }
+.g2-a .mini { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; margin-top: 6px; padding: 10px; border-radius: 16px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); max-width: 300px; }
+.g2-a .mini img { width: 52px; height: 42px; border-radius: 8px; object-fit: cover; } .g2-a .mini small { display: block; font: 500 11px/1 var(--sans); color: var(--ink-2); } .g2-a .mini b { font: 600 14px/1.3 var(--sans); }
+.g2-mid { display: grid; gap: 14px; }
+.g2-mid .tf-gmc { padding: 24px 24px 18px; }
+.g2-scale { display: grid; grid-template-columns: 49fr 30fr 20fr 9fr; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.g2-scale li { display: grid; gap: 4px; padding: 8px 8px 0; border-top: 6px solid var(--soft); border-radius: 3px; font: 500 12px/1.2 var(--sans); color: var(--ink-2); transition: border-color .3s, color .3s; }
+.g2-scale li b { font: 700 12px/1 var(--sans); } .g2-scale li:last-child span { white-space: nowrap; }
+.g2-scale li:nth-child(1) { --sc: #E0533D; } .g2-scale li:nth-child(2) { --sc: #E8A912; } .g2-scale li:nth-child(3), .g2-scale li:nth-child(4) { --sc: #16825A; }
+.g2-scale li { border-top-color: color-mix(in srgb, var(--sc) 25%, transparent); } .g2-scale li.on { color: var(--ink); border-top-color: var(--sc); }
+.g2-drag { display: grid; gap: 8px; padding: 12px 14px; border-radius: 14px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); font: 600 13px/1 var(--sans); color: var(--ink-2); } .g2-drag input { width: 100%; accent-color: var(--ink); }
+.tf-pr { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 1000px; margin: 0 auto 4vh; text-align: left; }
+.tf-pr > div { padding: 20px; border-radius: 20px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-pr .ic { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 12px; border-radius: 12px; background: var(--tbl); color: var(--tb); } .tf-pr > div:nth-child(2) .ic { background: var(--tal); color: var(--ta); } .tf-pr > div:nth-child(3) .ic { background: var(--tgl); color: var(--tg); }
+.tf-pr b { font: 700 17px/1.25 var(--sans); } .tf-pr p { margin: 6px 0 0; font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
+@media (max-width: 980px) { .tf-gm2 { grid-template-columns: 1fr; max-width: 520px; } .g2-mid { order: -1; } .g2-col, .g2-col.l { text-align: left; } .g2-col.l .g2-a { justify-items: start; } .g2-col { grid-template-columns: 1fr 1fr; gap: 18px; } .tf-pr { grid-template-columns: 1fr; max-width: 520px; } }
+@media (max-width: 520px) { .g2-col { grid-template-columns: 1fr; } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -7545,21 +7567,19 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <section class="tf-sec" id="tfMeter">
         ${plq(5, 'The visibility meter')}
         ${head('Enter the', 'visibility meter.')}
-        ${p('What if every property had a score that helped its owner understand how well it was set up to attract attention? I introduced a proprietary 0–100 visibility score: an overall growth meter, and a score on every listing card.')}
-        <div class="tf-gm" data-rv id="tfGm">
-          <div class="tf-gmc"><div class="hd"><b>Growth meter</b><small>Your property’s visibility at a glance.</small></div>
-            <div class="tf-gw">${tfGauge('tfG')}<div class="tf-gv"><b id="tfGv">72</b><span class="tf-chip g" id="tfGc">Good</span></div></div>
-            <p class="msg" id="tfGmsg"></p>
-            <label class="drag"><span>Drag the score</span><input type="range" id="tfGr" min="0" max="100" value="72" aria-label="Visibility score"></label></div>
-          <div class="tf-gmx">
-            <p class="k">On every listing card</p>
-            <div class="mini"><img src="${ti('ph')}" alt=""><span><small>NO. 343300</small><b>Ferienwohnung Strandhuus, Wohnung 307</b></span><span id="tfGring">${tfRing(72)}</span></div>
-            <ul class="bands">${TF.bands.map(([a, b, t, c]) => `<li class="${c}" data-b="${a}"><b>${a === b ? a : `${a}–${b}`}</b>${t}</li>`).join('')}</ul>
-            <p class="facts">Built from backend-defined factors: listing status, quality, photos, location, availability, calendar information and relevant value-added services.</p>
+        ${p('One number from 0 to 100: on the dashboard, and on every listing card.')}
+        <div class="tf-gm2" data-rv id="tfGm">
+          <div class="g2-col l"><div class="g2-a "><i>1</i><b>The score</b><span>One number for how well the listing is set up to be seen.</span></div><div class="g2-a "><i>2</i><b>In words</b><span>“Good” or “Needs attention”, so meaning never rests on colour alone.</span></div></div>
+          <div class="g2-mid">
+            <div class="tf-gmc"><div class="hd"><b>Growth meter</b><small>Your property’s visibility at a glance.</small></div>
+              <div class="tf-gw">${tfGauge('tfG')}<div class="tf-gv"><b id="tfGv">72</b><span class="tf-chip g" id="tfGc">Good</span></div></div>
+              <p class="msg" id="tfGmsg"></p></div>
+            <ol class="bands g2-scale">${TF.bands.map(([a, b, t]) => `<li data-b="${a}"><b>${a === b ? a : `${a}–${b}`}</b><span>${t}</span></li>`).join('')}</ol>
+            <label class="g2-drag"><span>Drag to try a score</span><input type="range" id="tfGr" min="0" max="100" value="72" aria-label="Visibility score"></label>
           </div>
+          <div class="g2-col r"><div class="g2-a "><i>3</i><b>The next milestone</b><span>Always tells the owner what to aim for next.</span></div><div class="g2-a"><i>4</i><b>On every listing</b><span>The same score, per property.</span><div class="mini"><img src="${ti('ph')}" alt=""><span><small>NO. 343300</small><b>Strandhuus, Wohnung 307</b></span><span id="tfGring">${tfRing(72)}</span></div></div></div>
         </div>
-        ${p('The point wasn’t another number to stare at. It was to make progress easier to understand, for owners of every age: familiar patterns, restrained colour, clear type, and words that carry the meaning instead of colour alone.')}
-        <div class="tf-honest" data-rv><b>A proxy, not a promise.</b> The score reflects listing quality and potential visibility. It isn’t a guarantee of search ranking or bookings, and the copy never pretends it is.</div>
+        <div class="tf-pr" data-rv>${[['sys', 'Made of real factors', 'Listing status, photos, location, calendar and add-ons.'], ['people', 'Readable at any age', 'A familiar gauge, clear type, and words over colour.'], ['warn', 'A proxy, not a promise', 'It reflects quality and potential reach, not a ranking guarantee.']].map(([ic, t, d]) => `<div><span class="ic">${tfIc(ic)}</span><b>${t}</b><p>${d}</p></div>`).join('')}</div>
         <h4 class="tf-h4" data-rv>How the meter grew up.</h4>
         <div class="tf-ev" data-rv id="tfEv">
           <div class="ev-stage">
