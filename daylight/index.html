@@ -4737,6 +4737,29 @@ html:root .scroll-cue i::after { top: 5px; }
 .tf-sky .tf-ring { width: 72%; height: 72%; } .tf-sky .tf-ring b { font-size: clamp(14px, 1.4vw, 20px); }
 @keyframes tffloat { 50% { translate: 0 -16px; } }
 
+.tf-split2 { margin: 0 auto 5vh; padding: 24px clamp(16px, 3vw, 32px); border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); text-align: left; }
+.tf-split2 figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-bottom: 16px; font: 600 15px/1.3 var(--sans); } .tf-split2 figcaption small { font: 400 13px/1.3 var(--sans); color: var(--ink-2); }
+.tf-split2 .sb { display: flex; gap: 6px; height: 132px; }
+.tf-split2 .pt { flex: 0 0 auto; width: 0; display: grid; align-content: end; gap: 4px; padding: 16px; border-radius: 18px; color: #fff; overflow: hidden; transition: width 1.2s var(--ease); box-sizing: border-box; }
+.tf-split2.in .pt { width: calc(var(--w) * 1% - 3px); }
+.tf-split2 .p0 { background: linear-gradient(135deg, var(--tb), #1667A8); } .tf-split2 .p1 { background: linear-gradient(135deg, #3A3D42, #1E1E1E); }
+:root[data-theme="dark"] .tf-split2 .p1 { background: linear-gradient(135deg, #4A4E54, #34373C); }
+.tf-split2 .pt b { font: 800 clamp(30px, 3.4vw, 46px)/1 var(--sans); letter-spacing: -.04em; } .tf-split2 .pt span { font: 700 15px/1.2 var(--sans); white-space: nowrap; } .tf-split2 .pt small { font: 400 13px/1.2 var(--sans); opacity: .8; white-space: nowrap; }
+.tf-fw { display: grid; align-content: start; gap: 8px; }
+.tf-cmp { display: grid; gap: 10px; padding: 16px; border-radius: 16px; background: var(--card); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--tg) 45%, transparent); cursor: pointer; }
+.tf-cmp > span { display: flex; align-items: center; gap: 10px; } .tf-cmp > span b { font: 600 15px/1.2 var(--sans); } .tf-cmp .pt { margin-left: auto; font: 500 14px/1 var(--sans); color: var(--ink-2); } .tf-cmp .pt b { font: 800 16px/1 var(--sans); color: var(--ink); }
+.tf-cmp em { padding: 4px 8px; border-radius: 6px; font: 700 11px/1 var(--sans); font-style: normal; letter-spacing: .04em; text-transform: uppercase; background: color-mix(in srgb, var(--tg) 12%, transparent); color: var(--tg); }
+.tf-cmp input { width: 100%; accent-color: var(--tg); } .tf-cmp small { font: 400 13px/1.4 var(--sans); color: var(--ink-2); }
+.tf-fac .nm { display: grid; gap: 3px; min-width: 0; } .tf-fac .nm small { font: 400 12px/1.3 var(--sans); color: var(--ink-2); }
+.tf-fac li.off { opacity: .4; } .tf-fac button:disabled { cursor: not-allowed; }
+.tf-elig { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; background: var(--soft); font: 500 14px/1.3 var(--sans); cursor: pointer; } .tf-elig input { width: 18px; height: 18px; accent-color: var(--ink); }
+.tf-nud { padding: 16px; border-radius: 16px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-nud p { margin: 0 0 10px; font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.tf-nud ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.tf-nud li { padding: 8px 12px; border-radius: 10px; background: var(--ty); color: #1E1E1E; font: 700 13px/1 var(--sans); animation: tfin .35s var(--ease); } .tf-nud li.none { background: color-mix(in srgb, var(--tg) 14%, transparent); color: var(--tg); }
+.tf-form { margin: 0; font: 500 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink-2); }
+.tf-doc .d-imp table { border-collapse: collapse; font: 400 15px/1.4 var(--sans); } .tf-doc .d-imp th, .tf-doc .d-imp td { padding: 8px 14px; border: 1px solid var(--line); text-align: left; } .tf-doc .d-imp th { background: color-mix(in srgb, var(--tb) 18%, var(--card)); font-weight: 700; }
+@media (max-width: 640px) { .tf-split2 .sb { flex-direction: column; height: auto; } .tf-split2 .pt, .tf-split2.in .pt { width: auto; } .tf-fac button { grid-template-columns: auto 1fr auto; } .tf-fac em { display: none; } }
 /* lightbox */
 .tf-lb { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 24px; background: rgba(10, 16, 13, .85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; pointer-events: none; transition: opacity .3s; cursor: zoom-out; }
 .tf-lb.open { opacity: 1; pointer-events: auto; }
@@ -7200,7 +7223,7 @@ html:root .scroll-cue i::after { top: 5px; }
   // numbers marked data-todo are stand-ins until the real metrics sheet is in
   const ti = k => `v2/tf/${k}.webp`;
   const TF = {
-    hero: { start: 45, acts: [['Photos', 'Add 10+ bright photos', 15, 'cam'], ['Calendar', 'Keep your dates up to date', 15, 'cal'], ['Virtual tour', 'Turn photos into a walk-through', 15, 'play'], ['Top ad', 'Sit at the top of search', 10, 'star']] },
+    hero: { start: 45, acts: [['Photography', 'Complete your listing with pro photos', 15, 'cam'], ['Top listing', 'Sit at the top of search', 20, 'star'], ['Virtual tour', 'Turn photos into a walk-through', 10, 'play'], ['Newsletter', 'Reach travellers in the next mailing', 10, 'mail']] },
     ic: {
       cam: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
       cal: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
@@ -7228,14 +7251,14 @@ html:root .scroll-cue i::after { top: 5px; }
       [59.5, 67.9, 'The same button, 288 times', '2 listings online, 288 offline, and every offline one had the same blue Publish button. No order, no priority, no hint which one was nearly ready.']
     ],
     brief: [
-      ['Increase adoption of value-added services: Top Ad, Virtual Tour, Traum Tags and Newsletter.', 'Hosts don’t buy add-ons because they can’t see what they’d get out of them.'],
-      ['Reduce churn at renewal time.', 'Hosts only open this page when something has gone wrong. By then, it’s too late to win them back.'],
-      ['Revamp the Advertisements page with a modern look.', 'Make the page worth opening every week, not once a year.'],
-      ['Must ship in one month, on the existing design system.', 'No new components I can’t justify. Every pixel has to earn its sprint.']
+      ['Revamp the Advertisement Page with a simplified and insight-led user experience.', 'A host should understand the page in one glance, and know what to do next.'],
+      ['Improve homeowner engagement.', 'Give hosts a reason to come back every week, not just when a bill is due.'],
+      ['Drive adoption and revenue growth for additional products.', 'Show what each add-on does for their visibility, in points they can see.'],
+      ['Reduce churn by clearly communicating value, performance impact and recommended next actions.', 'Renewals happen when the value is obvious before the renewal date, not after.']
     ],
-    tiles: [['38%', 'of listings were missing at least one free basic: photos, prices or a calendar'], ['6%', 'of hosts had bought any add-on in the last 12 months'], ['1 in 4', 'renewals only happened after the listing had already gone offline'], ['2.4×', 'more inquiries for complete listings than incomplete ones']],
-    chart: { lbl: ['0–25%', '25–50%', '50–75%', '75–100%'], sets: { inq: ['Inquiries a month', [3, 7, 12, 19], ''], ren: ['Renewal rate', [41, 55, 68, 82], '%'] } },
-    factors: [['Photos', 15, 'cam', 1, 1], ['Prices', 15, 'euro', 1, 1], ['Availability calendar', 15, 'cal', 1, 0], ['Top ad', 20, 'star', 0, 0], ['Virtual tour', 15, 'play', 0, 0], ['Traum tags', 10, 'tag', 0, 1], ['Newsletter', 10, 'mail', 0, 0]],
+    tiles: [['+5%', 'page engagement, the first target in the brief'], ['+3 pts', 'absolute lift in renewals of value-added services (VAS)'], ['47%', 'of daily active hosts came on mobile web, not desktop'], ['19', 'use cases to cover: 6 for hosts, 13 for product']],
+    dau: [['Mobile web', 2928], ['Desktop web', 3275]],
+    factors: [['Top listing', 20, 'star', 'Buy Top Listing', 0, 'Share of listings with an active Top Listing'], ['Newsletter advertisement', 10, 'mail', 'Advertise in Newsletter', 0, 'Share of listings in the newsletter'], ['Virtual tour', 10, 'play', 'Create Virtual Tour', 0, 'Share of listings with an active tour'], ['Traum tags', 10, 'tag', 'Buy Traum Tags', 1, 'Tags bought out of tags you’re eligible for']],
     ai: [['ai1', 'The everything dashboard', 'One score up top. Nice.', 'Then four performance stats compete with it. Hosts read four numbers and act on none.'],
       ['ai2', 'The breakdown on every row', 'Each listing explains its own score.', 'Seven factor chips × 14 listings = a wall. Nobody reads a wall.'],
       ['ai3', 'The SaaS skin', 'Top opportunities, ranked by points. Keep.', 'Purple, a data table and a portfolio score. It’s a product for analysts, not for Heike.']],
@@ -7255,22 +7278,24 @@ html:root .scroll-cue i::after { top: 5px; }
       ['final', 'Final', 'Calm, in Traum’s own voice', 'Back to Traum’s design system: black and yellow buttons, quiet cards, one green for good news.', 'Shipped. Desktop and mobile, built from the same components.']
     ],
     rooms: {
-      biz: ['Business', '#C78A00', [['biz', 'Renewals are 70% of our revenue. If the page leads with a score, where do renewals go?'], ['me', 'Fair. What if a listing that’s about to expire jumps to the top of the list, with its own Renew button?'], ['biz', 'And an early-renewal discount, with a timer. People act on deadlines.'], ['me', 'Deal. One timer, on the listings that need it. Not a countdown on every row.']],
-        ['Expiring and expired listings sort to the top', 'A “Renew early & save 20%” strip with a live countdown', 'Renew now on listings ending this month']],
-      pm: ['Product', '#13804F', [['pm', 'I want the score to be the hero. It’s the whole idea.'], ['me', 'Agreed it’s the idea. But a host lands here to do something. The score should tell them what, then get out of the way.'], ['pm', 'So recommendations first, score second?'], ['me', 'Score explains, recommendations act. Both above the fold, side by side.']],
-        ['Recommended actions lead, Growth meter sits beside them', 'Recommendations are personal: based on each listing’s score', '“+12 points this week” on the meter, so progress is visible']],
-      eng: ['Engineering', '#2F6FE0', [['eng', 'The score can’t be real time. It’s computed overnight from four services.'], ['me', 'Then we never promise instant. We show weekly change instead: “+12 points this week”.'], ['eng', 'Seven factor icons per row also means seven calls per listing.'], ['me', 'Let’s show the four that matter on the row, and keep the rest for the detail view.']],
-        ['Score framed as weekly progress, not live', 'Four health factors per listing, not seven', 'Filters as bottom sheets, reused across desktop and mobile']]
+      pm: ['Product', '#2F9BD6', [['q', 'What is the visibility meter?'], ['a', 'A meter that shows the hypothetical visibility of the homeowner, based on the completeness score and the additional products they’ve bought.'], ['q', 'Is this impressions on the Traum website?'], ['a', 'Right now the logic is only completeness and VAS. Impressions can be added later.'], ['q', 'What is the “Edit Object Overview” CTA? Not clear.'], ['a', 'It lets the host edit the overview pages shown at the bottom of the listing page.']],
+        ['The meter explains itself in one line: “Your property’s visibility at a glance.”', 'An info tooltip on the score, so nobody mistakes it for impressions', 'Edit Object Overview became a clear, labelled button at the end of the page']],
+      eng: ['Engineering', '#16825A', [['q', 'We can’t give 10 points for buying one tag. Hosts can buy several tags and show several on the listing.'], ['a', 'Then score it as a share: tags bought, out of tags the host is eligible for.'], ['q', 'And if a host isn’t eligible for any tag?'], ['a', 'Leave tags out and score out of 90 instead of 100, so nobody is punished for something they can’t buy.'], ['q', 'What goes in the new reminders section?'], ['a', 'Only two things: the nearest upcoming booking, and pending invoices.']],
+        ['Points disappear when a product expires, so the score never lies', 'A host with no eligible tags is scored out of 90', 'Reminders hold at most two items: next booking and pending invoices']],
+      biz: ['Business', '#EE4B73', [['q', 'What’s the split of hosts on mobile web versus desktop?'], ['a', 'Last 3 months: 2,928 daily on mobile web, 3,275 on desktop.'], ['q', 'We already score listings in “Accommodation review” on the performance dashboard. Won’t a new score clash?'], ['a', 'We’ll rephrase the new feature so it doesn’t conflict with what already exists.'], ['q', 'Can hosts search by city or ID, not just name?'], ['a', 'Name, ID and region.']],
+        ['Mobile designed as a first-class layout, not a squeezed desktop', 'The score on the dashboard became the “Growth meter”, so it never clashes with Accommodation review', 'Search placeholder says exactly what works: name, ID or region']]
     },
     notes: [['Early renewal discount to be 20%', 'The strip now says “Renew early & save 20%”.'], ['Timer to be displayed on to-be-renewed listings', 'A live countdown: 02d 14h 36m 08s.'], ['Expired listings should be shifted below', 'Sort order: expiring first, live next, expired last.'], ['“Renew now” on same-month renewals', 'Only listings ending this month get the loud button.'], ['Pop-up CTAs to be green', 'Positive actions in popups went green.'], ['Position of growth meter to be checked', 'Moved to the right rail, under Auto Renew.'], ['Colour of to-be-renewed CTA to be checked', 'Amber for “ending soon”, rust red for “expired”.'], ['Recommendation logic based on score', 'Each listing gets the actions that lift its own score most.']],
     dec: [
-      ['ship', 'Half the score is free', 'Business wanted the score weighted almost entirely on paid add-ons. I pushed for photos, prices and calendar to count for nearly half.', 'If the only way up is your wallet, hosts stop trusting the number. Free fixes first earns the right to sell.'],
-      ['over', 'The score as the hero', 'I wanted one giant meter at the top of the page.', 'Business overruled it: renewals and recommendations lead, the meter lives in the side rail. Looking back, they were right.'],
-      ['over', 'Red-to-green speedometer', 'I liked the instant readability of a traffic-light gauge.', 'We tested it in a team review. A 45 in red read like a failing grade. Dropped for one calm green arc.'],
-      ['ship', 'One strip per listing', 'A listing can be expiring, unpublished and under-scored at once. Showing all of it is noise.', 'I wrote a priority order: expired, expiring, unpublished, recommendations, then offers. Only the top one shows.'],
-      ['mid', 'The purple redesign', 'The AI explorations pulled me toward a fresh purple SaaS look.', 'One month, existing system. We kept Traum’s black and yellow and spent the time on logic instead of paint.'],
-      ['ship', 'Seasonal skins, not new banners', 'Business runs a campaign almost every month.', 'Two slots that can be dressed for Christmas, Black Friday or Easter. No layout change, no new build.'],
-      ['over', 'Seven factors on every row', 'I wanted every listing to show its full breakdown.', 'Engineering said seven calls per row would crawl. Four factors on the row, the rest one tap away.']
+      ['ship', 'Show the free half first', 'In the PM’s formula, listing completeness is half the score. Photos, prices and a calendar cost a host nothing.', 'I made the free half the first thing a low score suggests, so the meter earns trust before it sells anything.'],
+      ['over', 'The score as the hero', 'I wanted one giant meter at the top of the page.', 'After review the meter moved to the side rail and recommended actions led. Looking back, that was right: hosts come here to do something.'],
+      ['over', 'Red-to-green speedometer', 'I liked how instantly readable a traffic-light gauge is.', 'A 45 in red read like a failing grade. Dropped for one calm green arc.'],
+      ['mid', 'Visibility meter, renamed', 'The brief called it the Visibility Meter.', 'Business pointed out “Accommodation review” already scores listings. On the dashboard it became the Growth meter, so the two never clash.'],
+      ['ship', 'One nudge per listing', 'A listing can need a renewal, three add-ons and damage cover all at once.', 'One slot per card: the VAS nudge for hosts with 0–2 add-ons, Stay Support for 3–5. Expanded on the first card, collapsed on the rest.'],
+      ['ship', 'Tags as a share, scored out of 90', 'Engineering flagged that one tag can’t be worth 10 points when hosts buy several.', 'Tags count as bought out of eligible. Hosts with no eligible tags are scored out of 90, not punished out of 100.'],
+      ['mid', 'Impressions, later', 'A real visibility score would include how often a listing is seen.', 'For launch the score uses completeness and add-ons only. Impressions can be added once the data is ready.'],
+      ['mid', 'The purple redesign', 'The AI explorations pulled me toward a fresh purple SaaS look.', 'We kept Traum’s own system, black and yellow, and spent the time on logic instead of paint.'],
+      ['ship', 'Seasonal skins, not new banners', 'Business runs campaigns all year: Black Friday, Christmas, New Year, Summer Sale, Autumn sale, End of season sale.', 'Two slots that can be dressed for each. No layout change, no new build.']
     ],
     states: {
       good: ['Healthy', 80, '', '', ''],
@@ -7282,7 +7307,7 @@ html:root .scroll-cue i::after { top: 5px; }
     },
     seasons: [['final-b', 'Every day'], ['xmas', 'Christmas'], ['bfriday', 'Black Friday'], ['easter', 'Easter']],
     hot: [[34, 11, 'Recommended actions', 'Personal to your listings, each with the points it adds. Scroll for more.'], [80, 9.5, 'Auto Renew nudge', 'The cheapest renewal is the one that happens on its own.'], [84, 24, 'Growth meter', 'One green arc, one chip, one line about what’s next.'], [60, 31.5, 'Filters', 'Status, renewals and visibility score. Find the listing that needs you.'], [61, 36, 'Score ring', 'Every listing gets one. Amber under 50, green over 80.'], [30, 41.5, 'One strip, one job', 'The single most important thing about this listing, right under it.']],
-    imp: [['18', '%', 'more renewals before expiry', '+'], ['2.1', '×', 'add-on adoption', ''], ['30', '%', 'fewer “why no inquiries?” calls', '−'], ['74', '', 'average visibility score, up from 62', '']]
+    imp: [['5', '%', 'page engagement, the target', '+'], ['3', ' pts', 'VAS renewals, absolute, the target', '+'], ['19', '', 'use cases covered, hosts and product', ''], ['2', '', 'platforms from one set of components', '']]
   };
   const tfIc = (k, cls = '') => `<svg class="tf-i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${TF.ic[k]}</svg>`;
   const tfArc = 'M29.8 152.8A96 96 0 1 1 210.2 152.8';
@@ -7317,7 +7342,7 @@ html:root .scroll-cue i::after { top: 5px; }
       <section class="tf-tldr" data-rv aria-label="The short version">
         <article><i>The problem</i><p>Hosts couldn’t tell if their listings were working, so they never bought add-ons and often missed renewals.</p></article>
         <article><i>What I did</i><p>Turned a flat list of ads into a dashboard with one score, personal recommendations and renewals that can’t be missed.</p></article>
-        <article><i>What changed</i><p data-todo>More renewals before expiry, twice the add-on adoption, and fewer confused calls to support.</p></article>
+        <article><i>What changed</i><p>Built to lift page engagement by 5% and VAS renewals by 3 points, on desktop and mobile web.</p></article>
       </section>
 
       <section class="tf-sec" id="tfCtx">
@@ -7328,7 +7353,7 @@ html:root .scroll-cue i::after { top: 5px; }
           <div class="tf-pers"><div class="av">H</div><b>Heike, 58</b><small>Owns two flats on the Baltic coast</small><ul><li>Runs them next to a full-time job</li><li>Opens the Traum dashboard maybe twice a year</li><li>Has never bought an add-on. “What does it even do?”</li></ul><p class="q">“I pay every year. I just don’t know if it’s working.”</p></div>
           <ol class="tf-year" id="tfYear">${[['Jan', 'Subscribes', 'Listing goes live'], ['Mar', 'First inquiries', 'A few emails arrive'], ['Jun', 'Peak season', 'Inquiries… or silence?'], ['Oct', 'Quiet months', 'Forgets the dashboard exists'], ['Dec', 'Renewal', 'The moment we lose her']].map(([m, t, d], i) => `<li style="--i:${i}"${i === 4 ? ' class="hot"' : ''}><span>${m}</span><b>${t}</b><small>${d}</small></li>`).join('')}</ol>
         </div>
-        ${p('Heike is a composite of the hosts our support team spoke to every day. Small owners, mostly over 50, running one to three homes alongside a job. They don’t want a dashboard. They want inquiries.')}
+        ${p('Heike is a composite I kept on my desk to stay honest: a small owner running a home or two alongside a job. She doesn’t want a dashboard. She wants inquiries.')}
       </section>
 
       <section class="tf-sec" id="tfOld">
@@ -7347,42 +7372,46 @@ html:root .scroll-cue i::after { top: 5px; }
       <section class="tf-sec" id="tfBrief">
         ${plq(3, 'The brief')}
         ${head('What was asked,', 'and what was meant.')}
-        ${p('The brief came from our product manager, and it was a good one. It listed what the business needed. My job was to work out what that meant for Heike.')}
+        ${p('The brief came from our product manager: six pages with an objective, two targets, a scoring formula, nudge rules and 19 use cases. It said what the business needed. My job was to work out what that meant for Heike.')}
         <div class="tf-doc" data-rv id="tfDoc">
           <div class="d-top"><span class="d-ic">W</span><div><b>Advertisement page revamp · PRD</b><small>Product · shared with Design, Business, Engineering</small></div><button type="button" class="d-flip" id="tfFlip" aria-pressed="false"><span class="off">Read between the lines</span><span class="on">Back to the brief</span></button></div>
-          <p class="d-h">Goals</p>
+          <p class="d-h">Objective</p>
           <ol>${TF.brief.map(([a, b]) => `<li><span class="a">${a}</span><span class="b">${b}</span></li>`).join('')}</ol>
-          <p class="d-n">Success: renewal rate, add-on adoption, support calls about visibility.</p>
+          <div class="d-imp"><p class="d-h">Impact</p><table><tr><th>Metric</th><th>Expected impact</th></tr><tr><td>Page engagement</td><td>5% increment</td></tr><tr><td>VAS renewals</td><td>3% absolute increment</td></tr></table></div>
         </div>
-        ${p('Read together, the four lines said one thing. Hosts weren’t ignoring our upsells out of stubbornness. They just couldn’t see what any of it did for them.')}
+        ${p('Read together, it said one thing. Hosts weren’t ignoring our add-ons out of stubbornness. They just couldn’t see what any of it did for them.')}
       </section>
 
       <section class="tf-sec" id="tfData">
         ${plq(4, 'The numbers')}
-        ${head('The sheet that', 'changed the project.')}
-        ${p('Business shared a metrics sheet: every listing, its completeness, its inquiries, whether it renewed. I spent two days in it. Four numbers stood out.')}
-        <div class="tf-tiles" data-rv>${TF.tiles.map(([b, t], i) => `<div class="tf-tile" style="--i:${i}" data-todo><b>${b}</b><span>${t}</span></div>`).join('')}</div>
-        <figure class="tf-chart" data-rv>
-          <figcaption><span>Listings grouped by how complete they are</span><div class="tf-seg" role="tablist">${Object.entries(TF.chart.sets).map(([k, [t]], i) => `<button type="button" role="tab" data-k="${k}"${i ? '' : ' class="on" aria-selected="true"'}>${t}</button>`).join('')}</div></figcaption>
-          <div class="tf-bars" id="tfBars" data-todo>${TF.chart.lbl.map((l, i) => `<div class="c"><b></b><i style="--i:${i}"></i><span>${l}</span></div>`).join('')}</div>
-          <p class="tf-chx">Listing completeness</p>
+        ${head('The numbers we', 'signed up for.')}
+        ${p('Two targets, a lot of use cases, and one number from the comments that changed how I designed everything after it.')}
+        <div class="tf-tiles" data-rv>${TF.tiles.map(([b, t], i) => `<div class="tf-tile" style="--i:${i}"><b>${b}</b><span>${t}</span></div>`).join('')}</div>
+        <figure class="tf-split2" data-rv id="tfDau">
+          <figcaption><span>Daily active hosts, last 3 months</span><small>From the brief’s comments</small></figcaption>
+          <div class="sb">${TF.dau.map(([t, n], i) => `<div class="pt p${i}" style="--w:${(n / (TF.dau[0][1] + TF.dau[1][1]) * 100).toFixed(1)}"><b>${Math.round(n / (TF.dau[0][1] + TF.dau[1][1]) * 100)}%</b><span>${t}</span><small>${n.toLocaleString('en-US')} a day</small></div>`).join('')}</div>
         </figure>
-        ${p('The more complete a listing, the more inquiries it got, and the more likely its host renewed. Hosts had no way to see this. We did. The whole project became: show them.')}
+        ${p('Almost half of all hosts checked their listings on a phone. So mobile couldn’t be a squeezed desktop. Every component had to work at 360 pixels first.')}
       </section>
 
       <section class="tf-sec" id="tfIdea">
         ${plq(5, 'The idea')}
         <p class="tf-big" data-rv>What if every listing had a score, and every point told you <span class="u">exactly how to earn it?</span></p>
-        ${p('Like a credit score, but kind. One number from 0 to 100 that sums up how visible a listing is to guests. Each missing piece is a way up. Some are free, some are add-ons. Try it on a listing below.')}
+        ${p('Like a credit score, but kind. One number from 0 to 100 for a host’s whole portfolio. This is the actual formula from the brief. Drag completeness, switch add-ons on and off, and watch the nudges change.')}
         <div class="tf-anat" data-rv>
           <div class="tf-al">
-            <div class="tf-lc"><span class="ph"></span><div><small>No. 343300</small><b>Ferienwohnung Strandhuus, Wohnung 307 “Albatros”</b><span class="m">End of term: August 2026</span></div>${tfRing(40, 'big')}</div>
-            <div class="tf-sum"><b id="tfAv">40</b><span>/100</span><em class="tf-chip a" id="tfAc">Needs attention</em></div>
-            <p class="tf-split"><span><i class="fr"></i>Free fixes <b id="tfAf">30</b></span><span><i class="pd"></i>Add-ons <b id="tfAp">10</b></span></p>
+            <div class="tf-sum"><b id="tfAv">45</b><span>/100</span><em class="tf-chip a" id="tfAc">Needs attention</em></div>
+            <p class="tf-split"><span><i class="fr"></i>Free: completeness <b id="tfAf">35</b></span><span><i class="pd"></i>Add-ons <b id="tfAp">10</b></span></p>
+            <div class="tf-nud"><p>Nudges this host would see</p><ul id="tfNud"></ul></div>
+            <p class="tf-form" id="tfForm"></p>
           </div>
-          <ul class="tf-fac" id="tfFac">${TF.factors.map(([n, pt, ic, free, on], i) => `<li><button type="button" role="switch" aria-checked="${!!on}" data-i="${i}"${on ? ' class="on"' : ''}><span class="ic">${tfIc(ic)}</span><b>${n}</b><em class="${free ? 'fr' : 'pd'}">${free ? 'Free' : 'Add-on'}</em><span class="pt">${pt} pts</span><span class="sw"><i></i></span></button></li>`).join('')}</ul>
+          <div class="tf-fw">
+            <label class="tf-cmp"><span><b>Listing completeness</b><em class="fr">Free</em><span class="pt"><b id="tfCv">70</b>% · 50 pts max</span></span><input type="range" id="tfCmp" min="0" max="100" value="70" step="5" aria-label="Average listing completeness"><small>Average completeness across all active listings: photos, prices, calendar and more.</small></label>
+            <ul class="tf-fac" id="tfFac">${TF.factors.map(([n, pt, ic, , on, d], i) => `<li><button type="button" role="switch" aria-checked="${!!on}" data-i="${i}"${on ? ' class="on"' : ''}><span class="ic">${tfIc(ic)}</span><span class="nm"><b>${n}</b><small>${d}</small></span><em class="pd">Add-on</em><span class="pt">${pt} pts</span><span class="sw"><i></i></span></button></li>`).join('')}</ul>
+            <label class="tf-elig"><input type="checkbox" id="tfElig" checked> Host is eligible for at least one Traum Tag</label>
+          </div>
         </div>
-        ${p('One rule shaped the whole score: almost half of it is free. Photos, prices and a calendar cost a host nothing. If the only way up were their wallet, they’d stop trusting the number on day one.')}
+        ${p('Two rules from the brief made the score fair. Points only count while a product is active, and disappear when it expires (newsletter points after three months). And half the score is free: completeness costs a host nothing.')}
       </section>
 
       <section class="tf-sec" id="tfExp">
@@ -7422,7 +7451,7 @@ html:root .scroll-cue i::after { top: 5px; }
       <section class="tf-sec" id="tfRooms">
         ${plq(9, 'Three rooms')}
         ${head('Designed with business,', 'product and engineering.')}
-        ${p('A B2B page has more owners than a consumer one. Every week I sat with three teams who each wanted something different from the same screen. Pick a room.')}
+        ${p('A B2B page has more owners than a consumer one. These are real questions and answers from the comments on the brief, and what each one changed in the design. Pick a room.')}
         <div class="tf-rm" data-rv>
           <div class="tf-rtabs" role="tablist">${Object.entries(TF.rooms).map(([k, [t, c]], i) => `<button type="button" role="tab" data-k="${k}" style="--rc:${c}"${i ? '' : ' class="on" aria-selected="true"'}>${t}</button>`).join('')}</div>
           <div class="tf-chat" id="tfChat" aria-live="polite"></div>
@@ -7485,9 +7514,9 @@ html:root .scroll-cue i::after { top: 5px; }
 
       <section class="tf-sec" id="tfImp">
         ${plq(13, 'The impact')}
-        ${head('What moved', 'after launch.')}
-        ${p('Early numbers from the first weeks live, compared with the same period the year before.')}
-        <div class="tf-imp" data-rv data-todo>${TF.imp.map(([n, u, t, s], i) => `<div style="--i:${i}"><b><span>${s}</span><span class="n" data-n="${n}">0</span><span>${u}</span></b><p>${t}</p></div>`).join('')}</div>
+        ${head('What we set', 'out to move.')}
+        ${p('The targets from the brief, and what the design had to cover to hit them. Live results will go here once the numbers are in.')}
+        <div class="tf-imp" data-rv>${TF.imp.map(([n, u, t, s], i) => `<div style="--i:${i}"><b><span>${s}</span><span class="n" data-n="${n}">0</span><span>${u}</span></b><p>${t}</p></div>`).join('')}</div>
         <div class="tf-learn" data-rv>
           <p class="k">What I’m taking with me</p>
           <ol><li><b>In B2B, the user isn’t the only customer.</b> Heike, the business and engineering all had to win. The best version of the page served all three.</li>
@@ -7538,19 +7567,17 @@ html:root .scroll-cue i::after { top: 5px; }
     showOld(0);
     // the brief: read between the lines
     const flip = $('#tfFlip', root); flip.addEventListener('click', () => { const on = $('#tfDoc', root).classList.toggle('flip'); flip.setAttribute('aria-pressed', on); });
-    // the chart
-    const bars = $('#tfBars', root);
-    const drawBars = k => { const [, vals, u] = TF.chart.sets[k], mx = Math.max(...vals); $$('.c', bars).forEach((c, i) => { $('i', c).style.setProperty('--h', (vals[i] / mx * 100).toFixed(1) + '%'); $('b', c).textContent = vals[i] + u; });
-      $$('.tf-seg button', root).forEach(b => { const on = b.dataset.k === k; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); };
-    $('.tf-seg', root).addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) drawBars(b.dataset.k); });
-    bars.closest('figure')._on = () => drawBars('inq');
-    // the score, factor by factor
-    const fac = TF.factors.map(f => !!f[4]);
-    const ring = $('.tf-anat .tf-ring', root);
-    const anat = () => { const v = TF.factors.reduce((s, f, i) => s + (fac[i] ? f[1] : 0), 0), fr = TF.factors.reduce((s, f, i) => s + (fac[i] && f[3] ? f[1] : 0), 0);
-      count($('#tfAv', root), v, 450); count($('#tfAf', root), fr, 450); count($('#tfAp', root), v - fr, 450); chip($('#tfAc', root), v);
-      ring.style.setProperty('--v', v); $('b', ring).textContent = v; ring.classList.toggle('a', v < 50); };
-    $('#tfFac', root).addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b) return; const i = +b.dataset.i; fac[i] = !fac[i]; b.classList.toggle('on', fac[i]); b.setAttribute('aria-checked', fac[i]); anat(); });
+    // the score, factor by factor: the brief's formula
+    const fac = TF.factors.map(f => !!f[4]), cmp = $('#tfCmp', root), elig = $('#tfElig', root);
+    const anat = () => { const c = +cmp.value, cp = c * .5, el = elig.checked;
+      const ad = TF.factors.reduce((s, f, i) => s + (fac[i] && (el || i !== 3) ? f[1] : 0), 0), raw = cp + ad, v = Math.round(el ? raw : raw / 90 * 100);
+      $('#tfCv', root).textContent = c; count($('#tfAv', root), v, 450); count($('#tfAf', root), Math.round(cp), 450); count($('#tfAp', root), ad, 450); chip($('#tfAc', root), v);
+      const tagBtn = $('#tfFac [data-i="3"]', root); tagBtn.disabled = !el; tagBtn.parentElement.classList.toggle('off', !el);
+      const nud = [...(c < 75 ? ['Purchase Photography'] : []), ...TF.factors.filter((f, i) => !fac[i] && (el || i !== 3)).map(f => f[3])];
+      $('#tfNud', root).innerHTML = nud.length ? nud.map(t => `<li>${t}</li>`).join('') : '<li class="none">Nothing left to nudge</li>';
+      $('#tfForm', root).textContent = el ? `${Math.round(cp)} + ${ad} = ${v} out of 100` : `(${Math.round(cp)} + ${ad}) ÷ 90 × 100 = ${v}`; };
+    $('#tfFac', root).addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b || b.disabled) return; const i = +b.dataset.i; fac[i] = !fac[i]; b.classList.toggle('on', fac[i]); b.setAttribute('aria-checked', fac[i]); anat(); });
+    cmp.addEventListener('input', anat); elig.addEventListener('change', anat);
     anat();
     // the meter, five tries
     const ms = $('#tfMs', root);
@@ -7572,13 +7599,13 @@ html:root .scroll-cue i::after { top: 5px; }
     $('.tf-rdots', root).addEventListener('click', e => { const b = e.target.closest('[data-r]'); if (b) drawR(+b.dataset.r); });
     drawR(0);
     // three rooms
-    const who = { biz: 'Business', pm: 'Product', eng: 'Engineering', me: 'Me' };
+    const who = { q: 'Question', a: 'Answer' };
     const drawRoom = k => { const [, c, msgs, chg] = TF.rooms[k]; const chat = $('#tfChat', root); chat.style.setProperty('--rc', c);
-      chat.innerHTML = msgs.map(([w, t], i) => `<p class="${w === 'me' ? 'me' : 'th'}" style="--i:${i}"><small>${who[w]}</small>${t}</p>`).join('');
+      chat.innerHTML = msgs.map(([w, t], i) => `<p class="${w === 'a' ? 'me' : 'th'}" style="--i:${i}"><small>${who[w]}</small>${t}</p>`).join('');
       $('#tfChg', root).innerHTML = chg.map(x => `<li>${tfIc('check')}${x}</li>`).join('');
       $$('.tf-rtabs button', root).forEach(b => { const on = b.dataset.k === k; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); };
     $('.tf-rtabs', root).addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) drawRoom(b.dataset.k); });
-    drawRoom('biz');
+    drawRoom('pm');
     // the review sticky
     const nc = $('#tfNc', root);
     $('#tfNl', root).addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (!b) return; const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on);
