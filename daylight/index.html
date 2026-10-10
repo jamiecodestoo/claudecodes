@@ -4981,6 +4981,48 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .tf-m3[data-p="0"] #tfGv, .tf-m3[data-p="1"] #tfGc, .tf-m3[data-p="2"] .m3-card .msg { outline: 3px solid rgba(255, 198, 31, .7); outline-offset: 6px; border-radius: 10px; }
 #tfGv, #tfGc, .m3-card .msg { transition: outline-color .3s; }
 @media (max-width: 900px) { .tf-m3 { grid-template-columns: 1fr; max-width: 560px; } .m3-card { padding: 20px 18px; } }
+/* ICP */
+.tf-icp { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; max-width: 1000px; margin: 0 auto; text-align: left; }
+.icp-card { padding: 26px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 30px 60px -44px rgba(0, 0, 0, .3); }
+.icp-top { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; } .icp-top small { font: 700 11px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); } .icp-top b { display: block; margin-top: 4px; font: 800 24px/1.15 var(--sans); letter-spacing: -.02em; }
+.flag { display: grid; grid-template-rows: repeat(3, 1fr); width: 54px; height: 38px; border-radius: 8px; overflow: hidden; box-shadow: 0 6px 14px -8px rgba(0, 0, 0, .4); flex: none; } .flag i:nth-child(1) { background: #1E1E1E; } .flag i:nth-child(2) { background: #DD2B21; } .flag i:nth-child(3) { background: #FFCC00; }
+.icp-age p { margin: 0 0 30px; font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.icp-age .ax { position: relative; height: 12px; border-radius: 99px; background: var(--soft); margin: 0 10px 34px; }
+.icp-age .ax span { position: absolute; top: 20px; translate: -50% 0; font: 600 12px/1 var(--sans); color: var(--ink-2); }
+.icp-age .band { position: absolute; left: 20%; width: 0; top: -6px; bottom: -6px; border-radius: 99px; background: linear-gradient(90deg, #FFCC00, #E8A912); box-shadow: 0 8px 20px -8px rgba(200, 140, 0, .6); transition: width 1.1s var(--ease) .3s; }
+.tf-icp.in .icp-age .band { width: 40%; }
+.icp-age > small { font: 500 14px/1 var(--sans); color: var(--ink-2); } .icp-age > small b { color: var(--ink); font-size: 18px; }
+.icp-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; }
+.icp-facts li { padding: 12px 14px; border-radius: 14px; background: var(--paper); } .icp-facts span { display: block; font: 700 11px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); } .icp-facts b { display: block; margin-top: 6px; font: 600 15px/1.35 var(--sans); }
+.icp-jobs { display: grid; align-content: start; gap: 10px; }
+.icp-jobs .k { margin: 0 0 4px; font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.icp-jobs > div { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; align-items: center; padding: 16px; border-radius: 18px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); opacity: 0; translate: 20px 0; transition: opacity .6s, translate .7s var(--ease); transition-delay: calc(.4s + var(--i) * .15s); }
+.tf-icp.in .icp-jobs > div { opacity: 1; translate: 0 0; }
+.icp-jobs .ic { grid-row: span 2; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--tbl); color: var(--tb); } .icp-jobs > div:nth-of-type(2) .ic { background: var(--tal); color: var(--ta); } .icp-jobs > div:nth-of-type(3) .ic { background: var(--tgl); color: var(--tg); }
+.icp-jobs b { font: 700 17px/1.2 var(--sans); } .icp-jobs small { font: 400 14px/1.4 var(--sans); color: var(--ink-2); }
+.icp-jobs .note { margin: 6px 0 0; padding: 14px 16px; border-radius: 16px; background: var(--tal); font: 500 15px/1.5 var(--sans); }
+/* A/B */
+.tf-ab { display: grid; justify-items: center; gap: 22px; max-width: 1000px; margin: 0 auto; }
+.ab-steps { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; margin: 0; padding: 0; list-style: none; }
+.ab-steps button { display: inline-flex; align-items: center; gap: 8px; padding: 0; border: 0; background: none; color: var(--ink-2); font: 600 15px/1 var(--sans); cursor: pointer; opacity: .5; transition: opacity .3s, color .3s; }
+.ab-steps i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--soft); font: 800 12px/1 var(--sans); font-style: normal; } .ab-steps button.on { opacity: 1; color: var(--ink); } .ab-steps button.on i { background: var(--ty); color: #3A2A00; }
+.ab-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+.ab-v { position: relative; margin: 0; padding: 18px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); text-align: left; transition: opacity .6s, scale .6s var(--ease), box-shadow .5s, filter .6s; }
+.ab-v figcaption { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; } .ab-v figcaption b { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--ink); color: var(--card); font: 800 17px/1 var(--sans); } .ab-v figcaption span { font: 600 16px/1.2 var(--sans); }
+.ab-wf { display: grid; grid-template-columns: 1.7fr 1fr; gap: 10px; padding: 12px; border-radius: 16px; background: #F4F4F2; }
+.ab-wf > div { display: grid; align-content: start; gap: 8px; }
+.w-m { position: relative; height: 70px; border-radius: 10px; background: #fff; box-shadow: inset 0 0 0 2px #CFE8DA; } .w-m i { position: absolute; left: 50%; top: 14px; width: 50px; height: 25px; translate: -50% 0; border: 7px solid #16825A; border-bottom: 0; border-radius: 50px 50px 0 0; box-sizing: border-box; }
+.w-r { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 8px; border-radius: 10px; background: #fff; box-shadow: inset 0 0 0 2px #FFE08A; } .w-r i { height: 34px; border-radius: 6px; background: #F1E7C8; }
+.w-li { height: 26px; border-radius: 8px; background: #fff; } .w-p { height: 46px; border-radius: 10px; background: #fff; }
+.ab-call { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; max-height: 0; opacity: 0; overflow: hidden; transition: max-height .6s var(--ease), opacity .4s; }
+.ab-call .ph { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--tbl); color: var(--tb); } .ab-call .q { padding: 10px 14px; border-radius: 16px 16px 16px 4px; background: var(--paper); font: 500 14px/1.45 var(--sans); }
+.tf-ab:not([data-s="0"]) .ab-call { max-height: 120px; opacity: 1; }
+.tf-ab[data-s="2"] .ab-v { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--tb) 45%, transparent); } .tf-ab[data-s="2"] .ab-v::after { content: "Testing…"; position: absolute; top: 18px; right: 18px; padding: 5px 10px; border-radius: 999px; background: var(--tbl); color: var(--tb); font: 700 12px/1 var(--sans); }
+.ab-win { position: absolute; top: 16px; right: 16px; padding: 6px 12px; border-radius: 999px; background: var(--tg); color: #fff; font: 700 13px/1 var(--sans); opacity: 0; scale: .6; transition: opacity .4s, scale .5s var(--ease); }
+.tf-ab[data-s="3"] .ab-v.a { opacity: .45; scale: .96; filter: grayscale(.8); } .tf-ab[data-s="3"] .ab-v.b { box-shadow: inset 0 0 0 3px var(--tg), 0 30px 60px -40px rgba(20, 120, 70, .5); scale: 1.02; } .tf-ab[data-s="3"] .ab-v.b .ab-win { opacity: 1; scale: 1; }
+.ab-cap { margin: 0; max-width: 56ch; min-height: 3em; font: 500 16px/1.5 var(--sans); color: var(--ink-2); }
+@media (max-width: 760px) { .tf-icp, .ab-pair { grid-template-columns: 1fr; } .icp-facts { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .tf-h .u { white-space: normal; } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -7542,8 +7584,23 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         </div>
       </section>
 
+      <section class="tf-sec" id="tfWho">
+        ${plq(1, 'Who it’s for')}
+        ${head('Designed for', 'German owners, 30 to 50.')}
+        ${p('Our ideal customer: a property owner in Germany, in their 30s or 40s, trying to get a holiday home listed and booked, often alongside a full-time job.')}
+        <div class="tf-icp" data-rv id="tfIcp">
+          <div class="icp-card">
+            <div class="icp-top"><span class="flag"><i></i><i></i><i></i></span><div><small>Ideal customer profile</small><b>The busy German host</b></div></div>
+            <div class="icp-age"><p>Age</p><div class="ax">${[20, 30, 40, 50, 60, 70].map(a => `<span style="left:${(a - 20) * 2}%">${a}</span>`).join('')}<i class="band"></i></div><small>Core range: <b>30–50</b></small></div>
+            <ul class="icp-facts">${[['Where', 'Germany'], ['Owns', '1–3 holiday homes'], ['Uses', 'Desktop and phone, almost half on mobile'], ['Wants', 'More bookings, with less admin']].map(([k, v]) => `<li><span>${k}</span><b>${v}</b></li>`).join('')}</ul>
+          </div>
+          <div class="icp-jobs"><p class="k">What they come to the page to do</p>${[['Add a property', 'Get a new home listed and live.', 'pen'], ['Keep it visible', 'Know if a listing is doing well, and how to help it.', 'chart'], ['Stay live', 'Renew on time, without surprises.', 'clock']].map(([t, d, ic], i) => `<div style="--i:${i}"><span class="ic">${tfIc(ic)}</span><b>${t}</b><small>${d}</small></div>`).join('')}
+            <p class="note">Busy, practical, not designers. Every screen had to make sense at a glance, in plain words.</p></div>
+        </div>
+      </section>
+
       <section class="tf-sec" id="tfNum">
-        ${plq(1, 'The numbers')}
+        ${plq(2, 'The numbers')}
         ${head('The numbers told me', 'where to look.')}
         ${p('I went through page analytics, support tickets, stakeholder sessions and competitor products. One pattern stood out.')}
         <div class="tf-mk" id="tfMk">
@@ -7563,7 +7620,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       </section>
 
       <section class="tf-sec tf-find" id="tfFind">
-        ${plq(2, 'What we found')}
+        ${plq(3, 'What we found')}
         <p class="tf-rv2" id="tfRv">${['Owners came to', '<k>look</k>,', 'not to', '<k>act.</k>'].join(' ').split(' ').map(w => w.startsWith('<k>') ? `<i class="k">${w.replace(/<\/?k>/g, '')}</i>` : `<i>${w}</i>`).join(' ')}</p>
         <div class="tf-bub" data-rv id="tfBub">
           <p class="bb-k">Out of every 1,000 visits</p>
@@ -7579,7 +7636,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       </section>
 
       <section class="tf-sec tf-pins" id="tfPins">
-        ${plq(3, 'The problems')}
+        ${plq(4, 'The problems')}
         ${head('Four problems,', 'pinned to the wall.')}
         ${p('Each one came up in the data, the tickets and the stakeholder sessions. Tap a note to see what it meant for the design.')}
         <div class="tf-board" data-rv id="tfBoard">${TF.pins.map(([f, b, n, c], i) => `<button type="button" class="tf-pin" style="--r:${[-3, 2.5, -1.5, 3][i]}deg;--c:${c};--i:${i}" aria-pressed="false"><span class="tack"></span><span class="in"><span class="fr"><em>Problem ${i + 1}</em><b>${f}</b><small>Tap to flip</small></span><span class="bk"><em>What it meant</em><span class="ev">${b}</span><b>→ ${n}</b></span></span></button>`).join('')}</div>
@@ -7589,7 +7646,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         <div class="tf-sh" id="tfSh">
           <div class="sh-pin">
             <div class="sh-hd">
-        ${plq(4, 'A wrong turn')}
+        ${plq(5, 'A wrong turn')}
         ${head('My first idea', 'wasn’t the best one.')}
         ${p('I started with a separate catalogue of add-ons. Then I watched one property need just one of them.')}
             </div>
@@ -7607,7 +7664,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       </section>
 
       <section class="tf-sec" id="tfMeter">
-        ${plq(5, 'The visibility meter')}
+        ${plq(6, 'The visibility meter')}
         ${head('Enter the', 'visibility meter.')}
         ${p('One number from 0 to 100: on the dashboard, and on every listing card.')}
         <div class="tf-m3" data-rv id="tfGm">
@@ -7636,7 +7693,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       </section>
 
       <section class="tf-sec" id="tfNext">
-        ${plq(6, 'The next step')}
+        ${plq(7, 'The next step')}
         ${head('A score is useless', 'without a next step.')}
         ${p('So the top of the page became a tray of next steps, picked for each owner’s properties and sorted by how much they’d move the score. Same tray, different owners:')}
         <div class="tf-rt" data-rv id="tfRt">
@@ -7649,28 +7706,22 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         </div>
       </section>
 
-      <section class="tf-sec" id="tfStates">
-        ${plq(7, 'Listing states')}
-        ${head('One dashboard.', 'Very different situations.')}
-        ${p('A property that’s performing well needs something different from one that’s unpublished or overdue for renewal. So I designed distinct states on one consistent card structure. Each state changes what the card prioritises.')}
-        <div class="tf-st" data-rv id="tfSt">
-          <div class="tf-stt" role="tablist">${TF.states.map(([k, t], i) => `<button type="button" data-i="${i}"${i ? '' : ' class="on" aria-selected="true"'}>${t}</button>`).join('')}</div>
-          <div class="tf-dev" role="tablist"><button type="button" data-d="d" class="on">Desktop</button><button type="button" data-d="m">Mobile</button></div>
-          <div class="tf-sttrack" id="tfStk">${TF.states.map(([k, t, d, m, c], i) => `<article class="tf-sti" data-i="${i}"><div class="d"><img src="${ti(d)}" alt="${t} listing card on desktop" loading="lazy"></div><div class="mob">${m ? tfPhone(`<div class="tf-pscr"><img class="hd" src="${ti('mobile')}" alt=""><img class="cd" src="${ti(m)}" alt="${t} listing card on mobile" loading="lazy"></div>`, 'sm') : `<p class="na">Shown on desktop in this set.</p>`}</div><p class="c"><b>${t}.</b> ${c}</p></article>`).join('')}</div>
-          <div class="tf-stn"><button type="button" id="tfStp" aria-label="Previous state">←</button><span id="tfStx">1 / ${TF.states.length}</span><button type="button" id="tfStn" aria-label="Next state">→</button></div>
+      <section class="tf-sec" id="tfAB">
+        ${plq(8, 'Two contenders')}
+        ${head('Stuck between', 'two good layouts.')}
+        ${p('Both versions worked on paper. So instead of picking one in a meeting, we called owners and ran an A/B test.')}
+        <div class="tf-ab" data-rv id="tfAb" data-s="0">
+          <ol class="ab-steps">${['Two versions', 'Calls with owners', 'A/B test', 'The go-ahead'].map((t, i) => `<li><button type="button" data-k="${i}"><i>${i + 1}</i>${t}</button></li>`).join('')}</ol>
+          <div class="ab-pair">${[['A', 'Meter and actions on the left', 'a'], ['B', 'Actions left, meter on the right', 'b']].map(([k, t, c]) => `<figure class="ab-v ${c}"><figcaption><b>${k}</b><span>${t}</span></figcaption>
+            <div class="ab-wf"><div class="w-l">${c === 'a' ? '<span class="w-m"><i></i></span><span class="w-r"><i></i><i></i><i></i></span>' : '<span class="w-r"><i></i><i></i><i></i></span>'}<span class="w-li"></span><span class="w-li"></span><span class="w-li"></span></div><div class="w-s">${c === 'b' ? '<span class="w-m"><i></i></span>' : ''}<span class="w-p"></span><span class="w-p"></span></div></div>
+            <div class="ab-call"><span class="ph">${tfIc('people')}</span><span class="q">${c === 'a' ? '“Where do I start? The score and the offers fight for my eye.”' : '“I see what to do first, and the score sits there when I want it.”'}</span></div>
+            <span class="ab-win">Selected ✓</span></figure>`).join('')}</div>
+          <p class="ab-cap" id="tfAbC"></p>
         </div>
-        <h4 class="tf-h4" data-rv>The same thinking, beyond the cards.</h4>
-        <div class="tf-by" data-rv id="tfBy">
-          <div class="map"><img src="${ti('s-final')}" alt="The full redesigned page" loading="lazy"><span class="bhl" id="tfByH"></span></div>
-          <div class="list">${TF.beyond.map(([im, t, d], i) => `<button type="button" data-b="${i}"${i ? '' : ' class="on"'}><img src="${ti(im)}" alt="" loading="lazy"><span><b>${t}</b><small>${d}</small></span></button>`).join('')}</div>
-        </div>
-        <h4 class="tf-h4" data-rv>Offers that fit in, not shout.</h4>
-        ${p('Early-renewal messages and seasonal campaigns had to live on the page without overwhelming the main task. They borrow existing components and change only their dress.')}
-        <div class="tf-sea" data-rv><figure><img src="${ti('s-recs-easter')}" alt="Recommended actions, dressed for Easter" loading="lazy"><figcaption>Recommendations at Easter</figcaption></figure><figure><img src="${ti('s-meter-bf')}" alt="Growth meter, dressed for Black Friday" loading="lazy"><figcaption>The growth meter on Black Friday</figcaption></figure></div>
       </section>
 
       <section class="tf-sec" id="tfBal">
-        ${plq(8, 'Trade-offs')}
+        ${plq(9, 'Trade-offs')}
         ${head('The hardest part was', 'balancing priorities.')}
         ${p('A prominent growth meter mattered. But on mobile web, a bigger meter pushes the listings, the thing owners actually came for, further down. Try it.')}
         <div class="tf-fold" data-rv id="tfFold">
@@ -7691,7 +7742,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       </section>
 
       <section class="tf-sec" id="tfAi">
-        ${plq(9, 'Working with AI')}
+        ${plq(10, 'Working with AI')}
         ${head('AI helped me spend less time', 'pushing pixels.')}
         ${p('I didn’t want AI to generate more screens. I wanted it to take repetitive work off my plate, so I could spend more time on the problem itself.')}
         <div class="tf-ai" data-rv id="tfAiw">
@@ -7707,7 +7758,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       </section>
 
       <section class="tf-sec" id="tfNx">
-        ${plq(10, 'What happens next')}
+        ${plq(11, 'What happens next')}
         ${head('The next milestone isn’t a', 'victory lap.')}
         ${p('Desktop and mobile web designs are approved, and development is in progress. So the next step is validation.')}
         <p class="tf-status" data-rv><i></i>Approved · In development</p>
@@ -7822,17 +7873,11 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         const a = e.target.closest('[data-add]'); if (a && !a.disabled) { a.disabled = true; a.textContent = 'Added ✓'; const c = a.closest('.rt-c'); c.classList.add('done'); v = Math.min(100, v + +a.dataset.add); ring();
           later(() => { c.classList.add('out'); later(() => { left = left.filter(([k]) => k !== c.dataset.k); draw(); row.classList.add('in'); }, 450); }, 700); } });
       pick(0); }
-    // listing states: tabs, swipe track, device
-    const stk = $('#tfStk', root), st = $('#tfSt', root); let si = 0;
-    const goSt = (i, smooth = true) => { si = clamp(i, 0, TF.states.length - 1); const it = $$('.tf-sti', stk)[si]; stk.scrollTo({ left: it.offsetLeft - stk.offsetLeft, behavior: smooth && !reduce ? 'smooth' : 'auto' }); mark(); };
-    const mark = () => { $$('.tf-stt button', st).forEach(b => { const on = +b.dataset.i === si; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); if (on) b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); }); $('#tfStx', root).textContent = `${si + 1} / ${TF.states.length}`; };
-    let stT = 0; stk.addEventListener('scroll', () => { clearTimeout(stT); stT = setTimeout(() => { const its = $$('.tf-sti', stk), x = stk.scrollLeft; let b = 0; its.forEach((it, i) => { if (Math.abs(it.offsetLeft - stk.offsetLeft - x) < Math.abs(its[b].offsetLeft - stk.offsetLeft - x)) b = i; }); if (b !== si) { si = b; mark(); } }, 90); }, { passive: true });
-    st.addEventListener('click', e => { const b = e.target.closest('.tf-stt [data-i]'); if (b) goSt(+b.dataset.i); const d = e.target.closest('[data-d]'); if (d) { st.classList.toggle('mob', d.dataset.d === 'm'); $$('.tf-dev button', st).forEach(x => x.classList.toggle('on', x === d)); goSt(si, false); } });
-    $('#tfStp', root).addEventListener('click', () => goSt(si - 1)); $('#tfStn', root).addEventListener('click', () => goSt(si + 1));
-    // beyond the cards: where it lives
-    const by = $('#tfBy', root), byH = $('#tfByH', root);
-    const showBy = i => { const [, , , [x, y, w, h]] = TF.beyond[i]; Object.assign(byH.style, { left: x + '%', top: y + '%', width: w + '%', height: h + '%' }); $$('[data-b]', by).forEach(b => b.classList.toggle('on', +b.dataset.b === i)); };
-    by.addEventListener('click', e => { const b = e.target.closest('[data-b]'); if (b) showBy(+b.dataset.b); }); by.addEventListener('pointerover', e => { const b = e.target.closest('[data-b]'); if (b && matchMedia('(hover: hover)').matches) showBy(+b.dataset.b); }); showBy(0);
+    // A/B: four beats, tap or watch
+    { const ab = $('#tfAb', root); const CAP = ['Two layouts, both reasonable, both defended in reviews.', 'We called owners and walked them through both. Their words pointed one way.', 'Then an A/B test on the dashboard, to see it in real behaviour, not just opinions.', 'B got the go-ahead: actions lead on the left, the meter sits on the right where it’s glanced at, not fought over.'];
+      let auto = 0; const set = k => { ab.dataset.s = k; $$('.ab-steps button', ab).forEach(b => b.classList.toggle('on', +b.dataset.k <= k)); $('#tfAbC', root).textContent = CAP[k]; };
+      ab.addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) { clearInterval(auto); set(+b.dataset.k); } });
+      ab._on = () => { let k = 0; auto = every(() => { k++; set(k); if (k >= 3) clearInterval(auto); }, 2600); }; set(0); }
     // the fold
     const fold = $('#tfFold', root); const FD = { s: [2, 'A compact meter keeps two listings in view. The score is still the first thing you see.'], m: [1, 'One listing left above the fold. The meter starts to cost more than it gives.'], l: [0, 'A hero meter, and no listings at all until you scroll. Beautiful, and in the way.'] };
     const setFold = z => { fold.dataset.z = z; $$('[data-z]', fold).forEach(b => { const on = b.dataset.z === z; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); count($('#tfFn', root), FD[z][0], 400); $('#tfFd', root).textContent = FD[z][1]; };
@@ -7853,7 +7898,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       $('img', lb).src = im.src; $('img', lb).alt = im.alt; lb.classList.toggle('tall', im.naturalHeight > im.naturalWidth * 1.2); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
     addEventListener('keydown', initTF.kd = e => { if (e.key === 'Escape' && lb.classList.contains('open')) { closeLb(); e.stopImmediatePropagation(); } }, true);
     // coach marks: a quiet tooltip, only after a few seconds of doing nothing
-    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfSh .sh-add', 'Tap Add, or keep scrolling'], ['#tfGm .m3-g', 'Drag the knob around the arc'], ['#tfEv .ev-nav', 'Tap a version or use the arrows'], ['#tfRt .rt-who', 'Switch owner, or tap Add'], ['#tfSt .tf-stn', 'Swipe or use the arrows'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
+    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfSh .sh-add', 'Tap Add, or keep scrolling'], ['#tfGm .m3-g', 'Drag the knob around the arc'], ['#tfEv .ev-nav', 'Tap a version or use the arrows'], ['#tfRt .rt-who', 'Switch owner, or tap Add'], ['#tfAb .ab-steps', 'Tap a step to replay the test'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
       const done = new Set(), tip = document.createElement('div'); tip.className = 'tf-tip'; tip.setAttribute('role', 'status'); document.body.appendChild(tip); initTF.tip = tip;
       let last = performance.now(), cur = null; const poke = () => { last = performance.now(); if (cur) { done.add(cur); cur = null; tip.classList.remove('on'); } };
       ['scroll', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => root.addEventListener(ev, poke, { passive: true }));
