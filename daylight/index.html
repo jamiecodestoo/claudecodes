@@ -4659,6 +4659,49 @@ html:root .scroll-cue i::after { top: 5px; }
 .tf-end .k { margin: 0 0 3vh; font: 700 13px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--tp); }
 .tf-last { margin: 2vh auto 0; max-width: 24ch; font: 800 clamp(30px, 4vw, 54px)/1.12 var(--sans); letter-spacing: -.045em; text-wrap: balance; }
 
+/* hero v3 */
+.tf-hero .tf-k { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; padding: 0; background: none; box-shadow: none; font: 600 15px/1.3 var(--sans); color: var(--ink-2); letter-spacing: 0; }
+.tf-hero .tf-k img { width: 30px; height: 30px; border-radius: 9px; box-shadow: 0 0 0 1px var(--line); } .tf-hero .tf-k b { color: var(--oyo); font-weight: 800; }
+p.tf-meta { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 12px; margin: 0 0 6vh; font: 500 15px/1.3 var(--sans); color: var(--ink-2); }
+p.tf-meta i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: .5; }
+.tf-hero :is(.tf-hcard, .tf-try) { opacity: 0; translate: 0 18px; transition: opacity .9s var(--ease) .55s, translate 1s var(--ease) .55s; } .tf-hero.in :is(.tf-hcard, .tf-try) { opacity: 1; translate: 0 0; }
+.tf-hcard { width: min(100%, 440px); padding: 24px; border-radius: 28px; background: var(--card); box-shadow: 0 0 0 1px var(--line), 0 40px 80px -46px rgba(20, 80, 50, .45); box-sizing: border-box; transition: box-shadow .6s; }
+.tf-hcard.max { box-shadow: 0 0 0 2px #4CC892, 0 40px 80px -40px rgba(20, 120, 70, .5); }
+.tf-hcard .hd { text-align: left; } .tf-hcard .hd b { display: block; font: 600 20px/1.2 var(--sans); } .tf-hcard .hd small { font: 400 14px/1.4 var(--sans); color: var(--ink-2); }
+.tf-hcard .msg { margin: 6px 0 18px; font: 500 15px/1.4 var(--sans); min-height: 2.8em; }
+.tf-hcard .acts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.tf-hcard .acts button { display: grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto auto; gap: 2px 10px; align-items: center; width: 100%; padding: 10px; border: 0; border-radius: 16px; background: var(--paper); color: var(--ink); text-align: left; cursor: pointer; transition: background .3s, box-shadow .3s, transform .2s; }
+.tf-hcard .acts button:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-hcard .ic { grid-row: span 2; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; background: var(--card); color: var(--ink-2); transition: background .3s, color .3s; }
+.tf-hcard .t { font: 600 14px/1.2 var(--sans); } .tf-hcard em { grid-column: 3; grid-row: 1; font: 700 12px/1 var(--sans); font-style: normal; color: var(--tg); }
+.tf-hcard .go { grid-column: 2 / 4; font: 600 12px/1 var(--sans); color: var(--ink-2); }
+.tf-hcard .acts button.on { background: var(--tgl); } .tf-hcard .acts button.on .ic { background: var(--tg); color: #fff; } .tf-hcard .acts button.on .go { color: var(--tg); }
+.tf-try { margin: 16px 0 0; font: 500 14px/1.4 var(--sans); color: var(--ink-2); }
+/* opening v3 */
+.tf-open { max-width: 76rem; padding-top: 16vh; }
+.tf-ba { display: grid; justify-items: center; gap: 26px; margin: 0 auto 5vh; }
+.tf-ba .ba-stage { display: grid; justify-items: center; gap: 14px; width: min(100%, 520px); }
+.tf-ba .ba-ask { display: flex; align-items: center; gap: 10px; align-self: start; justify-self: start; }
+.tf-ba .ba-av { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--tbl); color: var(--tb); flex: none; }
+.tf-ba .ba-ask p { margin: 0; padding: 12px 16px; border-radius: 18px 18px 18px 6px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); font: 600 16px/1.35 var(--sans); text-align: left; }
+.tf-ba .ba-card { width: 100%; border-radius: 22px; background: #fff; color: #24272C; box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 30px 60px -40px rgba(60, 40, 0, .4); overflow: hidden; text-align: left; --soft: #ECEAE4; }
+.tf-ba .ba-top { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 16px; }
+.tf-ba .ba-top img { width: 76px; height: 64px; border-radius: 12px; object-fit: cover; } .tf-ba .ba-tx { display: grid; gap: 3px; } .tf-ba small, .tf-ba .ba-tx span { font: 400 13px/1.2 var(--sans); color: #6B6F75; } .tf-ba .ba-tx b { font: 600 17px/1.25 var(--sans); }
+.tf-ba .ba-sc { transition: opacity .5s, scale .5s var(--ease); } .tf-ba[data-m="b"] .ba-sc { opacity: 0; scale: .6; }
+.tf-ba .ba-old { display: flex; gap: 8px; padding: 0 16px 16px; } .tf-ba .ba-old span { padding: 8px 14px; border-radius: 10px; background: #F1EFEA; font: 600 13px/1 var(--sans); color: #6B6F75; }
+.tf-ba .ba-new { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; max-height: 0; padding: 0 16px; background: #FDF6E3; overflow: hidden; transition: max-height .6s var(--ease), padding .6s var(--ease); }
+.tf-ba[data-m="a"] .ba-new { max-height: 120px; padding: 14px 16px; }
+.tf-ba .ba-new img { width: 64px; height: 48px; border-radius: 8px; object-fit: cover; } .tf-ba .ba-new em { display: inline-block; padding: 3px 8px; border-radius: 6px; background: #E3F4EC; color: #16825A; font: 600 12px/1.2 var(--sans); font-style: normal; } .tf-ba .ba-new b { display: block; margin-top: 4px; font: 600 15px/1.2 var(--sans); }
+.tf-ba .ba-add { padding: 9px 16px; border-radius: 10px; box-shadow: inset 0 0 0 1.5px #24272C; font: 600 14px/1 var(--sans); }
+.tf-ba .ba-ans { justify-self: end; display: grid; font: 600 15px/1.35 var(--sans); }
+.tf-ba .ba-ans > span { grid-area: 1 / 1; justify-self: end; display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 18px 18px 6px 18px; transition: opacity .4s, translate .4s var(--ease); }
+.tf-ba .ba-ans .ba-n { background: var(--trl); color: var(--tr); } .tf-ba .ba-ans .ba-y { background: var(--tgl); color: var(--tg); }
+.tf-ba[data-m="b"] .ba-ans .ba-y, .tf-ba[data-m="a"] .ba-ans .ba-n { opacity: 0; translate: 0 8px; }
+.tf-3 { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0 auto 3vh; padding: 0; list-style: none; }
+.tf-3 li { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px 10px 10px; border-radius: 999px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); font: 600 15px/1.2 var(--sans); }
+.tf-3 i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--tal); color: var(--ta); font: 800 13px/1 var(--sans); font-style: normal; }
+p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-shadow: none; font: 400 16px/1.55 var(--sans); color: var(--ink-2); }
+@media (max-width: 640px) { .tf-hcard .acts { grid-template-columns: 1fr; } .tf-hcard { padding: 18px; } .tf-ba .ba-top img { width: 60px; height: 52px; } .tf-ba .ba-old span { padding: 7px 10px; } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -7127,6 +7170,7 @@ html:root .scroll-cue i::after { top: 5px; }
       spark: '<path d="M12 3c.6 4.6 2.4 6.4 7 7-4.6.6-6.4 2.4-7 7-.6-4.6-2.4-6.4-7-7 4.6-.6 6.4-2.4 7-7z"/>', figma: '<path d="M9 3h3v6H9a3 3 0 0 1 0-6zM12 3h3a3 3 0 0 1 0 6h-3zM9 9h3v6H9a3 3 0 0 1 0-6zM15 12a3 3 0 1 1-3-3 3 3 0 0 1 3 3zM9 15h3v3a3 3 0 1 1-3-3z"/>',
       arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>', warn: '<path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4.5M12 17v.2"/>'
     },
+    hero: [['cam', 'Photography', 15], ['play', 'Virtual tour', 10], ['star', 'Top listing', 20], ['mail', 'Newsletter', 10]],
     ctr: [['Listing section', 34.65, 'list'], ['Statistics', 6.63, 'stat'], ['Renewal CTA', 1.40, 'ren'], ['Publish CTA', 0.45, 'pub']],
     // regions on the old page (pixels on the 1600×1740 capture)
     old: [
@@ -7178,23 +7222,36 @@ html:root .scroll-cue i::after { top: 5px; }
     return `<div class="cs-bar tf-bar"><button class="cs-close" id="csClose" type="button"><span class="ar" aria-hidden="true">←</span>Back to the box</button><span class="tf-bk"><img src="v2/s/logo-traum.webp" alt=""> Traum · Host dashboard</span></div>
     <div class="tf tf-pg">
       <header class="tf-hero" id="tfHero">
-        <p class="tf-k"><img src="v2/s/logo-traum.webp" alt="">Traum-Ferienwohnungen · an <b>OYO</b> company</p>
+        <p class="tf-k"><img src="v2/s/logo-traum.webp" alt=""><span>Traum-Ferienwohnungen, an <b>OYO</b> company</span></p>
         <h2 class="tf-t"><span class="ln"><span>A score worth</span></span><span class="ln"><span class="u">chasing.</span></span></h2>
         <p class="tf-lead">Turning a property dashboard into a system that tells owners what to do next.</p>
-        <ul class="tf-meta"><li>Product design</li><li>Desktop &amp; mobile web</li><li>1 month</li><li>End-to-end design</li></ul>
-        <div class="tf-stage" id="tfStage">
-          ${tfBrw('s-final', 'The redesigned Advertisements page on desktop', undefined, 'auto')}
-          ${tfPhone(`<img src="${ti('mobile')}" alt="The redesigned page on mobile web">`, 'auto')}
+        <p class="tf-meta">Product design <i></i> Desktop &amp; mobile web <i></i> 1 month</p>
+        <div class="tf-hcard" id="tfHc">
+          <div class="hd"><b>Growth meter</b><small>Your property’s visibility at a glance.</small></div>
+          <div class="tf-gw">${tfGauge('tfHg')}<div class="tf-gv"><b id="tfHv">45</b><span class="tf-chip a" id="tfHch">Needs attention</span></div></div>
+          <p class="msg" id="tfHm"></p>
+          <ul class="acts">${TF.hero.map(([ic, t, pt], i) => `<li><button type="button" data-h="${i}"><span class="ic">${tfIc(ic)}</span><span class="t">${t}</span><em>+${pt}</em><span class="go">Add</span></button></li>`).join('')}</ul>
         </div>
-        <p class="tf-hint">The real screens. They scroll on their own; hover or touch to take over.</p>
+        <p class="tf-try">Tap an action and watch the score move.</p>
       </header>
 
-      <section class="tf-open" id="tfOpen">
-        <p class="tf-big" data-rv>A property owner logs in to manage their listings.</p>
-        ${p('They can edit a property, check its details, or renew a subscription. But there’s one thing the dashboard doesn’t really tell them:')}
-        <blockquote class="tf-q" data-rv id="tfQ"><span class="ty" id="tfQt"></span><i class="caret"></i></blockquote>
-        ${p('That’s where I started. I redesigned Traum-Ferienwohnungen’s advertisement page around a simple idea: give every property a score, show owners what could improve it, and make the next action obvious.')}
-        <div class="tf-catch" data-rv><b>The catch?</b> The solution also needed to support renewals and revenue, without turning the dashboard into one giant sales pitch.</div>
+      <section class="tf-sec tf-open" id="tfOpen">
+        ${head('Owners could manage listings.', 'Not grow them.')}
+        ${p('The old dashboard let them edit, check and renew. It never answered the one question they actually had.')}
+        <div class="tf-ba" data-rv id="tfBa" data-m="b">
+          <div class="tf-sw2" role="tablist"><button type="button" data-m="b" class="on" aria-selected="true">Before</button><button type="button" data-m="a">After</button></div>
+          <div class="ba-stage">
+            <div class="ba-ask"><span class="ba-av">${tfIc('people')}</span><p>What should I do to get more bookings?</p></div>
+            <div class="ba-card">
+              <div class="ba-top"><img src="${ti('ph')}" alt=""><div class="ba-tx"><small>No 343300</small><b>Ferienwohnung Strandhuus</b><span>End of term: August 2026</span></div><span class="ba-sc">${tfRing(52, 'a')}</span></div>
+              <div class="ba-old"><span>Edit</span><span>Details</span><span>Renew</span></div>
+              <div class="ba-new"><img src="${ti('rc-3')}" alt=""><span><em>+25 points</em><b>Add a virtual tour</b></span><span class="ba-add">Add</span></div>
+            </div>
+            <div class="ba-ans"><span class="ba-n">…no answer on the page.</span><span class="ba-y">${tfIc('check')}A virtual tour. It’s worth 25 points.</span></div>
+          </div>
+        </div>
+        <ol class="tf-3" data-rv>${['Give every property a score', 'Show what would improve it', 'Make the next step obvious'].map((t, i) => `<li><i>${i + 1}</i>${t}</li>`).join('')}</ol>
+        <p class="tf-catch" data-rv>The catch: it also had to lift renewals and revenue, without turning the page into a sales pitch.</p>
       </section>
 
       <section class="tf-sec" id="tfNum">
@@ -7382,8 +7439,6 @@ html:root .scroll-cue i::after { top: 5px; }
       const tick = t => { const dt = Math.min(.05, (t - last) / 1000); last = t; if (on && t > hold) { const max = vp.scrollHeight - vp.clientHeight; if (max > 4) { if (Math.abs(vp.scrollTop - pos) > 3) pos = vp.scrollTop; pos += dir * speed * dt; if (pos >= max) { pos = max; dir = -1; hold = t + 1600; } else if (pos <= 0) { pos = 0; dir = 1; hold = t + 1600; } vp.scrollTop = pos; } } else pos = vp.scrollTop; initTF.raf.push(requestAnimationFrame(tick)); };
       initTF.raf.push(requestAnimationFrame(tick)); };
     $$('.tf-brw.auto .vp, .tf-phone.auto .scr', root).forEach((vp, i) => drift(vp, i ? 40 : 30));
-    // the question types itself
-    const q = $('#tfQ', root); q._on = () => { const s = '“What should I do to get more visibility and more bookings?”', el = $('#tfQt', root); let i = 0; if (reduce) { el.textContent = s; q.classList.add('done'); return; } const iv = every(() => { el.textContent = s.slice(0, ++i); if (i >= s.length) { clearInterval(iv); q.classList.add('done'); } }, 34); };
     // CTR bars, and how many times bigger the listing section is
     const ctr = $('#tfCtr', root), cmp = $('#tfCmp', root);
     const showCmp = i => { if (!i) i = 2; const [t, v] = TF.ctr[i], x = TF.ctr[0][1] / v; $$('.r', ctr).forEach(r => r.classList.toggle('on', +r.dataset.c === i)); cmp.innerHTML = `The listing section got <b>${x >= 10 ? Math.round(x) : x.toFixed(1)}×</b> the clicks of the ${t.toLowerCase().replace('cta', 'CTA')}.`; };
@@ -7408,6 +7463,15 @@ html:root .scroll-cue i::after { top: 5px; }
     const putG = (svg, v) => { const a = (200 - 220 * v / 100) * Math.PI / 180, k = $('.kn', svg); $('.fl', svg).style.strokeDasharray = `${Math.max(.01, v).toFixed(2)} 100`; k.setAttribute('cx', (120 + 96 * Math.cos(a)).toFixed(1)); k.setAttribute('cy', (120 - 96 * Math.sin(a)).toFixed(1)); };
     const tween = (svg, v) => { const from = svg._v || 0, t0 = performance.now(), ms = reduce ? 1 : 900; svg._v = v; cancelAnimationFrame(svg._raf); const step = t => { const q = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - q, 3); putG(svg, from + (v - from) * e); if (q < 1) svg._raf = requestAnimationFrame(step); }; svg._raf = requestAnimationFrame(step); };
     const band = v => TF.bands.find(([a, b]) => v >= a && v <= b);
+    // hero: a growth meter you can grow
+    { const hg = $('#tfHg', root), hc = $('#tfHc', root); let hv = 45; const on = new Set();
+      const draw = anim => { const [, , t, c, m] = band(hv); tween(hg, hv); count($('#tfHv', root), hv, 700); const ch = $('#tfHch', root); ch.textContent = t; ch.className = 'tf-chip ' + c; $('#tfHm', root).textContent = m; hc.classList.toggle('max', hv >= 100); };
+      const add = i => { if (on.has(i)) { on.delete(i); hv -= TF.hero[i][2]; } else { on.add(i); hv += TF.hero[i][2]; } const b = $(`[data-h="${i}"]`, hc); b.classList.toggle('on', on.has(i)); $('.go', b).textContent = on.has(i) ? 'Added' : 'Add'; draw(); };
+      hc.addEventListener('click', e => { const b = e.target.closest('[data-h]'); if (b) add(+b.dataset.h); });
+      later(() => draw(), 500); later(() => { if (!on.size) add(0); }, 1900); }
+    // before and after
+    { const ba = $('#tfBa', root); const set = m => { ba.dataset.m = m; $$('.tf-sw2 button', ba).forEach(b => { const o = b.dataset.m === m; b.classList.toggle('on', o); b.setAttribute('aria-selected', o); }); };
+      ba.addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b && b.tagName === 'BUTTON') set(b.dataset.m); }); ba._on = () => later(() => { if (ba.dataset.m === 'b') set('a'); }, 2400); }
     const drawG = (v, anim) => { const [, , t, c, m] = band(v); anim ? tween(G, v) : (G._v = v, putG(G, v)); anim ? count($('#tfGv', root), v, 600) : $('#tfGv', root).textContent = v;
       const ch = $('#tfGc', root); ch.textContent = t; ch.className = 'tf-chip ' + c; $('#tfGmsg', root).textContent = m;
       const r = $('#tfGring .tf-ring', root); r.style.setProperty('--v', v); $('b', r).textContent = v; r.classList.toggle('a', v < 50);
