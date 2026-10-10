@@ -21,8 +21,6 @@ const PAGES = [
     desc: 'A score worth chasing. How I redesigned the host dashboard for Traum-Ferienwohnungen by OYO around one number: the visibility score.' },
   { path: '/work/lastlook', title: `LastLook | ${NAME}`, og: 'lastlook',
     desc: 'LastLook, my own iOS app that reminds you to check your essentials before you leave. Case study coming soon.' },
-  { path: '/work/campusx', title: `CampusX | ${NAME}`, og: 'campusx',
-    desc: 'CampusX, the failed app that got me into design. Case study coming soon.' },
   { path: '/journey', title: `The journey | ${NAME}`, og: 'home', desc: 'Engineer by degree, designer by obsession. Nine stops between 2021 and now.' },
   { path: '/work', title: `Work | ${NAME}`, og: 'home', desc: 'Case studies from EazyDiner, MakeMyTrip, Traum and my own apps.' },
   { path: '/about', title: `About me | ${NAME}`, og: 'home', desc: HOME.desc },
