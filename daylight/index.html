@@ -4832,7 +4832,10 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 @media (max-width: 520px) { .tf-board { grid-template-columns: 1fr; padding: 22px 18px; } .tf-pin { aspect-ratio: auto; min-height: 190px; } }
 /* wrong turn: scroll scene */
 .tf-sh { height: 340vh; }
-.sh-pin { position: sticky; top: 0; height: 100vh; display: grid; align-content: center; justify-items: center; gap: 26px; padding-top: 40px; box-sizing: border-box; }
+.sh-pin { position: sticky; top: 0; height: 100vh; display: grid; align-content: center; justify-items: center; gap: 22px; padding-top: 56px; box-sizing: border-box; }
+.sh-hd .tf-h { margin-bottom: 1.5vh; font-size: clamp(30px, 3.6vw, 52px); } .sh-hd .tf-p { margin: 0 auto; } .sh-hd .tf-pl { margin-bottom: 12px; }
+#tfFirst { padding-top: 10vh; }
+@media (max-width: 640px) { .sh-pin { align-content: start; padding-top: 74px; gap: 14px; } .sh-hd .tf-pl, .sh-hd .tf-p { display: none; } .sh-hd .tf-h { font-size: 28px; margin: 0; } .sh-steps { gap: 4px 14px; } .sh-note { width: 230px; padding: 20px 16px 16px; } .sh-note b { font-size: 16px; } }
 .sh-steps { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin: 0; padding: 0; list-style: none; }
 .sh-steps li { opacity: .45; transition: opacity .4s; } .sh-steps button { display: flex; align-items: center; gap: 8px; padding: 0; border: 0; background: none; font: 600 15px/1.2 var(--sans); color: var(--ink-2); cursor: pointer; } .sh-steps li.cur button { color: var(--ink); }
 .sh-steps i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--soft); font: 800 12px/1 var(--sans); font-style: normal; transition: background .4s, color .4s; }
@@ -7519,11 +7522,13 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       </section>
 
       <section class="tf-sec" id="tfFirst">
+        <div class="tf-sh" id="tfSh">
+          <div class="sh-pin">
+            <div class="sh-hd">
         ${plq(4, 'A wrong turn')}
         ${head('My first idea', 'wasn’t the best one.')}
         ${p('I started with a separate catalogue of add-ons. Then I watched one property need just one of them.')}
-        <div class="tf-sh" id="tfSh">
-          <div class="sh-pin">
+            </div>
             <ol class="sh-steps">${['A catalogue for everyone', 'This property needs one thing', 'The offer moves in', 'Added'].map((t, i) => `<li data-k="${i}"><button type="button" data-k="${i}"><i>${i + 1}</i><span>${t}</span></button></li>`).join('')}</ol>
             <div class="sh-stage" data-s="0">
               <div class="sh-card">
