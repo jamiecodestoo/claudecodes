@@ -195,13 +195,16 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .nums li { padding: 11px 12px; border-radius: 14px; background: color-mix(in srgb, var(--c) 10%, var(--card)); display: grid; gap: 2px; }
 .nums b { font-size: 22px; font-weight: 800; letter-spacing: -.03em; line-height: 1.05; font-variant-numeric: tabular-nums; }
 .nums span { font-size: 12.5px; line-height: 1.3; color: var(--ink-2); font-weight: 500; }
-.nums li.fx { display: grid; overflow: hidden; } .nums .fx > span { grid-area: 1 / 1; display: grid; align-content: start; gap: 2px; color: inherit; font-size: inherit; transition: opacity .35s calc(var(--k) * .08s), translate .45s calc(var(--k) * .08s) cubic-bezier(.2, .8, .2, 1); }
-.nums .fx > .bk { opacity: 0; translate: 0 60%; } .nums .fx > .bk b { color: #16825A; }
-@media (hover: hover) { .sheet:hover .nums .fx > .f, .sheet:focus-within .nums .fx > .f { opacity: 0; translate: 0 -60%; } .sheet:hover .nums .fx > .bk, .sheet:focus-within .nums .fx > .bk { opacity: 1; translate: 0 0; } }
-@media (hover: none) { .nums .fx > .f { animation: fxf 7s 2s infinite; } .nums .fx > .bk { animation: fxb 7s 2s infinite; } }
-@keyframes fxf { 0%, 42% { opacity: 1; translate: 0 0; } 50%, 92% { opacity: 0; translate: 0 -60%; } }
-@keyframes fxb { 0%, 42% { opacity: 0; translate: 0 60%; } 50%, 92% { opacity: 1; translate: 0 0; } }
-:root[data-theme="dark"] .nums .fx > .bk b { color: #4CC892; }
+.s-alt { position: absolute; z-index: 2; display: grid; align-content: center; gap: 10px; padding: 14px 16px; border-radius: 16px; box-sizing: border-box; background: color-mix(in srgb, #1667A8 6%, var(--card)); box-shadow: inset 0 0 0 1px color-mix(in srgb, #1667A8 16%, transparent); opacity: 0; translate: 0 10px; pointer-events: none; transition: opacity .35s, translate .45s cubic-bezier(.2, .8, .2, 1); }
+.s-alt[hidden] { display: none; }
+.sheet.alt .s-alt { opacity: 1; translate: 0 0; } .sheet #s-p, .sheet #s-n { transition: opacity .3s; } .sheet.alt #s-p, .sheet.alt #s-n { opacity: 0; }
+.sa-k { display: flex; align-items: center; gap: 8px; margin: 0; font: 700 12px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: #1667A8; } .sa-k img { width: 20px; height: 20px; border-radius: 6px; }
+.sa-l { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; } .sa-l li { display: flex; align-items: flex-start; gap: 8px; font: 500 14px/1.35 var(--sans); color: var(--ink); }
+.sa-l svg { flex: none; width: 16px; height: 16px; margin-top: 1px; fill: none; stroke: #16825A; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.sa-m { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; } .sa-m span { display: inline-flex; align-items: baseline; gap: 6px; padding: 6px 10px; border-radius: 10px; background: var(--card); box-shadow: inset 0 0 0 1px color-mix(in srgb, #16825A 20%, transparent); font: 500 12.5px/1 var(--sans); color: var(--ink-2); }
+.sa-m b { font: 800 17px/1 var(--sans); letter-spacing: -.02em; color: #16825A; } .sa-m small { font: 500 12px/1 var(--sans); color: var(--ink-2); }
+@media (hover: none) { .sheet .s-alt { position: static; order: 1; margin-top: 12px; opacity: 1; translate: none; } }
+:root[data-theme="dark"] .sa-k { color: #6CB8EE; } :root[data-theme="dark"] .sa-m b { color: #4CC892; } :root[data-theme="dark"] .sa-l svg { stroke: #4CC892; }
 .peek { display: flex; gap: 10px; margin: 16px 0 0; }
 .peek img { width: calc((100% - 20px) / 3); height: auto; border-radius: 14px; box-shadow: var(--shadow-sm); border: 1px solid var(--line); background: #fff; transition: transform .5s var(--spring); }
 .peek img:nth-child(1) { transform: rotate(-3deg); }
@@ -3696,7 +3699,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
   .sheet .did p:nth-child(n+2) { display: none; }
   .sheet .nums { display: flex !important; gap: 8px; overflow-x: auto; scrollbar-width: none; }
   .sheet .nums[hidden] { display: none !important; }
-  .sheet .nums li { flex: 1 0 auto; padding: 10px 12px !important; } .sheet .nums li.fx { flex: 1 1 0; min-width: 0; }
+  .sheet .nums li { flex: 1 0 auto; padding: 10px 12px !important; }
   .sheet .nums b { font-size: 20px !important; }
   .sheet .nums span { font-size: 11.5px !important; }
   .sheet .row { margin: 10px -16px -16px; padding: 12px 16px 14px; bottom: -16px; box-sizing: border-box; width: calc(100% + 32px); }
@@ -5330,6 +5333,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <div class="s-fun" id="s-f" hidden></div>
       <div class="s-gal" id="s-p"></div>
       <ul class="nums" id="s-n"></ul>
+      <div class="s-alt" id="s-a" hidden aria-hidden="true"></div>
       <div class="row" id="s-row"></div>
     </aside>
 
@@ -5691,8 +5695,8 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       n: [['16 → 35%', 'hotel response rate'], ['4,500+', 'bookings a day use it'], ['2,800+', 'hotels on the new flow']], j: 5, cs: 'requests', csL: 'View case study' },
     oyo: { c: '#DC402A', side: 'left', tag: 'Chapter 04 · Dec 2025 → now', t: 'OYO', r: 'Associate Product Designer',
       h: 'Then OYO, and the whole stay.',
-      st: ['Where I am right now: <b>self check-in, room selection and cancellations</b>. For <b>Traum</b>, an OYO company in Germany, I designed a <b>B2B host dashboard</b> that tells holiday-home owners what to do next.'],
-      n: [['500', 'properties validated'], ['6,000+', 'approved next']], alt: [['+5%', 'page engagement, Traum target'], ['+3–4%', 'renewals, Traum target']], j: 6, cs: 'traum', csL: 'View case study' },
+      st: ['Where I am right now: <b>self check-in, room selection and cancellations</b>. For <b>Traum</b>, an OYO company in Germany, I redesigned the dashboard holiday-home owners use every day.'],
+      n: [['500', 'properties validated'], ['6,000+', 'approved next']], alt: { l: ['A visibility score on every listing', 'Next steps picked for each owner', 'Clearer states for live, expiring and offline listings'], m: [['+5%', 'engagement'], ['+3–4%', 'renewals']] }, j: 6, cs: 'traum', csL: 'View case study' },
     me: { c: '#F2B705', side: 'left', tag: 'About me', t: 'Hey, I’m James', r: '23 · Product designer · Builder · Engineer',
       h: 'I design so people don’t rage quit.',
       st: [],
@@ -5773,7 +5777,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       pois: [[160, 100, 'bell', 'Hotels now reply: 16% → 35%.'], [-170, 110, 'heart', 'Swipr.AI: swipe right on a hotel.']] },
     { id: 'oyo', when: 'Dec 2025', place: 'Gurgaon', logo: 'logo-oyo', c: '#DC402A', at: [3820, 1460], lift: 200, name: 'OYO',
       title: 'Then OYO, and the whole stay.',
-      txt: 'At <b>OYO</b>, a hospitality chain, I design the moments between booking a room and walking into it: <b>self check-in, room selection and cancellations</b>. For <b>Traum</b>, an OYO company, I designed a <b>B2B host dashboard</b>.',
+      txt: 'At <b>OYO</b>, a hospitality chain, I design the moments between booking a room and walking into it: <b>self check-in, room selection and cancellations</b>. For <b>Traum</b>, an OYO company, I redesigned the host dashboard.',
       stats: [['500', 'properties validated'], ['6,000+', 'approved next']],
       photos: [['oyo-floor', 'The OYO floor'], ['oyo-building', 'Spaze Palazo, by night'], ['oyo-prism-figma', 'Designing PRISM'], ['oyo-prism-wall', 'PRISM, live on the wall']],
       work: 'traum', pois: [[160, 100, 'key', 'Self check-in, straight to your room.']] },
@@ -5800,7 +5804,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       did: ['Pulled real complaints to check the problem was real: "I just apply the first coupon I see."', 'Filled a whiteboard with 40+ pain points and boiled them down to 5 core problems', 'Studied 50+ apps, from Zomato and Swiggy to BookMyShow and District', 'Went through 4 rounds: search and chips, bank sub-chips, tabs by card type, then the final tray', 'Solved the Axis Bank puzzle (80+ card types) by asking for the first 8 digits of the card', 'Put the single best coupon upfront, based on your payment method', 'Ran a 3-hour handoff with the devs so the logic behind every decision shipped too'],
       res: [['+41%', 'payment success, 34.6% → 45.6%'], ['+25%', 'coupon application, 55.5% → 67%'], ['18 → 42%', 'filter engagement'], ['+26%', 'coupon tray opens']],
       shots: ['ed1', 'ed2', 'ed3', 'ed4'] },
-    { id: 'traum', bg: 'radial-gradient(90% 60% at 0% 0%, #FFD24D 0%, transparent 55%), radial-gradient(90% 70% at 100% 100%, #EE4B73 0%, transparent 60%), linear-gradient(165deg, #3AA6E0, #1667A8)', glow: '#3AA6E0', logo: 'logo-traum', face: ['mid', 'A score worth chasing.', 'B2B host dashboard'], name: 'The Visibility Game', co: 'Traum · an OYO company', t: '#F4F4F2', c: '#1667A8', icon: 'pin', cs: '', status: 'B2B · Desktop & mobile',
+    { id: 'traum', bg: 'radial-gradient(90% 60% at 0% 0%, #FFD24D 0%, transparent 55%), radial-gradient(90% 70% at 100% 100%, #EE4B73 0%, transparent 60%), linear-gradient(165deg, #3AA6E0, #1667A8)', glow: '#3AA6E0', logo: 'logo-traum', face: ['mid', 'A score worth chasing.', 'B2B host dashboard'], name: 'The Visibility Game', co: 'Traum · an OYO company', t: '#F4F4F2', c: '#1667A8', icon: 'pin', cs: '', status: 'Desktop & mobile web',
       pitch: 'Turning a property dashboard into a system that tells owners what to do next, one score at a time.',
       meta: [['Role', 'Sole product designer'], ['Timeline', '1 month'], ['Platforms', 'Desktop and mobile web']],
       problem: 'Hosts couldn’t tell whether their listings were working, so they never bought add-ons and often missed renewals.',
@@ -5903,7 +5907,9 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     $('#s-f').innerHTML = fun.length ? `<div class="sf-tabs" role="tablist">${fun.map(([t, c], k) => `<button type="button" role="tab" data-ft="${k}" style="--fc:${c}" aria-selected="${!k}">${t}</button>`).join('')}</div>`
       + fun.map(([, c, items], k) => `<ul class="sf-pane" data-fp="${k}" style="--fc:${c}"${k ? ' hidden' : ''}>${items.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>`).join('') : '';
     $('#s-f').hidden = !fun.length;
-    $('#s-n').innerHTML = P.n.map(([b, s], k) => P.alt && P.alt[k] ? `<li class="fx" style="--k:${k}"><span class="f"><b>${b}</b><span>${s}</span></span><span class="bk" aria-hidden="true"><b>${P.alt[k][0]}</b><span>${P.alt[k][1]}</span></span></li>` : `<li><b>${b}</b><span>${s}</span></li>`).join('');
+    $('#s-n').innerHTML = P.n.map(([b, s]) => `<li><b>${b}</b><span>${s}</span></li>`).join('');
+    const A = $('#s-a'); sheet.classList.remove('alt'); clearInterval(sheet._alt); A.hidden = !P.alt;
+    A.innerHTML = P.alt ? `<p class="sa-k"><img src="${img('logo-traum')}" alt="">Traum, after the redesign</p><ul class="sa-l">${P.alt.l.map(t => `<li><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>${t}</li>`).join('')}</ul><div class="sa-m">${P.alt.m.map(([b, t]) => `<span><b>${b}</b>${t}</span>`).join('')}<small>targets</small></div>` : '';
     const ph = P.photos || (S && S.photos) || [];
     $('#s-p').innerHTML = ph.length ? `<p>Gallery</p><div style="--n:${ph.length}">${ph.map(([src, cap], k) => `<button type="button" class="jc-ph" data-sg="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div>` : '';
     $('#s-p').hidden = !ph.length;
@@ -5912,6 +5918,11 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     $('#s-row').innerHTML = cta; $('#s-row').hidden = !cta;
   }
 
+  // the Traum summary sits exactly over the gallery and the numbers, so the card never changes height
+  const placeAlt = () => { const A = $('#s-a'); if (A.hidden) return; const els = [$('#s-p'), $('#s-n')].filter(e => !e.hidden && e.offsetHeight); if (!els.length) return;
+    const t = Math.min(...els.map(e => e.offsetTop)), b = Math.max(...els.map(e => e.offsetTop + e.offsetHeight)); A.style.top = t + 'px'; A.style.height = Math.max(b - t, 150) + 'px'; A.style.left = els[0].offsetLeft + 'px'; A.style.width = els[0].offsetWidth + 'px'; };
+  sheet.addEventListener('pointerenter', e => { if (e.pointerType !== 'mouse' || $('#s-a').hidden) return; placeAlt(); sheet.classList.add('alt'); });
+  sheet.addEventListener('pointerleave', () => { if (!matchMedia('(hover: none)').matches) sheet.classList.remove('alt'); });
   function focus(id) {
     if (!PLACES[id] || pV > .04) { if (PLACES[id]) { goTo(vTop); setTimeout(() => focus(id), 900); } return; }
     if (focusId === id) return;
@@ -7713,12 +7724,12 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     const fcard = (k, [n, im, d, [ic, t, why, pt]]) => `<div class="tf-fc"><div class="top"><img src="${ti(im)}" alt=""><div><b>${n}</b><small>${d}</small></div></div>
       <div class="gen">${F.cat.map(([i, c]) => `<span>${tfIc(i)}${c}</span>`).join('')}</div>
       <div class="ctx"><span class="ic">${tfIc(ic)}</span><span class="tx"><b>${t}</b><small>${why}</small></span><em>${pt}</em></div></div>`;
-    return `<div class="cs-bar tf-bar"><button class="cs-close" id="csClose" type="button"><span class="ar" aria-hidden="true">←</span>Back to the box</button><span class="tf-bk"><img src="v2/s/logo-traum.webp" alt=""> Traum · B2B host dashboard</span></div>
+    return `<div class="cs-bar tf-bar"><button class="cs-close" id="csClose" type="button"><span class="ar" aria-hidden="true">←</span>Back to the box</button><span class="tf-bk"><img src="v2/s/logo-traum.webp" alt=""> Traum · Host dashboard</span></div>
     <div class="tf tf-pg">
       <header class="tf-hero" id="tfHero">
         <p class="tf-k"><img src="v2/s/logo-traum.webp" alt=""><span>Traum-Ferienwohnungen, an <b>OYO</b> company</span></p>
         <h2 class="tf-t"><span class="ln"><span>A score worth</span></span><span class="ln"><span class="u">chasing.</span></span></h2>
-        <p class="tf-lead">Turning a <b>B2B dashboard for holiday-home owners</b> into a system that tells them what to do next.</p>
+        <p class="tf-lead">Turning a property dashboard into a system that tells owners what to do next.</p>
         <p class="tf-meta"><span class="tf-b2b">B2B host dashboard</span> Product design <i></i> Desktop &amp; mobile web <i></i> 1 month</p>
         <div class="tf-hcard" id="tfHc">
           <div class="hd"><b>Growth meter</b><small>Your property’s visibility at a glance.</small></div>
