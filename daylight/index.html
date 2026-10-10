@@ -4951,6 +4951,36 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .wf-lg b { font: 800 clamp(24px, 2.6vw, 34px)/1 var(--sans); letter-spacing: -.03em; font-variant-numeric: tabular-nums; } .wf-lg .y b { color: #C98E00; } .wf-lg .o b { color: #E06A3F; } .wf-lg .p b { color: #D9476B; } .wf-lg .n b { color: var(--ink-2); }
 .wf-lg span { font: 500 14px/1.2 var(--sans); color: var(--ink-2); }
 @media (max-width: 640px) { .wf { grid-template-columns: repeat(25, 1fr); gap: 2px; } .wf-lg { grid-template-columns: 1fr 1fr; } }
+/* meter v3 */
+.tf-m3 { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(20px, 4vw, 56px); align-items: center; max-width: 1080px; margin: 0 auto 8vh; text-align: left; }
+.m3-card { position: relative; user-select: none; -webkit-user-select: none; padding: 26px 28px 24px; border-radius: 30px; background: #fff; color: #24272C; box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 50px 90px -50px rgba(40, 60, 30, .45); --soft: #EEEDE8; }
+.m3-card .hd b { display: flex; align-items: center; gap: 8px; font: 600 22px/1.2 var(--sans); } .m3-card .hd .i { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px #24272C; font: 700 12px/1 var(--sans); } .m3-card .hd small { font: 400 15px/1.4 var(--sans); color: #6B6F75; }
+.m3-g { position: relative; width: min(100%, 420px); margin: 10px auto 0; touch-action: none; }
+.tf-gauge.g3 { cursor: grab; } .dragging .tf-gauge.g3 { cursor: grabbing; }
+.g3 .sg { fill: none; stroke-width: 16; stroke-linecap: butt; opacity: .16; transition: opacity .35s; } .g3 .sg.on { opacity: .32; }
+.g3 .fl { stroke-width: 16; }
+.g3 .bl { font: 600 7.5px var(--sans); fill: #A3A7AC; letter-spacing: .02em; transition: fill .35s; } .g3 .bl.on { fill: #24272C; font-weight: 800; }
+.g3 .tk2 { font: 600 6.5px var(--sans); fill: #B9BCC0; }
+.g3 .halo { opacity: .18; transition: fill .4s; animation: m3h 2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; } @keyframes m3h { 50% { opacity: .05; transform: scale(1.35); } }
+.g3 .kn { stroke-width: 6; cursor: grab; }
+.m3-g .tf-gv { top: 44%; } .m3-g .tf-gv b { font-size: clamp(56px, 6vw, 80px); }
+.m3-hint { position: absolute; right: -2%; bottom: 2%; padding: 6px 10px; border-radius: 999px; background: #24272C; color: #fff; font: 700 12px/1 var(--sans); animation: m3b 1.6s ease-in-out infinite; transition: opacity .3s; pointer-events: none; } .m3-hint.gone { opacity: 0; } @keyframes m3b { 50% { translate: 0 -4px; } }
+.m3-card .msg { margin: 8px 0 0; text-align: center; font: 500 16px/1.4 var(--sans); min-height: 2.8em; }
+.m3-pin { position: absolute; z-index: 3; display: grid; place-items: center; width: 28px; height: 28px; margin: -14px 0 0 -14px; padding: 0; border: 0; border-radius: 50%; background: #FFC61F; color: #3A2A00; font: 800 13px/1 var(--sans); cursor: pointer; box-shadow: 0 0 0 4px rgba(255, 198, 31, .3), 0 6px 14px -6px rgba(120, 80, 0, .5); transition: scale .3s var(--ease), box-shadow .3s; }
+.m3-pin.on { scale: 1.2; box-shadow: 0 0 0 7px rgba(255, 198, 31, .35), 0 6px 14px -6px rgba(120, 80, 0, .5); }
+.m3-side { display: grid; gap: 18px; }
+.m3-list { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.m3-list button { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; width: 100%; padding: 14px 16px; border: 0; border-radius: 18px; background: none; color: var(--ink); text-align: left; cursor: pointer; transition: background .3s, box-shadow .3s; }
+.m3-list i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--soft); color: var(--ink-2); font: 800 13px/1 var(--sans); font-style: normal; transition: background .3s, color .3s; }
+.m3-list b { display: block; font: 700 18px/1.25 var(--sans); } .m3-list small { display: block; margin-top: 4px; font: 400 15px/1.5 var(--sans); color: var(--ink-2); max-height: 0; opacity: 0; overflow: hidden; transition: max-height .45s var(--ease), opacity .35s; }
+.m3-list li.on button { background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 14px 30px -22px rgba(0, 0, 0, .35); } .m3-list li.on i { background: var(--ty); color: #3A2A00; } .m3-list li.on small { max-height: 80px; opacity: 1; }
+.m3-li { position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 12px; border-radius: 18px; background: #fff; color: #24272C; box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 18px 40px -28px rgba(0, 0, 0, .35); transition: box-shadow .3s, scale .3s var(--ease); --soft: #EEEDE8; }
+.m3-li img { width: 64px; height: 52px; border-radius: 10px; object-fit: cover; } .m3-li small { display: block; font: 500 11px/1 var(--sans); color: #6B6F75; } .m3-li b { display: block; margin: 3px 0; font: 600 15px/1.25 var(--sans); }
+.m3-li em { font: 600 12px/1 var(--sans); font-style: normal; } .m3-li em.r { color: #C2412E; } .m3-li em.a { color: #A8740A; } .m3-li em.g, .m3-li em.p { color: #16825A; }
+.m3-li .m3-pin { top: 0; left: 0; margin: -10px 0 0 -10px; } .m3-li.on { box-shadow: 0 0 0 3px #FFC61F, 0 18px 40px -28px rgba(0, 0, 0, .35); scale: 1.02; }
+.tf-m3[data-p="0"] #tfGv, .tf-m3[data-p="1"] #tfGc, .tf-m3[data-p="2"] .m3-card .msg { outline: 3px solid rgba(255, 198, 31, .7); outline-offset: 6px; border-radius: 10px; }
+#tfGv, #tfGc, .m3-card .msg { transition: outline-color .3s; }
+@media (max-width: 900px) { .tf-m3 { grid-template-columns: 1fr; max-width: 560px; } .m3-card { padding: 20px 18px; } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -7580,16 +7610,17 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         ${plq(5, 'The visibility meter')}
         ${head('Enter the', 'visibility meter.')}
         ${p('One number from 0 to 100: on the dashboard, and on every listing card.')}
-        <div class="tf-gm2" data-rv id="tfGm">
-          <div class="g2-col l"><div class="g2-a "><i>1</i><b>The score</b><span>One number for how well the listing is set up to be seen.</span></div><div class="g2-a "><i>2</i><b>In words</b><span>“Good” or “Needs attention”, so meaning never rests on colour alone.</span></div></div>
-          <div class="g2-mid">
-            <div class="tf-gmc"><div class="hd"><b>Growth meter</b><small>Your property’s visibility at a glance.</small></div>
-              <div class="tf-gw">${tfGauge('tfG')}<div class="tf-gv"><b id="tfGv">72</b><span class="tf-chip g" id="tfGc">Good</span></div></div>
-              <p class="msg" id="tfGmsg"></p></div>
-            <ol class="bands g2-scale">${TF.bands.map(([a, b, t]) => `<li data-b="${a}"><b>${a === b ? a : `${a}–${b}`}</b><span>${t}</span></li>`).join('')}</ol>
-            <label class="g2-drag"><span>Drag to try a score</span><input type="range" id="tfGr" min="0" max="100" value="72" aria-label="Visibility score"></label>
+        <div class="tf-m3" data-rv id="tfGm">
+          <div class="m3-card">
+            <div class="hd"><b>Growth meter <span class="i">i</span></b><small>Your property’s visibility at a glance.</small></div>
+            <div class="m3-g"><svg class="tf-gauge g3" id="tfG" viewBox="-16 -14 272 186" aria-label="Growth meter. Drag the knob to change the score."><path id="tfLp0" d="M9.1 160.4A118 118 0 0 1 115.5 2.1" fill="none"/><text class="bl" data-s="0"><textPath href="#tfLp0" startOffset="50%" text-anchor="middle">Needs attention</textPath></text><path id="tfLp1" d="M120.0 2.0A118 118 0 0 1 225.9 67.9" fill="none"/><text class="bl" data-s="1"><textPath href="#tfLp1" startOffset="50%" text-anchor="middle">Good</textPath></text><path id="tfLp2" d="M227.8 72.0A118 118 0 0 1 232.4 156.1" fill="none"/><text class="bl" data-s="2"><textPath href="#tfLp2" startOffset="50%" text-anchor="middle">Great</textPath></text><text class="bl" data-s="3" x="234.9" y="176.4" text-anchor="start">Max</text><path class="sg" data-s="0" d="M29.8 152.8A96 96 0 0 1 117.8 24.0" stroke="#E0533D"/><path class="sg" data-s="1" d="M122.2 24.0A96 96 0 0 1 206.8 78.9" stroke="#E8A912"/><path class="sg" data-s="2" d="M208.6 83.0A96 96 0 0 1 211.2 150.0" stroke="#16825A"/><path class="sg" data-s="3" d="M210.6 151.8A96 96 0 0 1 210.2 152.8" stroke="#16825A"/><text class="tk2" x="46.7" y="149.7" text-anchor="middle">0</text><text class="tk2" x="120.0" y="45.0" text-anchor="middle">50</text><text class="tk2" x="191.3" y="91.3" text-anchor="middle">80</text><text class="tk2" x="193.3" y="149.7" text-anchor="middle">100</text><path class="fl" d="M29.8 152.8A96 96 0 1 1 210.2 152.8" pathLength="100" stroke="#E0533D"/><circle class="halo" r="22" cx="29.8" cy="152.8"/><circle class="kn" r="12" cx="29.8" cy="152.8"/></svg><div class="tf-gv"><b id="tfGv">72</b><span class="tf-chip g" id="tfGc">Good</span></div><span class="m3-hint" id="tfGh">Drag me</span></div>
+            <p class="msg" id="tfGmsg"></p>
+            <button type="button" class="m3-pin" data-p="0" style="left:34%;top:47%">1</button><button type="button" class="m3-pin" data-p="1" style="left:65%;top:66%">2</button><button type="button" class="m3-pin" data-p="2" style="left:5%;top:89%">3</button>
           </div>
-          <div class="g2-col r"><div class="g2-a "><i>3</i><b>The next milestone</b><span>Always tells the owner what to aim for next.</span></div><div class="g2-a"><i>4</i><b>On every listing</b><span>The same score, per property.</span><div class="mini"><img src="${ti('ph')}" alt=""><span><small>NO. 343300</small><b>Strandhuus, Wohnung 307</b></span><span id="tfGring">${tfRing(72)}</span></div></div></div>
+          <div class="m3-side">
+            <ol class="m3-list">${[['The score', 'One number, 0 to 100, for how well a property is set up to be seen.'], ['In words', 'A label carries the meaning, so colour is never the only signal.'], ['The next milestone', 'Every score comes with what to aim for next.'], ['On every listing', 'The same score lives on each card, so owners see which property needs them.']].map(([t, d], i) => `<li data-p="${i}"><button type="button" data-p="${i}"><i>${i + 1}</i><span><b>${t}</b><small>${d}</small></span></button></li>`).join('')}</ol>
+            <div class="m3-li" data-p="3"><img src="${ti('ph')}" alt=""><span><small>NO. 343300</small><b>Strandhuus, Wohnung 307</b><em id="tfGl">Good</em></span><span id="tfGring">${tfRing(72)}</span><button type="button" class="m3-pin" data-p="3">4</button></div>
+          </div>
         </div>
         <div class="tf-pr" data-rv>${[['sys', 'Made of real factors', 'Listing status, photos, location, calendar and add-ons.'], ['people', 'Readable at any age', 'A familiar gauge, clear type, and words over colour.'], ['warn', 'A proxy, not a promise', 'It reflects quality and potential reach, not a ranking guarantee.']].map(([ic, t, d]) => `<div><span class="ic">${tfIc(ic)}</span><b>${t}</b><p>${d}</p></div>`).join('')}</div>
         <h4 class="tf-h4" data-rv>How the meter grew up.</h4>
@@ -7740,8 +7771,8 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       sh.addEventListener('click', e => { const b = e.target.closest('.sh-steps button'); if (b) { manual = performance.now(); set(+b.dataset.k); } if (e.target.closest('.sh-add')) { manual = performance.now(); set(st.dataset.s == 3 ? 2 : 3); } });
       csEl.addEventListener('scroll', initTF.sc3 = go, { passive: true }); st.dataset.s = -1; set(0); }
     // the growth meter
-    const G = $('#tfG', root), gr = $('#tfGr', root);
-    const putG = (svg, v) => { const a = (200 - 220 * v / 100) * Math.PI / 180, k = $('.kn', svg); $('.fl', svg).style.strokeDasharray = `${Math.max(.01, v).toFixed(2)} 100`; k.setAttribute('cx', (120 + 96 * Math.cos(a)).toFixed(1)); k.setAttribute('cy', (120 - 96 * Math.sin(a)).toFixed(1)); k.style.fill = tfCol(v); $('.fl', svg).style.stroke = tfCol(v); };
+    const G = $('#tfG', root);
+    const putG = (svg, v) => { const a = (200 - 220 * v / 100) * Math.PI / 180, k = $('.kn', svg); $('.fl', svg).style.strokeDasharray = `${Math.max(.01, v).toFixed(2)} 100`; k.setAttribute('cx', (120 + 96 * Math.cos(a)).toFixed(1)); k.setAttribute('cy', (120 - 96 * Math.sin(a)).toFixed(1)); k.style.fill = tfCol(v); $('.fl', svg).style.stroke = tfCol(v); const h = $('.halo', svg); if (h) { h.setAttribute('cx', k.getAttribute('cx')); h.setAttribute('cy', k.getAttribute('cy')); h.style.fill = tfCol(v); } };
     const tween = (svg, v) => { const from = svg._v || 0, t0 = performance.now(), ms = reduce ? 1 : 900; svg._v = v; cancelAnimationFrame(svg._raf); const step = t => { const q = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - q, 3); putG(svg, from + (v - from) * e); if (q < 1) svg._raf = requestAnimationFrame(step); }; svg._raf = requestAnimationFrame(step); };
     const band = v => TF.bands.find(([a, b]) => v >= a && v <= b);
     // hero: a growth meter you can grow
@@ -7758,11 +7789,18 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         const tick = t => { const e = t - t0; if (e < 0) { sw = requestAnimationFrame(tick); return; } let k = keys.findIndex(([ms]) => ms > e); if (k < 0) { set(50); return; } const [a0, v0] = keys[k - 1], [a1, v1] = keys[k], q = (e - a0) / (a1 - a0), ez = q < .5 ? 2 * q * q : 1 - Math.pow(-2 * q + 2, 2) / 2; set(v0 + (v1 - v0) * ez); sw = requestAnimationFrame(tick); initTF.raf.push(sw); };
         sw = requestAnimationFrame(tick); initTF.raf.push(sw); };
       set(50); }
-    const drawG = (v, anim) => { const [, , t, c, m] = band(v); anim ? tween(G, v) : (G._v = v, putG(G, v)); anim ? count($('#tfGv', root), v, 600) : $('#tfGv', root).textContent = v;
-      const ch = $('#tfGc', root); ch.textContent = t; ch.className = 'tf-chip ' + tfCls(v); $('#tfGmsg', root).textContent = m;
+    const drawG = (v, anim) => { v = Math.round(v); const [, , t, , m] = band(v); anim ? tween(G, v) : (G._v = v, putG(G, v)); anim ? count($('#tfGv', root), v, 600) : $('#tfGv', root).textContent = v;
+      const ch = $('#tfGc', root); ch.textContent = t; ch.className = 'tf-chip ' + tfCls(v); $('#tfGmsg', root).textContent = m; $('#tfGl', root).textContent = t; $('#tfGl', root).className = tfCls(v);
       const r = $('#tfGring .tf-ring', root); r.style.setProperty('--v', v); r.style.setProperty('--rc', tfCol(v)); $('b', r).textContent = v;
-      $$('#tfGm .bands li', root).forEach(li => { const on = +li.dataset.b === band(v)[0]; li.className = on ? 'on ' + tfCls(v) : ''; }); };
-    gr.addEventListener('input', () => drawG(+gr.value)); $('#tfGm', root)._on = () => { G._v = 0; drawG(72, true); };
+      const bi = TF.bands.indexOf(band(v)); $$('.sg, .bl', G).forEach(e => e.classList.toggle('on', +e.dataset.s === bi)); const k = $('.kn', G); const h = $('.halo', G); h.setAttribute('cx', k.getAttribute('cx')); h.setAttribute('cy', k.getAttribute('cy')); h.style.fill = tfCol(v); };
+    { const gm = $('#tfGm', root); let drag = false, auto = 0;
+      const val = e => { const r = G.getBoundingClientRect(), sx = 272 / r.width, x = (e.clientX - r.left) * sx - 16, y = (e.clientY - r.top) * sx - 14; let a = Math.atan2(120 - y, x - 120) * 180 / Math.PI; if (a < -90) a += 360; return clamp((200 - a) / 2.2, 0, 100); };
+      G.addEventListener('pointerdown', e => { drag = true; G.setPointerCapture(e.pointerId); gm.classList.add('dragging'); $('#tfGh', root).classList.add('gone'); clearInterval(auto); drawG(val(e)); });
+      G.addEventListener('pointermove', e => { if (drag) drawG(val(e)); }); ['pointerup', 'pointercancel'].forEach(ev => G.addEventListener(ev, () => { drag = false; gm.classList.remove('dragging'); }));
+      const hi = i => { gm.dataset.p = i; $$('[data-p]', gm).forEach(el => el.classList.toggle('on', +el.dataset.p === i)); };
+      gm.addEventListener('click', e => { const b = e.target.closest('button[data-p]'); if (b) { clearInterval(auto); hi(+b.dataset.p); } });
+      gm.addEventListener('pointerover', e => { const b = e.target.closest('.m3-list button'); if (b && matchMedia('(hover: hover)').matches) { clearInterval(auto); hi(+b.dataset.p); } });
+      gm._on = () => { G._v = 0; drawG(34, true); later(() => drawG(72, true), 1100); let k = 0; hi(0); auto = every(() => { k = (k + 1) % 4; hi(k); }, 2600); }; }
     // how the meter grew up: a spotlight carousel
     { const ev = $('#tfEv', root), cs = $$('.ev-c', ev), N = cs.length; let cur = 0, auto = 0;
       const show = i => { cur = (i + N) % N; const [, k, t, g, b] = TF.gev[cur];
@@ -7815,7 +7853,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       $('img', lb).src = im.src; $('img', lb).alt = im.alt; lb.classList.toggle('tall', im.naturalHeight > im.naturalWidth * 1.2); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
     addEventListener('keydown', initTF.kd = e => { if (e.key === 'Escape' && lb.classList.contains('open')) { closeLb(); e.stopImmediatePropagation(); } }, true);
     // coach marks: a quiet tooltip, only after a few seconds of doing nothing
-    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfSh .sh-add', 'Tap Add, or keep scrolling'], ['#tfGr', 'Drag to change the score'], ['#tfEv .ev-nav', 'Tap a version or use the arrows'], ['#tfRt .rt-who', 'Switch owner, or tap Add'], ['#tfSt .tf-stn', 'Swipe or use the arrows'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
+    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfSh .sh-add', 'Tap Add, or keep scrolling'], ['#tfGm .m3-g', 'Drag the knob around the arc'], ['#tfEv .ev-nav', 'Tap a version or use the arrows'], ['#tfRt .rt-who', 'Switch owner, or tap Add'], ['#tfSt .tf-stn', 'Swipe or use the arrows'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
       const done = new Set(), tip = document.createElement('div'); tip.className = 'tf-tip'; tip.setAttribute('role', 'status'); document.body.appendChild(tip); initTF.tip = tip;
       let last = performance.now(), cur = null; const poke = () => { last = performance.now(); if (cur) { done.add(cur); cur = null; tip.classList.remove('on'); } };
       ['scroll', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => root.addEventListener(ev, poke, { passive: true }));
