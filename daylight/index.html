@@ -4952,7 +4952,11 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .wf-lg span { font: 500 14px/1.2 var(--sans); color: var(--ink-2); }
 @media (max-width: 640px) { .wf { grid-template-columns: repeat(25, 1fr); gap: 2px; } .wf-lg { grid-template-columns: 1fr 1fr; } }
 /* meter v3 */
-.tf-m3 { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(20px, 4vw, 56px); align-items: center; max-width: 1080px; margin: 0 auto 8vh; text-align: left; }
+.tf-m3 { display: grid; justify-items: center; max-width: 500px; margin: 0 auto 4vh; text-align: left; }
+.m3-card { width: 100%; box-sizing: border-box; }
+.m3-k { margin: 26px 0 10px; font: 600 14px/1.3 var(--sans); color: var(--ink-2); text-align: center; }
+.m3-k::before { content: ""; display: block; width: 1px; height: 22px; margin: -22px auto 10px; background: var(--line); }
+.tf-m3 .m3-li { width: calc(100% - 48px); box-sizing: border-box; }
 .m3-card { position: relative; user-select: none; -webkit-user-select: none; padding: 26px 28px 24px; border-radius: 30px; background: #fff; color: #24272C; box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 50px 90px -50px rgba(40, 60, 30, .45); --soft: #EEEDE8; }
 .m3-card .hd b { display: flex; align-items: center; gap: 8px; font: 600 22px/1.2 var(--sans); } .m3-card .hd .i { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px #24272C; font: 700 12px/1 var(--sans); } .m3-card .hd small { font: 400 15px/1.4 var(--sans); color: #6B6F75; }
 .m3-g { position: relative; width: min(100%, 420px); margin: 10px auto 0; touch-action: none; }
@@ -4966,21 +4970,10 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .m3-g .tf-gv { top: 44%; } .m3-g .tf-gv b { font-size: clamp(56px, 6vw, 80px); }
 .m3-hint { position: absolute; right: -2%; bottom: 2%; padding: 6px 10px; border-radius: 999px; background: #24272C; color: #fff; font: 700 12px/1 var(--sans); animation: m3b 1.6s ease-in-out infinite; transition: opacity .3s; pointer-events: none; } .m3-hint.gone { opacity: 0; } @keyframes m3b { 50% { translate: 0 -4px; } }
 .m3-card .msg { margin: 8px 0 0; text-align: center; font: 500 16px/1.4 var(--sans); min-height: 2.8em; }
-.m3-pin { position: absolute; z-index: 3; display: grid; place-items: center; width: 28px; height: 28px; margin: -14px 0 0 -14px; padding: 0; border: 0; border-radius: 50%; background: #FFC61F; color: #3A2A00; font: 800 13px/1 var(--sans); cursor: pointer; box-shadow: 0 0 0 4px rgba(255, 198, 31, .3), 0 6px 14px -6px rgba(120, 80, 0, .5); transition: scale .3s var(--ease), box-shadow .3s; }
-.m3-pin.on { scale: 1.2; box-shadow: 0 0 0 7px rgba(255, 198, 31, .35), 0 6px 14px -6px rgba(120, 80, 0, .5); }
-.m3-side { display: grid; gap: 18px; }
-.m3-list { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
-.m3-list button { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; width: 100%; padding: 14px 16px; border: 0; border-radius: 18px; background: none; color: var(--ink); text-align: left; cursor: pointer; transition: background .3s, box-shadow .3s; }
-.m3-list i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--soft); color: var(--ink-2); font: 800 13px/1 var(--sans); font-style: normal; transition: background .3s, color .3s; }
-.m3-list b { display: block; font: 700 18px/1.25 var(--sans); } .m3-list small { display: block; margin-top: 4px; font: 400 15px/1.5 var(--sans); color: var(--ink-2); max-height: 0; opacity: 0; overflow: hidden; transition: max-height .45s var(--ease), opacity .35s; }
-.m3-list li.on button { background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 14px 30px -22px rgba(0, 0, 0, .35); } .m3-list li.on i { background: var(--ty); color: #3A2A00; } .m3-list li.on small { max-height: 80px; opacity: 1; }
 .m3-li { position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 12px; border-radius: 18px; background: #fff; color: #24272C; box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 18px 40px -28px rgba(0, 0, 0, .35); transition: box-shadow .3s, scale .3s var(--ease); --soft: #EEEDE8; }
 .m3-li img { width: 64px; height: 52px; border-radius: 10px; object-fit: cover; } .m3-li small { display: block; font: 500 11px/1 var(--sans); color: #6B6F75; } .m3-li b { display: block; margin: 3px 0; font: 600 15px/1.25 var(--sans); }
 .m3-li em { font: 600 12px/1 var(--sans); font-style: normal; } .m3-li em.r { color: #C2412E; } .m3-li em.a { color: #A8740A; } .m3-li em.g, .m3-li em.p { color: #16825A; }
-.m3-li .m3-pin { top: 0; left: 0; margin: -10px 0 0 -10px; } .m3-li.on { box-shadow: 0 0 0 3px #FFC61F, 0 18px 40px -28px rgba(0, 0, 0, .35); scale: 1.02; }
-.tf-m3[data-p="0"] #tfGv, .tf-m3[data-p="1"] #tfGc, .tf-m3[data-p="2"] .m3-card .msg { outline: 3px solid rgba(255, 198, 31, .7); outline-offset: 6px; border-radius: 10px; }
-#tfGv, #tfGc, .m3-card .msg { transition: outline-color .3s; }
-@media (max-width: 900px) { .tf-m3 { grid-template-columns: 1fr; max-width: 560px; } .m3-card { padding: 20px 18px; } }
+@media (max-width: 900px) { .m3-card { padding: 20px 18px; } }
 /* ICP */
 .tf-icp { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; max-width: 1000px; margin: 0 auto; text-align: left; }
 .icp-card { padding: 26px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 30px 60px -44px rgba(0, 0, 0, .3); }
@@ -5033,21 +5026,21 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .fs-f { font: 600 16px/1.35 var(--sans); }
 @media (max-width: 640px) { .fs-k { display: none; } .fs-r { grid-template-columns: 1fr; gap: 6px; padding: 14px 16px; } .fs-ar { display: none; } .fs-f::before { content: "→ "; color: var(--c); } }
 /* iterations: single column, scroll-stepped */
-.tf-it { height: 360vh; margin-top: 10vh; }
-.it-pin { position: sticky; top: 0; height: 100vh; display: grid; align-content: center; justify-items: center; gap: 16px; padding-top: 50px; box-sizing: border-box; }
-.it-pin .tf-h4 { margin: 0; }
-.it-cap { display: grid; justify-items: center; gap: 4px; max-width: 60ch; min-height: 96px; }
-.it-cap.in > * { animation: tfin .45s var(--ease) both; } .it-cap.in > :nth-child(2) { animation-delay: .05s; } .it-cap.in > :nth-child(3) { animation-delay: .1s; }
-.it-k { font: 700 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ta); } .it-cap b { font: 800 clamp(20px, 2.2vw, 28px)/1.2 var(--sans); letter-spacing: -.02em; } .it-cap p { margin: 0; font: 400 16px/1.5 var(--sans); color: var(--ink-2); }
-.it-pin .tf-brw { width: min(100%, 980px); }
-.it-vp { position: relative; aspect-ratio: 16 / 8.6; max-height: 52vh; width: 100%; overflow: hidden; background: #F4F4F2; }
+.tf-it { height: 340vh; margin-top: 12vh; }
+.it-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; justify-items: center; gap: 18px; padding: 64px 0 24px; box-sizing: border-box; }
+.it-pin .tf-h4 { margin: 0 0 6px; }
+.it-cap { margin: 0; max-width: 60ch; font: 400 17px/1.45 var(--sans); color: var(--ink-2); text-align: center; text-wrap: balance; }
+.it-cap b { font-weight: 700; color: var(--ink); }
+.it-cap.in { animation: tfin .45s var(--ease) both; }
+.it-pin .tf-brw { width: min(100%, 1040px, (100svh - 330px) * 1.86); }
+.it-vp { position: relative; aspect-ratio: 16 / 8.6; width: 100%; overflow: hidden; background: #F4F4F2; }
 .it-vp img { position: absolute; inset: 0; width: 100%; height: auto; opacity: 0; scale: 1.02; transition: opacity .5s, scale .7s var(--ease); }
 .it-vp img.on { opacity: 1; scale: 1; }
 .it-dots { display: flex; gap: 6px; padding: 4px; border-radius: 999px; background: var(--soft); }
 .it-dots button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 0; border-radius: 999px; background: none; color: var(--ink-2); font: 600 13px/1 var(--sans); cursor: pointer; transition: background .3s, color .3s; }
 .it-dots i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .35; } .it-dots .past i { opacity: .8; background: var(--tg); }
 .it-dots button.on { background: var(--card); color: var(--ink); box-shadow: 0 4px 12px -6px rgba(0, 0, 0, .25); } .it-dots button.on i { opacity: 1; background: var(--ty); }
-@media (max-width: 640px) { .it-pin { align-content: start; padding-top: 74px; } .it-dots span { display: none; } .it-dots button { padding: 8px; } .it-cap { min-height: 120px; } .it-cap p { font-size: 14px; } .tf-it { height: 320vh; } }
+@media (max-width: 640px) { .it-pin .tf-brw { width: 100%; } .it-dots span { display: none; } .it-dots button { padding: 8px; } .it-cap { min-height: 3em; font-size: 15px; } .tf-it { height: 320vh; } }
 /* ICP v2: map + host ID */
 .tf-icp2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 48px); align-items: center; max-width: 1040px; margin: 0 auto 6vh; text-align: left; }
 .icp-map { position: relative; margin: 0; }
@@ -7594,7 +7587,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       ['stay', 'Stay support', 's-stay', '', 'Once the basics are covered, the single nudge slot can offer damage cover instead.']
     ],
     beyond: [['x-remind', 'Reminders', 'Relevant booking and billing updates, right on the dashboard.', [67, 41.6, 28.3, 17.8]], ['x-renew', 'Auto-renewal', 'Easier to discover when it’s turned off, before a listing lapses.', [67, 9, 28.3, 5.6]], ['x-perf', 'Property performance', 'Summary numbers stay close, without stealing focus from listings.', [67, 31.1, 28.3, 10]], ['x-filter', 'Search and filters', 'Agencies narrow long lists by status, renewals or visibility score.', [4.8, 30, 59.6, 3.8]]],
-    evo: [['s-it-a', 'Iteration 1', 'Boost cards beside the score', 'Recommendations got their own block next to the score. Clear, but generic: every owner saw the same list.'], ['s-it-b', 'Iteration 2', 'Bigger cards, fewer of them', 'Taller cards made each offer feel deliberate, but pushed the listings further down.'], ['s-it-c', 'Iteration 3', 'Recommendations move onto the listing', 'The 52/100 card carries its own recommendations. This is where the idea clicked.'], ['s-final', 'Final', 'Calm, consistent, in Traum’s system', 'Renewals and recommendations lead, the growth meter sits in the side rail, and every card shares one structure.']],
+    evo: [['s-it-a', 'Iteration 1', 'Boost cards beside the score.', 'Clear, but every owner saw the same list.'], ['s-it-b', 'Iteration 2', 'Bigger cards, fewer of them.', 'More deliberate, but the listings slid down.'], ['s-it-c', 'Iteration 3', 'Fixes move onto the listing.', 'Each card carries its own next step.'], ['s-final', 'Final', 'Calm and consistent.', 'Actions lead, the meter sits in the side rail.']],
     ai: [['sys', 'Give AI the right constraints', 'I installed the project’s design system in Claude and explored growth-meter iterations inside an established visual language, instead of building every variation by hand.'],
       ['spark', 'Use desktop as the foundation', 'Once desktop was final, the core layout, components and interaction patterns already existed. Mobile didn’t need to start from scratch.'],
       ['figma', 'Accelerate mobile execution', 'Working with Claude directly on my Figma file, I got the mobile UI to roughly 90% of the intended direction in under two hours, then reviewed and refined it.']],
@@ -7725,19 +7718,17 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <section class="tf-sec" id="tfMeter">
         ${plq(6, 'The visibility meter')}
         ${head('Enter the', 'visibility meter.')}
-        ${p('One number from 0 to 100: on the dashboard, and on every listing card.')}
+        ${p('One number from 0 to 100 that tells owners how visible a property is. Drag it.')}
         <div class="tf-m3" data-rv id="tfGm">
           <div class="m3-card">
             <div class="hd"><b>Growth meter <span class="i">i</span></b><small>Your property’s visibility at a glance.</small></div>
             <div class="m3-g"><svg class="tf-gauge g3" id="tfG" viewBox="-16 -14 272 186" aria-label="Growth meter. Drag the knob to change the score."><path id="tfLp0" d="M9.1 160.4A118 118 0 0 1 115.5 2.1" fill="none"/><text class="bl" data-s="0"><textPath href="#tfLp0" startOffset="50%" text-anchor="middle">Needs attention</textPath></text><path id="tfLp1" d="M120.0 2.0A118 118 0 0 1 225.9 67.9" fill="none"/><text class="bl" data-s="1"><textPath href="#tfLp1" startOffset="50%" text-anchor="middle">Good</textPath></text><path id="tfLp2" d="M227.8 72.0A118 118 0 0 1 232.4 156.1" fill="none"/><text class="bl" data-s="2"><textPath href="#tfLp2" startOffset="50%" text-anchor="middle">Great</textPath></text><text class="bl" data-s="3" x="234.9" y="176.4" text-anchor="start">Max</text><path class="sg" data-s="0" d="M29.8 152.8A96 96 0 0 1 117.8 24.0" stroke="#E0533D"/><path class="sg" data-s="1" d="M122.2 24.0A96 96 0 0 1 206.8 78.9" stroke="#E8A912"/><path class="sg" data-s="2" d="M208.6 83.0A96 96 0 0 1 211.2 150.0" stroke="#16825A"/><path class="sg" data-s="3" d="M210.6 151.8A96 96 0 0 1 210.2 152.8" stroke="#16825A"/><text class="tk2" x="46.7" y="149.7" text-anchor="middle">0</text><text class="tk2" x="120.0" y="45.0" text-anchor="middle">50</text><text class="tk2" x="191.3" y="91.3" text-anchor="middle">80</text><text class="tk2" x="193.3" y="149.7" text-anchor="middle">100</text><path class="fl" d="M29.8 152.8A96 96 0 1 1 210.2 152.8" pathLength="100" stroke="#E0533D"/><circle class="halo" r="22" cx="29.8" cy="152.8"/><circle class="kn" r="12" cx="29.8" cy="152.8"/></svg><div class="tf-gv"><b id="tfGv">72</b><span class="tf-chip g" id="tfGc">Good</span></div><span class="m3-hint" id="tfGh">Drag me</span></div>
             <p class="msg" id="tfGmsg"></p>
-            <button type="button" class="m3-pin" data-p="0" style="left:34%;top:47%">1</button><button type="button" class="m3-pin" data-p="1" style="left:65%;top:66%">2</button><button type="button" class="m3-pin" data-p="2" style="left:5%;top:89%">3</button>
           </div>
-          <div class="m3-side">
-            <ol class="m3-list">${[['The score', 'One number, 0 to 100, for how well a property is set up to be seen.'], ['In words', 'A label carries the meaning, so colour is never the only signal.'], ['The next milestone', 'Every score comes with what to aim for next.'], ['On every listing', 'The same score lives on each card, so owners see which property needs them.']].map(([t, d], i) => `<li data-p="${i}"><button type="button" data-p="${i}"><i>${i + 1}</i><span><b>${t}</b><small>${d}</small></span></button></li>`).join('')}</ol>
-            <div class="m3-li" data-p="3"><img src="${ti('ph')}" alt=""><span><small>NO. 343300</small><b>Strandhuus, Wohnung 307</b><em id="tfGl">Good</em></span><span id="tfGring">${tfRing(72)}</span><button type="button" class="m3-pin" data-p="3">4</button></div>
-          </div>
+          <p class="m3-k">The same score, on every listing card</p>
+          <div class="m3-li"><img src="${ti('ph')}" alt=""><span><small>NO. 343300</small><b>Strandhuus, Wohnung 307</b><em id="tfGl">Good</em></span><span id="tfGring">${tfRing(72)}</span></div>
         </div>
+        <h4 class="tf-h4" data-rv>Three rules it had to follow.</h4>
         <div class="tf-pr" data-rv>${[['sys', 'Made of real factors', 'Listing status, photos, location, calendar and add-ons.'], ['people', 'Readable at any age', 'A familiar gauge, clear type, and words over colour.'], ['warn', 'A proxy, not a promise', 'It reflects quality and potential reach, not a ranking guarantee.']].map(([ic, t, d]) => `<div><span class="ic">${tfIc(ic)}</span><b>${t}</b><p>${d}</p></div>`).join('')}</div>
         <h4 class="tf-h4" data-rv>How the meter grew up.</h4>
         <div class="tf-ev" data-rv id="tfEv">
@@ -7792,9 +7783,9 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         <div class="tf-it" id="tfEvo">
           <div class="it-pin">
             <h4 class="tf-h4">Iterating as the feedback came in.</h4>
-            <div class="it-cap"><span class="it-k" id="tfItK"></span><b id="tfItT"></b><p id="tfItD"></p></div>
             <div class="tf-brw"><div class="tbar"><i></i><i></i><i></i><span>traum-ferienwohnungen.de/vermieterbereich/inserate</span></div><div class="it-vp">${TF.evo.map(([im, k, t], i) => `<img src="${ti(im)}" alt="${k}: ${t}" data-i="${i}" loading="lazy"${i ? '' : ' class="on"'}>`).join('')}</div></div>
             <div class="it-dots">${TF.evo.map(([, k], i) => `<button type="button" data-i="${i}"><i></i><span>${k}</span></button>`).join('')}</div>
+            <p class="it-cap"><b id="tfItT"></b> <span id="tfItD"></span></p>
           </div>
         </div>
         <div class="tf-team" data-rv>
@@ -7906,14 +7897,11 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       const ch = $('#tfGc', root); ch.textContent = t; ch.className = 'tf-chip ' + tfCls(v); $('#tfGmsg', root).textContent = m; $('#tfGl', root).textContent = t; $('#tfGl', root).className = tfCls(v);
       const r = $('#tfGring .tf-ring', root); r.style.setProperty('--v', v); r.style.setProperty('--rc', tfCol(v)); $('b', r).textContent = v;
       const bi = TF.bands.indexOf(band(v)); $$('.sg, .bl', G).forEach(e => e.classList.toggle('on', +e.dataset.s === bi)); const k = $('.kn', G); const h = $('.halo', G); h.setAttribute('cx', k.getAttribute('cx')); h.setAttribute('cy', k.getAttribute('cy')); h.style.fill = tfCol(v); };
-    { const gm = $('#tfGm', root); let drag = false, auto = 0;
+    { const gm = $('#tfGm', root); let drag = false;
       const val = e => { const r = G.getBoundingClientRect(), sx = 272 / r.width, x = (e.clientX - r.left) * sx - 16, y = (e.clientY - r.top) * sx - 14; let a = Math.atan2(120 - y, x - 120) * 180 / Math.PI; if (a < -90) a += 360; return clamp((200 - a) / 2.2, 0, 100); };
-      G.addEventListener('pointerdown', e => { drag = true; G.setPointerCapture(e.pointerId); gm.classList.add('dragging'); $('#tfGh', root).classList.add('gone'); clearInterval(auto); drawG(val(e)); });
+      G.addEventListener('pointerdown', e => { drag = true; G.setPointerCapture(e.pointerId); gm.classList.add('dragging'); $('#tfGh', root).classList.add('gone'); drawG(val(e)); });
       G.addEventListener('pointermove', e => { if (drag) drawG(val(e)); }); ['pointerup', 'pointercancel'].forEach(ev => G.addEventListener(ev, () => { drag = false; gm.classList.remove('dragging'); }));
-      const hi = i => { gm.dataset.p = i; $$('[data-p]', gm).forEach(el => el.classList.toggle('on', +el.dataset.p === i)); };
-      gm.addEventListener('click', e => { const b = e.target.closest('button[data-p]'); if (b) { clearInterval(auto); hi(+b.dataset.p); } });
-      gm.addEventListener('pointerover', e => { const b = e.target.closest('.m3-list button'); if (b && matchMedia('(hover: hover)').matches) { clearInterval(auto); hi(+b.dataset.p); } });
-      gm._on = () => { G._v = 0; drawG(34, true); later(() => drawG(72, true), 1100); let k = 0; hi(0); auto = every(() => { k = (k + 1) % 4; hi(k); }, 2600); }; }
+      gm._on = () => { G._v = 0; drawG(34, true); later(() => drawG(72, true), 1100); }; }
     // how the meter grew up: a spotlight carousel
     { const ev = $('#tfEv', root), cs = $$('.ev-c', ev), N = cs.length; let cur = 0, auto = 0;
       const show = i => { cur = (i + N) % N; const [, k, t, g, b] = TF.gev[cur];
@@ -7947,7 +7935,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     // how the page evolved: one frame, scroll to step through
     { const it = $('#tfEvo', root); let cur = -1, manual = 0;
       const show = i => { if (i === cur) return; cur = i; const [, k, t, d] = TF.evo[i]; $$('.it-vp img', it).forEach(im => im.classList.toggle('on', +im.dataset.i === i)); $$('.it-dots button', it).forEach(b => { const n = +b.dataset.i; b.classList.toggle('on', n === i); b.classList.toggle('past', n < i); });
-        $('#tfItK', root).textContent = `${i + 1} of ${TF.evo.length} · ${k}`; $('#tfItT', root).textContent = t; $('#tfItD', root).textContent = d; const c = $('.it-cap', it); c.classList.remove('in'); void c.offsetWidth; c.classList.add('in'); };
+        $('#tfItT', root).textContent = t; $('#tfItD', root).textContent = d; const c = $('.it-cap', it); c.classList.remove('in'); void c.offsetWidth; c.classList.add('in'); };
       it.addEventListener('click', e => { const b = e.target.closest('.it-dots button'); if (b) { manual = performance.now(); show(+b.dataset.i); } });
       const go = () => { if (performance.now() - manual < 1000) return; const r = it.getBoundingClientRect(), span = r.height - innerHeight; show(Math.min(TF.evo.length - 1, Math.floor(clamp(-r.top / Math.max(1, span)) * TF.evo.length))); };
       csEl.addEventListener('scroll', initTF.sc5 = go, { passive: true }); show(0); }
