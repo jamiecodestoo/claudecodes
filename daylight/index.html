@@ -4379,9 +4379,9 @@ html:root .scroll-cue i::after { top: 5px; }
 
 /* frames: a browser with a real viewport, and a phone with thin bezels */
 .tf-brw { border-radius: 16px; overflow: hidden; background: var(--card); box-shadow: 0 0 0 1px var(--line), 0 40px 80px -48px rgba(40, 30, 10, .4); text-align: left; }
-.tf-brw .bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: #F1EFEA; border-bottom: 1px solid rgba(0, 0, 0, .06); }
-.tf-brw .bar i { width: 10px; height: 10px; border-radius: 50%; background: #F2A69F; } .tf-brw .bar i + i { background: #F4D58A; } .tf-brw .bar i + i + i { background: #9FD9A9; }
-.tf-brw .bar span { flex: 1; margin-left: 10px; padding: 5px 12px; border-radius: 8px; background: #fff; font: 500 12px/1 var(--sans); color: #6B6F75; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.tf-brw .tbar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: #F1EFEA; border-bottom: 1px solid rgba(0, 0, 0, .06); }
+.tf-brw .tbar i { width: 10px; height: 10px; border-radius: 50%; background: #F2A69F; } .tf-brw .tbar i + i { background: #F4D58A; } .tf-brw .tbar i + i + i { background: #9FD9A9; }
+.tf-brw .tbar span { flex: 1; margin-left: 10px; padding: 5px 12px; border-radius: 8px; background: #fff; font: 500 12px/1 var(--sans); color: #6B6F75; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .tf-brw .vp { aspect-ratio: 16 / 10; overflow-y: auto; overscroll-behavior: contain; background: #F4F4F2; scrollbar-width: thin; }
 .tf-brw .vp img { display: block; width: 100%; transition: opacity .25s; }
 .tf-phone { position: relative; width: 300px; aspect-ratio: 300 / 620; padding: 6px; border-radius: 46px; background: #2A2C30; box-shadow: inset 0 0 0 1.5px #44474D, 0 0 0 1px rgba(0, 0, 0, .25), 0 40px 70px -36px rgba(30, 20, 0, .55); box-sizing: border-box; flex: none; }
@@ -4702,6 +4702,18 @@ p.tf-meta i { width: 4px; height: 4px; border-radius: 50%; background: currentCo
 .tf-3 i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--tal); color: var(--ta); font: 800 13px/1 var(--sans); font-style: normal; }
 p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-shadow: none; font: 400 16px/1.55 var(--sans); color: var(--ink-2); }
 @media (max-width: 640px) { .tf-hcard .acts { grid-template-columns: 1fr; } .tf-hcard { padding: 18px; } .tf-ba .ba-top img { width: 60px; height: 52px; } .tf-ba .ba-old span { padding: 7px 10px; } }
+.tf-cmp2 { width: min(100%, 1100px); margin: 0 auto 5vh; }
+.tf-cmp2 .cm-cv { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #F4F4F2; user-select: none; touch-action: pan-y; }
+.tf-cmp2 .cm-cv img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; pointer-events: none; }
+.tf-cmp2 .cm-bf { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--x)) 0 0); }
+.tf-cmp2 .cm-hd { position: absolute; top: 0; bottom: 0; left: var(--x); width: 3px; margin-left: -1.5px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .08), 0 0 24px rgba(0, 0, 0, .18); pointer-events: none; }
+.tf-cmp2 .cm-hd i { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 48px; height: 48px; translate: -50% -50%; border-radius: 50%; background: #fff; color: #24272C; font: 700 18px/1 var(--sans); font-style: normal; letter-spacing: 2px; box-shadow: 0 8px 22px -8px rgba(0, 0, 0, .4), 0 0 0 4px rgba(255, 198, 31, .55); }
+.tf-cmp2 .cm-tg { position: absolute; bottom: 16px; box-shadow: 0 6px 16px -8px rgba(0, 0, 0, .35); padding: 7px 12px; border-radius: 999px; font: 700 13px/1 var(--sans); pointer-events: none; transition: opacity .3s; }
+.tf-cmp2 .cm-tg.l { left: 16px; background: #FCE9E1; color: #B9451A; } .tf-cmp2 .cm-tg.r { right: 16px; background: #E3F4EC; color: #16825A; }
+.tf-cmp2.lo .cm-tg.l, .tf-cmp2.hi .cm-tg.r { opacity: 0; }
+.tf-cmp2 input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; }
+.tf-cmp2 .cm-cap { margin: 16px auto 0; max-width: 56ch; font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
+@media (max-width: 640px) { .tf-cmp2 .cm-cv { aspect-ratio: 4 / 3.4; } .tf-cmp2 .cm-hd i { width: 40px; height: 40px; } .tf-cmp2 .cm-tg { bottom: 10px; font-size: 12px; } .tf-cmp2 .cm-tg.l { left: 10px; } .tf-cmp2 .cm-tg.r { right: 10px; } }
 /* footer, lightbox */
 .tf-foot { margin-top: 10vh; }
 .tf-sky { background: radial-gradient(40% 60% at 20% 100%, color-mix(in srgb, var(--tb) 16%, transparent), transparent 70%), radial-gradient(40% 60% at 55% 100%, color-mix(in srgb, var(--ty) 22%, transparent), transparent 70%), radial-gradient(40% 60% at 88% 100%, color-mix(in srgb, var(--tp) 14%, transparent), transparent 70%); }
@@ -4717,7 +4729,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .tf-lb .x { position: fixed; top: 18px; right: 18px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--card); color: var(--ink); font: 400 26px/1 var(--sans); cursor: pointer; box-shadow: 0 6px 16px -8px rgba(0, 0, 0, .3); z-index: 2; }
 .cs.tf .c3-links button, .cs.tf .fb-go { --gk: #2F86C4; }
 :root[data-theme="dark"] .cs.tf :is(.c3-links button, .fb-go) { --gk: #6CB8EE; }
-:root[data-theme="dark"] .tf-brw .bar { background: #2A2D32; border-color: rgba(255, 255, 255, .06); } :root[data-theme="dark"] .tf-brw .bar span { background: #1E2125; color: #A3A8AF; }
+:root[data-theme="dark"] .tf-brw .tbar { background: #2A2D32; border-color: rgba(255, 255, 255, .06); } :root[data-theme="dark"] .tf-brw .tbar span { background: #1E2125; color: #A3A8AF; }
 :root[data-theme="dark"] .tf-exv .spot, :root[data-theme="dark"] .tf-by .bhl { box-shadow: 0 0 0 3px var(--ty), 0 0 0 9999px rgba(21, 23, 26, .62); }
 :root[data-theme="dark"] .tf-lc { filter: brightness(.95); }
 
@@ -7209,7 +7221,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   const tfArc = 'M29.8 152.8A96 96 0 1 1 210.2 152.8';
   const tfGauge = id => `<svg class="tf-gauge" id="${id}" viewBox="0 0 240 170" aria-hidden="true"><defs><linearGradient id="${id}G" x1="0" x2="1"><stop offset="0" stop-color="#0E7A4E"/><stop offset="1" stop-color="#9FDDBE"/></linearGradient></defs><path class="tk" d="${tfArc}" pathLength="100"/><path class="fl" d="${tfArc}" pathLength="100" stroke="url(#${id}G)"/><circle class="kn" r="11" cx="29.8" cy="152.8"/></svg>`;
   const tfRing = (v, cls = '') => `<span class="tf-ring ${cls}" style="--v:${v}"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15"/><circle class="f" cx="18" cy="18" r="15" pathLength="100"/></svg><b>${v}</b></span>`;
-  const tfBrw = (img, alt, url = 'traum-ferienwohnungen.de/vermieterbereich/inserate', cls = '') => `<div class="tf-brw ${cls}"><div class="bar"><i></i><i></i><i></i><span>${url}</span></div><div class="vp"><img src="${ti(img)}" alt="${alt}" loading="lazy"></div></div>`;
+  const tfBrw = (img, alt, url = 'traum-ferienwohnungen.de/vermieterbereich/inserate', cls = '') => `<div class="tf-brw ${cls}"><div class="tbar"><i></i><i></i><i></i><span>${url}</span></div><div class="vp"><img src="${ti(img)}" alt="${alt}" loading="lazy"></div></div>`;
   const tfPhone = (inner, cls = '') => `<div class="tf-phone ${cls}"><span class="isl"></span><div class="scr">${inner}</div></div>`;
   function tfHTML(w) {
     const plq = (n, t) => `<p class="tf-pl" data-rv><span>${String(n).padStart(2, '0')}</span>${t}</p>`;
@@ -7238,17 +7250,12 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <section class="tf-sec tf-open" id="tfOpen">
         ${head('Owners could manage listings.', 'Not grow them.')}
         ${p('The old dashboard let them edit, check and renew. It never answered the one question they actually had.')}
-        <div class="tf-ba" data-rv id="tfBa" data-m="b">
-          <div class="tf-sw2" role="tablist"><button type="button" data-m="b" class="on" aria-selected="true">Before</button><button type="button" data-m="a">After</button></div>
-          <div class="ba-stage">
-            <div class="ba-ask"><span class="ba-av">${tfIc('people')}</span><p>What should I do to get more bookings?</p></div>
-            <div class="ba-card">
-              <div class="ba-top"><img src="${ti('ph')}" alt=""><div class="ba-tx"><small>No 343300</small><b>Ferienwohnung Strandhuus</b><span>End of term: August 2026</span></div><span class="ba-sc">${tfRing(52, 'a')}</span></div>
-              <div class="ba-old"><span>Edit</span><span>Details</span><span>Renew</span></div>
-              <div class="ba-new"><img src="${ti('rc-3')}" alt=""><span><em>+25 points</em><b>Add a virtual tour</b></span><span class="ba-add">Add</span></div>
-            </div>
-            <div class="ba-ans"><span class="ba-n">…no answer on the page.</span><span class="ba-y">${tfIc('check')}A virtual tour. It’s worth 25 points.</span></div>
-          </div>
+        <div class="tf-cmp2" data-rv id="tfCmp2" style="--x:50%">
+          <div class="tf-brw"><div class="tbar"><i></i><i></i><i></i><span>traum-ferienwohnungen.de/vermieterbereich/inserate</span></div>
+            <div class="cm-cv"><img src="${ti('cmp-after')}" alt="After: the redesigned Advertisements page" draggable="false"><div class="cm-bf"><img src="${ti('cmp-before')}" alt="Before: the old Advertisements page" draggable="false"></div>
+              <span class="cm-tg l">Before</span><span class="cm-tg r">After</span><span class="cm-hd"><i>‹ ›</i></span>
+              <input type="range" min="0" max="100" value="50" step=".1" aria-label="Drag to compare before and after"></div></div>
+          <p class="cm-cap">Drag to compare. Same owner, same listings: one page lists them, the other tells you what to do next.</p>
         </div>
         <ol class="tf-3" data-rv>${['Give every property a score', 'Show what would improve it', 'Make the next step obvious'].map((t, i) => `<li><i>${i + 1}</i>${t}</li>`).join('')}</ol>
         <p class="tf-catch" data-rv>The catch: it also had to lift renewals and revenue, without turning the page into a sales pitch.</p>
@@ -7271,7 +7278,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         ${p('Pick one to see where it lived on the old page.')}
         <div class="tf-ex" data-rv id="tfEx">
           <ol class="tf-exl">${TF.old.map(([t], i) => `<li><button type="button" data-o="${i}"${i ? '' : ' class="on"'}><i>${i < 3 ? i + 1 : '€'}</i><span>${t}</span></button></li>`).join('')}</ol>
-          <div class="tf-exv"><div class="tf-brw"><div class="bar"><i></i><i></i><i></i><span>traum-ferienwohnungen.de/vermieterbereich/inserate · before</span></div><div class="vp" id="tfExVp"><div class="in"><img src="${ti('old')}" alt="The Advertisements page before the redesign" loading="lazy"><span class="spot" id="tfSpot"></span></div></div></div>
+          <div class="tf-exv"><div class="tf-brw"><div class="tbar"><i></i><i></i><i></i><span>traum-ferienwohnungen.de/vermieterbereich/inserate · before</span></div><div class="vp" id="tfExVp"><div class="in"><img src="${ti('old')}" alt="The Advertisements page before the redesign" loading="lazy"><span class="spot" id="tfSpot"></span></div></div></div>
             <p class="tf-exd" id="tfExD"></p></div>
         </div>
         ${p('The opportunity wasn’t to make the page prettier. It was to connect what owners saw with what they could actually do about it.')}
@@ -7469,9 +7476,14 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       const add = i => { if (on.has(i)) { on.delete(i); hv -= TF.hero[i][2]; } else { on.add(i); hv += TF.hero[i][2]; } const b = $(`[data-h="${i}"]`, hc); b.classList.toggle('on', on.has(i)); $('.go', b).textContent = on.has(i) ? 'Added' : 'Add'; draw(); };
       hc.addEventListener('click', e => { const b = e.target.closest('[data-h]'); if (b) add(+b.dataset.h); });
       later(() => draw(), 500); later(() => { if (!on.size) add(0); }, 1900); }
-    // before and after
-    { const ba = $('#tfBa', root); const set = m => { ba.dataset.m = m; $$('.tf-sw2 button', ba).forEach(b => { const o = b.dataset.m === m; b.classList.toggle('on', o); b.setAttribute('aria-selected', o); }); };
-      ba.addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b && b.tagName === 'BUTTON') set(b.dataset.m); }); ba._on = () => later(() => { if (ba.dataset.m === 'b') set('a'); }, 2400); }
+    // before and after, side by side
+    { const c = $('#tfCmp2', root), r = $('input', c); let sw = 0;
+      const set = v => { c.style.setProperty('--x', v + '%'); r.value = v; c.classList.toggle('lo', v < 18); c.classList.toggle('hi', v > 82); };
+      r.addEventListener('input', () => { cancelAnimationFrame(sw); set(+r.value); });
+      c._on = () => { if (reduce) return; const keys = [[0, 50], [900, 16], [2100, 84], [3100, 50]], t0 = performance.now() + 500;
+        const tick = t => { const e = t - t0; if (e < 0) { sw = requestAnimationFrame(tick); return; } let k = keys.findIndex(([ms]) => ms > e); if (k < 0) { set(50); return; } const [a0, v0] = keys[k - 1], [a1, v1] = keys[k], q = (e - a0) / (a1 - a0), ez = q < .5 ? 2 * q * q : 1 - Math.pow(-2 * q + 2, 2) / 2; set(v0 + (v1 - v0) * ez); sw = requestAnimationFrame(tick); initTF.raf.push(sw); };
+        sw = requestAnimationFrame(tick); initTF.raf.push(sw); };
+      set(50); }
     const drawG = (v, anim) => { const [, , t, c, m] = band(v); anim ? tween(G, v) : (G._v = v, putG(G, v)); anim ? count($('#tfGv', root), v, 600) : $('#tfGv', root).textContent = v;
       const ch = $('#tfGc', root); ch.textContent = t; ch.className = 'tf-chip ' + c; $('#tfGmsg', root).textContent = m;
       const r = $('#tfGring .tf-ring', root); r.style.setProperty('--v', v); $('b', r).textContent = v; r.classList.toggle('a', v < 50);
