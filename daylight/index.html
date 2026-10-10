@@ -3804,7 +3804,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
 }
 @media (max-width: 859px) {
   .cs h2, .cs h3 { max-width: 100%; overflow-wrap: break-word; }
-  .cs h2:not(.sw-t):not(.mm-t), .cs h3.c3-h, .cs h3.mm-h, .cs h3.sw-h { font-size: clamp(26px, 7.8vw, 34px) !important; }
+  .cs h2:not(.sw-t):not(.mm-t):not(.tf-t), .cs h3.c3-h, .cs h3.mm-h, .cs h3.sw-h { font-size: clamp(26px, 7.8vw, 34px) !important; }
   .cs .c3-links > * { font-size: 14px !important; white-space: nowrap; padding-inline: 10px !important; }
 }
 
@@ -4356,6 +4356,435 @@ html:root .scroll-cue i::after { top: 5px; }
 @keyframes srtap { 0% { opacity: 0; transform: scale(.4); } 25% { opacity: 1; transform: scale(.85); } 100% { opacity: 0; transform: scale(1.6); } }
 :root[data-theme="dark"] .sr-ph, :root[data-theme="dark"] .sr-tb { box-shadow: inset 0 0 0 1.5px #4A4F59, 0 50px 90px -34px rgba(0,0,0,.85); }
 @media (prefers-reduced-motion: reduce) { .sr * { transition: none !important; animation: none !important; } }
+
+/* ===== Traum · the visibility score ===== */
+.cs.tf { --tg: #13804F; --tg2: #3CC48A; --ty: #FFC61F; --ta: #C98A00; --tr: #C2410C;
+  --paper: #F6F4EF; --card: #FFFFFF; --ink: #15191C; --ink-2: #565D63; --line: rgba(21, 25, 28, .1); --soft: #EEEBE3; --c: #13804F;
+  background: var(--paper); color: var(--ink); overflow-y: auto; overflow-x: hidden; }
+:root[data-theme="dark"] .cs.tf { --tg: #3CC48A; --tg2: #7BE3B1; --ty: #FFD24D; --ta: #F0B43C; --tr: #F07A4A;
+  --paper: #111513; --card: #1A201D; --ink: #EEF2EF; --ink-2: #A9B3AD; --line: rgba(220, 240, 230, .12); --soft: #202824; --c: #7BE3B1; background: var(--paper) !important; }
+.cs.tf .tf-bar { background: color-mix(in srgb, var(--paper) 84%, transparent); backdrop-filter: blur(16px) saturate(1.3); -webkit-backdrop-filter: blur(16px) saturate(1.3); }
+.tf-bk { display: inline-flex; align-items: center; gap: 8px; font: 700 14px/1 var(--sans); letter-spacing: -.01em; color: var(--ink-2); white-space: nowrap; }
+.tf-bk img { width: 26px; height: 26px; border-radius: 8px; }
+.tf-pg { position: relative; overflow-x: clip; text-align: center; }
+.tf [data-rv] { opacity: 0; translate: 0 26px; transition: opacity .8s var(--ease), translate 1s var(--ease); }
+.tf [data-rv].in { opacity: 1; translate: 0 0; }
+.tf .c3-h[data-rv] { opacity: 1; translate: none; }
+.tf .u { position: relative; z-index: 0; color: var(--tg); white-space: nowrap; }
+.tf .u::after { content: ""; position: absolute; z-index: -1; left: -.04em; right: -.04em; bottom: .02em; height: .32em; border-radius: 99px; background: color-mix(in srgb, var(--ty) 70%, transparent); transform-origin: 0 50%; scale: 0 1; transition: scale 1s var(--ease) .35s; }
+.tf .in .u::after, .tf-hero.in .u::after { scale: 1 1; }
+.tf-i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+
+/* hero */
+.tf-hero { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 4vw, 64px); align-items: center; max-width: 80rem; margin: 0 auto; padding: calc(84px + 6vh) clamp(16px, 4vw, 48px) 8vh; text-align: left; box-sizing: border-box; }
+.tf-hero::before { content: ""; position: absolute; z-index: -1; inset: -10% -30% 0; background: radial-gradient(40% 50% at 78% 40%, color-mix(in srgb, var(--tg2) 22%, transparent), transparent 70%), radial-gradient(30% 40% at 10% 10%, color-mix(in srgb, var(--ty) 26%, transparent), transparent 70%); pointer-events: none; }
+.tf-k { margin: 0 0 18px; font: 700 13px/1.4 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--tg); }
+.tf-t { margin: 0 0 24px; font: 800 clamp(46px, 7vw, 108px)/.95 var(--sans); letter-spacing: -.055em; }
+.tf-t .ln { display: block; overflow: hidden; padding-bottom: .06em; }
+.tf-t .ln > span { display: inline-block; translate: 0 105%; transition: translate 1.1s var(--ease); }
+.tf-t .ln + .ln > span { transition-delay: .12s; }
+.tf-hero.in .tf-t .ln > span { translate: 0 0; }
+.tf-lead { max-width: 46ch; margin: 0 0 28px; font: 400 clamp(17px, 1.35vw, 20px)/1.6 var(--sans); color: var(--ink-2); text-wrap: pretty; }
+.tf-meta { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.tf-meta li { display: grid; gap: 4px; padding: 12px 16px; border-radius: 16px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); font: 600 14px/1.3 var(--sans); }
+.tf-meta b { font: 700 11px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.tf-hero .tf-k, .tf-hero .tf-lead, .tf-hero .tf-meta, .tf-play { opacity: 0; translate: 0 18px; transition: opacity .9s var(--ease) .35s, translate 1s var(--ease) .35s; }
+.tf-hero.in .tf-k, .tf-hero.in .tf-lead, .tf-hero.in .tf-meta, .tf-hero.in .tf-play { opacity: 1; translate: 0 0; }
+.tf-hero.in .tf-play { transition-delay: .55s; }
+
+.tf-play { position: relative; display: grid; gap: 12px; padding: 18px; border-radius: 30px; background: color-mix(in srgb, var(--card) 70%, transparent); box-shadow: inset 0 0 0 1px var(--line), 0 40px 80px -40px rgba(10, 60, 35, .35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.tf-pc { padding: 20px 20px 16px; border-radius: 22px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); text-align: center; }
+.tf-ph { display: grid; gap: 4px; text-align: left; }
+.tf-ph b { font: 700 19px/1.2 var(--sans); letter-spacing: -.02em; }
+.tf-ph span { font: 400 14px/1.4 var(--sans); color: var(--ink-2); }
+.tf-gw { position: relative; width: min(280px, 100%); margin: 6px auto 0; }
+.tf-gauge { display: block; width: 100%; overflow: visible; }
+.tf-gauge path { fill: none; stroke-width: 18; stroke-linecap: round; }
+.tf-gauge .tk { stroke: var(--soft); }
+.tf-gauge .fl { stroke-dasharray: .01 100; }
+.tf-gauge .kn { fill: var(--tg); stroke: var(--card); stroke-width: 5; filter: drop-shadow(0 4px 8px rgba(0, 60, 30, .35)); }
+.tf-gv { position: absolute; left: 0; right: 0; top: 40%; display: grid; justify-items: center; gap: 8px; }
+.tf-gv b { font: 700 clamp(48px, 5vw, 64px)/1 var(--sans); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.tf-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 8px; font: 600 13px/1 var(--sans); font-style: normal; background: color-mix(in srgb, var(--tg) 12%, transparent); color: var(--tg); }
+.tf-chip::before { content: "↗"; }
+.tf-chip.a { background: color-mix(in srgb, var(--ta) 16%, transparent); color: var(--ta); }
+.tf-chip.a::before { content: "!"; font-weight: 800; }
+.tf-chip.p { background: var(--tg); color: #fff; }
+.tf-chip.p::before { content: "★"; }
+.tf-gl { margin: 4px 0 0; font: 500 14px/1.4 var(--sans); color: var(--ink-2); }
+.tf-pop { position: absolute; left: 50%; top: 18%; font: 800 22px/1 var(--sans); color: var(--tg); pointer-events: none; animation: tfpop 1.2s var(--ease) forwards; }
+@keyframes tfpop { 0% { opacity: 0; translate: -50% 10px; scale: .7; } 25% { opacity: 1; scale: 1.1; } 100% { opacity: 0; translate: -50% -40px; scale: 1; } }
+.tf-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tf-act { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: 4px 10px; align-items: center; padding: 12px; border: 0; border-radius: 18px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); text-align: left; cursor: pointer; transition: transform .25s var(--spring, var(--ease)), box-shadow .25s, opacity .3s; }
+.tf-act:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--tg) 50%, transparent), 0 14px 26px -18px rgba(0, 60, 30, .5); }
+.tf-act .ic { grid-row: span 2; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: color-mix(in srgb, var(--tg) 10%, var(--card)); color: var(--tg); }
+.tf-act .tx { display: grid; gap: 2px; min-width: 0; }
+.tf-act .tx b { font: 700 14px/1.2 var(--sans); }
+.tf-act .tx small { font: 400 12px/1.3 var(--sans); color: var(--ink-2); }
+.tf-act .ad { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; margin-top: 6px; padding: 9px 12px; border-radius: 10px; background: var(--ink); color: var(--card); font: 700 13px/1 var(--sans); }
+.tf-act .ad i { font-style: normal; color: var(--ty); }
+.tf-act.done { opacity: .6; pointer-events: none; }
+.tf-act.done .ad { background: color-mix(in srgb, var(--tg) 14%, transparent); color: var(--tg); } .tf-act.done .ad i { color: var(--tg); }
+.tf-max { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 8px; padding: 24px; border-radius: 30px; background: var(--card); text-align: center; opacity: 0; scale: .96; pointer-events: none; transition: opacity .5s var(--ease), scale .6s var(--ease); }
+.tf-play.max .tf-max { opacity: 1; scale: 1; pointer-events: auto; transition-delay: .9s; }
+.tf-max > span { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: color-mix(in srgb, var(--tg) 14%, transparent); color: var(--tg); }
+.tf-max > span .tf-i { width: 40px; height: 40px; }
+.tf-max b { font: 800 24px/1.2 var(--sans); letter-spacing: -.02em; color: var(--tg); }
+.tf-max small { font: 400 15px/1.4 var(--sans); color: var(--ink-2); }
+.tf-max button, .tf-doc .d-flip, .tf-rc button { margin-top: 6px; padding: 12px 18px; border: 0; border-radius: 999px; background: var(--ink); color: var(--card); font: 700 14px/1 var(--sans); cursor: pointer; }
+
+/* tl;dr */
+.tf-tldr { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 76rem; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px); box-sizing: border-box; text-align: left; }
+.tf-tldr article { padding: 22px; border-radius: 22px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-tldr i { font: 700 12px/1 var(--sans); font-style: normal; letter-spacing: .1em; text-transform: uppercase; color: var(--tg); }
+.tf-tldr p { margin: 10px 0 0; font: 500 16px/1.5 var(--sans); }
+
+/* section scaffolding */
+.tf-sec { position: relative; z-index: 1; max-width: 76rem; margin: 0 auto; padding: 18vh clamp(16px, 4vw, 48px) 0; box-sizing: border-box; }
+.tf-pl { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 18px; padding: 6px 14px 6px 6px; border-radius: 999px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); font: 700 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.tf-pl span { display: grid; place-items: center; min-width: 26px; height: 26px; border-radius: 999px; background: var(--tg); color: #fff; letter-spacing: 0; }
+.tf-h { margin: 0 auto 4vh; max-width: 22ch; font: 800 clamp(34px, 5vw, 72px)/1.02 var(--sans); letter-spacing: -.05em; text-wrap: balance; }
+.tf-h4 { margin: 14vh auto 2vh; font: 800 clamp(26px, 3vw, 42px)/1.1 var(--sans); letter-spacing: -.035em; }
+.tf-p { margin: -1vh auto 5vh; max-width: 60ch; font: 400 clamp(16px, 1.25vw, 19px)/1.65 var(--sans); color: var(--ink-2); text-wrap: pretty; }
+.tf-cap { margin: 2vh auto 0; font: 400 14px/1.5 var(--sans); color: var(--ink-2); }
+.tf-big { margin: 0 auto 5vh; max-width: 24ch; font: 800 clamp(30px, 4.2vw, 60px)/1.1 var(--sans); letter-spacing: -.045em; text-wrap: balance; }
+.tf-brw { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--soft); border-bottom: 1px solid var(--line); }
+.tf-brw i { width: 10px; height: 10px; border-radius: 50%; background: #FF5F57; } .tf-brw i + i { background: #FEBC2E; } .tf-brw i + i + i { background: #28C840; }
+.tf-brw span { flex: 1; margin-left: 10px; padding: 5px 12px; border-radius: 8px; background: var(--card); font: 500 12px/1 var(--sans); color: var(--ink-2); text-align: left; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.tf-hs { position: absolute; z-index: 3; display: grid; place-items: center; width: 34px; height: 34px; margin: -17px 0 0 -17px; border: 0; border-radius: 50%; background: var(--tg); color: #fff; font: 800 14px/1 var(--sans); cursor: pointer; box-shadow: 0 0 0 4px color-mix(in srgb, var(--tg) 28%, transparent), 0 8px 18px -6px rgba(0, 0, 0, .4); transition: scale .25s var(--ease), background .25s; }
+.tf-hs::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--tg); animation: tfping 2.2s ease-out infinite; }
+.tf-hs:hover { scale: 1.12; }
+.tf-hs.on { background: var(--ty); color: #15191C; } .tf-hs.on::after { border-color: var(--ty); }
+@keyframes tfping { from { opacity: .8; scale: 1; } to { opacity: 0; scale: 1.8; } }
+
+/* context: Heike and her year */
+.tf-host { display: grid; grid-template-columns: .8fr 1.2fr; gap: 18px; margin: 0 auto 5vh; text-align: left; }
+.tf-pers { padding: 24px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-pers .av { display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: 14px; border-radius: 50%; background: linear-gradient(135deg, #4FB2E3, #FFC61F 55%, #EE4B73); color: #fff; font: 800 26px/1 var(--sans); }
+.tf-pers b { display: block; font: 800 22px/1.2 var(--sans); letter-spacing: -.02em; }
+.tf-pers small { font: 400 14px/1.4 var(--sans); color: var(--ink-2); }
+.tf-pers ul { margin: 16px 0; padding: 0 0 0 18px; font: 400 15px/1.6 var(--sans); color: var(--ink-2); }
+.tf-pers .q { margin: 0; padding: 14px 16px; border-radius: 16px; background: color-mix(in srgb, var(--ty) 22%, var(--card)); font: 400 22px/1.25 var(--hand); color: var(--ink); }
+.tf-year { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; align-items: end; margin: 0; padding: 24px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); list-style: none; }
+.tf-year::before { content: ""; position: absolute; left: 24px; right: 24px; top: 50%; height: 2px; background: repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 14px); }
+.tf-year li { position: relative; display: grid; gap: 6px; padding: 14px 12px; border-radius: 18px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); opacity: 0; translate: 0 14px; transition: opacity .6s var(--ease), translate .7s var(--ease); transition-delay: calc(var(--i) * 120ms); }
+.tf-host.in .tf-year li { opacity: 1; translate: 0 0; }
+.tf-year li:nth-child(odd) { margin-bottom: 70px; } .tf-year li:nth-child(even) { margin-top: 70px; }
+.tf-year span { font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--tg); }
+.tf-year b { font: 700 15px/1.25 var(--sans); }
+.tf-year small { font: 400 13px/1.35 var(--sans); color: var(--ink-2); }
+.tf-year li.hot { background: color-mix(in srgb, var(--tr) 12%, var(--card)); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--tr) 50%, transparent); }
+.tf-year li.hot span { color: var(--tr); }
+
+/* the old page, redrawn */
+.tf-old { position: relative; max-width: 980px; margin: 0 auto; border-radius: 18px; overflow: visible; background: #fff; box-shadow: 0 0 0 1px var(--line), 0 40px 80px -40px rgba(0, 0, 0, .35); text-align: left; }
+.tf-old .tf-brw { border-radius: 18px 18px 0 0; }
+.tf-ow { padding: 0 0 18px; color: #333; font: 400 12px/1.4 Arial, sans-serif; filter: saturate(.85); border-radius: 0 0 18px 18px; overflow: hidden; background: #fff; }
+.o-nav { display: flex; align-items: center; gap: 18px; padding: 10px 18px; background: #F2F2F2; border-bottom: 1px solid #DDD; color: #555; white-space: nowrap; overflow: hidden; }
+.o-lg { display: inline-flex; align-items: center; gap: 6px; margin-right: 10px; font: 700 16px/1 Arial, sans-serif; color: #444; }
+.o-lg img { width: 20px; height: 20px; }
+.o-ban { margin: 12px 18px; padding: 10px 12px; background: #FFF3B0; border: 1px solid #F0D96B; color: #6A5500; }
+.o-h { margin: 6px 18px 8px; font: 700 16px/1.2 Arial, sans-serif; color: #444; }
+.o-tbl { margin: 0 18px; border: 1px solid #DDD; }
+.o-r { display: grid; grid-template-columns: 2.4fr .7fr .9fr .7fr 1.2fr; gap: 8px; align-items: center; padding: 7px 10px; border-top: 1px solid #EEE; color: #666; }
+.o-r:nth-child(even) { background: #FAFAFA; }
+.o-th { border-top: 0; background: #EDEDED !important; font-weight: 700; color: #555; }
+.o-r > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.o-r > span:first-child { display: flex; align-items: center; gap: 8px; }
+.o-im { flex: none; width: 34px; height: 24px; background: linear-gradient(135deg, #C9D3D9, #9BA9B2); }
+.o-ic { display: flex; gap: 5px; } .o-ic i { width: 11px; height: 11px; border-radius: 2px; background: #B5B5B5; }
+.tf-oc { position: relative; z-index: 4; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; max-width: 560px; margin: -36px auto 0; padding: 18px 20px; border-radius: 20px; background: var(--ink); color: var(--paper); text-align: left; box-shadow: 0 24px 50px -24px rgba(0, 0, 0, .55); }
+.tf-oc i { grid-row: span 2; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--ty); color: #15191C; font: 800 14px/1 var(--sans); font-style: normal; }
+.tf-oc b { font: 700 17px/1.3 var(--sans); }
+.tf-oc p { margin: 0; font: 400 15px/1.5 var(--sans); opacity: .8; }
+.tf-oc.on b, .tf-oc.on p { animation: tfin .5s var(--ease); }
+@keyframes tfin { from { opacity: 0; translate: 0 6px; } }
+
+/* the brief */
+.tf-doc { position: relative; max-width: 780px; margin: 0 auto 5vh; padding: 26px clamp(18px, 3vw, 36px) 28px; border-radius: 18px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 30px 60px -36px rgba(0, 0, 0, .3); text-align: left; }
+.tf-doc .d-top { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.tf-doc .d-ic { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 8px; background: #2B579A; color: #fff; font: 800 18px/1 var(--sans); }
+.tf-doc .d-top div { flex: 1; display: grid; gap: 3px; min-width: 0; }
+.tf-doc .d-top b { font: 700 16px/1.2 var(--sans); }
+.tf-doc .d-top small { font: 400 13px/1.3 var(--sans); color: var(--ink-2); }
+.tf-doc .d-flip { margin: 0; background: var(--tg); color: #fff; white-space: nowrap; }
+.tf-doc .d-flip .on, .tf-doc.flip .d-flip .off { display: none; } .tf-doc.flip .d-flip .on { display: inline; }
+.tf-doc .d-h { margin: 20px 0 8px; font: 700 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.tf-doc ol { margin: 0; padding: 0 0 0 22px; display: grid; gap: 14px; }
+.tf-doc li { font: 400 17px/1.5 var(--sans); }
+.tf-doc li > span { display: block; transition: opacity .45s var(--ease), translate .45s var(--ease); }
+.tf-doc .a { background: linear-gradient(transparent 62%, color-mix(in srgb, var(--ty) 55%, transparent) 62%); width: fit-content; }
+.tf-doc .b { height: 0; overflow: hidden; opacity: 0; translate: 0 6px; font: 400 24px/1.25 var(--hand); color: var(--tg); }
+.tf-doc.flip .a { text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--ink) 50%, transparent); opacity: .5; font-size: 14px; }
+.tf-doc.flip .b { height: auto; opacity: 1; translate: 0 0; margin-top: 4px; }
+.tf-doc .d-n { margin: 18px 0 0; padding-top: 14px; border-top: 1px dashed var(--line); font: 400 14px/1.5 var(--sans); color: var(--ink-2); }
+
+/* the numbers */
+.tf-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 0 auto 4vh; text-align: left; }
+.tf-tile { display: grid; align-content: start; gap: 10px; padding: 22px; border-radius: 22px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); opacity: 0; translate: 0 14px; transition: opacity .6s var(--ease), translate .7s var(--ease); transition-delay: calc(var(--i) * 110ms); }
+.tf-tiles.in .tf-tile { opacity: 1; translate: 0 0; }
+.tf-tile b { font: 800 clamp(34px, 3.4vw, 50px)/1 var(--sans); letter-spacing: -.04em; color: var(--tg); }
+.tf-tile span { font: 400 15px/1.45 var(--sans); color: var(--ink-2); }
+.tf-chart { margin: 0 auto 5vh; padding: 24px clamp(16px, 3vw, 32px) 18px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-chart figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; font: 600 15px/1.3 var(--sans); text-align: left; }
+.tf-seg, .tf-dev, .tf-sch, .tf-df, .tf-rtabs { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 4px; padding: 4px; border-radius: 999px; background: var(--soft); }
+.tf-seg button, .tf-dev button, .tf-sch button, .tf-df button, .tf-rtabs button { padding: 10px 16px; border: 0; border-radius: 999px; background: none; color: var(--ink-2); font: 600 14px/1 var(--sans); cursor: pointer; transition: background .25s, color .25s, box-shadow .25s; }
+.tf-seg button.on, .tf-dev button.on, .tf-sch button.on, .tf-df button.on, .tf-rtabs button.on { background: var(--card); color: var(--ink); box-shadow: 0 4px 12px -6px rgba(0, 0, 0, .3); }
+.tf-bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(10px, 3vw, 40px); align-items: end; height: 280px; margin-top: 22px; padding: 0 clamp(0px, 3vw, 40px); border-bottom: 2px solid var(--line); }
+.tf-bars .c { display: grid; grid-template-rows: auto 1fr; justify-items: center; align-items: end; height: 100%; position: relative; }
+.tf-bars b { font: 800 22px/1 var(--sans); letter-spacing: -.02em; margin-bottom: 8px; transition: opacity .3s; }
+.tf-bars i { display: block; width: 100%; max-width: 120px; height: var(--h, 0%); border-radius: 14px 14px 4px 4px; background: linear-gradient(180deg, var(--tg2), var(--tg)); transition: height 1s var(--ease); transition-delay: calc(var(--i) * 90ms); }
+.tf-bars .c span { position: absolute; bottom: -30px; font: 600 13px/1 var(--sans); color: var(--ink-2); white-space: nowrap; }
+.tf-chx { margin: 42px 0 0; font: 500 13px/1 var(--sans); color: var(--ink-2); }
+
+/* the score, factor by factor */
+.tf-anat { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 0 auto 5vh; text-align: left; }
+.tf-al { display: grid; align-content: center; gap: 22px; padding: 26px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-lc { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 14px; border-radius: 18px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-lc .ph, .tf-li .ph { width: 76px; height: 64px; border-radius: 10px; background: var(--soft) url(v2/tf/ph.webp) center / cover no-repeat; }
+.tf-lc small, .tf-li small { font: 500 11px/1 var(--sans); letter-spacing: .04em; color: var(--ink-2); }
+.tf-lc b { display: block; margin: 4px 0; font: 600 15px/1.3 var(--sans); }
+.tf-lc .m, .tf-li .m { font: 400 12px/1 var(--sans); color: var(--ink-2); }
+.tf-sum { display: flex; align-items: baseline; gap: 6px; }
+.tf-sum b { font: 800 clamp(64px, 7vw, 96px)/1 var(--sans); letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.tf-sum > span { font: 600 22px/1 var(--sans); color: var(--ink-2); margin-right: 10px; }
+.tf-split { display: flex; flex-wrap: wrap; gap: 16px; margin: 0; font: 500 15px/1 var(--sans); color: var(--ink-2); }
+.tf-split span { display: inline-flex; align-items: center; gap: 8px; } .tf-split b { color: var(--ink); }
+.tf-split i { width: 12px; height: 12px; border-radius: 4px; } .tf-split .fr { background: var(--tg); } .tf-split .pd { background: var(--ty); }
+.tf-fac { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.tf-fac button { display: grid; grid-template-columns: auto 1fr auto auto auto; gap: 12px; align-items: center; width: 100%; padding: 12px 14px; border: 0; border-radius: 16px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); text-align: left; cursor: pointer; transition: box-shadow .25s, background .25s; }
+.tf-fac button.on { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--tg) 45%, transparent); background: color-mix(in srgb, var(--tg) 5%, var(--card)); }
+.tf-fac .ic { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; background: var(--soft); color: var(--ink-2); transition: background .25s, color .25s; }
+.tf-fac .on .ic { background: color-mix(in srgb, var(--tg) 14%, var(--card)); color: var(--tg); }
+.tf-fac b { font: 600 15px/1.2 var(--sans); }
+.tf-fac em { padding: 4px 8px; border-radius: 6px; font: 700 11px/1 var(--sans); font-style: normal; letter-spacing: .04em; text-transform: uppercase; }
+.tf-fac em.fr { background: color-mix(in srgb, var(--tg) 12%, transparent); color: var(--tg); } .tf-fac em.pd { background: color-mix(in srgb, var(--ty) 28%, transparent); color: color-mix(in srgb, var(--ta) 80%, var(--ink)); }
+.tf-fac .pt { font: 600 14px/1 var(--sans); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.tf-fac .sw { position: relative; width: 40px; height: 24px; border-radius: 99px; background: var(--soft); box-shadow: inset 0 0 0 1px var(--line); transition: background .25s; }
+.tf-fac .sw i { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, .25); transition: translate .3s var(--ease); }
+.tf-fac .on .sw { background: var(--tg); } .tf-fac .on .sw i { translate: 16px 0; }
+
+/* rings */
+.tf-ring { --rc: var(--tg); position: relative; display: inline-grid; place-items: center; width: 44px; height: 44px; flex: none; }
+.tf-ring.a { --rc: var(--ta); }
+.tf-ring svg { position: absolute; inset: 0; width: 100%; height: 100%; rotate: -90deg; }
+.tf-ring circle { fill: none; stroke: var(--soft); stroke-width: 4; }
+.tf-ring circle.f { stroke: var(--rc); stroke-linecap: round; stroke-dasharray: var(--v) 100; transition: stroke-dasharray .8s var(--ease), stroke .3s; }
+.tf-ring b { font: 700 14px/1 var(--sans); font-variant-numeric: tabular-nums; }
+.tf-ring.big { width: 64px; height: 64px; } .tf-ring.big b { font-size: 18px; }
+
+/* going wide */
+.tf-refs { margin: 0 auto 6vh; cursor: zoom-in; }
+.tf-refs img, .tf-comps img { display: block; width: 100%; border-radius: 22px; box-shadow: 0 0 0 1px var(--line), 0 30px 60px -36px rgba(0, 0, 0, .4); }
+.tf-refs figcaption, .tf-comps figcaption { margin-top: 14px; font: 400 14px/1.5 var(--sans); color: var(--ink-2); }
+.tf-fan { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 0 auto 5vh; text-align: left; }
+.tf-ai { display: grid; align-content: start; gap: 10px; padding: 14px 14px 18px; border-radius: 24px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); rotate: calc((var(--i) - 1) * 1.6deg); transition: rotate .4s var(--ease), translate .4s var(--ease); }
+.tf-ai:hover { rotate: 0deg; translate: 0 -6px; }
+.tf-ai .tf-zoom { display: block; height: 300px; padding: 0; border: 0; border-radius: 14px; overflow: hidden; background: var(--soft); cursor: zoom-in; }
+.tf-ai img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.tf-ai b { margin-top: 6px; font: 700 17px/1.25 var(--sans); }
+.tf-ai p { display: flex; gap: 8px; margin: 0; font: 400 14px/1.45 var(--sans); color: var(--ink-2); }
+.tf-ai .g .tf-i { color: var(--tg); } .tf-ai .n .tf-i { color: var(--tr); }
+
+/* the meter */
+.tf-mt { display: grid; gap: 18px; margin: 0 auto; }
+.tf-steps { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.tf-steps button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px; border: 0; border-radius: 999px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink-2); font: 600 14px/1 var(--sans); cursor: pointer; transition: background .25s, color .25s; }
+.tf-steps i { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--soft); font-style: normal; font-weight: 800; }
+.tf-steps button.on { background: var(--ink); color: var(--card); } .tf-steps button.on i { background: var(--ty); color: #15191C; }
+.tf-mv { display: grid; grid-template-columns: 1.2fr .8fr; gap: 18px; align-items: stretch; text-align: left; }
+.tf-ms { display: grid; place-items: center; min-height: 380px; padding: 18px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-ms .tf-zoom { padding: 0; border: 0; background: none; cursor: zoom-in; }
+.tf-ms img { display: block; max-width: 100%; max-height: 420px; border-radius: 14px; animation: tfin .5s var(--ease); }
+.tf-mlive { position: relative; width: min(320px, 100%); text-align: center; animation: tfin .5s var(--ease); }
+.tf-mlive .tf-gv { top: 36%; }
+.tf-mlive p { margin: 6px 0 0; font: 500 15px/1.4 var(--sans); color: var(--ink-2); }
+.tf-mx { display: grid; align-content: start; gap: 12px; padding: 26px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-mx > b { font: 800 26px/1.15 var(--sans); letter-spacing: -.03em; }
+.tf-mx > p { margin: 0; font: 400 16px/1.6 var(--sans); color: var(--ink-2); }
+.tf-mx ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.tf-mx li { display: flex; gap: 8px; align-items: flex-start; font: 500 15px/1.4 var(--sans); }
+.tf-mx .ok .tf-i { color: var(--tg); } .tf-mx .no .tf-i { color: var(--tr); }
+
+/* six rounds */
+.tf-rd { display: grid; grid-template-columns: 1.35fr .65fr; gap: 18px; text-align: left; }
+.tf-rv { border-radius: 22px; overflow: hidden; background: var(--card); box-shadow: inset 0 0 0 1px var(--line), 0 30px 60px -36px rgba(0, 0, 0, .35); }
+.tf-rf { position: relative; height: min(70vh, 640px); overflow-y: auto; overscroll-behavior: contain; }
+.tf-rf img { display: none; width: 100%; } .tf-rf img.on { display: block; animation: tfin .45s var(--ease); }
+.tf-rn { display: grid; align-content: start; gap: 12px; padding: 26px; border-radius: 22px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-rn > span { font: 700 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--tg); }
+.tf-rn > b { font: 800 26px/1.15 var(--sans); letter-spacing: -.03em; }
+.tf-rn > p { margin: 0; font: 400 16px/1.6 var(--sans); color: var(--ink-2); }
+.tf-rn > p.l { padding: 14px 16px; border-radius: 16px; background: color-mix(in srgb, var(--ty) 20%, var(--card)); font: 400 21px/1.3 var(--hand); color: var(--ink); }
+.tf-rc { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.tf-rc button { margin: 0; width: 44px; height: 44px; padding: 0; flex: none; }
+.tf-rc input { flex: 1; accent-color: var(--tg); }
+.tf-rdots { display: flex; gap: 6px; }
+.tf-rdots button { flex: 1; height: 6px; padding: 0; border: 0; border-radius: 99px; background: var(--soft); cursor: pointer; transition: background .25s; }
+.tf-rdots button.on { background: var(--tg); }
+
+/* three rooms */
+.tf-rm { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; text-align: left; }
+.tf-rtabs { grid-column: 1 / -1; justify-self: center; }
+.tf-rtabs button.on { color: var(--rc); }
+.tf-chat { display: grid; align-content: start; gap: 10px; min-height: 340px; padding: 22px; border-radius: 26px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-chat p { max-width: 82%; margin: 0; padding: 12px 16px; border-radius: 20px 20px 20px 6px; background: color-mix(in srgb, var(--rc) 12%, var(--card)); font: 400 16px/1.45 var(--sans); animation: tfmsg .5s var(--ease) both; animation-delay: calc(var(--i) * 280ms); }
+.tf-chat p small { display: block; margin-bottom: 4px; font: 700 11px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--rc); }
+.tf-chat p.me { justify-self: end; border-radius: 20px 20px 6px 20px; background: var(--ink); color: var(--card); }
+.tf-chat p.me small { color: var(--ty); }
+@keyframes tfmsg { from { opacity: 0; translate: 0 10px; scale: .97; } }
+.tf-chg { padding: 22px; border-radius: 26px; background: var(--ink); color: var(--paper); }
+.tf-chg > p { margin: 0 0 14px; font: 700 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ty); }
+.tf-chg ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.tf-chg li { display: flex; gap: 10px; font: 500 16px/1.45 var(--sans); animation: tfin .5s var(--ease) both; }
+.tf-chg .tf-i { color: var(--tg2); margin-top: 2px; }
+
+/* the review sticky */
+.tf-sticky { position: relative; max-width: 640px; margin: 0 auto; padding: 30px clamp(18px, 3vw, 34px) 26px; background: #FFE680; color: #2B2410; border-radius: 4px 4px 22px 4px; rotate: -1deg; box-shadow: 0 30px 50px -30px rgba(80, 60, 0, .55); text-align: left; }
+.tf-sticky::before { content: ""; position: absolute; top: -14px; left: 50%; width: 120px; height: 28px; translate: -50% 0; rotate: 2deg; background: rgba(255, 255, 255, .55); box-shadow: 0 2px 6px rgba(0, 0, 0, .08); }
+.tf-sticky .t { display: flex; justify-content: space-between; align-items: center; margin: 0 0 14px; font: 700 28px/1 var(--hand); }
+.tf-sticky .t span { font: 700 13px/1 var(--sans); padding: 6px 10px; border-radius: 99px; background: rgba(43, 36, 16, .1); transition: background .3s, color .3s; }
+.tf-sticky .t span.all { background: #13804F; color: #fff; }
+.tf-sticky ol { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.tf-sticky button { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; width: 100%; padding: 8px 6px; border: 0; border-radius: 10px; background: none; color: inherit; text-align: left; cursor: pointer; }
+.tf-sticky button:hover { background: rgba(43, 36, 16, .06); }
+.tf-sticky i { grid-row: span 2; width: 22px; height: 22px; margin-top: 2px; border-radius: 6px; box-shadow: inset 0 0 0 2px rgba(43, 36, 16, .5); transition: background .25s; }
+.tf-sticky .a { font: 400 22px/1.2 var(--hand); transition: opacity .3s; }
+.tf-sticky .b { height: 0; overflow: hidden; font: 600 14px/1.4 var(--sans); color: #0E6B43; opacity: 0; transition: opacity .35s; }
+.tf-sticky [aria-pressed="true"] i { background: #13804F url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 12.5 4 4L18 8' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat; box-shadow: none; }
+.tf-sticky [aria-pressed="true"] .a { text-decoration: line-through; opacity: .55; }
+.tf-sticky [aria-pressed="true"] .b { height: auto; opacity: 1; }
+
+/* decisions */
+.tf-df { margin-bottom: 26px; }
+.tf-decs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 14px; text-align: left; }
+.tf-dc { display: grid; align-content: start; gap: 10px; padding: 22px; border-radius: 22px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); transition: opacity .3s, scale .3s; }
+.tf-dc.hid { display: none; }
+.tf-dc em { justify-self: start; padding: 5px 10px; border-radius: 8px; font: 700 12px/1 var(--sans); font-style: normal; letter-spacing: .06em; text-transform: uppercase; }
+.tf-dc.ship em { background: color-mix(in srgb, var(--tg) 14%, transparent); color: var(--tg); }
+.tf-dc.over em { background: color-mix(in srgb, var(--tr) 14%, transparent); color: var(--tr); }
+.tf-dc.mid em { background: color-mix(in srgb, var(--ty) 30%, transparent); color: color-mix(in srgb, var(--ta) 80%, var(--ink)); }
+.tf-dc b { font: 800 20px/1.2 var(--sans); letter-spacing: -.02em; }
+.tf-dc .a { margin: 0; font: 400 15px/1.5 var(--sans); color: var(--ink-2); }
+.tf-dc .b { margin: 0; padding-top: 10px; border-top: 1px dashed var(--line); font: 500 15px/1.5 var(--sans); }
+
+/* the final design */
+.tf-dev { margin-bottom: 22px; }
+.tf-fin { position: relative; }
+.tf-dk { max-width: 1040px; margin: 0 auto; border-radius: 18px; overflow: hidden; background: var(--card); box-shadow: 0 0 0 1px var(--line), 0 50px 90px -50px rgba(0, 0, 0, .45); }
+.tf-shot { position: relative; } .tf-shot img { display: block; width: 100%; }
+.tf-mb { display: none; justify-items: center; gap: 12px; }
+.tf-mb p { margin: 0; font: 500 13px/1 var(--sans); color: var(--ink-2); }
+.tf-phone { width: 320px; height: 660px; padding: 10px; border-radius: 46px; background: #121212; box-shadow: 0 0 0 2px #2A2A2A, 0 50px 90px -40px rgba(0, 0, 0, .55); }
+.tf-phone .scr { height: 100%; border-radius: 37px; overflow-y: auto; overscroll-behavior: contain; background: #F4F4F2; scrollbar-width: none; }
+.tf-phone .scr::-webkit-scrollbar { display: none; }
+.tf-phone img { display: block; width: 100%; }
+.tf-fin.mob .tf-dk { display: none; } .tf-fin.mob .tf-mb { display: grid; } .tf-fin.mob .tf-hc { display: none; }
+.tf-hc { max-width: 560px; margin: -30px auto 0; position: relative; z-index: 4; padding: 18px 22px; border-radius: 20px; background: var(--ink); color: var(--paper); text-align: left; box-shadow: 0 24px 50px -24px rgba(0, 0, 0, .55); }
+.tf-hc b { font: 700 17px/1.3 var(--sans); } .tf-hc p { margin: 4px 0 0; font: 400 15px/1.5 var(--sans); opacity: .8; }
+.tf-hc.on b, .tf-hc.on p { animation: tfin .5s var(--ease); }
+
+/* one listing, six moods */
+.tf-st { display: grid; justify-items: center; gap: 18px; }
+.tf-li { width: min(820px, 100%); border-radius: 18px; overflow: hidden; background: #fff; color: #15191C; box-shadow: 0 0 0 1px rgba(0, 0, 0, .08), 0 30px 60px -36px rgba(0, 0, 0, .35); text-align: left; transition: box-shadow .3s; --soft: #ECEAE4; --tg: #13804F; --ta: #C98A00; }
+.tf-li .row { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; padding: 16px; }
+.tf-li .ph { width: 92px; height: 84px; }
+.tf-li .tx { display: grid; gap: 5px; align-content: start; min-width: 0; }
+.tf-li .tx b { font: 600 16px/1.3 var(--sans); }
+.tf-li small, .tf-li .m { color: #6B7177; }
+.tf-li .hf { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 0; font: 400 13px/1 var(--sans); }
+.tf-li .hf span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; } .tf-li .hf .tf-i { width: 14px; height: 14px; color: #13804F; } .tf-li .hf .x .tf-i { color: #C2410C; }
+.tf-li .rt { display: grid; justify-items: end; align-content: space-between; gap: 10px; }
+.tf-li .cta { display: none; padding: 11px 20px; border-radius: 10px; font: 700 14px/1 var(--sans); white-space: nowrap; }
+.tf-li .cta.on { display: block; animation: tfin .4s var(--ease); }
+.tf-li .cta.yel { background: #FFC61F; color: #15191C; } .tf-li .cta.amber { background: #8A5A00; color: #fff; } .tf-li .cta.red { background: #C2410C; color: #fff; }
+.tf-li .cta.on + .tf-ring { display: none; }
+.tf-li .ics { display: flex; gap: 10px; color: #4B5157; } .tf-li .ics .tf-i { width: 17px; height: 17px; }
+.tf-li .strip { display: none; padding: 12px 16px; font: 500 14px/1.4 var(--sans); }
+.tf-li .strip.on { display: block; animation: tfin .4s var(--ease); }
+.tf-li .strip p { margin: 0; }
+.tf-li .strip.recs { background: #FFF1D6; color: #7A5300; } .tf-li .strip.amber { background: #FFF1D6; color: #7A5300; } .tf-li .strip.red { background: #FDE7DF; color: #A2360B; } .tf-li .strip.green { background: #DDF6EA; color: #0E6B43; }
+.tf-li .recs, .tf-li .tmr { display: none; }
+.tf-li .strip.recs .recs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.tf-li .rc { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 10px; border-radius: 12px; background: #fff; color: #15191C; }
+.tf-li .rc img { width: 56px; height: 42px; border-radius: 8px; object-fit: cover; }
+.tf-li .rc em { display: inline-block; padding: 3px 6px; border-radius: 6px; background: #DDF6EA; color: #0E6B43; font: 700 10px/1 var(--sans); font-style: normal; }
+.tf-li .rc b { display: block; margin-top: 4px; font: 600 13px/1.2 var(--sans); }
+.tf-li .rc u { padding: 7px 12px; border-radius: 8px; box-shadow: inset 0 0 0 1px #15191C; font: 600 12px/1 var(--sans); text-decoration: none; }
+.tf-li .strip.amber .tmr { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font: 600 12px/1 var(--sans); }
+.tf-li .tmr b { padding: 5px 7px; border-radius: 6px; background: #fff; font-variant-numeric: tabular-nums; }
+.tf-li.s-draft .tf-ring b { color: #9AA0A6; }
+.tf-li.s-max { box-shadow: 0 0 0 2px #3CC48A, 0 30px 60px -30px rgba(19, 128, 79, .5); }
+.tf-li.s-exp .row { opacity: .75; }
+.tf-pri { margin: 0; max-width: 64ch; font: 400 15px/1.7 var(--sans); color: var(--ink-2); }
+.tf-pri b { padding: 3px 8px; border-radius: 6px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); font-weight: 600; white-space: nowrap; }
+
+/* seasons */
+.tf-sea { display: grid; justify-items: center; gap: 18px; }
+.tf-sv { position: relative; width: min(760px, 100%); aspect-ratio: 1046 / 760; border-radius: 18px; overflow: hidden; background: var(--card); box-shadow: 0 0 0 1px var(--line), 0 40px 80px -46px rgba(0, 0, 0, .45); }
+.tf-sv img { position: absolute; inset: 0; width: 100%; height: auto; opacity: 0; transition: opacity .6s var(--ease); }
+.tf-sv img.on { opacity: 1; }
+.tf-comps { margin: 14vh auto 0; cursor: zoom-in; }
+
+/* impact */
+.tf-imp { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 0 auto 6vh; }
+.tf-imp > div { padding: 26px 18px; border-radius: 24px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+.tf-imp b { display: block; font: 800 clamp(40px, 4.4vw, 64px)/1 var(--sans); letter-spacing: -.05em; color: var(--tg); font-variant-numeric: tabular-nums; }
+.tf-imp p { margin: 10px 0 0; font: 500 15px/1.45 var(--sans); color: var(--ink-2); }
+.tf-learn { max-width: 760px; margin: 0 auto; padding: 28px clamp(18px, 3vw, 34px); border-radius: 26px; background: var(--ink); color: var(--paper); text-align: left; }
+.tf-learn .k { margin: 0 0 16px; font: 700 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ty); }
+.tf-learn ol { display: grid; gap: 16px; margin: 0; padding: 0 0 0 20px; font: 400 16px/1.6 var(--sans); }
+.tf-learn ol b { color: #fff; }
+:root[data-theme="dark"] .tf-learn ol b { color: var(--paper); }
+
+/* footer scene: floating score rings */
+.tf-foot { margin-top: 10vh; }
+.tf-sky { background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--tg) 14%, transparent)); }
+.tf-sky .fl { position: absolute; bottom: 12%; left: calc(6% + var(--i) * 14%); display: grid; place-items: center; width: clamp(64px, 8vw, 110px); height: clamp(64px, 8vw, 110px); border-radius: 50%; background: var(--card); box-shadow: 0 20px 40px -20px rgba(0, 60, 30, .45); animation: tffloat 6s ease-in-out infinite; animation-delay: calc(var(--i) * -.8s); }
+.tf-sky .fl:nth-child(even) { bottom: 40%; }
+.tf-sky .tf-ring { width: 72%; height: 72%; } .tf-sky .tf-ring b { font-size: clamp(14px, 1.4vw, 20px); }
+@keyframes tffloat { 50% { translate: 0 -16px; } }
+
+/* lightbox */
+.tf-lb { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 24px; background: rgba(10, 16, 13, .85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; pointer-events: none; transition: opacity .3s; cursor: zoom-out; }
+.tf-lb.open { opacity: 1; pointer-events: auto; }
+.tf-lb img { max-width: min(1280px, 100%); max-height: 90vh; border-radius: 14px; scale: .94; transition: scale .4s var(--ease); }
+.tf-lb.tall { place-items: start center; overflow-y: auto; } .tf-lb.tall img { max-height: none; max-width: min(760px, 100%); }
+.tf-lb.open img { scale: 1; }
+.tf-lb .x { position: fixed; top: 18px; right: 18px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: #fff; color: #111; font: 400 26px/1 var(--sans); cursor: pointer; z-index: 2; }
+
+.cs.tf .c3-links button, .cs.tf .fb-go { --gk: #13804F; }
+:root[data-theme="dark"] .cs.tf :is(.c3-links button, .fb-go) { --gk: #7BE3B1; }
+:root[data-theme="dark"] .tf-max button, :root[data-theme="dark"] .tf-rc button, :root[data-theme="dark"] .tf-act .ad { background: var(--ink); color: #111513; }
+:root[data-theme="dark"] .tf-steps button.on { color: #111513; }
+:root[data-theme="dark"] .tf-chat p.me { color: #111513; }
+:root[data-theme="dark"] .tf-chg, :root[data-theme="dark"] .tf-learn, :root[data-theme="dark"] .tf-oc, :root[data-theme="dark"] .tf-hc { background: #26302B; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+:root[data-theme="dark"] .tf-old, :root[data-theme="dark"] .tf-li, :root[data-theme="dark"] .tf-dk, :root[data-theme="dark"] .tf-sv { filter: brightness(.92); }
+
+@media (max-width: 980px) {
+  .tf-hero { grid-template-columns: 1fr; padding-top: calc(76px + 3vh); }
+  .tf-tldr, .tf-tiles, .tf-imp { grid-template-columns: 1fr 1fr; }
+  .tf-host, .tf-anat, .tf-mv, .tf-rd, .tf-rm { grid-template-columns: 1fr; }
+  .tf-fan { grid-template-columns: 1fr; max-width: 520px; }
+  .tf-rf { height: 60vh; }
+}
+@media (max-width: 640px) {
+  .tf-sec { padding-top: 12vh; }
+  .tf-tldr, .tf-tiles, .tf-imp { grid-template-columns: 1fr; }
+  .tf-acts { gap: 8px; } .tf-act { padding: 10px; gap: 2px 8px; } .tf-act .tx small { display: none; } .tf-act .ic { width: 32px; height: 32px; grid-row: auto; } .tf-act .ad { padding: 8px 10px; }
+  .tf-play { padding: 12px; border-radius: 24px; }
+  .tf-year { grid-template-columns: 1fr; padding: 18px; } .tf-year::before { left: 34px; right: auto; top: 24px; bottom: 24px; width: 2px; height: auto; background: repeating-linear-gradient(180deg, var(--line) 0 8px, transparent 8px 14px); }
+  .tf-year li:nth-child(n) { margin: 0 0 0 26px; }
+  .tf-ow { font-size: 10px; } .o-r { grid-template-columns: 2fr .9fr 1fr; } .o-r > span:nth-child(4), .o-r > span:nth-child(5) { display: none; } .o-nav span:nth-child(n+4) { display: none; }
+  .tf-hs { width: 30px; height: 30px; margin: -15px 0 0 -15px; font-size: 13px; }
+  .tf-doc .d-top { flex-wrap: wrap; } .tf-doc .d-flip { width: 100%; }
+  .tf-fac button { grid-template-columns: auto 1fr auto auto; } .tf-fac .pt { display: none; }
+  .tf-bars { height: 220px; } .tf-bars b { font-size: 17px; } .tf-bars .c span { font-size: 11px; }
+  .tf-li .row { grid-template-columns: auto 1fr; } .tf-li .rt { grid-column: 1 / -1; grid-template-columns: 1fr auto; justify-items: start; align-items: center; }
+  .tf-li .ph { width: 72px; height: 64px; } .tf-li .strip.recs .recs { grid-template-columns: 1fr; }
+  .tf-phone { width: 290px; height: 600px; }
+  .tf-lc { grid-template-columns: auto 1fr; } .tf-lc .tf-ring { display: none; }
+}
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -4951,6 +5380,12 @@ html:root .scroll-cue i::after { top: 5px; }
       did: ['Let people describe the stay they want in plain words', 'Turned results into a swipe deck, right to shortlist and left to skip', 'Used every swipe as feedback to sharpen the next cards', 'Brought price, inclusions and cancellation policy to the front of each card'],
       res: [['40%', 'faster to discovery (projected)'], ['65%', 'more engagement with cards (projected)'], ['30%', 'more accurate matches (projected)'], ['25%', 'fewer search drop-offs (projected)']],
       shots: ['sw1', 'sw2', 'sw3'] },
+    { id: 'traum', bg: 'radial-gradient(110% 70% at 10% 0%, #FFE27A 0%, transparent 55%), radial-gradient(90% 80% at 100% 100%, #0B4F31 0%, transparent 60%), linear-gradient(165deg, #2FB27A, #13804F)', glow: '#2FB27A', logo: 'logo-traum', face: ['mid', 'A score worth chasing.', 'B2B host dashboard'], name: 'The Visibility Game', co: 'Traum · OYO Vacation Homes', t: '#E3F3EA', c: '#13804F', icon: 'pin', cs: '', status: 'B2B · Desktop & mobile',
+      pitch: 'Hosts paid to list, then never came back. I rebuilt their dashboard around one number that tells them how they’re doing and what to do next.',
+      meta: [['Role', 'Sole product designer'], ['Timeline', '1 month'], ['Platforms', 'Desktop and mobile web']],
+      problem: 'Hosts couldn’t tell whether their listings were working, so they never bought add-ons and often missed renewals.',
+      did: ['Reframed the brief around what hosts couldn’t see', 'Designed a visibility score, almost half of it earned for free', 'Iterated the page six times with business, product and engineering', 'Shipped desktop and mobile, with seasonal skins'],
+      res: [], shots: [] },
     { id: 'lastlook', bg: 'radial-gradient(110% 70% at 15% 0%, #E2B98A 0%, transparent 55%), radial-gradient(90% 70% at 100% 100%, #3E2614 0%, transparent 60%), linear-gradient(165deg, #A8774B, #5E3B22)', glow: '#B8834F', logo: 'logo-lastlook', face: ['mid', 'FindMy, but for everything ↗', 'Live on iOS'], name: 'LastLook', co: 'My own app · iOS', t: '#F6E7D4', c: '#9A6A3E', icon: 'pin', cs: 'https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140', csLabel: 'Get it on iOS', status: 'On the App Store',
       pitch: 'I kept forgetting where I left things. So I built an app. FindMy, but for everything you own.',
       meta: [['Role', 'Designer and builder'], ['Platform', 'iOS'], ['Status', 'Live on the App Store']],
@@ -5993,7 +6428,7 @@ html:root .scroll-cue i::after { top: 5px; }
     </svg>`;
   }
   function edCleanup() {
-    mmCleanup(); swCleanup(); soonCleanup();
+    mmCleanup(); swCleanup(); tfCleanup(); soonCleanup();
     clearInterval(initED.fi); cancelAnimationFrame(initED.raf);
     if (initED.sc) csEl.removeEventListener('scroll', initED.sc); if (initED.rs) removeEventListener('resize', initED.rs); if (initED.kd) removeEventListener('keydown', initED.kd, true);
     initED.sc = initED.rs = initED.kd = null;
@@ -6768,6 +7203,434 @@ html:root .scroll-cue i::after { top: 5px; }
       if (ft || im) { $('img', lb).src = ft ? ft.dataset.full : im.src; lb.classList.toggle('tall', !!ft); lb.classList.add('open'); } else if (e.target.closest('#swLb')) lb.classList.remove('open'); });
     $$('[data-rv]', root).forEach(el => obs.observe(el));
   }
+  // ---------- Traum: the visibility score (B2B host dashboard) ----------
+  // numbers marked data-todo are stand-ins until the real metrics sheet is in
+  const ti = k => `v2/tf/${k}.webp`;
+  const TF = {
+    hero: { start: 45, acts: [['Photos', 'Add 10+ bright photos', 15, 'cam'], ['Calendar', 'Keep your dates up to date', 15, 'cal'], ['Virtual tour', 'Turn photos into a walk-through', 15, 'play'], ['Top ad', 'Sit at the top of search', 10, 'star']] },
+    ic: {
+      cam: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+      cal: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+      play: '<circle cx="12" cy="12" r="8.5"/><path d="M10 8.8v6.4l5-3.2z"/>',
+      star: '<path d="m12 4 2.4 5 5.4.6-4 3.7 1.1 5.4L12 16l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/>',
+      tag: '<path d="M4 4h7l9 9-7 7-9-9z"/><circle cx="8.5" cy="8.5" r="1.4"/>',
+      mail: '<rect x="3.5" y="6" width="17" height="12" rx="2"/><path d="m4 7 8 6 8-6"/>',
+      euro: '<path d="M17 6.5A6.5 6.5 0 1 0 17 17.5M5 10.5h8M5 13.5h8"/>',
+      check: '<path d="m5 12.5 4.2 4L19 7"/>',
+      x: '<path d="M6 6l12 12M18 6 6 18"/>',
+      clock: '<circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.5 2M9.5 3h5"/>',
+      bar: '<path d="M6 19V11M12 19V6M18 19v-5"/>',
+      pen: '<path d="M5 19l1-4L16 5l3 3L9 18z"/>',
+      warn: '<path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4.5M12 17v.2"/>',
+      shield: '<path d="M12 3.5 19 6v5.5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/>',
+      trophy: '<path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/>'
+    },
+    old: [
+      [18, 30, 'No pulse', 'Nothing on the page told a host whether a listing was doing well or quietly dying. A listing with zero inquiries looked exactly like one with fifty.'],
+      [74, 48, 'Renewals hid in plain text', 'An expiry date was just another grey date. Hosts found out their listing had gone offline when the inquiries stopped, not from us.'],
+      [50, 14, 'Upsells shouted, but never explained', 'A banner said “Book a Top-Inserat now!” but never said why, or what it would do for this listing. So hosts treated it like an ad, and scrolled past.'],
+      [30, 72, 'Every row was a twin', 'Fourteen listings, fourteen identical rows. The one that needed you today sat in the same grey as the one that was fine.'],
+      [88, 82, 'Twelve tiny icons, zero labels', 'Edit, stats, calendar, prices, mail… all as 14px icons. Hosts over 50 (most of them) told support they didn’t know what half of them did.']
+    ],
+    brief: [
+      ['Increase adoption of value-added services: Top Ad, Virtual Tour, Traum Tags and Newsletter.', 'Hosts don’t buy add-ons because they can’t see what they’d get out of them.'],
+      ['Reduce churn at renewal time.', 'Hosts only open this page when something has gone wrong. By then, it’s too late to win them back.'],
+      ['Revamp the Advertisements page with a modern look.', 'Make the page worth opening every week, not once a year.'],
+      ['Must ship in one month, on the existing design system.', 'No new components I can’t justify. Every pixel has to earn its sprint.']
+    ],
+    tiles: [['38%', 'of listings were missing at least one free basic: photos, prices or a calendar'], ['6%', 'of hosts had bought any add-on in the last 12 months'], ['1 in 4', 'renewals only happened after the listing had already gone offline'], ['2.4×', 'more inquiries for complete listings than incomplete ones']],
+    chart: { lbl: ['0–25%', '25–50%', '50–75%', '75–100%'], sets: { inq: ['Inquiries a month', [3, 7, 12, 19], ''], ren: ['Renewal rate', [41, 55, 68, 82], '%'] } },
+    factors: [['Photos', 15, 'cam', 1, 1], ['Prices', 15, 'euro', 1, 1], ['Availability calendar', 15, 'cal', 1, 0], ['Top ad', 20, 'star', 0, 0], ['Virtual tour', 15, 'play', 0, 0], ['Traum tags', 10, 'tag', 0, 1], ['Newsletter', 10, 'mail', 0, 0]],
+    ai: [['ai1', 'The everything dashboard', 'One score up top. Nice.', 'Then four performance stats compete with it. Hosts read four numbers and act on none.'],
+      ['ai2', 'The breakdown on every row', 'Each listing explains its own score.', 'Seven factor chips × 14 listings = a wall. Nobody reads a wall.'],
+      ['ai3', 'The SaaS skin', 'Top opportunities, ranked by points. Keep.', 'Purple, a data table and a portfolio score. It’s a product for analysts, not for Heike.']],
+    meter: [
+      ['gauge-ref', 'The obvious one', 'A traffic-light speedometer. Everyone knows how to read it, which is exactly the problem: it reads like a judgement.', ['Instantly readable'], ['Red means “you failed”', 'Needle feels like a car, not a home']],
+      ['g1', 'Speedometer + stats', 'I paired the meter with views, leads, rating and market rank, and stacked actions on the right.', ['“You’re ahead of 62% of similar properties”'], ['Four stats steal focus', 'Red still screams']],
+      ['g2', 'Tighter', 'Same idea, half the size. A “what this means” line explains the number in plain words.', ['Plain-language explainer'], ['Actions became a list nobody finishes']],
+      ['g3', 'Score + three moves', 'Three actions only, each with its impact, and a bar showing where you could be: 72 → 90.', ['“+12 points this week”', 'Potential score'], ['Red-to-green arc, again', 'Too big for the side rail']],
+      ['live', 'One green arc', 'No red anywhere. The arc fills in one calm green, the chip says how you’re doing, and a single line says what’s next.', ['Feels like progress, not a grade', 'Fits a 360px phone'], []]
+    ],
+    rounds: [
+      ['it1', 'Round 1', 'Recommendations under every listing', 'The first instinct: put the fix right where the problem is. Each listing got its own row of add-on cards.', 'Fourteen listings × two cards = 28 upsells on one page. It felt like a shop, not a dashboard.'],
+      ['it2', 'Round 2', 'A meter with a memory', 'The score card learned to say “+12 points this week”, so hosts see movement, not just a number.', 'Weekly change was the thing PM loved most. It stayed in every round after.'],
+      ['it3', 'Round 3', 'Fewer, bigger choices', 'Boost cards went from a carousel of five to a grid of two, to make each one feel deliberate.', 'Too few: business lost the add-ons that didn’t fit. The carousel came back.'],
+      ['it4', 'Round 4', 'Every listing gets a ring', 'A small score ring on each listing. Below 50 it opens recommendations. Above 90, a green “stellar” line.', 'The rings made the list scannable in one glance. This is where the page clicked.'],
+      ['it6', 'Round 5', 'Renewals move to the front', 'Business review: renewals pay the bills. Expiring listings jump to the top with a Renew button you can’t miss.', 'Right call. The meter moved to the side rail so renewals could lead.'],
+      ['final', 'Final', 'Calm, in Traum’s own voice', 'Back to Traum’s design system: black and yellow buttons, quiet cards, one green for good news.', 'Shipped. Desktop and mobile, built from the same components.']
+    ],
+    rooms: {
+      biz: ['Business', '#C78A00', [['biz', 'Renewals are 70% of our revenue. If the page leads with a score, where do renewals go?'], ['me', 'Fair. What if a listing that’s about to expire jumps to the top of the list, with its own Renew button?'], ['biz', 'And an early-renewal discount, with a timer. People act on deadlines.'], ['me', 'Deal. One timer, on the listings that need it. Not a countdown on every row.']],
+        ['Expiring and expired listings sort to the top', 'A “Renew early & save 20%” strip with a live countdown', 'Renew now on listings ending this month']],
+      pm: ['Product', '#13804F', [['pm', 'I want the score to be the hero. It’s the whole idea.'], ['me', 'Agreed it’s the idea. But a host lands here to do something. The score should tell them what, then get out of the way.'], ['pm', 'So recommendations first, score second?'], ['me', 'Score explains, recommendations act. Both above the fold, side by side.']],
+        ['Recommended actions lead, Growth meter sits beside them', 'Recommendations are personal: based on each listing’s score', '“+12 points this week” on the meter, so progress is visible']],
+      eng: ['Engineering', '#2F6FE0', [['eng', 'The score can’t be real time. It’s computed overnight from four services.'], ['me', 'Then we never promise instant. We show weekly change instead: “+12 points this week”.'], ['eng', 'Seven factor icons per row also means seven calls per listing.'], ['me', 'Let’s show the four that matter on the row, and keep the rest for the detail view.']],
+        ['Score framed as weekly progress, not live', 'Four health factors per listing, not seven', 'Filters as bottom sheets, reused across desktop and mobile']]
+    },
+    notes: [['Early renewal discount to be 20%', 'The strip now says “Renew early & save 20%”.'], ['Timer to be displayed on to-be-renewed listings', 'A live countdown: 02d 14h 36m 08s.'], ['Expired listings should be shifted below', 'Sort order: expiring first, live next, expired last.'], ['“Renew now” on same-month renewals', 'Only listings ending this month get the loud button.'], ['Pop-up CTAs to be green', 'Positive actions in popups went green.'], ['Position of growth meter to be checked', 'Moved to the right rail, under Auto Renew.'], ['Colour of to-be-renewed CTA to be checked', 'Amber for “ending soon”, rust red for “expired”.'], ['Recommendation logic based on score', 'Each listing gets the actions that lift its own score most.']],
+    dec: [
+      ['ship', 'Half the score is free', 'Business wanted the score weighted almost entirely on paid add-ons. I pushed for photos, prices and calendar to count for nearly half.', 'If the only way up is your wallet, hosts stop trusting the number. Free fixes first earns the right to sell.'],
+      ['over', 'The score as the hero', 'I wanted one giant meter at the top of the page.', 'Business overruled it: renewals and recommendations lead, the meter lives in the side rail. Looking back, they were right.'],
+      ['over', 'Red-to-green speedometer', 'I liked the instant readability of a traffic-light gauge.', 'We tested it in a team review. A 45 in red read like a failing grade. Dropped for one calm green arc.'],
+      ['ship', 'One strip per listing', 'A listing can be expiring, unpublished and under-scored at once. Showing all of it is noise.', 'I wrote a priority order: expired, expiring, unpublished, recommendations, then offers. Only the top one shows.'],
+      ['mid', 'The purple redesign', 'The AI explorations pulled me toward a fresh purple SaaS look.', 'One month, existing system. We kept Traum’s black and yellow and spent the time on logic instead of paint.'],
+      ['ship', 'Seasonal skins, not new banners', 'Business runs a campaign almost every month.', 'Two slots that can be dressed for Christmas, Black Friday or Easter. No layout change, no new build.'],
+      ['over', 'Seven factors on every row', 'I wanted every listing to show its full breakdown.', 'Engineering said seven calls per row would crawl. Four factors on the row, the rest one tap away.']
+    ],
+    states: {
+      good: ['Healthy', 80, '', '', ''],
+      low: ['Needs attention', 45, '', 'recs', 'Complete 2 recommendations to improve your visibility score by 35 points.'],
+      soon: ['Ending soon', 72, 'Renew now', 'amber', 'Your subscription ends on 1st September 2026. Renew now to stay live.'],
+      exp: ['Expired', 72, 'Renew now', 'red', 'Your subscription has expired. Renew to put your listing back online.'],
+      draft: ['Unpublished', 0, 'Publish now', '', ''],
+      max: ['Perfect', 100, '', 'green', 'You have a stellar visibility score with this property!']
+    },
+    seasons: [['final-b', 'Every day'], ['xmas', 'Christmas'], ['bfriday', 'Black Friday'], ['easter', 'Easter']],
+    hot: [[34, 11, 'Recommended actions', 'Personal to your listings, each with the points it adds. Scroll for more.'], [80, 9.5, 'Auto Renew nudge', 'The cheapest renewal is the one that happens on its own.'], [84, 24, 'Growth meter', 'One green arc, one chip, one line about what’s next.'], [60, 31.5, 'Filters', 'Status, renewals and visibility score. Find the listing that needs you.'], [61, 36, 'Score ring', 'Every listing gets one. Amber under 50, green over 80.'], [30, 41.5, 'One strip, one job', 'The single most important thing about this listing, right under it.']],
+    imp: [['18', '%', 'more renewals before expiry', '+'], ['2.1', '×', 'add-on adoption', ''], ['30', '%', 'fewer “why no inquiries?” calls', '−'], ['74', '', 'average visibility score, up from 62', '']]
+  };
+  const tfIc = (k, cls = '') => `<svg class="tf-i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${TF.ic[k]}</svg>`;
+  const tfArc = 'M29.8 152.8A96 96 0 1 1 210.2 152.8';
+  const tfGauge = id => `<svg class="tf-gauge" id="${id}" viewBox="0 0 240 170" aria-hidden="true"><defs><linearGradient id="${id}G" x1="0" x2="1"><stop offset="0" stop-color="#0E6B43"/><stop offset="1" stop-color="#3CC48A"/></linearGradient></defs><path class="tk" d="${tfArc}" pathLength="100"/><path class="fl" d="${tfArc}" pathLength="100" stroke="url(#${id}G)"/><circle class="kn" r="10" cx="29.8" cy="152.8"/></svg>`;
+  const tfRing = (v, cls = '') => `<span class="tf-ring ${cls}" style="--v:${v}"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15"/><circle class="f" cx="18" cy="18" r="15" pathLength="100"/></svg><b>${v || '–'}</b></span>`;
+  const tfLabel = v => v >= 100 ? ['Perfect', 'p'] : v >= 80 ? ['Great', 'g'] : v >= 50 ? ['Good', 'g'] : ['Needs attention', 'a'];
+  function tfHTML(w) {
+    const plq = (n, t) => `<p class="tf-pl" data-rv><span>${String(n).padStart(2, '0')}</span>${t}</p>`;
+    const head = (a, b) => `<h3 class="tf-h" data-rv>${a}${b ? ` <span class="u">${b}</span>` : ''}</h3>`;
+    const p = t => `<p class="tf-p" data-rv>${t}</p>`;
+    const S = TF.states;
+    return `<div class="cs-bar tf-bar"><button class="cs-close" id="csClose" type="button"><span class="ar" aria-hidden="true">←</span>Back to the box</button><span class="tf-bk"><img src="v2/s/logo-traum.webp" alt=""> Traum · Host dashboard</span></div>
+    <div class="tf tf-pg">
+      <header class="tf-hero" id="tfHero">
+        <div class="tf-hw">
+          <p class="tf-k">Traum-Ferienwohnungen by OYO · B2B · 1 month</p>
+          <h2 class="tf-t"><span class="ln"><span>A score worth</span></span><span class="ln"><span class="u">chasing.</span></span></h2>
+          <p class="tf-lead">Hosts paid to list their holiday homes on Traum, then never came back to the page that managed them. I redesigned it around one number, the visibility score, so every host knows how they’re doing and exactly what to do next.</p>
+          <ul class="tf-meta"><li><b>Role</b>Sole product designer</li><li><b>Timeline</b>1 month</li><li><b>Worked with</b>PM, business, engineering</li><li><b>Platforms</b>Desktop and mobile web</li></ul>
+        </div>
+        <div class="tf-play" id="tfPlay">
+          <div class="tf-pc">
+            <div class="tf-ph"><b>Growth meter</b><span>Play host: add a few things and watch your listing climb.</span></div>
+            <div class="tf-gw">${tfGauge('tfG0')}<div class="tf-gv"><b id="tfV0">${TF.hero.start}</b><span class="tf-chip a" id="tfC0">Needs attention</span></div></div>
+            <p class="tf-gl" id="tfL0">Complete 4 actions to reach 100.</p>
+          </div>
+          <div class="tf-acts" id="tfActs">${TF.hero.acts.map(([n, d, pt, ic], i) => `<button type="button" class="tf-act" data-i="${i}"><span class="ic">${tfIc(ic)}</span><span class="tx"><b>${n}</b><small>${d}</small></span><span class="ad"><span>Add</span><i>+${pt} pts</i></span></button>`).join('')}</div>
+          <div class="tf-max" id="tfMax" aria-live="polite"><span>${tfIc('trophy')}</span><b>Max score reached</b><small>Your property has maximum visibility.</small><button type="button" id="tfReset">Play again</button></div>
+        </div>
+      </header>
+
+      <section class="tf-tldr" data-rv aria-label="The short version">
+        <article><i>The problem</i><p>Hosts couldn’t tell if their listings were working, so they never bought add-ons and often missed renewals.</p></article>
+        <article><i>What I did</i><p>Turned a flat list of ads into a dashboard with one score, personal recommendations and renewals that can’t be missed.</p></article>
+        <article><i>What changed</i><p data-todo>More renewals before expiry, twice the add-on adoption, and fewer confused calls to support.</p></article>
+      </section>
+
+      <section class="tf-sec" id="tfCtx">
+        ${plq(1, 'The context')}
+        ${head('Meet the people', 'on the other side.')}
+        ${p('Traum-Ferienwohnungen is one of Germany’s biggest holiday-rental portals, part of OYO. Guests search for a cabin in the Alps or a flat by the North Sea. Hosts pay a yearly subscription to list it there. This project was for the hosts.')}
+        <div class="tf-host" data-rv>
+          <div class="tf-pers"><div class="av">H</div><b>Heike, 58</b><small>Owns two flats on the Baltic coast</small><ul><li>Runs them next to a full-time job</li><li>Opens the Traum dashboard maybe twice a year</li><li>Has never bought an add-on. “What does it even do?”</li></ul><p class="q">“I pay every year. I just don’t know if it’s working.”</p></div>
+          <ol class="tf-year" id="tfYear">${[['Jan', 'Subscribes', 'Listing goes live'], ['Mar', 'First inquiries', 'A few emails arrive'], ['Jun', 'Peak season', 'Inquiries… or silence?'], ['Oct', 'Quiet months', 'Forgets the dashboard exists'], ['Dec', 'Renewal', 'The moment we lose her']].map(([m, t, d], i) => `<li style="--i:${i}"${i === 4 ? ' class="hot"' : ''}><span>${m}</span><b>${t}</b><small>${d}</small></li>`).join('')}</ol>
+        </div>
+        ${p('Heike is a composite of the hosts our support team spoke to every day. Small owners, mostly over 50, running one to three homes alongside a job. They don’t want a dashboard. They want inquiries.')}
+      </section>
+
+      <section class="tf-sec" id="tfOld">
+        ${plq(2, 'The old page')}
+        ${head('A page nobody', 'wanted to open.')}
+        ${p('This is the “Inserate” page hosts used to manage their listings. It did its job, technically. Tap the numbers to see what was wrong with it.')}
+        <div class="tf-old" data-rv>
+          <div class="tf-brw"><i></i><i></i><i></i><span>traum-ferienwohnungen.de/vermieterbereich/inserate</span></div>
+          <div class="tf-ow" id="tfOw">
+            <div class="o-nav"><span class="o-lg"><img src="v2/s/logo-traum.webp" alt=""> traum</span><span>Inserate</span><span>Anfragen</span><span>Top-Inserat</span><span>Statistik</span><span>Rechnungen</span></div>
+            <div class="o-ban">Jetzt Top-Inserat buchen und mehr Anfragen erhalten! <u>Mehr erfahren</u></div>
+            <p class="o-h">Meine Inserate (14)</p>
+            <div class="o-tbl"><div class="o-r o-th"><span>Objekt</span><span>Nr.</span><span>Laufzeit bis</span><span>Status</span><span>Aktionen</span></div>
+              ${[['Ferienwohnung Strandhuus, Wohnung 307', '343300', '31.08.2026', 'Aktiv'], ['Ferienwohnung Meerblick, Wohnung 204', '343301', '12.09.2025', 'Aktiv'], ['Stadtwohnung am Park, Wohnung 101', '343302', '01.07.2025', 'Abgelaufen'], ['Alpenchalets, Wohnung 402', '343303', '30.11.2026', 'Aktiv'], ['Hochhausblick, Wohnung 305', '343304', '14.03.2026', 'Inaktiv'], ['Seehütten, Wohnung 101', '343305', '22.05.2026', 'Aktiv']].map(([n, id, d, s]) => `<div class="o-r"><span><i class="o-im"></i>${n}</span><span>${id}</span><span>${d}</span><span>${s}</span><span class="o-ic">${'<i></i>'.repeat(6)}</span></div>`).join('')}
+            </div>
+          </div>
+          ${TF.old.map(([x, y], i) => `<button type="button" class="tf-hs" style="left:${x}%;top:${y}%" data-o="${i}" aria-label="Problem ${i + 1}">${i + 1}</button>`).join('')}
+          <div class="tf-oc" id="tfOc" aria-live="polite"></div>
+        </div>
+        <p class="tf-cap" data-rv>Redrawn from the live page and simplified, so the problems are easier to see.</p>
+      </section>
+
+      <section class="tf-sec" id="tfBrief">
+        ${plq(3, 'The brief')}
+        ${head('What was asked,', 'and what was meant.')}
+        ${p('The brief came from our product manager, and it was a good one. It listed what the business needed. My job was to work out what that meant for Heike.')}
+        <div class="tf-doc" data-rv id="tfDoc">
+          <div class="d-top"><span class="d-ic">W</span><div><b>Advertisement page revamp · PRD</b><small>Product · shared with Design, Business, Engineering</small></div><button type="button" class="d-flip" id="tfFlip" aria-pressed="false"><span class="off">Read between the lines</span><span class="on">Back to the brief</span></button></div>
+          <p class="d-h">Goals</p>
+          <ol>${TF.brief.map(([a, b]) => `<li><span class="a">${a}</span><span class="b">${b}</span></li>`).join('')}</ol>
+          <p class="d-n">Success: renewal rate, add-on adoption, support calls about visibility.</p>
+        </div>
+        ${p('Read together, the four lines said one thing. Hosts weren’t ignoring our upsells out of stubbornness. They just couldn’t see what any of it did for them.')}
+      </section>
+
+      <section class="tf-sec" id="tfData">
+        ${plq(4, 'The numbers')}
+        ${head('The sheet that', 'changed the project.')}
+        ${p('Business shared a metrics sheet: every listing, its completeness, its inquiries, whether it renewed. I spent two days in it. Four numbers stood out.')}
+        <div class="tf-tiles" data-rv>${TF.tiles.map(([b, t], i) => `<div class="tf-tile" style="--i:${i}" data-todo><b>${b}</b><span>${t}</span></div>`).join('')}</div>
+        <figure class="tf-chart" data-rv>
+          <figcaption><span>Listings grouped by how complete they are</span><div class="tf-seg" role="tablist">${Object.entries(TF.chart.sets).map(([k, [t]], i) => `<button type="button" role="tab" data-k="${k}"${i ? '' : ' class="on" aria-selected="true"'}>${t}</button>`).join('')}</div></figcaption>
+          <div class="tf-bars" id="tfBars" data-todo>${TF.chart.lbl.map((l, i) => `<div class="c"><b></b><i style="--i:${i}"></i><span>${l}</span></div>`).join('')}</div>
+          <p class="tf-chx">Listing completeness</p>
+        </figure>
+        ${p('The more complete a listing, the more inquiries it got, and the more likely its host renewed. Hosts had no way to see this. We did. The whole project became: show them.')}
+      </section>
+
+      <section class="tf-sec" id="tfIdea">
+        ${plq(5, 'The idea')}
+        <p class="tf-big" data-rv>What if every listing had a score, and every point told you <span class="u">exactly how to earn it?</span></p>
+        ${p('Like a credit score, but kind. One number from 0 to 100 that sums up how visible a listing is to guests. Each missing piece is a way up. Some are free, some are add-ons. Try it on a listing below.')}
+        <div class="tf-anat" data-rv>
+          <div class="tf-al">
+            <div class="tf-lc"><span class="ph"></span><div><small>No. 343300</small><b>Ferienwohnung Strandhuus, Wohnung 307 “Albatros”</b><span class="m">End of term: August 2026</span></div>${tfRing(40, 'big')}</div>
+            <div class="tf-sum"><b id="tfAv">40</b><span>/100</span><em class="tf-chip a" id="tfAc">Needs attention</em></div>
+            <p class="tf-split"><span><i class="fr"></i>Free fixes <b id="tfAf">30</b></span><span><i class="pd"></i>Add-ons <b id="tfAp">10</b></span></p>
+          </div>
+          <ul class="tf-fac" id="tfFac">${TF.factors.map(([n, pt, ic, free, on], i) => `<li><button type="button" role="switch" aria-checked="${!!on}" data-i="${i}"${on ? ' class="on"' : ''}><span class="ic">${tfIc(ic)}</span><b>${n}</b><em class="${free ? 'fr' : 'pd'}">${free ? 'Free' : 'Add-on'}</em><span class="pt">${pt} pts</span><span class="sw"><i></i></span></button></li>`).join('')}</ul>
+        </div>
+        ${p('One rule shaped the whole score: almost half of it is free. Photos, prices and a calendar cost a host nothing. If the only way up were their wallet, they’d stop trusting the number on day one.')}
+      </section>
+
+      <section class="tf-sec" id="tfExp">
+        ${plq(6, 'Going wide')}
+        ${head('Borrow, generate,', 'then throw most of it away.')}
+        ${p('Progress you can see already exists in apps people love. I pulled from fitness trackers, course dashboards and profile-strength prompts, then used AI to sketch a dozen directions in a single day.')}
+        <figure class="tf-refs tf-zoom" data-rv><img src="${ti('refs')}" alt="Reference board: a fitness progress tracker, a profile completion prompt and a classroom dashboard" loading="lazy"><figcaption>The reference board. Progress rings, completion prompts, “points this week”.</figcaption></figure>
+        <div class="tf-fan" data-rv>${TF.ai.map(([k, t, g, b], i) => `<article class="tf-ai" style="--i:${i}"><button type="button" class="tf-zoom" aria-label="Look closer at ${t}"><img src="${ti(k)}" alt="${t}, an AI-generated exploration" loading="lazy"></button><b>${t}</b><p class="g">${tfIc('check')}${g}</p><p class="n">${tfIc('x')}${b}</p></article>`).join('')}</div>
+        ${p('None of these shipped. All of them were useful. AI is great at showing you ten wrong answers fast, which is the quickest way I know to find the right question.')}
+      </section>
+
+      <section class="tf-sec" id="tfMeter">
+        ${plq(7, 'The meter')}
+        ${head('Five tries at', 'one little gauge.')}
+        ${p('The score needed a face. It took five rounds to get one that felt like encouragement instead of a report card.')}
+        <div class="tf-mt" data-rv>
+          <div class="tf-steps" role="tablist">${TF.meter.map(([, t], i) => `<button type="button" role="tab" data-m="${i}"${i ? '' : ' class="on" aria-selected="true"'}><i>${i + 1}</i>${t}</button>`).join('')}</div>
+          <div class="tf-mv">
+            <div class="tf-ms" id="tfMs"></div>
+            <div class="tf-mx"><b id="tfMt"></b><p id="tfMd"></p><ul class="ok" id="tfMk"></ul><ul class="no" id="tfMn"></ul></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tf-sec" id="tfRounds">
+        ${plq(8, 'The page')}
+        ${head('Six rounds,', 'one month.')}
+        ${p('Drag through every version of the page, from the first sketch to the one that shipped. Each round answered a question the last one raised.')}
+        <div class="tf-rd" data-rv>
+          <div class="tf-rv"><div class="tf-rf" id="tfRf">${TF.rounds.map(([k, n], i) => `<img src="${ti(k)}" alt="${n} of the Advertisements page" loading="lazy" data-r="${i}"${i ? '' : ' class="on"'}>`).join('')}</div></div>
+          <div class="tf-rn"><span id="tfRk"></span><b id="tfRt"></b><p id="tfRd"></p><p class="l" id="tfRl"></p>
+            <div class="tf-rc"><button type="button" id="tfRp" aria-label="Previous round">←</button><input type="range" id="tfRr" min="0" max="${TF.rounds.length - 1}" value="0" step="1" aria-label="Round"><button type="button" id="tfRx" aria-label="Next round">→</button></div>
+            <div class="tf-rdots">${TF.rounds.map(([, n], i) => `<button type="button" data-r="${i}" aria-label="${n}"></button>`).join('')}</div></div>
+        </div>
+      </section>
+
+      <section class="tf-sec" id="tfRooms">
+        ${plq(9, 'Three rooms')}
+        ${head('Designed with business,', 'product and engineering.')}
+        ${p('A B2B page has more owners than a consumer one. Every week I sat with three teams who each wanted something different from the same screen. Pick a room.')}
+        <div class="tf-rm" data-rv>
+          <div class="tf-rtabs" role="tablist">${Object.entries(TF.rooms).map(([k, [t, c]], i) => `<button type="button" role="tab" data-k="${k}" style="--rc:${c}"${i ? '' : ' class="on" aria-selected="true"'}>${t}</button>`).join('')}</div>
+          <div class="tf-chat" id="tfChat" aria-live="polite"></div>
+          <div class="tf-chg"><p>What changed in the design</p><ul id="tfChg"></ul></div>
+        </div>
+      </section>
+
+      <section class="tf-sec" id="tfNotes">
+        ${plq(10, 'The review')}
+        ${head('Eight notes', 'from one review.')}
+        ${p('After the first full walkthrough, product and business left these notes right on the Figma file. Tick them off the way I did.')}
+        <div class="tf-sticky" data-rv>
+          <p class="t">Review notes <span id="tfNc">0/8 done</span></p>
+          <ol id="tfNl">${TF.notes.map(([a, b], i) => `<li><button type="button" data-n="${i}" aria-pressed="false"><i></i><span class="a">${a}</span><span class="b">${b}</span></button></li>`).join('')}</ol>
+        </div>
+      </section>
+
+      <section class="tf-sec" id="tfDec">
+        ${plq(11, 'Decisions')}
+        ${head('What shipped,', 'and what got overruled.')}
+        ${p('Not every call went my way. Some of the best ones didn’t.')}
+        <div class="tf-df" role="tablist" data-rv>${[['all', 'All'], ['ship', 'Shipped'], ['over', 'Overruled'], ['mid', 'Compromise']].map(([k, t], i) => `<button type="button" data-f="${k}"${i ? '' : ' class="on"'}>${t}</button>`).join('')}</div>
+        <div class="tf-decs" id="tfDecs" data-rv>${TF.dec.map(([k, t, a, b], i) => `<article class="tf-dc ${k}" data-k="${k}" style="--i:${i}"><em>${k === 'ship' ? 'Shipped' : k === 'over' ? 'Overruled' : 'Compromise'}</em><b>${t}</b><p class="a">${a}</p><p class="b">${b}</p></article>`).join('')}</div>
+      </section>
+
+      <section class="tf-sec" id="tfFinal">
+        ${plq(12, 'The final design')}
+        ${head('Calm, clear,', 'and a little bit fun.')}
+        ${p('Tap the dots to walk through the page. Switch to mobile to see it on a phone, where most hosts actually check their listings.')}
+        <div class="tf-dev" role="tablist" data-rv><button type="button" data-d="d" class="on" aria-selected="true">Desktop</button><button type="button" data-d="m">Mobile</button></div>
+        <div class="tf-fin" data-rv id="tfFin">
+          <div class="tf-dk"><div class="tf-brw"><i></i><i></i><i></i><span>traum-ferienwohnungen.de/vermieterbereich/inserate</span></div>
+            <div class="tf-shot"><img src="${ti('final')}" alt="The final Advertisements page on desktop" loading="lazy">${TF.hot.map(([x, y], i) => `<button type="button" class="tf-hs" style="left:${x}%;top:${y}%" data-h="${i}" aria-label="${TF.hot[i][2]}">${i + 1}</button>`).join('')}</div></div>
+          <div class="tf-mb"><div class="tf-phone"><div class="scr"><img src="${ti('mobile')}" alt="The final Advertisements page on mobile, scroll to see all of it" loading="lazy"></div></div><p>Scroll inside the phone</p></div>
+          <div class="tf-hc" id="tfHc" aria-live="polite"><b></b><p></p></div>
+        </div>
+
+        <h4 class="tf-h4" data-rv>One listing, six moods.</h4>
+        ${p('A listing can be healthy, under-scored, about to expire, expired, unpublished or perfect. Each gets exactly one strip and at most one loud button. Tap through them.')}
+        <div class="tf-st" data-rv>
+          <div class="tf-sch" role="tablist">${Object.entries(S).map(([k, [t]], i) => `<button type="button" data-s="${k}"${i ? '' : ' class="on" aria-selected="true"'}>${t}</button>`).join('')}</div>
+          <div class="tf-li" id="tfLi">
+            <div class="row"><span class="ph"></span><div class="tx"><small>NO. 343300</small><b>Ferienwohnung Strandhuus, Wohnung 307 “Albatros”</b><span class="m">End of term: August 2026</span>
+              <p class="hf"><span>${tfIc('check')}Photos</span><span>${tfIc('check')}Price</span><span>${tfIc('check')}Availability calendar</span><span class="x">${tfIc('x')}Top advertisement</span></p></div>
+              <div class="rt"><span class="cta"></span>${tfRing(80)}<div class="ics">${tfIc('mail')}${tfIc('bar')}${tfIc('clock')}${tfIc('pen')}</div></div></div>
+            <div class="strip"><p></p><div class="recs">${[['Photography Showcase', '+25'], ['Virtual Tour', '+10']].map(([t, pt]) => `<span class="rc"><img src="${ti(pt === '+25' ? 'rc-1' : 'rc-2')}" alt=""><span><em>${pt} Points</em><b>${t}</b></span><u>Add</u></span>`).join('')}</div><span class="tmr">Ends in <b>02d</b><b>14h</b><b class="s">36m</b></span></div>
+          </div>
+          <p class="tf-pri">Priority, if a listing is many things at once: <b>Expired</b> → <b>Ending soon</b> → <b>Unpublished</b> → <b>Recommendations</b> → <b>Offers</b></p>
+        </div>
+
+        <h4 class="tf-h4" data-rv>Made for the season.</h4>
+        ${p('Business runs a campaign almost every month. Instead of a new banner each time, two slots on the page can be dressed up, and nothing else moves.')}
+        <div class="tf-sea" data-rv>
+          <div class="tf-sch" role="tablist">${TF.seasons.map(([k, t], i) => `<button type="button" data-z="${i}"${i ? '' : ' class="on" aria-selected="true"'}>${t}</button>`).join('')}</div>
+          <div class="tf-sv">${TF.seasons.map(([k, t], i) => `<img src="${ti(k)}" alt="The page dressed for ${t}" loading="lazy" data-z="${i}"${i ? '' : ' class="on"'}>`).join('')}</div>
+        </div>
+
+        <figure class="tf-comps tf-zoom" data-rv><img src="${ti('comps')}" alt="The component sheet: filter sheets, score rings, listing strips and popups" loading="lazy"><figcaption>All of it as a system: filter sheets, score rings, listing strips, popups and renewal timers. Tap to look closer.</figcaption></figure>
+      </section>
+
+      <section class="tf-sec" id="tfImp">
+        ${plq(13, 'The impact')}
+        ${head('What moved', 'after launch.')}
+        ${p('Early numbers from the first weeks live, compared with the same period the year before.')}
+        <div class="tf-imp" data-rv data-todo>${TF.imp.map(([n, u, t, s], i) => `<div style="--i:${i}"><b><span>${s}</span><span class="n" data-n="${n}">0</span><span>${u}</span></b><p>${t}</p></div>`).join('')}</div>
+        <div class="tf-learn" data-rv>
+          <p class="k">What I’m taking with me</p>
+          <ol><li><b>In B2B, the user isn’t the only customer.</b> Heike, the business and engineering all had to win. The best version of the page served all three.</li>
+            <li><b>Losing an argument can make the work better.</b> Moving the meter off centre stage felt like a loss. It made the page more useful.</li>
+            <li><b>A number needs a next step.</b> A score on its own is a grade. A score with “add photos, +15” is a plan.</li></ol>
+        </div>
+      </section>
+
+      <footer class="c3-foot tf-foot">
+        <div class="c3-w c3-fin"><p class="kicker c3-k" data-rv>${STAR}That’s a wrap</p>
+          ${edHead('Thanks for', 'reading this far!', '', 'b-mint')}
+          <p class="c3-p" data-rv>Designed with care by James Chugh.</p>
+          <div class="c3-links" data-rv><a class="soc li" href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="soc-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span class="soc-t">LinkedIn ↗</span></a><a class="soc ig" href="https://www.instagram.com/jamieships" target="_blank" rel="noopener" aria-label="Instagram"><svg class="soc-i" viewBox="0 0 24 24" aria-hidden="true"><path  d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg><span class="soc-t">Instagram ↗</span></a><a class="soc gm" href="mailto:jameschughh@gmail.com" aria-label="Email me"><svg class="soc-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg><span class="soc-t">Email me</span></a><a href="https://calendly.com/jameschughh/30min" target="_blank" rel="noopener" data-book>Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
+          ${fbHTML('Traum visibility score', ['The problem', 'The brief', 'The score', 'The meter', 'Iterations', 'Final design', 'Impact'])}
+          <p class="c3-morek" data-rv>Got a minute for another story?</p>
+          <div class="c3-more" data-rv>${WORK.filter(x => x.id !== 'traum' && !CS_SOON.includes(x.id)).map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div></div>
+        <div class="tf-sky c3-scene" aria-hidden="true">${[92, 45, 80, 100, 64, 97, 72].map((v, i) => `<span class="fl" style="--i:${i}">${tfRing(v, v < 50 ? 'a' : '')}</span>`).join('')}</div>
+      </footer>
+      <div class="tf-lb" id="tfLb" aria-hidden="true"><button type="button" class="x" aria-label="Close">×</button><img alt=""></div>
+    </div>`;
+  }
+  function tfCleanup() { (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); initTF.tt = []; initTF.ti = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; }
+  function initTF() {
+    tfCleanup(); const root = csEl, later = (f, ms) => initTF.tt.push(setTimeout(f, ms)), every = (f, ms) => { const t = setInterval(f, ms); initTF.ti.push(t); return t; };
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); $$('.hl', e.target).forEach(h => h.classList.add('on')); obs.unobserve(e.target); if (e.target._on) e.target._on(); }), { root, threshold: .18 });
+    later(() => $('#tfHero', root).classList.add('in'), 80);
+    // gauges: one arc, a knob riding its end
+    const putG = (svg, v) => { const a = (200 - 220 * v / 100) * Math.PI / 180, k = $('.kn', svg); $('.fl', svg).style.strokeDasharray = `${Math.max(.01, v).toFixed(2)} 100`; k.setAttribute('cx', (120 + 96 * Math.cos(a)).toFixed(1)); k.setAttribute('cy', (120 - 96 * Math.sin(a)).toFixed(1)); };
+    const setG = (svg, v) => { if (!svg) return; const from = svg._v || 0, t0 = performance.now(), ms = reduce ? 1 : 1000; svg._v = v; cancelAnimationFrame(svg._raf);
+      const step = t => { const p = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - p, 3); putG(svg, from + (v - from) * e); if (p < 1) svg._raf = requestAnimationFrame(step); }; svg._raf = requestAnimationFrame(step); };
+    const chip = (el, v) => { const [t, c] = tfLabel(v); el.textContent = t; el.className = 'tf-chip ' + c; };
+    const count = (el, to, ms = 700) => { const from = +el.textContent || 0, t0 = performance.now(); const step = t => { const p = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - p, 3); el.textContent = Math.round(from + (to - from) * e); if (p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); };
+    // hero: play host
+    const g0 = $('#tfG0', root), v0 = $('#tfV0', root), c0 = $('#tfC0', root), l0 = $('#tfL0', root), play = $('#tfPlay', root);
+    let hv = TF.hero.start; const done = new Set();
+    const heroDraw = () => { setG(g0, hv); count(v0, hv); chip(c0, hv); const left = TF.hero.acts.length - done.size;
+      l0.textContent = left ? `+${TF.hero.acts.reduce((s, a, i) => s + (done.has(i) ? 0 : a[2]), 0)} points waiting. ${left} action${left > 1 ? 's' : ''} to go.` : 'Every action done. Nothing left to chase.';
+      play.classList.toggle('max', hv >= 100); };
+    later(() => setG(g0, hv), 400);
+    $('#tfActs', root).addEventListener('click', e => { const b = e.target.closest('.tf-act'); if (!b || done.has(+b.dataset.i)) return; const i = +b.dataset.i; done.add(i); b.classList.add('done'); $('.ad span', b).textContent = 'Added ✓';
+      hv = Math.min(100, hv + TF.hero.acts[i][2]); const pop = document.createElement('span'); pop.className = 'tf-pop'; pop.textContent = `+${TF.hero.acts[i][2]}`; $('.tf-gw', root).appendChild(pop); later(() => pop.remove(), 1200); heroDraw(); });
+    $('#tfReset', root).addEventListener('click', () => { done.clear(); hv = TF.hero.start; $$('.tf-act', root).forEach(b => { b.classList.remove('done'); $('.ad span', b).textContent = 'Add'; }); heroDraw(); });
+    // the old page: tap a number
+    const oc = $('#tfOc', root);
+    const showOld = i => { $$('#tfOld .tf-hs', root).forEach(b => b.classList.toggle('on', +b.dataset.o === i)); const [, , t, d] = TF.old[i]; oc.innerHTML = `<i>${i + 1}</i><b>${t}</b><p>${d}</p>`; oc.classList.add('on'); };
+    $('#tfOld', root).addEventListener('click', e => { const b = e.target.closest('[data-o]'); if (b) showOld(+b.dataset.o); });
+    showOld(0);
+    // the brief: read between the lines
+    const flip = $('#tfFlip', root); flip.addEventListener('click', () => { const on = $('#tfDoc', root).classList.toggle('flip'); flip.setAttribute('aria-pressed', on); });
+    // the chart
+    const bars = $('#tfBars', root);
+    const drawBars = k => { const [, vals, u] = TF.chart.sets[k], mx = Math.max(...vals); $$('.c', bars).forEach((c, i) => { $('i', c).style.setProperty('--h', (vals[i] / mx * 100).toFixed(1) + '%'); $('b', c).textContent = vals[i] + u; });
+      $$('.tf-seg button', root).forEach(b => { const on = b.dataset.k === k; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); };
+    $('.tf-seg', root).addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) drawBars(b.dataset.k); });
+    bars.closest('figure')._on = () => drawBars('inq');
+    // the score, factor by factor
+    const fac = TF.factors.map(f => !!f[4]);
+    const ring = $('.tf-anat .tf-ring', root);
+    const anat = () => { const v = TF.factors.reduce((s, f, i) => s + (fac[i] ? f[1] : 0), 0), fr = TF.factors.reduce((s, f, i) => s + (fac[i] && f[3] ? f[1] : 0), 0);
+      count($('#tfAv', root), v, 450); count($('#tfAf', root), fr, 450); count($('#tfAp', root), v - fr, 450); chip($('#tfAc', root), v);
+      ring.style.setProperty('--v', v); $('b', ring).textContent = v; ring.classList.toggle('a', v < 50); };
+    $('#tfFac', root).addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b) return; const i = +b.dataset.i; fac[i] = !fac[i]; b.classList.toggle('on', fac[i]); b.setAttribute('aria-checked', fac[i]); anat(); });
+    anat();
+    // the meter, five tries
+    const ms = $('#tfMs', root);
+    const drawM = i => { const [k, t, d, ok, no] = TF.meter[i];
+      ms.innerHTML = k === 'live' ? `<div class="tf-mlive">${tfGauge('tfGm')}<div class="tf-gv"><b>72</b><span class="tf-chip g">Good</span></div><p>Great! Keep optimising to reach 80+ points</p></div>` : `<button type="button" class="tf-zoom"><img src="${ti(k)}" alt="${t}"></button>`;
+      if (k === 'live') later(() => setG($('#tfGm', root), 72), 60);
+      $('#tfMt', root).textContent = t; $('#tfMd', root).textContent = d;
+      $('#tfMk', root).innerHTML = ok.map(x => `<li>${tfIc('check')}${x}</li>`).join(''); $('#tfMn', root).innerHTML = no.map(x => `<li>${tfIc('x')}${x}</li>`).join('');
+      $$('.tf-steps button', root).forEach(b => { const on = +b.dataset.m === i; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); };
+    $('.tf-steps', root).addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b) drawM(+b.dataset.m); });
+    drawM(0);
+    // six rounds
+    const rr = $('#tfRr', root);
+    const drawR = i => { i = clamp(i, 0, TF.rounds.length - 1); rr.value = i; const [, n, t, d, l] = TF.rounds[i];
+      $$('#tfRf img', root).forEach(im => im.classList.toggle('on', +im.dataset.r === i)); $$('.tf-rdots button', root).forEach(b => b.classList.toggle('on', +b.dataset.r === i));
+      $('#tfRk', root).textContent = n; $('#tfRt', root).textContent = t; $('#tfRd', root).textContent = d; $('#tfRl', root).textContent = l; $('#tfRf', root).scrollTop = 0; };
+    rr.addEventListener('input', () => drawR(+rr.value));
+    $('#tfRp', root).addEventListener('click', () => drawR(+rr.value - 1)); $('#tfRx', root).addEventListener('click', () => drawR(+rr.value + 1));
+    $('.tf-rdots', root).addEventListener('click', e => { const b = e.target.closest('[data-r]'); if (b) drawR(+b.dataset.r); });
+    drawR(0);
+    // three rooms
+    const who = { biz: 'Business', pm: 'Product', eng: 'Engineering', me: 'Me' };
+    const drawRoom = k => { const [, c, msgs, chg] = TF.rooms[k]; const chat = $('#tfChat', root); chat.style.setProperty('--rc', c);
+      chat.innerHTML = msgs.map(([w, t], i) => `<p class="${w === 'me' ? 'me' : 'th'}" style="--i:${i}"><small>${who[w]}</small>${t}</p>`).join('');
+      $('#tfChg', root).innerHTML = chg.map(x => `<li>${tfIc('check')}${x}</li>`).join('');
+      $$('.tf-rtabs button', root).forEach(b => { const on = b.dataset.k === k; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); };
+    $('.tf-rtabs', root).addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) drawRoom(b.dataset.k); });
+    drawRoom('biz');
+    // the review sticky
+    const nc = $('#tfNc', root);
+    $('#tfNl', root).addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (!b) return; const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on);
+      const n = $$('#tfNl [aria-pressed="true"]', root).length; nc.textContent = n === 8 ? 'All 8 shipped ✓' : `${n}/8 done`; nc.classList.toggle('all', n === 8); });
+    // decisions filter
+    $('.tf-df', root).addEventListener('click', e => { const b = e.target.closest('[data-f]'); if (!b) return; const f = b.dataset.f;
+      $$('.tf-df button', root).forEach(x => x.classList.toggle('on', x === b)); $$('.tf-dc', root).forEach(c => c.classList.toggle('hid', f !== 'all' && c.dataset.k !== f)); });
+    // the final page: hotspots and devices
+    const fin = $('#tfFin', root), hc = $('#tfHc', root);
+    const showHot = i => { $$('#tfFin .tf-hs', root).forEach(b => b.classList.toggle('on', +b.dataset.h === i)); const [, , t, d] = TF.hot[i]; $('b', hc).textContent = `${i + 1} · ${t}`; $('p', hc).textContent = d; hc.classList.add('on'); };
+    fin.addEventListener('click', e => { const b = e.target.closest('[data-h]'); if (b) showHot(+b.dataset.h); });
+    showHot(0);
+    $('.tf-dev', root).addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (!b) return; fin.classList.toggle('mob', b.dataset.d === 'm');
+      $$('.tf-dev button', root).forEach(x => { const on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-selected', on); }); });
+    // one listing, six moods
+    const li = $('#tfLi', root), lring = $('.tf-ring', li);
+    const drawS = k => { const [, v, cta, strip, msg] = TF.states[k]; li.className = 'tf-li s-' + k;
+      lring.style.setProperty('--v', v); $('b', lring).textContent = v || '–'; lring.classList.toggle('a', v > 0 && v < 50);
+      const c = $('.cta', li); c.textContent = cta; c.className = 'cta' + (cta ? ' on ' + (k === 'exp' ? 'red' : k === 'soon' ? 'amber' : 'yel') : '');
+      $('.strip', li).className = 'strip' + (strip ? ' on ' + strip : ''); $('.strip p', li).textContent = msg;
+      $$('.tf-st .tf-sch button', root).forEach(b => { const on = b.dataset.s === k; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); };
+    $('.tf-st .tf-sch', root).addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) drawS(b.dataset.s); });
+    drawS('good');
+    // a countdown that actually counts
+    let secs = 2 * 86400 + 14 * 3600 + 36 * 60 + 8; const tm = $$('.tmr b', li);
+    every(() => { secs = Math.max(0, secs - 1); const d = Math.floor(secs / 86400), h = Math.floor(secs % 86400 / 3600), m = Math.floor(secs % 3600 / 60), s = secs % 60;
+      tm[0].textContent = String(d).padStart(2, '0') + 'd'; tm[1].textContent = String(h).padStart(2, '0') + 'h'; tm[2].textContent = String(m).padStart(2, '0') + 'm ' + String(s).padStart(2, '0') + 's'; }, 1000);
+    // seasons
+    $('.tf-sea .tf-sch', root).addEventListener('click', e => { const b = e.target.closest('[data-z]'); if (!b) return; const z = b.dataset.z;
+      $$('.tf-sea .tf-sch button', root).forEach(x => { const on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-selected', on); }); $$('.tf-sv img', root).forEach(im => im.classList.toggle('on', im.dataset.z === z)); });
+    // impact counters
+    const imp = $('.tf-imp', root); imp._on = () => $$('.n', imp).forEach((el, i) => { const to = parseFloat(el.dataset.n), dec = String(el.dataset.n).includes('.') ? 1 : 0, t0 = performance.now() + i * 160;
+      const step = t => { const p = clamp((t - t0) / 1100), e = 1 - Math.pow(1 - p, 3); el.textContent = (to * e).toFixed(dec); if (p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); });
+    // look closer at any screen
+    const lb = $('#tfLb', root);
+    const closeLb = () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); };
+    $('.tf-pg', root).addEventListener('click', e => { if (e.target.closest('#tfLb')) { closeLb(); return; } const z = e.target.closest('.tf-zoom'); if (!z) return; const im = $('img', z) || z;
+      $('img', lb).src = im.src; $('img', lb).alt = im.alt; lb.classList.toggle('tall', im.naturalHeight > im.naturalWidth * 1.2); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
+    addEventListener('keydown', initTF.kd = e => { if (e.key === 'Escape' && lb.classList.contains('open')) { closeLb(); e.stopImmediatePropagation(); } }, true);
+    $$('[data-rv]', root).forEach(el => obs.observe(el));
+  }
   // ---------- coming soon: the case study is still being written ----------
   const SOON = {
     lastlook: { name: 'LastLook', app: 'https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140' },
@@ -6840,7 +7703,7 @@ html:root .scroll-cue i::after { top: 5px; }
     }));
   }
   // the case-study top bar: a round back button on the left; the story's name and the Day/Night switch on the right
-  const CS_NAME = { coupon: 'The Coupon Hunter', requests: 'Special Requests', swipr: 'Swipr.AI', lastlook: 'LastLook', campusx: 'CampusX' };
+  const CS_NAME = { coupon: 'The Coupon Hunter', requests: 'Special Requests', swipr: 'Swipr.AI', traum: 'The Visibility Score', lastlook: 'LastLook', campusx: 'CampusX' };
   function csBar(w) {
     const bar = $('.cs-bar', csEl); if (!bar) return;
     const close = $('#csClose', bar); if (close) { close.setAttribute('aria-label', 'Back'); close.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>'; }
@@ -6861,6 +7724,7 @@ html:root .scroll-cue i::after { top: 5px; }
     if (w.id === 'coupon') return edHTML(w);
     if (w.id === 'requests') return mmHTML(w);
     if (w.id === 'swipr') return swHTML(w);
+    if (w.id === 'traum') return tfHTML(w);
     if (SOON[w.id]) return soonHTML(w);
     const i = WORK.indexOf(w);
     return `<div class="cs-bar"><button class="cs-close" id="csClose" type="button"><span class="ar" aria-hidden="true">←</span>Back to the box</button><a class="cs-full" href="${w.cs}" target="_blank" rel="noopener">${w.csLabel || 'Full case study'} ↗</a></div>
@@ -6892,7 +7756,7 @@ html:root .scroll-cue i::after { top: 5px; }
   function expand(k) {
     const r = k.el.getBoundingClientRect();
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); csEl.classList.toggle('tf', k.w.id === 'traum'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); if (k.w.id === 'traum') initTF(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
     csEl.style.transition = 'none'; csEl.style.clipPath = rectClip(r); csEl.classList.add('open');
     // a flat copy of the card grows with the page, then melts into it
     const g = k.el.cloneNode(true); g.classList.add('wk-ghost'); g.classList.remove('hover'); g.removeAttribute('aria-label');
@@ -6914,7 +7778,7 @@ html:root .scroll-cue i::after { top: 5px; }
     const k = wks.find(x => x.w.id === id); if (!k || picked) return;
     picked = k; csFrom = from; const r = from.getBoundingClientRect(); setRoute(k.w);
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); csEl.classList.toggle('tf', k.w.id === 'traum'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); if (k.w.id === 'traum') initTF(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
     csEl.style.transition = 'none'; csEl.style.clipPath = rectClip(r); csEl.classList.add('open'); csEl.offsetWidth;
     csEl.style.transition = 'clip-path .9s cubic-bezier(.7, 0, .2, 1)'; csEl.style.clipPath = 'inset(0px 0px 0px 0px round 0px)';
     lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden';
@@ -6924,14 +7788,14 @@ html:root .scroll-cue i::after { top: 5px; }
     if (!picked) return; const k = picked; setRoute(null, 'replace');
     if (csFrom) { const from = csFrom; csFrom = null; csEl.classList.remove('ready');
       const r = from.getBoundingClientRect(); csEl.style.transition = 'clip-path .7s cubic-bezier(.7, 0, .2, 1)'; csEl.style.clipPath = rectClip(r);
-      setTimeout(() => { csEl.classList.remove('open', 'ed', 'mm', 'sw', 'soon'); csEl.innerHTML = ''; edCleanup(); document.documentElement.style.overflow = ''; lenis && lenis.start();
+      setTimeout(() => { csEl.classList.remove('open', 'ed', 'mm', 'sw', 'tf', 'soon'); csEl.innerHTML = ''; edCleanup(); document.documentElement.style.overflow = ''; lenis && lenis.start();
         wks.forEach(w => { if (w.el.style.opacity === '0') { w.el.style.opacity = 1; w.el.style.transform = stand(boxOpen ? 0 : w.z); } }); picked = null; setCap(null); from.focus({ preventScroll: true }); }, 720);
       return; }
     csEl.classList.remove('ready');
     const r = k.el.getBoundingClientRect();
     csEl.style.transition = 'clip-path .75s cubic-bezier(.7, 0, .2, 1)'; csEl.style.clipPath = rectClip(r);
     setTimeout(() => {
-      k.el.style.opacity = 1; csEl.classList.remove('open', 'ed', 'mm', 'sw', 'soon'); csEl.innerHTML = ''; edCleanup();
+      k.el.style.opacity = 1; csEl.classList.remove('open', 'ed', 'mm', 'sw', 'tf', 'soon'); csEl.innerHTML = ''; edCleanup();
       document.documentElement.style.overflow = ''; lenis && lenis.start();
       const a = k.el.animate([{ transform: faced(k) }, { transform: stand(CH + 60), offset: .55 }, { transform: stand(0) }], { duration: reduce ? 1 : 1400, easing: pickEase, fill: 'forwards' });
       a.onfinish = () => { k.el.style.transform = stand(0); rim(k, 0); k.z = 0; a.cancel(); k.el.style.transition = ''; picked = null; setCap(null); k.el.focus({ preventScroll: true }); };
@@ -6943,12 +7807,12 @@ html:root .scroll-cue i::after { top: 5px; }
     edCleanup(); picked.el.style.opacity = 1; picked.el.style.transform = stand(0); rim(picked, 0); picked.z = 0;
     picked = k; k.el.style.transform = faced(k); k.el.style.opacity = 0; setRoute(k.w, 'replace');
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); csEl.classList.toggle('tf', k.w.id === 'traum'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); if (k.w.id === 'traum') initTF(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
     $('#csClose').focus({ preventScroll: true });
   }
   /* ---------- addresses: every case study and section gets its own link and tab title ---------- */
   const SITE = 'James Chugh';
-  const CS_SLUG = { coupon: 'eazydiner', requests: 'makemytrip', swipr: 'swipr', lastlook: 'lastlook', campusx: 'campusx' };
+  const CS_SLUG = { coupon: 'eazydiner', requests: 'makemytrip', swipr: 'swipr', traum: 'traum', lastlook: 'lastlook', campusx: 'campusx' };
   const SEC_PATH = { journey: ['journey', 'The journey'], work: ['work', 'Work'], life: ['about', 'About me'], hello: ['contact', 'Say hi'] };
   const ROUTED = location.protocol.startsWith('http') && /(^|\.)jameschugh\.com$|\.vercel\.app$|^localhost$|^127\./.test(location.hostname);
   const HOME_TITLE = SITE;
