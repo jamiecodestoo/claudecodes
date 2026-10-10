@@ -195,16 +195,6 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .nums li { padding: 11px 12px; border-radius: 14px; background: color-mix(in srgb, var(--c) 10%, var(--card)); display: grid; gap: 2px; }
 .nums b { font-size: 22px; font-weight: 800; letter-spacing: -.03em; line-height: 1.05; font-variant-numeric: tabular-nums; }
 .nums span { font-size: 12.5px; line-height: 1.3; color: var(--ink-2); font-weight: 500; }
-.s-alt { position: absolute; z-index: 2; display: grid; align-content: center; gap: 10px; padding: 14px 16px; border-radius: 16px; box-sizing: border-box; background: color-mix(in srgb, #1667A8 6%, var(--card)); box-shadow: inset 0 0 0 1px color-mix(in srgb, #1667A8 16%, transparent); opacity: 0; translate: 0 10px; pointer-events: none; transition: opacity .35s, translate .45s cubic-bezier(.2, .8, .2, 1); }
-.s-alt[hidden] { display: none; }
-.sheet.alt .s-alt { opacity: 1; translate: 0 0; } .sheet #s-p, .sheet #s-n { transition: opacity .3s; } .sheet.alt #s-p, .sheet.alt #s-n { opacity: 0; }
-.sa-k { display: flex; align-items: center; gap: 8px; margin: 0; font: 700 12px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: #1667A8; } .sa-k img { width: 20px; height: 20px; border-radius: 6px; }
-.sa-l { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; } .sa-l li { display: flex; align-items: flex-start; gap: 8px; font: 500 14px/1.35 var(--sans); color: var(--ink); }
-.sa-l svg { flex: none; width: 16px; height: 16px; margin-top: 1px; fill: none; stroke: #16825A; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
-.sa-m { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; } .sa-m span { display: inline-flex; align-items: baseline; gap: 6px; padding: 6px 10px; border-radius: 10px; background: var(--card); box-shadow: inset 0 0 0 1px color-mix(in srgb, #16825A 20%, transparent); font: 500 12.5px/1 var(--sans); color: var(--ink-2); }
-.sa-m b { font: 800 17px/1 var(--sans); letter-spacing: -.02em; color: #16825A; } .sa-m small { font: 500 12px/1 var(--sans); color: var(--ink-2); }
-@media (hover: none) { .sheet .s-alt { position: static; order: 1; margin-top: 12px; opacity: 1; translate: none; } }
-:root[data-theme="dark"] .sa-k { color: #6CB8EE; } :root[data-theme="dark"] .sa-m b { color: #4CC892; } :root[data-theme="dark"] .sa-l svg { stroke: #4CC892; }
 .peek { display: flex; gap: 10px; margin: 16px 0 0; }
 .peek img { width: calc((100% - 20px) / 3); height: auto; border-radius: 14px; box-shadow: var(--shadow-sm); border: 1px solid var(--line); background: #fff; transition: transform .5s var(--spring); }
 .peek img:nth-child(1) { transform: rotate(-3deg); }
@@ -470,6 +460,17 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .wk.light::after { box-shadow: inset 0 0 0 1.5px rgba(19, 35, 58, .06); }
 .wk.dark::after { box-shadow: inset 0 0 0 2px transparent; background: linear-gradient(#141418, #141418) padding-box, linear-gradient(to top, #8AF28A, #7C5CFF 40%, transparent 70%) border-box; border: 2px solid transparent;
   -webkit-mask: linear-gradient(#000 0 0) padding-box exclude, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) padding-box exclude, linear-gradient(#000 0 0); }
+.wk-bk { position: absolute; z-index: 2; inset: 0; display: flex; flex-direction: column; gap: 12px; padding: 20px; color: #fff; background: linear-gradient(180deg, rgba(12, 18, 30, .5), rgba(12, 18, 30, .72)); -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2); opacity: 0; transition: opacity .35s var(--ease); pointer-events: none; }
+.wk > :not(.wk-bk) { transition: opacity .35s var(--ease); } .wk.hover:has(.wk-bk) > :not(.wk-bk) { opacity: 0; } .wk.hover .wk-bk { opacity: 1; }
+.wb-k { margin: 0; font: 700 11px/1 var(--geist); letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
+.wb-n { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; } .wb-n li { display: grid; gap: 3px; translate: 0 8px; opacity: 0; transition: translate .5s var(--ease), opacity .4s; }
+.wb-n b { font: 800 40px/1 var(--sans); letter-spacing: -.04em; } .wb-n span { font: 500 13px/1.3 var(--geist); opacity: .9; }
+.wb-l { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; } .wb-l li { display: flex; gap: 8px; font: 600 14px/1.3 var(--sans); translate: 0 8px; opacity: 0; transition: translate .5s var(--ease), opacity .4s; }
+.wb-l svg { flex: none; width: 16px; height: 16px; margin-top: 1px; fill: none; stroke: #8AF2B5; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+.wb-g { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; } .wb-g span { display: inline-flex; align-items: baseline; gap: 5px; padding: 6px 9px; border-radius: 10px; background: rgba(255, 255, 255, .14); font: 500 12px/1 var(--geist); } .wb-g b { font: 800 17px/1 var(--sans); letter-spacing: -.02em; color: #8AF2B5; }
+.wb-t { margin-top: -4px; font: 500 11.5px/1 var(--geist); opacity: .7; }
+.wb-go { margin-top: auto; font: 700 13px/1 var(--sans); }
+.wk.hover .wb-n li, .wk.hover .wb-l li { translate: 0 0; opacity: 1; } .wk.hover :is(.wb-n, .wb-l) li:nth-child(2) { transition-delay: .06s; } .wk.hover :is(.wb-n, .wb-l) li:nth-child(3) { transition-delay: .12s; }
 .wk.hover, .wk:focus-visible { box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset, 0 0 0 3px rgba(255, 255, 255, .9), 0 0 40px 4px var(--glow); }
 .box-info { position: absolute; z-index: 3; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 6vh); bottom: calc(env(safe-area-inset-bottom, 0px) + 3vh); transform: translateX(-50%); width: min(76rem, calc(100vw - 32px)); display: flex; flex-direction: column; align-items: center; text-align: center; pointer-events: none; color: var(--ink); }
 .box-info > * { pointer-events: auto; }
@@ -5333,7 +5334,6 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <div class="s-fun" id="s-f" hidden></div>
       <div class="s-gal" id="s-p"></div>
       <ul class="nums" id="s-n"></ul>
-      <div class="s-alt" id="s-a" hidden aria-hidden="true"></div>
       <div class="row" id="s-row"></div>
     </aside>
 
@@ -5696,7 +5696,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     oyo: { c: '#DC402A', side: 'left', tag: 'Chapter 04 · Dec 2025 → now', t: 'OYO', r: 'Associate Product Designer',
       h: 'Then OYO, and the whole stay.',
       st: ['Where I am right now: <b>self check-in, room selection and cancellations</b>. For <b>Traum</b>, an OYO company in Germany, I redesigned the dashboard holiday-home owners use every day.'],
-      n: [['500', 'properties validated'], ['6,000+', 'approved next']], alt: { l: ['A visibility score on every listing', 'Next steps picked for each owner', 'Clearer states for live, expiring and offline listings'], m: [['+5%', 'engagement'], ['+3–4%', 'renewals']] }, j: 6, cs: 'traum', csL: 'View case study' },
+      n: [['500', 'properties validated'], ['6,000+', 'approved next']], j: 6, cs: 'traum', csL: 'View case study' },
     me: { c: '#F2B705', side: 'left', tag: 'About me', t: 'Hey, I’m James', r: '23 · Product designer · Builder · Engineer',
       h: 'I design so people don’t rage quit.',
       st: [],
@@ -5809,7 +5809,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       meta: [['Role', 'Sole product designer'], ['Timeline', '1 month'], ['Platforms', 'Desktop and mobile web']],
       problem: 'Hosts couldn’t tell whether their listings were working, so they never bought add-ons and often missed renewals.',
       did: ['Reframed the brief around what hosts couldn’t see', 'Designed a visibility score, almost half of it earned for free', 'Iterated the page six times with business, product and engineering', 'Shipped desktop and mobile, with seasonal skins'],
-      res: [], shots: [] },
+      res: [], wins: ['A visibility score on every listing', 'Next steps picked for each owner', 'Clearer listing states'], goals: [['+5%', 'engagement'], ['+3–4%', 'renewals']], shots: [] },
     { id: 'requests', bg: 'radial-gradient(110% 70% at 10% 0%, #FF9A8C 0%, transparent 55%), radial-gradient(90% 80% at 100% 100%, #8E0D14 0%, transparent 60%), linear-gradient(165deg, #F2453D, #C8161E)', glow: '#EF3B35', logo: 'logo-mmt', face: ['big', '2×', 'hotel replies'], name: 'The Request Rescue', co: 'MakeMyTrip · Special Requests', t: '#FFE2DE', c: '#D7262B', icon: 'bell', cs: CS + 'requests', status: 'Live on app & desktop',
       pitch: 'Skip the calls, make it special, right in the app. Guests can ask for a late check-in or a birthday surprise, and hotels actually reply.',
       meta: [['Role', 'Product Design Intern'], ['Timeline', 'Apr – Oct 2025'], ['Platforms', 'App and desktop']],
@@ -5908,8 +5908,6 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       + fun.map(([, c, items], k) => `<ul class="sf-pane" data-fp="${k}" style="--fc:${c}"${k ? ' hidden' : ''}>${items.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>`).join('') : '';
     $('#s-f').hidden = !fun.length;
     $('#s-n').innerHTML = P.n.map(([b, s]) => `<li><b>${b}</b><span>${s}</span></li>`).join('');
-    const A = $('#s-a'); sheet.classList.remove('alt'); clearInterval(sheet._alt); A.hidden = !P.alt;
-    A.innerHTML = P.alt ? `<p class="sa-k"><img src="${img('logo-traum')}" alt="">Traum, after the redesign</p><ul class="sa-l">${P.alt.l.map(t => `<li><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>${t}</li>`).join('')}</ul><div class="sa-m">${P.alt.m.map(([b, t]) => `<span><b>${b}</b>${t}</span>`).join('')}<small>targets</small></div>` : '';
     const ph = P.photos || (S && S.photos) || [];
     $('#s-p').innerHTML = ph.length ? `<p>Gallery</p><div style="--n:${ph.length}">${ph.map(([src, cap], k) => `<button type="button" class="jc-ph" data-sg="${k}" aria-label="Open photo: ${cap}" style="--r:${[-3, 2, -1.5][k % 3]}deg"><span class="ph${src ? '' : ' empty'}">${src ? `<img src="${img(src)}" alt="" loading="lazy">` : `<svg viewBox="0 0 24 24">${ICONS.camera}</svg>`}</span><small>${cap}</small></button>`).join('')}</div>` : '';
     $('#s-p').hidden = !ph.length;
@@ -5918,11 +5916,6 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     $('#s-row').innerHTML = cta; $('#s-row').hidden = !cta;
   }
 
-  // the Traum summary sits exactly over the gallery and the numbers, so the card never changes height
-  const placeAlt = () => { const A = $('#s-a'); if (A.hidden) return; const els = [$('#s-p'), $('#s-n')].filter(e => !e.hidden && e.offsetHeight); if (!els.length) return;
-    const t = Math.min(...els.map(e => e.offsetTop)), b = Math.max(...els.map(e => e.offsetTop + e.offsetHeight)); A.style.top = t + 'px'; A.style.height = Math.max(b - t, 150) + 'px'; A.style.left = els[0].offsetLeft + 'px'; A.style.width = els[0].offsetWidth + 'px'; };
-  sheet.addEventListener('pointerenter', e => { if (e.pointerType !== 'mouse' || $('#s-a').hidden) return; placeAlt(); sheet.classList.add('alt'); });
-  sheet.addEventListener('pointerleave', () => { if (!matchMedia('(hover: none)').matches) sheet.classList.remove('alt'); });
   function focus(id) {
     if (!PLACES[id] || pV > .04) { if (PLACES[id]) { goTo(vTop); setTimeout(() => focus(id), 900); } return; }
     if (focusId === id) return;
@@ -6511,6 +6504,12 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   face('wall-i', BD, BH, 0, BD / 2, 0, 'rotateZ(90deg) rotateX(-90deg)');
   const lid = face('box-lid', BW, BD, BW / 2, 0, BH, 'rotateX(-180deg)');
   const SUNK = -(CH - BH + 40);
+  // the back of a card, shown on hover: the numbers it moved, or for unshipped work what changed and the targets
+  const wkBack = w => { const res = (w.res || []).slice(0, 2);
+    if (!res.length && !w.wins) return '';
+    const body = res.length ? `<ul class="wb-n">${res.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>`
+      : `<ul class="wb-l">${w.wins.map(t => `<li><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>${t}</li>`).join('')}</ul><div class="wb-g">${w.goals.map(([b, t]) => `<span><b>${b}</b>${t}</span>`).join('')}</div><small class="wb-t">Targets, launching soon</small>`;
+    return `<div class="wk-bk" aria-hidden="true"><p class="wb-k">${res.length ? 'The numbers' : 'What changed'}</p>${body}<span class="wb-go">Open case study →</span></div>`; };
   const wks = WORK.map((w, i) => {
     const x = 108 + i * ((BW - 216) / (WORK.length - 1));
     const el = document.createElement('button'); el.className = 'wk' + (w.cls ? ' ' + w.cls : ''); el.type = 'button';
@@ -6519,7 +6518,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     el.setAttribute('aria-label', `${w.name}, open case study`);
     const [kind, main, sub] = w.face;
     el.innerHTML = `<div class="wk-top">${w.logo ? `<img class="wk-logo" src="${img(w.logo)}" alt="">` : `<span class="wk-ic"><svg viewBox="0 0 24 24">${ICONS[w.icon]}</svg></span>`}<span class="wk-tag">${String(i + 1).padStart(2, '0')}</span></div>
-      <div><p class="wk-hand" style="margin:0 0 8px">${w.name}</p><div class="wk-${kind}">${main}</div><p class="wk-sub" style="margin-bottom:0">${sub}</p></div>`;
+      <div><p class="wk-hand" style="margin:0 0 8px">${w.name}</p><div class="wk-${kind}">${main}</div><p class="wk-sub" style="margin-bottom:0">${sub}</p></div>${wkBack(w)}`;
     box3.appendChild(el);
     return { el, w, i, x, z: SUNK };
   });
