@@ -4830,12 +4830,12 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 @media (max-width: 980px) { .tf-board { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 520px) { .tf-board { grid-template-columns: 1fr; padding: 22px 18px; } .tf-pin { aspect-ratio: auto; min-height: 190px; } }
 /* wrong turn: scroll scene */
-.tf-sh { height: 260vh; }
-.sh-pin { position: sticky; top: max(80px, 12vh); display: grid; justify-items: center; gap: 26px; }
+.tf-sh { height: 340vh; }
+.sh-pin { position: sticky; top: 0; height: 100vh; display: grid; align-content: center; justify-items: center; gap: 26px; padding-top: 40px; box-sizing: border-box; }
 .sh-steps { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin: 0; padding: 0; list-style: none; }
-.sh-steps li { display: flex; align-items: center; gap: 8px; font: 600 15px/1.2 var(--sans); color: var(--ink-2); opacity: .45; transition: opacity .4s, color .4s; }
+.sh-steps li { opacity: .45; transition: opacity .4s; } .sh-steps button { display: flex; align-items: center; gap: 8px; padding: 0; border: 0; background: none; font: 600 15px/1.2 var(--sans); color: var(--ink-2); cursor: pointer; } .sh-steps li.cur button { color: var(--ink); }
 .sh-steps i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--soft); font: 800 12px/1 var(--sans); font-style: normal; transition: background .4s, color .4s; }
-.sh-steps li.on { opacity: 1; color: var(--ink); } .sh-steps li.on i { background: var(--ty); color: #3A2A00; }
+.sh-steps li.on { opacity: 1; } .sh-steps li.on i { background: var(--ty); color: #3A2A00; }
 .sh-stage { position: relative; display: grid; justify-items: center; gap: 20px; width: min(100%, 880px); }
 .sh-card { width: 100%; border-radius: 24px; background: #fff; color: #24272C; box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 40px 70px -44px rgba(60, 40, 0, .5); overflow: hidden; text-align: left; --soft: #ECEAE4; }
 .sh-top { display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center; padding: 24px; }
@@ -4846,20 +4846,24 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .sh-rec { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; max-height: 0; padding: 0 20px; background: #FDF6E3; overflow: hidden; transition: max-height .7s var(--ease), padding .7s var(--ease); }
 .sh-rec img { width: 120px; height: 84px; border-radius: 10px; object-fit: cover; }
 .sh-rec em { display: inline-block; padding: 3px 8px; border-radius: 6px; background: #E3F4EC; color: #16825A; font: 600 12px/1.2 var(--sans); font-style: normal; } .sh-rec b { display: block; margin: 6px 0 3px; font: 600 20px/1.2 var(--sans); } .sh-rec small { font: 400 14px/1.4 var(--sans); color: #6B6F75; }
-.sh-add { padding: 11px 20px; border-radius: 10px; background: #fff; box-shadow: inset 0 0 0 1.5px #24272C; font: 600 15px/1 var(--sans); }
+.sh-add { padding: 11px 20px; border: 0; border-radius: 10px; background: #fff; box-shadow: inset 0 0 0 1.5px #24272C; color: #24272C; font: 600 15px/1 var(--sans); cursor: pointer; white-space: nowrap; transition: background .3s, color .3s, box-shadow .3s, scale .3s var(--ease); }
+.sh-stage[data-s="2"] .sh-add { background: #FFC61F; box-shadow: none; animation: shp 1.4s ease-in-out infinite; } @keyframes shp { 50% { scale: 1.06; } }
+.sh-stage[data-s="3"] .sh-add { background: #E3F4EC; color: #16825A; box-shadow: none; }
+.sh-stage[data-s="3"] .sh-rec { background: #F0FAF4; }
 .sh-cat { width: 100%; padding: 18px 20px; border-radius: 22px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); box-sizing: border-box; text-align: left; transition: opacity .6s, translate .7s var(--ease), max-height .7s var(--ease), padding .7s; max-height: 200px; overflow: hidden; }
 .sh-cat p { margin: 0 0 12px; font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
 .sh-cat div { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .sh-cat span { display: flex; align-items: center; gap: 8px; padding: 18px 14px; font-size: 15px; border-radius: 14px; background: var(--paper); font: 600 14px/1.2 var(--sans); transition: opacity .4s, box-shadow .4s, background .4s, scale .5s var(--ease); }
-.sh-note { position: absolute; right: -60px; bottom: -70px; width: 270px; padding: 26px 20px 20px; border-radius: 4px 4px 18px 4px; background: #FFF1B8; color: #2B2A26; text-align: left; rotate: 3deg; box-shadow: 0 24px 40px -22px rgba(80, 60, 0, .55); opacity: 0; translate: 0 30px; scale: .9; transition: opacity .5s, translate .6s var(--ease), scale .6s var(--ease); pointer-events: none; }
+.sh-note { position: absolute; right: -70px; bottom: -150px; width: 270px; padding: 26px 20px 20px; border-radius: 4px 4px 18px 4px; background: #FFF1B8; color: #2B2A26; text-align: left; rotate: 3deg; box-shadow: 0 24px 40px -22px rgba(80, 60, 0, .55); opacity: 0; translate: 0 30px; scale: .9; transition: opacity .5s, translate .6s var(--ease), scale .6s var(--ease); pointer-events: none; }
 .sh-note .tack { position: absolute; top: -9px; left: 50%; width: 18px; height: 18px; translate: -50% 0; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #FF8A8A, #D9364B 60%, #9E2033); box-shadow: 0 4px 6px -2px rgba(0, 0, 0, .35); }
 .sh-note em { display: block; margin-bottom: 8px; font: 700 11px/1 var(--sans); font-style: normal; letter-spacing: .1em; text-transform: uppercase; opacity: .6; } .sh-note b { font: 700 19px/1.3 var(--sans); }
 .sh-stage[data-s="1"] .sh-ph { background: #FCE6E1; box-shadow: 0 0 0 2px #E0533D; }
 .sh-stage[data-s="1"] .sh-cat span:not(.fit) { opacity: .3; } .sh-stage[data-s="1"] .sh-cat .fit { background: #FFF3C4; box-shadow: inset 0 0 0 2px #F2B705; scale: 1.06; }
 .sh-stage[data-s="2"] .sh-rec, .sh-stage[data-s="3"] .sh-rec { max-height: 220px; padding: 20px 24px; }
-.sh-stage[data-s="2"] .sh-cat, .sh-stage[data-s="3"] .sh-cat { opacity: 0; translate: 0 -40px; max-height: 0; padding-top: 0; padding-bottom: 0; }
-.sh-stage[data-s="3"] .sh-note { opacity: 1; translate: 0 0; scale: 1; }
-@media (max-width: 760px) { .sh-note { position: relative; right: auto; bottom: auto; margin-top: 4px; } .sh-cat div { grid-template-columns: 1fr 1fr; } .sh-top { grid-template-columns: auto 1fr; padding: 16px; } .sh-top img { width: 80px; height: 66px; } .sh-top b { font-size: 18px; } .sh-sc { position: absolute; right: 14px; top: 14px; } .sh-card { position: relative; } .sh-top > div { padding-right: 52px; } .sh-rec { grid-template-columns: auto 1fr; } .sh-rec img { width: 64px; height: 52px; } .sh-add { grid-column: 1 / -1; text-align: center; } .sh-steps li span { font-size: 13px; } .tf-sh { height: 240vh; } }
+.sh-stage[data-s="2"] .sh-cat .fit { opacity: 0; scale: .6; } .sh-stage[data-s="2"] .sh-cat span:not(.fit) { opacity: .35; }
+.sh-stage[data-s="3"] .sh-cat { opacity: 0; translate: 0 -40px; max-height: 0; padding-top: 0; padding-bottom: 0; }
+.sh-stage[data-s="3"] .sh-note { transition-delay: .5s; opacity: 1; translate: 0 0; scale: 1; }
+@media (max-width: 760px) { .sh-note { position: relative; right: auto; bottom: auto; margin-top: 4px; } .sh-cat div { grid-template-columns: 1fr 1fr; } .sh-top { grid-template-columns: auto 1fr; padding: 16px; } .sh-top img { width: 80px; height: 66px; } .sh-top b { font-size: 18px; } .sh-sc { position: absolute; right: 14px; top: 14px; } .sh-card { position: relative; } .sh-top > div { padding-right: 52px; } .sh-rec { grid-template-columns: auto 1fr; } .sh-rec img { width: 64px; height: 52px; } .sh-add { grid-column: 1 / -1; text-align: center; } .sh-steps li span { font-size: 13px; } .tf-sh { height: 320vh; } }
 /* meter evolution */
 .tf-ev { height: 300vh; }
 .ev-pin { position: sticky; top: max(80px, 11vh); display: grid; gap: 26px; justify-items: center; }
@@ -7486,11 +7490,11 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         ${p('I started with a separate catalogue of add-ons. Then I watched one property need just one of them.')}
         <div class="tf-sh" id="tfSh">
           <div class="sh-pin">
-            <ol class="sh-steps">${['A catalogue for everyone', 'This property needs one thing', 'So the offer moves in'].map((t, i) => `<li data-k="${i}"><i>${i + 1}</i><span>${t}</span></li>`).join('')}</ol>
+            <ol class="sh-steps">${['A catalogue for everyone', 'This property needs one thing', 'The offer moves in', 'Added'].map((t, i) => `<li data-k="${i}"><button type="button" data-k="${i}"><i>${i + 1}</i><span>${t}</span></button></li>`).join('')}</ol>
             <div class="sh-stage" data-s="0">
               <div class="sh-card">
                 <div class="sh-top"><img src="${ti('ph3')}" alt=""><div><small>No. 343303</small><b>Chalet Bergblick</b><p><span class="no sh-ph">${tfIc('x')}Only 6 phone photos</span><span>${tfIc('check')}Prices</span><span>${tfIc('check')}Calendar</span></p></div><span class="sh-sc">${tfRing(48)}</span></div>
-                <div class="sh-rec"><img src="${ti('rc-1')}" alt=""><span><em>+25 points</em><b>Photography Showcase</b><small>Pro photos, because this listing has only six.</small></span><span class="sh-add">Add</span></div>
+                <div class="sh-rec"><img src="${ti('rc-1')}" alt=""><span><em>+25 points</em><b>Photography Showcase</b><small>Pro photos, because this listing has only six.</small></span><button type="button" class="sh-add">Add</button></div>
               </div>
               <div class="sh-cat"><p>Add-ons</p><div>${[['cam', 'Photography'], ['play', 'Virtual tour'], ['star', 'Top listing'], ['mail', 'Newsletter']].map(([ic, t], i) => `<span class="${i ? '' : 'fit'}">${tfIc(ic)}${t}</span>`).join('')}</div></div>
               <div class="sh-note"><span class="tack"></span><em>The principle</em><b>Show the right opportunity where the need becomes clear.</b></div>
@@ -7667,11 +7671,13 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       csEl.addEventListener('scroll', initTF.sc2 = lit, { passive: true }); lit(); }
     // pinned problems: tap to lift and flip
     $('#tfBoard', root).addEventListener('click', e => { const b = e.target.closest('.tf-pin'); if (!b) return; const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on); });
-    // the wrong turn: one card, driven by scroll
-    { const sh = $('#tfSh', root), st = $('.sh-stage', sh), steps = $$('.sh-steps li', sh);
-      const go = () => { const r = sh.getBoundingClientRect(), span = r.height - innerHeight * .8; const q = clamp(-r.top / Math.max(1, span)); const k = q < .22 ? 0 : q < .5 ? 1 : q < .78 ? 2 : 3;
-        if (st.dataset.s != k) { st.dataset.s = k; steps.forEach((l, i) => l.classList.toggle('on', i <= Math.min(2, k))); const ring = $('.sh-sc .tf-ring', st), v = k >= 2 ? 73 : 48; ring.style.setProperty('--v', v); ring.style.setProperty('--rc', tfCol(v)); $('b', ring).textContent = v; } };
-      csEl.addEventListener('scroll', initTF.sc3 = go, { passive: true }); steps[0].classList.add('on'); }
+    // the wrong turn: one card, driven by scroll, or by tapping
+    { const sh = $('#tfSh', root), st = $('.sh-stage', sh), steps = $$('.sh-steps li', sh), add = $('.sh-add', sh); let manual = 0;
+      const set = k => { if (st.dataset.s == k) return; st.dataset.s = k; steps.forEach((l, i) => { l.classList.toggle('on', i <= k); l.classList.toggle('cur', i === k); });
+        const ring = $('.sh-sc .tf-ring', st), v = k >= 3 ? 73 : 48; ring.style.setProperty('--v', v); ring.style.setProperty('--rc', tfCol(v)); count($('b', ring), v, 600); add.textContent = k >= 3 ? 'Added ✓' : 'Add'; };
+      const go = () => { if (performance.now() - manual < 1200) return; const r = sh.getBoundingClientRect(), span = r.height - innerHeight; const q = clamp(-r.top / Math.max(1, span)); set(Math.min(3, Math.floor(q * 4))); };
+      sh.addEventListener('click', e => { const b = e.target.closest('.sh-steps button'); if (b) { manual = performance.now(); set(+b.dataset.k); } if (e.target.closest('.sh-add')) { manual = performance.now(); set(st.dataset.s == 3 ? 2 : 3); } });
+      csEl.addEventListener('scroll', initTF.sc3 = go, { passive: true }); st.dataset.s = -1; set(0); }
     // the growth meter
     const G = $('#tfG', root), gr = $('#tfGr', root);
     const putG = (svg, v) => { const a = (200 - 220 * v / 100) * Math.PI / 180, k = $('.kn', svg); $('.fl', svg).style.strokeDasharray = `${Math.max(.01, v).toFixed(2)} 100`; k.setAttribute('cx', (120 + 96 * Math.cos(a)).toFixed(1)); k.setAttribute('cy', (120 - 96 * Math.sin(a)).toFixed(1)); k.style.fill = tfCol(v); $('.fl', svg).style.stroke = tfCol(v); };
@@ -7748,7 +7754,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       $('img', lb).src = im.src; $('img', lb).alt = im.alt; lb.classList.toggle('tall', im.naturalHeight > im.naturalWidth * 1.2); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); });
     addEventListener('keydown', initTF.kd = e => { if (e.key === 'Escape' && lb.classList.contains('open')) { closeLb(); e.stopImmediatePropagation(); } }, true);
     // coach marks: a quiet tooltip, only after a few seconds of doing nothing
-    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfGr', 'Drag to change the score'], ['#tfEv .ev-rail', 'Scroll, or tap a version'], ['#tfJp', 'Play the journey, or tap the steps'], ['#tfSt .tf-stn', 'Swipe or use the arrows'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
+    { const TIPS = [['#tfHc .acts button', 'Tap an action to grow the score'], ['#tfCmp2 .cm-hd', 'Drag to compare before and after'], ['#tfMk .mk-steps', 'Scroll, or tap each part of the card'], ['#tfBoard', 'Tap a note to flip it'], ['#tfSh .sh-add', 'Tap Add, or keep scrolling'], ['#tfGr', 'Drag to change the score'], ['#tfEv .ev-rail', 'Scroll, or tap a version'], ['#tfJp', 'Play the journey, or tap the steps'], ['#tfSt .tf-stn', 'Swipe or use the arrows'], ['#tfFold .tf-sw2', 'Try a bigger meter'], ['#tfEvr', 'Drag through the iterations'], ['#tfAiw .tf-ais', 'Tap a step']];
       const done = new Set(), tip = document.createElement('div'); tip.className = 'tf-tip'; tip.setAttribute('role', 'status'); document.body.appendChild(tip); initTF.tip = tip;
       let last = performance.now(), cur = null; const poke = () => { last = performance.now(); if (cur) { done.add(cur); cur = null; tip.classList.remove('on'); } };
       ['scroll', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(ev => root.addEventListener(ev, poke, { passive: true }));
