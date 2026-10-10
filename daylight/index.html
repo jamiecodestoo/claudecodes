@@ -4488,7 +4488,7 @@ html:root .scroll-cue i::after { top: 5px; }
 .tf-gmc .hd { text-align: left; } .tf-gmc .hd b { display: block; font: 600 20px/1.2 var(--sans); } .tf-gmc .hd small { font: 400 14px/1.4 var(--sans); color: var(--ink-2); }
 .tf-gw { position: relative; width: min(290px, 100%); margin: 14px auto 0; }
 .tf-gauge { display: block; width: 100%; overflow: visible; }
-.tf-gauge path { fill: none; stroke-width: 16; stroke-linecap: round; } .tf-gauge .tk { stroke: var(--soft); } .tf-gauge .fl { stroke-dasharray: .01 100; }
+.tf-gauge path { fill: none; stroke-width: 16; stroke-linecap: round; } .tf-gauge .tk { stroke: var(--soft); } .tf-gauge .fl { stroke-dasharray: .01 100; transition: stroke .4s; }
 .tf-gauge .kn { fill: #0E7A4E; transition: fill .4s; stroke: #fff; stroke-width: 5; filter: drop-shadow(0 4px 8px rgba(0, 60, 30, .3)); }
 .tf-gv { position: absolute; left: 0; right: 0; top: 40%; display: grid; justify-items: center; gap: 8px; }
 .tf-gv b { font: 600 clamp(48px, 5vw, 64px)/1 var(--sans); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
@@ -7354,8 +7354,8 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     bands: [[0, 49, 'Needs attention', 'r', 'Start with the free basics: photos, prices and an up-to-date calendar.'], [50, 79, 'Good', 'a', 'Great! Keep optimising to increase score to 80+ points.'], [80, 99, 'Great', 'g', 'You’re near the top. One or two improvements left.'], [100, 100, 'Max score', 'p', 'Maximum visibility. Every recommended action is done.']],
     gev: [['Overall visibility score', 'Version 1', 'A score out of 100', 'A familiar gauge and a clear number.', 'The “/100” and the break in the arc read like an exam grade. Nothing said how to improve.'],
       ['Overall visibility score', 'Version 2', 'Progress over time', '“+12 points this week” made improvement visible.', 'The boxed message competed with the score, and the arc still had no clear end point.'],
-      ['Overall visibility score', 'Version 3', 'One marker, calmer copy', 'A knob marks exactly where you are. The message sits free under the score.', 'Red to green still felt like judgement, and “visibility score” sounded like a grade.'],
-      ['Growth meter', 'Final', 'A growth meter', 'Renamed to “Growth meter”, with an info icon that explains the score, and one calm colour.', '']],
+      ['Overall visibility score', 'Version 3', 'One marker, calmer copy', 'A knob marks exactly where you are. The message sits free under the score.', 'A rainbow gradient on every score felt noisy, and “visibility score” sounded like a grade.'],
+      ['Growth meter', 'Final', 'A growth meter', 'Renamed to “Growth meter”, with an info icon that explains the score. The arc is one colour that shifts with the score: red, then yellow, then green.', '']],
     meter: [['g1', 'Exploration', 'Score plus a row of stats', 'A speedometer with views, leads and rating beside it. Four numbers competed with the one that mattered.'],
       ['it-gauge', 'Iteration', 'A traffic-light arc', 'Red to green, inside the page layout. Readable at a glance, but the colour did all the talking, and red read like a failing grade.'],
       ['x-meter', 'Final', 'One calm green, and words', 'A single green arc, a “Good” label, and a sentence about the next milestone. Meaning never depends on colour alone.'],
@@ -7378,8 +7378,9 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   };
   const tfIc = (k, cls = '') => `<svg class="tf-i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${TF.ic[k]}</svg>`;
   const tfArc = 'M29.8 152.8A96 96 0 1 1 210.2 152.8';
-  const tfCol = v => v < 40 ? '#E0533D' : v < 70 ? '#E8A912' : '#16825A';
-  const tfGauge = id => `<svg class="tf-gauge" id="${id}" viewBox="0 0 240 170" aria-hidden="true"><defs><linearGradient id="${id}G" x1="0" x2="1"><stop offset="0" stop-color="#E0533D"/><stop offset=".45" stop-color="#F2B705"/><stop offset="1" stop-color="#16825A"/></linearGradient></defs><path class="tk" d="${tfArc}" pathLength="100"/><path class="fl" d="${tfArc}" pathLength="100" stroke="url(#${id}G)"/><circle class="kn" r="11" cx="29.8" cy="152.8"/></svg>`;
+  const tfCol = v => v < 50 ? '#E0533D' : v < 70 ? '#E8A912' : '#16825A';
+  const tfCls = v => v >= 100 ? 'p' : v < 50 ? 'r' : v < 70 ? 'a' : 'g';
+  const tfGauge = id => `<svg class="tf-gauge" id="${id}" viewBox="0 0 240 170" aria-hidden="true"><defs><linearGradient id="${id}G" x1="0" x2="1"><stop offset="0" stop-color="#E0533D"/><stop offset=".45" stop-color="#F2B705"/><stop offset="1" stop-color="#16825A"/></linearGradient></defs><path class="tk" d="${tfArc}" pathLength="100"/><path class="fl" d="${tfArc}" pathLength="100" stroke="#E0533D"/><circle class="kn" r="11" cx="29.8" cy="152.8"/></svg>`;
   const tfRing = (v, cls = '') => `<span class="tf-ring ${cls}" style="--v:${v};--rc:${tfCol(v)}"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15"/><circle class="f" cx="18" cy="18" r="15" pathLength="100"/></svg><b>${v}</b></span>`;
   const tfBrw = (img, alt, url = 'traum-ferienwohnungen.de/vermieterbereich/inserate', cls = '') => `<div class="tf-brw ${cls}"><div class="tbar"><i></i><i></i><i></i><span>${url}</span></div><div class="vp"><img src="${ti(img)}" alt="${alt}" loading="lazy"></div></div>`;
   const tfPhone = (inner, cls = '') => `<div class="tf-phone ${cls}"><span class="isl"></span><div class="scr">${inner}</div></div>`;
@@ -7645,12 +7646,12 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       csEl.addEventListener('scroll', initTF.sc3 = go, { passive: true }); steps[0].classList.add('on'); }
     // the growth meter
     const G = $('#tfG', root), gr = $('#tfGr', root);
-    const putG = (svg, v) => { const a = (200 - 220 * v / 100) * Math.PI / 180, k = $('.kn', svg); $('.fl', svg).style.strokeDasharray = `${Math.max(.01, v).toFixed(2)} 100`; k.setAttribute('cx', (120 + 96 * Math.cos(a)).toFixed(1)); k.setAttribute('cy', (120 - 96 * Math.sin(a)).toFixed(1)); k.style.fill = tfCol(v); };
+    const putG = (svg, v) => { const a = (200 - 220 * v / 100) * Math.PI / 180, k = $('.kn', svg); $('.fl', svg).style.strokeDasharray = `${Math.max(.01, v).toFixed(2)} 100`; k.setAttribute('cx', (120 + 96 * Math.cos(a)).toFixed(1)); k.setAttribute('cy', (120 - 96 * Math.sin(a)).toFixed(1)); k.style.fill = tfCol(v); $('.fl', svg).style.stroke = tfCol(v); };
     const tween = (svg, v) => { const from = svg._v || 0, t0 = performance.now(), ms = reduce ? 1 : 900; svg._v = v; cancelAnimationFrame(svg._raf); const step = t => { const q = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - q, 3); putG(svg, from + (v - from) * e); if (q < 1) svg._raf = requestAnimationFrame(step); }; svg._raf = requestAnimationFrame(step); };
     const band = v => TF.bands.find(([a, b]) => v >= a && v <= b);
     // hero: a growth meter you can grow
     { const hg = $('#tfHg', root), hc = $('#tfHc', root); let hv = 45; const on = new Set();
-      const draw = anim => { const [, , t, c, m] = band(hv); tween(hg, hv); count($('#tfHv', root), hv, 700); const ch = $('#tfHch', root); ch.textContent = t; ch.className = 'tf-chip ' + c; $('#tfHm', root).textContent = m; hc.classList.toggle('max', hv >= 100); };
+      const draw = anim => { const [, , t, c, m] = band(hv); tween(hg, hv); count($('#tfHv', root), hv, 700); const ch = $('#tfHch', root); ch.textContent = t; ch.className = 'tf-chip ' + tfCls(hv); $('#tfHm', root).textContent = m; hc.classList.toggle('max', hv >= 100); };
       const add = i => { if (on.has(i)) { on.delete(i); hv -= TF.hero[i][2]; } else { on.add(i); hv += TF.hero[i][2]; } const b = $(`[data-h="${i}"]`, hc); b.classList.toggle('on', on.has(i)); $('.go', b).textContent = on.has(i) ? 'Added' : 'Add'; draw(); };
       hc.addEventListener('click', e => { const b = e.target.closest('[data-h]'); if (b) add(+b.dataset.h); });
       later(() => draw(), 500); later(() => { if (!on.size) add(0); }, 1900); }
@@ -7663,9 +7664,9 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         sw = requestAnimationFrame(tick); initTF.raf.push(sw); };
       set(50); }
     const drawG = (v, anim) => { const [, , t, c, m] = band(v); anim ? tween(G, v) : (G._v = v, putG(G, v)); anim ? count($('#tfGv', root), v, 600) : $('#tfGv', root).textContent = v;
-      const ch = $('#tfGc', root); ch.textContent = t; ch.className = 'tf-chip ' + c; $('#tfGmsg', root).textContent = m;
+      const ch = $('#tfGc', root); ch.textContent = t; ch.className = 'tf-chip ' + tfCls(v); $('#tfGmsg', root).textContent = m;
       const r = $('#tfGring .tf-ring', root); r.style.setProperty('--v', v); r.style.setProperty('--rc', tfCol(v)); $('b', r).textContent = v;
-      $$('#tfGm .bands li', root).forEach(li => li.classList.toggle('on', +li.dataset.b === band(v)[0])); };
+      $$('#tfGm .bands li', root).forEach(li => { const on = +li.dataset.b === band(v)[0]; li.className = on ? 'on ' + tfCls(v) : ''; }); };
     gr.addEventListener('input', () => drawG(+gr.value)); $('#tfGm', root)._on = () => { G._v = 0; drawG(72, true); };
     // how the meter grew up: scroll lights each version
     { const ev = $('#tfEv', root); let cur = -1, manual = 0;
