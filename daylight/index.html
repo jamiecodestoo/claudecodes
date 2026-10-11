@@ -8559,6 +8559,15 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     return b ? `<i class="${cls}" style="--bh:#${b.h}"><img src="${SI}/icons/${b.s}.svg" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('${ch}'))"></i>` : `<i class="${cls} mono">${ch}</i>`; };
   const workHTML = n => { const co = String(n.company || '').trim(), ro = String(n.role || '').trim(); if (!co && !ro) return '';
     return `<small class="nw-work">${co ? logoHTML(co, n.brand) : ''}<span>${esc(ro)}${ro && co ? ' · ' : ''}${co ? `<em>${esc(co)}</em>` : ''}</span></small>`; };
+  // keep the wall readable: no keyboard mashing, no one-word or number-only notes (the server applies the same rules)
+  const KROWS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm', 'poiuytrewq', 'lkjhgfdsa', 'mnbvcxz'];
+  const junkWord = w => { const L = w.replace(/[^A-Za-z]/g, ''); if (L.length >= 4 && KROWS.some(r => r.includes(L.toLowerCase()))) return true; if (L.length < 6) return false; let flips = 0;
+    for (let i = 1; i < L.length; i++) if ((L[i] === L[i].toUpperCase()) !== (L[i - 1] === L[i - 1].toUpperCase())) flips++;
+    const vowels = (L.match(/[aeiouy]/gi) || []).length / L.length, run = Math.max(0, ...(L.match(/[^aeiou]+/gi) || []).map(r => r.length));
+    return (flips >= 4 && L.length >= 8) || (vowels < .25 && run >= 7 && L.length >= 8); };
+  const junkText = t => String(t || '').split(/\s+/).some(junkWord);
+  const noteShort = t => { t = String(t || '').trim(); return t.length < 8 || t.split(/\s+/).filter(w => /\p{L}/u.test(w)).length < 2; };
+  const noteOk = n => !noteShort(n.note) && /\p{L}/u.test(String(n.name || '')) && ![n.note, n.name, n.company, n.role].some(junkText);
   function noteCard(n, k) {
     if (n.ghost) return `<button type="button" class="nw-card nw-ghost" data-open style="--r:${k % 2 ? 1.5 : -1.5}deg"><div><p>Your note could be here.</p><span>Write one ↗</span></div></button>`;
     const c = NOTE_COLORS[hashStr(n.id || n.name) % NOTE_COLORS.length];
@@ -8566,9 +8575,12 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   }
   function renderWall() {
     const seen = new Set(), all = [...localNotes.map(n => ({ ...n, local: true })), ...wallNotes].filter(n => { const key = n.id; if (seen.has(key)) return false; seen.add(key); return true; })
-      .sort((a, b) => (b.at || 0) - (a.at || 0));
+      .filter(noteOk).sort((a, b) => (b.at || 0) - (a.at || 0));
     const list = all.slice(0, 40); while (list.length < 10) list.push({ ghost: true });
     const rows = [[], []]; list.forEach((n, i) => rows[i % 2].push(n));
+    // there is always a blank note to write on, first in the top row and halfway along the bottom one
+    if (!rows[0].some(n => n.ghost)) rows[0].unshift({ ghost: true });
+    if (!rows[1].some(n => n.ghost)) rows[1].splice(Math.ceil(rows[1].length / 2), 0, { ghost: true });
     rows.forEach((r, k) => { const html = r.map((n, i) => noteCard(n, i + k)).join(''); nwRows[k].innerHTML = html + html; nwRows[k].style.setProperty('--dur', Math.max(40, r.length * 11) + 's'); });
     $$('.nw-track > .nw-card', $('#notes')).forEach((c, i) => { if (i >= 0 && c.closest('.nw-track') && [...c.parentNode.children].indexOf(c) >= c.parentNode.children.length / 2) c.setAttribute('aria-hidden', 'true'); });
   }
@@ -8690,6 +8702,8 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     if (!name) { nwErr.textContent = 'Add your name.'; $('#nwName').focus(); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { nwErr.textContent = 'That email doesn’t look right.'; $('#nwEmail').focus(); return; }
     if (!note) { nwErr.textContent = 'Write a little something.'; $('#nwNote').focus(); return; }
+    if (noteShort(note)) { nwErr.textContent = 'Write a little more, at least a couple of words.'; $('#nwNote').focus(); return; }
+    if (junkText(note) || junkText(name) || junkText($('#nwCo').value) || junkText($('#nwRole').value)) { nwErr.textContent = 'That doesn’t look like real words. Try again?'; $('#nwNote').focus(); return; }
     const go = $('#nwGo'); go.disabled = true; nwErr.textContent = '';
     const company = $('#nwCo').value.trim().slice(0, 40), role = $('#nwRole').value.trim().slice(0, 40), brand = okBrand(coBrand);
     const body = { name: name.slice(0, 40), note: note.slice(0, 200), photo: nwPhoto, avatar: nwSeed, at: Date.now(), ...(company && { company }), ...(role && { role }), ...(company && brand && { brand }) };
@@ -8702,6 +8716,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       try {
         const r = await fetch('/api/notes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...body, email }) });
         if (r.status === 429) { nwErr.textContent = 'You’ve pinned a few already. Try again in an hour.'; go.disabled = false; return; }
+        if (r.status === 400) { nwErr.textContent = 'That doesn’t look like a real note. Try again?'; go.disabled = false; return; }
         if (r.ok) { const d = await r.json(); if (d && d.note) { wallNotes = [d.note, ...wallNotes.filter(n => n.id !== d.note.id)]; freshId = d.note.id; saved = true; } }
       } catch (_) {}
       // the live wall is there but this note didn't make it: say so, rather than pinning it only in this browser

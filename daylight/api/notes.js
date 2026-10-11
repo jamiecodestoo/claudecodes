@@ -32,9 +32,32 @@ const str = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHOTO = /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/;
 
+// keep the wall readable: no keyboard mashing, no one-word or number-only notes
+// a word is junk when its letter case flips back and forth (mHgTtDhrm…) or it is nearly all consonants (Cqgyhjcza)
+const ROWS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm', 'poiuytrewq', 'lkjhgfdsa', 'mnbvcxz'];
+function junkWord(w) {
+  const L = w.replace(/[^A-Za-z]/g, '');
+  if (L.length >= 4 && ROWS.some(r => r.includes(L.toLowerCase()))) return true;  // asdf, qwer
+  if (L.length < 6) return false;
+  let flips = 0;
+  for (let i = 1; i < L.length; i++) if ((L[i] === L[i].toUpperCase()) !== (L[i - 1] === L[i - 1].toUpperCase())) flips++;
+  const vowels = (L.match(/[aeiouy]/gi) || []).length / L.length;
+  const run = Math.max(0, ...(L.match(/[^aeiou]+/gi) || []).map(r => r.length));
+  return (flips >= 4 && L.length >= 8) || (vowels < 0.25 && run >= 7 && L.length >= 8);
+}
+const junkText = t => String(t || '').split(/\s+/).some(junkWord);
+function noteOk(n) {
+  const note = String(n.note || '').trim();
+  const words = note.split(/\s+/).filter(w => /\p{L}/u.test(w));
+  if (note.length < 8 || words.length < 2) return false;
+  if (!/\p{L}/u.test(String(n.name || ''))) return false;
+  return ![n.note, n.name, n.company, n.role].some(junkText);
+}
+
 function clean(b) {
   const name = str(b.name, 40), note = str(b.note, 200), email = str(b.email, 120);
   if (!name || !note || !EMAIL.test(email)) return null;
+  if (!noteOk({ name, note, company: b.company, role: b.role })) return null;
   const photo = typeof b.photo === 'string' && b.photo.length < 60000 && PHOTO.test(b.photo) ? b.photo : '';
   const avatar = str(b.avatar, 16).replace(/[^a-z0-9]/gi, '');
   const company = str(b.company, 40), role = str(b.role, 40);
@@ -53,7 +76,7 @@ module.exports = async (req, res) => {
   try {
     if (req.method === 'GET') {
       const [raw] = await redis([['LRANGE', WALL, 0, SHOW - 1]]);
-      const notes = (raw || []).map(x => { try { return JSON.parse(x); } catch (_) { return null; } }).filter(Boolean);
+      const notes = (raw || []).map(x => { try { return JSON.parse(x); } catch (_) { return null; } }).filter(Boolean).filter(noteOk);
       return res.status(200).json({ notes });
     }
 
