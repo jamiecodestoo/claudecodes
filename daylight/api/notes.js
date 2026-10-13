@@ -46,7 +46,11 @@ function junkWord(w) {
   return (flips >= 4 && L.length >= 8) || (vowels < 0.25 && run >= 7 && L.length >= 8);
 }
 const junkText = t => String(t || '').split(/\s+/).some(junkWord);
+// notes taken down by hand: any note whose name, text, role or company contains one of these is hidden
+const BLOCK = ['lihwak'];
+const blocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return BLOCK.some(w => t.includes(w)); };
 function noteOk(n) {
+  if (blocked(n)) return false;
   const note = String(n.note || '').trim();
   const words = note.split(/\s+/).filter(w => /\p{L}/u.test(w));
   if (note.length < 8 || words.length < 2) return false;

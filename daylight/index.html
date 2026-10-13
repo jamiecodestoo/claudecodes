@@ -8593,7 +8593,10 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     return (flips >= 4 && L.length >= 8) || (vowels < .25 && run >= 7 && L.length >= 8); };
   const junkText = t => String(t || '').split(/\s+/).some(junkWord);
   const noteShort = t => { t = String(t || '').trim(); return t.length < 8 || t.split(/\s+/).filter(w => /\p{L}/u.test(w)).length < 2; };
-  const noteOk = n => !noteShort(n.note) && /\p{L}/u.test(String(n.name || '')) && ![n.note, n.name, n.company, n.role].some(junkText);
+  // notes taken down by hand (the server hides the same ones)
+  const NOTE_BLOCK = ['lihwak'];
+  const noteBlocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return NOTE_BLOCK.some(w => t.includes(w)); };
+  const noteOk = n => !noteBlocked(n) && !noteShort(n.note) && /\p{L}/u.test(String(n.name || '')) && ![n.note, n.name, n.company, n.role].some(junkText);
   function noteCard(n, k) {
     if (n.ghost) return `<button type="button" class="nw-card nw-ghost" data-open style="--r:${k % 2 ? 1.5 : -1.5}deg"><div><p>Your note could be here.</p><span>Write one ↗</span></div></button>`;
     const c = NOTE_COLORS[hashStr(n.id || n.name) % NOTE_COLORS.length];
