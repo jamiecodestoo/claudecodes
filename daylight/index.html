@@ -922,6 +922,17 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .nw-ghost span { display: block; margin-top: 8px; font: 700 13px/1 var(--sans); color: var(--ink); }
 .nw-ghost:hover { border-color: var(--coral); background: rgba(255, 107, 74, .05); }
 /* the form */
+.nw-card[data-read] { cursor: pointer; }
+.nw-card.clip::after { content: ""; position: absolute; right: 8px; top: 8px; width: 24px; height: 24px; border-radius: 50%; background: rgba(255, 255, 255, .7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2313233A' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5'/%3E%3C/svg%3E") center / 12px no-repeat; }
+.nw-card.clip > p { padding-right: 20px; }
+.nw-read { position: fixed; z-index: 97; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(15, 25, 40, .55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; }
+.nw-read.open { opacity: 1; visibility: visible; }
+.nw-rd { position: relative; width: min(100%, 440px); max-height: 80vh; overflow: auto; box-sizing: border-box; padding: 30px 24px 22px; border-radius: 6px 6px 22px 6px; background: var(--nc); color: #13233A; transform: rotate(var(--r, 0deg)) scale(.92); transition: transform .35s var(--spring, cubic-bezier(.2, .9, .3, 1.2)); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .5); }
+.nw-read.open .nw-rd { transform: rotate(calc(var(--r, 0deg) * .4)) scale(1); }
+.nw-rd::before { content: ""; position: absolute; left: 50%; top: -12px; width: 80px; height: 24px; margin-left: -40px; background: rgba(255, 255, 255, .6); transform: rotate(-3deg); }
+.nw-rd p { margin: 0; font: 400 22px/1.35 var(--serif); font-size-adjust: .46; overflow-wrap: anywhere; }
+.nw-rd .nw-by { margin-top: 20px; } .nw-rd .nw-by small { color: rgba(19, 35, 58, .65); }
+.nw-rd-x { position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .55); color: #13233A; font: 400 26px/1 var(--sans); cursor: pointer; }
 .nw-modal { position: fixed; z-index: 96; inset: 0; display: grid; place-items: center; padding: 16px; background: rgba(15, 25, 40, .55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: opacity .35s var(--ease), visibility 0s .35s; }
 .nw-modal.open { opacity: 1; visibility: visible; transition: opacity .35s var(--ease), visibility 0s; }
 .nw-sheet { position: relative; width: min(460px, 100%); max-height: calc(100svh - 32px); overflow-y: auto; box-sizing: border-box; padding: 30px 28px 24px; border-radius: 22px; background: #FFFCF6; color: var(--ink); border: 1px solid rgba(19, 35, 58, .08); box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .6);
@@ -3785,6 +3796,8 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
   .nw-card .nw-by .av { width: 28px; height: 28px; box-shadow: 0 0 0 2px rgba(255, 255, 255, .85); }
   .nw-card .nw-by b { font-size: 13.5px; } .nw-card .nw-by small { font-size: 11.5px; }
   .nw-card .nw-work { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nw-card:has(.nw-work) > p { -webkit-line-clamp: 2; }
+  .nw-card .nw-work span { display: block; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .nw-ghost p { font-size: 16px; } .nw-ghost span { margin-top: 6px; }
   .nw-card.nw-ghost { display: grid; place-items: center; }
 }
@@ -8579,7 +8592,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   function noteCard(n, k) {
     if (n.ghost) return `<button type="button" class="nw-card nw-ghost" data-open style="--r:${k % 2 ? 1.5 : -1.5}deg"><div><p>Your note could be here.</p><span>Write one ↗</span></div></button>`;
     const c = NOTE_COLORS[hashStr(n.id || n.name) % NOTE_COLORS.length];
-    return `<figure class="nw-card${n.id === freshId ? ' fresh' : ''}" style="--nc:${c};--r:${((hashStr(n.id || n.name) % 7) - 3) * .8}deg;margin:0"><p>${esc(n.note)}</p><figcaption class="nw-by"><span class="av">${faceHTML(n)}</span><span><b>${esc(n.name)}</b>${workHTML(n) || `<small>${n.local ? 'Saved on this device' : esc(fmtDate(n.at))}</small>`}</span></figcaption></figure>`;
+    return `<figure class="nw-card${n.id === freshId ? ' fresh' : ''}" data-read tabindex="0" role="button" aria-label="Read the note from ${esc(n.name)}" style="--nc:${c};--r:${((hashStr(n.id || n.name) % 7) - 3) * .8}deg;margin:0"><p>${esc(n.note)}</p><figcaption class="nw-by"><span class="av">${faceHTML(n)}</span><span><b>${esc(n.name)}</b>${workHTML(n) || `<small>${n.local ? 'Saved on this device' : esc(fmtDate(n.at))}</small>`}</span></figcaption></figure>`;
   }
   function renderWall() {
     const seen = new Set(), all = [...localNotes.map(n => ({ ...n, local: true })), ...wallNotes].filter(n => { const key = n.id; if (seen.has(key)) return false; seen.add(key); return true; })
@@ -8590,6 +8603,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     if (!rows[0].some(n => n.ghost)) rows[0].unshift({ ghost: true });
     if (!rows[1].some(n => n.ghost)) rows[1].splice(Math.ceil(rows[1].length / 2), 0, { ghost: true });
     rows.forEach((r, k) => { const html = r.map((n, i) => noteCard(n, i + k)).join(''); nwRows[k].innerHTML = html + html; nwRows[k].style.setProperty('--dur', Math.max(40, r.length * 11) + 's'); });
+    requestAnimationFrame(() => $$('.nw-card[data-read] > p', $('#notes')).forEach(p => p.parentNode.classList.toggle('clip', p.scrollHeight > p.clientHeight + 2)));
     $$('.nw-track > .nw-card', $('#notes')).forEach((c, i) => { if (i >= 0 && c.closest('.nw-track') && [...c.parentNode.children].indexOf(c) >= c.parentNode.children.length / 2) c.setAttribute('aria-hidden', 'true'); });
   }
   renderWall();
@@ -8665,7 +8679,16 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   function openNotes() { drawAv(); nwErr.textContent = ''; nwFine.textContent = noteCanWrite || noteApi ? 'Your email stays private. Your name, photo and note go up on the wall.' : 'Your email stays private. On this preview your note is saved on this device.'; nwModal.classList.add('open'); lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; setTimeout(() => $('#nwName').focus(), 200); }
   function closeNotes() { nwModal.classList.remove('open'); lenis && lenis.start(); document.documentElement.style.overflow = ''; $('#nwOpen').focus({ preventScroll: true }); }
   $('#nwOpen').addEventListener('click', openNotes);
-  $('#notes').addEventListener('click', e => { if (e.target.closest('[data-open]')) openNotes(); });
+  $('#notes').addEventListener('click', e => { if (e.target.closest('[data-open]')) openNotes(); const c = e.target.closest('[data-read]'); if (c) readNote(c); });
+  $('#notes').addEventListener('keydown', e => { const c = e.target.closest('[data-read]'); if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); readNote(c); } });
+  // tap a note to read all of it: the same card, bigger and never cut off
+  const nwRead = document.createElement('div'); nwRead.className = 'nw-read'; nwRead.setAttribute('role', 'dialog'); nwRead.setAttribute('aria-modal', 'true'); nwRead.setAttribute('aria-label', 'Note'); document.body.appendChild(nwRead);
+  let readFrom = null;
+  function readNote(c) { readFrom = c; nwRead.innerHTML = `<div class="nw-rd" style="${c.getAttribute('style').replace(/margin:0/, '')}">${c.innerHTML}<button type="button" class="nw-rd-x" aria-label="Close">&times;</button></div>`;
+    nwRead.classList.add('open'); lenis && lenis.stop(); $('.nw-rd-x', nwRead).focus({ preventScroll: true }); }
+  function closeRead() { if (!nwRead.classList.contains('open')) return; nwRead.classList.remove('open'); lenis && lenis.start(); readFrom && readFrom.focus({ preventScroll: true }); }
+  nwRead.addEventListener('click', e => { if (e.target === nwRead || e.target.closest('.nw-rd-x')) closeRead(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeRead(); });
   $('#nwClose').addEventListener('click', closeNotes);
   nwModal.addEventListener('click', e => { if (e.target === nwModal) closeNotes(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && nwModal.classList.contains('open')) closeNotes(); });
