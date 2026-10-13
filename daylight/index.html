@@ -3773,11 +3773,19 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
 .sn-foot .c3-links { justify-content: center; }
 .sn-more { padding-bottom: 8vh !important; }
 @media (max-width: 859px) {
-  .nw-card { width: 158px !important; min-height: 206px; padding: 20px 14px 14px; display: flex; flex-direction: column; }
-  .nw-card p { font-size: 17px; line-height: 1.25; }
-  .nw-card .nw-by { margin-top: auto; padding-top: 12px; flex-direction: column; align-items: flex-start; gap: 6px; }
-  .nw-card .nw-by .av { width: 32px; height: 32px; }
-  .nw-ghost p { font-size: 17px; }
+  /* phones: one row of short cards, so the wall stays about one screen tall */
+  .notes { padding-block: 9vh 7vh !important; }
+  .nw-rows { margin-top: 28px; }
+  .nw-row.rev { display: none; }
+  .nw-track { gap: 14px; }
+  .nw-card { width: 210px !important; min-height: 0; height: 148px; padding: 18px 14px 12px; display: flex; flex-direction: column; }
+  .nw-card::before { width: 54px; height: 18px; margin-left: -27px; top: -9px; }
+  .nw-card p { font-size: 16px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .nw-card .nw-by { margin-top: auto; padding-top: 8px; gap: 8px; }
+  .nw-card .nw-by .av { width: 28px; height: 28px; box-shadow: 0 0 0 2px rgba(255, 255, 255, .85); }
+  .nw-card .nw-by b { font-size: 13.5px; } .nw-card .nw-by small { font-size: 11.5px; }
+  .nw-card .nw-work { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nw-ghost p { font-size: 16px; } .nw-ghost span { margin-top: 6px; }
   .nw-card.nw-ghost { display: grid; place-items: center; }
 }
 
@@ -8576,15 +8584,19 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   function renderWall() {
     const seen = new Set(), all = [...localNotes.map(n => ({ ...n, local: true })), ...wallNotes].filter(n => { const key = n.id; if (seen.has(key)) return false; seen.add(key); return true; })
       .filter(noteOk).sort((a, b) => (b.at || 0) - (a.at || 0));
-    const list = all.slice(0, 40); while (list.length < 10) list.push({ ghost: true });
-    const rows = [[], []]; list.forEach((n, i) => rows[i % 2].push(n));
+    // phones show a single row (the second is hidden), so every note goes in the first one
+    const one = matchMedia('(max-width: 859px)').matches;
+    const list = all.slice(0, 40); while (list.length < (one ? 6 : 10)) list.push({ ghost: true });
+    const rows = [[], []]; list.forEach((n, i) => rows[one ? 0 : i % 2].push(n));
     // there is always a blank note to write on, first in the top row and halfway along the bottom one
     if (!rows[0].some(n => n.ghost)) rows[0].unshift({ ghost: true });
-    if (!rows[1].some(n => n.ghost)) rows[1].splice(Math.ceil(rows[1].length / 2), 0, { ghost: true });
+    if (!one && !rows[1].some(n => n.ghost)) rows[1].splice(Math.ceil(rows[1].length / 2), 0, { ghost: true });
+    if (one) { const r = rows[0], k = r.findIndex((n, i) => i > 0 && n.ghost); if (k < 0 && r.length > 6) r.splice(Math.ceil(r.length / 2), 0, { ghost: true }); }
     rows.forEach((r, k) => { const html = r.map((n, i) => noteCard(n, i + k)).join(''); nwRows[k].innerHTML = html + html; nwRows[k].style.setProperty('--dur', Math.max(40, r.length * 11) + 's'); });
     $$('.nw-track > .nw-card', $('#notes')).forEach((c, i) => { if (i >= 0 && c.closest('.nw-track') && [...c.parentNode.children].indexOf(c) >= c.parentNode.children.length / 2) c.setAttribute('aria-hidden', 'true'); });
   }
   renderWall();
+  matchMedia('(max-width: 859px)').addEventListener('change', () => renderWall());
   // shared storage: the artifact's database when this viewer may write, otherwise this device only
   let noteDb = null, noteUid = null, noteCanWrite = false;
   (async () => {
