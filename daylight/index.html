@@ -5990,8 +5990,13 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     $$('.ph-pin[data-id]', ov).forEach(b => b.addEventListener('click', e => { e.stopPropagation(); focusId === b.dataset.id ? unfocus() : focus(b.dataset.id); }));
     // a pin never sits on the headline or its subtitle: if it would, it hangs below its spot instead
     const clear = () => { const t = $('.hero-copy', stage); if (!t || innerWidth >= 860) return; const lim = t.getBoundingClientRect().bottom + 6;
-      $$('.ph-pin', ov).forEach(p => { p.classList.remove('down'); if (p.getBoundingClientRect().top < lim) p.classList.add('down'); }); };
-    addEventListener('resize', clear); addEventListener('load', clear); setTimeout(clear, 900);
+      $$('.ph-pin', ov).forEach(p => { p.classList.remove('down'); if (p.getBoundingClientRect().top < lim) p.classList.add('down'); });
+      // and never under the bottom nav: on real phones the browser bars and home bar push the nav up over the lowest pins
+      const nav = [...document.querySelectorAll('nav')].find(n => { const r = n.getBoundingClientRect(); return r.height && r.top > innerHeight * .6; });
+      const floor = (nav ? nav.getBoundingClientRect().top : innerHeight - 92) - 12;
+      $$('.ph-pin', ov).forEach(p => { p.style.translate = ''; const over = p.getBoundingClientRect().bottom - floor; if (over > 0) p.style.translate = `0 ${-Math.ceil(over)}px`; }); };
+    addEventListener('resize', clear); addEventListener('load', clear); setTimeout(clear, 900); setTimeout(clear, 2000);
+    if (window.visualViewport) visualViewport.addEventListener('resize', clear);
     const mus = $('.ph-music', ov); mus.addEventListener('click', e => { e.stopPropagation(); const r = $('#radioPin'); if (r) r.click(); setTimeout(() => { const on = r && r.classList.contains('on'); mus.lastChild.textContent = on ? 'Now playing' : 'Play some music'; mus.classList.toggle('on', on); }, 60); });
   })();
 
