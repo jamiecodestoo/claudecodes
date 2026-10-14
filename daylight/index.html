@@ -4179,9 +4179,10 @@ html:has(.cs.open) .np { z-index: 95; top: calc(env(safe-area-inset-top, 0px) + 
 html:has(.cs.open) :is(header.bar, nav.nav, .mnav) { visibility: hidden !important; pointer-events: none !important; }
 
 /* featured on Wall of Portfolios: a badge in the sky, a pop-up in the middle of the screen */
-.wop-badge { position: absolute; z-index: 5; left: 50%; top: clamp(18px, 3.4vh, 34px); width: 118px; padding: 0; border: 0; background: none; cursor: pointer; pointer-events: auto; transform: translateX(-50%);
-  filter: drop-shadow(0 10px 16px rgba(8, 30, 70, .38)); transition: transform .5s var(--spring), opacity .5s, visibility 0s; -webkit-tap-highlight-color: transparent; }
-.wop-badge:hover, .wop-badge:focus-visible { transform: translateX(-50%) translateY(-3px) scale(1.07) rotate(-1.5deg); }
+.wop-badge { position: fixed; z-index: 69; top: calc(env(safe-area-inset-top, 0px) + 21px); right: calc(clamp(14px, 2.4vw, 28px) + 240px); width: 100px; padding: 0; border: 0; background: none; cursor: pointer; pointer-events: auto;
+  filter: drop-shadow(0 8px 14px rgba(8, 30, 70, .34)); transition: transform .5s var(--spring), opacity .5s, visibility 0s; -webkit-tap-highlight-color: transparent; }
+.wop-badge:not(.ready) { opacity: 0; }
+.wop-badge:hover, .wop-badge:focus-visible { transform: translateY(-3px) scale(1.07) rotate(-1.5deg); }
 .wop-badge:focus-visible { outline: 2.5px solid #FFD23F; outline-offset: 4px; border-radius: 8px; }
 .wop-in { position: relative; display: block; overflow: hidden; border-radius: 5px; line-height: 0; }
 .wop-in img { display: block; width: 100%; height: auto; max-width: none; }
@@ -4196,11 +4197,11 @@ html:has(.cs.open) :is(header.bar, nav.nav, .mnav) { visibility: hidden !importa
 .wop-ring { position: absolute; inset: -5px; border: 2px solid rgba(255, 255, 255, .85); border-radius: 9px; opacity: 0; pointer-events: none; }
 .wop-badge.new .wop-ring { animation: wopring 2.4s ease-out 4; }
 @keyframes wopring { 0% { opacity: .9; transform: scale(.94); } 100% { opacity: 0; transform: scale(1.32); } }
-.wop-hint { position: absolute; left: 50%; top: calc(100% + 9px); transform: translateX(-50%); white-space: nowrap; opacity: 0; pointer-events: none; font: 700 19px/1 var(--hand); color: #fff; text-shadow: 0 1px 3px rgba(8, 30, 70, .6); transition: opacity .5s; }
+.wop-hint { position: absolute; right: 0; top: calc(100% + 8px); white-space: nowrap; opacity: 0; pointer-events: none; font: 500 18px/1 var(--serif); color: #fff; text-shadow: 0 1px 4px rgba(8, 30, 70, .65); transition: opacity .5s; }
 .wop-badge.new .wop-hint { opacity: 1; }
-/* it steps aside while you fly into the valley or read a place card */
-.cam.flying ~ .wop-badge, .stage.still .wop-badge { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s, visibility 0s .35s; }
-@media (max-width: 859px) { .wop-badge { width: 106px; top: calc(env(safe-area-inset-top, 0px) + 16px); } .wop-hint { display: none; } }
+/* on phones it sits under the Night button and leaves with the hero */
+.wop-badge.away { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s, visibility 0s .35s; }
+@media (max-width: 859px) { .wop-badge { width: 88px; } .wop-hint { display: none; } }
 /* the pop-up */
 .wop-modal { position: fixed; z-index: 97; inset: 0; display: grid; place-items: center; align-content: center; gap: 12px; padding: 20px; text-align: center; color: #F5F7FA; background: radial-gradient(60% 50% at 50% 42%, rgba(60, 90, 140, .55), rgba(6, 10, 20, .9)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   opacity: 0; visibility: hidden; transition: opacity .4s var(--ease), visibility 0s .4s; }
@@ -4219,6 +4220,15 @@ html:has(.cs.open) :is(header.bar, nav.nav, .mnav) { visibility: hidden !importa
 .wop-link:hover { background: rgba(255, 255, 255, .22); transform: translateY(-2px); }
 .wop-x { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 16px); right: 16px; width: 44px; height: 44px; border-radius: 50%; background: rgba(255, 255, 255, .12); color: #fff; font: 400 26px/1 var(--sans); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); }
 .wop-x:hover { background: rgba(255, 255, 255, .22); }
+/* laptops and desktops: everything in the pop-up reads at a comfortable size */
+@media (min-width: 860px) {
+  .wop-modal { gap: 16px; }
+  .wop-card { width: min(36vw, 360px, calc((100svh - 290px) * .543)); }
+  .wop-cap { margin-top: 12px; font-size: clamp(26px, 2.3vw, 36px); letter-spacing: -.01em; }
+  .wop-sub { max-width: 38ch; font-size: clamp(18px, 1.45vw, 22px); line-height: 1.5; }
+  .wop-link { height: 54px; padding: 0 30px; font-size: 17px; }
+  .wop-x { width: 52px; height: 52px; top: 24px; right: 28px; font-size: 30px; }
+}
 .wop-cv { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 120; pointer-events: none; }
 
 /* phone hero: crisp headline, flat illustrated clouds instead of blurry blobs */
@@ -5294,6 +5304,11 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 <header class="bar">
   <button class="np" id="np" type="button" aria-label="Pause music" hidden><span class="np-d" aria-hidden="true"></span><span class="np-t">Music on the hill</span><span class="np-b" aria-hidden="true"><i></i><i></i></span></button>
 <div class="vc" id="vc" aria-live="polite"><i aria-hidden="true"></i><span><b>0</b><span class="vc-w"> visitors</span></span></div>
+    <button type="button" class="wop-badge" id="wopBadge" aria-haspopup="dialog" aria-label="Featured on Wall of Portfolios. Tap to see the badge">
+  <span class="wop-in"><img class="wb-w" src="v2/wop/featured-white.svg" alt="" width="94" height="44"><img class="wb-b" src="v2/wop/featured-black.svg" alt="" width="94" height="44"><i class="wop-shine"></i></span>
+  <i class="wop-ring"></i><i class="wop-sp a"></i><i class="wop-sp b"></i><i class="wop-sp c"></i>
+  <span class="wop-hint" aria-hidden="true">I got featured! tap it</span>
+</button>
 <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch theme"><span class="ti"><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg></span><span class="tl"><b class="tl-n">Night</b><b class="tl-d">Day</b></span></button>
   <a class="logo" href="#top" data-go="top" aria-label="James Chugh, back to top"><i><img src="v2/s/photo.webp" alt=""><b class="jc" aria-hidden="true">JC</b></i><span class="lt">James Chugh</span></a>
   <nav class="nav" aria-label="Sections">
@@ -5389,12 +5404,6 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     </div>
     <div class="scroll-cue" id="cue"><i></i>scroll to fly in</div>
     <script>setTimeout(() => { const c = document.getElementById('cue'); if (c && scrollY < 4 && !document.hidden) c.classList.add('idle'); }, Math.max(0, 4000 - performance.now()));</script>
-
-    <button type="button" class="wop-badge" id="wopBadge" aria-haspopup="dialog" aria-label="Featured on Wall of Portfolios. Tap to see the badge">
-      <span class="wop-in"><img class="wb-w" src="v2/wop/featured-white.svg" alt="" width="94" height="44"><img class="wb-b" src="v2/wop/featured-black.svg" alt="" width="94" height="44"><i class="wop-shine"></i></span>
-      <i class="wop-ring"></i><i class="wop-sp a"></i><i class="wop-sp b"></i><i class="wop-sp c"></i>
-      <span class="wop-hint" aria-hidden="true">I got featured! tap it</span>
-    </button>
 
     <aside class="sheet" id="sheet" aria-live="polite" data-lenis-prevent>
       <div class="sh-top"><span class="tag" id="s-tag"></span><button class="x" id="s-x" aria-label="Close">×</button></div>
@@ -8747,6 +8756,18 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
           if (p.round) { g.beginPath(); g.arc(0, 0, p.w / 2.4, 0, 6.3); g.fill(); } else g.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); g.restore(); }
         if (alive) requestAnimationFrame(step); else cv.remove(); };
       requestAnimationFrame(step); };
+    // beside the visitors counter on laptops (left of it, or of the music pill / Night button when they're alone); under the Night button on phones
+    const tb = $('#themeBtn'), np = $('#np'), vc = $('#vc'), GAP = 16;
+    const place = () => { if (!tb) return; const c = getComputedStyle(tb), tbRight = parseFloat(c.right) || 0, tbTop = parseFloat(c.top) || 0, phone = innerWidth < 860;
+      if (phone) { badge.style.right = Math.round(tbRight + (tb.offsetWidth - badge.offsetWidth) / 2) + 'px'; badge.style.top = Math.round(tbTop + tb.offsetHeight + 10) + 'px'; }
+      else { let edge = tbRight + tb.offsetWidth; if (np && !np.hidden && np.offsetWidth) edge += GAP + np.offsetWidth; if (vc && vc.classList.contains('in') && vc.offsetWidth) edge += GAP + vc.offsetWidth;
+        badge.style.right = Math.round(edge + GAP) + 'px'; badge.style.top = Math.round(tbTop + (tb.offsetHeight - badge.offsetHeight) / 2) + 'px'; }
+      badge.classList.add('ready'); };
+    const away = () => badge.classList.toggle('away', innerWidth < 860 && scrollY > innerHeight * .25);
+    addEventListener('resize', () => { place(); away(); }); addEventListener('scroll', away, { passive: true }); addEventListener('themechange', () => setTimeout(place, 60)); away();
+    if (document.fonts) document.fonts.ready.then(place);
+    if (window.ResizeObserver) { const ro = new ResizeObserver(place); [vc, np, tb, badge].forEach(el => el && ro.observe(el)); }
+    [vc, np].forEach(el => el && new MutationObserver(place).observe(el, { attributes: true, attributeFilter: ['hidden', 'class'] })); place(); setTimeout(place, 400);
     const mid = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
     // first visit: the badge gets a ring, a hint and one burst of confetti
     let seen = false; try { seen = !!localStorage.getItem('jc-wop-seen'); } catch (_) {}
@@ -8761,7 +8782,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
         <div class="wop-card"><div class="wop-tilt"><img class="wop-pill" src="v2/wop/featured-pill.webp" alt="Silver badge: Featured on Wall of Portfolios, 2026. Welcome to the wall. Keep growing and inspiring." draggable="false"><i class="wop-glint" aria-hidden="true"></i></div></div>
         <p class="wop-cap" id="wopT">Featured on <b>Wall of Portfolios</b> · 2026</p>
         <p class="wop-sub">Only 30% of the portfolios they receive make it to the Wall.</p>
-        <a class="wop-link" href="https://www.instagram.com/wallofportfolios/" target="_blank" rel="noopener">See Wall of Portfolios ↗</a>`;
+        <a class="wop-link" href="https://www.wallofportfolios.in/portfolios/james-chughh/" target="_blank" rel="noopener">See my page on Wall of Portfolios ↗</a>`;
       document.body.appendChild(m);
       m.addEventListener('click', e => { if (e.target === m || e.target.closest('.wop-x')) close(); });
       m.addEventListener('pointermove', e => { if (e.pointerType === 'touch') return; const r = $('.wop-card', m).getBoundingClientRect(); const dx = (e.clientX - (r.left + r.width / 2)) / innerWidth, dy = (e.clientY - (r.top + r.height / 2)) / innerHeight;
