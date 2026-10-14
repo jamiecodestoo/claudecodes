@@ -4178,6 +4178,49 @@ html:has(.cs.open) .np { z-index: 95; top: calc(env(safe-area-inset-top, 0px) + 
 /* inside a case study the site's own top bar and navbar step away completely */
 html:has(.cs.open) :is(header.bar, nav.nav, .mnav) { visibility: hidden !important; pointer-events: none !important; }
 
+/* featured on Wall of Portfolios: a badge in the sky, a pop-up in the middle of the screen */
+.wop-badge { position: absolute; z-index: 5; left: 50%; top: clamp(18px, 3.4vh, 34px); width: 118px; padding: 0; border: 0; background: none; cursor: pointer; pointer-events: auto; transform: translateX(-50%);
+  filter: drop-shadow(0 10px 16px rgba(8, 30, 70, .38)); transition: transform .5s var(--spring), opacity .5s, visibility 0s; -webkit-tap-highlight-color: transparent; }
+.wop-badge:hover, .wop-badge:focus-visible { transform: translateX(-50%) translateY(-3px) scale(1.07) rotate(-1.5deg); }
+.wop-badge:focus-visible { outline: 2.5px solid #FFD23F; outline-offset: 4px; border-radius: 8px; }
+.wop-in { position: relative; display: block; overflow: hidden; border-radius: 5px; line-height: 0; }
+.wop-in img { display: block; width: 100%; height: auto; max-width: none; }
+.wop-in .wb-b { display: none; }
+:root[data-theme="dark"] .wop-in .wb-w { display: none; } :root[data-theme="dark"] .wop-in .wb-b { display: block; }
+.wop-shine { position: absolute; inset: -20%; pointer-events: none; transform: translateX(-130%); background: linear-gradient(100deg, transparent 38%, rgba(255, 196, 70, .85) 50%, transparent 62%); mix-blend-mode: hard-light; animation: wopshine 5.2s ease-in-out 2.4s infinite; }
+:root[data-theme="dark"] .wop-shine { background: linear-gradient(100deg, transparent 38%, rgba(255, 255, 255, .8) 50%, transparent 62%); mix-blend-mode: soft-light; }
+@keyframes wopshine { 0%, 62% { transform: translateX(-130%); } 82%, 100% { transform: translateX(130%); } }
+.wop-sp { position: absolute; width: 13px; height: 13px; pointer-events: none; opacity: 0; background: #FFF6CC; clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%); animation: wopsp 5.2s ease-in-out infinite; }
+.wop-sp.a { left: -8px; top: -6px; animation-delay: 3.3s; } .wop-sp.b { right: -9px; top: 10px; width: 10px; height: 10px; animation-delay: 3.55s; } .wop-sp.c { right: 22%; bottom: -8px; width: 9px; height: 9px; animation-delay: 3.8s; }
+@keyframes wopsp { 0%, 14%, 100% { opacity: 0; transform: scale(.2) rotate(0); } 6% { opacity: 1; transform: scale(1.15) rotate(45deg); } }
+.wop-ring { position: absolute; inset: -5px; border: 2px solid rgba(255, 255, 255, .85); border-radius: 9px; opacity: 0; pointer-events: none; }
+.wop-badge.new .wop-ring { animation: wopring 2.4s ease-out 4; }
+@keyframes wopring { 0% { opacity: .9; transform: scale(.94); } 100% { opacity: 0; transform: scale(1.32); } }
+.wop-hint { position: absolute; left: 50%; top: calc(100% + 9px); transform: translateX(-50%); white-space: nowrap; opacity: 0; pointer-events: none; font: 700 19px/1 var(--hand); color: #fff; text-shadow: 0 1px 3px rgba(8, 30, 70, .6); transition: opacity .5s; }
+.wop-badge.new .wop-hint { opacity: 1; }
+/* it steps aside while you fly into the valley or read a place card */
+.cam.flying ~ .wop-badge, .stage.still .wop-badge { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s, visibility 0s .35s; }
+@media (max-width: 859px) { .wop-badge { width: 106px; top: calc(env(safe-area-inset-top, 0px) + 16px); } .wop-hint { display: none; } }
+/* the pop-up */
+.wop-modal { position: fixed; z-index: 97; inset: 0; display: grid; place-items: center; align-content: center; gap: 12px; padding: 20px; text-align: center; color: #F5F7FA; background: radial-gradient(60% 50% at 50% 42%, rgba(60, 90, 140, .55), rgba(6, 10, 20, .9)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  opacity: 0; visibility: hidden; transition: opacity .4s var(--ease), visibility 0s .4s; }
+.wop-modal.open { opacity: 1; visibility: visible; transition: opacity .4s var(--ease), visibility 0s; }
+.wop-card { position: relative; width: min(58vw, 270px, calc((100svh - 230px) * .543)); aspect-ratio: 598 / 1100; perspective: 900px; transform: translateY(30px) scale(.78) rotateY(-80deg); transition: transform .95s var(--spring); }
+.wop-modal.open .wop-card { transform: none; }
+.wop-tilt { position: absolute; inset: 0; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .25s ease-out; animation: wopfloat 6s ease-in-out infinite; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .55)); }
+.wop-pill { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; user-select: none; -webkit-user-drag: none; }
+.wop-glint { position: absolute; inset: 0; background: linear-gradient(108deg, transparent 38%, rgba(255, 255, 255, .95) 50%, transparent 62%) 130% 0 / 260% 100% no-repeat;
+  -webkit-mask: url("v2/wop/featured-pill.webp") center / 100% 100% no-repeat; mask: url("v2/wop/featured-pill.webp") center / 100% 100% no-repeat; mix-blend-mode: overlay; animation: wopglint 4.2s ease-in-out .9s infinite; }
+@keyframes wopglint { 0%, 55% { background-position: 130% 0; } 85%, 100% { background-position: -30% 0; } }
+@keyframes wopfloat { 50% { translate: 0 -7px; } }
+.wop-cap { margin: 8px 0 0; font: 700 17px/1.25 var(--sans); } .wop-cap b { color: #FFD23F; }
+.wop-sub { margin: 0; max-width: 30ch; font: 400 14px/1.45 var(--sans); color: rgba(245, 247, 250, .72); }
+.wop-link { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); color: #fff; font: 700 14px/1 var(--sans); text-decoration: none; transition: background .25s, transform .3s var(--spring); }
+.wop-link:hover { background: rgba(255, 255, 255, .22); transform: translateY(-2px); }
+.wop-x { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 16px); right: 16px; width: 44px; height: 44px; border-radius: 50%; background: rgba(255, 255, 255, .12); color: #fff; font: 400 26px/1 var(--sans); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); }
+.wop-x:hover { background: rgba(255, 255, 255, .22); }
+.wop-cv { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 120; pointer-events: none; }
+
 /* phone hero: crisp headline, flat illustrated clouds instead of blurry blobs */
 @media (max-width: 859px) {
   .hero-copy h1 { text-shadow: 0 1px 2px rgba(10, 40, 90, .25) !important; }
@@ -5346,6 +5389,12 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     </div>
     <div class="scroll-cue" id="cue"><i></i>scroll to fly in</div>
     <script>setTimeout(() => { const c = document.getElementById('cue'); if (c && scrollY < 4 && !document.hidden) c.classList.add('idle'); }, Math.max(0, 4000 - performance.now()));</script>
+
+    <button type="button" class="wop-badge" id="wopBadge" aria-haspopup="dialog" aria-label="Featured on Wall of Portfolios. Tap to see the badge">
+      <span class="wop-in"><img class="wb-w" src="v2/wop/featured-white.svg" alt="" width="94" height="44"><img class="wb-b" src="v2/wop/featured-black.svg" alt="" width="94" height="44"><i class="wop-shine"></i></span>
+      <i class="wop-ring"></i><i class="wop-sp a"></i><i class="wop-sp b"></i><i class="wop-sp c"></i>
+      <span class="wop-hint" aria-hidden="true">I got featured! tap it</span>
+    </button>
 
     <aside class="sheet" id="sheet" aria-live="polite" data-lenis-prevent>
       <div class="sh-top"><span class="tag" id="s-tag"></span><button class="x" id="s-x" aria-label="Close">×</button></div>
@@ -8681,6 +8730,51 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   };
   document.addEventListener('click', e => { const a = e.target.closest('a[data-book]'); if (!a) return; e.preventDefault(); bkLast = a; if (!bkEl) bkBuild();
     bkEl.classList.remove('cal'); bkEl.classList.add('open'); bkEl.setAttribute('aria-hidden', 'false'); setTimeout(() => $('input[name="co"]', bkEl).focus(), 60); });
+
+  /* ---------- featured on Wall of Portfolios: confetti, shimmer and the pop-up ---------- */
+  (() => {
+    const badge = $('#wopBadge'); if (!badge) return;
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // confetti: one small canvas, gone when the last piece lands
+    const confetti = (x, y, n = 90) => { if (still) return;
+      const cv = document.createElement('canvas'); cv.className = 'wop-cv'; const dpr = Math.min(2, devicePixelRatio || 1); cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; document.body.appendChild(cv);
+      const g = cv.getContext('2d'); g.scale(dpr, dpr); const C = ['#FFD23F', '#FF6B4A', '#2F7FD8', '#4F9E4A', '#B7A2FF', '#FFFFFF', '#C9D6E2'];
+      const P = Array.from({ length: n }, () => { const a = -Math.PI / 2 + (Math.random() - .5) * 2.3, v = 5 + Math.random() * 9;
+        return { x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 2, w: 5 + Math.random() * 6, h: 3 + Math.random() * 4, r: Math.random() * 6, vr: (Math.random() - .5) * .45, c: C[(Math.random() * C.length) | 0], round: Math.random() < .25, life: 0, max: 110 + Math.random() * 70 }; });
+      const step = () => { g.clearRect(0, 0, innerWidth, innerHeight); let alive = 0;
+        for (const p of P) { p.life++; if (p.life > p.max) continue; alive++; p.vy += .26; p.vx *= .985; p.vy *= .985; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+          g.globalAlpha = Math.min(1, (p.max - p.life) / 30); g.fillStyle = p.c; g.save(); g.translate(p.x, p.y); g.rotate(p.r);
+          if (p.round) { g.beginPath(); g.arc(0, 0, p.w / 2.4, 0, 6.3); g.fill(); } else g.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); g.restore(); }
+        if (alive) requestAnimationFrame(step); else cv.remove(); };
+      requestAnimationFrame(step); };
+    const mid = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+    // first visit: the badge gets a ring, a hint and one burst of confetti
+    let seen = false; try { seen = !!localStorage.getItem('jc-wop-seen'); } catch (_) {}
+    if (!seen) setTimeout(() => {
+      const cs = $('#cs'); if (document.hidden || scrollY > 4 || (cs && cs.classList.contains('open')) || getComputedStyle(badge).visibility === 'hidden') return;
+      badge.classList.add('new'); confetti(...mid(badge), 80); try { localStorage.setItem('jc-wop-seen', '1'); } catch (_) {}
+      setTimeout(() => badge.classList.remove('new'), 14000); }, 3200);
+    // the pop-up
+    let m = null, last = null;
+    const build = () => { m = document.createElement('div'); m.className = 'wop-modal'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-labelledby', 'wopT'); m.dataset.lenisPrevent = '';
+      m.innerHTML = `<button type="button" class="wop-x" aria-label="Close">&times;</button>
+        <div class="wop-card"><div class="wop-tilt"><img class="wop-pill" src="v2/wop/featured-pill.webp" alt="Silver badge: Featured on Wall of Portfolios, 2026. Welcome to the wall. Keep growing and inspiring." draggable="false"><i class="wop-glint" aria-hidden="true"></i></div></div>
+        <p class="wop-cap" id="wopT">Featured on <b>Wall of Portfolios</b> · 2026</p>
+        <p class="wop-sub">Only 30% of the portfolios they receive make it to the Wall.</p>
+        <a class="wop-link" href="https://www.instagram.com/wallofportfolios/" target="_blank" rel="noopener">See Wall of Portfolios ↗</a>`;
+      document.body.appendChild(m);
+      m.addEventListener('click', e => { if (e.target === m || e.target.closest('.wop-x')) close(); });
+      m.addEventListener('pointermove', e => { if (e.pointerType === 'touch') return; const r = $('.wop-card', m).getBoundingClientRect(); const dx = (e.clientX - (r.left + r.width / 2)) / innerWidth, dy = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+        const t = $('.wop-tilt', m); t.style.setProperty('--ry', (dx * 36).toFixed(1) + 'deg'); t.style.setProperty('--rx', (-dy * 28).toFixed(1) + 'deg'); });
+      m.addEventListener('pointerleave', () => { const t = $('.wop-tilt', m); t.style.setProperty('--ry', '0deg'); t.style.setProperty('--rx', '0deg'); });
+      addEventListener('keydown', e => { if (e.key === 'Escape' && m.classList.contains('open')) close(); }); };
+    const open = () => { if (!m) build(); last = document.activeElement; badge.classList.remove('new'); try { localStorage.setItem('jc-wop-seen', '1'); } catch (_) {}
+      document.documentElement.style.overflow = 'hidden'; lenis && lenis.stop();
+      m.classList.add('open'); m.setAttribute('aria-hidden', 'false'); setTimeout(() => $('.wop-x', m).focus({ preventScroll: true }), 80);
+      setTimeout(() => confetti(innerWidth / 2, innerHeight * .42, 110), 450); };
+    const close = () => { if (!m) return; m.classList.remove('open'); m.setAttribute('aria-hidden', 'true'); document.documentElement.style.overflow = ''; lenis && lenis.start(); if (last && last.focus) last.focus({ preventScroll: true }); };
+    badge.addEventListener('click', e => { e.stopPropagation(); open(); });
+  })();
   const nwModal = $('#nwModal'), nwForm = $('#nwForm'), nwAv = $('#nwAv'), nwErr = $('#nwErr'), nwFine = $('#nwFine');
   document.body.appendChild(nwModal); // lifted out of the section so no stacking context can clip it
   let nwSeed = Math.random().toString(36).slice(2, 9), nwPhoto = '';
