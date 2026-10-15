@@ -5331,8 +5331,8 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .nw-actions { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
 .nw-actions .nw-cta { order: 1; } .nw-actions .nw-view { order: 2; }
 @media (min-width: 860px) { .nw-actions { width: 100%; justify-content: flex-end; } .nw-actions .nw-view { order: 1; } .nw-actions .nw-cta { order: 2; } }
-/* wide screens: the buttons sit on the right, level with the eyebrow, top right */
-@media (min-width: 1000px) { .nw-head { position: relative; } .nw-actions { position: absolute; right: 0; top: -12px; width: auto; } }
+/* wide screens: the buttons sit on the right, bottom right, level with the line of copy under the heading */
+@media (min-width: 1000px) { .nw-head { position: relative; } .nw-head .sec-head p { max-width: calc(100% - 420px); } .nw-actions { position: absolute; right: 0; bottom: -12px; width: auto; } }
 .nw-view { display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 20px 0 16px; border-radius: 999px; background: transparent; color: var(--ink); font: 700 15px/1 var(--sans); box-shadow: inset 0 0 0 1.5px rgba(19, 35, 58, .26); cursor: pointer; transition: background .25s, box-shadow .25s, transform .3s var(--spring); }
 .nw-view svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
 .nw-view:hover { background: rgba(19, 35, 58, .06); box-shadow: inset 0 0 0 1.5px rgba(19, 35, 58, .5); transform: translateY(-2px); }
