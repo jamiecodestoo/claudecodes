@@ -8692,7 +8692,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   const noteOk = n => !noteBlocked(n) && !noteShort(n.note) && /\p{L}/u.test(String(n.name || '')) && ![n.note, n.name, n.company, n.role].some(junkText);
   function noteCard(n, k) {
     if (n.ghost) return `<button type="button" class="nw-card nw-ghost" data-open style="--r:${k % 2 ? 1.5 : -1.5}deg"><div><p>Your note could be here.</p><span>Write one ↗</span></div></button>`;
-    const c = NOTE_COLORS[hashStr(n.id || n.name) % NOTE_COLORS.length];
+    const c = n._c || NOTE_COLORS[hashStr(n.id || n.name) % NOTE_COLORS.length];
     return `<figure class="nw-card${n.id === freshId ? ' fresh' : ''}" data-read tabindex="0" role="button" aria-label="Read the note from ${esc(n.name)}" style="--nc:${c};--r:${((hashStr(n.id || n.name) % 7) - 3) * .8}deg;margin:0"><p>${esc(n.note)}</p><figcaption class="nw-by"><span class="av">${faceHTML(n)}</span><span><b>${esc(n.name)}</b>${workHTML(n) || `<small>${n.local ? 'Saved on this device' : esc(fmtDate(n.at))}</small>`}</span></figcaption></figure>`;
   }
   function renderWall() {
@@ -8703,6 +8703,11 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     // there is always a blank note to write on, first in the top row and halfway along the bottom one
     if (!rows[0].some(n => n.ghost)) rows[0].unshift({ ghost: true });
     if (!rows[1].some(n => n.ghost)) rows[1].splice(Math.ceil(rows[1].length / 2), 0, { ghost: true });
+    // colours: each note keeps a colour from its id, nudged so no two neighbours match (the row loops, so the last also differs from the first)
+    rows.forEach(row => { const L = NOTE_COLORS.length; let prev = -1;
+      row.forEach((n, i) => { if (n.ghost) { prev = -1; return; } let c = hashStr(n.id || n.name) % L; if (c === prev) c = (c + 1) % L; n._ci = c; n._c = NOTE_COLORS[c]; prev = c; });
+      const ns = row.filter(n => !n.ghost), f = ns[0], l = ns[ns.length - 1];
+      if (ns.length > 2 && f._ci === l._ci) { l._ci = (l._ci + 1) % L; if (l._ci === ns[ns.length - 2]._ci) l._ci = (l._ci + 1) % L; l._c = NOTE_COLORS[l._ci]; } });
     rows.forEach((r, k) => { const html = r.map((n, i) => noteCard(n, i + k)).join(''); nwRows[k].innerHTML = html + html; nwRows[k].style.setProperty('--dur', Math.max(40, r.length * 11) + 's'); });
     requestAnimationFrame(() => $$('.nw-card[data-read] > p', $('#notes')).forEach(p => p.parentNode.classList.toggle('clip', p.scrollHeight > p.clientHeight + 2)));
     $$('.nw-track > .nw-card', $('#notes')).forEach((c, i) => { if (i >= 0 && c.closest('.nw-track') && [...c.parentNode.children].indexOf(c) >= c.parentNode.children.length / 2) c.setAttribute('aria-hidden', 'true'); });
