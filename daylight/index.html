@@ -960,6 +960,20 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .nw-go { width: 100%; margin-top: 6px; padding: 15px; border-radius: 14px; background: var(--ink); color: var(--paper); font: 700 16px/1 var(--sans); transition: transform .3s var(--spring); }
 .nw-go:hover { transform: translateY(-2px); }
 .nw-go:disabled { opacity: .6; transform: none; }
+.nw-sheet.done > :not(.nw-done):not(.nw-x) { display: none !important; }
+.nw-done { display: grid; justify-items: center; text-align: center; gap: 10px; padding: 8px 0 4px; }
+.nw-done[hidden] { display: none; }
+.nw-tick { width: 64px; height: 64px; border-radius: 50%; background: var(--sun); display: grid; place-items: center; box-shadow: 0 12px 22px -10px rgba(19, 35, 58, .5); animation: nwpop .8s var(--spring); }
+.nw-tick svg { width: 30px; height: 30px; fill: none; stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.nw-done h3 { margin: 6px 0 0; }
+.nw-done p { margin: 0; max-width: 32ch; font: 500 16px/1.45 var(--sans); color: rgba(19, 35, 58, .75); }
+.nw-follow, .nw-home { display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 50px; border-radius: 14px; font: 700 16px/1 var(--sans); cursor: pointer; text-decoration: none; transition: transform .3s var(--spring); }
+.nw-follow { margin-top: 10px; background: var(--ink); color: var(--paper); }
+.nw-home { background: #F1ECE2; color: var(--ink); }
+.nw-follow:hover, .nw-home:hover { transform: translateY(-2px); }
+:root[data-theme="dark"] .nw-done p { color: #CFCFCF; }
+:root[data-theme="dark"] .nw-follow { background: #FFD86B; color: #1A1A1A; }
+:root[data-theme="dark"] .nw-home { background: rgba(255, 255, 255, .1); color: #F5F5F5; }
 .nw-fine { margin: 10px 0 0; font: 500 12.5px/1.4 var(--sans); color: rgba(19, 35, 58, .65); text-align: center; }
 
 
@@ -5714,6 +5728,13 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <p class="nw-err" id="nwErr" role="alert"></p>
       <button class="nw-go" type="submit" id="nwGo">Pin it to the wall</button>
       <p class="nw-fine" id="nwFine"></p>
+      <div class="nw-done" id="nwDone" hidden>
+        <span class="nw-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+        <h3 id="nwDoneT">Pinned.</h3>
+        <p>Your note is up on the wall. If you liked the work, I post what I’m learning on LinkedIn.</p>
+        <a class="nw-follow" href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener">Follow me on LinkedIn ↗</a>
+        <button type="button" class="nw-home" id="nwHome">Back to home</button>
+      </div>
     </form>
   </div>
 </section>
@@ -8800,7 +8821,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   document.body.appendChild(nwModal); // lifted out of the section so no stacking context can clip it
   let nwSeed = Math.random().toString(36).slice(2, 9), nwPhoto = '';
   const drawAv = () => { nwAv.innerHTML = nwPhoto ? `<img src="${nwPhoto}" alt="">` : avatarSVG(nwSeed); $('#nwClear').hidden = !nwPhoto; };
-  function openNotes() { drawAv(); nwErr.textContent = ''; nwFine.textContent = noteCanWrite || noteApi ? 'Your email stays private. Your name, photo and note go up on the wall.' : 'Your email stays private. On this preview your note is saved on this device.'; nwModal.classList.add('open'); lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; setTimeout(() => $('#nwName').focus(), 200); }
+  function openNotes() { $('#nwDone').hidden = true; nwForm.classList.remove('done'); drawAv(); nwErr.textContent = ''; nwFine.textContent = noteCanWrite || noteApi ? 'Your email stays private. Your name, photo and note go up on the wall.' : 'Your email stays private. On this preview your note is saved on this device.'; nwModal.classList.add('open'); lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; setTimeout(() => $('#nwName').focus(), 200); }
   function closeNotes() { nwModal.classList.remove('open'); lenis && lenis.start(); document.documentElement.style.overflow = ''; $('#nwOpen').focus({ preventScroll: true }); }
   $('#nwOpen').addEventListener('click', openNotes);
   $('#notes').addEventListener('click', e => { if (e.target.closest('[data-open]')) openNotes(); const c = e.target.closest('[data-read]'); if (c) readNote(c); });
@@ -8814,6 +8835,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   nwRead.addEventListener('click', e => { if (e.target === nwRead || e.target.closest('.nw-rd-x')) closeRead(); });
   addEventListener('keydown', e => { if (e.key === 'Escape') closeRead(); });
   $('#nwClose').addEventListener('click', closeNotes);
+  $('#nwHome').addEventListener('click', () => { closeNotes(); if (lenis) lenis.scrollTo(0, { duration: reduce ? 0 : 1.6 }); else scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
   nwModal.addEventListener('click', e => { if (e.target === nwModal) closeNotes(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && nwModal.classList.contains('open')) closeNotes(); });
   $('#nwShuffle').addEventListener('click', () => { nwPhoto = ''; nwSeed = Math.random().toString(36).slice(2, 9); drawAv(); });
@@ -8860,7 +8882,12 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     if (noteShort(note)) { nwErr.textContent = 'Write a little more, at least a couple of words.'; $('#nwNote').focus(); return; }
     if (junkText(note) || junkText(name) || junkText($('#nwCo').value) || junkText($('#nwRole').value)) { nwErr.textContent = 'That doesn’t look like real words. Try again?'; $('#nwNote').focus(); return; }
     const go = $('#nwGo'); go.disabled = true; nwErr.textContent = '';
-    const company = $('#nwCo').value.trim().slice(0, 40), role = $('#nwRole').value.trim().slice(0, 40), brand = okBrand(coBrand);
+    const company = $('#nwCo').value.trim().slice(0, 40), role = $('#nwRole').value.trim().slice(0, 40);
+    // no logo picked? still try to recognise the company by name, alias or its Simple Icons slug
+    if (company && !coBrand) { await loadCo(); const q = company.toLowerCase(), qs = coSlug(company);
+      coBrand = (coList || []).find(x => x.t.toLowerCase() === q || x.s === qs || x.a.some(a => a.toLowerCase() === q)) || null;
+      if (!coBrand) { const hit = (coList || []).filter(x => x.t.toLowerCase().startsWith(q)); if (q.length > 2 && hit.length === 1) coBrand = hit[0]; } }
+    const brand = okBrand(coBrand);
     const body = { name: name.slice(0, 40), note: note.slice(0, 200), photo: nwPhoto, avatar: nwSeed, at: Date.now(), ...(company && { company }), ...(role && { role }), ...(company && brand && { brand }) };
     let saved = false;
     if (noteDb && noteCanWrite) {
@@ -8878,7 +8905,8 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       if (!saved) { nwErr.textContent = 'Couldn’t pin it right now. Try again in a minute.'; go.disabled = false; return; }
     }
     if (!saved) { const id = 'local-' + body.at; localNotes = [{ id, ...body }, ...localNotes].slice(0, 5); freshId = id; try { localStorage.setItem('jc-notes', JSON.stringify(localNotes)); } catch (_) {} }
-    renderWall(); go.disabled = false; nwForm.reset(); setBrand(null); nwPhoto = ''; $('#nwCount').textContent = '0 / 200'; closeNotes();
+    renderWall(); go.disabled = false; nwForm.reset(); setBrand(null); nwPhoto = ''; $('#nwCount').textContent = '0 / 200';
+    $('#nwDoneT').textContent = 'Pinned, ' + name.split(/\s+/)[0] + '.'; nwForm.classList.add('done'); $('#nwDone').hidden = false; setTimeout(() => $('.nw-follow', nwForm).focus({ preventScroll: true }), 120);
   });
 
 
