@@ -2256,6 +2256,13 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 .nw-by > span:last-child { flex: 1; min-width: 0; }
 .nw-work em { font-style: normal; font-weight: 700; color: #2B3A4E; }
 .nw-card { width: 300px; }
+@media (min-width: 860px) {
+  .nw-card { height: 236px; min-height: 0; display: flex; flex-direction: column; }
+  .nw-card p { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .nw-card .nw-by { margin-top: auto; padding-top: 10px; }
+  .nw-card .nw-work, .nw-card .nw-work span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; min-width: 0; }
+  .nw-card.nw-ghost { display: grid; place-items: center; }
+}
 @media (max-width: 480px) { .nw-two { grid-template-columns: 1fr; gap: 0; } }
 :root[data-theme="dark"] .nw-sug { background: #2E2E2E; box-shadow: 0 24px 40px -18px rgba(0, 0, 0, .8), 0 0 0 1px rgba(255, 255, 255, .1); }
 :root[data-theme="dark"] .nw-sug li { color: #F5F5F5; }
