@@ -8684,6 +8684,9 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   // notes taken down by hand (the server hides the same ones)
   const NOTE_BLOCK = ['lihwak'];
   const noteBlocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return NOTE_BLOCK.some(w => t.includes(w)); };
+  // one Tamil note on the wall, shown in English (the original was cut off at the 200-character limit)
+  const NOTE_EN = [['படைப்பாற்றல், நேர்த்தியான', 'This portfolio is the finest expression of creativity, elegant design and meticulous craftsmanship. Its unique artistry and flawless creation are beautifully reflected in it.']];
+  const noteEn = n => { const t = String(n.note || '').replace(/^["“\s]+/, ''), hit = NOTE_EN.find(([k]) => t.startsWith(k)); return hit ? { ...n, note: hit[1] } : n; };
   const noteOk = n => !noteBlocked(n) && !noteShort(n.note) && /\p{L}/u.test(String(n.name || '')) && ![n.note, n.name, n.company, n.role].some(junkText);
   function noteCard(n, k) {
     if (n.ghost) return `<button type="button" class="nw-card nw-ghost" data-open style="--r:${k % 2 ? 1.5 : -1.5}deg"><div><p>Your note could be here.</p><span>Write one ↗</span></div></button>`;
@@ -8692,7 +8695,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   }
   function renderWall() {
     const seen = new Set(), all = [...localNotes.map(n => ({ ...n, local: true })), ...wallNotes].filter(n => { const key = n.id; if (seen.has(key)) return false; seen.add(key); return true; })
-      .filter(noteOk).sort((a, b) => (b.at || 0) - (a.at || 0));
+      .filter(noteOk).map(noteEn).sort((a, b) => (b.at || 0) - (a.at || 0));
     const list = all.slice(0, 40); while (list.length < 10) list.push({ ghost: true });
     const rows = [[], []]; list.forEach((n, i) => rows[i % 2].push(n));
     // there is always a blank note to write on, first in the top row and halfway along the bottom one
@@ -8931,7 +8934,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
     const el = document.getElementById('vc'); if (!el || !location.protocol.startsWith('http') || (window.claude && window.claude.use)) return;
     const MIN = 1; let counted = false; try { counted = !!localStorage.getItem('jc-counted'); } catch (_) {}
     let show = n => { if (!(n >= MIN)) return; const b = el.querySelector('b'), t0 = performance.now(), D = reduce ? 0 : 1200;
-      el.classList.add('in'); const tick = now => { const k = D ? Math.min(1, (now - t0) / D) : 1, e = 1 - Math.pow(1 - k, 3); b.textContent = Math.round(n * e).toLocaleString('en-IN'); if (k < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); };
+      el.classList.add('in'); const tick = now => { const k = D ? Math.min(1, (now - t0) / D) : 1, e = 1 - Math.pow(1 - k, 3); const v = Math.round(n * e); b.textContent = innerWidth < 860 && v >= 1000 ? (Math.floor(v / 100) / 10).toFixed(1).replace(/\.0$/, '') + 'k' : v.toLocaleString('en-IN'); if (k < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); };
     // sits just left of the theme button (and of the music pill while it's showing), centred on the same row
     const tb = document.getElementById('themeBtn'), np = document.getElementById('np');
     const GAP = 16;
