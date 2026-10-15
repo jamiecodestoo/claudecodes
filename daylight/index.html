@@ -5322,6 +5322,34 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   .cs.tf .nx-c { padding: 22px 20px 16px; }
 }
 
+
+/* view all notes: the secondary action next to "Write a note" */
+.nw-actions { display: flex; align-items: center; gap: 14px; }
+.nw-view { display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 20px 0 16px; border-radius: 999px; background: transparent; color: var(--ink); font: 700 15px/1 var(--sans); box-shadow: inset 0 0 0 1.5px rgba(19, 35, 58, .26); cursor: pointer; transition: background .25s, box-shadow .25s, transform .3s var(--spring); }
+.nw-view svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+.nw-view:hover { background: rgba(19, 35, 58, .06); box-shadow: inset 0 0 0 1.5px rgba(19, 35, 58, .5); transform: translateY(-2px); }
+:root[data-theme="dark"] .nw-view { color: #F5F5F5; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .3); }
+:root[data-theme="dark"] .nw-view:hover { background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .55); }
+.nw-all { position: fixed; z-index: 95; inset: 0; display: flex; flex-direction: column; background: rgba(15, 25, 40, .5); -webkit-backdrop-filter: blur(14px) saturate(1.1); backdrop-filter: blur(14px) saturate(1.1); opacity: 0; visibility: hidden; transition: opacity .35s var(--ease), visibility 0s .35s; }
+.nw-all.open { opacity: 1; visibility: visible; transition: opacity .35s var(--ease), visibility 0s; }
+:root[data-theme="dark"] .nw-all { background: rgba(8, 8, 8, .6); }
+.nw-all-h { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: calc(env(safe-area-inset-top, 0px) + 20px) clamp(16px, 4vw, 48px) 14px; color: #fff; }
+.nw-all-h h3 { margin: 0; font: 800 clamp(24px, 3vw, 34px)/1 var(--sans); letter-spacing: -.03em; }
+.nw-all-h small { display: block; margin-top: 6px; font: 500 14px/1 var(--sans); color: rgba(255, 255, 255, .7); }
+.nw-all-x { flex: none; width: 46px; height: 46px; border-radius: 50%; background: rgba(255, 255, 255, .14); color: #fff; font: 400 28px/1 var(--sans); cursor: pointer; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25); }
+.nw-all-x:hover { background: rgba(255, 255, 255, .26); }
+.nw-all-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 22px clamp(16px, 4vw, 48px) calc(env(safe-area-inset-bottom, 0px) + 48px); }
+.nw-all-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px 24px; max-width: 1400px; margin: 0 auto; }
+.nw-all .nw-card { width: auto !important; min-width: 0; }
+.nw-all-more { height: 1px; }
+@media (max-width: 859px) { .nw-all-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; } .nw-all .nw-card { height: 168px !important; padding: 16px 12px 10px !important; } .nw-all .nw-card p { -webkit-line-clamp: 4 !important; font-size: 15px !important; } }
+@media (max-width: 859px) {
+  .nw-head { align-items: stretch; }
+  .nw-actions { width: 100%; justify-content: space-between; }
+  .nw-actions .nw-view { height: 44px; padding: 0 16px 0 13px; font-size: 14px; }
+  .nw-actions .nw-cta { width: auto !important; height: 44px !important; padding: 0 16px 0 6px !important; gap: 8px; font-size: 14px !important; }
+  .nw-actions .nw-pen { width: 32px; height: 32px; }
+}
 </style>
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
@@ -5709,7 +5737,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
       <h2>Before you leave, <span class="hl b-sun" id="notesHl">leave a note.</span></h2>
       <p>Say hi, share feedback, or tell me what you’re building. It goes up on the wall.</p>
     </div>
-    <button class="nw-cta" id="nwOpen" type="button"><span class="nw-pen" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>Write a note</button>
+    <div class="nw-actions"><button class="nw-view" id="nwView" type="button" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>View notes</button><button class="nw-cta" id="nwOpen" type="button"><span class="nw-pen" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>Write a note</button></div>
   </div>
   <div class="nw-rows" aria-live="polite">
     <div class="nw-row"><div class="nw-track" id="nwRow1"></div></div>
@@ -8698,7 +8726,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   function renderWall() {
     const seen = new Set(), all = [...localNotes.map(n => ({ ...n, local: true })), ...wallNotes].filter(n => { const key = n.id; if (seen.has(key)) return false; seen.add(key); return true; })
       .filter(noteOk).map(noteEn).sort((a, b) => (b.at || 0) - (a.at || 0));
-    const list = all.slice(0, 40); while (list.length < 10) list.push({ ghost: true });
+    window.__wallAll = () => all; const list = all.slice(0, 40); while (list.length < 10) list.push({ ghost: true });
     const rows = [[], []]; list.forEach((n, i) => rows[i % 2].push(n));
     // there is always a blank note to write on, first in the top row and halfway along the bottom one
     if (!rows[0].some(n => n.ghost)) rows[0].unshift({ ghost: true });
@@ -8851,6 +8879,27 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   function closeRead() { if (!nwRead.classList.contains('open')) return; nwRead.classList.remove('open'); lenis && lenis.start(); readFrom && readFrom.focus({ preventScroll: true }); }
   nwRead.addEventListener('click', e => { if (e.target === nwRead || e.target.closest('.nw-rd-x')) closeRead(); });
   addEventListener('keydown', e => { if (e.key === 'Escape') closeRead(); });
+
+  // view all notes: every note at once, pinned in a grid, scrolling on as you go
+  (() => {
+    const btn = $('#nwView'); if (!btn) return;
+    const m = document.createElement('div'); m.className = 'nw-all'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-labelledby', 'nwAllT'); m.setAttribute('aria-hidden', 'true'); m.dataset.lenisPrevent = '';
+    m.innerHTML = '<div class="nw-all-h"><div><h3 id="nwAllT">The wall</h3><small id="nwAllN"></small></div><button type="button" class="nw-all-x" aria-label="Close">&times;</button></div><div class="nw-all-body"><div class="nw-all-grid"></div><div class="nw-all-more"></div></div>';
+    document.body.appendChild(m);
+    const body = $('.nw-all-body', m), grid = $('.nw-all-grid', m), more = $('.nw-all-more', m), CH = 24; let list = [], shown = 0, io = null;
+    const fill = () => { const cols = Math.max(1, getComputedStyle(grid).gridTemplateColumns.split(' ').length), L = NOTE_COLORS.length;
+      const part = list.slice(shown, shown + CH); grid.insertAdjacentHTML('beforeend', part.map((n, j) => { const i = shown + j; return noteCard({ ...n, _c: NOTE_COLORS[(i + Math.floor(i / cols)) % L] }, i); }).join('')); shown += part.length;
+      $$('.nw-card[data-read] > p', grid).forEach(p => p.parentNode.classList.toggle('clip', p.scrollHeight > p.clientHeight + 2)); };
+    let last = null;
+    const open = () => { list = (window.__wallAll ? window.__wallAll() : []); grid.innerHTML = ''; shown = 0; $('#nwAllN').textContent = list.length + (list.length === 1 ? ' note' : ' notes') + ' pinned'; fill(); body.scrollTop = 0;
+      last = document.activeElement; m.classList.add('open'); m.setAttribute('aria-hidden', 'false'); lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; setTimeout(() => $('.nw-all-x', m).focus({ preventScroll: true }), 80);
+      if (window.IntersectionObserver) { io = new IntersectionObserver(es => { if (es[0].isIntersecting && shown < list.length) fill(); }, { root: body, rootMargin: '400px' }); io.observe(more); } };
+    const close = () => { if (!m.classList.contains('open')) return; m.classList.remove('open'); m.setAttribute('aria-hidden', 'true'); io && io.disconnect(); lenis && lenis.start(); document.documentElement.style.overflow = ''; last && last.focus && last.focus({ preventScroll: true }); };
+    btn.addEventListener('click', open);
+    m.addEventListener('click', e => { if (e.target.closest('.nw-all-x')) { close(); return; } const c = e.target.closest('[data-read]'); if (c) { readNote(c); return; } if (!e.target.closest('.nw-card, .nw-all-h')) close(); });
+    m.addEventListener('keydown', e => { const c = e.target.closest('[data-read]'); if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); readNote(c); } });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && !nwRead.classList.contains('open')) close(); }, true);
+  })();
   $('#nwClose').addEventListener('click', closeNotes);
   $('#nwHome').addEventListener('click', () => { closeNotes(); if (lenis) lenis.scrollTo(0, { duration: reduce ? 0 : 1.6 }); else scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
   nwModal.addEventListener('click', e => { if (e.target === nwModal) closeNotes(); });
