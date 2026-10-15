@@ -5323,10 +5323,16 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 }
 
 
+/* role and company wrap onto a second line instead of being cut off with an ellipsis */
+.nw-card .nw-work { display: flex !important; align-items: center; gap: 6px; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; }
+.nw-card .nw-work > span { display: -webkit-box !important; -webkit-line-clamp: 2; -webkit-box-orient: vertical; white-space: normal !important; overflow: hidden !important; text-overflow: clip !important; min-width: 0; line-height: 1.25; }
+.nw-card .nw-work .co { flex: none; }
 /* view all notes: the secondary action next to "Write a note" */
 .nw-actions { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
 .nw-actions .nw-cta { order: 1; } .nw-actions .nw-view { order: 2; }
 @media (min-width: 860px) { .nw-actions { width: 100%; justify-content: flex-end; } .nw-actions .nw-view { order: 1; } .nw-actions .nw-cta { order: 2; } }
+/* wide screens: the buttons sit on the right, level with the eyebrow, top right */
+@media (min-width: 1000px) { .nw-head { position: relative; } .nw-actions { position: absolute; right: 0; top: -12px; width: auto; } }
 .nw-view { display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 20px 0 16px; border-radius: 999px; background: transparent; color: var(--ink); font: 700 15px/1 var(--sans); box-shadow: inset 0 0 0 1.5px rgba(19, 35, 58, .26); cursor: pointer; transition: background .25s, box-shadow .25s, transform .3s var(--spring); }
 .nw-view svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
 .nw-view:hover { background: rgba(19, 35, 58, .06); box-shadow: inset 0 0 0 1.5px rgba(19, 35, 58, .5); transform: translateY(-2px); }
@@ -5344,7 +5350,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .nw-all-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px 24px; max-width: 1400px; margin: 0 auto; }
 .nw-all .nw-card { width: auto !important; min-width: 0; }
 .nw-all-more { height: 1px; }
-@media (max-width: 859px) { .nw-all-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; } .nw-all .nw-card { height: 168px !important; padding: 16px 12px 10px !important; } .nw-all .nw-card p { -webkit-line-clamp: 4 !important; font-size: 15px !important; } }
+@media (max-width: 859px) { .nw-all-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; } .nw-all .nw-card { height: auto !important; min-height: 176px; padding: 18px 12px 12px !important; } .nw-all .nw-card .nw-work > span { -webkit-line-clamp: 3; } .nw-all .nw-card p { -webkit-line-clamp: 4 !important; font-size: 15px !important; } }
 @media (max-width: 859px) {
   .nw-head { align-items: stretch; }
   .nw-actions { width: 100%; justify-content: flex-start; }
