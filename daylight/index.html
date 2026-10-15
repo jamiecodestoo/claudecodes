@@ -8726,7 +8726,7 @@ h2 > .hl[id$="Hl"]::before { display: none; }
   const junkText = t => String(t || '').split(/\s+/).some(junkWord);
   const noteShort = t => { t = String(t || '').trim(); return t.length < 8 || t.split(/\s+/).filter(w => /\p{L}/u.test(w)).length < 2; };
   // notes taken down by hand (the server hides the same ones)
-  const NOTE_BLOCK = ['lihwak'];
+  const NOTE_BLOCK = ['lihwak', 'testing the functionality and and validation'];
   const noteBlocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return NOTE_BLOCK.some(w => t.includes(w)); };
   // one Tamil note on the wall, shown in English (the original was cut off at the 200-character limit)
   const NOTE_EN = [['படைப்பாற்றல், நேர்த்தியான', 'This portfolio is the finest expression of creativity, elegant design and meticulous craftsmanship. Its unique artistry and flawless creation are beautifully reflected in it.']];

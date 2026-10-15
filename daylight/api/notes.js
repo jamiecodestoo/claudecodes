@@ -47,7 +47,7 @@ function junkWord(w) {
 }
 const junkText = t => String(t || '').split(/\s+/).some(junkWord);
 // notes taken down by hand: any note whose name, text, role or company contains one of these is hidden
-const BLOCK = ['lihwak'];
+const BLOCK = ['lihwak', 'testing the functionality and and validation'];
 const blocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return BLOCK.some(w => t.includes(w)); };
 function noteOk(n) {
   if (blocked(n)) return false;
