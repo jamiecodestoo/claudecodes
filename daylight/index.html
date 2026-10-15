@@ -5324,7 +5324,8 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 
 
 /* view all notes: the secondary action next to "Write a note" */
-.nw-actions { display: flex; align-items: center; gap: 14px; }
+.nw-actions { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
+.nw-actions .nw-cta { order: 1; } .nw-actions .nw-view { order: 2; }
 .nw-view { display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 20px 0 16px; border-radius: 999px; background: transparent; color: var(--ink); font: 700 15px/1 var(--sans); box-shadow: inset 0 0 0 1.5px rgba(19, 35, 58, .26); cursor: pointer; transition: background .25s, box-shadow .25s, transform .3s var(--spring); }
 .nw-view svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
 .nw-view:hover { background: rgba(19, 35, 58, .06); box-shadow: inset 0 0 0 1.5px rgba(19, 35, 58, .5); transform: translateY(-2px); }
@@ -5345,7 +5346,7 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 @media (max-width: 859px) { .nw-all-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; } .nw-all .nw-card { height: 168px !important; padding: 16px 12px 10px !important; } .nw-all .nw-card p { -webkit-line-clamp: 4 !important; font-size: 15px !important; } }
 @media (max-width: 859px) {
   .nw-head { align-items: stretch; }
-  .nw-actions { width: 100%; justify-content: space-between; }
+  .nw-actions { width: 100%; justify-content: flex-start; }
   .nw-actions .nw-view { height: 44px; padding: 0 16px 0 13px; font-size: 14px; }
   .nw-actions .nw-cta { width: auto !important; height: 44px !important; padding: 0 16px 0 6px !important; gap: 8px; font-size: 14px !important; }
   .nw-actions .nw-pen { width: 32px; height: 32px; }
