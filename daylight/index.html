@@ -6073,14 +6073,14 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   // phones: the portrait painting gets its own place pins, pinned to the buildings in it
   (() => {
     const ov = document.createElement('div'); ov.className = 'ph-pins';
-    const SPOTS = [['nsut', 16, 61, 'l'], ['mmt', 66.5, 54.2], ['oyo', 86.5, 50.2, 'r'], ['eazydiner', 49, 65.5], ['me', 79, 86, 'r']];
-    ov.innerHTML = SPOTS.map(([id, x, y, a]) => { const p = $(`.pin[data-id="${id}"]`, scene); if (!p) return ''; const c = p.cloneNode(true); $$('.hint', c).forEach(h => h.remove()); c.classList.add('ph-pin'); if (a) c.classList.add(a); c.style.left = x + '%'; c.style.top = y + '%'; return c.outerHTML; }).join('')
+    const SPOTS = [['nsut', 16, 61, 'l'], ['mmt', 66.5, 54.2], ['oyo', 86.5, 47.6, 'r'], ['eazydiner', 49, 65.5], ['me', 79, 86, 'r']];
+    ov.innerHTML = SPOTS.map(([id, x, y, a]) => { const p = $(`.pin[data-id="${id}"]`, scene); if (!p) return ''; const c = p.cloneNode(true); $$('.hint', c).forEach(h => h.remove()); c.classList.add('ph-pin'); if (id === 'mmt') { const b = $('b', c), t = [...b.childNodes].reverse().find(n => n.nodeType === 3 && n.textContent.trim()); if (t) t.textContent = 'MMT'; } if (a) c.classList.add(a); c.style.left = x + '%'; c.style.top = y + '%'; return c.outerHTML; }).join('')
       + '<button type="button" class="pin ph-pin ph-music l" style="left:16%;top:84%;--c:#7B5CD6"><b><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>Play some music</b></button>';
     $('.ph-hero', stage).after(ov);
     $$('.ph-pin[data-id]', ov).forEach(b => b.addEventListener('click', e => { e.stopPropagation(); focusId === b.dataset.id ? unfocus() : focus(b.dataset.id); }));
     // a pin never sits on the headline or its subtitle: if it would, it hangs below its spot instead
     const clear = () => { const t = $('.hero-copy', stage); if (!t || innerWidth >= 860) return; const lim = t.getBoundingClientRect().bottom + 6;
-      $$('.ph-pin', ov).forEach(p => { p.classList.remove('down'); if (p.getBoundingClientRect().top < lim) p.classList.add('down'); });
+      $$('.ph-pin', ov).forEach(p => { p.classList.remove('down'); if (p.dataset.id !== 'oyo' && p.getBoundingClientRect().top < lim) p.classList.add('down'); });
       // and never under the bottom nav: on real phones the browser bars and home bar push the nav up over the lowest pins
       const nav = [...document.querySelectorAll('nav')].find(n => { const r = n.getBoundingClientRect(); return r.height && r.top > innerHeight * .6; });
       const floor = (nav ? nav.getBoundingClientRect().top : innerHeight - 92) - 12;
