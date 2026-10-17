@@ -5333,6 +5333,18 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .kicker svg { display: none; }
 h2 > .hl[id$="Hl"]::before { display: none; }
 .nw-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 30px -14px rgba(19, 35, 58, .55); }
+
+/* cursor: a dot and a ring, black on light and white on dark. It never reads styles or toggles page-wide classes while you move, so it stays cheap */
+html.cc, html.cc * { cursor: none !important; }
+html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"] { cursor: text !important; }
+.cc-dot, .cc-ring { position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none; will-change: transform; --c: #0B0B0C; --o: #fff; }
+:root[data-theme="dark"] .cc-dot, :root[data-theme="dark"] .cc-ring { --c: #fff; --o: #0B0B0C; }
+.cc-dot { width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 1.5px var(--o); transition: opacity .2s, scale .2s; }
+.cc-ring { width: 34px; height: 34px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--c), 0 0 0 1px var(--o); transition: scale .25s var(--ease), opacity .2s; }
+.cc-ring.link { scale: 1.7; }
+.cc-ring.down { scale: .8; }
+.cc-dot.dn { scale: .6; }
+.cc-dot.off, .cc-ring.off { opacity: 0; }
 /* view all notes: the secondary action next to "Write a note" */
 .nw-actions { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
 .nw-actions .nw-cta { order: 1; } .nw-actions .nw-view { order: 2; }
@@ -8990,6 +9002,29 @@ h2 > .hl[id$="Hl"]::before { display: none; }
   });
 
 
+
+
+  /* ---------- custom cursor (mouse only) ---------- */
+  (() => {
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const root = document.documentElement, still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const dot = document.createElement('i'), ring = document.createElement('i');
+    dot.className = 'cc-dot off'; ring.className = 'cc-ring off'; dot.setAttribute('aria-hidden', 'true'); ring.setAttribute('aria-hidden', 'true'); document.body.append(ring, dot);
+    const CLICK = 'a, button, summary, select, label, [role="button"], [data-read], [data-open], [data-case], .pin, .hot, .wk';
+    const TEXT = 'input, textarea, select, [contenteditable="true"], iframe';
+    let x = 0, y = 0, rx = 0, ry = 0, on = false, raf = 0;
+    const loop = () => { rx += (x - rx) * (still ? 1 : .22); ry += (y - ry) * (still ? 1 : .22);
+      dot.style.transform = `translate3d(${x}px, ${y}px, 0)`; ring.style.transform = `translate3d(${rx - 17}px, ${ry - 17}px, 0)`;
+      raf = Math.abs(x - rx) + Math.abs(y - ry) > .2 ? requestAnimationFrame(loop) : 0; };
+    const show = v => { dot.classList.toggle('off', !v); ring.classList.toggle('off', !v); };
+    addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; x = e.clientX; y = e.clientY;
+      if (!on) { on = true; rx = x; ry = y; root.classList.add('cc'); show(true); } if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
+    document.addEventListener('pointerover', e => { if (!on || e.pointerType !== 'mouse') return; const t = e.target;
+      if (t.closest && t.closest(TEXT)) { show(false); return; } show(true); ring.classList.toggle('link', !!(t.closest && t.closest(CLICK))); }, true);
+    document.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') { ring.classList.add('down'); dot.classList.add('dn'); } }, true);
+    addEventListener('pointerup', () => { ring.classList.remove('down'); dot.classList.remove('dn'); }, true);
+    root.addEventListener('mouseleave', () => show(false)); root.addEventListener('mouseenter', () => on && show(true));
+  })();
 
   /* ---------- browsers without text-wrap: pretty: glue the last two words of each line of copy ---------- */
   if (!(window.CSS && CSS.supports && CSS.supports('text-wrap', 'pretty'))) {
