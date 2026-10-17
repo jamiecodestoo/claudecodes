@@ -5340,10 +5340,14 @@ html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"
 .cc-ball { position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none; width: 0; height: 0; will-change: transform; --c: #0B0B0C; --o: #fff; }
 :root[data-theme="dark"] .cc-ball { --c: #fff; --o: #0B0B0C; }
 .cc-ball i { position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 1.5px var(--o); transition: scale .3s var(--ease), opacity .25s, box-shadow .25s; }
-.cc-ball.link i { scale: 3.4; opacity: .22; box-shadow: none; }
+.cc-ball.link i { scale: 2.8; opacity: .22; box-shadow: none; }
+.cc-ball.lbl i { scale: 4.5; opacity: .94; box-shadow: none; }
+.cc-ball b { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); font: 700 12px/1 var(--sans); color: var(--o); white-space: nowrap; opacity: 0; transition: opacity .2s; }
+.cc-ball.lbl b { opacity: 1; }
 .cc-ball.down i { scale: .75; }
-.cc-ball.link.down i { scale: 2.6; opacity: .32; }
-.cc-ball.off i { opacity: 0; }
+.cc-ball.link.down i { scale: 2.2; opacity: .32; }
+.cc-ball.lbl.down i { scale: 3.8; }
+.cc-ball.off i, .cc-ball.off b { opacity: 0; }
 /* view all notes: the secondary action next to "Write a note" */
 .nw-actions { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
 .nw-actions .nw-cta { order: 1; } .nw-actions .nw-view { order: 2; }
@@ -9007,9 +9011,11 @@ html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"
   (() => {
     if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     const root = document.documentElement, still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const ball = document.createElement('div'); ball.className = 'cc-ball off'; ball.setAttribute('aria-hidden', 'true'); ball.appendChild(document.createElement('i')); document.body.appendChild(ball);
+    const ball = document.createElement('div'); ball.className = 'cc-ball off'; ball.setAttribute('aria-hidden', 'true'); ball.appendChild(document.createElement('i')); const word = document.createElement('b'); ball.appendChild(word); document.body.appendChild(ball);
     const CLICK = 'a, button, summary, select, label, [role="button"], [data-read], [data-open], [data-case], .pin, .hot, .wk';
     const TEXT = 'input, textarea, select, [contenteditable="true"], iframe';
+    // a short word on the few big targets where it isn't obvious what a click does (checked once per element, never while moving)
+    const WORDS = [['.nw-card[data-read]', 'Read'], ['.nw-ghost', 'Write'], ['.pin, .ph-pin', 'Open'], ['[data-case], .wk', 'View'], ['.sticky', 'Drag']];
     let x = 0, y = 0, rx = 0, ry = 0, on = false, raf = 0;
     const loop = () => { rx += (x - rx) * (still ? 1 : .28); ry += (y - ry) * (still ? 1 : .28);
       ball.style.transform = `translate3d(${rx}px, ${ry}px, 0)`; raf = Math.abs(x - rx) + Math.abs(y - ry) > .2 ? requestAnimationFrame(loop) : 0; };
@@ -9017,7 +9023,7 @@ html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"
     addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; x = e.clientX; y = e.clientY;
       if (!on) { on = true; rx = x; ry = y; root.classList.add('cc'); show(true); } if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
     document.addEventListener('pointerover', e => { if (!on || e.pointerType !== 'mouse') return; const t = e.target;
-      if (t.closest && t.closest(TEXT)) { show(false); return; } show(true); ball.classList.toggle('link', !!(t.closest && t.closest(CLICK))); }, true);
+      if (t.closest && t.closest(TEXT)) { show(false); return; } show(true); const hit = t.closest && WORDS.find(([q]) => t.closest(q)); word.textContent = hit ? hit[1] : ''; ball.classList.toggle('lbl', !!hit); ball.classList.toggle('link', !hit && !!(t.closest && t.closest(CLICK))); }, true);
     document.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') ball.classList.add('down'); }, true);
     addEventListener('pointerup', () => ball.classList.remove('down'), true);
     root.addEventListener('mouseleave', () => show(false)); root.addEventListener('mouseenter', () => on && show(true));
