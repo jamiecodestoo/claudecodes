@@ -5333,22 +5333,6 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .kicker svg { display: none; }
 h2 > .hl[id$="Hl"]::before { display: none; }
 .nw-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 30px -14px rgba(19, 35, 58, .55); }
-
-/* custom cursor: a small dot that sticks to the pointer and a ring that trails it; the ring grows over things you can click and says what a click does */
-html.cc:not(.cc-off), html.cc:not(.cc-off) * { cursor: none !important; }
-.cc-dot, .cc-ring, .cc-rip { position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none; }
-.cc-dot { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 1.5px var(--paper); transition: opacity .2s, scale .25s var(--ease); }
-.cc-ring { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ink) 55%, transparent), 0 0 0 1px color-mix(in srgb, var(--paper) 55%, transparent); transition: width .32s var(--ease), height .32s var(--ease), background .25s, box-shadow .25s, opacity .2s, scale .2s var(--ease); }
-.cc-ring span { font: 700 12px/1 var(--sans); letter-spacing: .01em; color: var(--paper); opacity: 0; transition: opacity .2s; }
-.cc-ring.link { width: 58px; height: 58px; background: color-mix(in srgb, var(--ink) 9%, transparent); }
-.cc-ring.label { width: 64px; height: 64px; background: color-mix(in srgb, var(--ink) 94%, transparent); box-shadow: none; }
-.cc-ring.label span { opacity: 1; }
-.cc-ring.down { scale: .86; }
-.cc-dot.dn { scale: .6; }
-.cc-dot.hid { scale: 0; }
-html.cc-off .cc-dot, html.cc-off .cc-ring, html.cc-gone .cc-dot, html.cc-gone .cc-ring { opacity: 0; }
-.cc-rip { width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 50%; box-shadow: inset 0 0 0 2px var(--ink); animation: ccrip .6s var(--ease) forwards; }
-@keyframes ccrip { to { transform: scale(3.4); opacity: 0; } }
 /* view all notes: the secondary action next to "Write a note" */
 .nw-actions { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
 .nw-actions .nw-cta { order: 1; } .nw-actions .nw-view { order: 2; }
@@ -9006,42 +8990,6 @@ html.cc-off .cc-dot, html.cc-off .cc-ring, html.cc-gone .cc-dot, html.cc-gone .c
   });
 
 
-
-
-  /* ---------- custom cursor (mouse only) ---------- */
-  (() => {
-    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-    const root = document.documentElement, still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const dot = document.createElement('i'), ring = document.createElement('i'), lab = document.createElement('span');
-    dot.className = 'cc-dot'; ring.className = 'cc-ring'; ring.setAttribute('aria-hidden', 'true'); dot.setAttribute('aria-hidden', 'true'); ring.appendChild(lab); document.body.append(ring, dot);
-    // what a click does, by the thing under the pointer (only where the page already shows a pointer, grab or zoom cursor)
-    const LABELS = [['.cs-close, .nw-x, .nw-rd-x, .wop-x, .nw-all-x, .sheet .x, #s-x', 'Close'], ['.nw-card[data-read]', 'Read'], ['.nw-ghost, #nwOpen', 'Write'], ['.wop-badge', 'See'], ['.pin, .ph-pin', 'Open'], ['[data-case], .wk', 'View'], ['.theme-btn', 'Theme']];
-    let x = -100, y = -100, rx = x, ry = y, on = false, raf = 0;
-    const loop = () => { rx += (x - rx) * (still ? 1 : .2); ry += (y - ry) * (still ? 1 : .2);
-      dot.style.transform = `translate3d(${x}px, ${y}px, 0)`; ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
-      raf = (Math.abs(x - rx) + Math.abs(y - ry) > .1) ? requestAnimationFrame(loop) : 0; };
-    const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
-    const TEXT = 'input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=file]), textarea, [contenteditable=""], [contenteditable="true"]';
-    const read = el => {
-      if (!el || el.nodeType !== 1) return;
-      if (el.tagName === 'IFRAME' || el.closest(TEXT)) { root.classList.add('cc-off'); return; }
-      root.classList.remove('cc-off');
-      root.classList.remove('cc'); const cur = getComputedStyle(el).cursor; root.classList.add('cc');   // the page's own cursor tells us what it is
-      let name = '', st = '';
-      if (cur === 'grab' || cur === 'grabbing') { name = 'Drag'; st = 'label'; }
-      else if (cur === 'zoom-in') { name = 'Zoom'; st = 'label'; }
-      else if (cur === 'pointer') { const hit = LABELS.find(([q]) => el.closest(q)); if (hit) { name = hit[1]; st = 'label'; } else st = 'link'; }
-      lab.textContent = name; ring.classList.toggle('link', st === 'link'); ring.classList.toggle('label', st === 'label'); dot.classList.toggle('hid', st === 'label');
-    };
-    addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; x = e.clientX; y = e.clientY;
-      if (!on) { on = true; rx = x; ry = y; root.classList.add('cc'); } root.classList.remove('cc-gone'); kick(); }, { passive: true });
-    document.addEventListener('pointerover', e => { if (on && e.pointerType === 'mouse') read(e.target); }, true);
-    document.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') { ring.classList.add('down'); dot.classList.add('dn'); } }, true);
-    addEventListener('pointerup', () => { ring.classList.remove('down'); dot.classList.remove('dn'); }, true);
-    document.addEventListener('click', e => { if (still || !on || root.classList.contains('cc-off')) return; const q = document.createElement('i'); q.className = 'cc-rip'; q.style.left = e.clientX + 'px'; q.style.top = e.clientY + 'px'; document.body.appendChild(q); setTimeout(() => q.remove(), 700); }, true);
-    root.addEventListener('mouseleave', () => root.classList.add('cc-gone')); root.addEventListener('mouseenter', () => root.classList.remove('cc-gone'));
-    addEventListener('blur', () => root.classList.add('cc-gone'));
-  })();
 
   /* ---------- browsers without text-wrap: pretty: glue the last two words of each line of copy ---------- */
   if (!(window.CSS && CSS.supports && CSS.supports('text-wrap', 'pretty'))) {
