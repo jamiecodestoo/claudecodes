@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F7FD8"/><stop offset=".62" stop-color="#9FD3FF"/><stop offset="1" stop-color="#FFE7B8"/></linearGradient>
+    <linearGradient id="h1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7CC36B"/><stop offset="1" stop-color="#3F8F4A"/></linearGradient>
+    <linearGradient id="h2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5FAE58"/><stop offset="1" stop-color="#2D6E3A"/></linearGradient>
+    <clipPath id="r"><rect width="64" height="64" rx="15"/></clipPath>
+  </defs>
+  <g clip-path="url(#r)">
+    <rect width="64" height="64" fill="url(#sky)"/>
+    <circle cx="40" cy="31" r="11" fill="#FFD23F"/>
+    <circle cx="40" cy="31" r="15.5" fill="#FFD23F" opacity=".25"/>
+    <path d="M-4 44 C 10 32, 24 33, 38 42 S 60 46, 70 40 V70 H-4Z" fill="url(#h1)"/>
+    <path d="M-4 54 C 14 44, 30 47, 46 52 S 64 54, 70 50 V70 H-4Z" fill="url(#h2)"/>
+    <path d="M30 64 C 32 58, 36 54, 42 51" fill="none" stroke="#F4D9A6" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+</svg>
