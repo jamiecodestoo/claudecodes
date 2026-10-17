@@ -5334,11 +5334,11 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 h2 > .hl[id$="Hl"]::before { display: none; }
 .nw-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 30px -14px rgba(19, 35, 58, .55); }
 
-/* cursor: one filled ball, black on light and white on dark, that swells into a soft disc over anything clickable. It never reads styles or toggles page-wide classes while you move, so it stays cheap */
+/* cursor: one filled ball, dark blue on light and yellow on dark, that swells into a soft disc over anything clickable. It never reads styles or toggles page-wide classes while you move, so it stays cheap */
 html.cc, html.cc * { cursor: none !important; }
 html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"] { cursor: text !important; }
-.cc-ball { position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none; width: 0; height: 0; will-change: transform; --c: #0B0B0C; --o: #fff; }
-:root[data-theme="dark"] .cc-ball { --c: #fff; --o: #0B0B0C; }
+.cc-ball { position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none; width: 0; height: 0; will-change: transform; --c: #13233A; --o: #fff; }
+:root[data-theme="dark"] .cc-ball { --c: #FFD86B; --o: #1A1A1A; }
 .cc-ball i { position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 1.5px var(--o); transition: scale .3s var(--ease), opacity .25s, box-shadow .25s; }
 .cc-ball.link i { scale: 2.8; opacity: .22; box-shadow: none; }
 .cc-ball.lbl i { scale: 4.5; opacity: .94; box-shadow: none; }
