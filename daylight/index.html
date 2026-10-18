@@ -9021,14 +9021,14 @@ html:has(.cs.open) .sfx-btn { display: none; }
 
   /* ---------- sound effects (small clips from ElevenLabs, loaded after the first tap) ---------- */
   (() => {
-    const NAMES = { click: .5, hover: .2, open: .55, close: .45, unwrap: .6, pin: .6, bell: .55, toggle: .5, sparkle: .5 };
+    const NAMES = { click: .7, hover: .35, open: .55, close: .6, pin: .6, bell: .55, toggle: .65, sparkle: .5 }, WAV = { click: 1, hover: 1, close: 1, toggle: 1 };
     let ctx = null, master = null, bufs = {}, loading = false, last = {}, muted = false;
     try { muted = localStorage.getItem('jc-sfx') === '0'; } catch (_) {}
     const btn = $('#sfxBtn');
     const paint = () => { if (!btn) return; btn.setAttribute('aria-pressed', String(!muted)); btn.setAttribute('aria-label', muted ? 'Sound effects off' : 'Sound effects on'); };
     const load = () => { if (loading) return; loading = true;
       try { ctx = new (window.AudioContext || window.webkitAudioContext)(); master = ctx.createGain(); master.gain.value = .9; master.connect(ctx.destination); } catch (_) { return; }
-      Object.keys(NAMES).forEach(n => fetch(`v2/sfx/${n}.mp3`).then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => ctx.decodeAudioData(b, ok, no))).then(buf => { bufs[n] = buf; }).catch(() => {})); };
+      Object.keys(NAMES).forEach(n => fetch(`v2/sfx/${n}.${WAV[n] ? 'wav' : 'mp3'}`).then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => ctx.decodeAudioData(b, ok, no))).then(buf => { bufs[n] = buf; }).catch(() => {})); };
     const play = (n, opts = {}) => { if (muted || document.hidden || !ctx || !bufs[n]) return; const now = performance.now(), gap = n === 'hover' ? 130 : 45; if (last[n] && now - last[n] < gap) return; last[n] = now;
       if (ctx.state === 'suspended') ctx.resume();
       const src = ctx.createBufferSource(), g = ctx.createGain(); src.buffer = bufs[n]; src.playbackRate.value = n === 'click' || n === 'hover' ? .97 + Math.random() * .06 : 1; g.gain.value = (NAMES[n] || .5) * (opts.v || 1);
@@ -9042,13 +9042,10 @@ html:has(.cs.open) .sfx-btn { display: none; }
     const OPEN = '[data-case], .wk, #nwView, #nwOpen, .nw-ghost, a[data-book], .nw-card[data-read], .pin, .ph-pin';
     const TAP = 'a, button, summary, [role="button"], label[for]';
     document.addEventListener('click', e => { const t = e.target; if (!t.closest || t.closest('#sfxBtn, [data-nosound]')) return;
-      if (t.closest(CLOSE)) play('close'); else if (t.closest('.theme-btn')) play('toggle'); else if (t.closest('.wop-badge')) play('sparkle'); else if (t.closest('.gift-tap')) play('unwrap');
-      else if (t.closest(OPEN)) play('open'); else if (t.closest(TAP)) play('click'); }, true);
-    // hovering the portfolio: pins, cards in the box, notes
+      if (t.closest(CLOSE)) play('close'); else if (t.closest('.theme-btn')) play('toggle'); else if (t.closest('.wop-badge')) play('sparkle'); else if (t.closest(OPEN)) play('open'); else if (t.closest(TAP)) play('click'); }, true);
+    // hovering the portfolio: map pins and the cards in the box
     let lastEl = null;
-    document.addEventListener('pointerover', e => { if (e.pointerType !== 'mouse') return; const el = e.target.closest && e.target.closest('.pin:not(.ph-pin), .wk, .nw-card[data-read]'); if (el && el !== lastEl) play('hover'); lastEl = el || null; }, true);
-    // the gift in the stack section unwraps on its own as well as on tap
-    const gs = $('#giftStage'); if (gs && window.MutationObserver) new MutationObserver(() => { if (gs.classList.contains('open')) play('unwrap'); }).observe(gs, { attributes: true, attributeFilter: ['class'] });
+    document.addEventListener('pointerover', e => { if (e.pointerType !== 'mouse') return; const el = e.target.closest && e.target.closest('.pin:not(.ph-pin), .wk'); if (el && el !== lastEl) play('hover'); lastEl = el || null; }, true);
   })();
 
   /* ---------- custom cursor (mouse only) ---------- */
