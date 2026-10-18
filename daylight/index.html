@@ -2435,6 +2435,12 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 :root[data-theme="dark"] .theme-btn .tl-n { transform: translateY(-100%); opacity: 0; }
 :root[data-theme="dark"] .theme-btn .tl-d { transform: none; opacity: 1; }
 .np { right: calc(clamp(14px, 2.4vw, 28px) + 112px); }
+@media (min-width: 860px) {   /* three fixed slots, right to left: theme switch, music, badge. Nothing here changes width, so nothing ever shifts */
+  .theme-btn { width: 112px; padding: 0 14px 0 12px; justify-content: center; }
+  .np { right: calc(clamp(14px, 2.4vw, 28px) + 122px); width: 164px; box-sizing: border-box; }
+  .np-t { white-space: nowrap; }
+  .wop-badge { right: calc(clamp(14px, 2.4vw, 28px) + 296px); }
+}
 @media (max-width: 860px) { .theme-btn { height: 44px; width: 44px; padding: 0; justify-content: center; } .theme-btn .tl { display: none; } .np { right: calc(clamp(14px, 2.4vw, 28px) + 60px); } }
 
 /* a little plane crosses the sky, slowly */
@@ -4199,8 +4205,7 @@ html:root .jc-gal > div[style*="--n:2"], html:root .journey.jcm .jc-gal > div[st
 .jc-gal > div[style*="--n:2"] .jc-ph .ph { aspect-ratio: 4 / 3; }
 .jc-gal > div[style*="--n:2"] .jc-ph small { font-size: 13px !important; }
 
-/* the music pill stays with you inside a case study, next to the back button */
-html:has(.cs.open) .np { z-index: 95; top: calc(env(safe-area-inset-top, 0px) + 16px) !important; left: calc(clamp(16px, 4vw, 48px) + 58px) !important; right: auto !important; }
+html:has(.cs.open) .np { z-index: 95; }   /* the music button keeps its spot, top right, even over an open case study */
 @media (max-width: 859px) { html:has(.cs.open) .np { padding: 0 8px !important; gap: 0 !important; } html:has(.cs.open) .np .np-b { display: none; } }
 
 /* phone place pins over the portrait painting (same box as the cover-fit image, anchored at the bottom) */
@@ -9263,11 +9268,7 @@ void main() {
       np.hidden = false; np.classList.toggle('paused', !on); const tx = on ? 'Pause' : played ? 'Play' : 'Play music'; np.setAttribute('aria-label', on ? 'Pause music' : 'Play music'); np.title = tx; $('.np-t', np).textContent = tx;
     }
     const toggle = e => { e && e.stopPropagation(); on ? stop() : start(); };
-    // desktop: the play/pause button is always there, top right, just left of the badge
-    const placeNp = () => { const ref = [$('.wop-badge'), $('#themeBtn')].filter(Boolean).map(b => b.getBoundingClientRect()).filter(r => r.width).sort((a, b) => a.left - b.left)[0];
-      if (ref && innerWidth >= 860) np.style.right = (innerWidth - ref.left + 10) + 'px'; else np.style.right = ''; };
-    if (true) { ui(); np.classList.add('paused'); placeNp(); [200, 900, 2500].forEach(t => setTimeout(placeNp, t)); }
-    addEventListener('resize', placeNp); addEventListener('load', placeNp);
+    ui(); np.classList.add('paused');   // always there, top right, in a fixed spot (CSS)
     pinR.addEventListener('click', toggle); np.addEventListener('click', toggle); radio.addEventListener('click', toggle);
   })();
 
