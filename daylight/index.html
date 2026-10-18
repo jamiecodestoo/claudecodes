@@ -6211,7 +6211,7 @@ void main() {
   // phones: the portrait painting gets its own place pins, pinned to the buildings in it
   (() => {
     const ov = document.createElement('div'); ov.className = 'ph-pins';
-    const SPOTS = [['nsut', 15, 51, 'l'], ['mmt', 89, 52, 'r'], ['oyo', 92, 39.5, 'r'], ['eazydiner', 84, 64, 'r'], ['me', 21, 66.5, 'l']];
+    const SPOTS = [['nsut', 15, 51, 'l'], ['mmt', 89, 52, 'r'], ['oyo', 92, 35, 'r'], ['eazydiner', 84, 64, 'r'], ['me', 21, 66.5, 'l']];
     ov.innerHTML = SPOTS.map(([id, x, y, a]) => { const p = $(`.pin[data-id="${id}"]`, scene); if (!p) return ''; const c = p.cloneNode(true); $$('.hint', c).forEach(h => h.remove()); c.classList.add('ph-pin'); if (id === 'mmt') { const b = $('b', c), t = [...b.childNodes].reverse().find(n => n.nodeType === 3 && n.textContent.trim()); if (t) t.textContent = 'MMT'; } if (a) c.classList.add(a); c.style.left = x + '%'; c.style.top = y + '%'; return c.outerHTML; }).join('')
     ;
     $('.ph-hero', stage).after(ov);
