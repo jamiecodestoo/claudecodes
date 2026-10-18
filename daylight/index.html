@@ -2344,7 +2344,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 .np.paused .np-b { gap: 0; } .np.paused .np-b i { display: none; }
 .np.paused .np-b::before { content: ""; border-left: 11px solid #7B5CD6; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 2px; }
 .np:not(.paused) .np-b i { width: 3px; }
-@media (max-width: 860px) { .np { right: calc(clamp(14px, 2.4vw, 28px) + 56px); padding-right: 12px; } .np-t { display: none; } }
+@media (max-width: 859px) { .np { display: none !important; } }
 :root[data-theme="dark"] .np { background: rgba(42, 42, 42, .88); color: #F5F5F5; box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 10px 30px -10px rgba(0, 0, 0, .6); }
 :root[data-theme="dark"] .radio .rs { filter: brightness(.75) saturate(.9); }
 
@@ -5386,7 +5386,8 @@ html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"
 .sfx-btn .off { display: none; }
 .sfx-btn[aria-pressed="false"] .on { display: none; } .sfx-btn[aria-pressed="false"] .off { display: inline; }
 :root[data-theme="dark"] .sfx-btn { background: rgba(42, 42, 42, .85); color: #FFD86B; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .6), inset 0 0 0 1px rgba(255, 255, 255, .12); }
-@media (max-width: 859px) { .sfx-btn { width: 38px; height: 38px; bottom: 98px; left: 14px; } }
+/* phones: the sound switch sits in the top bar, between the badge and the theme switch */
+@media (max-width: 859px) { .sfx-btn { top: calc(env(safe-area-inset-top, 0px) + 14px); bottom: auto; left: auto; right: calc(clamp(14px, 2.4vw, 28px) + 56px); width: 44px; height: 44px; z-index: 70; } .wop-badge { right: calc(clamp(14px, 2.4vw, 28px) + 112px) !important; } }
 html:has(.cs.open) .sfx-btn { display: none; }
 /* view all notes: the secondary action next to "Write a note" */
 .nw-actions { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
@@ -6208,7 +6209,7 @@ void main() {
   // phones: the portrait painting gets its own place pins, pinned to the buildings in it
   (() => {
     const ov = document.createElement('div'); ov.className = 'ph-pins';
-    const SPOTS = [['nsut', 18, 46, 'l'], ['mmt', 83, 55, 'r'], ['oyo', 86, 39, 'r'], ['eazydiner', 80, 64, 'r'], ['me', 22, 67.5, 'l']];
+    const SPOTS = [['nsut', 18, 53, 'l'], ['mmt', 83, 55, 'r'], ['oyo', 86, 39, 'r'], ['eazydiner', 80, 64, 'r'], ['me', 22, 67.5, 'l']];
     ov.innerHTML = SPOTS.map(([id, x, y, a]) => { const p = $(`.pin[data-id="${id}"]`, scene); if (!p) return ''; const c = p.cloneNode(true); $$('.hint', c).forEach(h => h.remove()); c.classList.add('ph-pin'); if (id === 'mmt') { const b = $('b', c), t = [...b.childNodes].reverse().find(n => n.nodeType === 3 && n.textContent.trim()); if (t) t.textContent = 'MMT'; } if (a) c.classList.add(a); c.style.left = x + '%'; c.style.top = y + '%'; return c.outerHTML; }).join('')
     ;
     $('.ph-hero', stage).after(ov);
