@@ -4175,10 +4175,15 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
 /* phone home: one portrait painting with a tall sky for the headline, instead of the wide layered valley */
 .ph-hero { display: none; }
 @media (max-width: 859px) {
-  .ph-hero { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(180deg, rgba(16, 70, 160, .42), rgba(16, 70, 160, .12) 34%, transparent 48%), url("v2/h/phone-day.webp") 50% 100% / cover no-repeat; }
+  /* the whole painting fits the width (nothing cropped at the sides); the strip above it is a sky gradient the painting fades into, and the headline sits there */
+  .ph-hero { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; background: linear-gradient(180deg, #1f5fb8, #3a86d6 70%, #4a90dc); }
+  .ph-hero::before, .ph-hero::after { content: ""; position: absolute; inset: 0; background-repeat: no-repeat; }
+  .ph-hero::before { display: none; }
+  .ph-hero::after { inset: auto 0 0 0; height: calc(100vw / .5625); background-image: url("v2/h/phone-day.webp"); background-size: 100% 100%; -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%); mask-image: linear-gradient(180deg, transparent, #000 30%); }
   .stage .cam { display: none !important; }
   .stage::before { display: none !important; }
-  :root[data-theme="dark"] .ph-hero { background: linear-gradient(180deg, rgba(3, 6, 24, .5), rgba(3, 6, 24, .12) 34%, transparent 48%), url("v2/h/phone-night.webp") 50% 100% / cover no-repeat; }
+  :root[data-theme="dark"] .ph-hero { background: linear-gradient(180deg, #020611, #06143a 70%, #0a1f55); }
+  :root[data-theme="dark"] .ph-hero::before, :root[data-theme="dark"] .ph-hero::after { background-image: url("v2/h/phone-night.webp"); }
 }
 
 /* case-study footer: on phones the socials are just their logos; laptops keep the labelled pills */
@@ -4211,12 +4216,14 @@ html:has(.cs.open) .np { z-index: 95; }   /* the music button keeps its spot, to
 /* phone place pins over the portrait painting (same box as the cover-fit image, anchored at the bottom) */
 .ph-pins { display: none; }
 @media (max-width: 859px) {
-  .ph-pins { display: block; position: absolute; z-index: 1; left: 50%; bottom: 0; transform: translateX(-50%); width: max(100%, 100svh * .5625); height: max(100svh, 100vw / .5625); pointer-events: none; }
+  .ph-pins { display: block; position: absolute; z-index: 1; left: 0; bottom: 0; width: 100%; height: calc(100vw / .5625); pointer-events: none; }
   .ph-pin { position: absolute; z-index: 1; pointer-events: auto; opacity: 0; animation: phpin .6s var(--spring) forwards; }
   .ph-pin:nth-child(2) { animation-delay: .1s; } .ph-pin:nth-child(3) { animation-delay: .2s; } .ph-pin:nth-child(4) { animation-delay: .3s; } .ph-pin:nth-child(5) { animation-delay: .4s; } .ph-pin:nth-child(6) { animation-delay: .5s; }
   .ph-pin.l { transform: translate(-22%, -100%); } .ph-pin.l b::after { left: 22%; }
   .ph-pin.r { transform: translate(-78%, -100%); } .ph-pin.r b::after { left: 78%; }
   .ph-pin b { font-size: 12.5px; padding: 4px 11px 4px 4px; }
+  .ph-pin b { background: rgba(255, 253, 247, .96) !important; color: #13233A !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; box-shadow: 0 6px 14px -6px rgba(10, 20, 40, .5) !important; }
+  :root[data-theme="dark"] .ph-pin b { background: rgba(34, 34, 38, .96) !important; color: #F5F5F5 !important; }
   .ph-pin b { gap: 9px !important; }
   .ph-pin b > img { width: 22px; height: 22px; }
   .ph-pin b > img { margin-right: 0; }
@@ -6209,7 +6216,7 @@ void main() {
   // phones: the portrait painting gets its own place pins, pinned to the buildings in it
   (() => {
     const ov = document.createElement('div'); ov.className = 'ph-pins';
-    const SPOTS = [['nsut', 18, 53, 'l'], ['mmt', 83, 55, 'r'], ['oyo', 86, 39, 'r'], ['eazydiner', 80, 64, 'r'], ['me', 22, 67.5, 'l']];
+    const SPOTS = [['nsut', 15, 51, 'l'], ['mmt', 89, 52, 'r'], ['oyo', 92, 37.5, 'r'], ['eazydiner', 84, 64, 'r'], ['me', 21, 66.5, 'l']];
     ov.innerHTML = SPOTS.map(([id, x, y, a]) => { const p = $(`.pin[data-id="${id}"]`, scene); if (!p) return ''; const c = p.cloneNode(true); $$('.hint', c).forEach(h => h.remove()); c.classList.add('ph-pin'); if (id === 'mmt') { const b = $('b', c), t = [...b.childNodes].reverse().find(n => n.nodeType === 3 && n.textContent.trim()); if (t) t.textContent = 'MMT'; } if (a) c.classList.add(a); c.style.left = x + '%'; c.style.top = y + '%'; return c.outerHTML; }).join('')
     ;
     $('.ph-hero', stage).after(ov);
