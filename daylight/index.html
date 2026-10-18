@@ -9021,13 +9021,13 @@ html:has(.cs.open) .sfx-btn { display: none; }
 
   /* ---------- sound effects (small clips from ElevenLabs, loaded after the first tap) ---------- */
   (() => {
-    const NAMES = { click: .7, hover: .35, open: .55, close: .6, pin: .6, bell: .55, toggle: .65, sparkle: .5 }, WAV = { click: 1, hover: 1, close: 1, toggle: 1 };
+    const NAMES = { click: 1, hover: .35, open: .55, close: .6, pin: .6, bell: .55, toggle: .65, sparkle: .5 }, WAV = { click: 1, hover: 1, close: 1, toggle: 1 };
     let ctx = null, master = null, bufs = {}, loading = false, last = {}, muted = false;
     try { muted = localStorage.getItem('jc-sfx') === '0'; } catch (_) {}
     const btn = $('#sfxBtn');
     const paint = () => { if (!btn) return; btn.setAttribute('aria-pressed', String(!muted)); btn.setAttribute('aria-label', muted ? 'Sound effects off' : 'Sound effects on'); };
     const load = () => { if (loading) return; loading = true;
-      try { ctx = new (window.AudioContext || window.webkitAudioContext)(); master = ctx.createGain(); master.gain.value = .9; master.connect(ctx.destination); } catch (_) { return; }
+      try { ctx = new (window.AudioContext || window.webkitAudioContext)(); master = ctx.createGain(); master.gain.value = 1; master.connect(ctx.destination); } catch (_) { return; }
       Object.keys(NAMES).forEach(n => fetch(`v2/sfx/${n}.${WAV[n] ? 'wav' : 'mp3'}`).then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => ctx.decodeAudioData(b, ok, no))).then(buf => { bufs[n] = buf; }).catch(() => {})); };
     const play = (n, opts = {}) => { if (muted || document.hidden || !ctx || !bufs[n]) return; const now = performance.now(), gap = n === 'hover' ? 130 : 45; if (last[n] && now - last[n] < gap) return; last[n] = now;
       if (ctx.state === 'suspended') ctx.resume();
