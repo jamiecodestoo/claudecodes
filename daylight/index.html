@@ -6046,7 +6046,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
   cueArm(Math.max(0, 4000 - performance.now()));
 
   /* the painting is a WebGL plate: a 4000px texture with mipmaps (a zoom stays sharp) and a hand-built depth map, so the pointer and the scroll move near things more than far ones */
-  const AR = 2000 / 1126, PAR = [.012, .006], FOC = [.52, .58];
+  const AR = 2000 / 1126, PAR = [.005, .0025], FOC = [.52, .58];
   const SPOT = { nsut: [.115, .41, .10, .13], oyo: [.92, .31, .10, .12], mmt: [.72, .45, .10, .085], eazydiner: [.81, .67, .10, .09], me: [.19, .76, .17, .17] };
   const glc = $('#glPlate'); let lastDraw = [0, 0, 0], glKey = '', nightLoad = null, nightReady = false, nf = 0, gl = null, glU = null, glReady = false, fa = 0, hspot = SPOT.eazydiner;
   const gain = (e, d) => 1 + e * (.02 + d * .12);
@@ -6248,7 +6248,7 @@ void main() {
     const T = focusId ? focusCam(focusId) : { x: baseX, y: baseY, s: 1 };
     const k = reduce ? 1 : 1 - Math.exp(-dt * rate);
     cur.x += (T.x - cur.x) * k; cur.y += (T.y - cur.y) * k; cur.s += (T.s - cur.s) * k;
-    ptr.sx += (ptr.x - ptr.sx) * clamp(dt * 2.6); ptr.sy += (ptr.y - ptr.sy) * clamp(dt * 2.6);
+    ptr.sx += (ptr.x - ptr.sx) * clamp(dt * 1.6); ptr.sy += (ptr.y - ptr.sy) * clamp(dt * 1.6);
     const intro = reduce ? 0 : 1 - ss(clamp((performance.now() - t0 - 200) / 2000));
 
     cam.style.transform = `translate3d(${cur.x.toFixed(2)}px, ${cur.y.toFixed(2)}px, 0) scale(${cur.s.toFixed(4)})`;
