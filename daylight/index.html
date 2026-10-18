@@ -5340,12 +5340,12 @@ html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"
 .cc-ball { position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none; width: 0; height: 0; will-change: transform; --c: #13233A; --o: #fff; }
 :root[data-theme="dark"] .cc-ball { --c: #FFD86B; --o: #1A1A1A; }
 .cc-ball i { position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 1.5px var(--o); transition: scale .3s var(--ease), opacity .25s, box-shadow .25s; }
-.cc-ball.link i { scale: 2.8; opacity: .22; box-shadow: none; }
+.cc-ball.link i { scale: 2; opacity: 1; }
 .cc-ball.lbl i { scale: 4.5; opacity: .94; box-shadow: none; }
 .cc-ball b { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); font: 700 12px/1 var(--sans); color: var(--o); white-space: nowrap; opacity: 0; transition: opacity .2s; }
 .cc-ball.lbl b { opacity: 1; }
 .cc-ball.down i { scale: .75; }
-.cc-ball.link.down i { scale: 2.2; opacity: .32; }
+.cc-ball.link.down i { scale: 1.5; }
 .cc-ball.lbl.down i { scale: 3.8; }
 .cc-ball.off i, .cc-ball.off b { opacity: 0; }
 
@@ -9056,7 +9056,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
     const CLICK = 'a, button, summary, select, label, [role="button"], [data-read], [data-open], [data-case], .pin, .hot, .wk';
     const TEXT = 'input, textarea, select, [contenteditable="true"], iframe';
     // a short word on the few big targets where it isn't obvious what a click does (checked once per element, never while moving)
-    const WORDS = [['.nw-card[data-read]', 'Read'], ['.nw-ghost', 'Write'], ['.pin, .ph-pin', 'Open'], ['[data-case], .wk', 'View'], ['.sticky', 'Drag']];
+    const WORDS = [['.cs-close, .nw-x, .nw-rd-x, .wop-x, .nw-all-x, #s-x, .sheet .x, .bk-x', 'Close'], ['#jcNext', 'Next'], ['#jcPrev', 'Prev'], ['.nw-card[data-read]', 'Read'], ['.nw-ghost, #nwOpen', 'Write'], ['.pin, .ph-pin', 'Open'], ['[data-case], .wk, .jc-more, #nwView', 'View'], ['.sticky', 'Drag'], ['.theme-btn', 'Theme'], ['a[data-book]', 'Book']];
     let x = 0, y = 0, rx = 0, ry = 0, on = false, raf = 0;
     const loop = () => { rx += (x - rx) * (still ? 1 : .28); ry += (y - ry) * (still ? 1 : .28);
       ball.style.transform = `translate3d(${rx}px, ${ry}px, 0)`; raf = Math.abs(x - rx) + Math.abs(y - ry) > .2 ? requestAnimationFrame(loop) : 0; };
@@ -9064,7 +9064,9 @@ html:has(.cs.open) .sfx-btn { display: none; }
     addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; x = e.clientX; y = e.clientY;
       if (!on) { on = true; rx = x; ry = y; root.classList.add('cc'); show(true); } if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
     document.addEventListener('pointerover', e => { if (!on || e.pointerType !== 'mouse') return; const t = e.target;
-      if (t.closest && t.closest(TEXT)) { show(false); return; } show(true); const hit = t.closest && WORDS.find(([q]) => t.closest(q)); word.textContent = hit ? hit[1] : ''; ball.classList.toggle('lbl', !!hit); ball.classList.toggle('link', !hit && !!(t.closest && t.closest(CLICK))); }, true);
+      if (t.closest && t.closest(TEXT)) { show(false); return; } show(true); let hit = t.closest && WORDS.find(([q]) => t.closest(q)); let txt = hit ? hit[1] : '';
+      if (!hit && t.closest) { const b = t.closest('button, a'); if (b) { const lab = (b.getAttribute('aria-label') || b.textContent || '').trim(); if (/^(next|continue)/i.test(lab)) txt = 'Next'; else if (/^(prev|back|previous)/i.test(lab)) txt = 'Prev'; } if (txt) hit = true; }
+      word.textContent = txt; ball.classList.toggle('lbl', !!hit); ball.classList.toggle('link', !hit && !!(t.closest && t.closest(CLICK))); }, true);
     document.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') ball.classList.add('down'); }, true);
     addEventListener('pointerup', () => ball.classList.remove('down'), true);
     root.addEventListener('mouseleave', () => show(false)); root.addEventListener('mouseenter', () => on && show(true));
