@@ -2336,7 +2336,6 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 /* now playing, reachable from anywhere */
 .np { position: fixed; z-index: 70; top: calc(env(safe-area-inset-top, 0px) + 14px); right: calc(clamp(14px, 2.4vw, 28px) + 58px); height: 48px; display: inline-flex; align-items: center; gap: 10px; padding: 0 16px 0 8px; border-radius: 999px; background: rgba(255, 253, 247, .9); color: var(--ink); box-shadow: var(--shadow-sm); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); font: 700 13.5px/1 var(--sans); --c: #7B5CD6; transition: transform .4s var(--spring), opacity .4s; }
 .np[hidden] { display: none; }
-.np-t { display: none; }
 .np:hover { transform: translateY(-2px); }
 .np-d { width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(circle, #E4402A 0 26%, #1a1a1a 27% 30%, #2a2a2a 31% 45%, #151515 46% 60%, #2a2a2a 61% 75%, #111 76%); animation: rsspin 3.2s linear infinite; }
 .np.paused .np-d, .np.paused .np-b i { animation-play-state: paused; }
@@ -4170,10 +4169,10 @@ html:root .cs .cs-bar button.cs-close { width: 48px; height: 48px; padding: 0 !i
 /* phone home: one portrait painting with a tall sky for the headline, instead of the wide layered valley */
 .ph-hero { display: none; }
 @media (max-width: 859px) {
-  .ph-hero { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(180deg, rgba(16, 70, 160, .42), rgba(16, 70, 160, .12) 34%, transparent 48%), url("v2/h/phone-hero.webp") 50% 100% / cover no-repeat; }
+  .ph-hero { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(180deg, rgba(16, 70, 160, .42), rgba(16, 70, 160, .12) 34%, transparent 48%), url("v2/h/phone-day.webp") 50% 100% / cover no-repeat; }
   .stage .cam { display: none !important; }
   .stage::before { display: none !important; }
-  :root[data-theme="dark"] .ph-hero { filter: brightness(.42) saturate(.7) contrast(1.05); }
+  :root[data-theme="dark"] .ph-hero { background: linear-gradient(180deg, rgba(3, 6, 24, .5), rgba(3, 6, 24, .12) 34%, transparent 48%), url("v2/h/phone-night.webp") 50% 100% / cover no-repeat; }
 }
 
 /* case-study footer: on phones the socials are just their logos; laptops keep the labelled pills */
@@ -6202,21 +6201,20 @@ void main() {
   // phones: the portrait painting gets its own place pins, pinned to the buildings in it
   (() => {
     const ov = document.createElement('div'); ov.className = 'ph-pins';
-    const SPOTS = [['nsut', 16, 61, 'l'], ['mmt', 66.5, 54.2], ['oyo', 86.5, 47.6, 'r'], ['eazydiner', 49, 65.5], ['me', 79, 86, 'r']];
+    const SPOTS = [['nsut', 18, 46, 'l'], ['mmt', 83, 55, 'r'], ['oyo', 86, 39, 'r'], ['eazydiner', 80, 64, 'r'], ['me', 22, 67.5, 'l']];
     ov.innerHTML = SPOTS.map(([id, x, y, a]) => { const p = $(`.pin[data-id="${id}"]`, scene); if (!p) return ''; const c = p.cloneNode(true); $$('.hint', c).forEach(h => h.remove()); c.classList.add('ph-pin'); if (id === 'mmt') { const b = $('b', c), t = [...b.childNodes].reverse().find(n => n.nodeType === 3 && n.textContent.trim()); if (t) t.textContent = 'MMT'; } if (a) c.classList.add(a); c.style.left = x + '%'; c.style.top = y + '%'; return c.outerHTML; }).join('')
-      + '<button type="button" class="pin ph-pin ph-music l" style="left:16%;top:84%;--c:#7B5CD6"><b><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>Play some music</b></button>';
+    ;
     $('.ph-hero', stage).after(ov);
     $$('.ph-pin[data-id]', ov).forEach(b => b.addEventListener('click', e => { e.stopPropagation(); focusId === b.dataset.id ? unfocus() : focus(b.dataset.id); }));
     // a pin never sits on the headline or its subtitle: if it would, it hangs below its spot instead
     const clear = () => { const t = $('.hero-copy', stage); if (!t || innerWidth >= 860) return; const lim = t.getBoundingClientRect().bottom + 6;
-      $$('.ph-pin', ov).forEach(p => { p.classList.remove('down'); if (p.dataset.id !== 'oyo' && p.getBoundingClientRect().top < lim) p.classList.add('down'); });
+      $$('.ph-pin', ov).forEach(p => { p.classList.remove('down'); if (p.getBoundingClientRect().top < lim) p.classList.add('down'); });
       // and never under the bottom nav: on real phones the browser bars and home bar push the nav up over the lowest pins
       const nav = [...document.querySelectorAll('nav')].find(n => { const r = n.getBoundingClientRect(); return r.height && r.top > innerHeight * .6; });
       const floor = (nav ? nav.getBoundingClientRect().top : innerHeight - 92) - 12;
-      $$('.ph-pin', ov).forEach(p => { p.style.translate = ''; const over = p.getBoundingClientRect().bottom - floor; if (over > 0) p.style.translate = `0 ${-Math.ceil(over)}px`; }); };
+      $$('.ph-pin', ov).forEach(p => { p.style.translate = ''; const r = p.getBoundingClientRect(), over = r.bottom - floor, dx = Math.round(Math.min(0, innerWidth - 10 - r.right) + Math.max(0, 10 - r.left)); if (over > 0 || dx) p.style.translate = `${dx}px ${over > 0 ? -Math.ceil(over) : 0}px`; }); };
     addEventListener('resize', clear); addEventListener('load', clear); setTimeout(clear, 900); setTimeout(clear, 2000);
     if (window.visualViewport) visualViewport.addEventListener('resize', clear);
-    const mus = $('.ph-music', ov); mus.addEventListener('click', e => { e.stopPropagation(); const r = $('#radioPin'); if (r) r.click(); setTimeout(() => { const on = r && r.classList.contains('on'); mus.lastChild.textContent = on ? 'Now playing' : 'Play some music'; mus.classList.toggle('on', on); }, 60); });
   })();
 
   // mobile: drag to look around
@@ -9203,7 +9201,7 @@ void main() {
     const radio = $('#radio'), pinR = $('#radioPin'), np = $('#np'), lbl = $('.rpl', pinR);
     document.body.appendChild(np); // out of the top bar's layer, so it can sit above an open case study
     if (!radio || !pinR) return;
-    let ac = null, out = null, bus = null, drums = null, on = false, timer = 0, nextBeat = 0, beat = 0, stopT = 0, crackle = null, noise = null;
+    let played = false, ac = null, out = null, bus = null, drums = null, on = false, timer = 0, nextBeat = 0, beat = 0, stopT = 0, crackle = null, noise = null;
     const BPM = 78, SPB = 60 / BPM, SW = .6;
     const CH = [[50, 53, 57, 60, 64], [43, 53, 57, 59, 64], [48, 52, 55, 59, 62], [45, 52, 55, 60, 64]], ROOT = [38, 31, 36, 33];
     const PENT = [69, 72, 74, 76, 79, 81, 84];
@@ -9250,7 +9248,7 @@ void main() {
     }
     function start() {
       if (!ac) build(); if (ac.state === 'suspended') ac.resume();
-      clearTimeout(stopT); on = true; nextBeat = Math.max(nextBeat, ac.currentTime + .1);
+      clearTimeout(stopT); on = true; played = true; nextBeat = Math.max(nextBeat, ac.currentTime + .1);
       const now = ac.currentTime; out.gain.cancelScheduledValues(now); out.gain.setValueAtTime(out.gain.value, now); out.gain.linearRampToValueAtTime(.6, now + 2);
       schedule(); clearInterval(timer); timer = setInterval(schedule, 300);
       ui();
@@ -9262,13 +9260,13 @@ void main() {
     }
     function ui() {
       radio.classList.toggle('on', on); pinR.classList.toggle('on', on); pinR.setAttribute('aria-pressed', on); lbl.textContent = on ? 'Now playing' : 'Play some music';
-      np.hidden = false; np.classList.toggle('paused', !on); np.setAttribute('aria-label', on ? 'Pause music' : 'Play music'); $('.np-t', np).textContent = on ? 'Lo-fi on the hill' : 'Paused';
+      np.hidden = false; np.classList.toggle('paused', !on); const tx = on ? 'Pause' : played ? 'Play' : 'Play music'; np.setAttribute('aria-label', on ? 'Pause music' : 'Play music'); np.title = tx; $('.np-t', np).textContent = tx;
     }
     const toggle = e => { e && e.stopPropagation(); on ? stop() : start(); };
     // desktop: the play/pause button is always there, top right, just left of the badge
     const placeNp = () => { const ref = [$('.wop-badge'), $('#themeBtn')].filter(Boolean).map(b => b.getBoundingClientRect()).filter(r => r.width).sort((a, b) => a.left - b.left)[0];
       if (ref && innerWidth >= 860) np.style.right = (innerWidth - ref.left + 10) + 'px'; else np.style.right = ''; };
-    if (innerWidth >= 860) { ui(); np.classList.add('paused'); placeNp(); [200, 900, 2500].forEach(t => setTimeout(placeNp, t)); }
+    if (true) { ui(); np.classList.add('paused'); placeNp(); [200, 900, 2500].forEach(t => setTimeout(placeNp, t)); }
     addEventListener('resize', placeNp); addEventListener('load', placeNp);
     pinR.addEventListener('click', toggle); np.addEventListener('click', toggle); radio.addEventListener('click', toggle);
   })();
