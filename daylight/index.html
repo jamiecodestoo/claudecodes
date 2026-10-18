@@ -5348,6 +5348,16 @@ html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"
 .cc-ball.link.down i { scale: 2.2; opacity: .32; }
 .cc-ball.lbl.down i { scale: 3.8; }
 .cc-ball.off i, .cc-ball.off b { opacity: 0; }
+
+/* sound: a small mute toggle, bottom left */
+.sfx-btn { position: fixed; z-index: 68; left: clamp(14px, 2.4vw, 28px); bottom: 22px; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 253, 247, .86); color: var(--ink); box-shadow: 0 10px 24px -12px rgba(19, 35, 58, .45), inset 0 0 0 1px rgba(19, 35, 58, .1); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); cursor: pointer; transition: transform .3s var(--ease), background .25s; }
+.sfx-btn:hover { transform: translateY(-2px); }
+.sfx-btn svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.sfx-btn .off { display: none; }
+.sfx-btn[aria-pressed="false"] .on { display: none; } .sfx-btn[aria-pressed="false"] .off { display: inline; }
+:root[data-theme="dark"] .sfx-btn { background: rgba(42, 42, 42, .85); color: #FFD86B; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .6), inset 0 0 0 1px rgba(255, 255, 255, .12); }
+@media (max-width: 859px) { .sfx-btn { width: 38px; height: 38px; bottom: 98px; left: 14px; } }
+html:has(.cs.open) .sfx-btn { display: none; }
 /* view all notes: the secondary action next to "Write a note" */
 .nw-actions { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
 .nw-actions .nw-cta { order: 1; } .nw-actions .nw-view { order: 2; }
@@ -5385,7 +5395,8 @@ html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"
 <header class="bar">
   <button class="np" id="np" type="button" aria-label="Pause music" hidden><span class="np-d" aria-hidden="true"></span><span class="np-t">Music on the hill</span><span class="np-b" aria-hidden="true"><i></i><i></i></span></button>
 <div class="vc" id="vc" aria-live="polite"><i aria-hidden="true"></i><span><b>0</b><span class="vc-w"> visitors</span></span></div>
-    <button type="button" class="wop-badge" id="wopBadge" aria-haspopup="dialog" aria-label="Featured on Wall of Portfolios. Tap to see the badge">
+    <button type="button" class="sfx-btn" id="sfxBtn" aria-pressed="true" aria-label="Sound effects on" title="Sound on/off"><svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg><svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
+<button type="button" class="wop-badge" id="wopBadge" aria-haspopup="dialog" aria-label="Featured on Wall of Portfolios. Tap to see the badge">
   <span class="wop-in"><img class="wb-w" src="v2/wop/featured-white.svg" alt="" width="94" height="44"><img class="wb-b" src="v2/wop/featured-black.svg" alt="" width="94" height="44"><i class="wop-shine"></i></span>
   <i class="wop-ring"></i><i class="wop-sp a"></i><i class="wop-sp b"></i><i class="wop-sp c"></i>
   <span class="wop-hint" aria-hidden="true">I got featured! tap it</span>
@@ -8830,7 +8841,7 @@ html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"
       const q = new URLSearchParams({ a1: brief, hide_gdpr_banner: '1' });
       const url = `${BK_URL}?${q}`; $('.bk-out', bkEl).href = url;
       const fr = document.createElement('iframe'); fr.className = 'bk-cal'; fr.title = 'Pick a time on Calendly'; fr.src = `${url}&embed_type=Inline&embed_domain=${encodeURIComponent(location.hostname || 'jameschugh.com')}`;
-      $('.bk-slot', bkEl).replaceChildren(fr); bkEl.classList.add('cal'); $('.nw-sheet', bkEl).scrollTop = 0; });
+      $('.bk-slot', bkEl).replaceChildren(fr); bkEl.classList.add('cal'); window.__sfx && window.__sfx('bell'); $('.nw-sheet', bkEl).scrollTop = 0; });
     addEventListener('keydown', e => { if (e.key === 'Escape' && bkEl.classList.contains('open')) bkClose(); });
   };
   document.addEventListener('click', e => { const a = e.target.closest('a[data-book]'); if (!a) return; e.preventDefault(); bkLast = a; if (!bkEl) bkBuild();
@@ -9001,11 +9012,44 @@ html.cc input, html.cc textarea, html.cc select, html.cc [contenteditable="true"
     }
     if (!saved) { const id = 'local-' + body.at; localNotes = [{ id, ...body }, ...localNotes].slice(0, 5); freshId = id; try { localStorage.setItem('jc-notes', JSON.stringify(localNotes)); } catch (_) {} }
     renderWall(); go.disabled = false; nwForm.reset(); setBrand(null); nwPhoto = ''; $('#nwCount').textContent = '0 / 200';
-    $('#nwDoneT').textContent = 'Pinned, ' + name.split(/\s+/)[0] + '.'; nwForm.classList.add('done'); $('#nwDone').hidden = false; setTimeout(() => $('.nw-follow', nwForm).focus({ preventScroll: true }), 120);
+    window.__sfx && window.__sfx('pin'); $('#nwDoneT').textContent = 'Pinned, ' + name.split(/\s+/)[0] + '.'; nwForm.classList.add('done'); $('#nwDone').hidden = false; setTimeout(() => $('.nw-follow', nwForm).focus({ preventScroll: true }), 120);
   });
 
 
 
+
+
+  /* ---------- sound effects (small clips from ElevenLabs, loaded after the first tap) ---------- */
+  (() => {
+    const NAMES = { click: .5, hover: .2, open: .55, close: .45, unwrap: .6, pin: .6, bell: .55, toggle: .5, sparkle: .5 };
+    let ctx = null, master = null, bufs = {}, loading = false, last = {}, muted = false;
+    try { muted = localStorage.getItem('jc-sfx') === '0'; } catch (_) {}
+    const btn = $('#sfxBtn');
+    const paint = () => { if (!btn) return; btn.setAttribute('aria-pressed', String(!muted)); btn.setAttribute('aria-label', muted ? 'Sound effects off' : 'Sound effects on'); };
+    const load = () => { if (loading) return; loading = true;
+      try { ctx = new (window.AudioContext || window.webkitAudioContext)(); master = ctx.createGain(); master.gain.value = .9; master.connect(ctx.destination); } catch (_) { return; }
+      Object.keys(NAMES).forEach(n => fetch(`v2/sfx/${n}.mp3`).then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => ctx.decodeAudioData(b, ok, no))).then(buf => { bufs[n] = buf; }).catch(() => {})); };
+    const play = (n, opts = {}) => { if (muted || document.hidden || !ctx || !bufs[n]) return; const now = performance.now(), gap = n === 'hover' ? 130 : 45; if (last[n] && now - last[n] < gap) return; last[n] = now;
+      if (ctx.state === 'suspended') ctx.resume();
+      const src = ctx.createBufferSource(), g = ctx.createGain(); src.buffer = bufs[n]; src.playbackRate.value = n === 'click' || n === 'hover' ? .97 + Math.random() * .06 : 1; g.gain.value = (NAMES[n] || .5) * (opts.v || 1);
+      src.connect(g); g.connect(master); src.start(); };
+    window.__sfx = play;
+    const unlock = () => { load(); if (ctx && ctx.state === 'suspended') ctx.resume(); };
+    addEventListener('pointerdown', unlock, { capture: true, once: false, passive: true }); addEventListener('keydown', unlock, { capture: true, passive: true });
+    if (btn) btn.addEventListener('click', e => { e.stopPropagation(); muted = !muted; try { localStorage.setItem('jc-sfx', muted ? '0' : '1'); } catch (_) {} paint(); if (!muted) { unlock(); setTimeout(() => play('click'), 60); } });
+    paint();
+    const CLOSE = '.cs-close, .nw-x, .nw-rd-x, .wop-x, .nw-all-x, #s-x, .sheet .x, .bk-x';
+    const OPEN = '[data-case], .wk, #nwView, #nwOpen, .nw-ghost, a[data-book], .nw-card[data-read], .pin, .ph-pin';
+    const TAP = 'a, button, summary, [role="button"], label[for]';
+    document.addEventListener('click', e => { const t = e.target; if (!t.closest || t.closest('#sfxBtn, [data-nosound]')) return;
+      if (t.closest(CLOSE)) play('close'); else if (t.closest('.theme-btn')) play('toggle'); else if (t.closest('.wop-badge')) play('sparkle'); else if (t.closest('.gift-tap')) play('unwrap');
+      else if (t.closest(OPEN)) play('open'); else if (t.closest(TAP)) play('click'); }, true);
+    // hovering the portfolio: pins, cards in the box, notes
+    let lastEl = null;
+    document.addEventListener('pointerover', e => { if (e.pointerType !== 'mouse') return; const el = e.target.closest && e.target.closest('.pin:not(.ph-pin), .wk, .nw-card[data-read]'); if (el && el !== lastEl) play('hover'); lastEl = el || null; }, true);
+    // the gift in the stack section unwraps on its own as well as on tap
+    const gs = $('#giftStage'); if (gs && window.MutationObserver) new MutationObserver(() => { if (gs.classList.contains('open')) play('unwrap'); }).observe(gs, { attributes: true, attributeFilter: ['class'] });
+  })();
 
   /* ---------- custom cursor (mouse only) ---------- */
   (() => {
