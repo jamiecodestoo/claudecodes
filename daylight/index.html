@@ -102,12 +102,13 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .scene.focusing .ly.on > img { filter: brightness(1.06) saturate(1.12) drop-shadow(0 0 18px rgba(255, 244, 200, .9)); }
 .ly.lift > img { transform: translateY(-1.2%); }
 /* the sunset landscape: one painted plate; picking a place lights that building up and dims the rest */
+.ly[data-id="radio"] { display: none; }   /* music lives in the top-right button */
 .ly > .plate { left: 0; top: 0; width: 100%; height: 100%; }
 /* the painting is drawn by a depth-aware shader (real parallax and a sharp zoom); the plain image is only the fallback */
 .gl-plate { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1s var(--ease), filter .9s var(--ease); pointer-events: none; }
 .gl-plate.on { opacity: 1; }
 .scene.gl .plate { visibility: hidden; }
-:root[data-theme="dark"] .gl-plate { filter: brightness(.6) saturate(.82) contrast(1.05); }
+:root[data-theme="dark"] .gl-plate:not(.nt) { filter: brightness(.6) saturate(.82) contrast(1.05); }
 @media (max-width: 859px) { .gl-plate { display: none; } }
 .scene.focusing .plate { filter: saturate(.55) brightness(.86) contrast(.94); }
 .ly > .plate { transition: filter .9s var(--ease); }
@@ -2335,12 +2336,14 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 /* now playing, reachable from anywhere */
 .np { position: fixed; z-index: 70; top: calc(env(safe-area-inset-top, 0px) + 14px); right: calc(clamp(14px, 2.4vw, 28px) + 58px); height: 48px; display: inline-flex; align-items: center; gap: 10px; padding: 0 16px 0 8px; border-radius: 999px; background: rgba(255, 253, 247, .9); color: var(--ink); box-shadow: var(--shadow-sm); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); font: 700 13.5px/1 var(--sans); --c: #7B5CD6; transition: transform .4s var(--spring), opacity .4s; }
 .np[hidden] { display: none; }
+.np-t { display: none; }
 .np:hover { transform: translateY(-2px); }
 .np-d { width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(circle, #E4402A 0 26%, #1a1a1a 27% 30%, #2a2a2a 31% 45%, #151515 46% 60%, #2a2a2a 61% 75%, #111 76%); animation: rsspin 3.2s linear infinite; }
 .np.paused .np-d, .np.paused .np-b i { animation-play-state: paused; }
 .np-b { display: inline-flex; align-items: flex-end; gap: 3px; height: 14px; }
 .np-b i { height: 14px; transform-origin: 50% 100%; } .np-b i:nth-child(2) { animation-delay: .35s; }
-.np.paused .np-b { gap: 4px; } .np.paused .np-b i { animation: none; transform: none; height: 13px; width: 4px; }
+.np.paused .np-b { gap: 0; } .np.paused .np-b i { display: none; }
+.np.paused .np-b::before { content: ""; border-left: 11px solid #7B5CD6; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 2px; }
 .np:not(.paused) .np-b i { width: 3px; }
 @media (max-width: 860px) { .np { right: calc(clamp(14px, 2.4vw, 28px) + 56px); padding-right: 12px; } .np-t { display: none; } }
 :root[data-theme="dark"] .np { background: rgba(42, 42, 42, .88); color: #F5F5F5; box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 10px 30px -10px rgba(0, 0, 0, .6); }
@@ -5416,7 +5419,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
 
 <script>(() => { let t = null; try { t = localStorage.getItem('jc-theme'); } catch (_) {} document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();</script>
 <header class="bar">
-  <button class="np" id="np" type="button" aria-label="Pause music" hidden><span class="np-d" aria-hidden="true"></span><span class="np-t">Music on the hill</span><span class="np-b" aria-hidden="true"><i></i><i></i></span></button>
+  <button class="np" id="np" type="button" aria-label="Play music" title="Play music"><span class="np-d" aria-hidden="true"></span><span class="np-t">Music on the hill</span><span class="np-b" aria-hidden="true"><i></i><i></i></span></button>
 <div class="vc" id="vc" aria-live="polite"><i aria-hidden="true"></i><span><b>0</b><span class="vc-w"> visitors</span></span></div>
     <button type="button" class="sfx-btn" id="sfxBtn" aria-pressed="true" aria-label="Sound effects on" title="Sound on/off"><svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg><svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
 <button type="button" class="wop-badge" id="wopBadge" aria-haspopup="dialog" aria-label="Featured on Wall of Portfolios. Tap to see the badge">
@@ -5453,27 +5456,11 @@ html:has(.cs.open) .sfx-btn { display: none; }
         <div class="ly" data-d=".5" data-id="nsut"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:4%;top:29.3%;width:14.5%;height:21.3%"></button><button class="pin" data-id="nsut" style="left:12%;top:48%;--c:#C4553A"><b><img src="v2/s/logo-nsut.webp" alt="">NSUT<small class="pyr">2021</small></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".62" data-id="eazydiner"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:72.5%;top:60.4%;width:17.5%;height:15.1%"></button><button class="pin" data-id="eazydiner" style="left:80.5%;top:62.5%;--c:#EE5A2B"><span class="hint" id="hint" aria-hidden="true">click a place<svg viewBox="0 0 40 22"><path d="M3 6C14 2 26 6 37 14M37 14l-9-1M37 14l-3-8"/></svg></span><b><img src="v2/s/logo-eazydiner.webp" alt="">EazyDiner<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d="1" data-id="radio"><div class="radio" id="radio" style="left:7%;top:69.5%;width:5.2%"><img class="rs" src="v2/h/gramophone.png" alt="" draggable="false"><span class="rn" aria-hidden="true"><i>♪</i><i>♫</i><i>♪</i><i>♬</i></span></div><button class="pin rpin" id="radioPin" style="left:7.2%;top:54.5%;--c:#7B5CD6" aria-pressed="false"><b><span class="rpi"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><span class="rpl">Play some music</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".97" data-id="me"><button class="hot" data-id="me" aria-label="About me" style="left:7.5%;top:58.6%;width:30.5%;height:30.2%"></button><button class="pin" data-id="me" style="left:17.5%;top:62%;--c:#F2B705"><b><img src="v2/s/photo.webp" alt="">That’s me</b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".97" data-id="me"><button class="hot" data-id="me" aria-label="About me" style="left:7.5%;top:58.6%;width:30.5%;height:30.2%"></button><button class="pin" data-id="me" style="left:17.5%;top:62%;--c:#F2B705"><b><img src="v2/s/photo.webp" alt="">Me</b><i class="pd" aria-hidden="true"></i></button></div>
       </div>
     </div>
 
     <div class="sky-birds" id="skyBirds" aria-hidden="true"></div>
-    <div class="sky-plane" aria-hidden="true"><div class="sp-in"><div class="sp-ban"><svg class="sp-rope" viewBox="0 0 40 20" preserveAspectRatio="none"><path d="M0 10 L40 10"/></svg><div class="sp-flag"><span>Welcome to my dream place</span></div></div>
-      <svg viewBox="0 0 150 60">
-        <defs><linearGradient id="spBody" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FFF7E6"/><stop offset=".6" stop-color="#EADFC8"/><stop offset="1" stop-color="#C9B999"/></linearGradient>
-        <linearGradient id="spWing" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F3E8D2"/><stop offset="1" stop-color="#BFAE8C"/></linearGradient></defs>
-        <path d="M22 26c10-3 20-4 30-4h52c12 0 22 3 29 8 2 1 2 3 0 4-7 5-17 8-29 8H50c-12 0-22-2-30-6-4-2-5-7 2-10z" fill="url(#spBody)"/>
-        <path d="M26 33c18 4 40 5 64 5h20c10 0 18-2 24-5" stroke="#D2483A" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-        <path d="M30 37c16 3 36 4 58 4h22c8 0 15-1 20-3" stroke="#2F5D96" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
-        <path d="M14 13l12 13h14L28 9c-3-3-10-2-14 4z" fill="url(#spWing)"/><path d="M15 13c4-4 9-4 12-2" stroke="#D2483A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-        <path d="M58 33l16 22c2 2 6 3 9 2l4-2-10-22z" fill="url(#spWing)"/><path d="M66 44l8 11" stroke="#D2483A" stroke-width="2" opacity=".8"/>
-        <path d="M60 31l12-14c2-2 6-3 8-2l3 1-8 15z" fill="#B9A986" opacity=".85"/>
-        <path d="M98 24c4-4 10-5 15-4 5 1 9 3 11 6l-24 1z" fill="#3E6FA6" opacity=".85"/><path d="M101 24c3-2 7-3 11-3" stroke="#fff" stroke-width="1.2" opacity=".6" fill="none" stroke-linecap="round"/>
-        <circle cx="86" cy="29" r="2.2" fill="#3E6FA6"/><circle cx="78" cy="29" r="2.2" fill="#3E6FA6"/><circle cx="70" cy="29" r="2.2" fill="#3E6FA6"/>
-        <path d="M133 26c3 1 4 4 4 6s-1 4-4 5z" fill="#8C7A5A"/>
-        <ellipse class="sp-prop" cx="138" cy="31.5" rx="2" ry="13" fill="#5B5145" opacity=".38"/>
-        <circle class="sp-l" cx="83" cy="56" r="1.8" fill="#FF5A4A"/><circle class="sp-l g" cx="14" cy="12" r="1.8" fill="#7CFFB0"/>
-      </svg></div></div>
     <div class="hero-copy" id="heroCopy">
       <p class="hey"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M9 17c-2-3-3-6-1-7s3 2 4 4M11 13l-2-6c-1-2 2-3 3-1l3 7M14 12l-1-6c0-2 3-2 3 0l1 6M17 12v-4c0-2 3-2 3 0v8c0 5-3 9-8 9-3 0-5-2-6-5" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><path d="M23 6c2 1 3 3 3 5M5 7C4 9 3 10 3 12" stroke="#FFD23F" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>hey, I'm James</p>
       <h1>
@@ -6049,7 +6036,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
   /* the painting is a WebGL plate: a 4000px texture with mipmaps (a zoom stays sharp) and a hand-built depth map, so the pointer and the scroll move near things more than far ones */
   const AR = 2000 / 1126, PAR = [.012, .006], FOC = [.52, .58];
   const SPOT = { nsut: [.115, .41, .10, .13], oyo: [.92, .31, .10, .12], mmt: [.71, .43, .07, .08], eazydiner: [.81, .67, .10, .09], me: [.19, .76, .17, .17] };
-  const glc = $('#glPlate'); let glKey = '', gl = null, glU = null, glReady = false, fa = 0, hspot = SPOT.eazydiner;
+  const glc = $('#glPlate'); let glKey = '', nightLoad = null, nightReady = false, nf = 0, gl = null, glU = null, glReady = false, fa = 0, hspot = SPOT.eazydiner;
   const gain = (e, d) => 1 + e * (.02 + d * .12);
   (function initGL() {
     if (matchMedia('(max-width: 859px)').matches) { addEventListener('resize', () => { if (!gl && innerWidth >= 860) initGL(); }); }
@@ -6062,7 +6049,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
 in vec2 p; void main() { gl_Position = vec4(p, 0., 1.); }`));
       g.attachShader(pr, sh(g.FRAGMENT_SHADER, `#version 300 es
 precision highp float;
-uniform sampler2D uTex, uDep; uniform vec2 uRes, uSize, uOff; uniform vec3 uCam; uniform float uE, uDpr, uFocus; uniform vec4 uSpot;
+uniform sampler2D uTex, uTexN, uDep; uniform vec2 uRes, uSize, uOff; uniform vec3 uCam; uniform float uE, uDpr, uFocus, uNight; uniform vec4 uSpot;
 out vec4 o;
 const vec2 F = vec2(.52, .58);
 float gn(float d) { return 1. + uE * (.02 + d * .12); }
@@ -6076,7 +6063,9 @@ void main() {
   // past the painting's edge the picture simply continues, mirrored, so there is no blurred band
   vec2 oo = max(max(-c, c - 1.), 0.);
   vec2 mc = 1. - abs(1. - mod(c, 2.));
-  vec3 col = textureLod(uTex, mc, clamp(max(oo.x, oo.y) * 110., 0., 4.)).rgb;
+  float bias = clamp(max(oo.x, oo.y) * 110., 0., 4.);
+  vec3 col = texture(uTex, mc, bias).rgb;
+  if (uNight > .001) col = mix(col, texture(uTexN, mc, bias).rgb, uNight);
   float m = 1. - smoothstep(.58, 1., length((c - uSpot.xy) / uSpot.zw));
   float l = dot(col, vec3(.299, .587, .114));
   vec3 dim = mix(vec3(l), col, .55) * .86, lit = mix(vec3(l), col, 1.12) * 1.06;
@@ -6087,7 +6076,7 @@ void main() {
       g.useProgram(pr);
       g.bindBuffer(g.ARRAY_BUFFER, g.createBuffer()); g.bufferData(g.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), g.STATIC_DRAW);
       const a = g.getAttribLocation(pr, 'p'); g.enableVertexAttribArray(a); g.vertexAttribPointer(a, 2, g.FLOAT, false, 0, 0);
-      glU = {}; ['uTex', 'uDep', 'uRes', 'uSize', 'uOff', 'uCam', 'uE', 'uDpr', 'uFocus', 'uSpot'].forEach(n => glU[n] = g.getUniformLocation(pr, n));
+      glU = {}; ['uTex', 'uTexN', 'uDep', 'uRes', 'uSize', 'uOff', 'uCam', 'uE', 'uDpr', 'uFocus', 'uNight', 'uSpot'].forEach(n => glU[n] = g.getUniformLocation(pr, n));
       const load = (src, unit, mips) => fetch(src).then(r => r.blob()).then(b => createImageBitmap(b, { imageOrientation: 'none', premultiplyAlpha: 'none' })).then(bm => {
         const t = g.createTexture(); g.activeTexture(g.TEXTURE0 + unit); g.bindTexture(g.TEXTURE_2D, t);
         g.texImage2D(g.TEXTURE_2D, 0, g.RGBA, g.RGBA, g.UNSIGNED_BYTE, bm);
@@ -6098,9 +6087,12 @@ void main() {
         else g.texParameteri(g.TEXTURE_2D, g.TEXTURE_MIN_FILTER, g.LINEAR);
         bm.close && bm.close();
       });
-      g.uniform1i(glU.uTex, 0); g.uniform1i(glU.uDep, 1);
+      g.uniform1i(glU.uTex, 0); g.uniform1i(glU.uDep, 1); g.uniform1i(glU.uTexN, 2);
       gl = g;
-      Promise.all([load('v2/h/plate.webp', 0, true), load('v2/h/depth2.png', 1, false)]).then(() => { glReady = true; scene.classList.add('gl'); sizeGL(); glc.classList.add('on'); })
+      Promise.all([load('v2/h/plate.webp', 0, true), load('v2/h/depth2.png', 1, false)]).then(() => { glReady = true; scene.classList.add('gl'); sizeGL(); glc.classList.add('on');
+        // the night painting loads once it is wanted (or a few seconds after the day one)
+        const wantN = () => { if (nightLoad) return; nightLoad = load('v2/h/plate-night.webp', 2, true).then(() => { nightReady = true; glc.classList.add('nt'); }).catch(() => {}); };
+        if (document.documentElement.dataset.theme === 'dark') wantN(); else setTimeout(wantN, 3500); addEventListener('themechange', wantN); })
         .catch(() => { gl = null; });
     } catch (err) { console.warn('plate shader', err); gl = null; }
   })();
@@ -6112,13 +6104,14 @@ void main() {
     if (!gl || !glReady || mobile) return;
     const dpr = glc.width / vw;
     fa += ((focusId ? 1 : 0) - fa) * (reduce ? 1 : clamp(dt * 3.2));
+    nf += ((nightReady && document.documentElement.dataset.theme === 'dark' ? 1 : 0) - nf) * (reduce ? 1 : clamp(dt * 3));
     if (focusId && SPOT[focusId]) hspot = SPOT[focusId];
-    const key = [cur.x, cur.y, cur.s, SW, px, py, e, fa, glc.width, glc.height, hspot[0]].map(v => v.toFixed(3)).join();
+    const key = [cur.x, cur.y, cur.s, SW, px, py, e, fa, nf, glc.width, glc.height, hspot[0]].map(v => v.toFixed(3)).join();
     if (key === glKey) return; glKey = key;   // nothing moved: leave the last picture on screen
     gl.uniform2f(glU.uRes, glc.width, glc.height); gl.uniform1f(glU.uDpr, dpr);
     gl.uniform3f(glU.uCam, cur.x, cur.y, cur.s); gl.uniform2f(glU.uSize, SW, SH);
     gl.uniform2f(glU.uOff, -px * PAR[0] * (1 - fa), -py * PAR[1] * (1 - fa) * (SW / SH)); gl.uniform1f(glU.uE, e);
-    gl.uniform1f(glU.uFocus, fa); gl.uniform4f(glU.uSpot, hspot[0], hspot[1], hspot[2], hspot[3]);
+    gl.uniform1f(glU.uFocus, fa); gl.uniform1f(glU.uNight, nf); gl.uniform4f(glU.uSpot, hspot[0], hspot[1], hspot[2], hspot[3]);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
@@ -9091,7 +9084,7 @@ void main() {
 
   /* ---------- sound effects (small clips from ElevenLabs, loaded after the first tap) ---------- */
   (() => {
-    const NAMES = { click: 1, hover: .35, open: .55, close: .6, pin: .6, bell: .55, toggle: .65, sparkle: .5 }, WAV = { click: 1, hover: 1, close: 1, toggle: 1 };
+    const NAMES = { click: 1, hover: .35, close: .6, pin: .6, bell: .55, toggle: .65 }, WAV = { click: 1, hover: 1, close: 1, toggle: 1 };
     let ctx = null, master = null, bufs = {}, loading = false, last = {}, muted = false;
     try { muted = localStorage.getItem('jc-sfx') === '0'; } catch (_) {}
     const btn = $('#sfxBtn');
@@ -9109,10 +9102,9 @@ void main() {
     if (btn) btn.addEventListener('click', e => { e.stopPropagation(); muted = !muted; try { localStorage.setItem('jc-sfx', muted ? '0' : '1'); } catch (_) {} paint(); if (!muted) { unlock(); setTimeout(() => play('click'), 60); } });
     paint();
     const CLOSE = '.cs-close, .nw-x, .nw-rd-x, .wop-x, .nw-all-x, #s-x, .sheet .x, .bk-x';
-    const OPEN = '[data-case], .wk, a[data-book], .pin, .ph-pin';   // notes and the notes buttons just get the plain click
     const TAP = 'a, button, summary, [role="button"], label[for]';
     document.addEventListener('click', e => { const t = e.target; if (!t.closest || t.closest('#sfxBtn, [data-nosound]')) return;
-      if (t.closest(CLOSE)) play('close'); else if (t.closest('.theme-btn')) play('toggle'); else if (t.closest('.wop-badge')) play('sparkle'); else if (t.closest(OPEN)) play('open'); else if (t.closest(TAP)) play('click'); }, true);
+      if (t.closest(CLOSE)) play('close'); else if (t.closest('.theme-btn')) play('toggle'); else if (t.closest(TAP)) play('click'); }, true);
     // hovering the portfolio: map pins and the cards in the box
     let lastEl = null;
     document.addEventListener('pointerover', e => { if (e.pointerType !== 'mouse') return; const el = e.target.closest && e.target.closest('.pin:not(.ph-pin), .wk'); if (el && el !== lastEl) play('hover'); lastEl = el || null; }, true);
@@ -9273,6 +9265,11 @@ void main() {
       np.hidden = false; np.classList.toggle('paused', !on); np.setAttribute('aria-label', on ? 'Pause music' : 'Play music'); $('.np-t', np).textContent = on ? 'Lo-fi on the hill' : 'Paused';
     }
     const toggle = e => { e && e.stopPropagation(); on ? stop() : start(); };
+    // desktop: the play/pause button is always there, top right, just left of the badge
+    const placeNp = () => { const ref = [$('.wop-badge'), $('#themeBtn')].filter(Boolean).map(b => b.getBoundingClientRect()).filter(r => r.width).sort((a, b) => a.left - b.left)[0];
+      if (ref && innerWidth >= 860) np.style.right = (innerWidth - ref.left + 10) + 'px'; else np.style.right = ''; };
+    if (innerWidth >= 860) { ui(); np.classList.add('paused'); placeNp(); [200, 900, 2500].forEach(t => setTimeout(placeNp, t)); }
+    addEventListener('resize', placeNp); addEventListener('load', placeNp);
     pinR.addEventListener('click', toggle); np.addEventListener('click', toggle); radio.addEventListener('click', toggle);
   })();
 
