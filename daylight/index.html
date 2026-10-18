@@ -92,7 +92,7 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .valley { position: relative; height: 260vh; }
 .stage .shade { position: absolute; z-index: 4; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(180deg, rgba(255, 248, 236, 0) 30%, rgba(255, 248, 236, .55)); }
 .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; overflow: clip; background: #2c7fd6; touch-action: pan-y; }
-.cam { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.cam { position: absolute; z-index: 2; left: 0; top: 0; transform-origin: 0 0; }
 .scene { position: absolute; inset: 0; }
 .scene > .bgp { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .ly { position: absolute; inset: 0; pointer-events: none; transform-origin: var(--fo, 52% 58%); }
@@ -102,10 +102,13 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .scene.focusing .ly.on > img { filter: brightness(1.06) saturate(1.12) drop-shadow(0 0 18px rgba(255, 244, 200, .9)); }
 .ly.lift > img { transform: translateY(-1.2%); }
 /* the sunset landscape: one painted plate; picking a place lights that building up and dims the rest */
-.ly > .plate, .ly > .spot { left: 0; top: 0; width: 100%; height: 100%; }
-.ly > .spot { opacity: 0; transition: opacity .55s var(--ease), filter .9s var(--ease); -webkit-mask-image: radial-gradient(ellipse var(--rx) var(--ry) at var(--cx) var(--cy), #000 58%, transparent 100%); mask-image: radial-gradient(ellipse var(--rx) var(--ry) at var(--cx) var(--cy), #000 58%, transparent 100%); }
-.ly.on > .spot { opacity: 1; }
-.ly.lift > .spot { transform: none; }
+.ly > .plate { left: 0; top: 0; width: 100%; height: 100%; }
+/* the painting is drawn by a depth-aware shader (real parallax and a sharp zoom); the plain image is only the fallback */
+.gl-plate { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1s var(--ease), filter .9s var(--ease); pointer-events: none; }
+.gl-plate.on { opacity: 1; }
+.scene.gl .plate { visibility: hidden; }
+:root[data-theme="dark"] .gl-plate { filter: brightness(.6) saturate(.82) contrast(1.05); }
+@media (max-width: 859px) { .gl-plate { display: none; } }
 .scene.focusing .plate { filter: saturate(.55) brightness(.86) contrast(.94); }
 .ly > .plate { transition: filter .9s var(--ease); }
 :root[data-theme="dark"] .plate { filter: brightness(.6) saturate(.82) contrast(1.05); }
@@ -113,7 +116,7 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 /* a soft dark gradient behind the headline so white type reads on the bright clouds (desktop only); it sits in the scene, under the pins */
 .hero-scrim { display: none; }
 @media (min-width: 860px) {
-  .hero-scrim { display: block; position: absolute; inset: 0; pointer-events: none; will-change: opacity;
+  .hero-scrim { display: block; position: absolute; inset: 0; z-index: 1; pointer-events: none; will-change: opacity;
     background: radial-gradient(62% 58% at 22% 20%, rgba(8, 18, 42, .64) 0%, rgba(8, 18, 42, .4) 38%, rgba(8, 18, 42, .12) 68%, transparent 84%), linear-gradient(180deg, rgba(8, 18, 42, .32), transparent 20%); }
 }
 
@@ -1977,7 +1980,6 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 .night { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; background: linear-gradient(180deg, transparent 40%, rgba(12, 12, 14, .35) 100%); }
 :root[data-theme="dark"] .night { opacity: 1; }
 .night i { display: none; }
-:root[data-theme="dark"] .scene { background: linear-gradient(180deg, #09090B 0%, #121215 30%, #1D1D22 52%, #2A2A31 62%, #17171A 100%); }
 :root[data-theme="dark"] .scene > .bgp, :root[data-theme="dark"] #L-sky > img { opacity: 0; }
 :root[data-theme="dark"] #L-sky::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 58%; animation: twinkle 4s ease-in-out infinite alternate; background-image:
   radial-gradient(1.6px 1.6px at 6% 12%, #fff, transparent), radial-gradient(1px 1px at 11% 30%, #fff, transparent), radial-gradient(1.3px 1.3px at 17% 6%, #fff, transparent), radial-gradient(1px 1px at 23% 22%, #fff, transparent),
@@ -5440,16 +5442,17 @@ html:has(.cs.open) .sfx-btn { display: none; }
 <section class="valley" id="top" aria-label="The valley">
   <div class="stage" id="stage">
     <div class="ph-hero" aria-hidden="true"></div>
+    <canvas class="gl-plate" id="glPlate" aria-hidden="true"></canvas>
+    <div class="hero-scrim" id="heroScrim" aria-hidden="true"></div>
     <div class="cam" id="cam">
       <div class="scene" id="scene">
-        <div class="ly keep" data-d=".07" id="L-plate"><img class="plate" src="v2/h/master5.webp" alt="Painted sunset valley: a college with a clock tower, a lake, a hillside hotel and a cafe, with a person and a golden retriever on a stone terrace"></div>
-        <div class="ly keep" data-d="0" id="L-scrim"><div class="hero-scrim" id="heroScrim" aria-hidden="true"></div></div>
-        <div class="ly" data-d=".07" data-id="oyo"><img class="spot" src="v2/h/master5.webp" alt="" style="--cx:92%;--cy:31%;--rx:10%;--ry:11%"><button class="hot" data-id="oyo" aria-label="OYO, the hotel on the hill" style="left:84.5%;top:22.5%;width:15%;height:17%"></button><button class="pin" data-id="oyo" style="left:86.7%;top:27.1%;--c:#DC402A"><b><img src="v2/s/logo-oyo.webp" alt="">OYO<small class="pyr">Now</small></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".07" data-id="mmt"><img class="spot" src="v2/h/master5.webp" alt="" style="--cx:70%;--cy:44%;--rx:7.5%;--ry:8%"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:64.2%;top:38.5%;width:11.4%;height:11%"></button><button class="pin" data-id="mmt" style="left:70%;top:39.5%;--c:#E4262C"><b><img src="v2/s/logo-mmt.webp" alt="">MakeMyTrip<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".07" data-id="nsut"><img class="spot" src="v2/h/master5.webp" alt="" style="--cx:11%;--cy:40%;--rx:9%;--ry:13%"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:3.9%;top:30%;width:14.4%;height:21%"></button><button class="pin" data-id="nsut" style="left:13.5%;top:47%;--c:#C4553A"><b><img src="v2/s/logo-nsut.webp" alt="">NSUT<small class="pyr">2021</small></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".07" data-id="eazydiner"><img class="spot" src="v2/h/master5.webp" alt="" style="--cx:80.5%;--cy:68%;--rx:10%;--ry:9%"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:72.5%;top:60%;width:17%;height:15%"></button><button class="pin" data-id="eazydiner" style="left:80.1%;top:61.6%;--c:#EE5A2B"><span class="hint" id="hint" aria-hidden="true">click a place<svg viewBox="0 0 40 22"><path d="M3 6C14 2 26 6 37 14M37 14l-9-1M37 14l-3-8"/></svg></span><b><img src="v2/s/logo-eazydiner.webp" alt="">EazyDiner<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".07" data-id="radio"><div class="radio" id="radio" style="left:37.5%;top:87.9%;width:7.2%"><img class="rs" src="v2/h/gramophone.png" alt="" draggable="false"><span class="rn" aria-hidden="true"><i>♪</i><i>♫</i><i>♪</i><i>♬</i></span></div><button class="pin rpin" id="radioPin" style="left:37.5%;top:76%;--c:#7B5CD6" aria-pressed="false"><b><span class="rpi"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><span class="rpl">Play some music</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".07" data-id="me"><img class="spot" src="v2/h/master5.webp" alt="" style="--cx:22%;--cy:72%;--rx:17%;--ry:17%"><button class="hot" data-id="me" aria-label="About me" style="left:7.5%;top:58%;width:29%;height:30%"></button><button class="pin" data-id="me" style="left:17.3%;top:59.2%;--c:#F2B705"><b><img src="v2/s/photo.webp" alt="">That’s me</b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly keep" data-d=".3" id="L-plate"><img class="plate" src="v2/h/plate.webp" alt="Painted sunset valley: a college with a clock tower, a lake, a hillside hotel and a cafe, with a person and a golden retriever on a stone terrace"></div>
+        <div class="ly" data-d=".5" data-id="oyo"><button class="hot" data-id="oyo" aria-label="OYO, the hotel on the hill" style="left:85%;top:21.8%;width:14.2%;height:18.2%"></button><button class="pin" data-id="oyo" style="left:89%;top:28%;--c:#DC402A"><b><img src="v2/s/logo-oyo.webp" alt="">OYO<small class="pyr">Now</small></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".5" data-id="mmt"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:64%;top:38.2%;width:11.5%;height:10.2%"></button><button class="pin" data-id="mmt" style="left:71%;top:41%;--c:#E4262C"><b><img src="v2/s/logo-mmt.webp" alt="">MakeMyTrip<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".5" data-id="nsut"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:4%;top:29.3%;width:14.5%;height:21.3%"></button><button class="pin" data-id="nsut" style="left:12%;top:48%;--c:#C4553A"><b><img src="v2/s/logo-nsut.webp" alt="">NSUT<small class="pyr">2021</small></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".62" data-id="eazydiner"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:72.5%;top:60.4%;width:17.5%;height:15.1%"></button><button class="pin" data-id="eazydiner" style="left:80.5%;top:62.5%;--c:#EE5A2B"><span class="hint" id="hint" aria-hidden="true">click a place<svg viewBox="0 0 40 22"><path d="M3 6C14 2 26 6 37 14M37 14l-9-1M37 14l-3-8"/></svg></span><b><img src="v2/s/logo-eazydiner.webp" alt="">EazyDiner<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d="1" data-id="radio"><div class="radio" id="radio" style="left:60%;top:92.5%;width:6.4%"><img class="rs" src="v2/h/gramophone.png" alt="" draggable="false"><span class="rn" aria-hidden="true"><i>♪</i><i>♫</i><i>♪</i><i>♬</i></span></div><button class="pin rpin" id="radioPin" style="left:60%;top:81%;--c:#7B5CD6" aria-pressed="false"><b><span class="rpi"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><span class="rpl">Play some music</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".97" data-id="me"><button class="hot" data-id="me" aria-label="About me" style="left:7.5%;top:58.6%;width:30.5%;height:30.2%"></button><button class="pin" data-id="me" style="left:17.5%;top:62%;--c:#F2B705"><b><img src="v2/s/photo.webp" alt="">That’s me</b><i class="pd" aria-hidden="true"></i></button></div>
       </div>
     </div>
 
@@ -6042,20 +6045,101 @@ html:has(.cs.open) .sfx-btn { display: none; }
   document.addEventListener('visibilitychange', () => { if (!document.hidden) cueArm(); });
   cueArm(Math.max(0, 4000 - performance.now()));
 
+  /* the painting is a WebGL plate: a 4000px texture with mipmaps (a zoom stays sharp) and a hand-built depth map, so the pointer and the scroll move near things more than far ones */
+  const AR = 2000 / 1126, PAR = [.048, .024], FOC = [.52, .58];
+  const SPOT = { nsut: [.115, .41, .10, .13], oyo: [.92, .31, .10, .12], mmt: [.71, .43, .07, .08], eazydiner: [.81, .67, .10, .09], me: [.19, .76, .17, .17] };
+  const glc = $('#glPlate'); let gl = null, glU = null, glReady = false, fa = 0, hspot = SPOT.eazydiner;
+  const gain = (e, d) => 1 + e * (.04 + d * .26);
+  (function initGL() {
+    if (matchMedia('(max-width: 859px)').matches) { addEventListener('resize', () => { if (!gl && innerWidth >= 860) initGL(); }); }
+    let g; try { g = glc.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'high-performance' }); } catch (_) {}
+    if (!g) return;
+    const sh = (t, src) => { const o = g.createShader(t); g.shaderSource(o, src); g.compileShader(o); if (!g.getShaderParameter(o, g.COMPILE_STATUS)) throw new Error(g.getShaderInfoLog(o)); return o; };
+    try {
+      const pr = g.createProgram();
+      g.attachShader(pr, sh(g.VERTEX_SHADER, `#version 300 es
+in vec2 p; void main() { gl_Position = vec4(p, 0., 1.); }`));
+      g.attachShader(pr, sh(g.FRAGMENT_SHADER, `#version 300 es
+precision highp float;
+uniform sampler2D uTex, uDep; uniform vec2 uRes, uSize, uOff; uniform vec3 uCam; uniform float uE, uDpr, uFocus; uniform vec4 uSpot;
+out vec4 o;
+const vec2 F = vec2(.52, .58);
+float gn(float d) { return 1. + uE * (.04 + d * .26); }
+void main() {
+  vec2 css = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;
+  vec2 uv = ((css - uCam.xy) / uCam.z) / uSize;
+  float edge = min(min(uv.x, 1. - uv.x), min(uv.y, 1. - uv.y));
+  vec2 off = uOff * smoothstep(0., .05, edge);
+  vec2 c = uv;
+  for (int i = 0; i < 4; i++) { float d = texture(uDep, clamp(c, 0., 1.)).r; c = F + (uv - off * (d - .45) - F) / gn(d); }
+  vec3 col = texture(uTex, clamp(c, 0., 1.)).rgb;
+  vec2 sc = css / (uRes / uDpr);
+  float va = uRes.x / uRes.y; vec2 scl = va < ${AR.toFixed(5)} ? vec2(va / ${AR.toFixed(5)}, 1.) : vec2(1., ${AR.toFixed(5)} / va);
+  vec2 bu = (sc - .5) * scl * .8 + .5;
+  vec3 bd = textureLod(uTex, vec2(bu.x, bu.y), 6.).rgb * .78;
+  float inside = smoothstep(0., .004, min(min(c.x, 1. - c.x), min(c.y, 1. - c.y)));
+  col = mix(bd, col, inside);
+  float m = 1. - smoothstep(.58, 1., length((c - uSpot.xy) / uSpot.zw));
+  float l = dot(col, vec3(.299, .587, .114));
+  vec3 dim = mix(vec3(l), col, .55) * .86, lit = mix(vec3(l), col, 1.12) * 1.06;
+  col = mix(col, mix(dim, lit, m), uFocus);
+  o = vec4(col, 1.);
+}`));
+      g.linkProgram(pr); if (!g.getProgramParameter(pr, g.LINK_STATUS)) throw new Error(g.getProgramInfoLog(pr));
+      g.useProgram(pr);
+      g.bindBuffer(g.ARRAY_BUFFER, g.createBuffer()); g.bufferData(g.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), g.STATIC_DRAW);
+      const a = g.getAttribLocation(pr, 'p'); g.enableVertexAttribArray(a); g.vertexAttribPointer(a, 2, g.FLOAT, false, 0, 0);
+      glU = {}; ['uTex', 'uDep', 'uRes', 'uSize', 'uOff', 'uCam', 'uE', 'uDpr', 'uFocus', 'uSpot'].forEach(n => glU[n] = g.getUniformLocation(pr, n));
+      const load = (src, unit, mips) => fetch(src).then(r => r.blob()).then(b => createImageBitmap(b, { imageOrientation: 'none', premultiplyAlpha: 'none' })).then(bm => {
+        const t = g.createTexture(); g.activeTexture(g.TEXTURE0 + unit); g.bindTexture(g.TEXTURE_2D, t);
+        g.texImage2D(g.TEXTURE_2D, 0, g.RGBA, g.RGBA, g.UNSIGNED_BYTE, bm);
+        g.texParameteri(g.TEXTURE_2D, g.TEXTURE_WRAP_S, g.CLAMP_TO_EDGE); g.texParameteri(g.TEXTURE_2D, g.TEXTURE_WRAP_T, g.CLAMP_TO_EDGE);
+        g.texParameteri(g.TEXTURE_2D, g.TEXTURE_MAG_FILTER, g.LINEAR);
+        if (mips) { g.generateMipmap(g.TEXTURE_2D); g.texParameteri(g.TEXTURE_2D, g.TEXTURE_MIN_FILTER, g.LINEAR_MIPMAP_LINEAR);
+          const an = g.getExtension('EXT_texture_filter_anisotropic'); if (an) g.texParameterf(g.TEXTURE_2D, an.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, g.getParameter(an.MAX_TEXTURE_MAX_ANISOTROPY_EXT))); }
+        else g.texParameteri(g.TEXTURE_2D, g.TEXTURE_MIN_FILTER, g.LINEAR);
+        bm.close && bm.close();
+      });
+      g.uniform1i(glU.uTex, 0); g.uniform1i(glU.uDep, 1);
+      gl = g;
+      Promise.all([load('v2/h/plate.webp', 0, true), load('v2/h/depth.png', 1, false)]).then(() => { glReady = true; scene.classList.add('gl'); sizeGL(); glc.classList.add('on'); })
+        .catch(() => { gl = null; });
+    } catch (err) { console.warn('plate shader', err); gl = null; }
+  })();
+  function sizeGL() {
+    const dpr = Math.min(devicePixelRatio || 1, 2), w = Math.round(vw * dpr), h = Math.round(vh * dpr);
+    if (glc.width !== w || glc.height !== h) { glc.width = w; glc.height = h; gl.viewport(0, 0, w, h); }
+  }
+  function drawGL(e, px, py, dt) {
+    if (!gl || !glReady || mobile) return;
+    const dpr = glc.width / vw;
+    fa += ((focusId ? 1 : 0) - fa) * (reduce ? 1 : clamp(dt * 3.2));
+    if (focusId && SPOT[focusId]) hspot = SPOT[focusId];
+    gl.uniform2f(glU.uRes, glc.width, glc.height); gl.uniform1f(glU.uDpr, dpr);
+    gl.uniform3f(glU.uCam, cur.x, cur.y, cur.s); gl.uniform2f(glU.uSize, SW, SH);
+    gl.uniform2f(glU.uOff, -px * PAR[0], -py * PAR[1] * (SW / SH)); gl.uniform1f(glU.uE, e);
+    gl.uniform1f(glU.uFocus, fa); gl.uniform4f(glU.uSpot, hspot[0], hspot[1], hspot[2], hspot[3]);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+
   function layoutValley() {
     // phones: the whole valley fits the width and sits above the places bar, so every place is in view
-    SW = mobile ? vw * 1.14 : Math.max(vw, vh * 1680 / 944) * 1.03; SH = SW * 944 / 1680;
+    // desktop shows the whole painting (nothing cropped); phones keep their own hero
+    SW = mobile ? vw * 1.14 : Math.min(vw, vh * AR); SH = mobile ? SW * 944 / 1680 : SW / AR;
     cam.style.width = SW + 'px'; cam.style.height = SH + 'px';
     if (mobile) ax = clamp(ax, 0, 1);
-    baseX = (vw - SW) * (mobile ? ax : .5); baseY = mobile ? vh - SH - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--navh')) || 92) * .55 : (vh - SH) * .55;
+    baseX = (vw - SW) * (mobile ? ax : .5); baseY = mobile ? vh - SH - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--navh')) || 92) * .55 : (vh - SH) * .5;
+    if (gl) sizeGL();
     if (mobile && !cur.ok) cur.s = 1;
     vTop = top(valley); vRange = Math.max(1, valley.offsetHeight - vh);
     if (!cur.ok) { cur.x = baseX - (cur.s - 1) * SW * .5; cur.y = baseY - (cur.s - 1) * SH * .55; cur.ok = true; }
   }
-  const clampCam = o => { o.x = Math.min(0, Math.max(vw - o.s * SW, o.x)); o.y = Math.min(0, Math.max(vh - o.s * SH, o.y)); return o; };
+  // a zoomed camera never shows past the painting; while the painting is smaller than the window it stays centred
+  const fit = (v, size, lo) => size >= lo ? Math.min(0, Math.max(lo - size, v)) : (lo - size) / 2;
+  const clampCam = o => { o.x = fit(o.x, o.s * SW, vw); o.y = fit(o.y, o.s * SH, vh); return o; };
   function focusCam(id) {
     const r = $(`.hot[data-id="${id}"]`, scene); const fx = (parseFloat(r.style.left) + parseFloat(r.style.width) / 2) / 100, fy = (parseFloat(r.style.top) + parseFloat(r.style.height) / 2) / 100;
-    const s = mobile ? 1.9 : 1.26, P = PLACES[id];
+    const s = mobile ? 1.9 : 1.7, P = PLACES[id];
     const sx = mobile ? vw * .5 : (P.side === 'left' ? vw * .68 : vw * .32), sy = mobile ? vh * .2 : vh * .52;
     if (mobile) return { x: clamp(sx - s * fx * SW, vw - s * SW, 0), y: sy - s * fy * SH, s };
     return clampCam({ x: sx - s * fx * SW, y: sy - s * fy * SH, s });
@@ -6165,12 +6249,12 @@ html:has(.cs.open) .sfx-btn { display: none; }
     cam.classList.toggle('flying', pV > .03);
     // fly-through: each layer grows around the valley's focal point by depth; foreground flies out
     const px = reduce ? 0 : ptr.sx, py = reduce ? 0 : ptr.sy;
+    // the DOM layers (pins, hot areas, the gramophone) ride the same depth maths as the shader, so they stay glued to their buildings
     for (const L of layers) {
-      const d = L.d, sc = 1.012 + e * (0.04 + d * .16);
-      const drop = 0;
-      const tx = -px * d * 26, ty = -py * d * 12 + e * d * 30 + drop;
-      L.el.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0) scale(${sc.toFixed(4)})`;
+      const d = L.d, sc = gain(e, d), k = d - .45;
+      L.el.style.transform = `translate3d(${(-px * PAR[0] * k * SW).toFixed(1)}px, ${(-py * PAR[1] * k * SW).toFixed(1)}px, 0) scale(${sc.toFixed(4)})`;
     }
+    drawGL(e, px, py, dt);
     const t = range(pV, .02, .3);
     heroCopy.style.transform = `translate3d(0, ${(-t * vh * .35).toFixed(1)}px, 0)`;
     if (!focusId) heroCopy.style.opacity = (1 - t * 1.2).toFixed(3);
