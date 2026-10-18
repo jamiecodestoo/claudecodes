@@ -137,7 +137,7 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 @keyframes sway { 0%, 100% { rotate: 0deg; } 50% { rotate: 1.4deg; } }
 .me-fig::after { content: ""; position: absolute; left: 10%; right: 10%; bottom: -2%; height: 5%; border-radius: 50%; background: radial-gradient(closest-side, rgba(20, 40, 20, .45), transparent); z-index: -1; }
 
-.pin { position: absolute; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; pointer-events: auto; transition: opacity .5s var(--ease), transform .6s var(--ease); }
+.pin { position: absolute; scale: var(--ps, 1); transform-origin: 50% 100%; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; pointer-events: auto; transition: opacity .5s var(--ease), transform .6s var(--ease); }
 .pin b { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; font-size: 13.5px; font-weight: 700; padding: 7px 13px 7px 8px; border-radius: 999px; background: var(--card); box-shadow: var(--shadow-sm); transition: transform .5s var(--spring); }
 .pin b::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent); }
 .pin::after { content: ""; width: 2px; height: 16px; background: linear-gradient(var(--card), transparent); }
@@ -2482,6 +2482,7 @@ html.theme-fade, html.theme-fade * { transition: background-color .9s ease, colo
 
 /* while a building is open, everything in the sky holds still where it is */
 .stage.still .sky-plane, .stage.still .sky-plane *, .stage.still .sky-birds * { animation-play-state: paused !important; }
+.stage.still .sky-plane, .stage.still .sky-birds { opacity: 0; transition: opacity .5s; }
 
 /* banner sits closer behind the plane */
 .sp-ban { right: 84% !important; }
@@ -6046,7 +6047,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
   cueArm(Math.max(0, 4000 - performance.now()));
 
   /* the painting is a WebGL plate: a 4000px texture with mipmaps (a zoom stays sharp) and a hand-built depth map, so the pointer and the scroll move near things more than far ones */
-  const AR = 2000 / 1126, PAR = [.048, .024], FOC = [.52, .58];
+  const AR = 2000 / 1126, PAR = [.024, .012], FOC = [.52, .58];
   const SPOT = { nsut: [.115, .41, .10, .13], oyo: [.92, .31, .10, .12], mmt: [.71, .43, .07, .08], eazydiner: [.81, .67, .10, .09], me: [.19, .76, .17, .17] };
   const glc = $('#glPlate'); let gl = null, glU = null, glReady = false, fa = 0, hspot = SPOT.eazydiner;
   const gain = (e, d) => 1 + e * (.04 + d * .26);
@@ -6072,13 +6073,10 @@ void main() {
   vec2 off = uOff * smoothstep(0., .05, edge);
   vec2 c = uv;
   for (int i = 0; i < 4; i++) { float d = texture(uDep, clamp(c, 0., 1.)).r; c = F + (uv - off * (d - .45) - F) / gn(d); }
-  vec3 col = texture(uTex, clamp(c, 0., 1.)).rgb;
-  vec2 sc = css / (uRes / uDpr);
-  float va = uRes.x / uRes.y; vec2 scl = va < ${AR.toFixed(5)} ? vec2(va / ${AR.toFixed(5)}, 1.) : vec2(1., ${AR.toFixed(5)} / va);
-  vec2 bu = (sc - .5) * scl * .8 + .5;
-  vec3 bd = textureLod(uTex, vec2(bu.x, bu.y), 6.).rgb * .78;
-  float inside = smoothstep(0., .004, min(min(c.x, 1. - c.x), min(c.y, 1. - c.y)));
-  col = mix(bd, col, inside);
+  // past the painting's edge the picture simply continues, mirrored, so there is no blurred band
+  vec2 oo = max(max(-c, c - 1.), 0.);
+  vec2 mc = 1. - abs(1. - mod(c, 2.));
+  vec3 col = textureLod(uTex, mc, clamp(max(oo.x, oo.y) * 110., 0., 4.)).rgb;
   float m = 1. - smoothstep(.58, 1., length((c - uSpot.xy) / uSpot.zw));
   float l = dot(col, vec3(.299, .587, .114));
   vec3 dim = mix(vec3(l), col, .55) * .86, lit = mix(vec3(l), col, 1.12) * 1.06;
@@ -6102,7 +6100,7 @@ void main() {
       });
       g.uniform1i(glU.uTex, 0); g.uniform1i(glU.uDep, 1);
       gl = g;
-      Promise.all([load('v2/h/plate.webp', 0, true), load('v2/h/depth.png', 1, false)]).then(() => { glReady = true; scene.classList.add('gl'); sizeGL(); glc.classList.add('on'); })
+      Promise.all([load('v2/h/plate.webp', 0, true), load('v2/h/depth2.png', 1, false)]).then(() => { glReady = true; scene.classList.add('gl'); sizeGL(); glc.classList.add('on'); })
         .catch(() => { gl = null; });
     } catch (err) { console.warn('plate shader', err); gl = null; }
   })();
@@ -6117,7 +6115,7 @@ void main() {
     if (focusId && SPOT[focusId]) hspot = SPOT[focusId];
     gl.uniform2f(glU.uRes, glc.width, glc.height); gl.uniform1f(glU.uDpr, dpr);
     gl.uniform3f(glU.uCam, cur.x, cur.y, cur.s); gl.uniform2f(glU.uSize, SW, SH);
-    gl.uniform2f(glU.uOff, -px * PAR[0], -py * PAR[1] * (SW / SH)); gl.uniform1f(glU.uE, e);
+    gl.uniform2f(glU.uOff, -px * PAR[0] * (1 - fa), -py * PAR[1] * (1 - fa) * (SW / SH)); gl.uniform1f(glU.uE, e);
     gl.uniform1f(glU.uFocus, fa); gl.uniform4f(glU.uSpot, hspot[0], hspot[1], hspot[2], hspot[3]);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
@@ -6247,11 +6245,12 @@ void main() {
 
     cam.style.transform = `translate3d(${cur.x.toFixed(2)}px, ${cur.y.toFixed(2)}px, 0) scale(${cur.s.toFixed(4)})`;
     cam.classList.toggle('flying', pV > .03);
+    cam.style.setProperty('--ps', Math.pow(cur.s, -.75).toFixed(3));
     // fly-through: each layer grows around the valley's focal point by depth; foreground flies out
     const px = reduce ? 0 : ptr.sx, py = reduce ? 0 : ptr.sy;
     // the DOM layers (pins, hot areas, the gramophone) ride the same depth maths as the shader, so they stay glued to their buildings
     for (const L of layers) {
-      const d = L.d, sc = gain(e, d), k = d - .45;
+      const d = L.d, sc = gain(e, d), k = (d - .45) * (1 - fa);
       L.el.style.transform = `translate3d(${(-px * PAR[0] * k * SW).toFixed(1)}px, ${(-py * PAR[1] * k * SW).toFixed(1)}px, 0) scale(${sc.toFixed(4)})`;
     }
     drawGL(e, px, py, dt);
