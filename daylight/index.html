@@ -5456,7 +5456,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
       <div class="scene" id="scene">
         <div class="ly keep" data-d=".3" id="L-plate"><img class="plate" src="v2/h/plate.webp" alt="Painted sunset valley: a college with a clock tower, a lake, a hillside hotel and a cafe, with a person and a golden retriever on a stone terrace"></div>
         <div class="ly" data-d=".5" data-id="oyo"><button class="hot" data-id="oyo" aria-label="OYO, the hotel on the hill" style="left:85%;top:21.8%;width:14.2%;height:18.2%"></button><button class="pin" data-id="oyo" style="left:89%;top:28%;--c:#DC402A"><b><img src="v2/s/logo-oyo.webp" alt="">OYO<small class="pyr">Now</small></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d=".5" data-id="mmt"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:64%;top:38.2%;width:11.5%;height:10.2%"></button><button class="pin" data-id="mmt" style="left:71%;top:41%;--c:#E4262C"><b><img src="v2/s/logo-mmt.webp" alt="">MakeMyTrip<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d=".5" data-id="mmt"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:63.5%;top:38%;width:19%;height:13%"></button><button class="pin" data-id="mmt" style="left:72%;top:42.5%;--c:#E4262C"><b><img src="v2/s/logo-mmt.webp" alt="">MakeMyTrip<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".5" data-id="nsut"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:4%;top:29.3%;width:14.5%;height:21.3%"></button><button class="pin" data-id="nsut" style="left:12%;top:48%;--c:#C4553A"><b><img src="v2/s/logo-nsut.webp" alt="">NSUT<small class="pyr">2021</small></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".62" data-id="eazydiner"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:72.5%;top:60.4%;width:17.5%;height:15.1%"></button><button class="pin" data-id="eazydiner" style="left:80.5%;top:62.5%;--c:#EE5A2B"><span class="hint" id="hint" aria-hidden="true">click a place<svg viewBox="0 0 40 22"><path d="M3 6C14 2 26 6 37 14M37 14l-9-1M37 14l-3-8"/></svg></span><b><img src="v2/s/logo-eazydiner.webp" alt="">EazyDiner<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d="1" data-id="radio"><div class="radio" id="radio" style="left:7%;top:69.5%;width:5.2%"><img class="rs" src="v2/h/gramophone.png" alt="" draggable="false"><span class="rn" aria-hidden="true"><i>♪</i><i>♫</i><i>♪</i><i>♬</i></span></div><button class="pin rpin" id="radioPin" style="left:7.2%;top:54.5%;--c:#7B5CD6" aria-pressed="false"><b><span class="rpi"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><span class="rpl">Play some music</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></b><i class="pd" aria-hidden="true"></i></button></div>
@@ -6039,8 +6039,8 @@ html:has(.cs.open) .sfx-btn { display: none; }
 
   /* the painting is a WebGL plate: a 4000px texture with mipmaps (a zoom stays sharp) and a hand-built depth map, so the pointer and the scroll move near things more than far ones */
   const AR = 2000 / 1126, PAR = [.012, .006], FOC = [.52, .58];
-  const SPOT = { nsut: [.115, .41, .10, .13], oyo: [.92, .31, .10, .12], mmt: [.71, .43, .07, .08], eazydiner: [.81, .67, .10, .09], me: [.19, .76, .17, .17] };
-  const glc = $('#glPlate'); let glKey = '', nightLoad = null, nightReady = false, nf = 0, gl = null, glU = null, glReady = false, fa = 0, hspot = SPOT.eazydiner;
+  const SPOT = { nsut: [.115, .41, .10, .13], oyo: [.92, .31, .10, .12], mmt: [.72, .45, .10, .085], eazydiner: [.81, .67, .10, .09], me: [.19, .76, .17, .17] };
+  const glc = $('#glPlate'); let lastDraw = [0, 0, 0], glKey = '', nightLoad = null, nightReady = false, nf = 0, gl = null, glU = null, glReady = false, fa = 0, hspot = SPOT.eazydiner;
   const gain = (e, d) => 1 + e * (.02 + d * .12);
   (function initGL() {
     if (matchMedia('(max-width: 859px)').matches) { addEventListener('resize', () => { if (!gl && innerWidth >= 860) initGL(); }); }
@@ -6095,8 +6095,8 @@ void main() {
       gl = g;
       Promise.all([load('v2/h/plate.webp', 0, true), load('v2/h/depth2.png', 1, false)]).then(() => { glReady = true; scene.classList.add('gl'); sizeGL(); glc.classList.add('on');
         // the night painting loads once it is wanted (or a few seconds after the day one)
-        const wantN = () => { if (nightLoad) return; nightLoad = load('v2/h/plate-night.webp', 2, true).then(() => { nightReady = true; glc.classList.add('nt'); }).catch(() => {}); };
-        if (document.documentElement.dataset.theme === 'dark') wantN(); else setTimeout(wantN, 3500); addEventListener('themechange', wantN); })
+        const wantN = () => { if (nightLoad) return; nightLoad = load('v2/h/plate-night2.webp', 2, true).then(() => { nightReady = true; glc.classList.add('nt'); }).catch(() => {}); };
+        if (document.documentElement.dataset.theme === 'dark') wantN(); else setTimeout(wantN, 1500); addEventListener('themechange', () => { wantN(); if (glReady && !mobile) { glKey = ''; drawGL(lastDraw[0], lastDraw[1], lastDraw[2], .016); } }); })
         .catch(() => { gl = null; });
     } catch (err) { console.warn('plate shader', err); gl = null; }
   })();
@@ -6108,7 +6108,9 @@ void main() {
     if (!gl || !glReady || mobile) return;
     const dpr = glc.width / vw;
     fa += ((focusId ? 1 : 0) - fa) * (reduce ? 1 : clamp(dt * 3.2));
-    nf += ((nightReady && document.documentElement.dataset.theme === 'dark' ? 1 : 0) - nf) * (reduce ? 1 : clamp(dt * 3));
+    const nt = nightReady && document.documentElement.dataset.theme === 'dark' ? 1 : 0;
+    nf = reduce || document.startViewTransition ? nt : nf + (nt - nf) * clamp(dt * 3);
+    lastDraw = [e, px, py];
     if (focusId && SPOT[focusId]) hspot = SPOT[focusId];
     const key = [cur.x, cur.y, cur.s, SW, px, py, e, fa, nf, glc.width, glc.height, hspot[0]].map(v => v.toFixed(3)).join();
     if (key === glKey) return; glKey = key;   // nothing moved: leave the last picture on screen
