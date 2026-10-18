@@ -5452,7 +5452,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
         <div class="ly" data-d=".5" data-id="mmt"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:64%;top:38.2%;width:11.5%;height:10.2%"></button><button class="pin" data-id="mmt" style="left:71%;top:41%;--c:#E4262C"><b><img src="v2/s/logo-mmt.webp" alt="">MakeMyTrip<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".5" data-id="nsut"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:4%;top:29.3%;width:14.5%;height:21.3%"></button><button class="pin" data-id="nsut" style="left:12%;top:48%;--c:#C4553A"><b><img src="v2/s/logo-nsut.webp" alt="">NSUT<small class="pyr">2021</small></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".62" data-id="eazydiner"><button class="hot" data-id="eazydiner" aria-label="EazyDiner, the bistro" style="left:72.5%;top:60.4%;width:17.5%;height:15.1%"></button><button class="pin" data-id="eazydiner" style="left:80.5%;top:62.5%;--c:#EE5A2B"><span class="hint" id="hint" aria-hidden="true">click a place<svg viewBox="0 0 40 22"><path d="M3 6C14 2 26 6 37 14M37 14l-9-1M37 14l-3-8"/></svg></span><b><img src="v2/s/logo-eazydiner.webp" alt="">EazyDiner<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
-        <div class="ly" data-d="1" data-id="radio"><div class="radio" id="radio" style="left:60%;top:92.5%;width:6.4%"><img class="rs" src="v2/h/gramophone.png" alt="" draggable="false"><span class="rn" aria-hidden="true"><i>♪</i><i>♫</i><i>♪</i><i>♬</i></span></div><button class="pin rpin" id="radioPin" style="left:60%;top:81%;--c:#7B5CD6" aria-pressed="false"><b><span class="rpi"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><span class="rpl">Play some music</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></b><i class="pd" aria-hidden="true"></i></button></div>
+        <div class="ly" data-d="1" data-id="radio"><div class="radio" id="radio" style="left:7%;top:69.5%;width:5.2%"><img class="rs" src="v2/h/gramophone.png" alt="" draggable="false"><span class="rn" aria-hidden="true"><i>♪</i><i>♫</i><i>♪</i><i>♬</i></span></div><button class="pin rpin" id="radioPin" style="left:7.2%;top:54.5%;--c:#7B5CD6" aria-pressed="false"><b><span class="rpi"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><span class="rpl">Play some music</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".97" data-id="me"><button class="hot" data-id="me" aria-label="About me" style="left:7.5%;top:58.6%;width:30.5%;height:30.2%"></button><button class="pin" data-id="me" style="left:17.5%;top:62%;--c:#F2B705"><b><img src="v2/s/photo.webp" alt="">That’s me</b><i class="pd" aria-hidden="true"></i></button></div>
       </div>
     </div>
@@ -5864,7 +5864,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
       h: 'Then OYO, and the whole stay.',
       st: ['Where I am right now: <b>self check-in, room selection and cancellations</b>. For <b>Traum</b>, an OYO company in Germany, I redesigned the dashboard holiday-home owners use every day.'],
       n: [['500', 'properties validated'], ['6,000+', 'approved next']], j: 6, cs: 'traum', csL: 'View case study' },
-    me: { c: '#F2B705', side: 'left', tag: 'About me', t: 'Hey, I’m James', r: '23 · Product designer · Builder · Engineer',
+    me: { c: '#F2B705', side: 'right', tag: 'About me', t: 'Hey, I’m James', r: '23 · Product designer · Builder · Engineer',
       h: 'I design so people don’t rage quit.',
       st: [],
       fun: [
@@ -6047,10 +6047,10 @@ html:has(.cs.open) .sfx-btn { display: none; }
   cueArm(Math.max(0, 4000 - performance.now()));
 
   /* the painting is a WebGL plate: a 4000px texture with mipmaps (a zoom stays sharp) and a hand-built depth map, so the pointer and the scroll move near things more than far ones */
-  const AR = 2000 / 1126, PAR = [.024, .012], FOC = [.52, .58];
+  const AR = 2000 / 1126, PAR = [.012, .006], FOC = [.52, .58];
   const SPOT = { nsut: [.115, .41, .10, .13], oyo: [.92, .31, .10, .12], mmt: [.71, .43, .07, .08], eazydiner: [.81, .67, .10, .09], me: [.19, .76, .17, .17] };
-  const glc = $('#glPlate'); let gl = null, glU = null, glReady = false, fa = 0, hspot = SPOT.eazydiner;
-  const gain = (e, d) => 1 + e * (.04 + d * .26);
+  const glc = $('#glPlate'); let glKey = '', gl = null, glU = null, glReady = false, fa = 0, hspot = SPOT.eazydiner;
+  const gain = (e, d) => 1 + e * (.02 + d * .12);
   (function initGL() {
     if (matchMedia('(max-width: 859px)').matches) { addEventListener('resize', () => { if (!gl && innerWidth >= 860) initGL(); }); }
     let g; try { g = glc.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'high-performance' }); } catch (_) {}
@@ -6065,7 +6065,7 @@ precision highp float;
 uniform sampler2D uTex, uDep; uniform vec2 uRes, uSize, uOff; uniform vec3 uCam; uniform float uE, uDpr, uFocus; uniform vec4 uSpot;
 out vec4 o;
 const vec2 F = vec2(.52, .58);
-float gn(float d) { return 1. + uE * (.04 + d * .26); }
+float gn(float d) { return 1. + uE * (.02 + d * .12); }
 void main() {
   vec2 css = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;
   vec2 uv = ((css - uCam.xy) / uCam.z) / uSize;
@@ -6105,14 +6105,16 @@ void main() {
     } catch (err) { console.warn('plate shader', err); gl = null; }
   })();
   function sizeGL() {
-    const dpr = Math.min(devicePixelRatio || 1, 2), w = Math.round(vw * dpr), h = Math.round(vh * dpr);
-    if (glc.width !== w || glc.height !== h) { glc.width = w; glc.height = h; gl.viewport(0, 0, w, h); }
+    const dpr = Math.max(1, Math.min(devicePixelRatio || 1, 2, Math.sqrt(4e6 / (vw * vh)))), w = Math.round(vw * dpr), h = Math.round(vh * dpr);
+    if (glc.width !== w || glc.height !== h) { glc.width = w; glc.height = h; gl.viewport(0, 0, w, h); glKey = ''; }
   }
   function drawGL(e, px, py, dt) {
     if (!gl || !glReady || mobile) return;
     const dpr = glc.width / vw;
     fa += ((focusId ? 1 : 0) - fa) * (reduce ? 1 : clamp(dt * 3.2));
     if (focusId && SPOT[focusId]) hspot = SPOT[focusId];
+    const key = [cur.x, cur.y, cur.s, SW, px, py, e, fa, glc.width, glc.height, hspot[0]].map(v => v.toFixed(3)).join();
+    if (key === glKey) return; glKey = key;   // nothing moved: leave the last picture on screen
     gl.uniform2f(glU.uRes, glc.width, glc.height); gl.uniform1f(glU.uDpr, dpr);
     gl.uniform3f(glU.uCam, cur.x, cur.y, cur.s); gl.uniform2f(glU.uSize, SW, SH);
     gl.uniform2f(glU.uOff, -px * PAR[0] * (1 - fa), -py * PAR[1] * (1 - fa) * (SW / SH)); gl.uniform1f(glU.uE, e);
@@ -6137,7 +6139,7 @@ void main() {
   const clampCam = o => { o.x = fit(o.x, o.s * SW, vw); o.y = fit(o.y, o.s * SH, vh); return o; };
   function focusCam(id) {
     const r = $(`.hot[data-id="${id}"]`, scene); const fx = (parseFloat(r.style.left) + parseFloat(r.style.width) / 2) / 100, fy = (parseFloat(r.style.top) + parseFloat(r.style.height) / 2) / 100;
-    const s = mobile ? 1.9 : 1.7, P = PLACES[id];
+    const s = mobile ? 1.9 : 1.32, P = PLACES[id];
     const sx = mobile ? vw * .5 : (P.side === 'left' ? vw * .68 : vw * .32), sy = mobile ? vh * .2 : vh * .52;
     if (mobile) return { x: clamp(sx - s * fx * SW, vw - s * SW, 0), y: sy - s * fy * SH, s };
     return clampCam({ x: sx - s * fx * SW, y: sy - s * fy * SH, s });
@@ -9313,7 +9315,7 @@ void main() {
     if (!giftTap) fold('st', stackTrack, $('#process'));
     fold('ll', llRevTrack, llRoles);
     y = Y();
-    if (y < vTop + vRange + vh) frameValley(dt, DONE.v ? 0 : held('v', y, vh * .04));
+    if (y < vTop + vRange + vh) frameValley(dt, DONE.v ? 0 : y);
     if (y > sTop - vh && y < sTop + sRange + vh) frameStory(DONE.s ? 1e9 : held('s', y, sTop - vh));
     if (y > jTop - vh && y < jTop + jRange + vh) frameJourney(dt, y);
     if (y > jTop + jRange - vh) frameWork(dt);
