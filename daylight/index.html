@@ -9039,7 +9039,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
     if (btn) btn.addEventListener('click', e => { e.stopPropagation(); muted = !muted; try { localStorage.setItem('jc-sfx', muted ? '0' : '1'); } catch (_) {} paint(); if (!muted) { unlock(); setTimeout(() => play('click'), 60); } });
     paint();
     const CLOSE = '.cs-close, .nw-x, .nw-rd-x, .wop-x, .nw-all-x, #s-x, .sheet .x, .bk-x';
-    const OPEN = '[data-case], .wk, #nwView, #nwOpen, .nw-ghost, a[data-book], .nw-card[data-read], .pin, .ph-pin';
+    const OPEN = '[data-case], .wk, a[data-book], .pin, .ph-pin';   // notes and the notes buttons just get the plain click
     const TAP = 'a, button, summary, [role="button"], label[for]';
     document.addEventListener('click', e => { const t = e.target; if (!t.closest || t.closest('#sfxBtn, [data-nosound]')) return;
       if (t.closest(CLOSE)) play('close'); else if (t.closest('.theme-btn')) play('toggle'); else if (t.closest('.wop-badge')) play('sparkle'); else if (t.closest(OPEN)) play('open'); else if (t.closest(TAP)) play('click'); }, true);
