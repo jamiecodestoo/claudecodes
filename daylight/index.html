@@ -4212,6 +4212,7 @@ html:root .jc-gal > div[style*="--n:2"], html:root .journey.jcm .jc-gal > div[st
 .jc-gal > div[style*="--n:2"] .jc-ph small { font-size: 13px !important; }
 
 html:has(.cs.open) .np { z-index: 95; }   /* the music button keeps its spot, top right, even over an open case study */
+@media (min-width: 860px) { html:has(.cs.open) .np { right: clamp(14px, 2.4vw, 28px) !important; } html:has(.cs.open) .cs-bar { padding-right: calc(clamp(14px, 2.4vw, 28px) + 196px) !important; } html:has(.cs.open) .cs-bar > :last-child { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }   /* in a case study the music button takes the far right and the bar's own title and theme switch sit just left of it */
 @media (max-width: 859px) { html:has(.cs.open) .np { padding: 0 8px !important; gap: 0 !important; } html:has(.cs.open) .np .np-b { display: none; } }
 
 /* phone place pins over the portrait painting (same box as the cover-fit image, anchored at the bottom) */
