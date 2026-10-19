@@ -149,11 +149,11 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .scene.focusing .pin:not(.on) { opacity: 0; }
 .cam.flying .pin { opacity: 0; pointer-events: none; }
 
-.hero-copy { position: absolute; z-index: 5; left: clamp(16px, 5vw, 76px); top: calc(env(safe-area-inset-top, 0px) + clamp(86px, 13vh, 140px)); width: min(52rem, calc(100vw - 32px));
+.hero-copy { position: absolute; z-index: 5; left: clamp(16px, 5vw, 76px); top: calc(env(safe-area-inset-top, 0px) + clamp(74px, 12vh, 140px)); width: min(52rem, calc(100vw - 32px));
   color: #fff; pointer-events: none; will-change: transform, opacity; transition: opacity .6s var(--ease); }
-.hey { margin: 0 0 12px; display: inline-flex; align-items: center; gap: 10px; font: 400 clamp(21px, 1.9vw, 28px)/1 var(--serif); font-size-adjust: .46; text-shadow: 0 2px 18px rgba(10, 40, 90, .35); }
-.hey svg { width: 30px; height: 30px; }
-.hero-copy h1 { margin: 0; font-weight: 800; font-size: clamp(2.5rem, 4.9vw, 5.1rem); line-height: .93; letter-spacing: -.05em; text-wrap: balance;
+.hey { margin: 0 0 12px; display: inline-flex; align-items: center; gap: 10px; font: 400 calc(clamp(21px, 1.9vw, 28px) * var(--hs, 1))/1 var(--serif); font-size-adjust: .46; text-shadow: 0 2px 18px rgba(10, 40, 90, .35); }
+.hey svg { width: calc(30px * var(--hs, 1)); height: calc(30px * var(--hs, 1)); }
+.hero-copy h1 { margin: 0; font-weight: 800; font-size: calc(clamp(2.5rem, 4.9vw, 5.1rem) * var(--hs, 1)); line-height: .93; letter-spacing: -.05em; text-wrap: balance;
   text-shadow: 0 4px 30px rgba(10, 40, 90, .28); }
 .hero-copy h1 .ln { display: block; overflow: hidden; padding: .03em .12em .09em 0; margin-bottom: -.06em; }
 .hero-copy h1 .ln > span { display: inline-block; animation: rise 1.3s var(--ease) both; animation-delay: var(--dl, 1.7s); }
@@ -164,7 +164,7 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .rq svg path { fill: none; stroke: var(--coral); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1s var(--ease) 3.2s forwards; }
 @keyframes paint { to { clip-path: inset(0 0 0 0); } }
 @keyframes draw { to { stroke-dashoffset: 0; } }
-.sub { margin: 18px 0 0; font: 400 clamp(19px, 1.7vw, 25px)/1.3 var(--serif); font-size-adjust: .46; text-shadow: 0 2px 16px rgba(10, 40, 90, .45); opacity: 0; animation: fade 1s var(--ease) 2.9s forwards; }
+.sub { margin: calc(18px * var(--hs, 1)) 0 0; font: 400 calc(clamp(19px, 1.7vw, 25px) * var(--hs, 1))/1.3 var(--serif); font-size-adjust: .46; text-shadow: 0 2px 16px rgba(10, 40, 90, .45); opacity: 0; animation: fade 1s var(--ease) 2.9s forwards; }
 .chips { position: absolute; z-index: 6; left: clamp(16px, 3vw, 36px); bottom: calc(env(safe-area-inset-bottom, 0px) + 86px); display: flex; flex-direction: column; align-items: flex-start; gap: 8px; pointer-events: none; opacity: 0; animation: fade 1s var(--ease) 3.2s forwards; }
 .chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: var(--ink);
   background: rgba(255, 253, 247, .88); box-shadow: var(--shadow-sm); }
@@ -6130,6 +6130,18 @@ void main() {
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
+  // short or narrow laptop windows: the headline block shrinks until it clears every place tag, so nothing ever sits on top of the words
+  function fitCopy() {
+    if (mobile || !heroCopy) { if (heroCopy) heroCopy.style.removeProperty('--hs'); return; }
+    const tags = $$('.pin[data-id]', scene).filter(p => !p.classList.contains('rpin')).map(p => { const b = $('b', p), x = baseX + parseFloat(p.style.left) / 100 * SW, y = baseY + parseFloat(p.style.top) / 100 * SH; return { l: x - b.offsetWidth / 2 - 8, r: x + b.offsetWidth / 2 + 8, t: y - b.offsetHeight - 30, b: y }; });
+    let hs = 1; heroCopy.style.setProperty('--hs', 1);
+    for (let i = 0; i < 8 && hs > .55; i++) {
+      const o = e => ({ l: heroCopy.offsetLeft + e.offsetLeft, t: heroCopy.offsetTop + e.offsetTop, r: heroCopy.offsetLeft + e.offsetLeft + e.offsetWidth, b: heroCopy.offsetTop + e.offsetTop + e.offsetHeight });
+      const boxes = [$('.hey', heroCopy), ...$$('h1 .ln > span', heroCopy), $('.sub', heroCopy)].filter(e => e && e.offsetWidth).map(o);
+      if (!tags.some(t => boxes.some(r => r.l < t.r && r.r > t.l && r.t < t.b && r.b > t.t))) break;
+      hs = Math.max(.55, hs * .94); heroCopy.style.setProperty('--hs', hs.toFixed(3));
+    }
+  }
   function layoutValley() {
     // phones: the whole valley fits the width and sits above the places bar, so every place is in view
     // desktop shows the whole painting (nothing cropped); phones keep their own hero
@@ -6138,6 +6150,7 @@ void main() {
     if (mobile) ax = clamp(ax, 0, 1);
     baseX = (vw - SW) * (mobile ? ax : .5); baseY = mobile ? vh - SH - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--navh')) || 92) * .55 : (vh - SH) * .5;
     if (gl) sizeGL();
+    fitCopy();
     if (mobile && !cur.ok) cur.s = 1;
     vTop = top(valley); vRange = Math.max(1, valley.offsetHeight - vh);
     if (!cur.ok) { cur.x = baseX - (cur.s - 1) * SW * .5; cur.y = baseY - (cur.s - 1) * SH * .55; cur.ok = true; }
