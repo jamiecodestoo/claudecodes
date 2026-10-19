@@ -4212,7 +4212,7 @@ html:root .jc-gal > div[style*="--n:2"], html:root .journey.jcm .jc-gal > div[st
 .jc-gal > div[style*="--n:2"] .jc-ph small { font-size: 13px !important; }
 
 html:has(.cs.open) .np { z-index: 95; }   /* the music button keeps its spot, top right, even over an open case study */
-@media (min-width: 860px) { html:has(.cs.open) .np { right: clamp(14px, 2.4vw, 28px) !important; } html:has(.cs.open) .cs-bar { padding-right: calc(clamp(14px, 2.4vw, 28px) + 196px) !important; } html:has(.cs.open) .cs-bar > :last-child { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }   /* in a case study the music button takes the far right and the bar's own title and theme switch sit just left of it */
+@media (min-width: 860px) { html:has(.cs.open) .np { right: clamp(14px, 2.4vw, 28px) !important; } html:has(.cs.open) .np { top: calc(env(safe-area-inset-top, 0px) + 16px) !important; } html:has(.cs.open) .cs-bar { padding-right: calc(clamp(14px, 2.4vw, 28px) + var(--npw, 170px) + 8px) !important; } html:has(.cs.open) .cs-right { overflow: visible !important; } html:has(.cs.open) .cs-bar > :last-child { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }   /* in a case study the music button takes the far right and the bar's own title and theme switch sit just left of it */
 @media (max-width: 859px) { html:has(.cs.open) .np { padding: 0 8px !important; gap: 0 !important; } html:has(.cs.open) .np .np-b { display: none; } }
 
 /* phone place pins over the portrait painting (same box as the cover-fit image, anchored at the bottom) */
@@ -9285,6 +9285,9 @@ void main() {
     }
     const toggle = e => { e && e.stopPropagation(); on ? stop() : start(); };
     ui(); np.classList.add('paused');   // always there, top right, in a fixed spot (CSS)
+    // its width follows its label; the case-study bar reads it so the gap beside it stays exact
+    const npw = () => document.documentElement.style.setProperty('--npw', np.offsetWidth + 'px');
+    if (window.ResizeObserver) new ResizeObserver(npw).observe(np); npw();
     pinR.addEventListener('click', toggle); np.addEventListener('click', toggle); radio.addEventListener('click', toggle);
   })();
 
