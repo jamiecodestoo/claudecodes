@@ -7,6 +7,7 @@
 // KV_REST_API_URL and KV_REST_API_TOKEN (or UPSTASH_REDIS_REST_URL / _TOKEN) for you.
 
 const { randomUUID } = require('node:crypto');
+const dns = require('node:dns').promises;
 
 const URL_ = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
 const TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -47,7 +48,40 @@ function junkWord(w) {
 }
 const junkText = t => String(t || '').split(/\s+/).some(junkWord);
 // notes taken down by hand: any note whose name, text, role or company contains one of these is hidden
-const BLOCK = ['lihwak', 'testing the functionality and and validation'];
+const BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop'];
+
+// an email has to look like a real person's: proper shape, a real-looking name and domain, no throwaway or placeholder services, no common typos
+const FAKE_DOMAINS = ['example.com', 'example.org', 'example.net', 'test.com', 'test.test', 'test.in', 'fake.com', 'fakemail.com', 'noemail.com', 'none.com', 'abc.com', 'asdf.com', 'xyz.com', 'domain.com', 'email.test', 'mailinator.com', 'guerrillamail.com', 'guerrillamail.net', 'sharklasers.com', '10minutemail.com', 'tempmail.com', 'temp-mail.org', 'tempmail.net', 'yopmail.com', 'trashmail.com', 'throwawaymail.com', 'getnada.com', 'maildrop.cc', 'dispostable.com', 'fakeinbox.com', 'mailnesia.com', 'mintemail.com', 'moakt.com', 'emailondeck.com', 'spamgourmet.com', 'mohmal.com', 'burnermail.io'];
+const TYPO_DOMAINS = ['gmial.com', 'gamil.com', 'gmai.com', 'gmail.co', 'gmail.cm', 'gmaill.com', 'gmal.com', 'gnail.com', 'gmail.con', 'hotmial.com', 'hotmal.com', 'yaho.com', 'yahooo.com', 'yahoo.co', 'outlok.com', 'outlook.co'];
+const FAKE_LOCALS = ['test', 'testing', 'fake', 'asdf', 'qwerty', 'abc', 'abcd', 'xyz', 'noreply', 'no-reply', 'nobody', 'none', 'null', 'email', 'example', 'user', 'admin', 'name', 'sample', 'demo', 'spam', 'trash'];
+function emailOk(e) {
+  e = String(e || '').trim().toLowerCase();
+  const m = /^([a-z0-9][a-z0-9._%+-]{0,63})@((?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,24})$/.exec(e);
+  if (!m || e.length > 120) return false;
+  const [, local, domain] = m;
+  if (/\.\.|\.$|^\./.test(local) || /[._%+-]{2,}/.test(local)) return false;
+  if (FAKE_DOMAINS.includes(domain) || TYPO_DOMAINS.includes(domain)) return false;
+  if (FAKE_LOCALS.includes(local.replace(/[0-9._-]+$/, ''))) return false;
+  if ((local.match(/[a-z]/g) || []).length < 2) return false;                    // 12345@…, a@…
+  if (/^(.)\1{3,}/.test(local) || /(.)\1{4,}/.test(local)) return false;
+  if (/lihwak/.test(e) || /(.)\1{3,}/.test(domain)) return false;
+  if (domain.split('.').slice(0, -1).some(p => p.length >= 6 && ((p.match(/[aeiou]/g) || []).length / p.length) < .2)) return false;        // aaaaa@, hellooooo@
+  if (junkText(local.replace(/[0-9._%+-]+/g, ' ')) || domain.split('.').slice(0, -1).some(p => junkWord(p))) return false;  // keyboard mashing
+  return true;
+}
+
+// the domain has to exist and be able to receive mail; a lookup that merely times out lets the note through, a definite "no such domain" does not
+async function domainReal(email) {
+  const d = email.split('@')[1].toLowerCase();
+  const dead = e => e && (e.code === 'ENOTFOUND' || e.code === 'ENODATA' || e.code === 'NXDOMAIN');
+  const t = new Promise(r => setTimeout(() => r('slow'), 2500));
+  try {
+    const r = await Promise.race([dns.resolveMx(d).then(x => x.length > 0), t]);
+    if (r === 'slow') return true;
+    if (r) return true;
+  } catch (e) { if (!dead(e)) return true; }
+  try { const r = await Promise.race([dns.resolve4(d).then(x => x.length > 0), t]); return r === 'slow' ? true : r; } catch (e) { return !dead(e); }
+}
 const blocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return BLOCK.some(w => t.includes(w)); };
 function noteOk(n) {
   if (blocked(n)) return false;
@@ -60,7 +94,8 @@ function noteOk(n) {
 
 function clean(b) {
   const name = str(b.name, 40), note = str(b.note, 200), email = str(b.email, 120);
-  if (!name || !note || !EMAIL.test(email)) return null;
+  if (!name || !note) return null;
+  if (!EMAIL.test(email) || !emailOk(email)) return { bad: 'email' };
   if (!noteOk({ name, note, company: b.company, role: b.role })) return null;
   const photo = typeof b.photo === 'string' && b.photo.length < 60000 && PHOTO.test(b.photo) ? b.photo : '';
   const avatar = str(b.avatar, 16).replace(/[^a-z0-9]/gi, '');
@@ -89,6 +124,7 @@ module.exports = async (req, res) => {
       if (body.website) return res.status(200).json({ ok: true }); // honeypot: bots fill every field
       const c = clean(body);
       if (!c) return res.status(400).json({ error: 'invalid' });
+      if (c.bad || !(await domainReal(c.email))) return res.status(400).json({ error: 'email' });
 
       const ip = String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'x').split(',')[0].trim();
       const rl = `notes:rl:${ip}`;
