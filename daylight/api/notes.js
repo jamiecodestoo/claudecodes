@@ -48,7 +48,7 @@ function junkWord(w) {
 }
 const junkText = t => String(t || '').split(/\s+/).some(junkWord);
 // notes taken down by hand: any note whose name, text, role or company contains one of these is hidden
-const BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop'];
+const BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop', 'uh uh'];
 
 // an email has to look like a real person's: proper shape, a real-looking name and domain, no throwaway or placeholder services, no common typos
 const FAKE_DOMAINS = ['example.com', 'example.org', 'example.net', 'test.com', 'test.test', 'test.in', 'fake.com', 'fakemail.com', 'noemail.com', 'none.com', 'abc.com', 'asdf.com', 'xyz.com', 'domain.com', 'email.test', 'mailinator.com', 'guerrillamail.com', 'guerrillamail.net', 'sharklasers.com', '10minutemail.com', 'tempmail.com', 'temp-mail.org', 'tempmail.net', 'yopmail.com', 'trashmail.com', 'throwawaymail.com', 'getnada.com', 'maildrop.cc', 'dispostable.com', 'fakeinbox.com', 'mailnesia.com', 'mintemail.com', 'moakt.com', 'emailondeck.com', 'spamgourmet.com', 'mohmal.com', 'burnermail.io'];
@@ -82,12 +82,26 @@ async function domainReal(email) {
   } catch (e) { if (!dead(e)) return true; }
   try { const r = await Promise.race([dns.resolve4(d).then(x => x.length > 0), t]); return r === 'slow' ? true : r; } catch (e) { return !dead(e); }
 }
+
+// a note has to read like something a person meant: not interjections ("uh uh ah ah"), not the same words over and over, and with a couple of real words in it
+const FILLER = new Set(['uh', 'uhh', 'uhm', 'um', 'umm', 'ah', 'aah', 'ahh', 'oh', 'ohh', 'eh', 'hm', 'hmm', 'hmmm', 'mm', 'mmm', 'huh', 'ha', 'haha', 'hahaha', 'hehe', 'heh', 'lol', 'lmao', 'blah', 'bla', 'la', 'na', 'nah', 'ya', 'yay', 'woo', 'yeah', 'yep', 'nope', 'test', 'testing', 'asdf', 'abc', 'xyz', 'zzz', 'ok', 'okay', 'hi', 'hey', 'hello', 'wow', 'yo']);
+function nonsense(t) {
+  const w = String(t || '').toLowerCase().match(/[\p{L}\p{M}']+/gu) || [], n = w.length;
+  if (n < 2 || new Set(w).size < 2) return true;
+  const uniq = new Set(w).size, fill = w.filter(x => FILLER.has(x) || /^(.)\1+$/.test(x)).length;
+  const cnt = {}; w.forEach(x => { cnt[x] = (cnt[x] || 0) + 1; });
+  if (fill / n >= .5) return true;                                             // uh uh ah ah
+  if (n >= 4 && uniq / n < .6) return true;                                    // the same few words again and again
+  if (Math.max(...Object.values(cnt)) >= 3 && Math.max(...Object.values(cnt)) / n >= .3) return true;
+  if (n >= 4) { const bg = {}; for (let i = 0; i < n - 1; i++) { const k = w[i] + ' ' + w[i + 1]; bg[k] = (bg[k] || 0) + 1; } if (Math.max(...Object.values(bg)) >= 2 && uniq / n < .75) return true; }
+  return w.filter(x => x.length >= 3 && !FILLER.has(x) && (/[aeiouy]/.test(x) || !/[a-z]/.test(x))).length < 2;  // at least two real words
+}
 const blocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return BLOCK.some(w => t.includes(w)); };
 function noteOk(n) {
   if (blocked(n)) return false;
   const note = String(n.note || '').trim();
   const words = note.split(/\s+/).filter(w => /\p{L}/u.test(w));
-  if (note.length < 8 || words.length < 2) return false;
+  if (note.length < 8 || words.length < 2 || nonsense(note)) return false;
   if (!/\p{L}/u.test(String(n.name || ''))) return false;
   return ![n.note, n.name, n.company, n.role].some(junkText);
 }

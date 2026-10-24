@@ -6052,7 +6052,8 @@ html:has(.cs.open) .sfx-btn { display: none; }
   const SPOT = { nsut: [.115, .41, .10, .13], oyo: [.92, .31, .10, .12], mmt: [.72, .45, .10, .085], eazydiner: [.81, .67, .10, .09], me: [.19, .76, .17, .17] };
   const glc = $('#glPlate'); let lastDraw = [0, 0, 0], glKey = '', nightLoad = null, nightReady = false, nf = 0, gl = null, glU = null, glReady = false, fa = 0, hspot = SPOT.eazydiner;
   const gain = (e, d) => 1 + e * (.02 + d * .12);
-  (function initGL() {
+  // the painting's texture upload is heavy, so it starts once the headline has finished arriving (the plain image shows until then)
+  setTimeout(function initGL() {
     if (matchMedia('(max-width: 859px)').matches) { addEventListener('resize', () => { if (!gl && innerWidth >= 860) initGL(); }); }
     let g; try { g = glc.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'high-performance' }); } catch (_) {}
     if (!g) return;
@@ -6106,10 +6107,10 @@ void main() {
       Promise.all([load('v2/h/plate.webp', 0, true), load('v2/h/depth2.png', 1, false)]).then(() => { glReady = true; scene.classList.add('gl'); sizeGL(); glc.classList.add('on');
         // the night painting loads once it is wanted (or a few seconds after the day one)
         const wantN = () => { if (nightLoad) return; nightLoad = load('v2/h/plate-night2.webp', 2, true).then(() => { nightReady = true; glc.classList.add('nt'); }).catch(() => {}); };
-        if (document.documentElement.dataset.theme === 'dark') wantN(); else setTimeout(wantN, 1500); addEventListener('themechange', () => { wantN(); if (glReady && !mobile) { glKey = ''; drawGL(lastDraw[0], lastDraw[1], lastDraw[2], .016); } }); })
+        if (document.documentElement.dataset.theme === 'dark') wantN(); else setTimeout(() => (window.requestIdleCallback || (f => f()))(wantN, { timeout: 4000 }), 8000); addEventListener('themechange', () => { wantN(); if (glReady && !mobile) { glKey = ''; drawGL(lastDraw[0], lastDraw[1], lastDraw[2], .016); } }); })
         .catch(() => { gl = null; });
     } catch (err) { console.warn('plate shader', err); gl = null; }
-  })();
+  }, 3300);
   function sizeGL() {
     const dpr = Math.max(1, Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(2.2e6 / (vw * vh)))), w = Math.round(vw * dpr), h = Math.round(vh * dpr);
     if (glc.width !== w || glc.height !== h) { glc.width = w; glc.height = h; gl.viewport(0, 0, w, h); glKey = ''; }
@@ -6351,7 +6352,8 @@ void main() {
   // phones: a reveal starts when its block comes into view and plays on its own, the scroll never holds it
   const PLAY = {};
   function playIn(el, k, ms) { if (!PLAY[k]) { const r = el.getBoundingClientRect(); if (r.top < vh * .8 && r.bottom > 0) PLAY[k] = performance.now(); else return 0; } return clamp((performance.now() - PLAY[k]) / ms); }
-  function layoutStory() { sTop = top(story); sRange = Math.max(1, story.offsetHeight - vh); buildDoodles(); lastQ = -1; }
+  function layoutStory() { sTop = top(story); sRange = Math.max(1, story.offsetHeight - vh); const dk = Math.round(tellBox.offsetWidth) + 'x' + Math.round(tellBox.offsetHeight) + ':' + words.length;
+    if (dk !== layoutStory.dk) { layoutStory.dk = dk; buildDoodles(); lastQ = -1; } }
   let lastQ = -1;
   function frameStory(y) {
     const q = playIn(tell, 'st', 2800);
@@ -6575,7 +6577,8 @@ void main() {
         img.onerror = () => { mapArt.style.visibility = ''; };
         img.src = URL.createObjectURL(new Blob([svgFor(dark)], { type: 'image/svg+xml' }));
       };
-      bake(); addEventListener('themechange', bake);
+      let baked = false; const bakeLater = () => { baked = true; (window.requestIdleCallback || (f => setTimeout(f, 60)))(bake, { timeout: 1500 }); };
+      setTimeout(bakeLater, 4200); addEventListener('themechange', () => { if (baked) bake(); });
     })();
     const layer = (id, html, z) => { const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); el.id = id; el.setAttribute('class', 'maplayer'); el.setAttribute('viewBox', `0 0 ${MW} ${MH}`); el.setAttribute('aria-hidden', 'true'); if (z) el.style.zIndex = z; el.innerHTML = html; world3.insertBefore(el, meTip); return el; };
     layer('routeArt', rtH);
@@ -6585,7 +6588,9 @@ void main() {
     spot = $('#spot'); carve = $('#carve'); casing = $('#casing'); ghost = $('#ghostPath');
     pathLen = carve.getTotalLength();
     [carve, casing].forEach(p => { p.style.strokeDasharray = pathLen; p.style.strokeDashoffset = pathLen; });
-    stopL = STOPS.map(st => { let best = 0, bd = 1e12; for (let l = 0; l <= pathLen; l += 4) { const q = carve.getPointAtLength(l), dd = (q.x - st.at[0]) ** 2 + (q.y - st.at[1]) ** 2; if (dd < bd) { bd = dd; best = l; } } return best; });
+    { const STEP = 16, pts = []; for (let l = 0; l <= pathLen; l += STEP) pts.push(carve.getPointAtLength(l));   // the route is sampled once and shared by every stop
+      stopL = STOPS.map(st => { let bi = 0, bd = 1e12; pts.forEach((q, i) => { const dd = (q.x - st.at[0]) ** 2 + (q.y - st.at[1]) ** 2; if (dd < bd) { bd = dd; bi = i; } });
+        let best = bi * STEP; bd = 1e12; for (let l = Math.max(0, best - STEP); l <= Math.min(pathLen, best + STEP); l += 2) { const q = carve.getPointAtLength(l), dd = (q.x - st.at[0]) ** 2 + (q.y - st.at[1]) ** 2; if (dd < bd) { bd = dd; best = l; } } return best; }); }
     const pinShape = c => `<svg viewBox="0 0 54 66"><path d="M27 64C27 64 4 40 4 25a23 23 0 0 1 46 0c0 15-23 39-23 39z" fill="${c}" stroke="#fff" stroke-width="3"/></svg>`;
     STOPS.forEach((st, i) => {
       const m = document.createElement('button'); m.className = 'mk'; m.type = 'button'; m.style.setProperty('--c', st.c); m.style.left = st.at[0] + 'px'; m.style.top = st.at[1] + 'px';
@@ -8843,6 +8848,20 @@ void main() {
     const vowels = (L.match(/[aeiouy]/gi) || []).length / L.length, run = Math.max(0, ...(L.match(/[^aeiou]+/gi) || []).map(r => r.length));
     return (flips >= 4 && L.length >= 8) || (vowels < .25 && run >= 7 && L.length >= 8); };
   const junkText = t => String(t || '').split(/\s+/).some(junkWord);
+// a note has to read like something a person meant: not interjections ("uh uh ah ah"), not the same words over and over, and with a couple of real words in it
+const FILLER = new Set(['uh', 'uhh', 'uhm', 'um', 'umm', 'ah', 'aah', 'ahh', 'oh', 'ohh', 'eh', 'hm', 'hmm', 'hmmm', 'mm', 'mmm', 'huh', 'ha', 'haha', 'hahaha', 'hehe', 'heh', 'lol', 'lmao', 'blah', 'bla', 'la', 'na', 'nah', 'ya', 'yay', 'woo', 'yeah', 'yep', 'nope', 'test', 'testing', 'asdf', 'abc', 'xyz', 'zzz', 'ok', 'okay', 'hi', 'hey', 'hello', 'wow', 'yo']);
+function nonsense(t) {
+  const w = String(t || '').toLowerCase().match(/[\p{L}\p{M}']+/gu) || [], n = w.length;
+  if (n < 2 || new Set(w).size < 2) return true;
+  const uniq = new Set(w).size, fill = w.filter(x => FILLER.has(x) || /^(.)\1+$/.test(x)).length;
+  const cnt = {}; w.forEach(x => { cnt[x] = (cnt[x] || 0) + 1; });
+  if (fill / n >= .5) return true;                                             // uh uh ah ah
+  if (n >= 4 && uniq / n < .6) return true;                                    // the same few words again and again
+  if (Math.max(...Object.values(cnt)) >= 3 && Math.max(...Object.values(cnt)) / n >= .3) return true;
+  if (n >= 4) { const bg = {}; for (let i = 0; i < n - 1; i++) { const k = w[i] + ' ' + w[i + 1]; bg[k] = (bg[k] || 0) + 1; } if (Math.max(...Object.values(bg)) >= 2 && uniq / n < .75) return true; }
+  return w.filter(x => x.length >= 3 && !FILLER.has(x) && (/[aeiouy]/.test(x) || !/[a-z]/.test(x))).length < 2;  // at least two real words
+}
+
 // (same rules as the server) an email has to look like a real person's: proper shape, a real-looking name and domain, no throwaway or placeholder services, no common typos
 const FAKE_DOMAINS = ['example.com', 'example.org', 'example.net', 'test.com', 'test.test', 'test.in', 'fake.com', 'fakemail.com', 'noemail.com', 'none.com', 'abc.com', 'asdf.com', 'xyz.com', 'domain.com', 'email.test', 'mailinator.com', 'guerrillamail.com', 'guerrillamail.net', 'sharklasers.com', '10minutemail.com', 'tempmail.com', 'temp-mail.org', 'tempmail.net', 'yopmail.com', 'trashmail.com', 'throwawaymail.com', 'getnada.com', 'maildrop.cc', 'dispostable.com', 'fakeinbox.com', 'mailnesia.com', 'mintemail.com', 'moakt.com', 'emailondeck.com', 'spamgourmet.com', 'mohmal.com', 'burnermail.io'];
 const TYPO_DOMAINS = ['gmial.com', 'gamil.com', 'gmai.com', 'gmail.co', 'gmail.cm', 'gmaill.com', 'gmal.com', 'gnail.com', 'gmail.con', 'hotmial.com', 'hotmal.com', 'yaho.com', 'yahooo.com', 'yahoo.co', 'outlok.com', 'outlook.co'];
@@ -8865,12 +8884,12 @@ function emailOk(e) {
 
   const noteShort = t => { t = String(t || '').trim(); return t.length < 8 || t.split(/\s+/).filter(w => /\p{L}/u.test(w)).length < 2; };
   // notes taken down by hand (the server hides the same ones)
-  const NOTE_BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop'];
+  const NOTE_BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop', 'uh uh'];
   const noteBlocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return NOTE_BLOCK.some(w => t.includes(w)); };
   // one Tamil note on the wall, shown in English (the original was cut off at the 200-character limit)
   const NOTE_EN = [['படைப்பாற்றல், நேர்த்தியான', 'This portfolio is the finest expression of creativity, elegant design and meticulous craftsmanship. Its unique artistry and flawless creation are beautifully reflected in it.']];
   const noteEn = n => { const t = String(n.note || '').replace(/^["“\s]+/, ''), hit = NOTE_EN.find(([k]) => t.startsWith(k)); return hit ? { ...n, note: hit[1] } : n; };
-  const noteOk = n => !noteBlocked(n) && !noteShort(n.note) && /\p{L}/u.test(String(n.name || '')) && ![n.note, n.name, n.company, n.role].some(junkText);
+  const noteOk = n => !noteBlocked(n) && !noteShort(n.note) && !nonsense(n.note) && /\p{L}/u.test(String(n.name || '')) && ![n.note, n.name, n.company, n.role].some(junkText);
   function noteCard(n, k) {
     if (n.ghost) return `<button type="button" class="nw-card nw-ghost" data-open style="--r:${k % 2 ? 1.5 : -1.5}deg"><div><p>Your note could be here.</p><span>Write one ↗</span></div></button>`;
     const c = n._c || NOTE_COLORS[hashStr(n.id || n.name) % NOTE_COLORS.length];
@@ -9098,6 +9117,7 @@ function emailOk(e) {
     if (!name) { nwErr.textContent = 'Add your name.'; $('#nwName').focus(); return; }
     if (!emailOk(email)) { nwErr.textContent = 'That doesn’t look like a real email. Use your own address.'; $('#nwEmail').focus(); return; }
     if (!note) { nwErr.textContent = 'Write a little something.'; $('#nwNote').focus(); return; }
+    if (nonsense(note)) { nwErr.textContent = 'That doesn’t read like a real note. Say something specific about the work.'; $('#nwNote').focus(); return; }
     if (noteShort(note)) { nwErr.textContent = 'Write a little more, at least a couple of words.'; $('#nwNote').focus(); return; }
     if (junkText(note) || junkText(name) || junkText($('#nwCo').value) || junkText($('#nwRole').value)) { nwErr.textContent = 'That doesn’t look like real words. Try again?'; $('#nwNote').focus(); return; }
     const go = $('#nwGo'); go.disabled = true; nwErr.textContent = '';
