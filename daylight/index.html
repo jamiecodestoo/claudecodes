@@ -6286,7 +6286,7 @@ void main() {
     heroScrim.style.opacity = focusId ? 0 : Math.max(0, 1 - t * 1.2).toFixed(3);
     places.style.opacity = pV > .002 ? (1 - range(pV, .0, .08)).toFixed(3) : '';
     places.style.pointerEvents = pV > .06 ? 'none' : '';
-    if (pV > .002 || focusId) cue.classList.remove('idle');
+    if ((pV > .002 || focusId) && cue.classList.contains('idle')) cue.classList.remove('idle');
     shade.style.opacity = range(pV, .25, .65).toFixed(3);
     if (!focusId) { const fo = (1 - range(pV, .0, .12)); chips.style.opacity = pV > .002 ? fo.toFixed(3) : ''; hint.style.opacity = pV > .002 ? fo.toFixed(3) : ''; }
   }
@@ -6688,6 +6688,7 @@ void main() {
   function viewFor(cx, cy, s) { const L = cardW(), fx = mobile ? vw * .5 : L + (vw - L) * .36, fy = mobile ? vh * .33 : vh * .58; return { x: fx - cx * s, y: fy - cy * s, s }; }
   let headB = 240;
   function overview() { const t = headB + 10, b = mobile ? 70 : 90, s = Math.min((vw - 48) / MW, (vh - t - b) / MH) * (mobile ? 1.12 : 1); return { x: (vw - MW * s) / 2, y: t + (vh - t - b - MH * s) / 2, s }; }
+  const tg = (el, c, on) => { on = !!on; if (el.classList.contains(c) !== on) el.classList.toggle(c, on); };   // touch the class list only when something changes
   function frameJourney(dt, y) {
     if (jCar) { const ke = reduce ? 1 : 1 - Math.exp(-dt * (jdrag ? 22 : 4.6)); jpos += (jposT - jpos) * ke; if (Math.abs(jposT - jpos) < .0005) jpos = jposT; }
     const p = jCar ? (jpos <= -.999 ? 0 : .5) : clamp((y - jTop) / jRange), ph = jCar ? (jpos < 0 ? { pos: jpos, k: ss(jpos + 1), out: 0 } : { pos: jpos, k: 1, out: 0 }) : phase(p);
@@ -6698,7 +6699,7 @@ void main() {
     const k = ph.out ? 1 - ph.out : ph.k;
     const hk = ss(clamp(k * 1.6));
     jHead.style.opacity = (1 - hk).toFixed(3); jHead.style.transform = `translate3d(0, ${(-hk * 40).toFixed(1)}px, 0)`; jFade.style.opacity = (1 - ss(k)).toFixed(3);
-    world3.classList.toggle('far', k < .5); journey.classList.toggle('jfar', k < .5); journey.classList.toggle('jstart', ph.pos <= -.995 && !ph.out);
+    tg(world3, 'far', k < .5); tg(journey, 'jfar', k < .5); tg(journey, 'jstart', ph.pos <= -.995 && !ph.out);
     const T = { x: O.x + (F.x - O.x) * k + pan.x, y: O.y + (F.y - O.y) * k + pan.y, s: O.s + (F.s - O.s) * k };
     if (!cam3.ok) Object.assign(cam3, T, { ok: true });
     const e = reduce ? 1 : 1 - Math.exp(-dt * 6);
@@ -6713,28 +6714,28 @@ void main() {
     const settled = ph.k > .95 && !ph.out && Math.abs(ph.pos - Math.round(ph.pos)) < .06;
     const active = ph.pos < -.35 || ph.out > .3 ? -1 : Math.round(ph.pos);
     if (active !== lastActive) { lastActive = active; pan.x = 0; pan.y = 0; pois.forEach(q => q.classList.remove('tipon')); }
-    lms.forEach((g, i) => { const reached = ph.pos >= i - .08 && ph.k > .5 && ph.out < .3; g.classList.toggle('seen', reached); g.classList.toggle('all', ph.k < .5 || ph.out > .3);
-      g.classList.toggle('act', i === Math.round(ph.pos) && ph.k > .9 && ph.out < .3);
+    lms.forEach((g, i) => { const reached = ph.pos >= i - .08 && ph.k > .5 && ph.out < .3; tg(g, 'seen', reached); tg(g, 'all', ph.k < .5 || ph.out > .3);
+      tg(g, 'act', i === Math.round(ph.pos) && ph.k > .9 && ph.out < .3);
       if (reached && !found[i]) { found[i] = true; rips[i].classList.remove('go'); void rips[i].getBBox(); rips[i].classList.add('go'); } if (!reached && ph.pos < i - .5) found[i] = false; });
-    jmarks.forEach((m, i) => { const seen = ph.k < .5 || ph.out > .3 || ph.pos >= i - .08; m.classList.toggle('seen', seen); m.classList.toggle('on', i === active); m.classList.toggle('dim', ph.k > .5 && !ph.out && ph.pos < i - .08); });
-    pois.forEach(q => { q.classList.toggle('seen', ph.pos >= +q.dataset.stop - .08 && ph.k > .9 && !ph.out); q.classList.toggle('here', +q.dataset.stop === active); });
-    world3.classList.toggle('focus', active >= 0);
+    jmarks.forEach((m, i) => { const seen = ph.k < .5 || ph.out > .3 || ph.pos >= i - .08; tg(m, 'seen', seen); tg(m, 'on', i === active); tg(m, 'dim', ph.k > .5 && !ph.out && ph.pos < i - .08); });
+    pois.forEach(q => { tg(q, 'seen', ph.pos >= +q.dataset.stop - .08 && ph.k > .9 && !ph.out); tg(q, 'here', +q.dataset.stop === active); });
+    tg(world3, 'focus', active >= 0);
     if (active >= 0) { const a = STOPS[active].at, e2 = reduce ? 1 : clamp(dt * 3.5); spotC.x += (a[0] + 190 - spotC.x) * e2; spotC.y += (a[1] - 120 - spotC.y) * e2; }
     if (active >= 0) { const sx = (cam3.x + spotC.x * cam3.s).toFixed(0), sy = (cam3.y + spotC.y * cam3.s).toFixed(0), sr = (900 * cam3.s).toFixed(0), key = sx + ',' + sy + ',' + sr; if (key !== frameJourney.sp) { frameJourney.sp = key; spot.style.setProperty('--sx', sx + 'px'); spot.style.setProperty('--sy', sy + 'px'); spot.style.setProperty('--sr', sr + 'px'); } }
-    spot.classList.toggle('on', active >= 0 && ph.k > .9);
+    tg(spot, 'on', active >= 0 && ph.k > .9);
     showPols(-1);
     meTip.style.opacity = ph.pos > -.5 && ph.out < .5 ? 1 : 0;
     { const mt = `translate3d(${tip.x.toFixed(1)}px, ${tip.y.toFixed(1)}px, 0) translate(-50%, -50%) scale(var(--inv, 1))`; if (mt !== frameJourney.mt) { frameJourney.mt = mt; meTip.style.transform = mt; } }
     const ahead = carve.getPointAtLength(Math.min(pathLen, L + 40)), want = ph.pos < 0 || ph.out ? 0 : Math.atan2(ahead.x - tip.x, -(ahead.y - tip.y)) * 180 / Math.PI;
     let dh = ((want - heading + 540) % 360) - 180; heading += dh * (reduce ? 1 : clamp(dt * 4));
     needle.style.transform = `rotate(${heading.toFixed(1)}deg)`; meTip.style.setProperty('--hd', heading.toFixed(1) + 'deg');
-    compass.classList.toggle('in', p > .005 && p < .999);
-    tlBtns.forEach((b, i) => { b.classList.toggle('on', i === active); b.classList.toggle('done', ph.pos >= i - .08 && ph.k > .5); });
-    jtlYr.textContent = active >= 0 ? `${STOPS[active].when} · ${STOPS[active].place}` : '2021 → now';
+    tg(compass, 'in', p > .005 && p < .999);
+    tlBtns.forEach((b, i) => { tg(b, 'on', i === active); tg(b, 'done', ph.pos >= i - .08 && ph.k > .5); });
+    { const yt = active >= 0 ? `${STOPS[active].when} · ${STOPS[active].place}` : '2021 → now'; if (yt !== frameJourney.yt) { frameJourney.yt = yt; jtlYr.textContent = yt; } }   // a text write every frame would re-layout the whole page every frame
     showCard(active);
     if (jCar) { const f = ph.pos < 0 ? 0 : ph.pos - Math.round(ph.pos), dx = (-f * 150).toFixed(1), da = Math.max(0, 1 - Math.abs(f) * 2.1).toFixed(3);
       if (dx !== frameJourney.dx || da !== frameJourney.da) { frameJourney.dx = dx; frameJourney.da = da; jcIn.style.transform = `translate3d(${dx}px, 0, 0)`; jcIn.style.opacity = da; } }
-    journey.classList.toggle('over', !jCar && ph.out > .6);
+    tg(journey, 'over', !jCar && ph.out > .6);
   }
   const stopP = i => i < 0 ? 0 : PH.zoom + Math.min(N - 1.001, i + .1) / (N - 1) * (PH.walk - PH.zoom);
   function carTo(i) {
@@ -8761,7 +8762,7 @@ void main() {
   /* ---------- highlights that paint as they enter ---------- */
   const lateHl = ['#journeyHl', '#workHl', '#brandHl', '#stackHl', '#llHl', '#procHl', '#notesHl', '#lifeHl'].map(s => $(s));
   const helloRq = $('#helloRq'); helloRq.style.animation = 'none';
-  const cloudsFoot = $$('#cloudsFoot img');
+  const cloudsFoot = $$('#cloudsFoot img'), cloudsFootEl = $('#cloudsFoot');
   let dockY = 0;
   const dock = $('.bar .nav');
   const navLinks = $$('.bar .nav a[data-go]'), navInd = $('#navInd'); let navOn = null, navTops = [];
@@ -8772,13 +8773,13 @@ void main() {
     if (navOn && navOn === cur && navInd.offsetWidth !== navOn.offsetWidth) { navInd.style.width = navOn.offsetWidth + 'px'; navInd.style.transform = `translateX(${navOn.offsetLeft}px)`; }
     if (cur !== navOn) { navOn = cur; navLinks.forEach(a => a.classList.toggle('on', a === cur)); navInd.classList.toggle('on', !!cur); if (cur) { navInd.style.width = cur.offsetWidth + 'px'; navInd.style.transform = `translateX(${cur.offsetLeft}px)`; } }
     const inMap = y > jTop - vh * .4 && y < jTop + jRange + vh * .3, bx = boxTrack.getBoundingClientRect(), pinned = (bx.top < vh * .3 && bx.bottom > vh * .7) || (y > stTop - vh * .2 && y < stTop + stRange) || (y > rvTop - vh * .2 && y < rvTop + rvRange) || (y > bTop - vh * .2 && y < bTop + bRange);
-    if (y > dockY + 3 && y > vh * .5) dock.dataset.dn = 1; else if (y < dockY - 3) dock.dataset.dn = '';
-    dock.classList.remove('away'); dockY = y; // the nav always stays on screen
+    if (y > dockY + 3 && y > vh * .5) { if (dock.dataset.dn !== '1') dock.dataset.dn = 1; } else if (y < dockY - 3 && dock.dataset.dn) dock.dataset.dn = '';
+    if (dock.classList.contains('away')) dock.classList.remove('away'); dockY = y; // the nav always stays on screen
     lateHl.forEach(h => { if (!h.classList.contains('on') && h.getBoundingClientRect().top < vh * .78) h.classList.add('on'); });
     const hr = helloRq.getBoundingClientRect();
     if (hr.top < vh * .8 && !helloRq.dataset.done) { helloRq.dataset.done = 1; helloRq.classList.add('painted'); }
-    const fr = $('#cloudsFoot').getBoundingClientRect(), fq = clamp(1 - fr.top / vh);
-    cloudsFoot.forEach(im => im.style.transform = `translate3d(0, ${(-(fq) * vh * +im.dataset.sp).toFixed(1)}px, 0)` + (im.dataset.f ? ' scaleX(-1)' : ''));
+    const fr = cloudsFootEl.getBoundingClientRect(), fq = clamp(1 - fr.top / vh), fk = fq.toFixed(3);
+    if (fk !== frameMisc.fk) { frameMisc.fk = fk; cloudsFoot.forEach(im => im.style.transform = `translate3d(0, ${(-(fq) * vh * +im.dataset.sp).toFixed(1)}px, 0)` + (im.dataset.f ? ' scaleX(-1)' : '')); }
   }
   const st = document.createElement('style'); st.textContent = '#helloRq::before{animation:none}#helloRq.painted::before{animation:paint 1s var(--ease) .1s forwards}'; document.head.appendChild(st);
 
@@ -9000,8 +9001,8 @@ function emailOk(e) {
     const place = () => { if (!tb) return; const c = getComputedStyle(tb), tbRight = parseFloat(c.right) || 0, tbTop = parseFloat(c.top) || 0, phone = innerWidth < 860;
       { let edge = tbRight + tb.offsetWidth; if (np && !np.hidden && np.offsetWidth) edge += GAP + np.offsetWidth; if (!phone && vc && vc.classList.contains('in') && !vc.classList.contains('away') && vc.offsetWidth) edge += GAP + vc.offsetWidth;   // the badge keeps a steady gap: left of the count while it shows, sliding right into its place once the count is gone
         badge.style.right = Math.round(edge + GAP) + 'px'; badge.style.top = Math.round(tbTop + (tb.offsetHeight - badge.offsetHeight) / 2) + 'px'; }
-      badge.classList.add('ready'); };
-    const away = () => { if (scrollY > 40) badge.classList.remove('new'); };   // the "I got featured!" note belongs to the landing view only
+      if (!badge.classList.contains('ready')) badge.classList.add('ready'); };
+    const away = () => { if (scrollY > 40 && badge.classList.contains('new')) badge.classList.remove('new'); };   // the "I got featured!" note belongs to the landing view only
     addEventListener('resize', () => { place(); away(); }); addEventListener('scroll', away, { passive: true }); addEventListener('themechange', () => setTimeout(place, 60)); away();
     if (document.fonts) document.fonts.ready.then(place);
     if (window.ResizeObserver) { const ro = new ResizeObserver(place); [vc, np, tb, badge].forEach(el => el && ro.observe(el)); }
@@ -9231,7 +9232,7 @@ function emailOk(e) {
     addEventListener('resize', place); addEventListener('themechange', () => setTimeout(place, 50));
     // the count is for the landing view only: gone on phones at the first scroll, on laptops once the hero is behind you
     const hero = document.getElementById('top');
-    const away = () => el.classList.toggle('away', innerWidth < 860 ? scrollY > 24 : !!hero && hero.getBoundingClientRect().bottom < innerHeight * .85);
+    const away = () => { const want = innerWidth < 860 ? scrollY > 24 : !!hero && hero.getBoundingClientRect().bottom < innerHeight * .85; if (want !== el.classList.contains('away')) el.classList.toggle('away', want); };
     addEventListener('scroll', away, { passive: true }); addEventListener('resize', away); away();
     if (np) new MutationObserver(place).observe(np, { attributes: true, attributeFilter: ['hidden', 'class'] });
     if (document.fonts) document.fonts.ready.then(place);
