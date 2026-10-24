@@ -243,17 +243,6 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .kicker { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
 .kicker svg { width: 22px; height: 22px; fill: var(--coral); animation: spin 14s linear infinite; }
 @keyframes spin { to { rotate: 360deg; } }
-/* "How I got here" is set in Coolvetica */
-@font-face { font-family: "Coolvetica"; src: url("v2/f/coolvetica-rg.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Coolvetica"; src: url("v2/f/coolvetica-it.otf") format("opentype"); font-weight: 400; font-style: italic; font-display: swap; }
-@font-face { font-family: "Coolvetica Cond"; src: url("v2/f/coolvetica-cond.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Coolvetica Cram"; src: url("v2/f/coolvetica-cram.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Coolvetica Comp"; src: url("v2/f/coolvetica-hv-comp.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
-.story .tell { font-family: "Coolvetica", var(--sans); font-weight: 400; font-synthesis: none; letter-spacing: -.005em; word-spacing: .02em; line-height: 1.22; }
-.story .sticky { font-family: "Coolvetica Cond", "Coolvetica", var(--sans); font-size: 25px; line-height: 1.12; letter-spacing: .005em; }
-.story .sticky small { font-family: "Coolvetica Cram", "Coolvetica", var(--sans); font-weight: 400; letter-spacing: .1em; opacity: .6; }
-.story .move-hint { font-family: "Coolvetica Cond", "Coolvetica", var(--sans); font-size: 20px; }
-.story .kicker { font-family: "Coolvetica", var(--sans); font-weight: 400; letter-spacing: .06em; }
 .tell-box { position: relative; padding-right: min(18rem, 22vw); }
 .tell { position: relative; z-index: 1; margin: 0; max-width: 22ch; font-weight: 800; font-size: clamp(2rem, 4.2vw, 4.1rem); line-height: 1.34; letter-spacing: -.03em; word-spacing: .04em; text-wrap: pretty; }
 .tell .w { opacity: .13; transition: opacity .3s linear; }
@@ -6084,7 +6073,7 @@ void main() {
   float edge = min(min(uv.x, 1. - uv.x), min(uv.y, 1. - uv.y));
   vec2 off = uOff * smoothstep(0., .05, edge);
   vec2 c = uv;
-  for (int i = 0; i < 4; i++) { float d = texture(uDep, clamp(c, 0., 1.)).r; c = F + (uv - off * (d - .45) - F) / gn(d); }
+  for (int i = 0; i < 3; i++) { float d = texture(uDep, clamp(c, 0., 1.)).r; c = F + (uv - off * (d - .45) - F) / gn(d); }
   // past the painting's edge the picture simply continues, mirrored, so there is no blurred band
   vec2 oo = max(max(-c, c - 1.), 0.);
   vec2 mc = 1. - abs(1. - mod(c, 2.));
@@ -6122,7 +6111,7 @@ void main() {
     } catch (err) { console.warn('plate shader', err); gl = null; }
   })();
   function sizeGL() {
-    const dpr = Math.max(1, Math.min(devicePixelRatio || 1, 2, Math.sqrt(4e6 / (vw * vh)))), w = Math.round(vw * dpr), h = Math.round(vh * dpr);
+    const dpr = Math.max(1, Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(2.2e6 / (vw * vh)))), w = Math.round(vw * dpr), h = Math.round(vh * dpr);
     if (glc.width !== w || glc.height !== h) { glc.width = w; glc.height = h; gl.viewport(0, 0, w, h); glKey = ''; }
   }
   function drawGL(e, px, py, dt) {
@@ -6277,15 +6266,17 @@ void main() {
     ptr.sx += (ptr.x - ptr.sx) * clamp(dt * 1.6); ptr.sy += (ptr.y - ptr.sy) * clamp(dt * 1.6);
     const intro = reduce ? 0 : 1 - ss(clamp((performance.now() - t0 - 200) / 2000));
 
-    cam.style.transform = `translate3d(${cur.x.toFixed(2)}px, ${cur.y.toFixed(2)}px, 0) scale(${cur.s.toFixed(4)})`;
-    cam.classList.toggle('flying', pV > .03);
-    cam.style.setProperty('--ps', Math.pow(cur.s, -.75).toFixed(3));
+    // only touch the DOM when something actually moved, so an idle hero costs nothing
+    const ct = `translate3d(${cur.x.toFixed(2)}px, ${cur.y.toFixed(2)}px, 0) scale(${cur.s.toFixed(4)})`;
+    if (ct !== frameValley.ct) { frameValley.ct = ct; cam.style.transform = ct; cam.style.setProperty('--ps', Math.pow(cur.s, -.75).toFixed(3)); }
+    const fl = pV > .03; if (fl !== frameValley.fl) { frameValley.fl = fl; cam.classList.toggle('flying', fl); }
     // fly-through: each layer grows around the valley's focal point by depth; foreground flies out
     const px = reduce ? 0 : ptr.sx, py = reduce ? 0 : ptr.sy;
     // the DOM layers (pins, hot areas, the gramophone) ride the same depth maths as the shader, so they stay glued to their buildings
     for (const L of layers) {
       const d = L.d, sc = gain(e, d), k = (d - .45) * (1 - fa);
-      L.el.style.transform = `translate3d(${(-px * PAR[0] * k * SW).toFixed(1)}px, ${(-py * PAR[1] * k * SW).toFixed(1)}px, 0) scale(${sc.toFixed(4)})`;
+      const lt = `translate3d(${(-px * PAR[0] * k * SW).toFixed(1)}px, ${(-py * PAR[1] * k * SW).toFixed(1)}px, 0) scale(${sc.toFixed(4)})`;
+      if (lt !== L.t) { L.t = lt; L.el.style.transform = lt; }
     }
     drawGL(e, px, py, dt);
     const t = range(pV, .02, .3);
