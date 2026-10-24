@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Climb · James Chugh</title>
+<meta name="description" content="The Climb: an illustrated journey through James Chugh’s life and career as a product designer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script>
+  // Apply the saved theme before first paint so there is no flash.
+  try { var t = localStorage.getItem('ascent-theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+</head>
+<body>
+<!--BODY-->
+<div class="stage" aria-hidden="true">
+  <canvas id="sky"></canvas>
+  <canvas id="scene"></canvas>
+  <div class="grain"></div>
+</div>
+
+<header class="bar">
+  <a class="mark" href="#top" id="mark">James Chugh</a>
+  <p class="crumb" id="crumb" aria-live="polite">The Climb</p>
+  <button class="theme" id="theme" type="button" aria-label="Switch to dark mode">
+    <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+    <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M19.5 14.6A7.8 7.8 0 0 1 9.4 4.5a7.8 7.8 0 1 0 10.1 10.1z"/></svg>
+  </button>
+</header>
+
+<section class="hero" id="hero">
+  <p class="eyebrow ln"><span class="in">The Climb <span>·</span> James Chugh, Product Designer</span></p>
+  <h1>
+    <span class="ln"><span>Every great product</span></span>
+    <span class="ln"><span>is a staircase.</span></span>
+    <span class="ln"><span class="hl">I design the steps.</span></span>
+  </h1>
+</section>
+
+<div class="cue" id="cue"><div class="cue-in"><span class="cue-line"><i></i></span><span>Scroll to start climbing</span></div></div>
+
+<div class="tag" id="chap" data-off>
+  <span class="k">Chapter 01</span>
+  <span class="t">NSUT</span>
+  <span class="s">Mechanical Engineering · 2021</span>
+</div>
+<div class="tag tag-next" id="next" data-off>
+  <span class="k">Chapter 02</span>
+  <span class="s">The next landing</span>
+</div>
+
+<p class="story" id="story" data-off aria-live="polite"><span class="k" id="storyK"></span><span class="t" id="storyT"></span></p>
+
+<nav class="meter" aria-label="Your climb">
+  <button class="m-stop" type="button" data-go="8.8" aria-label="Go to the next landing">02</button>
+  <div class="m-rail"><div class="m-scale" id="mScale"></div><button class="m-mid" type="button" data-go="3.3" aria-label="Go to Chapter 01, NSUT">01</button><div class="m-mark" id="mMark"><span id="mRead">+0.0 m</span></div></div>
+  <button class="m-stop" type="button" data-go="0" aria-label="Go to the start">G</button>
+</nav>
+
+<div id="track"></div>
+<!--/BODY-->
+<script src="main.js"></script>
+</body>
+</html>
