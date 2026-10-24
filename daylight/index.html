@@ -6675,7 +6675,7 @@ void main() {
   addEventListener('pointerup', () => { if (drag) { drag = null; mapview.classList.remove('drag'); setTimeout(() => dragMoved = false, 0); } });
   mapview.addEventListener('click', e => { if (!e.target.closest('.poi')) pois.forEach(q => q.classList.remove('tipon')); });
   function layoutJourney() { jCar = vw <= 1100; journey.classList.toggle('jcm', jCar); $('.j-how').textContent = jCar ? 'Tap through them, or swipe the map.' : 'Scroll to walk the path.'; jTrack.style.height = jCar ? '' : DONE.j ? '100vh' : (N * 84 + 200) + 'vh'; jTop = top(jTrack); jRange = Math.max(1, jTrack.offsetHeight - vh); headB = jHead.offsetTop + jHead.offsetHeight; jFade.style.setProperty('--hb', headB + 'px'); }
-  const PH = { hold: .05, zoom: .12, walk: .91 };
+  const PH = { hold: .012, zoom: .115, walk: .91 };
   function phase(p) {
     if (p < PH.hold) return { pos: -1, k: 0, out: 0 };
     if (p < PH.zoom) { const k = ss((p - PH.hold) / (PH.zoom - PH.hold)); return { pos: -1 + k, k, out: 0 }; }
