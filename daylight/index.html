@@ -243,6 +243,17 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .kicker { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 22px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
 .kicker svg { width: 22px; height: 22px; fill: var(--coral); animation: spin 14s linear infinite; }
 @keyframes spin { to { rotate: 360deg; } }
+/* "How I got here" is set in Coolvetica */
+@font-face { font-family: "Coolvetica"; src: url("v2/f/coolvetica-rg.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Coolvetica"; src: url("v2/f/coolvetica-it.otf") format("opentype"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Coolvetica Cond"; src: url("v2/f/coolvetica-cond.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Coolvetica Cram"; src: url("v2/f/coolvetica-cram.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Coolvetica Comp"; src: url("v2/f/coolvetica-hv-comp.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+.story .tell { font-family: "Coolvetica", var(--sans); font-weight: 400; font-synthesis: none; letter-spacing: -.005em; word-spacing: .02em; line-height: 1.22; }
+.story .sticky { font-family: "Coolvetica Cond", "Coolvetica", var(--sans); font-size: 25px; line-height: 1.12; letter-spacing: .005em; }
+.story .sticky small { font-family: "Coolvetica Cram", "Coolvetica", var(--sans); font-weight: 400; letter-spacing: .1em; opacity: .6; }
+.story .move-hint { font-family: "Coolvetica Cond", "Coolvetica", var(--sans); font-size: 20px; }
+.story .kicker { font-family: "Coolvetica", var(--sans); font-weight: 400; letter-spacing: .06em; }
 .tell-box { position: relative; padding-right: min(18rem, 22vw); }
 .tell { position: relative; z-index: 1; margin: 0; max-width: 22ch; font-weight: 800; font-size: clamp(2rem, 4.2vw, 4.1rem); line-height: 1.34; letter-spacing: -.03em; word-spacing: .04em; text-wrap: pretty; }
 .tell .w { opacity: .13; transition: opacity .3s linear; }
@@ -8980,7 +8991,7 @@ function emailOk(e) {
       { let edge = tbRight + tb.offsetWidth; if (np && !np.hidden && np.offsetWidth) edge += GAP + np.offsetWidth; if (!phone && vc && vc.classList.contains('in') && !vc.classList.contains('away') && vc.offsetWidth) edge += GAP + vc.offsetWidth;   // the badge keeps a steady gap: left of the count while it shows, sliding right into its place once the count is gone
         badge.style.right = Math.round(edge + GAP) + 'px'; badge.style.top = Math.round(tbTop + (tb.offsetHeight - badge.offsetHeight) / 2) + 'px'; }
       badge.classList.add('ready'); };
-    const away = () => {};
+    const away = () => { if (scrollY > 40) badge.classList.remove('new'); };   // the "I got featured!" note belongs to the landing view only
     addEventListener('resize', () => { place(); away(); }); addEventListener('scroll', away, { passive: true }); addEventListener('themechange', () => setTimeout(place, 60)); away();
     if (document.fonts) document.fonts.ready.then(place);
     if (window.ResizeObserver) { const ro = new ResizeObserver(place); [vc, np, tb, badge].forEach(el => el && ro.observe(el)); }
