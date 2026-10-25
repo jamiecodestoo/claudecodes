@@ -91,7 +91,12 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
    ========================================================= */
 .valley { position: relative; height: 260vh; }
 .stage .shade { position: absolute; z-index: 4; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(180deg, rgba(255, 248, 236, 0) 30%, rgba(255, 248, 236, .55)); }
-.stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; overflow: clip; background: #2c7fd6; touch-action: pan-y; }
+.stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; overflow: clip; background: linear-gradient(180deg, #385773 50%, #66492f 50%); touch-action: pan-y; }
+/* the strips above and below (or beside) the painting are a blurred copy of the painting itself, there from the first paint and never changing */
+.hero-blur { position: absolute; inset: -6%; background: url("v2/h/plate.webp") center / cover no-repeat; filter: blur(26px) saturate(1.1); pointer-events: none; }
+:root[data-theme="dark"] .stage { background: linear-gradient(180deg, #141d31 50%, #583826 50%); }
+:root[data-theme="dark"] .hero-blur { background-image: url("v2/h/plate-night2.webp"); filter: blur(26px) saturate(1.05); }
+@media (max-width: 859px) { .hero-blur { display: none; } }
 .cam { position: absolute; z-index: 2; left: 0; top: 0; transform-origin: 0 0; }
 .scene { position: absolute; inset: 0; }
 .scene > .bgp { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -5459,6 +5464,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
 <!-- 1 · THE VALLEY -->
 <section class="valley" id="top" aria-label="The valley">
   <div class="stage" id="stage">
+    <div class="hero-blur" aria-hidden="true"></div>
     <div class="ph-hero" aria-hidden="true"></div>
     <canvas class="gl-plate" id="glPlate" aria-hidden="true"></canvas>
     <div class="hero-scrim" id="heroScrim" aria-hidden="true"></div>
@@ -6055,7 +6061,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
   // the painting's texture upload is heavy, so it starts once the headline has finished arriving (the plain image shows until then)
   setTimeout(function initGL() {
     if (matchMedia('(max-width: 859px)').matches) { addEventListener('resize', () => { if (!gl && innerWidth >= 860) initGL(); }); }
-    let g; try { g = glc.getContext('webgl2', { antialias: false, alpha: false, powerPreference: 'high-performance' }); } catch (_) {}
+    let g; try { g = glc.getContext('webgl2', { antialias: false, alpha: true, premultipliedAlpha: true, powerPreference: 'high-performance' }); } catch (_) {}
     if (!g) return;
     const sh = (t, src) => { const o = g.createShader(t); g.shaderSource(o, src); g.compileShader(o); if (!g.getShaderParameter(o, g.COMPILE_STATUS)) throw new Error(g.getShaderInfoLog(o)); return o; };
     try {
@@ -6075,17 +6081,16 @@ void main() {
   vec2 off = uOff * smoothstep(0., .05, edge);
   vec2 c = uv;
   for (int i = 0; i < 3; i++) { float d = texture(uDep, clamp(c, 0., 1.)).r; c = F + (uv - off * (d - .45) - F) / gn(d); }
-  // past the painting's edge the picture simply continues, mirrored, so there is no blurred band
-  vec2 oo = max(max(-c, c - 1.), 0.);
-  vec2 mc = 1. - abs(1. - mod(c, 2.));
-  float bias = clamp(max(oo.x, oo.y) * 110., 0., 4.);
-  vec3 col = texture(uTex, mc, bias).rgb;
-  if (uNight > .001) col = mix(col, texture(uTexN, mc, bias).rgb, uNight);
+  // outside the painting this draws nothing, so the blurred backdrop behind the canvas (the same one that is there from the very first paint) shows through
+  vec2 mc = clamp(c, 0., 1.);
+  float inside = smoothstep(0., .003, min(min(c.x, 1. - c.x), min(c.y, 1. - c.y)));
+  vec3 col = texture(uTex, mc).rgb;
+  if (uNight > .001) col = mix(col, texture(uTexN, mc).rgb, uNight);
   float m = 1. - smoothstep(.58, 1., length((c - uSpot.xy) / uSpot.zw));
   float l = dot(col, vec3(.299, .587, .114));
   vec3 dim = mix(vec3(l), col, .55) * .86, lit = mix(vec3(l), col, 1.12) * 1.06;
   col = mix(col, mix(dim, lit, m), uFocus);
-  o = vec4(col, 1.);
+  o = vec4(col * inside, inside);
 }`));
       g.linkProgram(pr); if (!g.getProgramParameter(pr, g.LINK_STATUS)) throw new Error(g.getProgramInfoLog(pr));
       g.useProgram(pr);
