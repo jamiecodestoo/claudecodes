@@ -8871,12 +8871,16 @@ void main() {
   const junkText = t => String(t || '').split(/\s+/).some(junkWord);
 // a note has to read like something a person meant: not interjections ("uh uh ah ah"), not the same words over and over, and with a couple of real words in it
 const FILLER = new Set(['uh', 'uhh', 'uhm', 'um', 'umm', 'ah', 'aah', 'ahh', 'oh', 'ohh', 'eh', 'hm', 'hmm', 'hmmm', 'mm', 'mmm', 'huh', 'ha', 'haha', 'hahaha', 'hehe', 'heh', 'lol', 'lmao', 'blah', 'bla', 'la', 'na', 'nah', 'ya', 'yay', 'woo', 'yeah', 'yep', 'nope', 'test', 'testing', 'asdf', 'abc', 'xyz', 'zzz', 'ok', 'okay', 'hi', 'hey', 'hello', 'wow', 'yo']);
+const FAKE_NAME = /^(test(ing|er|user)?\d*|asdf\w*|qwerty\w*|admin|user\d*|abc|xyz|demo|sample|fake|null|none|na|n\/a|name|anonymous|anon|xxx+|aaa+|hello|hi|hey|me|no ?one|nobody|someone|god)$/i;
+const fakeName = v => FAKE_NAME.test(String(v || '').trim());
 function nonsense(t) {
   const w = String(t || '').toLowerCase().match(/[\p{L}\p{M}']+/gu) || [], n = w.length;
   if (n < 2 || new Set(w).size < 2) return true;
   const uniq = new Set(w).size, fill = w.filter(x => FILLER.has(x) || /^(.)\1+$/.test(x)).length;
   const cnt = {}; w.forEach(x => { cnt[x] = (cnt[x] || 0) + 1; });
   if (fill / n >= .5) return true;                                             // uh uh ah ah
+  const stutter = w.filter(x => /(\p{L}{2,3})\1/u.test(x.replace(/(\p{L})\1+/gu, '$1')) || /^(\p{L})\1$/u.test(x)).length;   // ththath, aa (a stretched "sooo" is fine)
+  if (stutter >= 2 || (n >= 3 && stutter / n >= .25)) return true;
   if (n >= 4 && uniq / n < .6) return true;                                    // the same few words again and again
   if (Math.max(...Object.values(cnt)) >= 3 && Math.max(...Object.values(cnt)) / n >= .3) return true;
   if (n >= 4) { const bg = {}; for (let i = 0; i < n - 1; i++) { const k = w[i] + ' ' + w[i + 1]; bg[k] = (bg[k] || 0) + 1; } if (Math.max(...Object.values(bg)) >= 2 && uniq / n < .75) return true; }
@@ -8905,12 +8909,12 @@ function emailOk(e) {
 
   const noteShort = t => { t = String(t || '').trim(); return t.length < 8 || t.split(/\s+/).filter(w => /\p{L}/u.test(w)).length < 2; };
   // notes taken down by hand (the server hides the same ones)
-  const NOTE_BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop', 'uh uh'];
+  const NOTE_BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop', 'uh uh', 'this isss a aa hit'];
   const noteBlocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return NOTE_BLOCK.some(w => t.includes(w)); };
   // one Tamil note on the wall, shown in English (the original was cut off at the 200-character limit)
   const NOTE_EN = [['படைப்பாற்றல், நேர்த்தியான', 'This portfolio is the finest expression of creativity, elegant design and meticulous craftsmanship. Its unique artistry and flawless creation are beautifully reflected in it.']];
   const noteEn = n => { const t = String(n.note || '').replace(/^["“\s]+/, ''), hit = NOTE_EN.find(([k]) => t.startsWith(k)); return hit ? { ...n, note: hit[1] } : n; };
-  const noteOk = n => !noteBlocked(n) && !noteShort(n.note) && !nonsense(n.note) && /\p{L}/u.test(String(n.name || '')) && ![n.note, n.name, n.company, n.role].some(junkText);
+  const noteOk = n => !noteBlocked(n) && !noteShort(n.note) && !nonsense(n.note) && !fakeName(n.name) && !(n.company && fakeName(n.company)) && !(n.role && fakeName(n.role)) && /\p{L}/u.test(String(n.name || '')) && ![n.note, n.name, n.company, n.role].some(junkText);
   function noteCard(n, k) {
     if (n.ghost) return `<button type="button" class="nw-card nw-ghost" data-open style="--r:${k % 2 ? 1.5 : -1.5}deg"><div><p>Your note could be here.</p><span>Write one ↗</span></div></button>`;
     const c = n._c || NOTE_COLORS[hashStr(n.id || n.name) % NOTE_COLORS.length];
@@ -9138,6 +9142,8 @@ function emailOk(e) {
     if (!name) { nwErr.textContent = 'Add your name.'; $('#nwName').focus(); return; }
     if (!emailOk(email)) { nwErr.textContent = 'That doesn’t look like a real email. Use your own address.'; $('#nwEmail').focus(); return; }
     if (!note) { nwErr.textContent = 'Write a little something.'; $('#nwNote').focus(); return; }
+    if (fakeName(name)) { nwErr.textContent = 'Use your real name.'; $('#nwName').focus(); return; }
+    if (fakeName($('#nwCo').value) || fakeName($('#nwRole').value)) { nwErr.textContent = 'Add your real company and role, or leave them empty.'; $('#nwCo').focus(); return; }
     if (nonsense(note)) { nwErr.textContent = 'That doesn’t read like a real note. Say something specific about the work.'; $('#nwNote').focus(); return; }
     if (noteShort(note)) { nwErr.textContent = 'Write a little more, at least a couple of words.'; $('#nwNote').focus(); return; }
     if (junkText(note) || junkText(name) || junkText($('#nwCo').value) || junkText($('#nwRole').value)) { nwErr.textContent = 'That doesn’t look like real words. Try again?'; $('#nwNote').focus(); return; }

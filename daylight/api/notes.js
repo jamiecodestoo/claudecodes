@@ -48,7 +48,7 @@ function junkWord(w) {
 }
 const junkText = t => String(t || '').split(/\s+/).some(junkWord);
 // notes taken down by hand: any note whose name, text, role or company contains one of these is hidden
-const BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop', 'uh uh'];
+const BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop', 'uh uh', 'this isss a aa hit'];
 
 // an email has to look like a real person's: proper shape, a real-looking name and domain, no throwaway or placeholder services, no common typos
 const FAKE_DOMAINS = ['example.com', 'example.org', 'example.net', 'test.com', 'test.test', 'test.in', 'fake.com', 'fakemail.com', 'noemail.com', 'none.com', 'abc.com', 'asdf.com', 'xyz.com', 'domain.com', 'email.test', 'mailinator.com', 'guerrillamail.com', 'guerrillamail.net', 'sharklasers.com', '10minutemail.com', 'tempmail.com', 'temp-mail.org', 'tempmail.net', 'yopmail.com', 'trashmail.com', 'throwawaymail.com', 'getnada.com', 'maildrop.cc', 'dispostable.com', 'fakeinbox.com', 'mailnesia.com', 'mintemail.com', 'moakt.com', 'emailondeck.com', 'spamgourmet.com', 'mohmal.com', 'burnermail.io'];
@@ -85,12 +85,16 @@ async function domainReal(email) {
 
 // a note has to read like something a person meant: not interjections ("uh uh ah ah"), not the same words over and over, and with a couple of real words in it
 const FILLER = new Set(['uh', 'uhh', 'uhm', 'um', 'umm', 'ah', 'aah', 'ahh', 'oh', 'ohh', 'eh', 'hm', 'hmm', 'hmmm', 'mm', 'mmm', 'huh', 'ha', 'haha', 'hahaha', 'hehe', 'heh', 'lol', 'lmao', 'blah', 'bla', 'la', 'na', 'nah', 'ya', 'yay', 'woo', 'yeah', 'yep', 'nope', 'test', 'testing', 'asdf', 'abc', 'xyz', 'zzz', 'ok', 'okay', 'hi', 'hey', 'hello', 'wow', 'yo']);
+const FAKE_NAME = /^(test(ing|er|user)?\d*|asdf\w*|qwerty\w*|admin|user\d*|abc|xyz|demo|sample|fake|null|none|na|n\/a|name|anonymous|anon|xxx+|aaa+|hello|hi|hey|me|no ?one|nobody|someone|god)$/i;
+const fakeName = v => FAKE_NAME.test(String(v || '').trim());
 function nonsense(t) {
   const w = String(t || '').toLowerCase().match(/[\p{L}\p{M}']+/gu) || [], n = w.length;
   if (n < 2 || new Set(w).size < 2) return true;
   const uniq = new Set(w).size, fill = w.filter(x => FILLER.has(x) || /^(.)\1+$/.test(x)).length;
   const cnt = {}; w.forEach(x => { cnt[x] = (cnt[x] || 0) + 1; });
   if (fill / n >= .5) return true;                                             // uh uh ah ah
+  const stutter = w.filter(x => /(\p{L}{2,3})\1/u.test(x.replace(/(\p{L})\1+/gu, '$1')) || /^(\p{L})\1$/u.test(x)).length;   // ththath, aa (a stretched "sooo" is fine)
+  if (stutter >= 2 || (n >= 3 && stutter / n >= .25)) return true;
   if (n >= 4 && uniq / n < .6) return true;                                    // the same few words again and again
   if (Math.max(...Object.values(cnt)) >= 3 && Math.max(...Object.values(cnt)) / n >= .3) return true;
   if (n >= 4) { const bg = {}; for (let i = 0; i < n - 1; i++) { const k = w[i] + ' ' + w[i + 1]; bg[k] = (bg[k] || 0) + 1; } if (Math.max(...Object.values(bg)) >= 2 && uniq / n < .75) return true; }
@@ -102,6 +106,7 @@ function noteOk(n) {
   const note = String(n.note || '').trim();
   const words = note.split(/\s+/).filter(w => /\p{L}/u.test(w));
   if (note.length < 8 || words.length < 2 || nonsense(note)) return false;
+  if (fakeName(n.name) || (n.company && fakeName(n.company)) || (n.role && fakeName(n.role))) return false;
   if (!/\p{L}/u.test(String(n.name || ''))) return false;
   return ![n.note, n.name, n.company, n.role].some(junkText);
 }
