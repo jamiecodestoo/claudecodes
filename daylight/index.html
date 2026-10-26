@@ -394,6 +394,7 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
   box-sizing: border-box; padding: 0; border-radius: 28px; background: #fff; color: var(--ink); box-shadow: 0 30px 60px -30px rgba(19, 35, 58, .5), 0 0 0 1px rgba(19, 35, 58, .05);
   transform: translate(-30px, -50%); opacity: 0; pointer-events: none; transition: opacity .5s var(--ease), transform .8s var(--ease); }
 .jcard::-webkit-scrollbar { display: none; }
+.jcard { overscroll-behavior: contain; }  /* scrolling inside a stop's card never spills over into the map */
 .jcard.in { opacity: 1; transform: translate(0, -50%); pointer-events: auto; }
 .jcard .jc-in { transition: opacity .3s var(--ease), transform .5s var(--ease); }
 .jcard.swap .jc-in { opacity: 0; transform: translateY(10px); }
@@ -6711,6 +6712,10 @@ void main() {
   let headB = 240;
   function overview() { const t = headB + 10, b = mobile ? 70 : 90, s = Math.min((vw - 48) / MW, (vh - t - b) / MH) * (mobile ? 1.12 : 1); return { x: (vw - MW * s) / 2, y: t + (vh - t - b - MH * s) / 2, s }; }
   const tg = (el, c, on) => { on = !!on; if (el.classList.contains(c) !== on) el.classList.toggle(c, on); };   // touch the class list only when something changes
+  // with the pointer over a stop's card, the wheel scrolls the card while it still has text to show; at its top or bottom the map takes over again
+  { const jc = $('#jcard');
+    jc.addEventListener('wheel', e => { const can = jc.scrollHeight > jc.clientHeight + 2 && (e.deltaY > 0 ? jc.scrollTop + jc.clientHeight < jc.scrollHeight - 1 : jc.scrollTop > 0);
+      if (can) jc.setAttribute('data-lenis-prevent', ''); else jc.removeAttribute('data-lenis-prevent'); jc.style.overscrollBehavior = can ? 'contain' : 'auto'; }, { passive: true, capture: true }); }
   function frameJourney(dt, y) {
     if (jCar) { const ke = reduce ? 1 : 1 - Math.exp(-dt * (jdrag ? 22 : 4.6)); jpos += (jposT - jpos) * ke; if (Math.abs(jposT - jpos) < .0005) jpos = jposT; }
     const p = jCar ? (jpos <= -.999 ? 0 : .5) : clamp((y - jTop) / jRange), ph = jCar ? (jpos < 0 ? { pos: jpos, k: ss(jpos + 1), out: 0 } : { pos: jpos, k: 1, out: 0 }) : phase(p);
