@@ -6052,7 +6052,7 @@ html:has(.cs.open) .sfx-btn { display: none; }
   const chips = document.createElement('div'), heroCopy = $('#heroCopy'), places = document.createElement('div'), cue = $('#cue'), hint = $('#hint'), sheet = $('#sheet');
   const shade = $('#shade'); const t0 = performance.now();
   let SW = 0, SH = 0, baseX = 0, baseY = 0, ax = .5, vTop = 0, vRange = 1, pV = 0;
-  const cur = { x: 0, y: 0, s: 1.18 }, ptr = { x: 0, y: 0, sx: 0, sy: 0 };
+  const cur = { x: 0, y: 0, s: 1 }, ptr = { x: 0, y: 0, sx: 0, sy: 0 };   // the painting starts exactly where it rests: no intro zoom that would glide once loading ends
   let focusId = null, rate = 2;
   // "scroll to fly in" appears 4s after the page opens (or at once, if loading took longer); it hides once you scroll and returns if you settle back at the top
   let cueT = 0;
