@@ -9,7 +9,7 @@
 <meta name="description" content="James Chugh, product designer. A painted valley of the places I've worked, and the numbers my work moved.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Geist:wght@400;600&family=Gaegu:wght@400;700&family=Anton&family=Mrs+Saint+Delafield&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Geist:wght@400;600&family=Gaegu:wght@400;700&family=Anton&family=Mrs+Saint+Delafield&display=block">
 <style>
 /* Layout: a layered painted valley you fly into; clouds carry you onto paper where the
    story draws itself; a pinned diorama walks place to place; stacked case cards; a desk
@@ -132,8 +132,10 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 /* a soft dark gradient behind the headline so white type reads on the bright clouds (desktop only); it sits in the scene, under the pins */
 .hero-scrim { display: none; }
 @media (min-width: 860px) {
-  .hero-scrim { display: block; position: absolute; inset: 0; z-index: 1; pointer-events: none; will-change: opacity;
-    background: radial-gradient(62% 58% at 22% 20%, rgba(8, 18, 42, .64) 0%, rgba(8, 18, 42, .4) 38%, rgba(8, 18, 42, .12) 68%, transparent 84%), linear-gradient(180deg, rgba(8, 18, 42, .32), transparent 20%); }
+  /* it lives in the scene, right above the painting and below the pins, so it is the same before and after the shader takes over;
+     the box reaches past the painting's top and left so the strips there get the same shade */
+  .hero-scrim { display: block; position: absolute; left: -40%; top: -40%; width: 180%; height: 180%; pointer-events: none; will-change: opacity;
+    background: radial-gradient(34.4% 32.2% at 34.4% 33.3%, rgba(8, 18, 42, .64) 0%, rgba(8, 18, 42, .4) 38%, rgba(8, 18, 42, .12) 68%, transparent 84%), linear-gradient(180deg, rgba(8, 18, 42, .32) 22%, transparent 33.4%); }
 }
 
 
@@ -5476,10 +5478,10 @@ html:has(.cs.open) .sfx-btn { display: none; }
   <div class="stage" id="stage">
     <div class="ph-hero" aria-hidden="true"></div>
     <canvas class="gl-plate" id="glPlate" aria-hidden="true"></canvas>
-    <div class="hero-scrim" id="heroScrim" aria-hidden="true"></div>
     <div class="cam" id="cam">
       <div class="scene" id="scene">
         <div class="ly keep" data-d=".3" id="L-plate"><i class="pmir t" aria-hidden="true"></i><i class="pmir b" aria-hidden="true"></i><i class="pmir l" aria-hidden="true"></i><i class="pmir r" aria-hidden="true"></i><img class="plate" src="v2/h/plate.webp" alt="Painted sunset valley: a college with a clock tower, a lake, a hillside hotel and a cafe, with a person and a golden retriever on a stone terrace"></div>
+        <div class="hero-scrim" id="heroScrim" aria-hidden="true"></div>
         <div class="ly" data-d=".5" data-id="oyo"><button class="hot" data-id="oyo" aria-label="OYO, the hotel on the hill" style="left:85%;top:21.8%;width:14.2%;height:18.2%"></button><button class="pin" data-id="oyo" style="left:89%;top:28%;--c:#DC402A"><b><img src="v2/s/logo-oyo.webp" alt="">OYO<small class="pyr">Now</small></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".5" data-id="mmt"><button class="hot" data-id="mmt" aria-label="MakeMyTrip, the balloon tower" style="left:63.5%;top:38%;width:19%;height:13%"></button><button class="pin" data-id="mmt" style="left:72%;top:42.5%;--c:#E4262C"><b><img src="v2/s/logo-mmt.webp" alt="">MakeMyTrip<small class="pyr">2025</small></b><i class="pd" aria-hidden="true"></i></button></div>
         <div class="ly" data-d=".5" data-id="nsut"><button class="hot" data-id="nsut" aria-label="NSUT, my college" style="left:4%;top:29.3%;width:14.5%;height:21.3%"></button><button class="pin" data-id="nsut" style="left:12%;top:48%;--c:#C4553A"><b><img src="v2/s/logo-nsut.webp" alt="">NSUT<small class="pyr">2021</small></b><i class="pd" aria-hidden="true"></i></button></div>
