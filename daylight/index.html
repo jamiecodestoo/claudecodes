@@ -170,7 +170,8 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
   color: #fff; pointer-events: none; will-change: transform, opacity; transition: opacity .6s var(--ease); }
 .hey { margin: 0 0 12px; display: inline-flex; align-items: center; gap: 10px; font: 400 calc(clamp(21px, 1.9vw, 28px) * var(--hs, 1))/1 var(--serif); font-size-adjust: .46; text-shadow: 0 2px 18px rgba(10, 40, 90, .35); }
 .hey svg { width: calc(30px * var(--hs, 1)); height: calc(30px * var(--hs, 1)); }
-.hero-copy h1 { margin: 0; font-weight: 800; font-size: calc(clamp(2.5rem, 4.9vw, 5.1rem) * var(--hs, 1)); line-height: .93; letter-spacing: -.05em; text-wrap: balance;
+@font-face { font-family: "Unbounded"; src: url("v2/f/unbounded-900.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: block; }
+.hero-copy h1 { margin: 0; font-family: "Unbounded", var(--sans); font-weight: 900; font-size: calc(clamp(2rem, 4.15vw, 4.5rem) * var(--hs, 1)); line-height: 1.04; letter-spacing: -.045em; text-wrap: balance;
   text-shadow: 0 4px 30px rgba(10, 40, 90, .28); }
 .hero-copy h1 .ln { display: block; overflow: hidden; padding: .03em .12em .09em 0; margin-bottom: -.06em; }
 .hero-copy h1 .ln > span { display: inline-block; animation: rise 1.3s var(--ease) both; animation-delay: var(--dl, 1.7s); }
@@ -1592,7 +1593,7 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
   .nav a[data-go="life"], .nav a[data-go="stack"], .nav a[data-go="lastlook"], .nav .sep { display: none; }
   .nav a.cta { padding: 0 14px; }
   .hero-copy { top: calc(env(safe-area-inset-top, 0px) + 80px); }
-  .hero-copy h1 { font-size: clamp(2.5rem, 11.4vw, 3.6rem); }
+  .hero-copy h1 { font-size: clamp(1.9rem, 8.6vw, 2.8rem); }
   .sub { font-size: 19px; }
   .chip { font-size: 12.5px; }
   .scroll-cue, .hint { display: none; }
@@ -3772,7 +3773,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
   .stage { background: linear-gradient(90deg, #0E64B7, #0662AE 50%, #035DA7); }
   :root[data-theme="dark"] .stage { background: #09090B; }
   .hero-copy { left: 16px; right: 16px; width: auto; top: calc(env(safe-area-inset-top, 0px) + 78px); }
-  .hero-copy h1 { font-size: clamp(2.1rem, 10.4vw, 2.9rem); }
+  .hero-copy h1 { font-size: clamp(1.7rem, 7.8vw, 2.3rem); }
   .stage .places { left: 16px; right: 16px; transform: none; max-width: none; justify-content: flex-start; }
   .pin b { gap: 0; padding: 3px; font-size: 0; }
   .pin b > img { width: 26px; height: 26px; }
@@ -3819,7 +3820,7 @@ html:root:not([data-theme="dark"]) .cs .cs-bar button.cs-close:hover { box-shado
 }
 @media (max-width: 859px) and (max-height: 740px) {
   .hero-copy { top: calc(env(safe-area-inset-top, 0px) + 70px); }
-  .hero-copy h1 { font-size: clamp(1.9rem, 8.6vw, 2.3rem); }
+  .hero-copy h1 { font-size: clamp(1.5rem, 6.6vw, 1.85rem); }
   .hero-copy .sub { display: none; }
   .hero-copy .hey { margin-bottom: 6px; }
 }
