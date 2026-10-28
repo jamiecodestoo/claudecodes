@@ -171,6 +171,10 @@ p, li, figcaption, blockquote, small, dd { text-wrap: pretty; }
 .hey { margin: 0 0 12px; display: inline-flex; align-items: center; gap: 10px; font: 400 calc(clamp(21px, 1.9vw, 28px) * var(--hs, 1))/1 var(--serif); font-size-adjust: .46; text-shadow: 0 2px 18px rgba(10, 40, 90, .35); }
 .hey svg { width: calc(30px * var(--hs, 1)); height: calc(30px * var(--hs, 1)); }
 @font-face { font-family: "Unbounded"; src: url("v2/f/unbounded-900.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: block; }
+/* every heading (and the big "How I got here" statement) is set in Unbounded Black; the face is scaled to 80% because it is much wider than the font it replaces,
+   so every existing heading size, wrap and layout keeps working. Body copy, labels, buttons and the hand-written notes keep their own fonts. */
+@font-face { font-family: "UnboundedS"; src: url("v2/f/unbounded-900.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: swap; size-adjust: 80%; ascent-override: 96%; descent-override: 26%; line-gap-override: 0%; }
+body h2, body h3, body .tell, body .ll-stats b, body .sheet h2, body .sheet h3 { font-family: "UnboundedS", var(--sans) !important; font-weight: 900 !important; font-synthesis: none; letter-spacing: -.02em !important; word-spacing: .14em; }
 .hero-copy h1 { margin: 0; font-family: "Unbounded", var(--sans); font-weight: 900; font-size: calc(clamp(2rem, 4.15vw, 4.5rem) * var(--hs, 1)); line-height: 1.04; letter-spacing: -.045em; text-wrap: balance;
   text-shadow: 0 4px 30px rgba(10, 40, 90, .28); }
 .hero-copy h1 .ln { display: block; overflow: hidden; padding: .03em .12em .09em 0; margin-bottom: -.06em; }
