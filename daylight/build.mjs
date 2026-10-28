@@ -7,7 +7,7 @@ const NAME = 'James Chugh';
 const HEAD = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n';
 const src = readFileSync('index.html', 'utf8');
 
-const HOME = { path: '/', title: NAME, og: 'home',
+const HOME = { path: '/', title: NAME, og: 'home-2',
   desc: 'James Chugh, product designer. A painted valley of the places I’ve worked, and the numbers my work moved.' };
 const PAGES = [
   HOME,
@@ -21,10 +21,10 @@ const PAGES = [
     desc: 'A score worth chasing. How I redesigned the host dashboard for Traum-Ferienwohnungen by OYO around one number: the visibility score.' },
   { path: '/work/lastlook', title: `LastLook | ${NAME}`, og: 'lastlook',
     desc: 'LastLook, my own iOS app that reminds you to check your essentials before you leave. Case study coming soon.' },
-  { path: '/journey', title: `The journey | ${NAME}`, og: 'home', desc: 'Engineer by degree, designer by obsession. Nine stops between 2021 and now.' },
-  { path: '/work', title: `Work | ${NAME}`, og: 'home', desc: 'Case studies from EazyDiner, MakeMyTrip, Traum and my own apps.' },
-  { path: '/about', title: `About me | ${NAME}`, og: 'home', desc: HOME.desc },
-  { path: '/contact', title: `Say hi | ${NAME}`, og: 'home', desc: 'Book a free call about your website, brand or product, or just say hi.' },
+  { path: '/journey', title: `The journey | ${NAME}`, og: 'home-2', desc: 'Engineer by degree, designer by obsession. Nine stops between 2021 and now.' },
+  { path: '/work', title: `Work | ${NAME}`, og: 'home-2', desc: 'Case studies from EazyDiner, MakeMyTrip, Traum and my own apps.' },
+  { path: '/about', title: `About me | ${NAME}`, og: 'home-2', desc: HOME.desc },
+  { path: '/contact', title: `Say hi | ${NAME}`, og: 'home-2', desc: 'Book a free call about your website, brand or product, or just say hi.' },
 ];
 
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
