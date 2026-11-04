@@ -5513,6 +5513,36 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 :root[data-theme="dark"] .st-deck { box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 40px 80px -40px rgba(0, 0, 0, .9); }
 .tf-owners { max-width: 860px; margin: 4vh auto 0; } .tf-owners img { width: 100%; mix-blend-mode: multiply; } .tf-owners figcaption { margin-top: 6px; text-align: center; font: 500 14px/1.5 var(--sans); color: var(--ink-2); }
 :root[data-theme="dark"] .tf-owners img { mix-blend-mode: normal; border-radius: 18px; }
+/* references: how others do it, and what made it into Traum */
+.tf-refs { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: clamp(18px, 3vw, 40px); align-items: start; max-width: 1120px; margin: 4vh auto 0; text-align: left; }
+.rf-list { display: grid; gap: 6px; }
+.rf-list button { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: center; padding: 8px; border-radius: 14px; text-align: left; color: var(--ink-2); transition: background .25s, box-shadow .25s, color .25s; }
+.rf-list button:hover { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+.rf-list button.on { background: var(--card); color: var(--ink); box-shadow: 0 0 0 1px var(--line), 0 14px 30px -22px rgba(36, 39, 44, .5); }
+.rf-list img { width: 64px; height: 46px; object-fit: cover; object-position: top left; border-radius: 8px; box-shadow: 0 0 0 1px var(--line); }
+.rf-list span { display: grid; gap: 2px; } .rf-list b { font: 700 14.5px/1.2 var(--sans); color: var(--ink); } .rf-list small { font: 500 12.5px/1.3 var(--sans); }
+.rf-stage { display: grid; }
+.rf-p { grid-area: 1 / 1; display: grid; grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr); gap: 14px; align-items: start; opacity: 0; transform: translateY(10px); transition: opacity .45s var(--ease), transform .6s var(--ease); pointer-events: none; }
+.rf-p.on { opacity: 1; transform: none; pointer-events: auto; }
+.rf-p figure { margin: 0; display: grid; gap: 10px; align-content: start; }
+.rf-p figcaption { font: 700 12px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.rf-me figcaption { color: var(--tg); }
+.rf-p img { width: 100%; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px var(--line), 0 24px 44px -30px rgba(36, 39, 44, .55); }
+.rf-them.ph img { width: auto; max-width: 70%; max-height: 380px; justify-self: center; border-radius: 22px; }
+.rf-p p { margin: 0; font: 500 14.5px/1.5 var(--sans); color: var(--ink-2); }
+.rf-me p { color: var(--ink); font-weight: 600; }
+.rf-p a { color: var(--ink-2); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.rf-ar { margin-top: 90px; } .rf-ar svg { width: 40px; height: 24px; fill: none; stroke: var(--ink-2); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rf-p.on .rf-ar svg path { stroke-dasharray: 60; stroke-dashoffset: 60; animation: rfDraw .6s var(--ease) .25s forwards; }
+@keyframes rfDraw { to { stroke-dashoffset: 0; } }
+.rf-src { margin: 2vh auto 0; text-align: center; font: 500 12.5px/1 var(--sans); color: var(--ink-2); }
+@media (max-width: 860px) {
+  .tf-refs { grid-template-columns: minmax(0, 1fr); }
+  .rf-list { display: flex; overflow-x: auto; gap: 8px; padding: 4px; margin: 0 -4px; scrollbar-width: none; }
+  .rf-list button { flex: 0 0 auto; width: 200px; }
+  .rf-p { grid-template-columns: minmax(0, 1fr); }
+  .rf-ar { justify-self: center; transform: rotate(90deg); }
+}
 .icp-id:hover { rotate: 0deg; }
 .icp-id::before { content: ""; position: absolute; inset: 0 0 auto; height: 6px; background: linear-gradient(90deg, #1E1E1E 33%, #DD2B21 33% 66%, #FFCC00 66%); }
 .id-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; } .id-top span { font: 700 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #6B6F75; } .id-top img { width: 30px; height: 30px; border-radius: 8px; }
@@ -8239,6 +8269,11 @@ void main() {
     ],
     beyond: [['x-remind', 'Reminders', 'Relevant booking and billing updates, right on the dashboard.', [67, 41.6, 28.3, 17.8]], ['x-renew', 'Auto-renewal', 'Easier to discover when it’s turned off, before a listing lapses.', [67, 9, 28.3, 5.6]], ['x-perf', 'Property performance', 'Summary numbers stay close, without stealing focus from listings.', [67, 31.1, 28.3, 10]], ['x-filter', 'Search and filters', 'Agencies narrow long lists by status, renewals or visibility score.', [4.8, 30, 59.6, 3.8]]],
     evo: [['ev-r1', 'Round 1', 'A score, with fixes on the listing.', 'It read like an exam grade, and every owner saw the same list.'], ['ev-r2', 'Round 2', 'The meter moves to the side rail.', 'Owners picked this layout in the A/B test: next steps first.'], ['ev-r3', 'Round 3', 'Renew early, with a countdown.', 'Straight from the review notes: 20% off, and a timer.'], ['ev-r4', 'Round 4', 'Every card gets a state.', 'Publish, improve, renew or reactivate. One action per listing.'], ['ev-final', 'Final', 'Calm and consistent.', 'Actions lead, the meter sits in the side rail.']],
+    refs: [['airbnb', 'Airbnb', 'Next steps as cards', 'A row of small, friendly cards, one action each.', 'rf-tray', 'The Recommended actions tray, with the points each step adds.', 'https://mobbin.com/screens/fc6b314f-c9b0-4ce8-bdc2-a68c51017c08'],
+      ['turo', 'Turo', 'Tips beside the status', 'The host’s status sits right next to the tips that improve it.', 'kp-vas', 'Recommendations open next to the score, never on a separate page.', 'https://mobbin.com/screens/875261ee-14a9-4752-a69e-f9a8550d7254'],
+      ['airtasker', 'Airtasker', 'Words, not just colour', 'A ranking bar labelled Poor, Okay and Good.', 'rf-gauges', 'The meter always says Poor, Average or Good next to the colour.', 'https://mobbin.com/screens/076d7a53-3f06-45c9-8c12-6714b46eea32'],
+      ['fiverr', 'Fiverr', 'A goal, not a grade', 'A success score that shows the next level to reach.', 'rf-meter', '“Keep optimising to reach 80+ points”: always a next milestone.', 'https://mobbin.com/screens/09aa39af-01cf-4605-b12f-c9a0868770b2'],
+      ['worldapp', 'World App', 'One ring, steps below', 'A single progress ring, with the steps that fill it right under it.', 'kc-lowScore', 'A meter on every listing card, with Improve right under it.', 'https://mobbin.com/screens/c35cc00f-2558-4e15-8bf9-0f365c89b7f3']],
     seasons: [['easter', 'Easter', '#F4A7BE'], ['summer', 'Summer', '#F2B705'], ['oktober', 'Oktoberfest', '#2F86C4'], ['autumn', 'Autumn', '#D9692B'], ['halloween', 'Halloween', '#E8761F'], ['bfriday', 'Black Friday', '#24272C'], ['xmas', 'Christmas', '#C8372D'], ['newyear', 'New Year', '#C9A227'], ['eos', 'End of season', '#A8740A']],
     notes: [['Early renewal discount to be 20%', 'The card says it: renew early, get 20% off instantly.', ['kc-earlyRenew']],
       ['Timer on listings to be renewed', 'A live countdown, and a warning on the last day.', ['kp-renewbar']],
@@ -8384,6 +8419,18 @@ void main() {
         <div class="tf-board" data-rv id="tfBoard">${TF.pins.map(([f, b, n, c], i) => `<button type="button" class="tf-pin" style="--r:${[-3, 2.5, -1.5, 3][i]}deg;--c:${c};--i:${i}" aria-pressed="false"><span class="tack"></span><span class="in"><span class="fr"><em>Problem ${i + 1}</em><b>${f}</b><small>Tap to flip</small></span><span class="bk"><em>What it meant</em><span class="ev">${b}</span><b>→ ${n}</b></span></span></button>`).join('')}</div>
       </section>
 
+      <section class="tf-sec" id="tfRefs">
+        <h4 class="tf-h4" data-rv>How other platforms coach their hosts.</h4>
+        ${p('Before drawing anything, I studied products that turn a status into a next step. Pick one to see what I took from it.')}
+        <div class="tf-refs" id="tfRf" data-rv>
+          <div class="rf-list" role="tablist">${TF.refs.map(([k, app, t], i) => `<button type="button" role="tab" aria-selected="${!i}"${i ? '' : ' class="on"'}><img src="${ti('mb-' + k)}" alt="" loading="lazy"><span><b>${app}</b><small>${t}</small></span></button>`).join('')}</div>
+          <div class="rf-stage">${TF.refs.map(([k, app, t, d, mine, use, url], i) => `<div class="rf-p${i ? '' : ' on'}">
+            <figure class="rf-them ${k === 'worldapp' ? 'ph' : ''}"><figcaption>${app}</figcaption><img src="${ti('mb-' + k)}" alt="${app}: ${t}" loading="lazy"><p>${d} <a href="${url}" target="_blank" rel="noopener">See it on Mobbin ↗</a></p></figure>
+            <span class="rf-ar" aria-hidden="true"><svg viewBox="0 0 40 24"><path d="M2 12h34M28 4l8 8-8 8"/></svg></span>
+            <figure class="rf-me"><figcaption>In Traum</figcaption><img src="${ti(mine)}" alt="${use}" loading="lazy"><p>${use}</p></figure></div>`).join('')}</div>
+        </div>
+        <p class="rf-src" data-rv>Reference screens via Mobbin.</p>
+      </section>
       <section class="tf-sec" id="tfFirst">
         <div class="tf-sh" id="tfSh">
           <div class="sh-pin">
@@ -8691,6 +8738,9 @@ void main() {
       deck.addEventListener('pointerup', end); deck.addEventListener('pointercancel', end); deck.addEventListener('pointerleave', e => { if (moved) end(e); });
       addEventListener('keydown', initTF.stk = e => { if (!root.classList.contains('open')) return; const r = deck.getBoundingClientRect(); if (r.bottom < 100 || r.top > innerHeight - 100) return; if (e.key === 'ArrowRight') { go(cur + 1); e.preventDefault(); } if (e.key === 'ArrowLeft') { go(cur - 1); e.preventDefault(); } });
       go(0); } }
+    // references: pick one, see what made it into Traum
+    { const rf = $('#tfRf', root); if (rf) { const bs = $$('.rf-list button', rf), ps = $$('.rf-p', rf);
+      bs.forEach((b, i) => b.addEventListener('click', () => { bs.forEach((x, j) => { x.classList.toggle('on', j === i); x.setAttribute('aria-selected', j === i); }); ps.forEach((p, j) => p.classList.toggle('on', j === i)); })); } }
     // host profile tabs
     { const id = $('#tfIcp .icp-id', root); if (id) { const tb = $$('.id-tabs button', id), pn = $$('.id-panes > *', id);
       tb.forEach((b, i) => b.addEventListener('click', () => { tb.forEach((x, j) => { x.classList.toggle('on', j === i); x.setAttribute('aria-selected', j === i); }); pn.forEach((x, j) => x.classList.toggle('on', j === i)); })); } }
