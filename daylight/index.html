@@ -5408,6 +5408,111 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
   .sz-p { grid-template-columns: minmax(0, 1fr); } .sz-p img + img { width: 64%; justify-self: end; margin-top: -10%; }
 }
 @media (prefers-reduced-motion: reduce) { .sz-fx { display: none; } }
+/* the story deck: Thomas, end to end, one card at a time */
+.tf-story *, .tf-story *::before, .tf-story *::after { box-sizing: border-box; }
+/* the story: twelve vertical cards, like the comic in the EazyDiner case study */
+.tf-story { padding: clamp(18px, 4vh, 40px) 16px 2vh; }
+.st-top { margin: 0 auto 16px; text-align: center; font: 600 14px/1.4 var(--sans); color: var(--ink-2); }
+.st-wrap { position: relative; width: min(calc(min(74svh, 720px) * .6), 100%); margin: 0 auto; }
+.st-deck { position: relative; height: min(74svh, 720px); min-height: 540px; border-radius: 22px; overflow: hidden; background: #FFFDF8; text-align: left; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  box-shadow: 0 0 0 1px rgba(36, 39, 44, .08), 0 40px 70px -44px rgba(60, 40, 0, .5); }
+.st-bars { position: absolute; z-index: 4; top: 12px; left: 14px; right: 14px; display: flex; gap: 4px; }
+.st-bars i { flex: 1; height: 3px; border-radius: 2px; background: rgba(36, 39, 44, .12); overflow: hidden; }
+.st-bars b { display: block; height: 100%; background: #24272C; transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease); }
+.st-bars i.d b { transform: none; }
+.st-deck.dark .st-bars i { background: rgba(255, 255, 255, .22); } .st-deck.dark .st-bars b { background: #fff; }
+.st-track { display: flex; height: 100%; transition: transform .65s cubic-bezier(.2, .8, .2, 1); will-change: transform; }
+.st-track.drag { transition: none; }
+.st-s { flex: 0 0 100%; width: 100%; min-width: 0; height: 100%; display: grid; grid-template-rows: minmax(0, 1fr) auto; padding: 30px 22px 24px; color: #24272C; background: #FFFDF8; text-align: left; overflow: hidden; }
+.st-vis { min-height: 0; height: 100%; overflow: hidden; display: grid; place-items: center; }
+.st-vis > * { opacity: 0; transform: scale(.97); transition: opacity .55s var(--ease) .05s, transform .8s var(--ease) .05s; }
+.st-s.on .st-vis > * { opacity: 1; transform: none; }
+.st-vis .il { width: 100%; height: 100%; max-height: 100%; object-fit: contain; }
+.st-vis .il.wide { height: auto; }
+.st-tx { padding-top: 14px; }
+.st-tx > * { opacity: 0; transform: translateY(12px); transition: opacity .5s var(--ease), transform .65s var(--ease); }
+.st-s.on .st-tx > * { opacity: 1; transform: none; }
+.st-s.on .st-tx > :nth-child(2) { transition-delay: .07s; } .st-s.on .st-tx > :nth-child(3) { transition-delay: .14s; } .st-s.on .st-tx > :nth-child(4) { transition-delay: .21s; }
+.st-k { margin: 0 0 8px; font: 600 12px/1.3 var(--sans); color: #8A8F96; }
+.st-h { margin: 0; font-size: clamp(24px, 3.4svh, 30px) !important; line-height: 1.08 !important; letter-spacing: -.02em; color: inherit; text-wrap: balance; }
+.st-p { margin: 8px 0 0; font: 500 15px/1.5 var(--sans); color: #4E535A; text-wrap: pretty; }
+.st-p b { color: #24272C; }
+
+/* 3 numbers, set like a table */
+.st-num { width: 100%; display: grid; gap: 22px; align-content: center; }
+.st-num > div { display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 2px 14px; }
+.st-num b { grid-row: span 2; font: 800 44px/1 var(--sans); letter-spacing: -.04em; color: var(--c); text-align: right; font-variant-numeric: tabular-nums; }
+.st-num span { font: 600 15px/1.2 var(--sans); }
+.st-num i { height: 6px; border-radius: 3px; background: rgba(36, 39, 44, .07); position: relative; overflow: hidden; }
+.st-num i::after { content: ""; position: absolute; inset: 0 auto 0 0; width: max(4px, var(--w)); background: var(--c); transform: scaleX(0); transform-origin: left; transition: transform 1.1s var(--ease) calc(.3s + var(--i) * .2s); }
+.st-s.on .st-num i::after { transform: none; }
+.st-num p { margin: 0 0 0 106px; font: 500 13px/1.4 var(--sans); color: #8A8F96; }
+
+/* 5 the question */
+.st-q { grid-template-rows: 1fr; align-items: center; background: #24272C; color: #fff; }
+.st-q .st-k { color: rgba(255, 255, 255, .55); }
+.st-big { margin: 0; font: 800 clamp(30px, 4.4svh, 40px)/1.08 var(--sans); letter-spacing: -.03em; color: #fff; text-wrap: balance; }
+.st-big u { text-decoration: none; color: #FFC61F; }
+
+/* 7 try it */
+.st-try { display: grid; gap: 14px; justify-items: center; width: 100%; }
+.st-gm { position: relative; display: grid; justify-items: center; width: min(250px, 80%); padding: 14px 14px 16px; border-radius: 18px; background: #fff; box-shadow: 0 0 0 1px rgba(36, 39, 44, .07), 0 18px 34px -24px rgba(36, 39, 44, .45); }
+.st-gm p { margin: 0 0 4px; justify-self: start; font: 700 14px/1 var(--sans); }
+.st-gm svg { width: 100%; }
+.st-gm .tk, .st-gm .fl { fill: none; stroke-width: 20; stroke-linecap: round; }
+.st-gm .tk { stroke: #ECEAE4; }
+.st-gm .fl { stroke: var(--gc, #E0533D); stroke-dasharray: 100; stroke-dashoffset: calc(100 - var(--gv, 45)); transition: stroke-dashoffset 1.2s var(--ease), stroke .5s; }
+.st-gm .v { position: absolute; top: 44%; font: 800 42px/1 var(--sans); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.st-gm .w { margin-top: -4px; font: 700 13px/1 var(--sans); color: var(--gc, #E0533D); transition: color .5s; }
+.st-rec { display: grid; grid-template-columns: 52px 1fr auto; align-items: center; gap: 12px; width: 100%; padding: 10px; border-radius: 14px; background: #fff; box-shadow: 0 0 0 1px rgba(36, 39, 44, .07), 0 14px 28px -22px rgba(36, 39, 44, .45); }
+.st-rec img { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; }
+.st-rec div { display: grid; gap: 2px; } .st-rec em { font: 700 11.5px/1.2 var(--sans); font-style: normal; color: #16825A; }
+.st-rec b { font: 700 14.5px/1.2 var(--sans); } .st-rec small { font: 500 12px/1.3 var(--sans); color: #6B6F75; }
+.st-add { padding: 10px 14px; border-radius: 10px; background: #24272C; color: #fff; font: 700 13.5px/1 var(--sans); transition: background .3s; }
+.st-add.done { background: #16825A; }
+
+/* 8, 9, 10 real components */
+.st-stk { display: grid; gap: 10px; width: 100%; }
+.st-stk img { width: 100%; filter: drop-shadow(0 14px 22px rgba(80, 60, 0, .16)); }
+.st-win { width: 100%; border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .07), 0 24px 40px -28px rgba(36, 39, 44, .5); }
+.st-win .tb { display: flex; align-items: center; gap: 5px; height: 24px; padding: 0 10px; background: #F4F4F2; }
+.st-win .tb i { width: 7px; height: 7px; border-radius: 50%; background: #D9D9D6; }
+.st-win .tb .lb { margin-left: auto; font: 700 11px/1 var(--sans); color: #24272C; }
+.st-fl .fs { position: relative; aspect-ratio: 4 / 5; }
+.fs > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top left; opacity: 0; transition: opacity .6s var(--ease); }
+.fs > img.on { opacity: 1; }
+.st-sz { position: relative; width: 92%; aspect-ratio: 376 / 345; }
+.st-sz > img { object-fit: contain; filter: drop-shadow(0 16px 24px rgba(36, 39, 44, .16)); }
+
+/* 11 results, as a plain list */
+.st-r { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
+.st-r li { display: flex; align-items: baseline; gap: 10px; font: 500 14.5px/1.3 var(--sans); color: #4E535A; opacity: 0; transform: translateY(8px); transition: opacity .4s calc(.2s + var(--i) * .12s), transform .6s var(--ease) calc(.2s + var(--i) * .12s); }
+.st-s.on .st-r li { opacity: 1; transform: none; }
+.st-r b { min-width: 92px; font: 800 22px/1 var(--sans); letter-spacing: -.02em; color: #16825A; }
+
+/* 12 the end */
+.st-end { grid-template-rows: 1fr; align-items: center; }
+.st-cta { display: grid; gap: 8px; margin-top: 22px; }
+.st-cta button { padding: 14px 18px; border-radius: 12px; font: 700 15px/1 var(--sans); }
+.st-more { background: #24272C; color: #fff; } .st-again { background: transparent; color: #24272C; box-shadow: inset 0 0 0 1.5px rgba(36, 39, 44, .2); }
+
+/* arrows sit outside the card on wide screens */
+.st-nav { position: absolute; top: 50%; width: 46px; height: 46px; margin-top: -23px; border-radius: 50%; display: grid; place-items: center; background: var(--card); color: var(--ink); box-shadow: 0 0 0 1px var(--line), 0 10px 22px -14px rgba(0, 0, 0, .4); transition: opacity .3s, transform .3s var(--spring); }
+.st-nav svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.st-nav:hover { transform: scale(1.06); } .st-nav.pv { left: -70px; } .st-nav.nx { right: -70px; }
+.st-nav[disabled] { opacity: .25; pointer-events: none; }
+.st-down { margin: 16px 0 0; text-align: center; font: 500 13.5px/1 var(--sans); color: var(--ink-2); }
+@media (hover: none) { .st-keys { display: none; } }
+@media (max-width: 760px) {
+  .tf-story { padding: 10px 12px 2vh; }
+  .st-wrap { width: 100%; }
+  .st-deck { height: calc(100svh - 160px); min-height: 540px; }
+  .st-nav { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .st-track, .st-tx > *, .st-vis > * { transition: none !important; } }
+:root[data-theme="dark"] .st-deck { box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 40px 80px -40px rgba(0, 0, 0, .9); }
+.tf-owners { max-width: 860px; margin: 4vh auto 0; } .tf-owners img { width: 100%; mix-blend-mode: multiply; } .tf-owners figcaption { margin-top: 6px; text-align: center; font: 500 14px/1.5 var(--sans); color: var(--ink-2); }
+:root[data-theme="dark"] .tf-owners img { mix-blend-mode: normal; border-radius: 18px; }
 .icp-id:hover { rotate: 0deg; }
 .icp-id::before { content: ""; position: absolute; inset: 0 0 auto; height: 6px; background: linear-gradient(90deg, #1E1E1E 33%, #DD2B21 33% 66%, #FFCC00 66%); }
 .id-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; } .id-top span { font: 700 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #6B6F75; } .id-top img { width: 30px; height: 30px; border-radius: 8px; }
@@ -8166,6 +8271,31 @@ void main() {
       <div class="ctx"><span class="ic">${tfIc(ic)}</span><span class="tx"><b>${t}</b><small>${why}</small></span><em>${pt}</em></div></div>`;
     return `<div class="cs-bar tf-bar"><button class="cs-close" id="csClose" type="button"><span class="ar" aria-hidden="true">←</span>Back to the box</button><span class="tf-bk"><img src="v2/s/logo-traum.webp" alt=""> Traum · Host dashboard</span></div>
     <div class="tf tf-pg">
+      <section class="tf-story" id="tfStory" aria-roledescription="carousel" aria-label="The Traum story in 12 cards">
+        <p class="st-top">The whole story in 12 cards. Swipe or tap<span class="st-keys">, or use the arrow keys</span>.</p>
+        <div class="st-wrap">
+        <div class="st-deck">
+          <div class="st-bars" aria-hidden="true">${Array.from({ length: 12 }, () => '<i><b></b></i>').join('')}</div>
+          <div class="st-track">
+            <article class="st-s"><div class="st-vis"><img class="il" src="${ti('th-p1')}" alt="Thomas at his kitchen table by the Baltic Sea, checking his listings on a laptop"></div><div class="st-tx"><p class="st-k">1 · Traum, an OYO company</p><h3 class="st-h">Meet Thomas.</h3><p class="st-p">He rents out two holiday flats on the Baltic coast. Every Monday he checks on them.</p></div></article>
+            <article class="st-s"><div class="st-vis"><img class="il" src="${ti('th-p2')}" alt="Thomas confused in front of the old page full of ticks and crosses"></div><div class="st-tx"><p class="st-k">2 · The problem</p><h3 class="st-h">Is my listing any good?</h3><p class="st-p">The old page showed ticks, crosses and buttons. It never said how he was doing, or what to do next.</p></div></article>
+            <article class="st-s"><div class="st-vis"><div class="st-num">${[['347', 'opened a listing', '#24272C', 100], ['14', 'renewed it', '#A8740A', 4], ['4.5', 'published a new one', '#B9451A', 1.3]].map(([n, t, c, w], i) => `<div style="--i:${i};--c:${c}"><b>${n}</b><span>${t}</span><i style="--w:${w}%"></i></div>`).join('')}<p>out of every 1,000 visits</p></div></div><div class="st-tx"><p class="st-k">3 · The numbers</p><h3 class="st-h">Most owners looked, and left.</h3><p class="st-p">Renewals and new listings are how Traum earns. Almost nobody got that far.</p></div></article>
+            <article class="st-s"><div class="st-vis"><img class="il wide" src="${ti('th-owners')}" alt="Seven holiday-home owners of different ages and backgrounds"></div><div class="st-tx"><p class="st-k">4 · Who it’s for</p><h3 class="st-h">Owners like him, all over Germany.</h3><p class="st-p">Young and old, from every background, often with one or two homes next to a full-time job. The page had to make sense to all of them.</p></div></article>
+            <article class="st-s st-q"><div class="st-tx"><p class="st-k">5 · The idea</p><p class="st-big">What if the page told every owner <u>what to do next?</u></p></div></article>
+            <article class="st-s"><div class="st-vis"><img class="il" src="${ti('th-p3')}" alt="Thomas smiling and pointing at a score of 72 on his laptop"></div><div class="st-tx"><p class="st-k">6 · Step one</p><h3 class="st-h">First, a score.</h3><p class="st-p">One number from 0 to 100 shows how easily guests find a flat. A word sits next to the colour, so anyone can read it.</p></div></article>
+            <article class="st-s" data-g="45"><div class="st-vis"><div class="st-try"><div class="st-gm"><p>Growth meter</p><svg viewBox="0 0 240 170" aria-hidden="true"><path class="tk" d="${tfArc}" pathLength="100"/><path class="fl" d="${tfArc}" pathLength="100"/></svg><b class="v">45</b><span class="w">Needs attention</span></div>
+              <div class="st-rec"><img src="${ti('rk1')}" alt=""><div><em>+25 points</em><b>Professional photos</b><small>Only 6 phone photos so far</small></div><button type="button" class="st-add">Add</button></div></div></div><div class="st-tx"><p class="st-k">7 · Step two · try it</p><h3 class="st-h">Then, one next step.</h3><p class="st-p">Each flat gets the step that helps it most. Tap <b>Add</b> and watch the score move.</p></div></article>
+            <article class="st-s"><div class="st-vis"><div class="st-stk"><img src="${ti('kc-earlyRenew')}" alt="Renew early and get 20% off"><img src="${ti('kc-highIntentRenew')}" alt="Renew now, when the date is close"></div></div><div class="st-tx"><p class="st-k">8 · Step three</p><h3 class="st-h">Renewals, before it’s too late.</h3><p class="st-p">A calm note a month out, 20% off for renewing early, and a clear button when it’s due. Never a red alert after it expired.</p></div></article>
+            <article class="st-s" data-flip><div class="st-vis"><div class="st-win st-fl"><div class="tb"><i></i><i></i><i></i><span class="lb">Round 1</span></div><div class="fs">${['ev-r1', 'ev-r2', 'ev-r3', 'ev-r4', 'ev-final'].map((k, i) => `<img src="${ti(k)}" alt=""${i ? '' : ' class="on"'} data-l="${i < 4 ? 'Round ' + (i + 1) : 'Final'}">`).join('')}</div></div></div><div class="st-tx"><p class="st-k">9 · How it was made</p><h3 class="st-h">Four rounds to get it right.</h3><p class="st-p">After each round, the team and real owners told me what was confusing, and I fixed it. Owners even picked the final layout.</p></div></article>
+            <article class="st-s" data-flip><div class="st-vis"><div class="st-sz fs">${['xmas', 'easter', 'halloween', 'summer', 'bfriday'].map((k, i) => `<img src="${ti('sz-' + k + '-m')}" alt=""${i ? '' : ' class="on"'}>`).join('')}</div></div><div class="st-tx"><p class="st-k">10 · A bonus</p><h3 class="st-h">It dresses up for holidays.</h3><p class="st-p">Christmas, Easter or Black Friday campaigns reuse the same design with a seasonal look. No new page needed.</p></div></article>
+            <article class="st-s"><div class="st-vis"><img class="il" src="${ti('th-p4')}" alt="Thomas relaxing in a beach chair, his listing renewed, guests arriving at his cottage"></div><div class="st-tx"><p class="st-k">11 · After launch, May to July 2026</p><h3 class="st-h">And it worked.</h3><ul class="st-r">${[['0 → 33.6', 'renewal clicks'], ['+14%', 'Publish clicks'], ['2×', 'dashboard visits']].map(([n, t], i) => `<li style="--i:${i}"><b>${n}</b>${t}</li>`).join('')}</ul></div></article>
+            <article class="st-s st-end"><div class="st-tx"><p class="st-k">12 · The end</p><h3 class="st-h">Thomas knows what to do next.</h3><p class="st-p">That was the whole job. Want to see how every decision was made?</p><div class="st-cta"><button type="button" class="st-more">Read the full case study ↓</button><button type="button" class="st-again">Watch again</button></div></div></article>
+          </div>
+        </div>
+        <button type="button" class="st-nav pv" aria-label="Previous card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="st-nav nx" aria-label="Next card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+        <p class="st-down">Or scroll down for the full case study</p>
+      </section>
       <header class="tf-hero" id="tfHero">
         <p class="tf-k"><img src="v2/s/logo-traum.webp" alt=""><span>Traum-Ferienwohnungen, an <b>OYO</b> company</span></p>
         <h2 class="tf-t"><span class="ln"><span>A score worth</span></span><span class="ln"><span class="u">chasing.</span></span></h2>
@@ -8195,6 +8325,7 @@ void main() {
         ${plq(1, 'Who it’s for')}
         ${head('Designed for', 'German owners, 30 to 50.')}
         ${p('Our ideal customer: a property owner in Germany, in their 30s or 40s, trying to get a holiday home listed and booked, often alongside a full-time job.')}
+        <figure class="tf-owners" data-rv><img src="${ti('th-owners')}" alt="Seven holiday-home owners of different ages and backgrounds" loading="lazy"><figcaption>Owners of every age and background list with Traum. The core: Germany, 30 to 50.</figcaption></figure>
         <div class="tf-icp2" data-rv id="tfIcp">
           <figure class="icp-map"><svg viewBox="0 0 520 560" aria-label="Map of Germany with our hosts marked on the Baltic coast"><path class="nb" d="M396,-1968L407,-2025L450,-2030L486,-1973L535,-1914L581,-1856L508,-1798L492,-1694L467,-1668L453,-1560L418,-1555L356,-1634L382,-1682L339,-1721L283,-1843L260,-1965L339,-2024L355,-1966ZM858,-823L808,-790L785,-783L797,-841L760,-874L715,-846L701,-785L674,-750L642,-769L605,-765L573,-808L555,-786L537,-783L533,-730L479,-743L471,-700L443,-700L424,-646L395,-564L350,-466L361,-443L351,-417L322,-418L303,-357L305,-274L323,-243L314,-174L290,-134L277,-102L258,-136L201,-72L162,-59L122,-87L112,-147L102,-284L129,-324L205,-378L263,-446L316,-542L349,-612L385,-684L433,-743L472,-794L513,-845L576,-882L624,-878L668,-950L721,-946L773,-964L819,-932L863,-899L826,-876ZM751,-2031L708,-1944L624,-1925L539,-1951L534,-1996L492,-1999L460,-2076L550,-2125L592,-2083L621,-2135L694,-2091ZM673,-1698L609,-1642L558,-1673L578,-1709L560,-1754L620,-1782L631,-1729ZM-1536,1896L-1553,1922L-1562,1943L-1573,1954L-1587,1957L-1591,1948L-1598,1947L-1607,1955L-1619,1949L-1612,1937L-1609,1924L-1604,1911L-1616,1894L-1618,1874L-1603,1849L-1593,1852L-1572,1859L-1541,1884ZM137,365L151,376L192,385L178,415L174,445L166,453L153,449L154,460L133,483L132,502L146,496L156,514L155,526L163,542L153,554L161,585L176,591L173,608L147,631L90,620L48,633L44,656L11,661L-22,644L-32,652L-85,634L-97,619L-82,595L-76,513L-106,469L-128,448L-172,431L-175,399L-137,390L-89,401L-98,351L-71,370L-3,335L5,298L31,289L35,305L48,305L62,324L82,345L97,342L122,362L129,366ZM211,650L230,635L235,669L225,699L212,691L205,665ZM277,-102L290,-134L314,-174L323,-243L305,-274L303,-357L322,-418L351,-417L361,-443L350,-466L395,-564L424,-646L443,-700L471,-700L479,-743L533,-730L537,-783L555,-786L594,-747L639,-694L640,-579L649,-551L600,-531L572,-483L576,-441L530,-388L474,-333L453,-246L474,-204L501,-171L475,-107L445,-94L434,-3L417,46L382,41L366,82L332,85L323,36L299,-24ZM637,157L639,179L647,197L646,216L629,226L638,248L639,269L653,309L650,322L636,327L609,364L617,384L611,382L583,365L562,371L549,366L531,376L517,360L505,366L503,363L490,341L469,339L466,324L446,319L442,331L426,322L428,309L406,305L392,290L381,261L383,245L376,219L365,202L373,189L367,165L386,150L431,127L468,110L497,119L499,131L527,132L562,137L616,137L630,142ZM449,424L447,441L431,441L436,451L427,478L421,485L396,486L381,496L357,493L316,482L310,467L281,474L278,482L260,476L245,475L232,467L237,457L236,450L244,447L259,459L263,448L289,450L309,442L323,443L332,452L335,445L331,417L341,411L351,391L373,405L389,387L399,384L422,397L435,395L449,403L446,409ZM597,411L613,423L615,434L597,443L584,472L566,501L543,509L525,507L503,518L492,524L468,516L446,498L437,493L432,479L427,478L436,451L431,441L447,441L449,424L464,435L475,439L499,434L501,426L513,424L527,417L530,420L543,415L550,405L560,402L591,415ZM724,72L727,94L703,111L697,139L665,157L637,157L630,142L616,137L613,124L616,110L604,102L573,93L567,50L600,34L649,38L677,32L681,43L697,47ZM437,493L446,498L468,516L492,524L503,518L510,534L519,545L508,561L495,552L475,552L450,546L436,546L430,555L420,546L414,563L428,582L434,594L447,609L458,618L469,634L495,649L492,656L465,642L448,627L421,615L397,586L403,583L390,566L389,552L370,546L362,563L353,550L354,535L355,535L375,536L380,529L390,536L401,537L401,525L411,521L414,504ZM236,450L237,457L232,467L245,475L260,476L258,494L245,501L224,495L217,512L204,514L199,507L182,521L168,523L156,514L146,496L132,502L133,483L154,460L153,449L166,453L174,445L199,446L205,436ZM133,335L139,345L137,365L129,366L122,362L125,337ZM136,304L133,335L125,337L122,362L97,342L82,345L62,324L48,305L35,305L31,289L54,279L75,283L102,273L120,294ZM158,178L163,194L156,238L149,256L131,256L136,304L120,294L102,273L75,283L54,279L69,267L94,197L134,177ZM260,476L278,482L281,474L310,467L316,482L357,493L354,513L361,531L338,525L315,540L316,560L313,571L322,592L349,612L364,645L396,677L419,676L426,685L418,693L444,707L465,718L490,738L493,745L487,759L471,741L446,735L434,759L455,773L451,793L439,795L424,826L412,829L412,818L418,798L424,790L413,769L404,750L392,745L383,729L365,722L352,706L331,704L308,686L282,661L262,638L253,599L239,594L215,581L202,586L185,605L173,608L176,591L161,585L153,554L163,542L155,526L156,514L168,523L182,521L199,507L204,514L217,512L224,495L245,501L258,494ZM385,821L407,817L397,846L401,858L395,876L373,863L358,859L318,840L322,821L355,825ZM210,717L224,705L242,733L238,782L225,780L213,792L202,783L201,737L194,715ZM245,104L227,111L205,105L193,77L192,24L197,10L205,-6L231,-10L241,-24L264,-40L263,-12L255,5L258,20L274,28L267,48L258,42L237,79ZM316,46L325,72L308,113L277,84L273,63ZM-221,159L-243,149L-261,150L-255,123L-261,96L-237,94L-206,125ZM-131,182L-131,182L-127,153L-147,123L-147,122L-182,113L-189,100L-178,77L-188,63L-204,87L-205,38L-220,11L-209,-45L-187,-89L-164,-85L-129,-89L-160,-30L-130,-38L-99,-37L-106,6L-132,53L-102,57L-100,62L-74,122L-54,130L-37,186L-28,205L7,214L3,244L-12,258L0,282L-26,306L-65,306L-114,318L-127,309L-147,331L-173,325L-194,343L-209,334L-167,286L-141,276L-141,276L-186,268L-194,249L-164,235L-180,209L-174,177ZM357,493L381,496L396,486L421,485L427,478L432,479L437,493L414,504L411,521L401,525L401,537L390,536L380,529L375,536L355,535L361,531L354,513ZM611,382L603,393L597,411L591,415L560,402L550,405L543,415L530,420L527,417L513,424L501,426L499,434L475,439L464,435L449,424L446,409L449,403L453,393L466,394L475,390L476,386L482,383L484,373L490,371L495,363L503,363L505,366L517,360L531,376L549,366L562,371L583,365ZM392,290L406,305L428,309L426,322L442,331L446,319L466,324L469,339L490,341L503,363L495,363L490,371L484,373L482,383L476,386L475,390L466,394L453,393L449,403L435,395L422,397L399,384L389,387L373,405L351,391L335,372L320,361L317,342L312,329L333,319L344,308L365,299L372,290L380,295Z"/><path class="de" d="M234,450L229,446L224,443L222,443L215,444L215,444L214,442L212,441L212,442L211,442L211,442L207,439L206,439L204,439L202,441L201,442L201,444L203,444L205,444L206,444L206,445L206,445L203,446L203,446L202,447L201,447L199,446L195,446L192,447L187,448L181,448L178,447L177,446L176,443L176,439L178,433L178,429L177,426L178,422L181,417L183,411L184,405L185,401L187,399L193,391L194,390L193,387L192,386L189,385L184,384L178,383L176,382L174,379L172,379L170,380L166,380L164,380L162,380L162,380L161,380L161,377L159,377L157,376L156,376L155,378L154,379L153,378L149,373L148,371L148,370L147,368L145,366L143,365L142,365L142,363L143,359L143,357L145,355L146,354L146,352L146,350L144,350L141,348L139,347L138,345L136,342L135,339L135,337L135,335L135,335L137,330L142,327L142,323L141,320L140,319L138,318L137,317L136,316L138,314L136,312L135,310L132,308L131,307L133,300L132,298L130,297L129,296L128,295L128,294L128,293L130,293L130,293L135,289L136,288L135,287L134,287L134,286L134,285L136,279L137,276L137,275L137,273L136,270L134,268L134,266L133,265L130,260L130,258L132,257L134,256L135,255L136,254L140,256L142,257L142,257L144,256L147,256L153,253L154,252L155,250L155,250L152,247L152,246L153,245L153,244L155,244L156,242L160,239L161,236L161,233L162,231L161,229L160,228L158,228L156,228L153,227L152,225L152,224L152,223L152,222L152,221L152,220L153,219L161,219L161,218L162,214L164,207L166,203L166,201L166,192L166,188L165,186L162,183L163,178L164,174L166,170L169,168L179,168L190,168L194,175L193,179L195,180L197,180L198,177L198,173L199,172L203,175L204,176L204,182L205,174L204,169L205,164L206,161L207,159L215,161L224,160L228,162L235,172L238,174L241,175L237,172L227,160L225,158L220,158L218,156L216,154L216,153L216,140L214,138L212,137L211,138L208,138L208,135L208,133L214,132L217,130L217,126L215,123L212,118L209,113L209,108L214,108L216,108L224,111L226,113L228,113L233,111L236,110L238,111L239,112L240,112L240,113L244,114L246,116L248,119L248,124L246,127L244,129L251,129L252,130L253,133L258,131L268,137L275,134L277,134L278,139L276,144L271,149L272,152L274,153L279,152L288,155L290,154L297,147L299,146L308,144L310,142L314,139L316,136L322,130L328,131L331,132L335,132L338,139L347,146L355,145L358,152L359,160L362,163L364,164L370,166L370,166L371,167L371,171L372,174L375,188L375,191L375,192L374,196L372,200L369,202L367,205L367,207L370,212L378,218L381,224L380,229L379,232L380,234L381,236L383,237L383,239L383,242L383,244L385,245L385,246L384,247L383,251L383,253L380,257L381,260L383,263L384,265L384,266L384,270L384,271L389,274L390,275L391,278L392,284L391,291L390,295L387,301L386,302L386,303L385,304L384,304L382,303L381,302L381,299L380,299L379,297L379,296L378,295L374,294L372,294L371,294L370,295L371,296L372,298L374,299L374,300L369,302L366,304L363,304L360,306L354,308L350,309L349,309L348,313L347,314L346,313L345,313L344,313L343,314L342,315L341,315L339,318L335,319L334,320L333,322L332,322L330,322L327,321L326,322L324,323L321,323L318,325L316,328L314,332L313,333L312,330L310,328L309,327L308,327L308,327L308,329L309,331L310,333L310,334L311,336L313,339L316,341L318,343L320,346L320,346L320,347L319,348L318,350L316,353L317,354L318,355L320,357L321,360L323,365L325,367L327,369L329,371L332,371L335,374L338,378L341,380L342,381L344,383L345,385L346,386L347,387L350,387L354,391L356,394L358,396L357,396L357,399L357,402L357,403L355,405L354,406L354,406L348,404L348,404L347,404L346,412L345,413L343,415L340,416L338,417L336,417L331,420L329,422L327,424L327,426L330,430L333,434L333,437L331,440L331,441L332,441L334,442L335,442L336,444L335,447L335,450L335,451L333,452L331,450L329,449L328,448L328,447L328,446L327,445L325,443L322,444L320,445L319,445L318,443L316,442L313,442L311,441L311,442L311,444L311,445L297,447L293,448L290,450L288,451L287,452L285,454L282,454L282,454L280,454L277,455L276,455L275,454L273,452L272,451L273,450L269,450L266,448L261,449L260,448L260,449L259,454L258,456L256,459L254,460L253,460L253,458L253,456L252,456L250,456L249,455L249,454L249,453L248,452L246,450L243,448L240,447L239,448L237,449L234,449ZM355,134L355,137L355,139L351,136L348,136L346,140L345,141L340,137L339,135L339,133L339,128L339,126L341,124L341,121L344,118L346,118L347,120L348,122L352,124L353,125L354,126L352,129L351,130L352,132ZM369,155L369,157L369,159L368,159L364,159L361,159L360,156L361,153L359,151L358,150L358,148L358,146L364,151ZM284,132L280,132L278,130L277,130L277,127L279,126L283,128L284,131ZM198,114L198,115L198,108L201,100L203,100L201,102L201,104L200,106L200,108L208,108L207,110L199,111ZM206,117L205,119L203,118L201,117L202,116L203,115L204,115L206,116Z"/><text class="lbl" x="256" y="295.4" text-anchor="middle">GERMANY</text><circle class="pls" cx="274.8" cy="142.9" r="9"/><circle class="dot" cx="274.8" cy="142.9" r="7"/></svg>
             <span class="icp-tag" style="left:52.8%;top:25.5%">Baltic coast</span><figcaption>Core market: Germany</figcaption></figure>
@@ -8441,7 +8572,7 @@ void main() {
       <div class="tf-lb" id="tfLb" aria-hidden="true"><button type="button" class="x" aria-label="Close">×</button><img alt=""></div>
     </div>`;
   }
-  function tfCleanup() { if (initTF.sc5) { csEl.removeEventListener('scroll', initTF.sc5); initTF.sc5 = null; } if (initTF.sc3) { csEl.removeEventListener('scroll', initTF.sc3); initTF.sc3 = null; } if (initTF.sc2) { csEl.removeEventListener('scroll', initTF.sc2); initTF.sc2 = null; } if (initTF.sc) { csEl.removeEventListener('scroll', initTF.sc); initTF.sc = null; } if (initTF.tip) { initTF.tip.remove(); initTF.tip = null; } (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); (initTF.raf || []).forEach(cancelAnimationFrame); (initTF.io || []).forEach(o => o.disconnect()); initTF.tt = []; initTF.ti = []; initTF.raf = []; initTF.io = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; }
+  function tfCleanup() { if (initTF.sc5) { csEl.removeEventListener('scroll', initTF.sc5); initTF.sc5 = null; } if (initTF.sc3) { csEl.removeEventListener('scroll', initTF.sc3); initTF.sc3 = null; } if (initTF.sc2) { csEl.removeEventListener('scroll', initTF.sc2); initTF.sc2 = null; } if (initTF.sc) { csEl.removeEventListener('scroll', initTF.sc); initTF.sc = null; } if (initTF.tip) { initTF.tip.remove(); initTF.tip = null; } (initTF.tt || []).forEach(clearTimeout); (initTF.ti || []).forEach(clearInterval); (initTF.raf || []).forEach(cancelAnimationFrame); (initTF.io || []).forEach(o => o.disconnect()); initTF.tt = []; initTF.ti = []; initTF.raf = []; initTF.io = []; if (initTF.kd) removeEventListener('keydown', initTF.kd, true); initTF.kd = null; if (initTF.stk) removeEventListener('keydown', initTF.stk); initTF.stk = null; }
   function initTF() {
     tfCleanup(); const root = csEl, later = (f, ms) => initTF.tt.push(setTimeout(f, ms)), every = (f, ms) => { const t = setInterval(f, ms); initTF.ti.push(t); return t; };
     const obs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('in'); obs.unobserve(e.target); if (e.target._on) e.target._on(); }), { root, threshold: .18 }); initTF.io.push(obs);
@@ -8535,6 +8666,31 @@ void main() {
     const setFold = z => { fold.dataset.z = z; $$('[data-z]', fold).forEach(b => { const on = b.dataset.z === z; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); count($('#tfFn', root), FD[z][0], 400); $('#tfFd', root).textContent = FD[z][1]; };
     fold.addEventListener('click', e => { const b = e.target.closest('[data-z]'); if (b) setFold(b.dataset.z); }); setFold('s');
     // how the page evolved: one frame, scroll to step through
+    // the story deck: swipe, tap the sides, or use the arrow keys
+    { const st = $('#tfStory', root); if (st) {
+      const deck = $('.st-deck', st), track = $('.st-track', st), sl = $$('.st-s', st), bars = $$('.st-bars i', st), pv = $('.st-nav.pv', st), nx = $('.st-nav.nx', st); let cur = -1, flip = null;
+      const gauge = (g, v) => { const c = v < 50 ? '#E0533D' : v < 70 ? '#E8A912' : '#16825A'; g.style.setProperty('--gv', v); g.style.setProperty('--gc', c); $('.w', g).textContent = v < 50 ? 'Needs attention' : v < 80 ? 'Good' : 'Great';
+        const el = $('.v', g), from = +el.textContent || 0, t0 = performance.now(); const step = t => { const q = Math.min(1, (t - t0) / 1100), e = 1 - Math.pow(1 - q, 3); el.textContent = Math.round(from + (v - from) * e); if (q < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); };
+      const go = i => { i = Math.max(0, Math.min(sl.length - 1, i)); if (i === cur) return; cur = i; track.style.transform = `translateX(${-i * 100}%)`;
+        sl.forEach((s, j) => s.classList.toggle('on', j === i)); bars.forEach((b, j) => b.classList.toggle('d', j <= i)); pv.disabled = !i; nx.disabled = i === sl.length - 1;
+        deck.classList.toggle('dark', sl[i].classList.contains('st-q') || sl[i].classList.contains('st-res')); if (i) deck.classList.add('moved');
+        const s = sl[i], g = $('.st-gm', s); if (g && !$('.st-add.done', s)) { $('.v', g).textContent = $('.st-rec', s) ? '45' : '0'; gauge(g, 45); }
+        if (flip) { clearInterval(flip); flip = null; } if (s.hasAttribute('data-flip') && !reduce) { const ims = $$('.fs > img', s), lb = $('.lb', s); let k = 0; flip = setInterval(() => { k = (k + 1) % ims.length; ims.forEach((m, j) => m.classList.toggle('on', j === k)); if (lb) lb.textContent = ims[k].dataset.l; }, 1500); initTF.ti.push(flip); } };
+      pv.addEventListener('click', () => go(cur - 1)); nx.addEventListener('click', () => go(cur + 1));
+      $('.st-again', st).addEventListener('click', () => { $$('.st-add', st).forEach(b => { b.classList.remove('done'); b.textContent = 'Add'; }); go(0); });
+      $('.st-more', st).addEventListener('click', () => { const h = $('#tfHero', root); if (h) root.scrollTo({ top: root.scrollTop + h.getBoundingClientRect().top - 20, behavior: reduce ? 'auto' : 'smooth' }); });
+      $$('.st-add', st).forEach(b => b.addEventListener('click', e => { e.stopPropagation(); if (b.classList.contains('done')) return; b.classList.add('done'); b.textContent = 'Added ✓'; gauge($('.st-gm', b.closest('.st-s')), 72); }));
+      // drag / swipe, and tap the left or right edge
+      let x0 = null, y0 = 0, dx = 0, moved = false;
+      deck.addEventListener('pointerdown', e => { if (e.target.closest('button, a, input')) return; x0 = e.clientX; y0 = e.clientY; dx = 0; moved = false; });
+      deck.addEventListener('pointermove', e => { if (x0 === null) return; dx = e.clientX - x0; if (!moved && Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(e.clientY - y0)) { moved = true; track.classList.add('drag'); } if (moved) track.style.transform = `translateX(calc(${-cur * 100}% + ${dx}px))`; });
+      const end = e => { if (x0 === null) return; track.classList.remove('drag'); const w = deck.clientWidth;
+        if (moved) { if (dx < -w * .12) go(cur + 1); else if (dx > w * .12) go(cur - 1); else track.style.transform = `translateX(${-cur * 100}%)`; }
+        else if (e.type === 'pointerup' && !e.target.closest('button, a, input')) { const r = deck.getBoundingClientRect(); (e.clientX - r.left) < r.width * .3 ? go(cur - 1) : go(cur + 1); }
+        x0 = null; };
+      deck.addEventListener('pointerup', end); deck.addEventListener('pointercancel', end); deck.addEventListener('pointerleave', e => { if (moved) end(e); });
+      addEventListener('keydown', initTF.stk = e => { if (!root.classList.contains('open')) return; const r = deck.getBoundingClientRect(); if (r.bottom < 100 || r.top > innerHeight - 100) return; if (e.key === 'ArrowRight') { go(cur + 1); e.preventDefault(); } if (e.key === 'ArrowLeft') { go(cur - 1); e.preventDefault(); } });
+      go(0); } }
     // host profile tabs
     { const id = $('#tfIcp .icp-id', root); if (id) { const tb = $$('.id-tabs button', id), pn = $$('.id-panes > *', id);
       tb.forEach((b, i) => b.addEventListener('click', () => { tb.forEach((x, j) => { x.classList.toggle('on', j === i); x.setAttribute('aria-selected', j === i); }); pn.forEach((x, j) => x.classList.toggle('on', j === i)); })); } }
