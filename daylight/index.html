@@ -5535,6 +5535,17 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .rf-ar { margin-top: 90px; } .rf-ar svg { width: 40px; height: 24px; fill: none; stroke: var(--ink-2); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .rf-p.on .rf-ar svg path { stroke-dasharray: 60; stroke-dashoffset: 60; animation: rfDraw .6s var(--ease) .25s forwards; }
 @keyframes rfDraw { to { stroke-dashoffset: 0; } }
+.rf-me .why { padding-top: 10px; border-top: 1px dashed var(--line); font-weight: 500; color: var(--ink-2); } .rf-me .why b { color: var(--ink); }
+.rf-them img { max-height: 380px; width: auto; max-width: 100%; justify-self: start; }
+.rf-mkt { max-width: 1120px; margin: 7vh auto 0; text-align: left; }
+.rf-mk { margin: 0 0 14px; font: 700 15px/1.3 var(--sans); color: var(--ink); }
+.rf-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.rf-row a { display: grid; gap: 4px; text-decoration: none; color: var(--ink-2); }
+.rf-row img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top center; border-radius: 10px; box-shadow: 0 0 0 1px var(--line); transition: transform .35s var(--spring), box-shadow .3s; margin-bottom: 6px; }
+.rf-row a:hover img { transform: translateY(-3px); box-shadow: 0 0 0 1px var(--line), 0 18px 30px -20px rgba(36, 39, 44, .5); }
+.rf-row b { font: 700 14px/1.2 var(--sans); color: var(--ink); } .rf-row small { font: 500 12.5px/1.35 var(--sans); }
+.rf-mkt .rf-src { text-align: left; margin-top: 12px; }
+@media (max-width: 860px) { .rf-row { display: flex; overflow-x: auto; scrollbar-width: none; } .rf-row a { flex: 0 0 200px; } }
 .rf-src { margin: 2vh auto 0; text-align: center; font: 500 12.5px/1 var(--sans); color: var(--ink-2); }
 @media (max-width: 860px) {
   .tf-refs { grid-template-columns: minmax(0, 1fr); }
@@ -8269,6 +8280,10 @@ void main() {
     ],
     beyond: [['x-remind', 'Reminders', 'Relevant booking and billing updates, right on the dashboard.', [67, 41.6, 28.3, 17.8]], ['x-renew', 'Auto-renewal', 'Easier to discover when it’s turned off, before a listing lapses.', [67, 9, 28.3, 5.6]], ['x-perf', 'Property performance', 'Summary numbers stay close, without stealing focus from listings.', [67, 31.1, 28.3, 10]], ['x-filter', 'Search and filters', 'Agencies narrow long lists by status, renewals or visibility score.', [4.8, 30, 59.6, 3.8]]],
     evo: [['ev-r1', 'Round 1', 'A score, with fixes on the listing.', 'It read like an exam grade, and every owner saw the same list.'], ['ev-r2', 'Round 2', 'The meter moves to the side rail.', 'Owners picked this layout in the A/B test: next steps first.'], ['ev-r3', 'Round 3', 'Renew early, with a countdown.', 'Straight from the review notes: 20% off, and a timer.'], ['ev-r4', 'Round 4', 'Every card gets a state.', 'Publish, improve, renew or reactivate. One action per listing.'], ['ev-final', 'Final', 'Calm and consistent.', 'Actions lead, the meter sits in the side rail.']],
+    pins: [['pin-1', 'A hair-care progress tracker', 'One score with a plain word next to it (“You are consistent”), and a small ring for each product.', 'kc-perfecto', 'The Growth meter always says Good or Needs attention, and every listing card carries its own small meter.', 'An owner with several flats needs both: how am I doing overall, and which flat needs help.'],
+      ['pin-2', 'A “Complete your profile” dialog', 'It sets a target and gives the reason: be at least 70% complete to get good views.', 'rf-meter', '“Keep optimising to increase your score to 80+ points.” The meter always names the next milestone.', 'A number on its own doesn’t move anyone. A target with a reason makes the next step obvious.'],
+      ['pin-3', 'A student progress gauge', 'A half-circle gauge with the number inside and the label underneath.', 'rf-gauges', 'The half-circle Growth meter, with the score inside and its word underneath.', 'It’s a speedometer. Owners of any age read it instantly, with no legend needed.'],
+      ['pin-4', 'A live-class dashboard', 'Small gauges that turn green, yellow or red depending on the value.', 'kc-lowScore', 'The meter’s colour shifts with the score, and a low score always comes with an Improve button.', 'Colour helps owners scan many listings quickly. The word and the button keep it readable without colour.']],
     refs: [['airbnb', 'Airbnb', 'Next steps as cards', 'A row of small, friendly cards, one action each.', 'rf-tray', 'The Recommended actions tray, with the points each step adds.', 'https://mobbin.com/screens/fc6b314f-c9b0-4ce8-bdc2-a68c51017c08'],
       ['turo', 'Turo', 'Tips beside the status', 'The host’s status sits right next to the tips that improve it.', 'kp-vas', 'Recommendations open next to the score, never on a separate page.', 'https://mobbin.com/screens/875261ee-14a9-4752-a69e-f9a8550d7254'],
       ['airtasker', 'Airtasker', 'Words, not just colour', 'A ranking bar labelled Poor, Okay and Good.', 'rf-gauges', 'The meter always says Poor, Average or Good next to the colour.', 'https://mobbin.com/screens/076d7a53-3f06-45c9-8c12-6714b46eea32'],
@@ -8420,16 +8435,20 @@ void main() {
       </section>
 
       <section class="tf-sec" id="tfRefs">
-        <h4 class="tf-h4" data-rv>How other platforms coach their hosts.</h4>
-        ${p('Before drawing anything, I studied products that turn a status into a next step. Pick one to see what I took from it.')}
+        <h4 class="tf-h4" data-rv>Where the meter came from.</h4>
+        ${p('These are the four screens I pinned in Figma while designing it, and the decision each one led to. Pick one.')}
         <div class="tf-refs" id="tfRf" data-rv>
-          <div class="rf-list" role="tablist">${TF.refs.map(([k, app, t], i) => `<button type="button" role="tab" aria-selected="${!i}"${i ? '' : ' class="on"'}><img src="${ti('mb-' + k)}" alt="" loading="lazy"><span><b>${app}</b><small>${t}</small></span></button>`).join('')}</div>
-          <div class="rf-stage">${TF.refs.map(([k, app, t, d, mine, use, url], i) => `<div class="rf-p${i ? '' : ' on'}">
-            <figure class="rf-them ${k === 'worldapp' ? 'ph' : ''}"><figcaption>${app}</figcaption><img src="${ti('mb-' + k)}" alt="${app}: ${t}" loading="lazy"><p>${d} <a href="${url}" target="_blank" rel="noopener">See it on Mobbin ↗</a></p></figure>
+          <div class="rf-list" role="tablist">${TF.pins.map(([k, t], i) => `<button type="button" role="tab" aria-selected="${!i}"${i ? '' : ' class="on"'}><img src="${ti(k)}" alt="" loading="lazy"><span><b>${t}</b><small>Reference ${i + 1} of 4</small></span></button>`).join('')}</div>
+          <div class="rf-stage">${TF.pins.map(([k, t, saw, mine, did, why], i) => `<div class="rf-p${i ? '' : ' on'}">
+            <figure class="rf-them"><figcaption>What I saw</figcaption><img src="${ti(k)}" alt="${t}" loading="lazy"><p>${saw}</p></figure>
             <span class="rf-ar" aria-hidden="true"><svg viewBox="0 0 40 24"><path d="M2 12h34M28 4l8 8-8 8"/></svg></span>
-            <figure class="rf-me"><figcaption>In Traum</figcaption><img src="${ti(mine)}" alt="${use}" loading="lazy"><p>${use}</p></figure></div>`).join('')}</div>
+            <figure class="rf-me"><figcaption>What I did in Traum</figcaption><img src="${ti(mine)}" alt="" loading="lazy"><p>${did}</p><p class="why"><b>Why:</b> ${why}</p></figure></div>`).join('')}</div>
         </div>
-        <p class="rf-src" data-rv>Reference screens via Mobbin.</p>
+        <div class="rf-mkt" data-rv>
+          <p class="rf-mk">The same pattern shows up in products owners already use</p>
+          <div class="rf-row">${TF.refs.map(([k, app, t, , , , url]) => `<a href="${url}" target="_blank" rel="noopener"><img src="${ti('mb-' + k)}" alt="${app}: ${t}" loading="lazy"><b>${app}</b><small>${t}</small></a>`).join('')}</div>
+          <p class="rf-src">Screens via Mobbin. Tap one to open it.</p>
+        </div>
       </section>
       <section class="tf-sec" id="tfFirst">
         <div class="tf-sh" id="tfSh">
