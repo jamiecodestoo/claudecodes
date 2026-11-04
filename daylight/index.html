@@ -5294,6 +5294,120 @@ p.tf-catch { max-width: 52ch; margin: 0 auto; padding: 0; background: none; box-
 .icp-map .icp-tag { position: absolute; translate: 14px -130%; padding: 6px 10px; border-radius: 999px; background: var(--card); box-shadow: 0 6px 16px -8px rgba(0, 0, 0, .3); font: 700 12px/1 var(--sans); white-space: nowrap; }
 .icp-map figcaption { margin-top: 6px; text-align: center; font: 600 14px/1 var(--sans); color: var(--ink-2); }
 .icp-id { position: relative; padding: 22px; border-radius: 22px; background: linear-gradient(135deg, #FFFFFF, #F6F3EC); color: #24272C; box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 40px 70px -40px rgba(60, 40, 0, .5); rotate: -2deg; transition: rotate .6s var(--ease); overflow: hidden; }
+/* host profile: flip between who they are, what they want, what got in the way */
+.id-tabs { display: flex; gap: 2px; padding: 3px; margin: -4px 0 16px; border-radius: 999px; background: #EFECE5; width: max-content; max-width: 100%; }
+.id-tabs button { padding: 7px 12px; border-radius: 999px; font: 600 12.5px/1 var(--sans); color: #6B6F75; transition: background .25s, color .25s, box-shadow .25s; }
+.id-tabs button:hover { color: #24272C; }
+.id-tabs button.on { background: #fff; color: #24272C; box-shadow: 0 3px 10px -5px rgba(0, 0, 0, .3); }
+.id-panes { display: grid; min-height: 132px; } .id-panes > * { grid-area: 1 / 1; }
+.id-panes > :not(.on) { visibility: hidden; }
+.id-pane.on > * , .id-l.on li { animation: idIn .5s var(--ease) both; animation-delay: calc(var(--j, 0) * 70ms); }
+@keyframes idIn { from { opacity: 0; transform: translateY(8px); } }
+.id-l { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; align-content: start; }
+.id-l li { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start; font: 600 15px/1.35 var(--sans); color: #24272C; }
+.id-l li::before { content: "✓"; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; background: #E3F4EC; color: #16825A; }
+.id-l.fr li::before { content: "!"; background: #FCE9E1; color: #B9451A; font-weight: 800; }
+
+/* seasons: one meter, nine outfits, with weather */
+.tf-sz { max-width: 1080px; margin: 0 auto; }
+.sz-dial { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 20px; }
+.sz-dial button { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; font: 600 13.5px/1 var(--sans); color: var(--ink-2); background: var(--card); box-shadow: 0 0 0 1px var(--line); transition: transform .3s var(--spring), box-shadow .25s, color .25s; }
+.sz-dial button i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); transition: transform .35s var(--spring); }
+.sz-dial button:hover { transform: translateY(-2px); color: var(--ink); }
+.sz-dial button.on { color: var(--ink); box-shadow: 0 0 0 2px var(--c), 0 10px 22px -12px var(--c); }
+.sz-dial button.on i { transform: scale(1.35); }
+.sz-stage { position: relative; overflow: hidden; border-radius: 28px; padding: clamp(28px, 5vw, 64px) clamp(16px, 4vw, 52px) clamp(22px, 4vw, 44px);
+  background: radial-gradient(70% 90% at 20% 0%, color-mix(in srgb, var(--sc) 28%, transparent), transparent 70%), radial-gradient(60% 80% at 100% 100%, color-mix(in srgb, var(--sc) 18%, transparent), transparent 70%), var(--soft); transition: background .6s; }
+.sz-sw { position: relative; display: grid; z-index: 2; }
+.sz-p { grid-area: 1 / 1; display: grid; grid-template-columns: 2.1fr 1fr; gap: 14px; align-items: end; opacity: 0; transform: translateY(14px) scale(.985); transition: opacity .5s var(--ease), transform .7s var(--spring); pointer-events: none; }
+.sz-p.on { opacity: 1; transform: none; }
+.sz-p img { width: 100%; filter: drop-shadow(0 18px 26px rgba(36, 39, 44, .16)); }
+.sz-p img + img { transition-delay: .06s; }
+.sz-fx { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.sz-fx i { position: absolute; top: -8%; left: var(--x); width: calc(11px * var(--z)); height: calc(15px * var(--z)); background: var(--p1); border-radius: var(--br, 50%); opacity: .85; animation: szFall var(--t) linear var(--d) infinite; }
+.sz-fx i:nth-child(3n) { background: var(--p2); } .sz-fx i:nth-child(3n + 1) { background: var(--p3); }
+@keyframes szFall { to { transform: translate3d(var(--dx), 640px, 0) rotate(540deg); } }
+.tf-sz[data-s="easter"] { --p1: #F4A7BE; --p2: #FFE08A; --p3: #B7E4C7; --br: 50% 0 50% 50%; }
+.tf-sz[data-s="summer"] { --p1: #FFD166; --p2: #FFE8A3; --p3: #8ED1F5; --br: 50%; }
+.tf-sz[data-s="oktober"] { --p1: #2F86C4; --p2: #FFFFFF; --p3: #8EC5EA; --br: 2px; }
+.tf-sz[data-s="autumn"], .tf-sz[data-s="eos"] { --p1: #D9692B; --p2: #E8A912; --p3: #B9451A; --br: 0 70% 0 70%; }
+.tf-sz[data-s="halloween"] { --p1: #E8761F; --p2: #3A2E39; --p3: #F2B705; --br: 0 70% 0 70%; }
+.tf-sz[data-s="bfriday"] { --p1: #24272C; --p2: #FFC61F; --p3: #FFFFFF; --br: 1px; }
+.tf-sz[data-s="xmas"] { --p1: #FFFFFF; --p2: #FFFFFF; --p3: #E9EEF2; --br: 50%; }
+.tf-sz[data-s="newyear"] { --p1: #C9A227; --p2: #E0533D; --p3: #FFFFFF; --br: 1px; }
+.tf-sz[data-s="xmas"] .sz-fx i { box-shadow: 0 0 0 1px rgba(0, 0, 0, .05); }
+.sz-cap { margin: 16px auto 0; max-width: 40rem; text-align: center; font: 500 14px/1.5 var(--sans); color: var(--ink-2); }
+
+/* review notes: the real list, ticked off one by one */
+.tf-rn { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); gap: clamp(24px, 4vw, 56px); align-items: center; max-width: 1080px; margin: 0 auto; text-align: left; }
+.rn-pad { position: relative; padding: 30px 22px 18px; border-radius: 4px; background: #FFF5C4; color: #3A3210; box-shadow: 0 26px 44px -28px rgba(60, 50, 10, .6); rotate: -1.5deg; transition: rotate .6s var(--spring); }
+.rn-pad:hover { rotate: 0deg; }
+.rn-tape { position: absolute; top: -12px; left: 50%; width: 96px; height: 24px; translate: -50% 0; rotate: 3deg; background: rgba(255, 255, 255, .6); box-shadow: 0 0 0 1px rgba(0, 0, 0, .04); }
+.rn-h { margin: 0 0 10px; font: 400 26px/1 var(--hand); }
+.rn-pad ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.rn-pad button { display: grid; grid-template-columns: 24px 1fr; gap: 10px; width: 100%; padding: 8px 8px; border-radius: 8px; text-align: left; font: 400 20px/1.15 var(--hand); color: #3A3210; transition: background .2s, transform .25s var(--spring); }
+.rn-pad button:hover { background: rgba(58, 50, 16, .07); transform: translateX(3px); }
+.rn-pad button.on { background: rgba(58, 50, 16, .1); }
+.rn-pad svg { width: 24px; height: 24px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.rn-pad svg rect { stroke: #8C7A2A; stroke-width: 2; transition: fill .3s, stroke .3s; }
+.rn-pad svg path { stroke: #fff; stroke-width: 2.6; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .45s var(--ease) .1s; }
+.rn-pad .done svg rect { fill: var(--tg); stroke: var(--tg); }
+.rn-pad .done svg path { stroke-dashoffset: 0; }
+.rn-pad .done span { text-decoration: line-through; text-decoration-color: rgba(58, 50, 16, .35); text-decoration-thickness: 2px; }
+.rn-ft { margin: 12px 0 0; font: 600 12px/1 var(--sans); color: #8C7A2A; } .rn-ft b { font-size: 15px; color: #3A3210; }
+.rn-out { display: grid; }
+.rn-pn { grid-area: 1 / 1; display: grid; gap: 12px; align-content: center; opacity: 0; transform: translateX(18px); transition: opacity .45s var(--ease), transform .6s var(--spring); pointer-events: none; }
+.rn-pn.on { opacity: 1; transform: none; pointer-events: auto; }
+.rn-k { margin: 0; font: 700 12px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--tg); }
+.rn-d { margin: 0; font: 700 clamp(18px, 1.8vw, 22px)/1.35 var(--sans); color: var(--ink); text-wrap: balance; }
+.rn-ims { display: grid; gap: 10px; padding: clamp(14px, 2.5vw, 26px); border-radius: 22px; background: var(--soft); }
+.rn-ims img { width: 100%; filter: drop-shadow(0 14px 22px rgba(36, 39, 44, .14)); }
+.rn-ims img[src*="kg-high"] { max-width: 260px; justify-self: center; }
+
+/* one card, every state */
+.tf-sim { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.3fr); gap: clamp(20px, 4vw, 48px); align-items: center; max-width: 1080px; margin: 4vh auto 0; text-align: left; }
+.sim-ctl { display: grid; gap: 18px; padding: 24px; border-radius: 24px; background: var(--card); box-shadow: 0 0 0 1px var(--line), 0 30px 60px -40px rgba(36, 39, 44, .5); }
+.sim-row { display: grid; gap: 10px; }
+.sim-row .lb { display: flex; justify-content: space-between; font: 700 12px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.sim-row .lb b { font: 800 15px/1 var(--sans); letter-spacing: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+.sim-seg { display: flex; gap: 2px; padding: 3px; border-radius: 12px; background: var(--soft); }
+.sim-seg button { flex: 1; padding: 10px 8px; border-radius: 9px; font: 600 14px/1 var(--sans); color: var(--ink-2); transition: background .25s, color .25s, box-shadow .25s; }
+.sim-seg button.on { background: var(--card); color: var(--ink); box-shadow: 0 3px 10px -5px rgba(0, 0, 0, .3); }
+.tf-sim input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--tr) 0 8%, var(--ta) 8% 26%, var(--ty) 26% 46%, var(--tg) 46% 100%); outline: none; }
+.tf-sim input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px var(--ink), 0 6px 14px -4px rgba(0, 0, 0, .4); cursor: grab; transition: transform .2s var(--spring); }
+.tf-sim input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.18); cursor: grabbing; }
+.tf-sim input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px var(--ink); cursor: grab; }
+.sim-tk { display: flex; justify-content: space-between; font: 600 10.5px/1 var(--sans); color: var(--ink-2); opacity: .8; }
+.sim-sw { display: flex; align-items: center; gap: 10px; font: 600 14px/1.3 var(--sans); color: var(--ink); cursor: pointer; }
+.sim-sw input { position: absolute; opacity: 0; }
+.sim-sw i { width: 40px; height: 24px; flex: none; border-radius: 99px; background: var(--soft); box-shadow: inset 0 0 0 1px var(--line); position: relative; transition: background .25s; }
+.sim-sw i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, .25); transition: transform .3s var(--spring); }
+.sim-sw input:checked + i { background: var(--ty); } .sim-sw input:checked + i::after { transform: translateX(16px); }
+.sim-sw input:focus-visible + i { outline: 2px solid var(--c); outline-offset: 2px; }
+.sim-out { display: grid; gap: 16px; padding: clamp(18px, 3vw, 36px); border-radius: 28px; background: radial-gradient(80% 90% at 10% 0%, var(--tgl), transparent 70%), var(--soft); }
+.sim-card { display: grid; }
+.sim-card img { grid-area: 1 / 1; width: 100%; opacity: 0; transform: translateY(10px) scale(.97); transition: opacity .35s var(--ease), transform .55s var(--spring); filter: drop-shadow(0 18px 28px rgba(36, 39, 44, .18)); }
+.sim-card img.on { opacity: 1; transform: none; }
+.sim-why { margin: 0; min-height: 3em; font: 600 16px/1.5 var(--sans); color: var(--ink); }
+.sim-why::before { content: "→ "; color: var(--tg); }
+
+/* after launch: real lines that draw themselves */
+.nx-real svg { overflow: visible; }
+.nx-real .ln { fill: none; stroke: var(--tg); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.4s var(--ease) .2s; }
+.nx-real .ar { fill: color-mix(in srgb, var(--tg) 12%, transparent); opacity: 0; transition: opacity .8s .9s; }
+.nx-real .pt { fill: var(--card); stroke: var(--tg); stroke-width: 2.5; opacity: 0; transition: opacity .3s calc(.3s + var(--i) * .45s); }
+.nx-real .vl { font: 700 13px/1 var(--sans); fill: var(--ink); opacity: 0; transition: opacity .3s calc(.4s + var(--i) * .45s); }
+.nx-real .tx { font: 600 11px/1 var(--sans); fill: var(--ink-2); }
+.nx-real.in .ln { stroke-dashoffset: 0; } .nx-real.in .ar, .nx-real.in .pt, .nx-real.in .vl { opacity: 1; }
+.nx-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; margin: 3vh auto 0; }
+.nx-chips span { display: inline-flex; align-items: baseline; gap: 8px; padding: 12px 16px; border-radius: 16px; background: var(--card); box-shadow: 0 0 0 1px var(--line); font: 600 14px/1.2 var(--sans); color: var(--ink-2); opacity: 0; transform: translateY(10px); transition: opacity .4s calc(var(--i) * .08s), transform .6s var(--spring) calc(var(--i) * .08s); }
+.nx-chips.in span { opacity: 1; transform: none; }
+.nx-chips b { font: 800 20px/1 var(--sans); color: var(--ink); } .nx-chips .up b { color: var(--tg); } .nx-chips .dn b { color: var(--tr); }
+@media (max-width: 860px) {
+  .tf-rn, .tf-sim { grid-template-columns: minmax(0, 1fr); }
+  .sz-p { grid-template-columns: minmax(0, 1fr); } .sz-p img + img { width: 64%; justify-self: end; margin-top: -10%; }
+}
+@media (prefers-reduced-motion: reduce) { .sz-fx { display: none; } }
 .icp-id:hover { rotate: 0deg; }
 .icp-id::before { content: ""; position: absolute; inset: 0 0 auto; height: 6px; background: linear-gradient(90deg, #1E1E1E 33%, #DD2B21 33% 66%, #FFCC00 66%); }
 .id-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; } .id-top span { font: 700 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: #6B6F75; } .id-top img { width: 30px; height: 30px; border-radius: 8px; }
@@ -8019,7 +8133,16 @@ void main() {
       ['stay', 'Stay support', 's-stay', '', 'Once the basics are covered, the single nudge slot can offer damage cover instead.']
     ],
     beyond: [['x-remind', 'Reminders', 'Relevant booking and billing updates, right on the dashboard.', [67, 41.6, 28.3, 17.8]], ['x-renew', 'Auto-renewal', 'Easier to discover when it’s turned off, before a listing lapses.', [67, 9, 28.3, 5.6]], ['x-perf', 'Property performance', 'Summary numbers stay close, without stealing focus from listings.', [67, 31.1, 28.3, 10]], ['x-filter', 'Search and filters', 'Agencies narrow long lists by status, renewals or visibility score.', [4.8, 30, 59.6, 3.8]]],
-    evo: [['s-it-a', 'Iteration 1', 'Boost cards beside the score.', 'Clear, but every owner saw the same list.'], ['s-it-b', 'Iteration 2', 'Bigger cards, fewer of them.', 'More deliberate, but the listings slid down.'], ['s-it-c', 'Iteration 3', 'Fixes move onto the listing.', 'Each card carries its own next step.'], ['s-final', 'Final', 'Calm and consistent.', 'Actions lead, the meter sits in the side rail.']],
+    evo: [['ev-r1', 'Round 1', 'A score, with fixes on the listing.', 'It read like an exam grade, and every owner saw the same list.'], ['ev-r2', 'Round 2', 'The meter moves to the side rail.', 'Owners picked this layout in the A/B test: next steps first.'], ['ev-r3', 'Round 3', 'Renew early, with a countdown.', 'Straight from the review notes: 20% off, and a timer.'], ['ev-r4', 'Round 4', 'Every card gets a state.', 'Publish, improve, renew or reactivate. One action per listing.'], ['ev-final', 'Final', 'Calm and consistent.', 'Actions lead, the meter sits in the side rail.']],
+    seasons: [['easter', 'Easter', '#F4A7BE'], ['summer', 'Summer', '#F2B705'], ['oktober', 'Oktoberfest', '#2F86C4'], ['autumn', 'Autumn', '#D9692B'], ['halloween', 'Halloween', '#E8761F'], ['bfriday', 'Black Friday', '#24272C'], ['xmas', 'Christmas', '#C8372D'], ['newyear', 'New Year', '#C9A227'], ['eos', 'End of season', '#A8740A']],
+    notes: [['Early renewal discount to be 20%', 'The card says it: renew early, get 20% off instantly.', ['kc-earlyRenew']],
+      ['Timer on listings to be renewed', 'A live countdown, and a warning on the last day.', ['kp-renewbar']],
+      ['Expired listings below “Renew now”', 'This month’s renewals first. Expired comes after, greyed out.', ['kc-highIntentRenew', 'kc-expired']],
+      ['Pop-up CTAs to be green', 'Offer buttons went green, the same green as the meter.', ['kp-renewbar']],
+      ['Position of the growth meter to be checked', 'Checked again. It stayed in the side rail, beside the next steps.', ['kg-high']],
+      ['Colour of the “to be renewed” CTA to be checked', 'Amber while it’s due, red only once it has expired.', ['kc-highIntentRenew', 'kc-expired']],
+      ['Recommendations based on each property’s score', 'A low score gets an Improve button with fixes for that listing.', ['kc-lowScore', 'kc-midScore']]],
+    sim: { unpublished: 'Not live yet, so Publish now leads, with what’s missing right under the name.', expired: 'Expired. Greyed out, with one action: Reactivate now.', highIntentRenew: 'Days to go. The date turns amber and Renew now becomes the main button.', topListing: 'The Top listing add-on ends in 3 days. A quiet note, with Renew now beside it.', renew: 'A month out. A calm note on the card, with a link to renew.', earlyRenew: 'Two months out. Renew early and get 20% off, said in green.', lowScore: 'Low score. Improve opens fixes for this listing, each with its points.', midScore: 'Average score. The same Improve button, a calmer colour.', perfecto: 'A great listing, nothing due. No upsell, just the score.' },
     ai: [['sys', 'Give AI the right constraints', 'I installed the project’s design system in Claude and explored growth-meter iterations inside an established visual language, instead of building every variation by hand.'],
       ['spark', 'Use desktop as the foundation', 'Once desktop was final, the core layout, components and interaction patterns already existed. Mobile didn’t need to start from scratch.'],
       ['figma', 'Accelerate mobile execution', 'Working with Claude directly on my Figma file, I got the mobile UI to roughly 90% of the intended direction in under two hours, then reviewed and refined it.']],
@@ -8077,7 +8200,11 @@ void main() {
             <span class="icp-tag" style="left:52.8%;top:25.5%">Baltic coast</span><figcaption>Core market: Germany</figcaption></figure>
           <div class="icp-id">
             <div class="id-top"><span>Host profile</span><img src="v2/s/logo-traum.webp" alt=""></div>
+            <div class="id-tabs" role="tablist">${['Profile', 'Goals', 'Frustrations'].map((t, i) => `<button type="button" role="tab" aria-selected="${!i}"${i ? '' : ' class="on"'}>${t}</button>`).join('')}</div>
+            <div class="id-panes"><div class="id-pane on">
             <div class="id-body"><svg viewBox="0 0 120 140" class="av" aria-hidden="true"><rect width="120" height="140" fill="#DCE9F3"/><path d="M12 140c4-30 22-44 48-44s44 14 48 44z" fill="#3F6E8C"/><path d="M42 102l18 14 18-14" fill="none" stroke="#fff" stroke-width="4"/><path d="M50 84h20v16c0 6-20 6-20 0z" fill="#E2AE88"/><ellipse cx="60" cy="58" rx="24" ry="28" fill="#EDBE98"/><path d="M36 60c0-24 10-34 24-34s24 10 24 34c-3-8-6-14-10-16-8 3-20 3-30 0-4 3-6 9-8 16z" fill="#B9B4AE"/><path d="M38 66c2 16 10 24 22 24s20-8 22-24c-4 6-10 9-22 9s-18-3-22-9z" fill="#A8A29C"/><path d="M52 76c4 2 12 2 16 0" stroke="#8A5A46" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="51" cy="59" r="7" fill="none" stroke="#2A2420" stroke-width="2"/><circle cx="69" cy="59" r="7" fill="none" stroke="#2A2420" stroke-width="2"/><path d="M58 59h4M44 58h-6M76 58h6" stroke="#2A2420" stroke-width="2"/><circle cx="51" cy="59" r="1.8" fill="#2A2420"/><circle cx="69" cy="59" r="1.8" fill="#2A2420"/><path d="M45 49c3-2 8-2 11 0M64 49c3-2 8-2 11 0" stroke="#8C8680" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg><dl>${[['Name', 'Thomas B.'], ['Age', '46'], ['Region', 'Baltic coast, Schleswig-Holstein'], ['Owns', '2 holiday flats'], ['Uses', 'Desktop at home, phone on the go'], ['Wants', 'More bookings, less admin']].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></div>
+            </div>
+              ${[['More bookings, with less admin.', 'Know at a glance if a listing is doing well.', 'Renew on time, without surprises.'], ['Couldn’t tell if a listing was any good.', 'No next step on offline listings.', 'Offers felt like ads, not help.', 'Renewal reminders came too late.']].map((l, i) => `<ul class="id-pane id-l ${i ? 'fr' : 'go'}">${l.map((t, j) => `<li style="--j:${j}">${t}</li>`).join('')}</ul>`).join('')}</div>
             <div class="id-age"><span>Typical age</span><div class="ax"><i class="band"></i><i class="me" style="left:52%"></i></div><div class="lb"><span>20</span><b>30–50</b><span>70</span></div></div>
             <p class="id-ft">Illustrative profile of our ideal customer</p>
           </div>
@@ -8171,6 +8298,15 @@ void main() {
           <div class="ev-tx"><p class="ev-k" id="tfEvK"></p><b id="tfEvT"></b><div class="ev-gb"><p class="ev-good" id="tfEvG"></p><p class="ev-bad" id="tfEvB"></p></div></div>
           <div class="ev-nav"><button type="button" class="pv" aria-label="Previous version">←</button><span class="ev-dots">${TF.gev.map((_, i) => `<i data-k="${i}"></i>`).join('')}</span><button type="button" class="nx" aria-label="Next version">→</button></div>
         </div>
+        <h4 class="tf-h4" data-rv>Dressed for every season.</h4>
+        <div class="tf-sz" id="tfSz" data-rv style="--sc:#F4A7BE" data-s="easter">
+          <div class="sz-dial" role="tablist">${TF.seasons.map(([k, t, c], i) => `<button type="button" role="tab" data-k="${k}" style="--c:${c}" aria-selected="${!i}"${i ? '' : ' class="on"'}><i></i>${t}</button>`).join('')}</div>
+          <div class="sz-stage">
+            <div class="sz-fx" aria-hidden="true">${Array.from({ length: 22 }, (_, i) => `<i style="--x:${(i * 47 % 100)}%;--d:${-(i * 0.73 % 7).toFixed(2)}s;--t:${(6 + i % 5).toFixed(1)}s;--dx:${(i % 2 ? 1 : -1) * (20 + i * 7 % 50)}px;--z:${(0.6 + (i * 13 % 10) / 12).toFixed(2)}"></i>`).join('')}</div>
+            <div class="sz-sw">${TF.seasons.map(([k, t], i) => `<div class="sz-p${i ? '' : ' on'}"><img src="${ti('sz-' + k + '-r')}" alt="Recommended actions, ${t} skin" loading="lazy"><img src="${ti('sz-' + k + '-m')}" alt="Growth meter, ${t} skin" loading="lazy"></div>`).join('')}</div>
+          </div>
+          <p class="sz-cap">Same components, a new skin for each campaign. Marketing gets a moment, owners keep their layout.</p>
+        </div>
         <p class="tf-rv2 sm">${'The real innovation wasn’t the gauge. It was what happened <k>after someone saw their score.</k>'.replace(/<k>(.*?)<\/k>/, (m, x) => x.split(' ').map(w => '\u0001' + w).join(' ')).split(' ').map(w => w.startsWith('\u0001') ? `<i class="k">${w.slice(1)}</i>` : `<i>${w}</i>`).join(' ')}</p>
       </section>
 
@@ -8214,10 +8350,29 @@ void main() {
         <div class="tf-tri" data-rv>${[['For owners', 'Keep the hierarchy clear, the language understandable, and the colours purposeful.', 'sky'], ['For the business', 'Improve discovery of relevant offers, without showing every promotion at once.', 'sun'], ['For engineering', 'Reuse existing components wherever possible and avoid unnecessary complexity.', 'mint']].map(([t, d, c]) => `<div class="${c}"><b>${t}</b><p>${d}</p></div>`).join('')}</div>
         <div class="tf-it" id="tfEvo">
           <div class="it-pin">
-            <h4 class="tf-h4">Iterating as the feedback came in.</h4>
+            <h4 class="tf-h4">Four review rounds, one page.</h4>
             <div class="tf-brw"><div class="tbar"><i></i><i></i><i></i><span>traum-ferienwohnungen.de/vermieterbereich/inserate</span></div><div class="it-vp">${TF.evo.map(([im, k, t], i) => `<img src="${ti(im)}" alt="${k}: ${t}" data-i="${i}" loading="lazy"${i ? '' : ' class="on"'}>`).join('')}</div></div>
             <div class="it-dots">${TF.evo.map(([, k], i) => `<button type="button" data-i="${i}"><i></i><span>${k}</span></button>`).join('')}</div>
             <p class="it-cap"><b id="tfItT"></b> <span id="tfItD"></span></p>
+          </div>
+        </div>
+        <h4 class="tf-h4" data-rv>The review notes, ticked off.</h4>
+        <div class="tf-rn" id="tfRn" data-rv>
+          <div class="rn-pad"><span class="rn-tape" aria-hidden="true"></span><p class="rn-h">Feedback, round 2</p><ul>${TF.notes.map(([t], i) => `<li><button type="button" data-i="${i}"${i ? '' : ' class="on done"'}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7 12.5l3.2 3.2L17 8.6" pathLength="1"/></svg><span>${t}</span></button></li>`).join('')}</ul><p class="rn-ft"><b id="tfRnN">1</b>/${TF.notes.length} landed. Tap a note.</p></div>
+          <div class="rn-out">${TF.notes.map(([, d, ims], i) => `<div class="rn-pn${i ? '' : ' on'}"><p class="rn-k">Shipped in rounds 3 and 4</p><p class="rn-d">${d}</p><div class="rn-ims${ims.length > 1 ? ' two' : ''}">${ims.map(k => `<img src="${ti(k)}" alt="" loading="lazy">`).join('')}</div></div>`).join('')}</div>
+        </div>
+        <h4 class="tf-h4" data-rv>One card, every state.</h4>
+        ${p('Nine states, one rule: show the single action that matters right now. Play with the listing and watch the card react.')}
+        <div class="tf-sim" id="tfSim" data-rv>
+          <div class="sim-ctl">
+            <div class="sim-row"><span class="lb">Listing</span><div class="sim-seg" data-k="pub"><button type="button" data-v="live" class="on">Live</button><button type="button" data-v="draft">Draft</button></div></div>
+            <div class="sim-row"><span class="lb">Growth score</span><div class="sim-seg" data-k="sc"><button type="button" data-v="low">Low</button><button type="button" data-v="mid">Average</button><button type="button" data-v="high" class="on">High</button></div></div>
+            <div class="sim-row"><span class="lb">Days until renewal <b id="tfSimD">120</b></span><input type="range" min="-10" max="120" step="1" value="120" id="tfSimR" aria-label="Days until renewal"><div class="sim-tk"><span>Expired</span><span>2 weeks</span><span>1 month</span><span>2 months</span><span>4 months</span></div></div>
+            <label class="sim-sw"><input type="checkbox" id="tfSimT"><i></i><span>Top listing add-on ends soon</span></label>
+          </div>
+          <div class="sim-out">
+            <div class="sim-card">${['perfecto', 'midScore', 'lowScore', 'unpublished', 'expired', 'topListing', 'renew', 'highIntentRenew', 'earlyRenew'].map(k => `<img src="${ti('kc-' + k)}" alt="" data-k="${k}" loading="lazy"${k === 'perfecto' ? ' class="on"' : ''}>`).join('')}</div>
+            <p class="sim-why" id="tfSimW" aria-live="polite"></p>
           </div>
         </div>
         <div class="tf-team" data-rv>
@@ -8246,22 +8401,20 @@ void main() {
         ${head('Here’s where', 'it landed.')}
         ${p('Desktop and mobile web, side by side. Scroll inside each screen to see the whole page.')}
         <div class="tf-fin" data-rv>
-          <figure class="fn-d"><figcaption><i></i>Desktop web<small>↕ Scroll</small></figcaption><div class="tf-brw"><div class="tbar"><i></i><i></i><i></i><span>traum-ferienwohnungen.de/vermieterbereich/inserate</span></div><div class="vp"><img src="${ti('s-final')}" alt="The final desktop dashboard, full page" loading="lazy"></div></div></figure>
-          <figure class="fn-m"><figcaption><i></i>Mobile web<small>↕ Scroll</small></figcaption>${tfPhone(`<img src="${ti('mobile')}" alt="The final mobile dashboard, full page" loading="lazy">`, 'fn-ph')}</figure>
+          <figure class="fn-d"><figcaption><i></i>Desktop web<small>↕ Scroll</small></figcaption><div class="tf-brw"><div class="tbar"><i></i><i></i><i></i><span>traum-ferienwohnungen.de/vermieterbereich/inserate</span></div><div class="vp"><img src="${ti('fin-d')}" alt="The final desktop dashboard, full page" loading="lazy"></div></div></figure>
+          <figure class="fn-m"><figcaption><i></i>Mobile web<small>↕ Scroll</small></figcaption>${tfPhone(`<img src="${ti('fin-m')}" alt="The final mobile dashboard, full page" loading="lazy">`, 'fn-ph')}</figure>
         </div>
       </section>
 
       <section class="tf-sec" id="tfNx">
-        ${plq(12, 'What happens next')}
-        ${head('Next up:', 'proving it works.')}
-        ${p('The designs are approved and being built. From here, the work is validation.')}
-        <div class="nx-track" data-rv><ol>${[['Research', 'd'], ['Design', 'd'], ['Approved', 'd'], ['In development', 'now'], ['Launch & measure', '']].map(([t, c], i) => `<li class="${c}" style="--i:${i}"><span class="dot">${c === 'd' ? tfIc('check') : ''}</span><b>${t}</b>${c === 'now' ? '<em>We are here</em>' : ''}</li>`).join('')}</ol></div>
-        <h4 class="tf-h4 nx-h" data-rv>What success looks like.</h4>
-        <div class="nx-tg" data-rv>${[['+5%', 'Page engagement', 'On the advertisement page', 0], ['+3–4%', 'Renewals', 'From clearer states and better offers', 1]].map(([n, t, d, r]) => `<div class="nx-c"><div class="t"><b>${n}</b><span><strong>${t}</strong><small>${d}</small></span></div>
-          <svg viewBox="-4 -6 328 122" aria-hidden="true"><line class="ax" x1="0" y1="96" x2="316" y2="96"/><text class="tx" x="0" y="70">Baseline</text><path class="base" d="M0 80 H160"/><line class="lx" x1="160" y1="8" x2="160" y2="96"/><text class="tx" x="168" y="16">Launch</text>
-            <g class="pj">${r ? '<path class="area" d="M160 80 C220 80 262 46 310 40 L310 24 C262 30 220 80 160 80Z"/><path class="proj" d="M160 80 C220 80 262 46 310 40"/><path class="proj" d="M160 80 C220 80 262 30 310 24"/><path class="rng" d="M310 24 V40"/>' : '<path class="area" d="M160 80 C220 80 262 40 310 32 V96 H160Z"/><path class="proj" d="M160 80 C220 80 262 40 310 32"/><circle class="end" cx="310" cy="32" r="5"/>'}</g></svg></div>`).join('')}</div>
-        <p class="nx-cap" data-rv>Targets agreed with product and business. Not results, yet.</p>
-        <div class="nx-ms" data-rv><p>After launch, measured against a historical baseline</p><ul>${TF.measure.map(t => `<li>${t}</li>`).join('')}</ul></div>
+        ${plq(12, 'After launch')}
+        ${head('Live, and', 'it’s working.')}
+        ${p('From the page analytics: May, June, and the first 12 days of July 2026.')}
+        <div class="nx-track" data-rv><ol>${[['Research', 'd'], ['Design', 'd'], ['Approved', 'd'], ['Built', 'd'], ['Launch & measure', 'now']].map(([t, c], i) => `<li class="${c}" style="--i:${i}"><span class="dot">${c === 'd' ? tfIc('check') : ''}</span><b>${t}</b>${c === 'now' ? '<em>We are here</em>' : ''}</li>`).join('')}</ol></div>
+        <h4 class="tf-h4 nx-h" data-rv>What actually happened.</h4>
+        <div class="nx-tg nx-real" data-rv><div class="nx-c"><div class="t"><b>0 → 33.6</b><span><strong>Renewal CTA clicks</strong><small>The target was +3–4% renewals</small></span></div><svg viewBox="-4 -10 328 132" aria-hidden="true"><line class="ax" x1="0" y1="96" x2="316" y2="96"/><text class="tx" x="24" y="114" text-anchor="middle">May</text><text class="tx" x="160" y="114" text-anchor="middle">June</text><text class="tx" x="296" y="114" text-anchor="middle">July</text><path class="ar" d="M24 88.0 L160 66.8 L296 22.0 L296 96 L24 96Z"/><path class="ln" d="M24 88.0 L160 66.8 L296 22.0" pathLength="1"/><circle class="pt" cx="24" cy="88.0" r="4" style="--i:0"/><text class="vl" x="24" y="76.0" text-anchor="middle" style="--i:0">0</text><circle class="pt" cx="160" cy="66.8" r="4" style="--i:1"/><text class="vl" x="160" y="54.8" text-anchor="middle" style="--i:1">10.8</text><circle class="pt" cx="296" cy="22.0" r="5.5" style="--i:2"/><text class="vl" x="296" y="10.0" text-anchor="middle" style="--i:2">33.6</text></svg></div><div class="nx-c"><div class="t"><b>0 → 14.5</b><span><strong>View full dashboard</strong><small>The target was +5% engagement</small></span></div><svg viewBox="-4 -10 328 132" aria-hidden="true"><line class="ax" x1="0" y1="96" x2="316" y2="96"/><text class="tx" x="24" y="114" text-anchor="middle">May</text><text class="tx" x="160" y="114" text-anchor="middle">June</text><text class="tx" x="296" y="114" text-anchor="middle">July</text><path class="ar" d="M24 88.0 L160 56.6 L296 22.0 L296 96 L24 96Z"/><path class="ln" d="M24 88.0 L160 56.6 L296 22.0" pathLength="1"/><circle class="pt" cx="24" cy="88.0" r="4" style="--i:0"/><text class="vl" x="24" y="76.0" text-anchor="middle" style="--i:0">0</text><circle class="pt" cx="160" cy="56.6" r="4" style="--i:1"/><text class="vl" x="160" y="44.6" text-anchor="middle" style="--i:1">6.9</text><circle class="pt" cx="296" cy="22.0" r="5.5" style="--i:2"/><text class="vl" x="296" y="10.0" text-anchor="middle" style="--i:2">14.5</text></svg></div></div>
+        <div class="nx-chips" data-rv>${[['up', '+14%', 'Publish CTA'], ['up', '+12%', 'Edit listing'], ['', '−2%', 'Page visits, steady'], ['dn', '−65%', 'Virtual tour tag, next to fix']].map(([c, n, t], i) => `<span class="${c}" style="--i:${i}"><b>${n}</b>${t}</span>`).join('')}</div>
+        <p class="nx-cap" data-rv>May is the baseline. July covers 1 to 12 July.</p>
       </section>
 
       <section class="tf-end" id="tfEnd">
@@ -8280,7 +8433,7 @@ void main() {
           ${edHead('Thanks for', 'reading this far!', '', 'b-sun')}
           <p class="c3-p" data-rv>Designed with care by James Chugh.</p>
           <div class="c3-links" data-rv><a class="soc li" href="https://www.linkedin.com/in/jameschughh/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="soc-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span class="soc-t">LinkedIn ↗</span></a><a class="soc ig" href="https://www.instagram.com/jamesknowswhy" target="_blank" rel="noopener" aria-label="Instagram"><svg class="soc-i" viewBox="0 0 24 24" aria-hidden="true"><path  d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg><span class="soc-t">Instagram ↗</span></a><a class="soc gm" href="mailto:hello@jameschugh.com" aria-label="Email me"><svg class="soc-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg><span class="soc-t">Email me</span></a><a href="https://calendly.com/jameschughh/30min" target="_blank" rel="noopener" data-book>Book a free call ↗</a><button type="button" data-close>Back to the box</button></div>
-          ${fbHTML('Traum visibility score', ['The numbers', 'First idea', 'The meter', 'Next step', 'Listing states', 'Trade-offs', 'AI workflow'])}
+          ${fbHTML('Traum visibility score', ['Host profile', 'The numbers', 'First idea', 'The meter', 'Seasons', 'Review notes', 'Card states', 'Results'])}
           <p class="c3-morek" data-rv>Got a minute for another story?</p>
           <div class="c3-more" data-rv>${WORK.filter(x => x.id !== 'traum' && !CS_SOON.includes(x.id)).map(x => `<button type="button" class="c3-wc" data-switch="${x.id}" style="--bg:${x.bg};--g:${x.glow}"><span class="wc-top">${x.logo ? `<img src="v2/s/${x.logo}.webp" alt="">` : `<i class="wc-ic"><svg viewBox="0 0 24 24">${ICONS[x.icon]}</svg></i>`}<em>${x.status}</em></span><span class="wc-face ${x.face[0]}"><b>${x.face[1]}</b><small>${x.face[2]}</small></span><span class="wc-name"><b>${x.name}</b><small>${x.co}</small></span><span class="wc-go">Read the case study →</span></button>`).join('')}</div></div>
         <div class="tf-sky c3-scene" aria-hidden="true">${[92, 45, 80, 100, 64, 97, 72].map((v, i) => `<span class="fl" style="--i:${i}">${tfRing(v, v < 50 ? 'a' : '')}</span>`).join('')}</div>
@@ -8382,6 +8535,23 @@ void main() {
     const setFold = z => { fold.dataset.z = z; $$('[data-z]', fold).forEach(b => { const on = b.dataset.z === z; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); count($('#tfFn', root), FD[z][0], 400); $('#tfFd', root).textContent = FD[z][1]; };
     fold.addEventListener('click', e => { const b = e.target.closest('[data-z]'); if (b) setFold(b.dataset.z); }); setFold('s');
     // how the page evolved: one frame, scroll to step through
+    // host profile tabs
+    { const id = $('#tfIcp .icp-id', root); if (id) { const tb = $$('.id-tabs button', id), pn = $$('.id-panes > *', id);
+      tb.forEach((b, i) => b.addEventListener('click', () => { tb.forEach((x, j) => { x.classList.toggle('on', j === i); x.setAttribute('aria-selected', j === i); }); pn.forEach((x, j) => x.classList.toggle('on', j === i)); })); } }
+    // seasons: the dial changes the skin and the weather, and turns on its own until touched
+    { const sz = $('#tfSz', root); if (sz) { const bs = $$('.sz-dial button', sz), ps = $$('.sz-p', sz); let cur = 0, t = null, user = false;
+      const set = i => { cur = i; const [k, , c] = TF.seasons[i]; sz.dataset.s = k; sz.style.setProperty('--sc', c); bs.forEach((b, j) => { b.classList.toggle('on', j === i); b.setAttribute('aria-selected', j === i); }); ps.forEach((p, j) => p.classList.toggle('on', j === i)); };
+      bs.forEach((b, i) => b.addEventListener('click', () => { user = true; if (t) { clearInterval(t); t = null; } set(i); }));
+      if (!reduce) { const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !user && !t) { t = setInterval(() => set((cur + 1) % bs.length), 3400); initTF.ti.push(t); } else if (!e.isIntersecting && t) { clearInterval(t); t = null; } }), { root, threshold: .35 }); o.observe(sz); initTF.io.push(o); } } }
+    // review notes: tick a line, see where it landed
+    { const rn = $('#tfRn', root); if (rn) { const bs = $$('.rn-pad button', rn), ps = $$('.rn-pn', rn), n = $('#tfRnN', rn);
+      bs.forEach((b, i) => b.addEventListener('click', () => { b.classList.add('done'); bs.forEach((x, j) => x.classList.toggle('on', j === i)); ps.forEach((p, j) => p.classList.toggle('on', j === i)); n.textContent = bs.filter(x => x.classList.contains('done')).length; })); } }
+    // one card, every state
+    { const sm = $('#tfSim', root); if (sm) { const st = { pub: 'live', sc: 'high' }, r = $('#tfSimR', sm), d = $('#tfSimD', sm), tp = $('#tfSimT', sm), w = $('#tfSimW', sm), ims = $$('.sim-card img', sm); let last = '';
+      const pickK = () => { const dy = +r.value; if (st.pub === 'draft') return 'unpublished'; if (dy < 0) return 'expired'; if (dy <= 14) return 'highIntentRenew'; if (tp.checked) return 'topListing'; if (dy <= 40) return 'renew'; if (dy <= 75) return 'earlyRenew'; return st.sc === 'low' ? 'lowScore' : st.sc === 'mid' ? 'midScore' : 'perfecto'; };
+      const draw = () => { const dy = +r.value; d.textContent = dy < 0 ? 'Expired' : dy; const k = pickK(); if (k === last) return; last = k; ims.forEach(im => im.classList.toggle('on', im.dataset.k === k)); w.textContent = TF.sim[k]; };
+      $$('.sim-seg', sm).forEach(g => { const bb = $$('button', g); bb.forEach(b => b.addEventListener('click', () => { bb.forEach(x => x.classList.toggle('on', x === b)); st[g.dataset.k] = b.dataset.v; draw(); })); });
+      r.addEventListener('input', draw); tp.addEventListener('change', draw); draw(); } }
     { const it = $('#tfEvo', root); let cur = -1, manual = 0;
       const show = i => { if (i === cur) return; cur = i; const [, k, t, d] = TF.evo[i]; $$('.it-vp img', it).forEach(im => im.classList.toggle('on', +im.dataset.i === i)); $$('.it-dots button', it).forEach(b => { const n = +b.dataset.i; b.classList.toggle('on', n === i); b.classList.toggle('past', n < i); });
         $('#tfItT', root).textContent = t; $('#tfItD', root).textContent = d; const c = $('.it-cap', it); c.classList.remove('in'); void c.offsetWidth; c.classList.add('in'); };
