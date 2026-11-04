@@ -48,7 +48,7 @@ function junkWord(w) {
 }
 const junkText = t => String(t || '').split(/\s+/).some(junkWord);
 // notes taken down by hand: any note whose name, text, role or company contains one of these is hidden
-const BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop', 'uh uh', 'this isss a aa hit'];
+const BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop', 'uh uh', 'this isss a aa hit', 'fufufafa'];
 
 // an email has to look like a real person's: proper shape, a real-looking name and domain, no throwaway or placeholder services, no common typos
 const FAKE_DOMAINS = ['example.com', 'example.org', 'example.net', 'test.com', 'test.test', 'test.in', 'fake.com', 'fakemail.com', 'noemail.com', 'none.com', 'abc.com', 'asdf.com', 'xyz.com', 'domain.com', 'email.test', 'mailinator.com', 'guerrillamail.com', 'guerrillamail.net', 'sharklasers.com', '10minutemail.com', 'tempmail.com', 'temp-mail.org', 'tempmail.net', 'yopmail.com', 'trashmail.com', 'throwawaymail.com', 'getnada.com', 'maildrop.cc', 'dispostable.com', 'fakeinbox.com', 'mailnesia.com', 'mintemail.com', 'moakt.com', 'emailondeck.com', 'spamgourmet.com', 'mohmal.com', 'burnermail.io'];
