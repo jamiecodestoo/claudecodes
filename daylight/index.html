@@ -9321,7 +9321,8 @@ function emailOk(e) {
   const noteShort = t => { t = String(t || '').trim(); return t.length < 8 || t.split(/\s+/).filter(w => /\p{L}/u.test(w)).length < 2; };
   // notes taken down by hand (the server hides the same ones)
   const NOTE_BLOCK = ['lihwak', 'testing the functionality and and validation', 'ai slop', 'uh uh', 'this isss a aa hit', 'fufufafa'];
-  const noteBlocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return NOTE_BLOCK.some(w => t.includes(w)); };
+  const NOTE_HIDE = new Set(['269cd466-01aa-4799-8fd2-332bbde695b7']);
+  const noteBlocked = n => { if (n.id && NOTE_HIDE.has(n.id)) return true; const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return NOTE_BLOCK.some(w => t.includes(w)); };
   // one Tamil note on the wall, shown in English (the original was cut off at the 200-character limit)
   const NOTE_EN = [['படைப்பாற்றல், நேர்த்தியான', 'This portfolio is the finest expression of creativity, elegant design and meticulous craftsmanship. Its unique artistry and flawless creation are beautifully reflected in it.']];
   const noteEn = n => { const t = String(n.note || '').replace(/^["“\s]+/, ''), hit = NOTE_EN.find(([k]) => t.startsWith(k)); return hit ? { ...n, note: hit[1] } : n; };

@@ -100,7 +100,8 @@ function nonsense(t) {
   if (n >= 4) { const bg = {}; for (let i = 0; i < n - 1; i++) { const k = w[i] + ' ' + w[i + 1]; bg[k] = (bg[k] || 0) + 1; } if (Math.max(...Object.values(bg)) >= 2 && uniq / n < .75) return true; }
   return w.filter(x => x.length >= 3 && !FILLER.has(x) && (/[aeiouy]/.test(x) || !/[a-z]/.test(x))).length < 2;  // at least two real words
 }
-const blocked = n => { const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return BLOCK.some(w => t.includes(w)); };
+const HIDE = new Set(['269cd466-01aa-4799-8fd2-332bbde695b7']);  // single notes taken down by id
+const blocked = n => { if (n.id && HIDE.has(n.id)) return true; const t = [n.note, n.name, n.company, n.role].join(' ').toLowerCase(); return BLOCK.some(w => t.includes(w)); };
 function noteOk(n) {
   if (blocked(n)) return false;
   const note = String(n.note || '').trim();
