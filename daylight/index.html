@@ -5734,6 +5734,11 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr.lite .tr-vig { background: radial-gradient(ellipse 80% 76% at 50% 46%, rgba(60, 40, 12, 0) 48%, rgba(60, 40, 12, .16) 76%, rgba(60, 40, 12, .38) 100%); }
 :root[data-theme="dark"] .tr.lite .tr-vig { background: radial-gradient(ellipse 88% 82% at 50% 48%, rgba(0, 0, 0, 0) 56%, rgba(0, 0, 0, .5) 100%); }
 .tr-vig::after { content: ""; position: absolute; inset: 0; opacity: .07; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.tr-spot { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(circle at var(--sx, 50%) var(--sy, 50%), rgba(14, 10, 6, 0) var(--sr, 200px), rgba(14, 10, 6, .5) calc(var(--sr, 200px) + 280px)); }
+.tr-end a { display: inline-flex; align-items: center; height: 48px; padding: 0 22px; border-radius: 999px; font: 700 15px/1 var(--sans); text-decoration: none; transition: transform .4s var(--spring); }
+.tr-end a:hover { transform: translateY(-2px); }
+.tr.done .tr-end a.go { background: #14213A; color: #fff; }
+:root[data-theme="dark"] .tr.done .tr-end a.go { background: #fff; color: #141414; }
 .tr-dim { position: absolute; inset: 0; background: var(--bg, #FBF8F1); opacity: 0; pointer-events: none; }
 .tr-cut { position: absolute; inset: 0; background: radial-gradient(120% 100% at 50% 50%, #FFFBF3, #FBF1E2); opacity: 0; pointer-events: none; }
 .tr.lite .tr-low { background: linear-gradient(0deg, rgba(251, 248, 241, .97), rgba(251, 248, 241, .8) 45%, rgba(251, 248, 241, 0)); }
@@ -9893,43 +9898,48 @@ function emailOk(e) {
       V.push(['v2/tour/j' + i + '.mp3', jt]);
       say('map', 'jm', jt + segs[0][0], segs[segs.length - 1][1] - segs[0][0], segs.map(x => x[2]).join(' '));
       jt += d + (i ? 1.1 : 1.6); });
-    // section 3 · inside EazyDiner: the case study opens out of the haze and turns its own pages while she tells the story behind it
-    const S3 = jt + .2, EL = [
-      [3.84, 'This is one of my favourite stories about him. EazyDiner.', ['The story', 0, 'The story', 1200]],
-      [9.04, 'People came to EazyDiner for the discounts. But paying felt like a treasure hunt. Too many coupons, and no idea which one was best.', ['The drop-off', 0, 'The drop-off', 2400]],
-      [6.72, 'So he didn’t start in Figma. He started by listening, to real diners, and to the data.', ['Listening', 0, 'The whiteboard', 900]],
-      [5.6, 'And he noticed something. The problem wasn’t the coupons. It was confidence.', ['The twist', -120, 'The twist', 200]],
-      [6.64, 'So he flipped it. Instead of making people search, the app now just shows the best deal, first.', ['The twist', 640, 'The twist', 1000]],
-      [8.08, 'More people paid. And he still carries the lesson. Good design is about how people feel, not just what they see.', ['Results', -100, 'Results', 760]]];
-    const CK = [[S3 + .7, 'The story', 0, 0]];   // [time, chapter, pixels into it, is this a jump]
-    jt = S3 + 1.6; EL.forEach(([d, text, [k0, o0, k1, o1]], i) => {
-      if (i) { const l = CK[CK.length - 1]; CK.push([jt - 1.5, l[1], l[2], 0]); }
-      CK.push([jt, k0, o0, i ? 1 : 0], [jt + d + .5, k1, o1, 0]);
-      V.push(['v2/tour/f' + i + '.mp3', jt]);
-      say('csx', 'jm', jt, d, text);
-      jt += d + 1.5; });
-    // section 4 · LastLook: back out to the page, to the app he built for himself
-    const S4 = jt - .4, LL = [
-      [3.6, 'And then, there’s the thing he built just for himself.', ['#lastlook', -20, '#lastlook', 60]],
-      [8.88, 'He kept forgetting his things. So he made an app that gives you one last look, before you walk out the door. He called it LastLook.', ['#lastlook', 80, '#lastlook', 180]],
-      [8.24, 'He wore every hat. Founder, designer, brand, and even the iOS developer, writing it himself in Xcode.', ['#llRoles', -140, '#llRoles', 120]],
-      [4.64, 'He built it in public, and more than half a million people watched along.', ['.ll-stats', -360, '.ll-stats', -300]],
-      [5.44, 'Today, over four hundred people have it on their phones, and ten of them pay for it.', ['.ll-stats', -300, '.ll-stats', -260]],
-      [4.08, 'Not bad, for a mechanical engineer who Googled his way here.', ['.ll-stats', -260, '.ll-stats', -240]]];
-    const PK = [];   // [time, element, offset] on the page itself
-    jt = S4 + 2.6; LL.forEach(([d, text, [k0, o0, k1, o1]], i) => {
-      if (i) { const l = PK[PK.length - 1]; PK.push([jt - 1.2, l[1], l[2]]); } else PK.push([S4 + 1.4, k0, o0 - 200]);
-      PK.push([jt, k0, o0], [jt + d + .4, k1, o1]);
-      V.push(['v2/tour/l' + i + '.mp3', jt]);
-      say('csx', 'jm', jt, d, text);
-      jt += d + (i === 4 ? 1.4 : 1.1); });
-    const END = jt - .3;
+    // from EazyDiner to the very end, every line she says is a shot: a framed view that drifts slowly while she speaks,
+    // an optional spotlight on the thing she is talking about, and a soft dissolve whenever the next shot is somewhere else
+    const S3 = jt + .2, SHOTS = [];
+    const shot = (where, file, d, text, key, o0, o1, spot, gap = 1.3) => { SHOTS.push({ where, t: jt, d, key, o0, o1, spot }); V.push(['v2/tour/' + file + '.mp3', jt]); say('csx', 'jm', jt, d, text); jt += d + gap; };
+    jt = S3 + 1.6;
+    // 3 · EazyDiner, told as her favourite story about him
+    shot('cs', 'f0', 3.84, 'This is one of my favourite stories about him. EazyDiner.', 'The story', 0, 220);
+    shot('cs', 'f1', 9.04, 'People came to EazyDiner for the discounts. But paying felt like a treasure hunt. Too many coupons, and no idea which one was best.', 'The drop-off', 0, 1500);
+    shot('cs', 'f2', 6.72, 'So he didn’t start in Figma. He started by listening, to real diners, and to the data.', 'Listening', -60, 120);
+    shot('cs', 'f3', 5.6, 'And he noticed something. The problem wasn’t the coupons. It was confidence.', 'The twist', -120, 30);
+    shot('cs', 'f4', 6.64, 'So he flipped it. Instead of making people search, the app now just shows the best deal, first.', 'The twist', 640, 800);
+    shot('cs', 'f5', 8.08, 'More people paid. And he still carries the lesson. Good design is about how people feel, not just what they see.', 'Results', -100, 380, null, 1.6);
+    // 4 · LastLook, back out on the page
+    const S4 = jt - .4; jt = S4 + 2.6;
+    shot('pg', 'l0', 3.6, 'And then, there’s the thing he built just for himself.', '#lastlook', -40, 10);
+    shot('pg', 'l1', 8.88, 'He kept forgetting his things. So he made an app that gives you one last look, before you walk out the door. He called it LastLook.', '#lastlook', 10, 70, '#llRev');
+    shot('pg', 'l2', 8.24, 'He wore every hat. Founder, designer, brand, and even the iOS developer, writing it himself in Xcode.', '#llRoles', -330, -290, '#llRoles');
+    shot('pg', 'l3', 4.64, 'He built it in public, and more than half a million people watched along.', '.ll-stats', -380, -360, '.ll-stats > :last-child');
+    shot('pg', 'l4', 5.44, 'Today, over four hundred people have it on their phones, and ten of them pay for it.', '.ll-stats', -360, -340, '.ll-stats');
+    shot('pg', 'l5', 4.08, 'Not bad, for a mechanical engineer who Googled his way here.', '.ll-stats', -340, -330, null, 1.6);
+    // 5 · off the clock: the James she knows
+    shot('pg', 'o0', 4, 'But that’s the work. Let me tell you about the James I know.', '#life', -40, 0);
+    shot('pg', 'o1', 4.32, 'He’s twenty-three, and he splits his life between Delhi and Dubai.', '#life', 0, 40, '#life h2 + p');
+    shot('pg', 'o2', 8.4, 'When he’s not in Figma, he’s making noise. Drums, piano, guitar, and music, always way too loud.', '#life', 340, 380, 'img[alt*="drum kit"]');
+    shot('pg', 'o3', 5.52, 'The gym is his reset button, and he asks “but why” about everything.', '#life', 380, 410, 'img[alt*="gym"]');
+    shot('pg', 'o4', 5.84, 'His roommate, Olive, is a golden retriever. And honestly, she runs the flat.', '#life', 410, 430, 'img[alt^="Olive"]');
+    shot('pg', 'o5', 4, 'Oh, and LastLook’s very first user? His sister.', '#life', 430, 440, 'img[alt*="sister"]', 1.6);
+    // 6 · the wall
+    shot('pg', 'w0', 7.04, 'Before you go, people leave notes for him on this wall. Say hi, share some feedback, or tell him what you’re building.', '#notes', -40, 40, null, 1.6);
+    // 7 · the end
+    shot('pg', 'h0', 1.76, 'So, that’s James.', '#hello', -60, -40, null, .8);
+    shot('pg', 'h1', 6.32, 'He’s open to projects with founders, startups and personal brands. And he replies fast.', '#hello', -40, 0, '#hello h2 + p', 1);
+    shot('pg', 'h2', 5.44, 'Thank you for letting me show you around. Now, let’s make something nobody rage quits.', '#hello', 0, 40, '#hello h2');
+    const END = jt - .6;
     const chY = (k, o) => { let e = csE.querySelector(`[data-ch="${k}"]`), y = o; if (!e) return 0; while (e && e !== csE) { y += e.offsetTop; e = e.offsetParent; } return y; };   // offsets, not screen positions: pinned chapters would lie
-    // where the case study should be, and how far into a jump between chapters we are (a jump dissolves rather than scrolls)
-    const scrollAt = T => { for (let i = 1; i < CK.length; i++) if (T < CK[i][0]) { const [t0, k0, o0] = CK[i - 1], [t1, k1, o1, j] = CK[i], a = chY(k0, o0), u = clamp((T - t0) / (t1 - t0));
-        return j ? [u < .5 ? a : chY(k1, o1), Math.sin(Math.PI * u)] : [a + (chY(k1, o1) - a) * sm(t0, t1, T), 0]; } const l = CK[CK.length - 1]; return [chY(l[1], l[2]), 0]; };
     const pgY = (q, o) => { const e = $(q); return e ? top(e) + o : 0; };
-    const pageAt = T => { for (let i = 1; i < PK.length; i++) if (T < PK[i][0]) { const [t0, k0, o0] = PK[i - 1], [t1, k1, o1] = PK[i], a = pgY(k0, o0); return a + (pgY(k1, o1) - a) * sm(t0, t1, T); } const l = PK[PK.length - 1]; return pgY(l[1], l[2]); };
+    const cont = (A, B) => A.where === B.where && A.key === B.key && Math.abs(A.o1 - B.o0) < 60;   // the next shot just carries on from this one
+    const shotAt = T => { let i = 0; while (i < SHOTS.length - 1 && T >= SHOTS[i + 1].t - .2) i++;
+      const A = SHOTS[i], B = SHOTS[i + 1], tEnd = B ? B.t - .2 : A.t + A.d + 1.5, u = clamp((T - (A.t - .2)) / (tEnd - (A.t - .2))), e = .5 - Math.cos(Math.PI * u) / 2;
+      let dip = 0; if (B && B.where === A.where && !cont(A, B)) dip = Math.max(0, Math.sin(Math.PI * clamp((T - (B.t - .8)) / 1.2)));
+      const P = i && SHOTS[i - 1].where === A.where && !cont(SHOTS[i - 1], A) ? Math.max(0, Math.sin(Math.PI * clamp((T - (A.t - .8)) / 1.2))) : 0;
+      return { A, o: A.o0 + (A.o1 - A.o0) * e, dip: Math.max(dip, P), spot: A.spot ? sm(A.t + .1, A.t + .9, T) * (1 - sm(tEnd - .6, tEnd - .1, T)) : 0 }; };
     const posAt = T => { for (let i = 1; i < JK.length; i++) if (T < JK[i][0]) { const [t0, p0] = JK[i - 1], [t1, p1] = JK[i]; return p0 + (p1 - p0) * sm(t0, t1, T); } return JK[JK.length - 1][1]; };
     const sm = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
     const eo = t => 1 - Math.pow(1 - clamp(t), 3);
@@ -9958,10 +9968,10 @@ function emailOk(e) {
       return ac;
     }
     // the opening lines are waited for; the rest arrive while she is already talking
-    let bufP = [], run = 0, jumped = false, cutEl = null, dimEl = null, inCase = false, closed4 = false, lock4 = false, csY = -1, pgS = -1, posS = NaN; const jPinEl = $('#jPin'), csE = $('#cs');
+    let bufP = [], run = 0, jumped = false, cutEl = null, dimEl = null, spEl = null, scoreBuf = null, nextScore = 0, inCase = false, closed4 = false, lock4 = false, csY = -1, pgS = -1, posS = NaN; const jPinEl = $('#jPin'), csE = $('#cs');
     const dec = u => fetch(u).then(r => r.arrayBuffer()).then(a => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).catch(() => null);
     let musP = null;   // the score: an ElevenLabs piece, loaded alongside her first lines and started the moment it is ready
-    const load = () => loading || (loading = audio() ? (bufP = V.map(([u]) => dec(u)), musP = dec('v2/tour/music.mp3'), Promise.all(bufP.slice(0, 3))) : Promise.resolve());
+    const load = () => loading || (loading = audio() ? (bufP = V.map(([u]) => dec(u)), musP = dec('v2/tour/score.mp3'), Promise.all(bufP.slice(0, 3))) : Promise.resolve());
     ['pointerenter', 'focus', 'touchstart'].forEach(ev => btn.addEventListener(ev, () => load(), { passive: true, once: true }));
 
     const CH = [[50, 57, 61, 64, 69], [47, 54, 57, 62, 66], [43, 50, 54, 59, 62], [45, 52, 57, 61, 64]];   // D, Bm, G, A, all with soft added notes
@@ -9982,6 +9992,13 @@ function emailOk(e) {
         for (let k = 0; k < 3; k++) if (Math.random() < .5) bell(BELL[Math.floor(Math.random() * BELL.length)], nextChord + 1.2 + k * 2.1 + Math.random() * .4);
         nextChord += 7; ci++;
       }
+    }
+    // one play of the score, faded in and out on its own gain, so plays can overlap and hand over without a seam
+    const LOOP_END = 176.4, XF = 8;
+    function scoreAt(at, first) {
+      const s = ac.createBufferSource(), g = ac.createGain(); s.buffer = scoreBuf; s.connect(g); g.connect(mus);
+      g.gain.setValueAtTime(0, at); g.gain.linearRampToValueAtTime(1, at + (first ? 2.5 : XF)); g.gain.setValueAtTime(1, at + LOOP_END - XF); g.gain.linearRampToValueAtTime(0, at + LOOP_END);
+      s.start(at); s.stop(at + LOOP_END + .1); srcs.push(s); nextScore = at + LOOP_END - XF;
     }
     const ramp = (p, v, at, dur) => { p.cancelScheduledValues(at); p.setValueAtTime(p.value, at); p.linearRampToValueAtTime(v, at + dur); };
 
@@ -10047,10 +10064,10 @@ function emailOk(e) {
 
     function build() {
       root = document.createElement('div'); root.className = 'tr'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-label', 'A guided tour of James’s portfolio');
-      root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-veil" aria-hidden="true"></div><div class="tr-vig" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div><div class="tr-dim" aria-hidden="true"></div>
+      root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-veil" aria-hidden="true"></div><div class="tr-vig" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div><div class="tr-spot" aria-hidden="true"></div><div class="tr-dim" aria-hidden="true"></div>
         <div class="tr-ctl"><button type="button" class="tr-pp" aria-label="Pause"><svg class="pa" viewBox="0 0 14 14"><rect x="2.5" y="1.5" width="3.2" height="11" rx="1"/><rect x="8.3" y="1.5" width="3.2" height="11" rx="1"/></svg><svg class="pl" viewBox="0 0 14 14"><path d="M3.5 1.8v10.4c0 .6.7 1 1.2.7l8-5.2a.8.8 0 0 0 0-1.4l-8-5.2c-.5-.3-1.2.1-1.2.7z"/></svg></button><span class="tr-bar" aria-hidden="true"><i></i></span><button type="button" class="tr-x">End tour</button></div>
-        <div class="tr-end"><p>That’s his story, <em>so far.</em></p><div><button type="button" class="tr-again">Watch again</button><button type="button" class="go tr-own">Explore on my own</button></div></div>`;
-      document.body.appendChild(root); cutEl = $('.tr-cut', root); dimEl = $('.tr-dim', root); cv = $('.tr-sky', root); glInit(); sizeCv();
+        <div class="tr-end"><p>Thanks for taking the tour.</p><div><button type="button" class="tr-again">Watch again</button><a class="go" href="mailto:hello@jameschugh.com">Say hi</a><button type="button" class="tr-own">Explore on my own</button></div></div>`;
+      document.body.appendChild(root); cutEl = $('.tr-cut', root); dimEl = $('.tr-dim', root); spEl = $('.tr-spot', root); cv = $('.tr-sky', root); glInit(); sizeCv();
       $('.tr-pp', root).addEventListener('click', e => { e.stopPropagation(); pause(); });
       $('.tr-x', root).addEventListener('click', e => { e.stopPropagation(); end(); });
       $('.tr-own', root).addEventListener('click', e => { e.stopPropagation(); end(); });
@@ -10070,7 +10087,7 @@ function emailOk(e) {
     }
     function reset() {
       srcs.forEach(s => { try { s.stop(); } catch (_) {} }); srcs = []; clearInterval(padT);
-      cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; inCase = false; closed4 = false; lock4 = false; csY = pgS = -1; posS = NaN; run++; stage.style.filter = ''; delete stage.dataset.tf; flew = false; puffs.forEach(P => spawn(P, false, false));
+      cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; inCase = false; closed4 = false; lock4 = false; nextScore = 0; csY = pgS = -1; posS = NaN; run++; stage.style.filter = ''; delete stage.dataset.tf; flew = false; puffs.forEach(P => spawn(P, false, false));
       $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       tour.e = null; tour.cam = null; tour.lit = false;
       if (root) { root.classList.remove('done', 'paused', 'low', 'lite'); root.style.opacity = ''; }
@@ -10093,7 +10110,7 @@ function emailOk(e) {
         const now = ac.currentTime, m = mus.gain, w = wind.gain;
         m.cancelScheduledValues(now); m.setValueAtTime(m.value, now); m.linearRampToValueAtTime(.17, now + 3); m.setValueAtTime(.17, st + END - .8); m.linearRampToValueAtTime(.3, st + END + 1.6);
         w.cancelScheduledValues(now); w.setValueAtTime(w.value, now); w.linearRampToValueAtTime(.1, now + 2.5); w.setValueAtTime(.1, st + 10.6); w.linearRampToValueAtTime(0, st + 14);
-        musP && musP.then(b => { if (!b || me !== run || !on) return; const s = ac.createBufferSource(); s.buffer = b; s.connect(mus); s.start(ac.currentTime + .05); srcs.push(s); });
+        musP && musP.then(b => { if (!b || me !== run || !on) return; scoreBuf = b; scoreAt(ac.currentTime + .05, true); });
       }
       last = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(tick);
     }
@@ -10130,19 +10147,24 @@ function emailOk(e) {
       root.classList.toggle('low', T > 13.4 && T < END + .2); root.classList.toggle('lite', T > CUT);
       // section 2: a soft cut to the journey, then the map walks from stop to stop as she tells it
       cutEl.style.opacity = Math.max(sm(26.4, CUT, T) * (1 - sm(CUT + .15, CUT + 1.6, T)), sm(S3 - .3, S3 + .7, T) * (1 - sm(S3 + .9, S3 + 2.3, T)), sm(S4 - .3, S4 + .6, T) * (1 - sm(S4 + 1.6, S4 + 3, T))).toFixed(3);
-      let dip = 0;
+      let dip = 0, so = 0;
+      const sh = T > S3 + .7 ? shotAt(T) : null;
       if (T > S3 + .7 && T < S4 + .6) {
-        if (!inCase && typeof openCaseAt === 'function') { inCase = true; uz = 1; openCaseAt('coupon', jPinEl); csY = -1; }
-        const [y, dj] = scrollAt(T); dip = dj;
-        // a soft follower: the page never starts or stops dead, it always eases toward where it should be
-        if (csY < 0 || dj > .96) csY = y; else csY += (y - csY) * (1 - Math.exp(-dT * 3.4)); csE.scrollTop = csY;
+        if (!inCase && typeof openCaseAt === 'function') { inCase = true; uz = 1; openCaseAt('coupon', jPinEl); }
+        if (sh.A.where === 'cs') { csE.scrollTop = chY(sh.A.key, sh.o); dip = sh.dip; }
         const q = 1 - eo((T - S3 - .7) / 1.8); csE.style.transform = q > .002 ? `scale(${(1 + q * .06).toFixed(4)})` : '';
       }
-      // section 4: the case study closes behind the haze and we land on the app he built
+      // the case study closes behind the haze and we land on the page again
       if (T > S4 + .6 && !closed4) { closed4 = true; csE.style.transform = ''; if (csE.classList.contains('open') && typeof closeCase === 'function') closeCase(); }
-      if (T > S4 + 1.4 && T < END + 1) { if (!lock4) { lock4 = true; lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; pgS = -1; }
-        const y = pageAt(T); if (pgS < 0) pgS = y; else pgS += (y - pgS) * (1 - Math.exp(-dT * 3)); goTo(pgS); }
-      dimEl.style.opacity = (dip * .94).toFixed(3);
+      if (T > S4 + 1.4 && T < END + 1 && sh) { if (!lock4) { lock4 = true; lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; }
+        if (sh.A.where === 'pg') { goTo(pgY(sh.A.key, sh.o)); dip = sh.dip; } else { const F = SHOTS.find(x => x.where === 'pg'); goTo(pgY(F.key, F.o0)); } }
+      // a spotlight on whatever she is talking about
+      if (sh && sh.A.spot && sh.spot > .002) { const e = $(sh.A.spot); const el = e && (e.closest('figure') || e);
+        if (el) { const r = el.getBoundingClientRect(); spEl.style.setProperty('--sx', (r.left + r.width / 2).toFixed(0) + 'px'); spEl.style.setProperty('--sy', (r.top + r.height / 2).toFixed(0) + 'px'); spEl.style.setProperty('--sr', (Math.hypot(r.width, r.height) * .56).toFixed(0) + 'px'); so = sh.spot; } }
+      spEl.style.opacity = (so * (1 - dip)).toFixed(3);
+      dimEl.style.opacity = (dip * .96).toFixed(3);
+      // the score never runs out: before it ends, the next play fades in underneath
+      if (useAc && scoreBuf && ac.state === 'running' && ac.currentTime > nextScore - .2) scoreAt(nextScore);
 
       if (T > CUT && T < CUT + 2.2) { const q = 1 - eo((T - CUT) / 2.1); jPinEl.style.transform = `scale(${(1 + q * .16).toFixed(4)})`; jPinEl.style.filter = q > .01 ? `blur(${(q * 10).toFixed(1)}px)` : ''; jPinEl.dataset.tf = 1; }
       else if (jPinEl.dataset.tf) { jPinEl.style.transform = jPinEl.style.filter = ''; delete jPinEl.dataset.tf; }
