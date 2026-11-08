@@ -5755,6 +5755,25 @@ html:has(.cs.open) .np.tour { display: none !important; }
   -webkit-mask-image: radial-gradient(var(--rx, 300px) var(--ry, 200px) at var(--sx, 50%) var(--sy, 50%), transparent 0%, transparent 46%, rgba(0, 0, 0, .55) 74%, #000 100%);
   mask-image: radial-gradient(var(--rx, 300px) var(--ry, 200px) at var(--sx, 50%) var(--sy, 50%), transparent 0%, transparent 46%, rgba(0, 0, 0, .55) 74%, #000 100%); }
 :root[data-theme="dark"] .tr-spot { background: rgba(14, 14, 14, .42); -webkit-backdrop-filter: blur(2px) saturate(.5) brightness(.78); backdrop-filter: blur(2px) saturate(.5) brightness(.78); }
+.tr .tr-sky { transition: none !important; }
+.tr.hazy .tr-vig::after, .tr.lite .tr-vig::after { display: none; }   /* the grain's blend mode would switch off the blur behind the haze and the spotlight */
+.tr-haze { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(22, 30, 58, .3), rgba(8, 11, 24, .64)); -webkit-backdrop-filter: blur(28px) saturate(1.2); backdrop-filter: blur(28px) saturate(1.2); will-change: opacity; }
+.tr-orb { position: absolute; left: 0; top: 0; width: 120px; height: 120px; margin: -60px 0 0 -60px; pointer-events: none; opacity: 0; will-change: transform, opacity; }
+.tr-orb i { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; isolation: isolate;
+  background: radial-gradient(circle at 27% 72%, rgba(255, 107, 74, .92), rgba(255, 107, 74, 0) 46%), radial-gradient(circle at 76% 76%, rgba(47, 127, 216, .98), rgba(47, 127, 216, 0) 56%), radial-gradient(circle at 84% 30%, rgba(183, 162, 255, .9), rgba(183, 162, 255, 0) 48%), radial-gradient(circle at 40% 34%, #FFE58A 0%, #FFD23F 30%, #FFAE52 58%, #E97A63 80%, #3F6FD0 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 248, 236, .4), inset 0 -16px 28px rgba(19, 35, 58, .34), inset 0 10px 22px rgba(255, 248, 236, .45), 0 18px 40px -14px rgba(19, 35, 58, .45); }
+/* colour that drifts inside the glass as she speaks */
+.tr-orb i::before { content: ""; position: absolute; inset: -18%; z-index: -0; mix-blend-mode: screen; opacity: .48; filter: blur(9px); transform: rotate(var(--rot, 0deg));
+  background: radial-gradient(circle at 30% 28%, rgba(159, 211, 255, .9), rgba(159, 211, 255, 0) 30%), radial-gradient(circle at 72% 64%, rgba(255, 210, 63, .85), rgba(255, 210, 63, 0) 32%), radial-gradient(circle at 36% 80%, rgba(183, 162, 255, .7), rgba(183, 162, 255, 0) 30%); }
+/* the gloss: a sharp highlight on top, a soft bounce of sky underneath */
+.tr-orb i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(ellipse 34% 20% at 38% 17%, rgba(255, 255, 255, .95), rgba(255, 255, 255, 0) 100%), radial-gradient(ellipse 50% 22% at 52% 94%, rgba(159, 211, 255, .55), rgba(159, 211, 255, 0) 100%), radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 62%, rgba(255, 248, 236, .28) 72%, rgba(255, 255, 255, 0) 74%); }
+.tr-orb u { position: absolute; inset: -75%; border-radius: 50%; opacity: var(--glow, .5); background: radial-gradient(closest-side, rgba(255, 210, 63, .42), rgba(255, 140, 90, .18) 40%, rgba(47, 127, 216, .14) 62%, rgba(47, 127, 216, 0)); }
+.tr-orb b { position: absolute; inset: 0; border-radius: 50%; opacity: 0; box-shadow: 0 0 0 1.5px rgba(255, 248, 236, .75), 0 0 20px rgba(255, 210, 63, .3); }
+.tr.closing > :not(.tr-orb) { opacity: 0 !important; transition: opacity .75s cubic-bezier(.4, 0, .2, 1) !important; }
+.tr.closing::before { animation: trOut .75s forwards !important; }
+@keyframes trOut { to { opacity: 0; } }
+.np.tour.arrive { animation: npArrive .7s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes npArrive { from { opacity: 0; transform: scale(.94); } }
 .tr-mist { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(ellipse 90% 80% at 50% 46%, rgba(255, 255, 255, .78), rgba(236, 243, 252, .96)); }
 .tr.lite:not(.done) .tr-vig { opacity: 0 !important; }   /* the pages stay clean: the spotlight does the focusing */
 .tr-end a { display: inline-flex; align-items: center; height: 48px; padding: 0 22px; border-radius: 999px; font: 700 15px/1 var(--sans); text-decoration: none; transition: transform .4s var(--spring); }
@@ -5783,7 +5802,7 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr.low .tr-low { opacity: 1; }
 
 .tr-cap { position: absolute; left: 50%; transform: translateX(-50%); width: min(1040px, calc(100vw - 32px)); text-align: center; text-wrap: balance; }
-.tr-cap.mid { top: 50%; transform: translate(-50%, -54%); }
+.tr-cap.mid { top: calc(38% + 96px); transform: translate(-50%, 0); }
 .tr-cap.low, .tr-cap.map, .tr-cap.csx { left: 50%; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 54px); width: min(860px, calc(100vw - 48px)); text-align: center; text-wrap: balance; }
 .tr-l, .tr-end p { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; font-weight: 700 !important; letter-spacing: -.035em !important; }
 .tr-cap { isolation: isolate; }
@@ -5797,7 +5816,7 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr-w.on { opacity: 1; transform: none; filter: blur(0); }
 .tr-cap { transition: opacity .3s cubic-bezier(.4, 0, .2, 1), filter .3s; }
 .tr-cap.out { opacity: 0; filter: blur(8px); }
-.tr-cap.out.mid { transform: translate(-50%, -62%); transition: opacity .9s, filter .9s, transform 1.2s cubic-bezier(.4, 0, .2, 1); }
+.tr-cap.out.mid { transform: translate(-50%, -16px); transition: opacity .9s, filter .9s, transform 1.2s cubic-bezier(.4, 0, .2, 1); }
 
 .tr-ctl { position: absolute; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 16px); transform: translate(-50%, -14px); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(18, 24, 38, .5); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 14px 40px -18px rgba(0, 0, 0, .5); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); opacity: 0; transition: opacity .8s .6s, transform .9s .6s cubic-bezier(.2, .8, .2, 1); font-family: var(--sans); }
 .tr.in .tr-ctl { opacity: 1; transform: translate(-50%, 0); }
@@ -9570,10 +9589,12 @@ function emailOk(e) {
     const mid = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
     // first visit: the badge gets a ring, a hint and one burst of confetti
     let seen = false; try { seen = !!localStorage.getItem('jc-wop-seen'); } catch (_) {}
-    if (!seen) setTimeout(() => {
-      const cs = $('#cs'); if (document.hidden || scrollY > 4 || (cs && cs.classList.contains('open')) || getComputedStyle(badge).visibility === 'hidden') return;
+    const fire = () => {
+      const cs = $('#cs'); if (document.documentElement.classList.contains('touring') || document.hidden || scrollY > 4 || (cs && cs.classList.contains('open')) || getComputedStyle(badge).visibility === 'hidden') return;
       badge.classList.add('new'); confetti(...mid(badge), 80); try { localStorage.setItem('jc-wop-seen', '1'); } catch (_) {}
-      setTimeout(() => badge.classList.remove('new'), 14000); }, 3200);
+      setTimeout(() => badge.classList.remove('new'), 14000); };
+    // never at the same time as the tour note: if that note is up, this waits for it to go
+    if (!seen) setTimeout(() => { if ($('.tr-coach')) addEventListener('jc-coach-done', fire, { once: true }); else fire(); }, 3200);
     // the pop-up
     let m = null, last = null;
     const build = () => { m = document.createElement('div'); m.className = 'wop-modal'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-labelledby', 'wopT'); m.dataset.lenisPrevent = '';
@@ -9912,6 +9933,8 @@ function emailOk(e) {
     const AC = window.AudioContext || window.webkitAudioContext;
     // the script. Times are seconds from the start of the tour; each line's words are timed to the voice
     const V = [['v2/tour/v1.mp3', 1.4], ['v2/tour/v2.mp3', 8.3], ['v2/tour/v3.mp3', 13.9]];
+    const ENV = {"f0":"06LX>52ED;01FIAF?65BMH?300000SXXWF6;NM92351CFHKECF>02;24JOJ?977>>8731232000000000000006XXXE4;IH9CRO@<=3?@>;=<910000","f1":"00;WX>0FXX4;HMVR?96?LD2=FMUK<FPK3JVNLE4BEFD602DK19L108XX@444;9GMB9540000000011000000000JX>000@BB=CXUJLLNJ;44502105KJEA5GO@7KA00<A@:53GVXFAHROC<:@?98400064201101000000007?N<NHC@UUHVN;7=CQJ62UXXXXSC997183AFB88889:BLPNGHPIVIGD604?FNXXXK@=GG5=5>IA59<?4000WRXVD==3000000200000","f2":"0005RXVSQD587A>TM9RS7:::40012300>XXXXRC06<43301:RL3006B7>;8:73000000000026<JB=209XXPKFTK103XXXIAA;FTHD02<<6A;<30020000000049;D;648DGNSQPI34SMIMHB5CA?;;66000000000001XWOJFE=45405<H3=OD0?UUSW;BC>A@<800000","f3":"00CWK;A=IF;;PSRS8XX:3000003IE3103A??870025000000000000000000R;09;<WXXO00IRC@B@<;BXXS79D>50?D079@8JI90APH;?:722330000000000000000<E@:?=311DJD:OM?522EQ3@97500000000000000","f4":"000007WUPB?TP5101FXT0030=GC@=500000000200000000L=:6>0BXXAXJ704>JD045;6534>B602A@5000001FUPQOEDA40<==;533000004LPB<XXXU<033JVRK;4:AA<;=<AKIC>7000B31000XXVB=01004>AC>==988400000000004MXUH05120000050000","f5":"0019:OXXSOB08:KN40FXS80J=FXSMGDA;E<07<5:41100000000008XE<>AF@900001@QPPNK=<ENJVROONH;000DPKFRLB?300975001310000000000000000=RXX405WQ=07XJHIFGG:398F?2FJ0RXXG6=KAMWC015:=02<BA420000=KJOUKC?>;<;80000000016<XSID015DE3020GQ900GK@55113@A=36655300000","h0":"00000=NPLHEDCA=9300007XWM1001008>MKA<:30002100000000","h1":"04NW?2XXQ33EG:67U345>UXUD4<OQF1101=943004XRH@948LMLJKNK@4012000100LXVVMAXXXW?021111208SOJC74805:BOC40268>>52?ROH;8:74002000000000000>ENEJG675144239=JC<FB1265XXRKB2010000MXTD;:;93300000200000","h2":"000EXT=190PU>66UXHQXXHN98=FF8G?FOMJFGLMLJC?QVRLPE?:9024528664100000017XXQA==;7000000000:RO?0000JXU:823OX=811JSM?889877777NXWKD3ETKBC?;59DEB<1;<075E@=:0000000000000","j0":"08OXWQJA;?;9920000005;XX?6AE<<<:8TNJCFJLEAOTM=7G=0ANVWOA264:;?==>=:1000000000000000786XXXUPJC9:81210@XXKD=60021100000000003O@55688:XVAHD9848KBHD@?EJNKHD944430003;;C66IPK<@<<8:8000000","j1":"00<SE<:<8NXLBJJ<661RFFHEB=BQXUFA<4677500007<@U<09@XEWXXXWP9;649DXXUSG=9AJJE?59CCDBB@??CD8204NO986?BGGHFF76B10<UW;HQL<2021ACC505:>CQMIDBDJ<8E?8867XXXSKG@=<:;:500000AXI8GH2ADOSK<C17DNNHE847::6@GNNMGA?;4023200000","j2":"0DWICFNVRLSO>VWRP?DKKLLKG@:300002=B:MKNNH6IE1210MXPGB4433;<7KXTN324A22ILA83=8295DSQDG>810065200000000000000PQ71343XXXXNLCFEB5444000000000EXXXM0000:XXF=00210JRXEBRPI@LJ70>A572211XX9047<?<;840000000007@EA>4455433DI<0?GD?96:CEEHG@025=MJD@60029<><810000000","j3":"016PO0?X@XXI68Q@8132XXM:005GD93>NIIKJ==QJ1255FPKB79<7003364132JNOLB687UXXMHR<6<BG9787EH>46??>BOMI30:3EQW34017XXPNPJCQTRLF007A??@439RXP<=65<8666500000","j4":"009WV8@EFR@?OV:104XSKF<80@XUOHIA<;67883000000000046LUC82PXQMJHEB7994XK;HM9LJ<65:DA<7411:EGPQKGD20<@OXPRXXKKC<34730000","j5":"00HXT140GUXV22XNC8XWIA>4DCJEED@7000000<DKUOIBPNKD874?=XOBNSB09000EGDCILRMUUD554?>211278=GB<=;401331110000000000=@GXX>?O=404KD5302XXXKF431200JTIPXR40420002OSMRCJIFA;6;NSN>45465@?500AJI@4000042000000","j6":"5<HXXXPG876A;00268:XXT2901SPH58D;9XV@<00066413100000=QWXF00000WXU?:9EOP?LTLE844BXXJ220000CXXO2;OG?9BA?400000000000000:<>>HXXTQLILL=<16P>9ACHG?22GFE?DDC>3000008DGE76613>E<;7IGC=8BE74MC;25RK;5=DB=789300FMB0333CJHI7BDE@8:3>?A=757=GROM<;951051100000","j7":"04MM<;;WXRFXNNLFD@D@910597QH72XXS400FXXTTOLIE=A<8;600000000<P?8XXUN9NC7;000OXX70BHLD0>F@;7888O1:68>>845300NU<<8PA6@A;8BHEA??;998;10DF76658GWXP:17E>7?D:3047:8;=A?=850000","j8":"00LXJ8>B5315TXLTWQIMLHB3=61004;9LB0?XWN17AEG81406MHA?6>9?LH?=9000531000007EXXXR><1000:D>=6400:34100000FO756FXXQ<44423PPF32CB66?BEPUE0101059;::@;:910000","j9":"003QO>B?KG;<<BXXVO<0;0000NFFXXSPXG58HKCB<6000000000009PXO4<<NB82138G70KTWTRTR?76:01DTQP>67FJ<7306@FB<620124000000","l0":"02:M;;;<XXXXRQK=666;C8696310008XWPC310CXI0>@OA6888:D=40FVQOH700000059>AIH>310500GE<@=52013HOD@:9841210010000","l1":"045LE0;W>UB06:202XI51:FJECI?68=B;110005LCA?<92000020000000000000000000EXXXNLJE<?M?LE8AQTX<HWB8=26XOKMFF30303XH308EL63107<==9641@QVQ8789FOROG81002;COK;9600920000:F853>PTNLFGE@HVXO27CKG902D;8CFINFDBB<:100000000000000:=N66F9XXUB4GRRRG300000001DXXXXB90030CQOO950074210000","l2":"015@LKA7=GGNLLI20000WXQ;437CDE@;?:LIE=;80039910000000000000TXXKB<56GONLJHFD>4003EA40:RLKKJB7FFEEDCA=610007PXXMIIKMJA54437500BOH7775334<HR;NX>8=GC:EWXXVTNJVXX:2005A0ERIEC<01@>C@=B50000034VXWXBMB6DI>4>895400002OXXOFC;3137@:4:@H;09220;<C767:818500000","l3":"017QX<0=XXXJ07SX>SQ:;56>A=XW308CGGIE:06;D3200PQ9:9CKPO4SK6?DFACDFCQXHC600FE9::;<<JQSSPMGFKI::65;9HKC00FONJF<>PXXK0:=D5@HDAHKKBA8=7223500000","l4":"04CRMWXXXXXVQPLFB>:2003LTG4COG7310005SSROSXC>C?HF667DG800:9;OJ>08NKPUAAXXS9J?FHE63AG@100CUNC;8620010000000001:H932007GC=XX:HL?25<HC;34540;=9TVK8227<:>>DC?950000000","l5":"008WXA;000XXVD=XXNKF@4<5>7:3000055XXSM@5BG3@KSWNBCK64GTPRPH567<:47AFOUTQNJ9@MH>320?IXP=1OOD>87=E901:DHFEC5>CHDECGHK=210000","o0":"06W600VXVN?00120GD;3>NMEGXE<700>6;<74430000000000000BXX>7BF>4F6LXOHFFGKG5HXXS00>D26;@EB@?75661501?LMHA?35?>::99786100000","o1":"035SS>318@3RT<NIB6067GRXH=>@<;;3342000CVWWTL86<==BJ;2400RXE008HQB32IXXXXO?100F;886==74535QXXVQICJKECCE<4CC4338B=0AURNEAB=;<810000","o2":"00=UD><HI;248AVXXHBTI;9212SXB156FIIFFCA:46455=FH7168CHP29;A533333=ACB>>B?>;:72000012000000001386@XXRNL?7777679600000885?BNXXVSE@MNPQPONKGB61?E028L:>XXWXXWWWXT?55441208EE@:977=??<503>BA<7094500000000UVBRXNADMQOJ<113157767?TXXOGE8367;8989EHBC=<;;67600000","o3":"000NX8679GVQLE899IE=NG3HINN<25536GMNB33:PNC004MQ?6021101330000030DO7CCMTXXXXWN;33203000000000000CWSN67:0=GIKJMPXMICEC?=3220000CP2XXTSG300008LXC202DE=8<;@>;99323310000","o4b":"007UXC9;8DXXH>>DRTNLJK<00005XXXXQAHLILJFA:4432290:VI6BQ310CWXTK<HC7;=G?8B<8DPFG10>ICB>D:30311000015IIN7553000007C=JEAO@000<URNLNL@3000025;<QMD><HXVA135007B221<VWSJA>9000010000","o5b":"00:JE;;OB0:A:@OVHEB99:9730000000000000000:EHXF:IQOXXR=000OXK9<;;IWV=1JL?AAKXRD00BA>2:??=AEC@?;60000000000","v1":"0056QXXV41>LE8884<F7GKC=7<PWXVTRD5KB83049EPM?7673000400000000000000001JXXH46DH90046WR>1004BDHJJ;41<I?3000=B?<3000002>KMLKKA76;?2OXXA0DKC4:SX?03=89<>>304CHNOCDF?71000000","v2":"2>QXW40<F?UH7285CH35IKEDDC?7000000018A??>><32234630458DKQ5007610SXXXWOJIKLJKF422330000","v3":"5:<XXM6>809=F>07@E<@;FONC72008NGH>::9989996000000000000000PXX:0GNJ7264VXRD310BC5<DGJ=03;@1:<0359:EF<EA537:>7EIA6000007;>@@@A=;8969700000000000000003AC210;@BKXXWNKLLLI?3357874200000F<;LJW832L7@CEE62:@JNOK9001D>2=RNHEB69322EIPPOQPMH:01100000000000QX;OXT@001039XXXFA:411110000000033XXF8BA1H<XXXUFF?=71100000000?Q=>DOXXWOJEBA=8600000014J=200CQQJ;G<49?<4@8=DA716;::::700000","w0":"00BO642OVSLHLE49XXXXNKJFC?;500000000;;SG02LSSGMNH3066IPF?00310JH<;CD74DI=49=50210@JSXO>?9:;710000000000000HKVXQC?XXLKWHFGC=82000000348JXRG41755313CDI823VXXXXT?00;730AIIKJIHG@106GJWIGC:9AF<<@OE35UTNG1@D?<92242000"};   // her loudness, 30 times a second, for every line
+    let VE = null; const amp = T => { VE = VE || V.map(([u, at]) => [at, ENV[u.split('/').pop().slice(0, -4)]]); for (const [at, e] of VE) { if (!e) continue; const i = Math.floor((T - at) * 30); if (i >= 0 && i < e.length) return (e.charCodeAt(i) - 48) / 40; } return 0; };
     const CARDS = [
       { pos: 'mid', out: 7.6, lines: [['big', [[1.42, 3.3, 'Welcome to the world of *James.*']]], ['sub', [[3.64, 5.06, 'I’m his personal assistant,'], [5.23, 6.76, 'and I’ll be taking you through it.']]]] },
       { pos: 'mid', out: 11.3, lines: [['big', [[8.3, 9.23, 'Get comfortable,'], [9.37, 11, 'and let’s fly in.']]]] },,,,
@@ -10002,7 +10025,7 @@ function emailOk(e) {
       return ac;
     }
     // the opening lines are waited for; the rest arrive while she is already talking
-    let org = [innerWidth - 200, 40], mistEl = null, endSky = false, bufP = [], run = 0, jumped = false, cutEl = null, dimEl = null, spEl = null, scoreBuf = null, nextScore = 0, inCase = false, closed4 = false, lock4 = false, csY = -1, pgS = -1, posS = NaN; const jPinEl = $('#jPin'), csE = $('#cs');
+    let org = [innerWidth - 200, 40], orb = null, orbEl = null, hazeEl = null, rings = [], mistEl = null, endSky = false, bufP = [], run = 0, jumped = false, cutEl = null, dimEl = null, spEl = null, scoreBuf = null, nextScore = 0, inCase = false, closed4 = false, lock4 = false, csY = -1, pgS = -1, posS = NaN; const jPinEl = $('#jPin'), csE = $('#cs');
     const dec = u => fetch(u).then(r => r.arrayBuffer()).then(a => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).catch(() => null);
     let musP = null;   // the score: an ElevenLabs piece, loaded alongside her first lines and started the moment it is ready
     let voices = [], rate = 1, tNow = 0, lastReal = 0, started = false, camEl = null, cam2 = null, spS = null, doneSwell = false;
@@ -10079,7 +10102,8 @@ function emailOk(e) {
       // a golden-hour sky, so the colours already match the valley we are about to land in
       if (sky > .001) { const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#3D70C4'); g.addColorStop(.28, '#6A98DA'); g.addColorStop(.56, '#A9C6EC'); g.addColorStop(.8, '#EBDCCB'); g.addColorStop(1, '#F4C9A0');
         ctx.globalAlpha = sky; ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-        const sg = ctx.createRadialGradient(W * .55, H * .92, 0, W * .55, H * .92, H * .8); sg.addColorStop(0, 'rgba(255,222,170,.38)'); sg.addColorStop(1, 'rgba(255,214,150,0)'); ctx.fillStyle = sg; ctx.fillRect(0, 0, W, H); }
+        const sg = ctx.createRadialGradient(W * .55, H * .92, 0, W * .55, H * .92, H * .8); sg.addColorStop(0, 'rgba(255,222,170,.38)'); sg.addColorStop(1, 'rgba(255,214,150,0)'); ctx.fillStyle = sg; ctx.fillRect(0, 0, W, H);
+        const su = sm(8.2, 9.9, T) * (T < 16 ? 1 : 0); if (su > .001) { const sn = ctx.createRadialGradient(W * .5, H * .17, 0, W * .5, H * .17, H * .46); sn.addColorStop(0, `rgba(255,240,206,${(.62 * su).toFixed(3)})`); sn.addColorStop(.35, `rgba(255,214,160,${(.22 * su).toFixed(3)})`); sn.addColorStop(1, 'rgba(255,214,160,0)'); ctx.fillStyle = sn; ctx.fillRect(0, 0, W, H); } }
       if (!shapes || alpha <= .001) return;
       // on "let's fly in", a line of clouds waits dead ahead, so we really go through them
       if (!flew && T > 7.7) { flew = true; puffs.filter(P => !P.fog && P.z > 5.5).slice(0, 6).forEach((P, i) => { spawn(P, false, true); P.fog = false; P.k = rnd(1.3, 1.8); P.z = 6.4 + i * .32; }); }   // once the welcome has faded: they start far off and faint, and grow as we speed up
@@ -10110,10 +10134,10 @@ function emailOk(e) {
 
     function build() {
       root = document.createElement('div'); root.className = 'tr'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-label', 'A guided tour of James’s portfolio');
-      root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-mist" aria-hidden="true"></div><div class="tr-veil" aria-hidden="true"></div><div class="tr-vig" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div><div class="tr-spot" aria-hidden="true"></div><div class="tr-dim" aria-hidden="true"></div>
+      root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-mist" aria-hidden="true"></div><div class="tr-veil" aria-hidden="true"></div><div class="tr-vig" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div><div class="tr-spot" aria-hidden="true"></div><div class="tr-dim" aria-hidden="true"></div><div class="tr-haze" aria-hidden="true"></div><div class="tr-orb" aria-hidden="true"><u></u><b></b><b></b><i></i></div>
         <div class="tr-ctl"><button type="button" class="tr-pp" aria-label="Pause"><svg class="pa" viewBox="0 0 14 14"><rect x="2.5" y="1.5" width="3.2" height="11" rx="1"/><rect x="8.3" y="1.5" width="3.2" height="11" rx="1"/></svg><svg class="pl" viewBox="0 0 14 14"><path d="M3.5 1.8v10.4c0 .6.7 1 1.2.7l8-5.2a.8.8 0 0 0 0-1.4l-8-5.2c-.5-.3-1.2.1-1.2.7z"/></svg></button><button type="button" class="tr-rate" aria-label="Playback speed">1×</button><span class="tr-bar" role="slider" aria-label="Jump to a part of the tour" tabindex="-1"><i></i></span><button type="button" class="tr-skip" aria-label="Skip to the next part"><svg viewBox="0 0 14 14"><path d="M2 2.2v9.6c0 .5.6.8 1 .5L9 7.6a.7.7 0 0 0 0-1.2L3 1.7c-.4-.3-1 0-1 .5z"/><rect x="10" y="2" width="2.2" height="10" rx="1"/></svg></button><button type="button" class="tr-x">End tour</button></div>
         <div class="tr-end"><span class="tr-k">The end</span><p>Thanks for taking the tour.</p><span class="tr-s">Let’s make something nobody rage quits.</span><div><button type="button" class="tr-again">Watch again</button><a class="go" href="mailto:hello@jameschugh.com">Say hi</a><button type="button" class="tr-own">Explore on my own</button></div></div>`;
-      document.body.appendChild(root); cutEl = $('.tr-cut', root); mistEl = $('.tr-mist', root); dimEl = $('.tr-dim', root); spEl = $('.tr-spot', root); cv = $('.tr-sky', root); glInit(); sizeCv();
+      document.body.appendChild(root); cutEl = $('.tr-cut', root); mistEl = $('.tr-mist', root); dimEl = $('.tr-dim', root); spEl = $('.tr-spot', root); hazeEl = $('.tr-haze', root); orbEl = $('.tr-orb', root); rings = $$('b', orbEl); cv = $('.tr-sky', root); glInit(); sizeCv();
       $('.tr-pp', root).addEventListener('click', e => { e.stopPropagation(); pause(); });
       $('.tr-x', root).addEventListener('click', e => { e.stopPropagation(); end(); });
       $('.tr-rate', root).addEventListener('click', e => { e.stopPropagation(); setRate(rate === 1 ? 1.5 : rate === 1.5 ? 2 : 1); });
@@ -10132,7 +10156,7 @@ function emailOk(e) {
       if (paused) voices.forEach(v => { if (!v.a.paused) v.a.pause(); });
     }
     function lockPage(lock) {
-      if (lock) { unfocus && focusId && unfocus(); setTimeout(() => on && tNow < 1 && goTo(0), 1150); lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; document.documentElement.classList.add('touring'); }
+      if (lock) { unfocus && focusId && unfocus(); setTimeout(() => on && tNow < 1 && goTo(0), scrollY > 40 ? 560 : 1150); lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; document.documentElement.classList.add('touring'); }
       else { document.documentElement.classList.remove('touring'); csE.style.transform = csE.style.filter = ''; if (csE.classList.contains('open')) return; document.documentElement.style.overflow = ''; lenis && lenis.start(); }
     }
     function reset() {
@@ -10140,18 +10164,20 @@ function emailOk(e) {
       cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; endSky = false; inCase = false; closed4 = false; lock4 = false; nextScore = 0; csY = pgS = -1; posS = NaN; run++; stage.style.filter = ''; delete stage.dataset.tf; flew = false; puffs.forEach(P => spawn(P, false, false));
       $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       tour.e = null; tour.cam = null; tour.lit = false; tour.llLit = null;
-      if (root) { root.classList.remove('done', 'paused', 'low', 'lite'); root.style.opacity = ''; root.style.clipPath = ''; root.style.transition = ''; }
+      if (root) { root.classList.remove('done', 'paused', 'low', 'lite', 'closing'); root.style.opacity = ''; root.style.clipPath = ''; root.style.transition = ''; }
       paused = false;
     }
     async function begin() {
-      const br = btn.getBoundingClientRect(); org = [br.left + br.width / 2, br.top + br.height / 2];
+      const br = ($('.np-i', btn) || btn).getBoundingClientRect(), fromBtn = br.width > 0;
+      if (fromBtn) org = [br.left + br.width / 2, br.top + br.height / 2];
+      const st = fromBtn ? { x: org[0], y: org[1], s: br.width / 120 } : orb ? { x: orb.x, y: orb.y, s: orb.s } : { x: innerWidth / 2, y: innerHeight * .38, s: .3 };
       on = true; lockPage(true); tour.e = 0;
       if (!root) build();
-      const R = Math.hypot(Math.max(org[0], innerWidth - org[0]), Math.max(org[1], innerHeight - org[1])) + 40;
-      root.style.transition = 'none'; root.style.opacity = ''; root.style.clipPath = `circle(0px at ${org[0]}px ${org[1]}px)`; mistEl.style.opacity = 1; cv.style.filter = 'blur(16px)';
-      root.classList.add('live', 'in'); void root.offsetWidth;
-      root.style.transition = 'clip-path 1.25s cubic-bezier(.66, 0, .2, 1)'; root.style.clipPath = `circle(${R}px at ${org[0]}px ${org[1]}px)`;
-      setTimeout(() => { if (on && root) { root.style.transition = ''; root.style.clipPath = ''; } btn.hidden = true; }, 1300);
+      root.classList.remove('closing'); orbEl.getAnimations().forEach(a => a.cancel()); root.style.opacity = ''; root.style.clipPath = ''; root.style.transition = '';
+      root.classList.add('live', 'in'); hazeEl.style.opacity = 0; cv.style.opacity = 0; mistEl.style.opacity = 0;
+      orb = { hd: scrollY > 40 ? .5 : 1.3, from: [st.x, st.y], s0: st.s, x: st.x, y: st.y, s: st.s, t0: performance.now() / 1000, amp: 0, ph: 0, rot: 0, tx: innerWidth / 2 - 220, ty: innerHeight - 70, rest: true };
+      setTimeout(() => { if (on) btn.hidden = true; }, 520);
+      last = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(tick);
       root.style.setProperty('--veil', 1); cv.style.display = '';
       // unlock every line of hers inside this click, so browsers let them play later
       mkVoices(); voices.forEach(v => { v.a.muted = true; const pr = v.a.play(); pr && pr.then(() => { v.a.pause(); v.a.currentTime = 0; v.a.muted = false; }).catch(() => { v.a.muted = false; }); });
@@ -10170,16 +10196,48 @@ function emailOk(e) {
     }
     function end() {
       if (!on) return; on = false; cancelAnimationFrame(raf);
-      const R = Math.hypot(Math.max(org[0], innerWidth - org[0]), Math.max(org[1], innerHeight - org[1])) + 40;
-      root.classList.remove('live'); root.style.transition = 'none'; root.style.clipPath = `circle(${R}px at ${org[0]}px ${org[1]}px)`; void root.offsetWidth;
-      root.style.transition = 'clip-path 1s cubic-bezier(.66, 0, .2, 1)'; root.style.clipPath = `circle(0px at ${org[0]}px ${org[1]}px)`;
+      root.classList.remove('live'); root.classList.add('closing'); rings.forEach(r => { r.style.opacity = 0; });
+      const home = `translate3d(${org[0].toFixed(1)}px, ${org[1].toFixed(1)}px, 0) scale(${(34 / 120).toFixed(4)})`;
+      orbEl.style.filter = ''; orbEl.animate([{ transform: orbEl.style.transform || home, opacity: +orbEl.style.opacity || 0 }, { transform: home, opacity: 1, offset: .8 }, { transform: home, opacity: 0 }], { duration: 1150, easing: 'cubic-bezier(.65, 0, .25, 1)', fill: 'forwards' });
       if (ac) { ramp(mus.gain, 0, ac.currentTime, 1.2); ramp(wind.gain, 0, ac.currentTime, .6); }
       srcs.forEach(s => { try { s.stop(ac.currentTime + .05); } catch (_) {} }); stopVoices(); camOff();
       // the camera eases home on its own
-      stage.style.filter = ''; jPinEl.style.transform = jPinEl.style.filter = ''; if (jumped) uz = 1; btn.hidden = false; tour.cam = null; tour.lit = false; tour.e = null; tour.back = true; tour.llLit = null; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
+      stage.style.filter = ''; jPinEl.style.transform = jPinEl.style.filter = ''; if (jumped) uz = 1; tour.cam = null; tour.lit = false; tour.e = null; tour.back = true; tour.llLit = null; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       lockPage(false);
-      setTimeout(() => { if (on) return; reset(); clearInterval(padT); root.remove(); root = null; ctx = null; ac && ac.suspend(); }, 1100);
-      btn.focus({ preventScroll: true });
+      setTimeout(() => { if (on) return; btn.hidden = false; btn.classList.add('arrive'); btn.focus({ preventScroll: true }); setTimeout(() => btn.classList.remove('arrive'), 900); }, 860);   // the button comes back just as the orb lands in it
+      setTimeout(() => { if (on) return; reset(); clearInterval(padT); root.remove(); root = null; orb = null; ctx = null; ac && ac.suspend(); }, 1250);
+    }
+    // the orb: her voice, made visible. It lifts out of the button, speaks in the middle of the screen,
+    // rises into the sun as we fly in, then rides beside every line she says and finally drifts home.
+    const eio = u => u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+    function orbTick(T, dt) {
+      if (!orb || !orbEl) return;
+      const W = innerWidth, H = innerHeight, C = [W / 2, H * .38], k = r => 1 - Math.exp(-dt * r);
+      const a = started && !paused ? amp(T) : 0; orb.amp += (a - orb.amp) * k(a > orb.amp ? 22 : 7);
+      let x, y, s, op = 1, b = 0;
+      if (T < 13.4 || !started) {
+        const q = sm(7.6, 10.2, T); x = C[0]; y = C[1] + (H * .17 - C[1]) * q; s = 1 + q * 1.8; b = q * 30; op = 1 - sm(8.6, 10.2, T);
+        const g = clamp((performance.now() / 1000 - orb.t0) / 1.5);
+        if (g < 1) { const u = eio(g), P0 = orb.from, P1 = [P0[0] + (x - P0[0]) * .2, P0[1] + (y - P0[1]) * .95], v = 1 - u;   // a soft arc out of the button
+          x = v * v * P0[0] + 2 * v * u * P1[0] + u * u * x; y = v * v * P0[1] + 2 * v * u * P1[1] + u * u * y; s = orb.s0 + (s - orb.s0) * eio(clamp(g * 1.12 - .06)); }
+        else s *= 1 + Math.sin(performance.now() / 1000 * 1.25) * .01;
+        orb.x = x; orb.y = y; orb.s = s; orb.rest = op < .02;
+      } else {
+        if (T < END - .3) {   // small, beside the line she is saying
+          const c = cards.filter(c => !c.out && c.C.pos !== 'mid').pop();
+          if (c && c.ws.length) { const w = c.ws[0][0].getBoundingClientRect(), l = c.ws[0][0].parentNode.getBoundingClientRect(); orb.tx = w.left - 26; orb.ty = l.top + l.height * .52; }
+          s = .16; op = sm(13.4, 14.4, T);
+        } else { orb.tx = W / 2; orb.ty = H / 2 - 140; s = .45; }   // the end: it waits above the last card
+        if (orb.rest) { orb.x = orb.tx; orb.y = orb.ty; orb.s = s; orb.rest = false; }
+        orb.x += (orb.tx - orb.x) * k(4.5); orb.y += (orb.ty - orb.y) * k(4.5); orb.s += (s - orb.s) * k(4); x = orb.x; y = orb.y; s = orb.s;
+      }
+      // she speaks: it swells a little, its light turns, and soft rings spread from it, all only while she talks
+      orb.ph = (orb.ph + dt * (.35 + orb.amp * 1.1)) % 1; orb.rot += dt * orb.amp * 150;
+      const sc = s * (1 + orb.amp * (s < .5 ? .32 : .12));
+      orbEl.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) scale(${sc.toFixed(4)})`;
+      orbEl.style.opacity = op.toFixed(3); orbEl.style.filter = b > .4 ? `blur(${(b / sc).toFixed(1)}px)` : '';
+      orbEl.style.setProperty('--rot', orb.rot.toFixed(1) + 'deg'); orbEl.style.setProperty('--glow', (.5 + orb.amp * .5).toFixed(3));
+      rings.forEach((r, i) => { const p = (orb.ph + i * .5) % 1; r.style.transform = `scale(${(1 + p * .75).toFixed(3)})`; r.style.opacity = ((1 - p) * Math.min(1, orb.amp * 1.6) * .6 * (s > .5 ? 1 : 0)).toFixed(3); });
     }
     function camFor(id) {
       if (!id || mobile) return { x: baseX, y: baseY, s: 1 };
@@ -10208,7 +10266,10 @@ function emailOk(e) {
       if (started) voiceTick(T);
       if (useAc && wind) wind.gain.setTargetAtTime(paused ? 0 : .1 * Math.min(1, T / 2.5) * (1 - sm(10.6, 14, T)), ac.currentTime, .15);
       // the beginning and the end are wrapped in mist: everything soft and white, then the sky clears
-      const mist = Math.max(1 - sm(.2, 3.4, T), sm(END - .5, END + .7, T) * (1 - sm(END + 1.3, END + 3.6, T)));
+      orbTick(T, Math.min(.1, now - (tick.rl || now))); tick.rl = now;
+      // the page stays soft and dim behind her until "get comfortable", then the sky opens up through it
+      const hz = eio(clamp((now - orb.t0) / orb.hd)) * (1 - sm(8.5, 9.9, T)); hazeEl.style.opacity = hz.toFixed(3); root.classList.toggle('hazy', hz > .001);
+      const mist = sm(END - .5, END + .7, T) * (1 - sm(END + 1.3, END + 3.6, T));
       mistEl.style.opacity = mist.toFixed(3); cv.style.filter = mist > .01 ? `blur(${(mist * 16).toFixed(1)}px)` : '';
       // fly: a slow drift while she says hello, then we pick up speed on "let's fly in" and ease out over the valley
       const speed = .035 + 2.5 * sm(8.8, 10.8, T) * (1 - sm(11.4, 15.4, T)) + .3 * sm(11.4, 15.4, T), sky = 1 - sm(10.4, 12.5, T), alpha = 1 - sm(12.4, 14.2, T);
@@ -10218,7 +10279,8 @@ function emailOk(e) {
       // the end: the sky we started in fades back in behind the last card, so the story closes where it began
       const endA = sm(END - .2, END + 1.8, T);
       if (endA > .001 && !endSky) { endSky = true; flew = true; puffs.forEach(P => spawn(P, false, false, true)); cv.style.display = ''; }
-      if (alpha > .001 || endA > .001) { if (cv.style.display === 'none') cv.style.display = ''; sizeCv(); drawSky(T, endA > .001 ? .05 : speed, dT, Math.max(sky, endA), Math.max(alpha, endA)); }
+      const skyIn = Math.max(sm(7.2, 9.2, T), endA); cv.style.opacity = skyIn.toFixed(3);
+      if ((alpha > .001 && skyIn > .001) || endA > .001) { if (cv.style.display === 'none') cv.style.display = ''; sizeCv(); drawSky(T, endA > .001 ? .05 : speed, dT, Math.max(sky, endA), Math.max(alpha, endA)); }
       else if (cv.style.display !== 'none') cv.style.display = 'none';
       root.style.setProperty('--veil', (1 - sm(11, 13, T)).toFixed(3));
       // the valley: we come out of the clouds still moving, glide a little way in, and settle back once she is done
@@ -10304,8 +10366,8 @@ function emailOk(e) {
         c.innerHTML = '<b>New: take the tour</b><span>Four minutes, narrated. Sound on.</span><button type="button" aria-label="Dismiss">×</button>';
         c.style.top = (r.bottom + 14) + 'px'; c.style.right = Math.max(12, innerWidth - r.right) + 'px'; c.style.setProperty('--ax', (r.width / 2 - 8).toFixed(0) + 'px');
         document.body.appendChild(c); btn.classList.add('glow'); requestAnimationFrame(() => requestAnimationFrame(() => c.classList.add('in')));
-        let gone = false; const bye = () => { if (gone) return; gone = true; c.classList.remove('in'); btn.classList.remove('glow'); setTimeout(() => c.remove(), 600); mark(); };
-        $('button', c).addEventListener('click', bye); btn.addEventListener('click', bye, { once: true }); setTimeout(bye, 15000); }, 2800); })();
+        let gone = false; const bye = () => { if (gone) return; gone = true; setTimeout(() => dispatchEvent(new Event('jc-coach-done')), 700); c.classList.remove('in'); btn.classList.remove('glow'); setTimeout(() => c.remove(), 600); mark(); };
+        $('button', c).addEventListener('click', bye); btn.addEventListener('click', bye, { once: true }); setTimeout(bye, 6500); }, 2800); })();
     // its width follows its label; the case-study bar reads it so the gap beside it stays exact
     const npw = () => document.documentElement.style.setProperty('--npw', btn.offsetWidth + 'px');
     if (window.ResizeObserver) new ResizeObserver(npw).observe(btn); npw();
