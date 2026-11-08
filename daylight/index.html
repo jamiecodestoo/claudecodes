@@ -5807,7 +5807,7 @@ html:has(.cs.open) .np.tour { display: none !important; }
 
 .tr-cap { position: absolute; left: 50%; transform: translateX(-50%); width: min(1040px, calc(100vw - 32px)); text-align: center; text-wrap: balance; }
 .tr-cap.mid { top: calc(38% + 96px); transform: translate(-50%, 0); }
-.tr-cap.low, .tr-cap.map, .tr-cap.csx { left: 50%; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 54px); width: min(860px, calc(100vw - 48px)); text-align: center; text-wrap: balance; }
+.tr-cap.low, .tr-cap.map, .tr-cap.csx { left: calc(clamp(24px, 5vw, 72px) + 34px); top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 54px); width: auto; max-width: calc(100vw - 140px); transform: none; text-align: left; text-wrap: nowrap; }
 .tr-l, .tr-end p { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; font-weight: 700 !important; letter-spacing: -.035em !important; }
 .tr-cap { isolation: isolate; }
 .tr-cap.mid::before { content: ""; position: absolute; z-index: -1; inset: -40% -12%; background: radial-gradient(closest-side, rgba(20, 50, 110, .2), transparent 80%); filter: blur(8px); }
@@ -10179,7 +10179,7 @@ function emailOk(e) {
       if (!root) build();
       root.classList.remove('closing'); orbEl.getAnimations().forEach(a => a.cancel()); root.style.opacity = ''; root.style.clipPath = ''; root.style.transition = '';
       root.classList.add('live', 'in'); hazeEl.style.opacity = 0; cv.style.opacity = 0; mistEl.style.opacity = 0;
-      orb = { hd: scrollY > 40 ? .5 : 1.3, from: [st.x, st.y], s0: st.s, x: st.x, y: st.y, s: st.s, t0: performance.now() / 1000, amp: 0, ph: 0, rot: 0, tx: innerWidth / 2 - 220, ty: innerHeight - 70, rest: true };
+      orb = { hd: scrollY > 40 ? .5 : 1.3, from: [st.x, st.y], s0: st.s, x: st.x, y: st.y, s: st.s, t0: performance.now() / 1000, amp: 0, ph: 0, rot: 0, tx: innerWidth / 2 - 220, ty: innerHeight - 70, rest: true, op: 0 };
       setTimeout(() => { if (on) btn.hidden = true; }, 520);
       last = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(tick);
       root.style.setProperty('--veil', 1); cv.style.display = '';
@@ -10227,8 +10227,12 @@ function emailOk(e) {
         orb.x = x; orb.y = y; orb.s = s; orb.rest = op < .02;
       } else {
         if (T < END - .3) {   // small, beside the line she is saying
-          orb.tx = W / 2; orb.ty = H - (W < 860 ? 104 : 116);
-          s = .16; op = sm(13.4, 14.4, T);
+          // one fixed place at the start of the line; it is only there while there are words on screen
+          const c = cards.find(c => c.C.pos !== 'mid' && !c.out && T >= c.ws[0][1] - .1), l = c && $('.tr-l', c.el).getBoundingClientRect();
+          orb.tx = Math.min(72, Math.max(24, W * .05)) + 10; if (l && l.height) orb.ty = l.top + l.height / 2; else if (!orb.ty0) orb.ty = H - 70; orb.ty0 = 1;
+          const near = CARDS.some(C => C.pos !== 'mid' && T >= C.lines[0][1][0][0] - .35 && T <= C.out + .3);   // short breaths between lines keep it steady; it only leaves in a real pause
+          orb.op = (orb.op || 0) + ((near ? 1 : 0) - (orb.op || 0)) * k(near ? 6 : 5);
+          s = .16; op = orb.op;
         } else { const h = $('.tr-end p', root), r = h && h.getBoundingClientRect(); orb.tx = W / 2; orb.ty = r && r.height ? r.top - 44 : H / 2 - 120; s = .42; orb.slow = true; }   // the end: it floats up and rests just above the last words
         if (orb.rest) { orb.x = orb.tx; orb.y = orb.ty; orb.s = s; orb.rest = false; }
         const kr = orb.slow ? 2.2 : 4.5; orb.slow = false; orb.x += (orb.tx - orb.x) * k(kr); orb.y += (orb.ty - orb.y) * k(kr); orb.s += (s - orb.s) * k(kr * .9); x = orb.x; y = orb.y; s = orb.s;
