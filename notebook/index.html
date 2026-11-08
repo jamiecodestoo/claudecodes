@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>James Chugh · Sketchbook</title>
+<meta name="description" content="James Chugh, product designer. A playable sketchbook portfolio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script>try { var t = localStorage.getItem('jc-theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
+</head>
+<body>
+<!--BODY-->
+<canvas id="ink" aria-hidden="true"></canvas>
+<div id="layer" aria-hidden="false"></div>
+
+<header class="top">
+  <a class="logo" href="#board"><span class="logo-mark">J</span><span>James Chugh</span></a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#story">Story</a>
+    <a href="#work">Work</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="top-right">
+    <div class="presence" aria-label="Who is here">
+      <span class="av av-j" title="James">J</span>
+      <span class="av av-you" title="You">You</span>
+    </div>
+    <button class="icon-btn" id="theme" type="button" aria-label="Switch to dark mode">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path class="sun" d="M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zM12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/><path class="moon" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- ============ HERO BOARD ============ -->
+  <section class="board" id="board" aria-label="Introduction">
+    <div class="frame-label"><span class="mono">Frame</span> hello-world.fig <span class="mono dim" id="boardSize"></span></div>
+
+    <div class="headline">
+      <p class="hand hi">hi, I'm James <span class="wave">👋</span></p>
+      <h1>
+        I design <span class="hl hl-y" style="--d:.2s">products</span><br>
+        people <em class="serif">actually</em>
+        <span class="hl hl-p love" style="--d:.55s" id="loveWord">love</span><br>
+        to use.
+      </h1>
+      <p class="sub">Product designer. Mechanical engineer by training. Now building <span class="hl hl-m" style="--d:.9s">LastLook</span>, my own product.</p>
+      <div class="hero-actions">
+        <a class="btn btn-ink" href="#work">See the work <span aria-hidden="true">↓</span></a>
+        <label class="switch" id="tidyWrap">
+          <input type="checkbox" id="tidy">
+          <span class="track" aria-hidden="true"><span class="knob"></span></span>
+          <span class="switch-label">Recruiter mode</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="board-items">
+    <!-- draggable things -->
+    <figure class="item polaroid" data-m="68,10,4" data-t="52,12,0" style="--w:190px">
+      <div class="photo"><span>J</span></div>
+      <figcaption class="hand">me, probably thinking about a button</figcaption>
+      <i class="tape tape-a"></i>
+    </figure>
+
+    <div class="item sticky s-yellow" data-m="83,19,-5" data-t="68,12,0">
+      <span class="mono k">Role</span>
+      <b>Product Designer</b>
+      <span>UX · UI · Systems</span>
+    </div>
+    <div class="item sticky s-pink" data-m="61,50,6" data-t="68,40,0">
+      <span class="mono k">Worked with</span>
+      <b>EazyDiner · MakeMyTrip · OYO · PRISM</b>
+    </div>
+    <div class="item sticky s-mint" data-m="80,54,-3" data-t="84,12,0" id="stickyBuild">
+      <span class="mono k">Building</span>
+      <b>LastLook</b>
+      <span>my own product</span>
+    </div>
+    <div class="item sticky s-blue" data-m="68,74,-7" data-t="84,40,0">
+      <span class="mono k">Studied</span>
+      <b>Mechanical Engineering</b>
+      <span>NSUT · 2021</span>
+    </div>
+    <div class="item sticky s-lilac" data-m="84,76,4" data-t="68,68,0">
+      <span class="mono k">Also</span>
+      <b>A design studio</b>
+      <span>& content</span>
+    </div>
+    <a class="item resume-card" data-m="84,68,0" data-t="84,68,0" href="#contact">
+      <span class="mono k">Résumé</span><b>Get my CV →</b>
+    </a>
+
+    <div class="item chip-stack" data-m="35,64,-3" data-t="35,64,0">
+      <span class="chip">Figma</span><span class="chip">Research</span><span class="chip">Prototyping</span><span class="chip">Design systems</span>
+    </div>
+
+    </div>
+
+    <svg class="doodle doodle-arrow" viewBox="0 0 160 90" aria-hidden="true"><path d="M8 12c30 4 62 16 84 36 14 12 22 22 26 34M104 70l14 12 4-18"/></svg>
+    <p class="hand doodle-note">psst… grab a highlighter</p>
+
+    <!-- James's cursor -->
+    <div class="cursor-j" id="jc" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path d="M3 2l7.5 19 2.6-7.9L21 10.5z"/></svg>
+      <span class="tag">James</span>
+      <span class="bubble" id="jcBubble"></span>
+    </div>
+  </section>
+
+  <!-- ============ STORY (ruled notebook page) ============ -->
+  <section class="page" id="story" aria-labelledby="storyTitle">
+    <div class="sheet">
+      <div class="sheet-margin" aria-hidden="true"></div>
+      <p class="mono page-no">p. 01 — origin</p>
+      <h2 id="storyTitle" class="page-title">How an engineer <span class="hl hl-y">ended up</span> designing apps</h2>
+
+      <p class="line reveal">I started by learning <span class="hl hl-b">how things work</span>. Mechanical Engineering at <b>NSUT</b>: gears, tolerances, and a lot of technical drawings.</p>
+      <p class="line reveal">Eventually, I became more interested in <span class="hl hl-p">why people use them</span>.</p>
+      <p class="line reveal big">That's where I discovered <span class="hl hl-y"><em class="serif">UX</em></span>.</p>
+
+      <div class="flip reveal" aria-live="polite">
+        <span class="mono k">Same brain, new tools</span>
+        <button class="flip-btn" id="flip" type="button" aria-pressed="false">
+          <span class="f-a">engineer</span><span class="f-b">designer</span>
+        </button>
+        <span class="hand">← tap me</span>
+      </div>
+
+      <p class="line reveal">Since then I've designed for <span class="hl hl-o">EazyDiner</span>, <span class="hl hl-b">MakeMyTrip</span>, <span class="hl hl-p">OYO</span> and <span class="hl hl-m">PRISM</span>, and now I'm building my own product, <b>LastLook</b>.</p>
+
+      <aside class="margin-note n1 hand">engineering → empathy</aside>
+      <aside class="margin-note n2 sticky-mini s-yellow hand">(this is the fun part)</aside>
+    </div>
+  </section>
+
+  <!-- ============ PATH ============ -->
+  <section class="path" id="path" aria-labelledby="pathTitle">
+    <h2 id="pathTitle" class="section-title"><span class="mono k">The path so far</span>One line, <span class="hl hl-m">many</span> turns</h2>
+    <div class="path-wrap">
+      <svg class="path-svg" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+        <path id="pathLine" d="M20 230 C 150 230, 170 90, 300 110 S 470 250, 600 170 S 780 40, 900 110 S 1080 210, 1180 70"/>
+      </svg>
+      <ol class="stops">
+        <li style="--x:4%;--y:74%"><span class="dot"></span><b>NSUT</b><span>Mechanical Engineering · 2021</span></li>
+        <li style="--x:22%;--y:36%"><span class="dot"></span><b>EazyDiner</b><span>Product design</span></li>
+        <li style="--x:40%;--y:70%"><span class="dot"></span><b>MakeMyTrip</b><span>Product design</span></li>
+        <li style="--x:58%;--y:52%"><span class="dot"></span><b>OYO</b><span>Product design</span></li>
+        <li style="--x:74%;--y:20%"><span class="dot"></span><b>PRISM</b><span>Product design</span></li>
+        <li style="--x:94%;--y:14%"><span class="dot"></span><b>LastLook</b><span>My own product</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ WORK ============ -->
+  <section class="work" id="work" aria-labelledby="workTitle">
+    <h2 id="workTitle" class="section-title"><span class="mono k">Selected work</span>Frames from the <span class="hl hl-y">file</span></h2>
+    <div class="frames">
+      <button class="frame" style="--c:#E4574B" type="button"><span class="fname mono">EazyDiner</span><span class="fdim mono"></span><div class="fbody" data-mark="E"><b>EazyDiner</b><span>Restaurant discovery & reservations</span><i class="soon mono">Case study · coming soon</i></div></button>
+      <button class="frame" style="--c:#2A7DE1" type="button"><span class="fname mono">MakeMyTrip</span><span class="fdim mono"></span><div class="fbody" data-mark="M"><b>MakeMyTrip</b><span>Travel booking</span><i class="soon mono">Case study · coming soon</i></div></button>
+      <button class="frame" style="--c:#D6353F" type="button"><span class="fname mono">OYO</span><span class="fdim mono"></span><div class="fbody" data-mark="O"><b>OYO</b><span>Hotels & stays</span><i class="soon mono">Case study · coming soon</i></div></button>
+      <button class="frame" style="--c:#7A5AF8" type="button"><span class="fname mono">PRISM</span><span class="fdim mono"></span><div class="fbody" data-mark="P"><b>PRISM</b><span>Product design</span><i class="soon mono">Case study · coming soon</i></div></button>
+      <button class="frame wide" style="--c:#1B1A17" type="button"><span class="fname mono">LastLook</span><span class="fdim mono"></span><div class="fbody" data-mark="L"><b>LastLook</b><span>My own product, designed and built end to end</span><i class="soon mono">Interactive prototype · coming soon</i></div></button>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact" aria-labelledby="contactTitle">
+    <div class="big-sticky">
+      <i class="tape tape-b"></i>
+      <p class="hand">so…</p>
+      <h2 id="contactTitle">Let's make something people <span class="hl hl-p">love</span>.</h2>
+      <div class="contact-row">
+        <a class="btn btn-ink" href="#" data-todo>Email James</a>
+        <a class="btn" href="#" data-todo>LinkedIn</a>
+        <a class="btn" href="#" data-todo>Download résumé</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ TOOLBAR ============ -->
+<div class="toolbar" role="toolbar" aria-label="Sketchbook tools">
+  <button class="tool on" data-tool="move" type="button" aria-label="Move (V)" title="Move · V"><svg viewBox="0 0 24 24"><path d="M5 3l6.5 17 2.3-7 7.2-2.6z"/></svg></button>
+  <button class="tool" data-tool="marker" type="button" aria-label="Highlighter (H)" title="Highlighter · H"><svg viewBox="0 0 24 24"><path d="M15 4l5 5-9 9H6v-5z"/><path d="M4 21h8"/></svg></button>
+  <div class="swatches" aria-label="Highlighter colour">
+    <button class="sw on" data-c="#FFE14D" style="--c:#FFE14D" type="button" aria-label="Yellow (1)"></button>
+    <button class="sw" data-c="#FF8FC2" style="--c:#FF8FC2" type="button" aria-label="Pink (2)"></button>
+    <button class="sw" data-c="#7EEBB5" style="--c:#7EEBB5" type="button" aria-label="Mint (3)"></button>
+    <button class="sw" data-c="#8CC8FF" style="--c:#8CC8FF" type="button" aria-label="Blue (4)"></button>
+  </div>
+  <span class="sep" aria-hidden="true"></span>
+  <button class="tool" data-tool="sticky" type="button" aria-label="Sticky note (S)" title="Sticky · S"><svg viewBox="0 0 24 24"><path d="M4 4h16v10l-6 6H4z"/><path d="M14 20v-6h6"/></svg></button>
+  <button class="tool" data-tool="stamp" type="button" aria-label="Stamp (E)" title="Stamp · E"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></button>
+  <button class="tool" data-tool="clear" type="button" aria-label="Clear my marks" title="Clear my marks"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="you" id="you" aria-hidden="true">You</div>
+<!--/BODY-->
+<script src="app.js"></script>
+</body>
+</html>

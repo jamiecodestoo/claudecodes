@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/(.+)/v2/(.*)", "destination": "/v2/$2" }
+  ],
+  "headers": [
+    { "source": "/v2/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }] }
+  ]
+}
