@@ -5729,6 +5729,21 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr.live { pointer-events: auto; cursor: default; }
 .tr-sky, .tr-veil, .tr-low, .tr-cap { pointer-events: none; }
 .tr-ctl, .tr-end { z-index: 3; }
+.tr-cut { position: absolute; inset: 0; background: var(--bg, #FBF8F1); opacity: 0; pointer-events: none; }
+.tr-cap.map.mid0 { left: 50%; }
+.tr-cap.map { left: calc(50% + min(230px, 16vw)); bottom: calc(env(safe-area-inset-bottom, 0px) + 176px); width: min(720px, calc(100vw - 560px)); }
+.tr-l.jm { font-size: clamp(22px, 2.1vw, 30px); line-height: 1.18; color: #14213A; text-shadow: 0 0 2px rgba(255, 253, 247, .9), 0 0 22px rgba(255, 253, 247, .95), 0 0 44px rgba(255, 253, 247, .8); }
+:root[data-theme="dark"] .tr-l.jm { color: #F5F5F5; text-shadow: 0 0 2px rgba(10, 10, 10, .9), 0 0 22px rgba(10, 10, 10, .9), 0 0 44px rgba(10, 10, 10, .7); }
+.tr.done .tr-end p { color: #14213A; text-shadow: 0 0 30px rgba(255, 253, 247, .95); }
+.tr.done .tr-end p em { color: #D9731F; }
+:root[data-theme="dark"] .tr.done .tr-end p em { color: #FFE08A; }
+:root[data-theme="dark"] .tr.done .tr-end p { color: #fff; text-shadow: 0 2px 30px rgba(0, 0, 0, .6); }
+.tr.done::before { content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--bg, #FBF8F1) 70%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: trIn .9s both; }
+@keyframes trIn { from { opacity: 0; } }
+.tr.done .tr-end button:not(.go) { color: #14213A; background: rgba(20, 33, 58, .06); box-shadow: inset 0 0 0 1px rgba(20, 33, 58, .16); }
+:root[data-theme="dark"] .tr.done .tr-end button:not(.go) { color: #fff; background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25); }
+.tr.done .tr-end button.go { background: #14213A; color: #fff; }
+:root[data-theme="dark"] .tr.done .tr-end button.go { background: #fff; color: #141414; }
 .tr-sky { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s cubic-bezier(.2, .7, .2, 1); }
 .tr.in .tr-sky { opacity: 1; }
 .tr-veil { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 45%, transparent 60%, rgba(10, 30, 70, .22)); opacity: 0; transition: opacity 1.4s; }
@@ -5753,7 +5768,7 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr-cap.out { opacity: 0; filter: blur(8px); }
 .tr-cap.out.mid { transform: translate(-50%, -62%); transition: opacity .9s, filter .9s, transform 1.2s cubic-bezier(.4, 0, .2, 1); }
 
-.tr-ctl { position: absolute; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 16px); transform: translate(-50%, -14px); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(255, 255, 255, .14); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22), 0 14px 40px -18px rgba(0, 0, 0, .5); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); opacity: 0; transition: opacity .8s .6s, transform .9s .6s cubic-bezier(.2, .8, .2, 1); font-family: var(--sans); }
+.tr-ctl { position: absolute; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 16px); transform: translate(-50%, -14px); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(18, 24, 38, .5); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 14px 40px -18px rgba(0, 0, 0, .5); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); opacity: 0; transition: opacity .8s .6s, transform .9s .6s cubic-bezier(.2, .8, .2, 1); font-family: var(--sans); }
 .tr.in .tr-ctl { opacity: 1; transform: translate(-50%, 0); }
 .tr-ctl button { height: 40px; display: inline-flex; align-items: center; gap: 8px; padding: 0 16px; border-radius: 999px; color: #fff; font: 600 14px/1 var(--sans); transition: background .25s; }
 .tr-ctl button:hover { background: rgba(255, 255, 255, .16); }
@@ -9859,7 +9874,16 @@ function emailOk(e) {
       { pos: 'low', out: 26.8, lines: [['lo', [[22.06, 23, 'and that’s *James,*'], [23.12, 23.95, 'on the terrace,'], [24.11, 24.76, 'with Olive,'], [24.89, 25.97, 'his golden retriever.']]]] }
     ];
     const SPOTS = [[18.8, 'nsut'], [19.86, 'mmt'], [20.5, 'eazydiner'], [21.15, 'oyo'], [22.06, 'me'], [26.6, null]];
-    const END = 27.4;
+    // section 2 · the journey: a soft cut to the map, which walks stop to stop while she tells it
+    const JL = [[6.11, [[0.0, 0.46, "Now,"], [0.46, 3.47, "let me show you how he got here."], [3.47, 4.57, "Nine stops,"], [4.57, 5.85, "from 2021 to now."]]], [7.0, [[0.0, 0.81, "In 2021,"], [0.81, 4.51, "he cleared JEE and joined NSUT in Delhi,"], [4.51, 6.76, "for mechanical engineering."]]], [8.44, [[0.0, 0.94, "A year later,"], [0.94, 3.57, "he and a friend tried to build an app."], [3.57, 4.31, "It failed,"], [4.31, 6.59, "but that’s where he opened Figma,"], [6.59, 8.14, "and never really closed it."]]], [4.99, [[0.0, 2.44, "He taught himself design at night,"], [2.44, 4.81, "and got an internship at IIT Delhi."]]], [3.97, [[0.0, 1.72, "At Hindustan Times,"], [1.72, 3.78, "design became a real job."]]], [6.61, [[0.0, 1.15, "At EazyDiner,"], [1.15, 4.29, "he learned to look beyond the screen."], [4.29, 6.43, "Payment success went up 41%."]]], [8.2, [[0.0, 1.34, "Then MakeMyTrip,"], [1.34, 3.64, "where everything got bigger."], [3.64, 5.14, "Millions of users,"], [5.14, 7.99, "and tiny decisions that mattered a lot."]]], [5.64, [[0.0, 0.58, "And now,"], [0.58, 1.42, "he’s at OYO,"], [1.42, 5.43, "designing everything between booking a room and walking into it."]]], [5.07, [[0.0, 0.84, "On the side,"], [0.84, 2.27, "he built his own app,"], [2.27, 2.92, "LastLook,"], [2.92, 4.87, "and launched it on the App Store."]]], [3.79, [[0.0, 1.77, "And he shares all of it,"], [1.77, 3.55, "on Instagram and LinkedIn."]]]];
+    const CUT = 27.4, JK = [[CUT, -1]];   // [time, stop on the map]; -1 is the whole map
+    let jt = 28.6; JL.forEach(([d, segs], i) => {
+      if (i) { const pos = i - 1, prev = JK[JK.length - 1][1]; JK.push([jt - (i === 1 ? 1.4 : 1), prev], [jt + (i === 1 ? 1.2 : .9), pos]); }
+      V.push(['v2/tour/j' + i + '.mp3', jt]);
+      CARDS.push({ pos: i ? 'map' : 'map mid0', out: jt + d + .2, lines: [['jm', segs.map(([a, b, t]) => [jt + a, jt + b, t])]] });
+      jt += d + (i ? 1.1 : 1.6); });
+    const END = jt + .3;
+    const posAt = T => { for (let i = 1; i < JK.length; i++) if (T < JK[i][0]) { const [t0, p0] = JK[i - 1], [t1, p1] = JK[i]; return p0 + (p1 - p0) * sm(t0, t1, T); } return JK[JK.length - 1][1]; };
     const sm = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
     const eo = t => 1 - Math.pow(1 - clamp(t), 3);
 
@@ -9886,7 +9910,10 @@ function emailOk(e) {
       wind = ac.createGain(); wind.gain.value = 0; ns.connect(bp); bp.connect(wind); wind.connect(master); ns.start();
       return ac;
     }
-    const load = () => loading || (loading = audio() ? Promise.all(V.map(([u]) => fetch(u).then(r => r.arrayBuffer()).then(a => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))))).then(b => (bufs = b)).catch(() => (bufs = [])) : Promise.resolve(bufs = []));
+    // the opening lines are waited for; the rest arrive while she is already talking
+    let bufP = [], run = 0, jumped = false, cutEl = null;
+    const dec = u => fetch(u).then(r => r.arrayBuffer()).then(a => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).catch(() => null);
+    const load = () => loading || (loading = audio() ? (bufP = V.map(([u]) => dec(u)), Promise.all(bufP.slice(0, 3))) : Promise.resolve());
     ['pointerenter', 'focus', 'touchstart'].forEach(ev => btn.addEventListener(ev, () => load(), { passive: true, once: true }));
 
     const CH = [[50, 57, 61, 64, 69], [47, 54, 57, 62, 66], [43, 50, 54, 59, 62], [45, 52, 57, 61, 64]];   // D, Bm, G, A, all with soft added notes
@@ -9962,10 +9989,10 @@ function emailOk(e) {
 
     function build() {
       root = document.createElement('div'); root.className = 'tr'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-label', 'A guided tour of James’s portfolio');
-      root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-veil" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div>
+      root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-veil" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div>
         <div class="tr-ctl"><button type="button" class="tr-pp" aria-label="Pause"><svg class="pa" viewBox="0 0 14 14"><rect x="2.5" y="1.5" width="3.2" height="11" rx="1"/><rect x="8.3" y="1.5" width="3.2" height="11" rx="1"/></svg><svg class="pl" viewBox="0 0 14 14"><path d="M3.5 1.8v10.4c0 .6.7 1 1.2.7l8-5.2a.8.8 0 0 0 0-1.4l-8-5.2c-.5-.3-1.2.1-1.2.7z"/></svg></button><span class="tr-bar" aria-hidden="true"><i></i></span><button type="button" class="tr-x">End tour</button></div>
-        <div class="tr-end"><p>That’s the <em>first</em> stop.</p><div><button type="button" class="tr-again">Watch again</button><button type="button" class="go tr-own">Explore on my own</button></div></div>`;
-      document.body.appendChild(root); cv = $('.tr-sky', root); glInit(); sizeCv();
+        <div class="tr-end"><p>That’s his story, <em>so far.</em></p><div><button type="button" class="tr-again">Watch again</button><button type="button" class="go tr-own">Explore on my own</button></div></div>`;
+      document.body.appendChild(root); cutEl = $('.tr-cut', root); cv = $('.tr-sky', root); glInit(); sizeCv();
       $('.tr-pp', root).addEventListener('click', e => { e.stopPropagation(); pause(); });
       $('.tr-x', root).addEventListener('click', e => { e.stopPropagation(); end(); });
       $('.tr-own', root).addEventListener('click', e => { e.stopPropagation(); end(); });
@@ -9985,7 +10012,7 @@ function emailOk(e) {
     }
     function reset() {
       srcs.forEach(s => { try { s.stop(); } catch (_) {} }); srcs = []; clearInterval(padT);
-      cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; flew = false; puffs.forEach(P => spawn(P, false, false));
+      cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; run++; flew = false; puffs.forEach(P => spawn(P, false, false));
       $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       tour.e = null; tour.cam = null; tour.lit = false;
       if (root) { root.classList.remove('done', 'paused', 'low'); root.style.opacity = ''; }
@@ -10001,10 +10028,12 @@ function emailOk(e) {
       useAc = !!(ac && ac.state === 'running');
       st = useAc ? ac.currentTime + .1 : performance.now() / 1000;
       if (useAc) {
-        bufs.forEach((b, i) => { if (!b) return; const s = ac.createBufferSource(); s.buffer = b; s.connect(master); s.start(st + V[i][1]); srcs.push(s); });
+        const me = ++run;
+        bufP.forEach((pb, i) => pb.then(b => { if (!b || me !== run || !on) return; const at = st + V[i][1]; if (at < ac.currentTime + .03) return;
+          const s = ac.createBufferSource(); s.buffer = b; s.connect(master); s.start(at); srcs.push(s); }));
         // the music sits low under her voice the whole way, and opens up a little once she is done
         const now = ac.currentTime, m = mus.gain, w = wind.gain;
-        m.cancelScheduledValues(now); m.setValueAtTime(m.value, now); m.linearRampToValueAtTime(.34, now + 2.5); m.setValueAtTime(.34, st + 26.2); m.linearRampToValueAtTime(.5, st + 28.5);
+        m.cancelScheduledValues(now); m.setValueAtTime(m.value, now); m.linearRampToValueAtTime(.34, now + 2.5); m.setValueAtTime(.34, st + END - .8); m.linearRampToValueAtTime(.5, st + END + 1.4);
         w.cancelScheduledValues(now); w.setValueAtTime(w.value, now); w.linearRampToValueAtTime(.16, now + 2.5); w.setValueAtTime(.16, st + 10.6); w.linearRampToValueAtTime(0, st + 14);
         nextChord = ac.currentTime + .1; pad(); padT = setInterval(pad, 700);
       }
@@ -10035,8 +10064,15 @@ function emailOk(e) {
       if (alpha <= .001 && cv.style.display !== 'none') cv.style.display = 'none';
       root.style.setProperty('--veil', (1 - sm(11, 13, T)).toFixed(3));
       // the valley: we come out of the clouds still moving, glide a little way in, and settle back once she is done
-      tour.e = T < 11 ? 0 : T < 26.4 ? .45 * eo((T - 11) / 4.6) : .45 * (1 - sm(26.4, 28.6, T));
-      root.classList.toggle('low', T > 13.4 && T < END);
+      if (T < CUT) tour.e = T < 11 ? 0 : T < 26.4 ? .45 * eo((T - 11) / 4.6) : .45 * (1 - sm(26.4, 27.4, T));
+      root.classList.toggle('low', T > 13.4 && T < 26.6);
+      // section 2: a soft cut to the journey, then the map walks from stop to stop as she tells it
+      cutEl.style.opacity = (sm(26.5, 27.2, T) * (1 - sm(27.9, 28.7, T))).toFixed(3);
+      if (T >= CUT) {
+        if (!jumped) { jumped = true; tour.e = null; tour.back = true; tour.cam = null; tour.lit = false; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov')); goTo(top(journey)); }
+        const pos = posAt(T);
+        if (jCar) jposT = pos; else goTo(jTop + jRange * (pos < 0 ? PH.hold + (pos + 1) * (PH.zoom - PH.hold) : PH.zoom + pos / (N - 1) * (PH.walk - PH.zoom)));
+      }
       // the spotlight walks from place to place as she names them
       let si = -1; SPOTS.forEach(([t], i) => { if (T >= t) si = i; });
       if (si !== spotI) { spotI = si; const id = si < 0 ? null : SPOTS[si][1];
@@ -10044,7 +10080,7 @@ function emailOk(e) {
         tour.lit = !!id; spot = id; }
       const tgt = spot ? SPOT[spot].map((v, i) => i > 1 ? v * 1.35 : v) : null;   // a softer, wider pool of light than a click gives
       if (tgt) { if (!tour.spot) tour.spot = tgt.slice(); const k = 1 - Math.exp(-dT * 5); tour.spot = tour.spot.map((v, i) => v + (tgt[i] - v) * k); }
-      tour.cam = T > 13.9 ? camFor(spot) : null; tour.rate = .9;
+      if (T < CUT) { tour.cam = T > 13.9 ? camFor(spot) : null; tour.rate = .9; }
       // captions
       CARDS.forEach((C, i) => { const t0 = C.lines[0][1][0][0];
         if (T > t0 - .3 && T < C.out + 1.2 && !cards.some(c => c.C === C)) cards.push(mkCard(C)); });
