@@ -10002,7 +10002,7 @@ function emailOk(e) {
       return ac;
     }
     // the opening lines are waited for; the rest arrive while she is already talking
-    let mistEl = null, endSky = false, bufP = [], run = 0, jumped = false, cutEl = null, dimEl = null, spEl = null, scoreBuf = null, nextScore = 0, inCase = false, closed4 = false, lock4 = false, csY = -1, pgS = -1, posS = NaN; const jPinEl = $('#jPin'), csE = $('#cs');
+    let org = [innerWidth - 200, 40], mistEl = null, endSky = false, bufP = [], run = 0, jumped = false, cutEl = null, dimEl = null, spEl = null, scoreBuf = null, nextScore = 0, inCase = false, closed4 = false, lock4 = false, csY = -1, pgS = -1, posS = NaN; const jPinEl = $('#jPin'), csE = $('#cs');
     const dec = u => fetch(u).then(r => r.arrayBuffer()).then(a => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).catch(() => null);
     let musP = null;   // the score: an ElevenLabs piece, loaded alongside her first lines and started the moment it is ready
     let voices = [], rate = 1, tNow = 0, lastReal = 0, started = false, camEl = null, cam2 = null, spS = null, doneSwell = false;
@@ -10132,7 +10132,7 @@ function emailOk(e) {
       if (paused) voices.forEach(v => { if (!v.a.paused) v.a.pause(); });
     }
     function lockPage(lock) {
-      if (lock) { unfocus && focusId && unfocus(); goTo(0); lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; document.documentElement.classList.add('touring'); }
+      if (lock) { unfocus && focusId && unfocus(); setTimeout(() => on && tNow < 1 && goTo(0), 1150); lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; document.documentElement.classList.add('touring'); }
       else { document.documentElement.classList.remove('touring'); csE.style.transform = csE.style.filter = ''; if (csE.classList.contains('open')) return; document.documentElement.style.overflow = ''; lenis && lenis.start(); }
     }
     function reset() {
@@ -10140,12 +10140,18 @@ function emailOk(e) {
       cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; endSky = false; inCase = false; closed4 = false; lock4 = false; nextScore = 0; csY = pgS = -1; posS = NaN; run++; stage.style.filter = ''; delete stage.dataset.tf; flew = false; puffs.forEach(P => spawn(P, false, false));
       $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       tour.e = null; tour.cam = null; tour.lit = false; tour.llLit = null;
-      if (root) { root.classList.remove('done', 'paused', 'low', 'lite'); root.style.opacity = ''; }
+      if (root) { root.classList.remove('done', 'paused', 'low', 'lite'); root.style.opacity = ''; root.style.clipPath = ''; root.style.transition = ''; }
       paused = false;
     }
     async function begin() {
-      on = true; lockPage(true); tour.e = 0; btn.hidden = true;
-      if (!root) build(); root.classList.add('live'); requestAnimationFrame(() => root.classList.add('in'));
+      const br = btn.getBoundingClientRect(); org = [br.left + br.width / 2, br.top + br.height / 2];
+      on = true; lockPage(true); tour.e = 0;
+      if (!root) build();
+      const R = Math.hypot(Math.max(org[0], innerWidth - org[0]), Math.max(org[1], innerHeight - org[1])) + 40;
+      root.style.transition = 'none'; root.style.opacity = ''; root.style.clipPath = `circle(0px at ${org[0]}px ${org[1]}px)`; mistEl.style.opacity = 1; cv.style.filter = 'blur(16px)';
+      root.classList.add('live', 'in'); void root.offsetWidth;
+      root.style.transition = 'clip-path 1.25s cubic-bezier(.66, 0, .2, 1)'; root.style.clipPath = `circle(${R}px at ${org[0]}px ${org[1]}px)`;
+      setTimeout(() => { if (on && root) { root.style.transition = ''; root.style.clipPath = ''; } btn.hidden = true; }, 1300);
       root.style.setProperty('--veil', 1); cv.style.display = '';
       // unlock every line of hers inside this click, so browsers let them play later
       mkVoices(); voices.forEach(v => { v.a.muted = true; const pr = v.a.play(); pr && pr.then(() => { v.a.pause(); v.a.currentTime = 0; v.a.muted = false; }).catch(() => { v.a.muted = false; }); });
@@ -10164,13 +10170,15 @@ function emailOk(e) {
     }
     function end() {
       if (!on) return; on = false; cancelAnimationFrame(raf);
-      root.classList.remove('in', 'live', 'low', 'lite'); root.style.opacity = '0'; root.style.transition = 'opacity 1s';
+      const R = Math.hypot(Math.max(org[0], innerWidth - org[0]), Math.max(org[1], innerHeight - org[1])) + 40;
+      root.classList.remove('live'); root.style.transition = 'none'; root.style.clipPath = `circle(${R}px at ${org[0]}px ${org[1]}px)`; void root.offsetWidth;
+      root.style.transition = 'clip-path 1s cubic-bezier(.66, 0, .2, 1)'; root.style.clipPath = `circle(0px at ${org[0]}px ${org[1]}px)`;
       if (ac) { ramp(mus.gain, 0, ac.currentTime, 1.2); ramp(wind.gain, 0, ac.currentTime, .6); }
       srcs.forEach(s => { try { s.stop(ac.currentTime + .05); } catch (_) {} }); stopVoices(); camOff();
       // the camera eases home on its own
       stage.style.filter = ''; jPinEl.style.transform = jPinEl.style.filter = ''; if (jumped) uz = 1; btn.hidden = false; tour.cam = null; tour.lit = false; tour.e = null; tour.back = true; tour.llLit = null; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       lockPage(false);
-      setTimeout(() => { if (on) return; reset(); clearInterval(padT); root.remove(); root = null; ctx = null; ac && ac.suspend(); }, 1300);
+      setTimeout(() => { if (on) return; reset(); clearInterval(padT); root.remove(); root = null; ctx = null; ac && ac.suspend(); }, 1100);
       btn.focus({ preventScroll: true });
     }
     function camFor(id) {
