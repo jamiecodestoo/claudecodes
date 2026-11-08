@@ -5724,7 +5724,6 @@ html:has(.cs.open) .sfx-btn { display: none; }
   box-shadow: inset 0 0 0 1px rgba(255, 248, 236, .4), inset 0 -5px 9px rgba(19, 35, 58, .3), inset 0 3px 7px rgba(255, 248, 236, .45), 0 4px 10px -4px rgba(19, 35, 58, .4); }
 html.touring .np.tour .np-i { opacity: 0; }   /* it has lifted off: the big orb is it */
 .np.tour:hover .np-i { transform: scale(1.08); }
-:root[data-theme="dark"] .np.tour .np-i { background: #F5F5F5; color: #141414; }
 html:has(.cs.open) .np.tour { display: none !important; }
 @media (min-width: 860px) { html:has(.cs.open) .cs-bar { padding-right: clamp(14px, 2.4vw, 28px) !important; } }
 @media (max-width: 859px) { .np.tour { display: none !important; } }
@@ -5850,11 +5849,14 @@ html:root.touring .scroll-cue, html:root.touring .scroll-cue.idle, html.touring 
 html.touring .np.tour { opacity: 0; pointer-events: none; }
 .np.tour { transition: transform .4s var(--spring), box-shadow .8s ease, opacity .4s; }
 .np.tour.glow { box-shadow: 0 0 0 5px rgba(255, 214, 120, .38), 0 14px 34px -10px rgba(240, 170, 40, .55), var(--shadow-sm); }
-.tr-coach { position: fixed; z-index: 120; display: grid; grid-template-columns: 1fr auto; column-gap: 16px; row-gap: 4px; align-items: center; padding: 14px 12px 14px 18px; border-radius: 22px; color: #fff; background: rgba(20, 26, 40, .9); box-shadow: 0 24px 48px -20px rgba(0, 0, 0, .5), 0 2px 8px rgba(0, 0, 0, .12); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; opacity: 0; transform: translateY(-8px) scale(.98); transform-origin: 85% 0; transition: opacity .6s ease, transform .8s cubic-bezier(.2, .8, .2, 1); pointer-events: none; }
+.tr-coach { --cb: #141A28; --ct: #fff; --cs: rgba(255, 255, 255, .7); --cx: rgba(255, 255, 255, .12); position: fixed; z-index: 120; display: grid; grid-template-columns: 1fr auto; column-gap: 16px; row-gap: 4px; align-items: center; padding: 14px 12px 14px 18px; border-radius: 20px; color: var(--ct); background: var(--cb); filter: drop-shadow(0 18px 28px rgba(0, 0, 0, .28)) drop-shadow(0 2px 4px rgba(0, 0, 0, .1)); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; opacity: 0; transform: translateY(-8px) scale(.98); transform-origin: calc(100% - var(--ax, 40px)) 0; transition: opacity .6s ease, transform .8s cubic-bezier(.2, .8, .2, 1); pointer-events: none; }
+/* the pointer is part of the same shape: same solid fill, one shadow around both */
+.tr-coach::before { content: ""; position: absolute; top: -6px; right: calc(var(--ax, 40px) - 7px); width: 14px; height: 14px; border-radius: 3px 0 0 0; background: var(--cb); transform: rotate(45deg); }
+:root[data-theme="dark"] .tr-coach { --cb: #fff; --ct: #13233A; --cs: rgba(19, 35, 58, .64); --cx: rgba(19, 35, 58, .08); filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .55)); }
 .tr-coach.in { opacity: 1; transform: none; pointer-events: auto; }
-.tr-coach b { font: 700 14px/1.2 inherit; letter-spacing: -.01em; } .tr-coach span { grid-column: 1; font: 500 13px/1.3 inherit; color: rgba(255, 255, 255, .72); }
-.tr-coach button { grid-row: 1 / 3; grid-column: 2; width: 28px; height: 28px; border-radius: 50%; color: rgba(255, 255, 255, .8); font: 400 18px/1 inherit; background: rgba(255, 255, 255, .1); }
-.tr-coach button:hover { background: rgba(255, 255, 255, .2); }
+.tr-coach b { font: 700 14px/1.2 inherit; letter-spacing: -.01em; } .tr-coach span { grid-column: 1; font: 500 13px/1.3 inherit; color: var(--cs); }
+.tr-coach button { grid-row: 1 / 3; grid-column: 2; width: 28px; height: 28px; border-radius: 50%; color: var(--ct); opacity: .8; font: 400 18px/1 inherit; background: var(--cx); }
+.tr-coach button:hover { opacity: 1; }
 html.touring .spot2 { background: radial-gradient(circle var(--sr, 800px) at var(--sx, 50%) var(--sy, 50%), rgba(244, 239, 225, 0) 22%, rgba(244, 239, 225, .9) 70%); }
 :root[data-theme="dark"] html.touring .spot2, html.touring:root[data-theme="dark"] .spot2 { background: radial-gradient(circle var(--sr, 800px) at var(--sx, 50%) var(--sy, 50%), rgba(28, 28, 28, 0) 22%, rgba(28, 28, 28, .9) 70%); }
 html.touring .bar, html.touring .nav, html.touring .logo, html.touring .wop-badge, html.touring .vc, html.touring .theme-btn, html.touring .sfx-btn, html.touring #compass, html.touring .mapctl, html.touring .jtl, html.touring .jtl-view, html.touring .jcar, html.touring .cs-bar, html.touring .c3-prog { opacity: 0 !important; pointer-events: none !important; transition: opacity .7s ease !important; }
@@ -6394,7 +6396,7 @@ html.touring .bar, html.touring .nav, html.touring .logo, html.touring .wop-badg
       photos: [['cr-desk', 'Pen, paper, then post'], ['cr-night', 'Building, after hours'], ['cr-takes', 'Take 9 of many']],
       pois: [[-90, 110, 'in', 'LinkedIn', LI, '#0A66C2'], [90, 110, 'ig', 'Instagram', IG, '#E1306C']] }
   ];
-  const CS_SOON = ['lastlook', 'campusx'];  // case studies still being written: never offered as "another story"
+  const CS_SOON = ['lastlook', 'campusx', 'traum'];  // case studies still being written: never offered as "another story"
   const WORK = [
     { id: 'coupon', bg: 'radial-gradient(120% 80% at 15% 0%, #FFC9A8 0%, transparent 55%), radial-gradient(90% 70% at 100% 100%, #E8402A 0%, transparent 60%), linear-gradient(165deg, #FF9A6B, #F25A38)', glow: '#FF7A4F', logo: 'logo-eazydiner', face: ['big', '+41%', 'payment success'], name: 'The Coupon Hunter', co: 'EazyDiner · PayEazy', t: '#FFE3D6', c: '#EE5A2B', icon: 'ticket', cs: CS + 'eazydiner', status: 'Live on app',
       pitch: 'Finding the best coupon shouldn’t feel like a treasure hunt. I rebuilt the coupon tray so the best deal is waiting for you.',
@@ -8950,7 +8952,8 @@ void main() {
   // ---------- coming soon: the case study is still being written ----------
   const SOON = {
     lastlook: { name: 'LastLook', app: 'https://apps.apple.com/in/app/lastlook-adhd-item-checklist/id6785531140' },
-    campusx: { name: 'CampusX' }
+    campusx: { name: 'CampusX' },
+    traum: { name: 'Traum' }   // parked for now: the full case study (tfHTML / initTF) stays in the code, ready to switch back on by removing this line and 'traum' from CS_SOON
   };
   const SN_SECS = ['The problem', 'Research', 'Ideas', 'Design', 'Results'];
   function soonHTML(w) {
@@ -9040,8 +9043,8 @@ void main() {
     if (w.id === 'coupon') return edHTML(w);
     if (w.id === 'requests') return mmHTML(w);
     if (w.id === 'swipr') return swHTML(w);
-    if (w.id === 'traum') return tfHTML(w);
     if (SOON[w.id]) return soonHTML(w);
+    if (w.id === 'traum') return tfHTML(w);
     const i = WORK.indexOf(w);
     return `<div class="cs-bar"><button class="cs-close" id="csClose" type="button"><span class="ar" aria-hidden="true">←</span>Back to the box</button><a class="cs-full" href="${w.cs}" target="_blank" rel="noopener">${w.csLabel || 'Full case study'} ↗</a></div>
       <header class="cs-hero cs-in"><span class="k"><i><svg viewBox="0 0 24 24">${ICONS[w.icon]}</svg></i>${String(i + 1).padStart(2, '0')} · ${w.co}</span><h2>${w.name}</h2><p class="pitch">${w.pitch}</p>
@@ -9072,7 +9075,7 @@ void main() {
   function expand(k) {
     const r = k.el.getBoundingClientRect();
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); csEl.classList.toggle('tf', k.w.id === 'traum'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); if (k.w.id === 'traum') initTF(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); csEl.classList.toggle('tf', k.w.id === 'traum' && !SOON.traum); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); if (k.w.id === 'traum' && !SOON.traum) initTF(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
     csEl.style.transition = 'none'; csEl.style.clipPath = rectClip(r); csEl.classList.add('open');
     // a flat copy of the card grows with the page, then melts into it
     const g = k.el.cloneNode(true); g.classList.add('wk-ghost'); g.classList.remove('hover'); g.removeAttribute('aria-label');
@@ -9094,7 +9097,7 @@ void main() {
     const k = wks.find(x => x.w.id === id); if (!k || picked) return;
     picked = k; csFrom = from; const r = from.getBoundingClientRect(); setRoute(k.w);
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); csEl.classList.toggle('tf', k.w.id === 'traum'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); if (k.w.id === 'traum') initTF(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); csEl.classList.toggle('tf', k.w.id === 'traum' && !SOON.traum); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); if (k.w.id === 'traum' && !SOON.traum) initTF(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
     csEl.style.transition = 'none'; csEl.style.clipPath = rectClip(r); csEl.classList.add('open'); csEl.offsetWidth;
     csEl.style.transition = 'clip-path .9s cubic-bezier(.7, 0, .2, 1)'; csEl.style.clipPath = 'inset(0px 0px 0px 0px round 0px)';
     lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden';
@@ -9123,7 +9126,7 @@ void main() {
     edCleanup(); picked.el.style.opacity = 1; picked.el.style.transform = stand(0); rim(picked, 0); picked.z = 0;
     picked = k; k.el.style.transform = faced(k); k.el.style.opacity = 0; setRoute(k.w, 'replace');
     csEl.style.setProperty('--t', k.w.t); csEl.style.setProperty('--c', k.w.c);
-    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); csEl.classList.toggle('tf', k.w.id === 'traum'); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); if (k.w.id === 'traum') initTF(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
+    csEl.innerHTML = csHTML(k.w); csEl.scrollTop = 0; csEl.classList.toggle('ed', k.w.id === 'coupon'); csEl.classList.toggle('mm', k.w.id === 'requests'); csEl.classList.toggle('sw', k.w.id === 'swipr'); csEl.classList.toggle('tf', k.w.id === 'traum' && !SOON.traum); if (k.w.id === 'coupon') initED(); if (k.w.id === 'requests') initMM(); if (k.w.id === 'swipr') initSW(); if (k.w.id === 'traum' && !SOON.traum) initTF(); csEl.classList.toggle('soon', !!SOON[k.w.id]); if (SOON[k.w.id]) initSoon(k.w); phCar(csEl); csBar(k.w);
     $('#csClose').focus({ preventScroll: true });
   }
   /* ---------- addresses: every case study and section gets its own link and tab title ---------- */
@@ -10373,7 +10376,7 @@ function emailOk(e) {
       const mark = () => { try { localStorage.setItem('jc-tour-seen', '1'); } catch (_) {} };
       setTimeout(() => { if (on || btn.hidden) return; const r = btn.getBoundingClientRect(), c = document.createElement('div'); c.className = 'tr-coach'; c.setAttribute('role', 'note');
         c.innerHTML = '<b>New: take the tour</b><span>Four minutes, narrated. Sound on.</span><button type="button" aria-label="Dismiss">×</button>';
-        c.style.top = (r.bottom + 14) + 'px'; c.style.right = Math.max(12, innerWidth - r.right) + 'px'; c.style.setProperty('--ax', (r.width / 2 - 8).toFixed(0) + 'px');
+        const ic = ($('.np-i', btn) || btn).getBoundingClientRect(), rt = Math.max(12, innerWidth - r.right); c.style.top = (r.bottom + 14) + 'px'; c.style.right = rt + 'px'; c.style.setProperty('--ax', Math.max(22, innerWidth - rt - (ic.left + ic.width / 2)).toFixed(0) + 'px');
         document.body.appendChild(c); btn.classList.add('glow'); requestAnimationFrame(() => requestAnimationFrame(() => c.classList.add('in')));
         let gone = false; const bye = () => { if (gone) return; gone = true; setTimeout(() => dispatchEvent(new Event('jc-coach-done')), 700); c.classList.remove('in'); btn.classList.remove('glow'); setTimeout(() => c.remove(), 600); mark(); };
         $('button', c).addEventListener('click', bye); btn.addEventListener('click', bye, { once: true }); setTimeout(bye, 6500); }, 2800); })();
