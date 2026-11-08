@@ -5729,14 +5729,17 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr.live { pointer-events: auto; cursor: default; }
 .tr-sky, .tr-veil, .tr-low, .tr-cap { pointer-events: none; }
 .tr-ctl, .tr-end { z-index: 3; }
-.tr-cut { position: absolute; inset: 0; background: var(--bg, #FBF8F1); opacity: 0; pointer-events: none; }
-.tr-cap.map.mid0 { left: 50%; }
-.tr-cap.map { left: calc(50% + min(230px, 16vw)); bottom: calc(env(safe-area-inset-bottom, 0px) + 176px); width: min(720px, calc(100vw - 560px)); }
-.tr-l.jm { font-size: clamp(22px, 2.1vw, 30px); line-height: 1.18; color: #14213A; text-shadow: 0 0 2px rgba(255, 253, 247, .9), 0 0 22px rgba(255, 253, 247, .95), 0 0 44px rgba(255, 253, 247, .8); }
+.tr-vig { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 1.6s ease, background .8s; background: radial-gradient(ellipse 88% 82% at 50% 48%, rgba(8, 10, 22, 0) 56%, rgba(8, 10, 22, .46) 100%); }
+.tr.in .tr-vig { opacity: 1; }
+.tr.lite .tr-vig { background: radial-gradient(ellipse 88% 82% at 50% 48%, rgba(70, 48, 16, 0) 58%, rgba(70, 48, 16, .2) 100%); }
+:root[data-theme="dark"] .tr.lite .tr-vig { background: radial-gradient(ellipse 88% 82% at 50% 48%, rgba(0, 0, 0, 0) 56%, rgba(0, 0, 0, .5) 100%); }
+.tr-vig::after { content: ""; position: absolute; inset: 0; opacity: .07; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.tr-cut { position: absolute; inset: 0; background: radial-gradient(120% 100% at 50% 50%, #FFFBF3, #FBF1E2); opacity: 0; pointer-events: none; }
+.tr.lite .tr-low { background: linear-gradient(0deg, rgba(251, 248, 241, .97), rgba(251, 248, 241, .8) 45%, rgba(251, 248, 241, 0)); }
+:root[data-theme="dark"] .tr.lite .tr-low { background: linear-gradient(0deg, rgba(16, 16, 16, .95), rgba(16, 16, 16, .75) 45%, rgba(16, 16, 16, 0)); }
+.tr-l.jm { text-wrap: balance; color: #14213A; text-shadow: 0 0 2px rgba(255, 253, 247, .9), 0 0 22px rgba(255, 253, 247, .95), 0 0 44px rgba(255, 253, 247, .8); }
 :root[data-theme="dark"] .tr-l.jm { color: #F5F5F5; text-shadow: 0 0 2px rgba(10, 10, 10, .9), 0 0 22px rgba(10, 10, 10, .9), 0 0 44px rgba(10, 10, 10, .7); }
 .tr.done .tr-end p { color: #14213A; text-shadow: 0 0 30px rgba(255, 253, 247, .95); }
-.tr.done .tr-end p em { color: #D9731F; }
-:root[data-theme="dark"] .tr.done .tr-end p em { color: #FFE08A; }
 :root[data-theme="dark"] .tr.done .tr-end p { color: #fff; text-shadow: 0 2px 30px rgba(0, 0, 0, .6); }
 .tr.done::before { content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--bg, #FBF8F1) 70%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: trIn .9s both; }
 @keyframes trIn { from { opacity: 0; } }
@@ -5748,23 +5751,23 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr.in .tr-sky { opacity: 1; }
 .tr-veil { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 45%, transparent 60%, rgba(10, 30, 70, .22)); opacity: 0; transition: opacity 1.4s; }
 .tr.in .tr-veil { opacity: var(--veil, 1); }
-.tr-low { position: absolute; left: 0; right: 0; top: 0; height: 40vh; background: linear-gradient(180deg, rgba(12, 14, 34, .62), rgba(12, 14, 34, .3) 50%, transparent); opacity: 0; transition: opacity 1.2s; }
+.tr-low { position: absolute; left: 0; right: 0; bottom: 0; height: 34vh; background: linear-gradient(0deg, rgba(10, 12, 28, .74), rgba(10, 12, 28, .38) 48%, rgba(10, 12, 28, 0)); opacity: 0; transition: opacity 1.2s; }
 .tr.low .tr-low { opacity: 1; }
 
 .tr-cap { position: absolute; left: 50%; transform: translateX(-50%); width: min(1040px, calc(100vw - 32px)); text-align: center; text-wrap: balance; }
 .tr-cap.mid { top: 50%; transform: translate(-50%, -54%); }
-.tr-cap.low { top: calc(env(safe-area-inset-top, 0px) + 96px); }
+.tr-cap.low, .tr-cap.map, .tr-cap.csx { left: 50%; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 54px); width: min(860px, calc(100vw - 48px)); text-align: center; text-wrap: balance; }
 .tr-l, .tr-end p { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; font-weight: 700 !important; letter-spacing: -.035em !important; }
 .tr-cap { isolation: isolate; }
 .tr-cap.mid::before { content: ""; position: absolute; z-index: -1; inset: -40% -12%; background: radial-gradient(closest-side, rgba(16, 44, 96, .26), transparent); filter: blur(8px); }
 .tr-l { margin: 0; font-weight: 400; letter-spacing: -.012em; text-shadow: 0 1px 2px rgba(10, 30, 70, .18), 0 4px 30px rgba(10, 30, 70, .35); }
-.tr-l.big { font-size: clamp(38px, 5.4vw, 80px); line-height: 1.02; }
+.tr-l.big { font-size: clamp(26px, 3.6vw, 56px); line-height: 1.05; white-space: nowrap; }
 .tr-l.sub { margin-top: .8em; font-size: clamp(19px, 1.8vw, 26px); line-height: 1.25; font-weight: 500 !important; letter-spacing: -.015em !important; color: rgba(255, 255, 255, .94); }
-.tr-l.lo { font-size: clamp(24px, 2.5vw, 36px); line-height: 1.15; }
-.tr-l em, .tr-end p em { font-style: normal; color: #FFE08A; }
-.tr-w { display: inline-block; opacity: 0; transform: translateY(.3em); filter: blur(10px); transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform 1.1s cubic-bezier(.16, .84, .24, 1), filter .9s cubic-bezier(.2, .7, .2, 1); will-change: transform, opacity, filter; }
+.tr-l.lo, .tr-l.jm { font-size: clamp(20px, 1.9vw, 28px) !important; line-height: 1.28; letter-spacing: -.02em !important; }
+.tr-l em, .tr-end p em { font-style: normal; color: inherit; }
+.tr-w { display: inline-block; opacity: 0; transform: translateY(.32em); filter: blur(6px); transition: opacity .45s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.16, .84, .24, 1), filter .5s cubic-bezier(.2, .7, .2, 1); will-change: transform, opacity, filter; }
 .tr-w.on { opacity: 1; transform: none; filter: blur(0); }
-.tr-cap { transition: opacity .9s cubic-bezier(.4, 0, .2, 1), filter .9s; }
+.tr-cap { transition: opacity .6s cubic-bezier(.4, 0, .2, 1), filter .6s; }
 .tr-cap.out { opacity: 0; filter: blur(8px); }
 .tr-cap.out.mid { transform: translate(-50%, -62%); transition: opacity .9s, filter .9s, transform 1.2s cubic-bezier(.4, 0, .2, 1); }
 
@@ -5781,7 +5784,7 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr-end { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -40%); display: grid; justify-items: center; gap: 22px; text-align: center; opacity: 0; pointer-events: none; transition: opacity .9s, transform 1.1s cubic-bezier(.2, .8, .2, 1); }
 .tr.done .tr-end { opacity: 1; transform: translate(-50%, -50%); pointer-events: auto; }
 .tr.done .tr-ctl, .tr.done .tr-cap { opacity: 0; pointer-events: none; }
-.tr-end p { margin: 0; font-size: clamp(34px, 4vw, 58px); line-height: 1.05; text-shadow: 0 2px 30px rgba(30, 22, 60, .5); }
+.tr-end p { margin: 0; white-space: nowrap; font-size: clamp(26px, 3.4vw, 50px); line-height: 1.05; text-shadow: 0 2px 30px rgba(30, 22, 60, .5); }
 .tr-end p em { font-style: italic; color: #FFE2B8; }
 .tr-end div { display: flex; gap: 10px; }
 .tr-end button { height: 48px; padding: 0 22px; border-radius: 999px; font: 700 15px/1 var(--sans); color: #fff; background: rgba(255, 255, 255, .14); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); transition: transform .4s var(--spring), background .25s; }
@@ -5789,6 +5792,8 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr-end button.go { background: #fff; color: #141414; box-shadow: none; }
 html:root.touring .scroll-cue, html:root.touring .scroll-cue.idle, html.touring .hero-copy, html.touring .places, html.touring .hint, html.touring .sheet { opacity: 0 !important; pointer-events: none !important; transition: opacity .8s !important; }
 html.touring .np.tour { opacity: 0; pointer-events: none; }
+html.touring .bar, html.touring .nav, html.touring .logo, html.touring .wop-badge, html.touring .vc, html.touring .theme-btn, html.touring .sfx-btn, html.touring #compass, html.touring .mapctl, html.touring .jtl, html.touring .jtl-view, html.touring .jcar, html.touring .cs-bar, html.touring .c3-prog { opacity: 0 !important; pointer-events: none !important; transition: opacity .7s ease !important; }
+.vc { transition: opacity .5s var(--ease), transform .6s var(--ease), right .7s var(--ease); }
 @media (prefers-reduced-motion: reduce) { .tr-w { filter: none; transform: none; } }
 </style>
 
@@ -9882,7 +9887,24 @@ function emailOk(e) {
       V.push(['v2/tour/j' + i + '.mp3', jt]);
       CARDS.push({ pos: i ? 'map' : 'map mid0', out: jt + d + .2, lines: [['jm', segs.map(([a, b, t]) => [jt + a, jt + b, t])]] });
       jt += d + (i ? 1.1 : 1.6); });
-    const END = jt + .3;
+    // section 3 · inside EazyDiner: the case study opens out of the haze and turns its own pages while she tells it
+    const S3 = jt + .2, EL = [
+      [4.4, [[0, 'Now, let me take you inside one of his projects. EazyDiner.']], ['The story', 0, 'The story', 1600]],
+      [7.6, [[0, 'People came to pay their bill with a discount.'], [2.98, 'But out of every hundred diners, only 35 actually paid.']], ['The drop-off', 0, 'The drop-off', 2600]],
+      [7.12, [[0, 'So he read what real users were telling them, and turned 40+ pain points into five real problems.']], ['Listening', 0, 'The whiteboard', 1800]],
+      [5.84, [[0, 'He studied 50+ apps before drawing a thing, and it took four rounds to get it right.']], ['Looking around', 0, 'Four rounds', 1800]],
+      [10.24, [[0, 'Then came the twist.'], [1.78, 'People didn’t need more coupons. They needed confidence.'], [5.72, 'So now, the best coupon shows up first, ready in one tap.']], ['The twist', 0, 'The twist', 700]],
+      [8.72, [[0, 'It shipped.'], [1.17, 'Payment success went up 41%, and coupon use, almost 25%.'], [6.88, 'That’s the bill, settled.']], ['Results', 0, 'Results', 900]]];
+    const CK = [[S3 + .7, 'The story', 0]];   // [time, chapter, pixels into it]: where the case study should be
+    jt = S3 + 1.6; EL.forEach(([d, caps, [k0, o0, k1, o1]], i) => {
+      if (i) CK.push([jt - 1.3, CK[CK.length - 1][1], CK[CK.length - 1][2]]);
+      CK.push([jt, k0, o0], [jt + d + .4, k1, o1]);
+      V.push(['v2/tour/e' + i + '.mp3', jt]);
+      caps.forEach(([a, t], j) => CARDS.push({ pos: 'csx', out: jt + (j < caps.length - 1 ? caps[j + 1][0] - .1 : d + .2), lines: [['jm', [[jt + a, jt + a + 1, t]]]] }));
+      jt += d + 1.4; });
+    const END = jt - .6;
+    const chY = (k, o) => { let e = csE.querySelector(`[data-ch="${k}"]`), y = o; if (!e) return 0; while (e && e !== csE) { y += e.offsetTop; e = e.offsetParent; } return y; };   // offsets, not screen positions: pinned chapters would lie
+    const scrollAt = T => { for (let i = 1; i < CK.length; i++) if (T < CK[i][0]) { const [t0, k0, o0] = CK[i - 1], [t1, k1, o1] = CK[i], a = chY(k0, o0); return a + (chY(k1, o1) - a) * sm(t0, t1, T); } const l = CK[CK.length - 1]; return chY(l[1], l[2]); };
     const posAt = T => { for (let i = 1; i < JK.length; i++) if (T < JK[i][0]) { const [t0, p0] = JK[i - 1], [t1, p1] = JK[i]; return p0 + (p1 - p0) * sm(t0, t1, T); } return JK[JK.length - 1][1]; };
     const sm = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
     const eo = t => 1 - Math.pow(1 - clamp(t), 3);
@@ -9911,9 +9933,10 @@ function emailOk(e) {
       return ac;
     }
     // the opening lines are waited for; the rest arrive while she is already talking
-    let bufP = [], run = 0, jumped = false, cutEl = null;
+    let bufP = [], run = 0, jumped = false, cutEl = null, inCase = false, lastY = 0; const jPinEl = $('#jPin'), csE = $('#cs');
     const dec = u => fetch(u).then(r => r.arrayBuffer()).then(a => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).catch(() => null);
-    const load = () => loading || (loading = audio() ? (bufP = V.map(([u]) => dec(u)), Promise.all(bufP.slice(0, 3))) : Promise.resolve());
+    let musP = null;   // the score: an ElevenLabs piece, loaded alongside her first lines and started the moment it is ready
+    const load = () => loading || (loading = audio() ? (bufP = V.map(([u]) => dec(u)), musP = dec('v2/tour/music.mp3'), Promise.all(bufP.slice(0, 3))) : Promise.resolve());
     ['pointerenter', 'focus', 'touchstart'].forEach(ev => btn.addEventListener(ev, () => load(), { passive: true, once: true }));
 
     const CH = [[50, 57, 61, 64, 69], [47, 54, 57, 62, 66], [43, 50, 54, 59, 62], [45, 52, 57, 61, 64]];   // D, Bm, G, A, all with soft added notes
@@ -9937,7 +9960,6 @@ function emailOk(e) {
     }
     const ramp = (p, v, at, dur) => { p.cancelScheduledValues(at); p.setValueAtTime(p.value, at); p.linearRampToValueAtTime(v, at + dur); };
 
-    // the clouds: a few layers of soft noise, lit from a low sun, rushing past as we fly
     // the clouds: the same painted cloud that floats in the valley's sky, cut into a few shapes and flown past in 3D
     const CLOUD = new Image(); CLOUD.decoding = 'async'; CLOUD.src = 'v2/h/cloud_s.webp';
     let ctx = null, shapes = null, puffs = [], dpr = 1, flew = false;
@@ -9953,28 +9975,37 @@ function emailOk(e) {
       // the whole cloud, its mirror, and two of its puffs on their own (feathered, so no edge ever shows)
       shapes = [mk(0, 0, W, H), mk(0, 0, W, H, true), mk(0, H * .32, W * .52, H * .68, false, true), mk(W * .5, H * .22, W * .5, H * .78, true, true)];
     }
-    function spawn(P, far, centre) {
-      const ang = rnd(0, Math.PI * 2), r = centre ? rnd(0, .45) : rnd(1.05, 2.3);
-      P.x = Math.cos(ang) * r * 1.5; P.y = Math.sin(ang) * r * .75 + .15; P.z = far ? rnd(4.6, 6.2) : rnd(1, 6.2);
-      P.s = Math.floor(Math.random() * 4); P.k = rnd(.9, 1.5); P.d = rnd(-.02, .02); return P;
+    function spawn(P, far, centre, wide) {
+      const ang = rnd(0, Math.PI * 2), r = centre ? rnd(0, .4) : rnd(wide ? 1.35 : .95, 2.6);
+      P.x = Math.cos(ang) * r * 1.55; P.y = Math.sin(ang) * r * .7 + .18; P.z = far ? rnd(6, 8) : rnd(.9, 8);
+      P.fog = !centre && Math.random() < .22; P.s = Math.floor(Math.random() * 4); P.k = P.fog ? rnd(2.2, 3.4) : rnd(.8, 1.6); P.d = rnd(-.025, .025); P.dead = false; return P;
     }
-    function glInit() { ctx = cv.getContext('2d'); puffs = Array.from({ length: 13 }, () => spawn({}, false, false)); flew = false;
+    // a soft sheet of mist, for the air between the clouds
+    const FOG = (() => { const c = document.createElement('canvas'); c.width = 512; c.height = 256; const x = c.getContext('2d'); x.setTransform(256, 0, 0, 128, 256, 128);
+      const g = x.createRadialGradient(0, 0, 0, 0, 0, 1); g.addColorStop(0, 'rgba(255,255,255,.75)'); g.addColorStop(.5, 'rgba(255,255,255,.35)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(-1, -1, 2, 2); return c; })();
+    function glInit() { ctx = cv.getContext('2d'); puffs = Array.from({ length: 30 }, () => spawn({}, false, false)); flew = false;
       if (CLOUD.complete && CLOUD.naturalWidth) cut(); else CLOUD.onload = cut; }
     function sizeCv() { dpr = Math.min(devicePixelRatio || 1, 1.5); const w = Math.round(innerWidth * dpr), h = Math.round(innerHeight * dpr); if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; } }
     function drawSky(T, speed, dT, sky, alpha) {
-      const W = cv.width, H = cv.height; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, W, H);
-      if (sky > .001) { const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#3D7DD0'); g.addColorStop(.55, '#86B8EC'); g.addColorStop(1, '#D9E9FA'); ctx.globalAlpha = sky; ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
+      const W = cv.width, H = cv.height; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, W, H);
+      // a golden-hour sky, so the colours already match the valley we are about to land in
+      if (sky > .001) { const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#3A6CBF'); g.addColorStop(.5, '#8EB2E2'); g.addColorStop(.82, '#EED4BC'); g.addColorStop(1, '#F6BE8E');
+        ctx.globalAlpha = sky; ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+        const sg = ctx.createRadialGradient(W * .55, H * .92, 0, W * .55, H * .92, H * .8); sg.addColorStop(0, 'rgba(255,214,150,.55)'); sg.addColorStop(1, 'rgba(255,214,150,0)'); ctx.fillStyle = sg; ctx.fillRect(0, 0, W, H); }
       if (!shapes || alpha <= .001) return;
-      // on "let's fly in", a few clouds line up dead ahead, so we really go through them
-      if (!flew && T > 9.5) { flew = true; puffs.slice(0, 5).forEach((P, i) => { spawn(P, false, true); P.z = 2.2 + i * .75; }); }
+      // on "let's fly in", a line of clouds waits dead ahead, so we really go through them
+      if (!flew && T > 9.2) { flew = true; puffs.filter(P => !P.fog).slice(0, 6).forEach((P, i) => { spawn(P, false, true); P.fog = false; P.k = rnd(1.3, 1.8); P.z = 1.3 + i * .42; }); }
       const F = H * .95, cx = W / 2, cy = H * .5;
-      puffs.forEach(P => { P.z -= speed * dT; P.x += P.d * dT; if (P.z < .22) spawn(P, true, false); });
-      puffs.sort((p, q) => q.z - p.z).forEach(P => {
-        const sh = shapes[P.s], w = P.k * F / P.z * 1.1, h = w * sh.height / sh.width;
-        const a = alpha * sm(6.2, 4.7, P.z) * sm(.22, .85, P.z) * .97; if (a < .004 || w > W * 12) return;
+      puffs.forEach(P => { if (P.dead) return; P.z -= speed * dT; P.x += P.d * dT; if (P.z < .22) { if (T < 11.8) spawn(P, true, false, T > 10.2); else P.dead = true; } });
+      puffs.filter(P => !P.dead).sort((p, q) => q.z - p.z).forEach(P => {
+        const sh = P.fog ? FOG : shapes[P.s], w = P.k * F / P.z * 1.1, h = w * sh.height / sh.width;
+        const a = alpha * sm(8, 5.6, P.z) * sm(.22, .9, P.z) * (P.fog ? .55 : .97); if (a < .004 || w > W * 12) return;
         ctx.globalAlpha = a; ctx.drawImage(sh, cx + P.x / P.z * F - w / 2, cy + P.y / P.z * F - h * .6, w, h);
       });
-      ctx.globalAlpha = 1;
+      // low sun: the undersides of the clouds near the horizon pick up a little warmth
+      ctx.globalCompositeOperation = 'source-atop'; ctx.globalAlpha = 1;
+      const wg = ctx.createLinearGradient(0, H * .35, 0, H); wg.addColorStop(0, 'rgba(255,190,130,0)'); wg.addColorStop(1, 'rgba(255,176,112,.3)'); ctx.fillStyle = wg; ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'source-over';
     }
 
     // captions: every word arrives with its own breath, timed to the voice
@@ -9983,20 +10014,22 @@ function emailOk(e) {
     function mkCard(C) {
       const el = document.createElement('div'); el.className = 'tr-cap ' + C.pos;
       el.innerHTML = C.lines.map(([cls, segs]) => `<p class="tr-l ${cls}">${segs.map(([s, e, t]) => words(t, s, e)).join(' ')}</p>`).join('');
-      root.insertBefore(el, $('.tr-ctl', root)); return { el, C, ws: $$('.tr-w', el).map(w => [w, +w.dataset.t]), out: false };
+      root.insertBefore(el, $('.tr-ctl', root));
+      const ws = []; $$('.tr-l', el).forEach((l, li) => { const t0 = C.lines[li][1][0][0] - .12; $$('.tr-w', l).forEach((w, i) => ws.push([w, t0 + i * .03])); });
+      return { el, C, ws, out: false };
     }
     const clock = () => paused ? perfT : useAc ? ac.currentTime - st : performance.now() / 1000 - st;
 
     function build() {
       root = document.createElement('div'); root.className = 'tr'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-label', 'A guided tour of James’s portfolio');
-      root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-veil" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div>
+      root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-veil" aria-hidden="true"></div><div class="tr-vig" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div>
         <div class="tr-ctl"><button type="button" class="tr-pp" aria-label="Pause"><svg class="pa" viewBox="0 0 14 14"><rect x="2.5" y="1.5" width="3.2" height="11" rx="1"/><rect x="8.3" y="1.5" width="3.2" height="11" rx="1"/></svg><svg class="pl" viewBox="0 0 14 14"><path d="M3.5 1.8v10.4c0 .6.7 1 1.2.7l8-5.2a.8.8 0 0 0 0-1.4l-8-5.2c-.5-.3-1.2.1-1.2.7z"/></svg></button><span class="tr-bar" aria-hidden="true"><i></i></span><button type="button" class="tr-x">End tour</button></div>
         <div class="tr-end"><p>That’s his story, <em>so far.</em></p><div><button type="button" class="tr-again">Watch again</button><button type="button" class="go tr-own">Explore on my own</button></div></div>`;
       document.body.appendChild(root); cutEl = $('.tr-cut', root); cv = $('.tr-sky', root); glInit(); sizeCv();
       $('.tr-pp', root).addEventListener('click', e => { e.stopPropagation(); pause(); });
       $('.tr-x', root).addEventListener('click', e => { e.stopPropagation(); end(); });
       $('.tr-own', root).addEventListener('click', e => { e.stopPropagation(); end(); });
-      $('.tr-again', root).addEventListener('click', e => { e.stopPropagation(); reset(); begin(); });
+      $('.tr-again', root).addEventListener('click', e => { e.stopPropagation(); reset(); if (csE.classList.contains('open')) { closeCase(); setTimeout(begin, 900); } else begin(); });
       root.addEventListener('click', () => { if (on && !root.classList.contains('done')) pause(); });
     }
     function pause() {
@@ -10008,18 +10041,18 @@ function emailOk(e) {
     }
     function lockPage(lock) {
       if (lock) { unfocus && focusId && unfocus(); goTo(0); lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; document.documentElement.classList.add('touring'); }
-      else { document.documentElement.classList.remove('touring'); document.documentElement.style.overflow = ''; lenis && lenis.start(); }
+      else { document.documentElement.classList.remove('touring'); csE.style.transform = csE.style.filter = ''; if (csE.classList.contains('open')) return; document.documentElement.style.overflow = ''; lenis && lenis.start(); }
     }
     function reset() {
       srcs.forEach(s => { try { s.stop(); } catch (_) {} }); srcs = []; clearInterval(padT);
-      cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; run++; flew = false; puffs.forEach(P => spawn(P, false, false));
+      cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; inCase = false; run++; stage.style.filter = ''; delete stage.dataset.tf; flew = false; puffs.forEach(P => spawn(P, false, false));
       $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       tour.e = null; tour.cam = null; tour.lit = false;
-      if (root) { root.classList.remove('done', 'paused', 'low'); root.style.opacity = ''; }
+      if (root) { root.classList.remove('done', 'paused', 'low', 'lite'); root.style.opacity = ''; }
       paused = false;
     }
     async function begin() {
-      on = true; lockPage(true); tour.e = 0;
+      on = true; lockPage(true); tour.e = 0; btn.hidden = true;
       if (!root) build(); root.classList.add('live'); requestAnimationFrame(() => root.classList.add('in'));
       root.style.setProperty('--veil', 1); cv.style.display = '';
       await load();
@@ -10033,43 +10066,56 @@ function emailOk(e) {
           const s = ac.createBufferSource(); s.buffer = b; s.connect(master); s.start(at); srcs.push(s); }));
         // the music sits low under her voice the whole way, and opens up a little once she is done
         const now = ac.currentTime, m = mus.gain, w = wind.gain;
-        m.cancelScheduledValues(now); m.setValueAtTime(m.value, now); m.linearRampToValueAtTime(.34, now + 2.5); m.setValueAtTime(.34, st + END - .8); m.linearRampToValueAtTime(.5, st + END + 1.4);
-        w.cancelScheduledValues(now); w.setValueAtTime(w.value, now); w.linearRampToValueAtTime(.16, now + 2.5); w.setValueAtTime(.16, st + 10.6); w.linearRampToValueAtTime(0, st + 14);
-        nextChord = ac.currentTime + .1; pad(); padT = setInterval(pad, 700);
+        m.cancelScheduledValues(now); m.setValueAtTime(m.value, now); m.linearRampToValueAtTime(.17, now + 3); m.setValueAtTime(.17, st + END - .8); m.linearRampToValueAtTime(.3, st + END + 1.6);
+        w.cancelScheduledValues(now); w.setValueAtTime(w.value, now); w.linearRampToValueAtTime(.1, now + 2.5); w.setValueAtTime(.1, st + 10.6); w.linearRampToValueAtTime(0, st + 14);
+        musP && musP.then(b => { if (!b || me !== run || !on) return; const s = ac.createBufferSource(); s.buffer = b; s.connect(mus); s.start(ac.currentTime + .05); srcs.push(s); });
       }
       last = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(tick);
     }
     function end() {
       if (!on) return; on = false; cancelAnimationFrame(raf);
-      root.classList.remove('in', 'live', 'low'); root.style.opacity = '0'; root.style.transition = 'opacity 1s';
+      root.classList.remove('in', 'live', 'low', 'lite'); root.style.opacity = '0'; root.style.transition = 'opacity 1s';
       if (ac) { ramp(mus.gain, 0, ac.currentTime, 1.2); ramp(wind.gain, 0, ac.currentTime, .6); }
       srcs.forEach(s => { try { s.stop(ac.currentTime + .05); } catch (_) {} });
       // the camera eases home on its own
-      tour.cam = null; tour.lit = false; tour.e = null; tour.back = true; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
+      stage.style.filter = ''; jPinEl.style.transform = jPinEl.style.filter = ''; if (jumped) uz = 1; btn.hidden = false; tour.cam = null; tour.lit = false; tour.e = null; tour.back = true; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       lockPage(false);
       setTimeout(() => { if (on) return; reset(); clearInterval(padT); root.remove(); root = null; ctx = null; ac && ac.suspend(); }, 1300);
       btn.focus({ preventScroll: true });
     }
     function camFor(id) {
       if (!id || mobile) return { x: baseX, y: baseY, s: 1 };
-      const sp = SPOT[id], s = 1.08;
+      const sp = SPOT[id], s = 1.15;
       return clampCam({ x: vw * .5 - s * sp[0] * SW, y: vh * .44 - s * sp[1] * SH, s });
     }
     function tick() {
       raf = requestAnimationFrame(tick);
       const T = clock(), dT = Math.max(0, Math.min(.1, T - last)); last = T;
       // fly: a slow drift while she says hello, then we pick up speed on "let's fly in" and ease out over the valley
-      const speed = .1 + 3.1 * sm(9.4, 10.6, T) * (1 - sm(12.4, 14, T)), sky = 1 - sm(11.3, 12.7, T), alpha = 1 - sm(13, 14.2, T);
+      const speed = .12 + 2.5 * sm(8.8, 10.8, T) * (1 - sm(11.4, 15.4, T)) + .3 * sm(11.4, 15.4, T), sky = 1 - sm(10.4, 12.5, T), alpha = 1 - sm(12.4, 14.2, T);
+      // the valley comes up out of the mist: soft and bright at first, sharpening as the last clouds slide past
+      if (T > 10 && T < 13.8) { const m = 1 - sm(10.6, 13.4, T); stage.style.filter = `blur(${(m * 14).toFixed(1)}px) brightness(${(1 + m * .22).toFixed(3)})`; stage.dataset.tf = 1; }
+      else if (stage.dataset.tf) { stage.style.filter = ''; delete stage.dataset.tf; }
       if (alpha > .001) { sizeCv(); drawSky(T, speed, dT, sky, alpha); }
       if (alpha <= .001 && cv.style.display !== 'none') cv.style.display = 'none';
       root.style.setProperty('--veil', (1 - sm(11, 13, T)).toFixed(3));
       // the valley: we come out of the clouds still moving, glide a little way in, and settle back once she is done
-      if (T < CUT) tour.e = T < 11 ? 0 : T < 26.4 ? .45 * eo((T - 11) / 4.6) : .45 * (1 - sm(26.4, 27.4, T));
-      root.classList.toggle('low', T > 13.4 && T < 26.6);
+      if (T < CUT) { const pu = sm(26, CUT, T); tour.e = T < 10.4 ? 0 : .5 * eo((T - 10.4) / 6.2) + 1.1 * pu * pu;
+        if (T > 26) { stage.style.filter = `blur(${(pu * 12).toFixed(1)}px) brightness(${(1 + pu * .35).toFixed(3)})`; stage.dataset.tf = 1; } }
+      root.classList.toggle('low', T > 13.4 && T < END + .2); root.classList.toggle('lite', T > CUT);
       // section 2: a soft cut to the journey, then the map walks from stop to stop as she tells it
-      cutEl.style.opacity = (sm(26.5, 27.2, T) * (1 - sm(27.9, 28.7, T))).toFixed(3);
-      if (T >= CUT) {
-        if (!jumped) { jumped = true; tour.e = null; tour.back = true; tour.cam = null; tour.lit = false; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov')); goTo(top(journey)); }
+      cutEl.style.opacity = Math.max(sm(26.4, CUT, T) * (1 - sm(CUT + .15, CUT + 1.6, T)), sm(S3 - .3, S3 + .7, T) * (1 - sm(S3 + .9, S3 + 2.3, T))).toFixed(3);
+      if (T > S3 + .7 && T < END + 1) {
+        if (!inCase && typeof openCaseAt === 'function') { inCase = true; uz = 1; openCaseAt('coupon', jPinEl); }
+        const y = scrollAt(T), v = Math.abs(y - lastY) / Math.max(dT, .016); lastY = y; csE.scrollTop = y;
+        const q = 1 - eo((T - S3 - .7) / 1.8), mb = Math.min(5, v / 2600);   // it settles in from a touch larger, and a long glide gets a breath of motion blur
+        csE.style.transform = q > .002 ? `scale(${(1 + q * .06).toFixed(4)})` : ''; csE.style.filter = mb > .3 ? `blur(${mb.toFixed(1)}px)` : '';
+      }
+
+      if (T > CUT && T < CUT + 2.2) { const q = 1 - eo((T - CUT) / 2.1); jPinEl.style.transform = `scale(${(1 + q * .16).toFixed(4)})`; jPinEl.style.filter = q > .01 ? `blur(${(q * 10).toFixed(1)}px)` : ''; jPinEl.dataset.tf = 1; }
+      else if (jPinEl.dataset.tf) { jPinEl.style.transform = jPinEl.style.filter = ''; delete jPinEl.dataset.tf; }
+      if (T >= CUT && T < S3 + .7) {
+        if (!jumped) { jumped = true; tour.e = null; stage.style.filter = ''; delete stage.dataset.tf; uz = 1.5; tour.back = true; tour.cam = null; tour.lit = false; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov')); goTo(top(journey)); }
         const pos = posAt(T);
         if (jCar) jposT = pos; else goTo(jTop + jRange * (pos < 0 ? PH.hold + (pos + 1) * (PH.zoom - PH.hold) : PH.zoom + pos / (N - 1) * (PH.walk - PH.zoom)));
       }
