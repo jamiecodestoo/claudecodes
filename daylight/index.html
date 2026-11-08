@@ -5729,11 +5729,12 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr.live { pointer-events: auto; cursor: default; }
 .tr-sky, .tr-veil, .tr-low, .tr-cap { pointer-events: none; }
 .tr-ctl, .tr-end { z-index: 3; }
-.tr-vig { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 1.6s ease, background .8s; background: radial-gradient(ellipse 88% 82% at 50% 48%, rgba(8, 10, 22, 0) 56%, rgba(8, 10, 22, .46) 100%); }
+.tr-vig { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 1.6s ease, background .8s; background: radial-gradient(ellipse 80% 76% at 50% 46%, rgba(6, 8, 20, 0) 46%, rgba(6, 8, 20, .34) 76%, rgba(6, 8, 20, .7) 100%); }
 .tr.in .tr-vig { opacity: 1; }
-.tr.lite .tr-vig { background: radial-gradient(ellipse 88% 82% at 50% 48%, rgba(70, 48, 16, 0) 58%, rgba(70, 48, 16, .2) 100%); }
+.tr.lite .tr-vig { background: radial-gradient(ellipse 80% 76% at 50% 46%, rgba(60, 40, 12, 0) 48%, rgba(60, 40, 12, .16) 76%, rgba(60, 40, 12, .38) 100%); }
 :root[data-theme="dark"] .tr.lite .tr-vig { background: radial-gradient(ellipse 88% 82% at 50% 48%, rgba(0, 0, 0, 0) 56%, rgba(0, 0, 0, .5) 100%); }
 .tr-vig::after { content: ""; position: absolute; inset: 0; opacity: .07; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.tr-dim { position: absolute; inset: 0; background: var(--bg, #FBF8F1); opacity: 0; pointer-events: none; }
 .tr-cut { position: absolute; inset: 0; background: radial-gradient(120% 100% at 50% 50%, #FFFBF3, #FBF1E2); opacity: 0; pointer-events: none; }
 .tr.lite .tr-low { background: linear-gradient(0deg, rgba(251, 248, 241, .97), rgba(251, 248, 241, .8) 45%, rgba(251, 248, 241, 0)); }
 :root[data-theme="dark"] .tr.lite .tr-low { background: linear-gradient(0deg, rgba(16, 16, 16, .95), rgba(16, 16, 16, .75) 45%, rgba(16, 16, 16, 0)); }
@@ -5759,15 +5760,15 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr-cap.low, .tr-cap.map, .tr-cap.csx { left: 50%; top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 54px); width: min(860px, calc(100vw - 48px)); text-align: center; text-wrap: balance; }
 .tr-l, .tr-end p { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; font-weight: 700 !important; letter-spacing: -.035em !important; }
 .tr-cap { isolation: isolate; }
-.tr-cap.mid::before { content: ""; position: absolute; z-index: -1; inset: -40% -12%; background: radial-gradient(closest-side, rgba(16, 44, 96, .26), transparent); filter: blur(8px); }
-.tr-l { margin: 0; font-weight: 400; letter-spacing: -.012em; text-shadow: 0 1px 2px rgba(10, 30, 70, .18), 0 4px 30px rgba(10, 30, 70, .35); }
+.tr-cap.mid::before { content: ""; position: absolute; z-index: -1; inset: -40% -12%; background: radial-gradient(closest-side, rgba(20, 50, 110, .2), transparent 80%); filter: blur(8px); }
+.tr-l { margin: 0; font-weight: 400; letter-spacing: -.012em; text-shadow: 0 1px 3px rgba(14, 34, 80, .22), 0 6px 22px rgba(14, 34, 80, .26), 0 14px 60px rgba(14, 34, 80, .3); }
 .tr-l.big { font-size: clamp(26px, 3.6vw, 56px); line-height: 1.05; white-space: nowrap; }
-.tr-l.sub { margin-top: .8em; font-size: clamp(19px, 1.8vw, 26px); line-height: 1.25; font-weight: 500 !important; letter-spacing: -.015em !important; color: rgba(255, 255, 255, .94); }
-.tr-l.lo, .tr-l.jm { font-size: clamp(20px, 1.9vw, 28px) !important; line-height: 1.28; letter-spacing: -.02em !important; }
+.tr-l.sub { white-space: nowrap; margin-top: .8em; font-size: clamp(19px, 1.8vw, 26px); line-height: 1.25; font-weight: 500 !important; letter-spacing: -.015em !important; color: rgba(255, 255, 255, .94); }
+.tr-l.lo, .tr-l.jm { font-size: clamp(18px, 1.7vw, 25px) !important; line-height: 1.3; letter-spacing: -.015em !important; white-space: nowrap; }
 .tr-l em, .tr-end p em { font-style: normal; color: inherit; }
 .tr-w { display: inline-block; opacity: 0; transform: translateY(.32em); filter: blur(6px); transition: opacity .45s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.16, .84, .24, 1), filter .5s cubic-bezier(.2, .7, .2, 1); will-change: transform, opacity, filter; }
 .tr-w.on { opacity: 1; transform: none; filter: blur(0); }
-.tr-cap { transition: opacity .6s cubic-bezier(.4, 0, .2, 1), filter .6s; }
+.tr-cap { transition: opacity .3s cubic-bezier(.4, 0, .2, 1), filter .3s; }
 .tr-cap.out { opacity: 0; filter: blur(8px); }
 .tr-cap.out.mid { transform: translate(-50%, -62%); transition: opacity .9s, filter .9s, transform 1.2s cubic-bezier(.4, 0, .2, 1); }
 
@@ -5792,6 +5793,8 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr-end button.go { background: #fff; color: #141414; box-shadow: none; }
 html:root.touring .scroll-cue, html:root.touring .scroll-cue.idle, html.touring .hero-copy, html.touring .places, html.touring .hint, html.touring .sheet { opacity: 0 !important; pointer-events: none !important; transition: opacity .8s !important; }
 html.touring .np.tour { opacity: 0; pointer-events: none; }
+html.touring .spot2 { background: radial-gradient(circle var(--sr, 800px) at var(--sx, 50%) var(--sy, 50%), rgba(244, 239, 225, 0) 22%, rgba(244, 239, 225, .9) 70%); }
+:root[data-theme="dark"] html.touring .spot2, html.touring:root[data-theme="dark"] .spot2 { background: radial-gradient(circle var(--sr, 800px) at var(--sx, 50%) var(--sy, 50%), rgba(28, 28, 28, 0) 22%, rgba(28, 28, 28, .9) 70%); }
 html.touring .bar, html.touring .nav, html.touring .logo, html.touring .wop-badge, html.touring .vc, html.touring .theme-btn, html.touring .sfx-btn, html.touring #compass, html.touring .mapctl, html.touring .jtl, html.touring .jtl-view, html.touring .jcar, html.touring .cs-bar, html.touring .c3-prog { opacity: 0 !important; pointer-events: none !important; transition: opacity .7s ease !important; }
 .vc { transition: opacity .5s var(--ease), transform .6s var(--ease), right .7s var(--ease); }
 @media (prefers-reduced-motion: reduce) { .tr-w { filter: none; transform: none; } }
@@ -6500,7 +6503,7 @@ void main() {
     gl.uniform2f(glU.uRes, glc.width, glc.height); gl.uniform1f(glU.uDpr, dpr);
     gl.uniform3f(glU.uCam, cur.x, cur.y, cur.s); gl.uniform2f(glU.uSize, SW, SH);
     gl.uniform2f(glU.uOff, -px * PAR[0] * (1 - fa), -py * PAR[1] * (1 - fa) * (SW / SH)); gl.uniform1f(glU.uE, e);
-    gl.uniform1f(glU.uFocus, fa); gl.uniform1f(glU.uNight, nf); gl.uniform4f(glU.uSpot, hspot[0], hspot[1], hspot[2], hspot[3]); gl.uniform1f(glU.uDim, tour.lit ? .6 : .86);   // the tour's spotlight is a touch deeper, so the place she names really stands out
+    gl.uniform1f(glU.uFocus, fa); gl.uniform1f(glU.uNight, nf); gl.uniform4f(glU.uSpot, hspot[0], hspot[1], hspot[2], hspot[3]); gl.uniform1f(glU.uDim, tour.lit ? .46 : .86);   // the tour's spotlight is a touch deeper, so the place she names really stands out
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
@@ -9872,12 +9875,15 @@ function emailOk(e) {
     const V = [['v2/tour/v1.mp3', 1.4], ['v2/tour/v2.mp3', 8.3], ['v2/tour/v3.mp3', 13.9]];
     const CARDS = [
       { pos: 'mid', out: 7.6, lines: [['big', [[1.42, 3.3, 'Welcome to the world of *James.*']]], ['sub', [[3.64, 5.06, 'I’m his personal assistant,'], [5.23, 6.76, 'and I’ll be taking you through it.']]]] },
-      { pos: 'mid', out: 11.3, lines: [['big', [[8.3, 9.23, 'Get comfortable,'], [9.37, 11, 'and let’s fly in.']]]] },
-      { pos: 'low', out: 15.6, lines: [['lo', [[13.9, 15.41, 'This is his valley.']]]] },
-      { pos: 'low', out: 18.6, lines: [['lo', [[15.72, 18.26, 'Every place in it is a part of his story.']]]] },
-      { pos: 'low', out: 21.95, lines: [['lo', [[18.8, 19.71, 'His college,'], [19.86, 21.72, 'the companies he has designed for,']]]] },
-      { pos: 'low', out: 26.8, lines: [['lo', [[22.06, 23, 'and that’s *James,*'], [23.12, 23.95, 'on the terrace,'], [24.11, 24.76, 'with Olive,'], [24.89, 25.97, 'his golden retriever.']]]] }
+      { pos: 'mid', out: 11.3, lines: [['big', [[8.3, 9.23, 'Get comfortable,'], [9.37, 11, 'and let’s fly in.']]]] },,,,
     ];
+    // captions are always one line: a sentence is cut at its commas and full stops into short lines, each timed to its share of her voice
+    const cut1 = (t0, d, text) => { const parts = text.match(/[^,.!?]+[,.!?]*/g).map(x => x.trim()).filter(Boolean), out = [];
+      parts.forEach(x => { const l = out[out.length - 1]; if (l && !/[.!?]$/.test(l) && (l + ' ' + x).length <= 44) out[out.length - 1] = l + ' ' + x; else out.push(x); });
+      const L = out.reduce((a, x) => a + x.length + 4, 0), sp = d * .96; let c = 0;
+      return out.map(x => { const a = t0 + sp * c / L; c += x.length + 4; return [a, t0 + sp * c / L, x]; }); };
+    const say = (pos, cls, t0, d, text) => { const ls = cut1(t0, d, text); ls.forEach(([a, b, x], i) => CARDS.push({ pos, out: i < ls.length - 1 ? ls[i + 1][0] - .4 : b + .4, lines: [[cls, [[a, b, x]]]] })); };
+    say('low', 'lo', 13.9, 12.07, 'This is his valley. Every place in it is a part of his story. His college, the companies he has designed for, and that’s James, on the terrace, with Olive, his golden retriever.');
     const SPOTS = [[18.8, 'nsut'], [19.86, 'mmt'], [20.5, 'eazydiner'], [21.15, 'oyo'], [22.06, 'me'], [26.6, null]];
     // section 2 · the journey: a soft cut to the map, which walks stop to stop while she tells it
     const JL = [[6.11, [[0.0, 0.46, "Now,"], [0.46, 3.47, "let me show you how he got here."], [3.47, 4.57, "Nine stops,"], [4.57, 5.85, "from 2021 to now."]]], [7.0, [[0.0, 0.81, "In 2021,"], [0.81, 4.51, "he cleared JEE and joined NSUT in Delhi,"], [4.51, 6.76, "for mechanical engineering."]]], [8.44, [[0.0, 0.94, "A year later,"], [0.94, 3.57, "he and a friend tried to build an app."], [3.57, 4.31, "It failed,"], [4.31, 6.59, "but that’s where he opened Figma,"], [6.59, 8.14, "and never really closed it."]]], [4.99, [[0.0, 2.44, "He taught himself design at night,"], [2.44, 4.81, "and got an internship at IIT Delhi."]]], [3.97, [[0.0, 1.72, "At Hindustan Times,"], [1.72, 3.78, "design became a real job."]]], [6.61, [[0.0, 1.15, "At EazyDiner,"], [1.15, 4.29, "he learned to look beyond the screen."], [4.29, 6.43, "Payment success went up 41%."]]], [8.2, [[0.0, 1.34, "Then MakeMyTrip,"], [1.34, 3.64, "where everything got bigger."], [3.64, 5.14, "Millions of users,"], [5.14, 7.99, "and tiny decisions that mattered a lot."]]], [5.64, [[0.0, 0.58, "And now,"], [0.58, 1.42, "he’s at OYO,"], [1.42, 5.43, "designing everything between booking a room and walking into it."]]], [5.07, [[0.0, 0.84, "On the side,"], [0.84, 2.27, "he built his own app,"], [2.27, 2.92, "LastLook,"], [2.92, 4.87, "and launched it on the App Store."]]], [3.79, [[0.0, 1.77, "And he shares all of it,"], [1.77, 3.55, "on Instagram and LinkedIn."]]]];
@@ -9885,26 +9891,45 @@ function emailOk(e) {
     let jt = 28.6; JL.forEach(([d, segs], i) => {
       if (i) { const pos = i - 1, prev = JK[JK.length - 1][1]; JK.push([jt - (i === 1 ? 1.4 : 1), prev], [jt + (i === 1 ? 1.2 : .9), pos]); }
       V.push(['v2/tour/j' + i + '.mp3', jt]);
-      CARDS.push({ pos: i ? 'map' : 'map mid0', out: jt + d + .2, lines: [['jm', segs.map(([a, b, t]) => [jt + a, jt + b, t])]] });
+      say('map', 'jm', jt + segs[0][0], segs[segs.length - 1][1] - segs[0][0], segs.map(x => x[2]).join(' '));
       jt += d + (i ? 1.1 : 1.6); });
-    // section 3 · inside EazyDiner: the case study opens out of the haze and turns its own pages while she tells it
+    // section 3 · inside EazyDiner: the case study opens out of the haze and turns its own pages while she tells the story behind it
     const S3 = jt + .2, EL = [
-      [4.4, [[0, 'Now, let me take you inside one of his projects. EazyDiner.']], ['The story', 0, 'The story', 1600]],
-      [7.6, [[0, 'People came to pay their bill with a discount.'], [2.98, 'But out of every hundred diners, only 35 actually paid.']], ['The drop-off', 0, 'The drop-off', 2600]],
-      [7.12, [[0, 'So he read what real users were telling them, and turned 40+ pain points into five real problems.']], ['Listening', 0, 'The whiteboard', 1800]],
-      [5.84, [[0, 'He studied 50+ apps before drawing a thing, and it took four rounds to get it right.']], ['Looking around', 0, 'Four rounds', 1800]],
-      [10.24, [[0, 'Then came the twist.'], [1.78, 'People didn’t need more coupons. They needed confidence.'], [5.72, 'So now, the best coupon shows up first, ready in one tap.']], ['The twist', 0, 'The twist', 700]],
-      [8.72, [[0, 'It shipped.'], [1.17, 'Payment success went up 41%, and coupon use, almost 25%.'], [6.88, 'That’s the bill, settled.']], ['Results', 0, 'Results', 900]]];
-    const CK = [[S3 + .7, 'The story', 0]];   // [time, chapter, pixels into it]: where the case study should be
-    jt = S3 + 1.6; EL.forEach(([d, caps, [k0, o0, k1, o1]], i) => {
-      if (i) CK.push([jt - 1.3, CK[CK.length - 1][1], CK[CK.length - 1][2]]);
-      CK.push([jt, k0, o0], [jt + d + .4, k1, o1]);
-      V.push(['v2/tour/e' + i + '.mp3', jt]);
-      caps.forEach(([a, t], j) => CARDS.push({ pos: 'csx', out: jt + (j < caps.length - 1 ? caps[j + 1][0] - .1 : d + .2), lines: [['jm', [[jt + a, jt + a + 1, t]]]] }));
-      jt += d + 1.4; });
-    const END = jt - .6;
+      [3.84, 'This is one of my favourite stories about him. EazyDiner.', ['The story', 0, 'The story', 1200]],
+      [9.04, 'People came to EazyDiner for the discounts. But paying felt like a treasure hunt. Too many coupons, and no idea which one was best.', ['The drop-off', 0, 'The drop-off', 2400]],
+      [6.72, 'So he didn’t start in Figma. He started by listening, to real diners, and to the data.', ['Listening', 0, 'The whiteboard', 900]],
+      [5.6, 'And he noticed something. The problem wasn’t the coupons. It was confidence.', ['The twist', -120, 'The twist', 200]],
+      [6.64, 'So he flipped it. Instead of making people search, the app now just shows the best deal, first.', ['The twist', 640, 'The twist', 1000]],
+      [8.08, 'More people paid. And he still carries the lesson. Good design is about how people feel, not just what they see.', ['Results', -100, 'Results', 760]]];
+    const CK = [[S3 + .7, 'The story', 0, 0]];   // [time, chapter, pixels into it, is this a jump]
+    jt = S3 + 1.6; EL.forEach(([d, text, [k0, o0, k1, o1]], i) => {
+      if (i) { const l = CK[CK.length - 1]; CK.push([jt - 1.5, l[1], l[2], 0]); }
+      CK.push([jt, k0, o0, i ? 1 : 0], [jt + d + .5, k1, o1, 0]);
+      V.push(['v2/tour/f' + i + '.mp3', jt]);
+      say('csx', 'jm', jt, d, text);
+      jt += d + 1.5; });
+    // section 4 · LastLook: back out to the page, to the app he built for himself
+    const S4 = jt - .4, LL = [
+      [3.6, 'And then, there’s the thing he built just for himself.', ['#lastlook', -20, '#lastlook', 60]],
+      [8.88, 'He kept forgetting his things. So he made an app that gives you one last look, before you walk out the door. He called it LastLook.', ['#lastlook', 80, '#lastlook', 180]],
+      [8.24, 'He wore every hat. Founder, designer, brand, and even the iOS developer, writing it himself in Xcode.', ['#llRoles', -140, '#llRoles', 120]],
+      [4.64, 'He built it in public, and more than half a million people watched along.', ['.ll-stats', -360, '.ll-stats', -300]],
+      [5.44, 'Today, over four hundred people have it on their phones, and ten of them pay for it.', ['.ll-stats', -300, '.ll-stats', -260]],
+      [4.08, 'Not bad, for a mechanical engineer who Googled his way here.', ['.ll-stats', -260, '.ll-stats', -240]]];
+    const PK = [];   // [time, element, offset] on the page itself
+    jt = S4 + 2.6; LL.forEach(([d, text, [k0, o0, k1, o1]], i) => {
+      if (i) { const l = PK[PK.length - 1]; PK.push([jt - 1.2, l[1], l[2]]); } else PK.push([S4 + 1.4, k0, o0 - 200]);
+      PK.push([jt, k0, o0], [jt + d + .4, k1, o1]);
+      V.push(['v2/tour/l' + i + '.mp3', jt]);
+      say('csx', 'jm', jt, d, text);
+      jt += d + (i === 4 ? 1.4 : 1.1); });
+    const END = jt - .3;
     const chY = (k, o) => { let e = csE.querySelector(`[data-ch="${k}"]`), y = o; if (!e) return 0; while (e && e !== csE) { y += e.offsetTop; e = e.offsetParent; } return y; };   // offsets, not screen positions: pinned chapters would lie
-    const scrollAt = T => { for (let i = 1; i < CK.length; i++) if (T < CK[i][0]) { const [t0, k0, o0] = CK[i - 1], [t1, k1, o1] = CK[i], a = chY(k0, o0); return a + (chY(k1, o1) - a) * sm(t0, t1, T); } const l = CK[CK.length - 1]; return chY(l[1], l[2]); };
+    // where the case study should be, and how far into a jump between chapters we are (a jump dissolves rather than scrolls)
+    const scrollAt = T => { for (let i = 1; i < CK.length; i++) if (T < CK[i][0]) { const [t0, k0, o0] = CK[i - 1], [t1, k1, o1, j] = CK[i], a = chY(k0, o0), u = clamp((T - t0) / (t1 - t0));
+        return j ? [u < .5 ? a : chY(k1, o1), Math.sin(Math.PI * u)] : [a + (chY(k1, o1) - a) * sm(t0, t1, T), 0]; } const l = CK[CK.length - 1]; return [chY(l[1], l[2]), 0]; };
+    const pgY = (q, o) => { const e = $(q); return e ? top(e) + o : 0; };
+    const pageAt = T => { for (let i = 1; i < PK.length; i++) if (T < PK[i][0]) { const [t0, k0, o0] = PK[i - 1], [t1, k1, o1] = PK[i], a = pgY(k0, o0); return a + (pgY(k1, o1) - a) * sm(t0, t1, T); } const l = PK[PK.length - 1]; return pgY(l[1], l[2]); };
     const posAt = T => { for (let i = 1; i < JK.length; i++) if (T < JK[i][0]) { const [t0, p0] = JK[i - 1], [t1, p1] = JK[i]; return p0 + (p1 - p0) * sm(t0, t1, T); } return JK[JK.length - 1][1]; };
     const sm = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
     const eo = t => 1 - Math.pow(1 - clamp(t), 3);
@@ -9933,7 +9958,7 @@ function emailOk(e) {
       return ac;
     }
     // the opening lines are waited for; the rest arrive while she is already talking
-    let bufP = [], run = 0, jumped = false, cutEl = null, inCase = false, lastY = 0; const jPinEl = $('#jPin'), csE = $('#cs');
+    let bufP = [], run = 0, jumped = false, cutEl = null, dimEl = null, inCase = false, closed4 = false, lock4 = false, csY = -1, pgS = -1, posS = NaN; const jPinEl = $('#jPin'), csE = $('#cs');
     const dec = u => fetch(u).then(r => r.arrayBuffer()).then(a => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).catch(() => null);
     let musP = null;   // the score: an ElevenLabs piece, loaded alongside her first lines and started the moment it is ready
     const load = () => loading || (loading = audio() ? (bufP = V.map(([u]) => dec(u)), musP = dec('v2/tour/music.mp3'), Promise.all(bufP.slice(0, 3))) : Promise.resolve());
@@ -9977,13 +10002,13 @@ function emailOk(e) {
     }
     function spawn(P, far, centre, wide) {
       const ang = rnd(0, Math.PI * 2), r = centre ? rnd(0, .4) : rnd(wide ? 1.35 : .95, 2.6);
-      P.x = Math.cos(ang) * r * 1.55; P.y = Math.sin(ang) * r * .7 + .18; P.z = far ? rnd(6, 8) : rnd(.9, 8);
+      P.x = Math.cos(ang) * r * 1.7; P.y = Math.sin(ang) * r * .62 + .3; P.z = far ? rnd(6, 8) : rnd(.9, 8);
       P.fog = !centre && Math.random() < .22; P.s = Math.floor(Math.random() * 4); P.k = P.fog ? rnd(2.2, 3.4) : rnd(.8, 1.6); P.d = rnd(-.025, .025); P.dead = false; return P;
     }
     // a soft sheet of mist, for the air between the clouds
     const FOG = (() => { const c = document.createElement('canvas'); c.width = 512; c.height = 256; const x = c.getContext('2d'); x.setTransform(256, 0, 0, 128, 256, 128);
       const g = x.createRadialGradient(0, 0, 0, 0, 0, 1); g.addColorStop(0, 'rgba(255,255,255,.75)'); g.addColorStop(.5, 'rgba(255,255,255,.35)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(-1, -1, 2, 2); return c; })();
-    function glInit() { ctx = cv.getContext('2d'); puffs = Array.from({ length: 30 }, () => spawn({}, false, false)); flew = false;
+    function glInit() { ctx = cv.getContext('2d'); puffs = Array.from({ length: 30 }, () => spawn({}, false, false, true)); flew = false;
       if (CLOUD.complete && CLOUD.naturalWidth) cut(); else CLOUD.onload = cut; }
     function sizeCv() { dpr = Math.min(devicePixelRatio || 1, 1.5); const w = Math.round(innerWidth * dpr), h = Math.round(innerHeight * dpr); if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; } }
     function drawSky(T, speed, dT, sky, alpha) {
@@ -9994,9 +10019,9 @@ function emailOk(e) {
         const sg = ctx.createRadialGradient(W * .55, H * .92, 0, W * .55, H * .92, H * .8); sg.addColorStop(0, 'rgba(255,214,150,.55)'); sg.addColorStop(1, 'rgba(255,214,150,0)'); ctx.fillStyle = sg; ctx.fillRect(0, 0, W, H); }
       if (!shapes || alpha <= .001) return;
       // on "let's fly in", a line of clouds waits dead ahead, so we really go through them
-      if (!flew && T > 9.2) { flew = true; puffs.filter(P => !P.fog).slice(0, 6).forEach((P, i) => { spawn(P, false, true); P.fog = false; P.k = rnd(1.3, 1.8); P.z = 1.3 + i * .42; }); }
+      if (!flew && T > 7.7) { flew = true; puffs.filter(P => !P.fog && P.z > 5.5).slice(0, 6).forEach((P, i) => { spawn(P, false, true); P.fog = false; P.k = rnd(1.3, 1.8); P.z = 6.4 + i * .32; }); }   // once the welcome has faded: they start far off and faint, and grow as we speed up
       const F = H * .95, cx = W / 2, cy = H * .5;
-      puffs.forEach(P => { if (P.dead) return; P.z -= speed * dT; P.x += P.d * dT; if (P.z < .22) { if (T < 11.8) spawn(P, true, false, T > 10.2); else P.dead = true; } });
+      puffs.forEach(P => { if (P.dead) return; P.z -= speed * dT; P.x += P.d * dT; if (P.z < .22) { if (T < 11.8) spawn(P, true, false, true); else P.dead = true; } });
       puffs.filter(P => !P.dead).sort((p, q) => q.z - p.z).forEach(P => {
         const sh = P.fog ? FOG : shapes[P.s], w = P.k * F / P.z * 1.1, h = w * sh.height / sh.width;
         const a = alpha * sm(8, 5.6, P.z) * sm(.22, .9, P.z) * (P.fog ? .55 : .97); if (a < .004 || w > W * 12) return;
@@ -10022,10 +10047,10 @@ function emailOk(e) {
 
     function build() {
       root = document.createElement('div'); root.className = 'tr'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-label', 'A guided tour of James’s portfolio');
-      root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-veil" aria-hidden="true"></div><div class="tr-vig" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div>
+      root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-veil" aria-hidden="true"></div><div class="tr-vig" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div><div class="tr-dim" aria-hidden="true"></div>
         <div class="tr-ctl"><button type="button" class="tr-pp" aria-label="Pause"><svg class="pa" viewBox="0 0 14 14"><rect x="2.5" y="1.5" width="3.2" height="11" rx="1"/><rect x="8.3" y="1.5" width="3.2" height="11" rx="1"/></svg><svg class="pl" viewBox="0 0 14 14"><path d="M3.5 1.8v10.4c0 .6.7 1 1.2.7l8-5.2a.8.8 0 0 0 0-1.4l-8-5.2c-.5-.3-1.2.1-1.2.7z"/></svg></button><span class="tr-bar" aria-hidden="true"><i></i></span><button type="button" class="tr-x">End tour</button></div>
         <div class="tr-end"><p>That’s his story, <em>so far.</em></p><div><button type="button" class="tr-again">Watch again</button><button type="button" class="go tr-own">Explore on my own</button></div></div>`;
-      document.body.appendChild(root); cutEl = $('.tr-cut', root); cv = $('.tr-sky', root); glInit(); sizeCv();
+      document.body.appendChild(root); cutEl = $('.tr-cut', root); dimEl = $('.tr-dim', root); cv = $('.tr-sky', root); glInit(); sizeCv();
       $('.tr-pp', root).addEventListener('click', e => { e.stopPropagation(); pause(); });
       $('.tr-x', root).addEventListener('click', e => { e.stopPropagation(); end(); });
       $('.tr-own', root).addEventListener('click', e => { e.stopPropagation(); end(); });
@@ -10045,7 +10070,7 @@ function emailOk(e) {
     }
     function reset() {
       srcs.forEach(s => { try { s.stop(); } catch (_) {} }); srcs = []; clearInterval(padT);
-      cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; inCase = false; run++; stage.style.filter = ''; delete stage.dataset.tf; flew = false; puffs.forEach(P => spawn(P, false, false));
+      cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; inCase = false; closed4 = false; lock4 = false; csY = pgS = -1; posS = NaN; run++; stage.style.filter = ''; delete stage.dataset.tf; flew = false; puffs.forEach(P => spawn(P, false, false));
       $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       tour.e = null; tour.cam = null; tour.lit = false;
       if (root) { root.classList.remove('done', 'paused', 'low', 'lite'); root.style.opacity = ''; }
@@ -10092,7 +10117,7 @@ function emailOk(e) {
       raf = requestAnimationFrame(tick);
       const T = clock(), dT = Math.max(0, Math.min(.1, T - last)); last = T;
       // fly: a slow drift while she says hello, then we pick up speed on "let's fly in" and ease out over the valley
-      const speed = .12 + 2.5 * sm(8.8, 10.8, T) * (1 - sm(11.4, 15.4, T)) + .3 * sm(11.4, 15.4, T), sky = 1 - sm(10.4, 12.5, T), alpha = 1 - sm(12.4, 14.2, T);
+      const speed = .06 + 2.5 * sm(8.8, 10.8, T) * (1 - sm(11.4, 15.4, T)) + .3 * sm(11.4, 15.4, T), sky = 1 - sm(10.4, 12.5, T), alpha = 1 - sm(12.4, 14.2, T);
       // the valley comes up out of the mist: soft and bright at first, sharpening as the last clouds slide past
       if (T > 10 && T < 13.8) { const m = 1 - sm(10.6, 13.4, T); stage.style.filter = `blur(${(m * 14).toFixed(1)}px) brightness(${(1 + m * .22).toFixed(3)})`; stage.dataset.tf = 1; }
       else if (stage.dataset.tf) { stage.style.filter = ''; delete stage.dataset.tf; }
@@ -10104,19 +10129,26 @@ function emailOk(e) {
         if (T > 26) { stage.style.filter = `blur(${(pu * 12).toFixed(1)}px) brightness(${(1 + pu * .35).toFixed(3)})`; stage.dataset.tf = 1; } }
       root.classList.toggle('low', T > 13.4 && T < END + .2); root.classList.toggle('lite', T > CUT);
       // section 2: a soft cut to the journey, then the map walks from stop to stop as she tells it
-      cutEl.style.opacity = Math.max(sm(26.4, CUT, T) * (1 - sm(CUT + .15, CUT + 1.6, T)), sm(S3 - .3, S3 + .7, T) * (1 - sm(S3 + .9, S3 + 2.3, T))).toFixed(3);
-      if (T > S3 + .7 && T < END + 1) {
-        if (!inCase && typeof openCaseAt === 'function') { inCase = true; uz = 1; openCaseAt('coupon', jPinEl); }
-        const y = scrollAt(T), v = Math.abs(y - lastY) / Math.max(dT, .016); lastY = y; csE.scrollTop = y;
-        const q = 1 - eo((T - S3 - .7) / 1.8), mb = Math.min(5, v / 2600);   // it settles in from a touch larger, and a long glide gets a breath of motion blur
-        csE.style.transform = q > .002 ? `scale(${(1 + q * .06).toFixed(4)})` : ''; csE.style.filter = mb > .3 ? `blur(${mb.toFixed(1)}px)` : '';
+      cutEl.style.opacity = Math.max(sm(26.4, CUT, T) * (1 - sm(CUT + .15, CUT + 1.6, T)), sm(S3 - .3, S3 + .7, T) * (1 - sm(S3 + .9, S3 + 2.3, T)), sm(S4 - .3, S4 + .6, T) * (1 - sm(S4 + 1.6, S4 + 3, T))).toFixed(3);
+      let dip = 0;
+      if (T > S3 + .7 && T < S4 + .6) {
+        if (!inCase && typeof openCaseAt === 'function') { inCase = true; uz = 1; openCaseAt('coupon', jPinEl); csY = -1; }
+        const [y, dj] = scrollAt(T); dip = dj;
+        // a soft follower: the page never starts or stops dead, it always eases toward where it should be
+        if (csY < 0 || dj > .96) csY = y; else csY += (y - csY) * (1 - Math.exp(-dT * 3.4)); csE.scrollTop = csY;
+        const q = 1 - eo((T - S3 - .7) / 1.8); csE.style.transform = q > .002 ? `scale(${(1 + q * .06).toFixed(4)})` : '';
       }
+      // section 4: the case study closes behind the haze and we land on the app he built
+      if (T > S4 + .6 && !closed4) { closed4 = true; csE.style.transform = ''; if (csE.classList.contains('open') && typeof closeCase === 'function') closeCase(); }
+      if (T > S4 + 1.4 && T < END + 1) { if (!lock4) { lock4 = true; lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; pgS = -1; }
+        const y = pageAt(T); if (pgS < 0) pgS = y; else pgS += (y - pgS) * (1 - Math.exp(-dT * 3)); goTo(pgS); }
+      dimEl.style.opacity = (dip * .94).toFixed(3);
 
       if (T > CUT && T < CUT + 2.2) { const q = 1 - eo((T - CUT) / 2.1); jPinEl.style.transform = `scale(${(1 + q * .16).toFixed(4)})`; jPinEl.style.filter = q > .01 ? `blur(${(q * 10).toFixed(1)}px)` : ''; jPinEl.dataset.tf = 1; }
       else if (jPinEl.dataset.tf) { jPinEl.style.transform = jPinEl.style.filter = ''; delete jPinEl.dataset.tf; }
       if (T >= CUT && T < S3 + .7) {
         if (!jumped) { jumped = true; tour.e = null; stage.style.filter = ''; delete stage.dataset.tf; uz = 1.5; tour.back = true; tour.cam = null; tour.lit = false; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov')); goTo(top(journey)); }
-        const pos = posAt(T);
+        const pt = posAt(T); posS = Number.isNaN(posS) ? pt : posS + (pt - posS) * (1 - Math.exp(-dT * 3.2)); const pos = posS;
         if (jCar) jposT = pos; else goTo(jTop + jRange * (pos < 0 ? PH.hold + (pos + 1) * (PH.zoom - PH.hold) : PH.zoom + pos / (N - 1) * (PH.walk - PH.zoom)));
       }
       // the spotlight walks from place to place as she names them
