@@ -5729,6 +5729,22 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr.live { pointer-events: auto; cursor: default; }
 .tr-sky, .tr-veil, .tr-low, .tr-cap { pointer-events: none; }
 .tr-ctl, .tr-end { z-index: 3; }
+/* the last card */
+.tr.done::before { background: radial-gradient(60% 40% at 50% 48%, rgba(20, 44, 96, .16), transparent) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.tr.done .tr-vig { opacity: 1; background: radial-gradient(ellipse 80% 76% at 50% 46%, rgba(6, 8, 20, 0) 46%, rgba(6, 8, 20, .34) 76%, rgba(6, 8, 20, .7) 100%) !important; }
+.tr-end { gap: 0 !important; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.tr-end .tr-k, .tr-end .tr-s { text-shadow: 0 1px 2px rgba(14, 34, 80, .3), 0 4px 18px rgba(14, 34, 80, .3); }
+.tr-end .tr-k { font: 600 12px/1 "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: .24em; text-transform: uppercase; color: rgba(255, 255, 255, .82); }
+.tr.done .tr-end p { margin: 18px 0 0; color: #fff !important; text-shadow: 0 1px 3px rgba(14, 34, 80, .22), 0 6px 22px rgba(14, 34, 80, .26), 0 14px 60px rgba(14, 34, 80, .3) !important; font-size: clamp(30px, 3.6vw, 54px) !important; letter-spacing: -.035em !important; }
+.tr-end .tr-s { margin-top: 14px; font: 500 clamp(16px, 1.4vw, 19px)/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgba(255, 255, 255, .9); white-space: nowrap; }
+.tr-end > div { margin-top: 34px; display: flex; gap: 10px; }
+.tr.done .tr-end button, .tr.done .tr-end a { height: 48px; padding: 0 22px; border-radius: 999px; font: 600 15px/1 "Helvetica Neue", Helvetica, Arial, sans-serif !important; letter-spacing: -.01em; }
+.tr.done .tr-end button:not(.go) { color: #fff !important; background: rgba(255, 255, 255, .16) !important; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .24) !important; }
+.tr.done .tr-end button:not(.go):hover { background: rgba(255, 255, 255, .18) !important; }
+.tr.done .tr-end a.go, :root[data-theme="dark"] .tr.done .tr-end a.go { background: #fff !important; color: #11151F !important; }
+.tr.done .tr-end > * { animation: trUp .9s cubic-bezier(.2, .8, .2, 1) both; }
+.tr.done .tr-end > :nth-child(2) { animation-delay: .08s; } .tr.done .tr-end > :nth-child(3) { animation-delay: .16s; } .tr.done .tr-end > :nth-child(4) { animation-delay: .26s; }
+@keyframes trUp { from { opacity: 0; transform: translateY(14px); } }
 .tr-vig { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 1.6s ease, background .8s; background: radial-gradient(ellipse 80% 76% at 50% 46%, rgba(6, 8, 20, 0) 46%, rgba(6, 8, 20, .34) 76%, rgba(6, 8, 20, .7) 100%); }
 .tr.in .tr-vig { opacity: 1; }
 .tr.lite .tr-vig { background: radial-gradient(ellipse 80% 76% at 50% 46%, rgba(60, 40, 12, 0) 48%, rgba(60, 40, 12, .16) 76%, rgba(60, 40, 12, .38) 100%); }
@@ -6245,7 +6261,7 @@ html.touring .bar, html.touring .nav, html.touring .logo, html.touring .wop-badg
       fun: [
         ['School', '#D2553A', [['Mechanical Engineering, NSUT', '7 CGPA. Never liked it. Graduated anyway.'], ['Cleared JEE and Waterloo Maths', 'Then picked Delhi. Still think I was right.'], ['Found design by accident', 'A friend’s app flopped. I opened Figma and never closed it.']]],
         ['Work', '#2F7FD8', [['2 years, 4 logos', 'Hindustan Times → EazyDiner → MakeMyTrip → OYO. Products used by millions.'], ['+41% payment success', 'My coupon redesign at EazyDiner.'], ['LastLook, my own iOS app', 'Designed, built and shipped it solo. 400+ downloads.']]],
-        ['Off the clock', '#4F9E4A', [['Drums, piano and guitar', 'The happy noise. Apple Music is on. Always.'], ['Olive, my roommate', 'A golden retriever. She runs the flat.'], ['Delhi ⇄ Dubai', 'Long drives, music way too loud. Gym is my reset button.']]]
+        ['Off the clock', '#4F9E4A', [['Drums, piano and guitar', 'The happy noise. Apple Music is on. Always.'], ['Olive, my roommate', 'A golden retriever. He runs the flat.'], ['Delhi ⇄ Dubai', 'Long drives, music way too loud. Gym is my reset button.']]]
       ],
       n: [['2 yrs', 'industry experience'], ['3', 'products shipped at scale']], j: 7,
       photos: [['photo', 'Me, mid-laugh'], ['life-coldplay', 'Coldplay. Best night ever.'], ['life-olive', 'My roommate, Olive']],
@@ -9921,10 +9937,10 @@ function emailOk(e) {
     // 5 · off the clock: the James she knows
     shot('pg', 'o0', 4, 'But that’s the work. Let me tell you about the James I know.', '#life', -40, 0);
     shot('pg', 'o1', 4.32, 'He’s twenty-three, and he splits his life between Delhi and Dubai.', '#life', 0, 40, '#life h2 + p');
-    shot('pg', 'o2', 8.4, 'When he’s not in Figma, he’s making noise. Drums, piano, guitar, and music, always way too loud.', '#life', 340, 380, 'img[alt*="drum kit"]');
+    shot('pg', 'o2', 8.4, 'When he’s not in Figma, he’s making noise. Drums, piano, guitar, and music, always way too loud.', '#life', 340, 380, '#life .item.about');
     shot('pg', 'o3', 5.52, 'The gym is his reset button, and he asks “but why” about everything.', '#life', 380, 410, 'img[alt*="gym"]');
-    shot('pg', 'o4', 5.84, 'His roommate, Olive, is a golden retriever. And honestly, she runs the flat.', '#life', 410, 430, 'img[alt^="Olive"]');
-    shot('pg', 'o5', 4, 'Oh, and LastLook’s very first user? His sister.', '#life', 430, 440, 'img[alt*="sister"]', 1.6);
+    shot('pg', 'o4b', 5.84, 'His roommate, Olive, is a golden retriever. And honestly, he runs the flat.', '#life', 410, 430, 'img[alt^="Olive"]');
+    shot('pg', 'o5b', 3.52, 'And the drums? He calls them his happy noise.', '#life', 430, 440, 'img[alt*="drum kit"]', 1.6);
     // 6 · the wall
     shot('pg', 'w0', 7.04, 'Before you go, people leave notes for him on this wall. Say hi, share some feedback, or tell him what you’re building.', '#notes', -40, 40, null, 1.6);
     // 7 · the end
@@ -9968,7 +9984,7 @@ function emailOk(e) {
       return ac;
     }
     // the opening lines are waited for; the rest arrive while she is already talking
-    let bufP = [], run = 0, jumped = false, cutEl = null, dimEl = null, spEl = null, scoreBuf = null, nextScore = 0, inCase = false, closed4 = false, lock4 = false, csY = -1, pgS = -1, posS = NaN; const jPinEl = $('#jPin'), csE = $('#cs');
+    let endSky = false, bufP = [], run = 0, jumped = false, cutEl = null, dimEl = null, spEl = null, scoreBuf = null, nextScore = 0, inCase = false, closed4 = false, lock4 = false, csY = -1, pgS = -1, posS = NaN; const jPinEl = $('#jPin'), csE = $('#cs');
     const dec = u => fetch(u).then(r => r.arrayBuffer()).then(a => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).catch(() => null);
     let musP = null;   // the score: an ElevenLabs piece, loaded alongside her first lines and started the moment it is ready
     const load = () => loading || (loading = audio() ? (bufP = V.map(([u]) => dec(u)), musP = dec('v2/tour/score.mp3'), Promise.all(bufP.slice(0, 3))) : Promise.resolve());
@@ -10066,7 +10082,7 @@ function emailOk(e) {
       root = document.createElement('div'); root.className = 'tr'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-label', 'A guided tour of James’s portfolio');
       root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-veil" aria-hidden="true"></div><div class="tr-vig" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div><div class="tr-spot" aria-hidden="true"></div><div class="tr-dim" aria-hidden="true"></div>
         <div class="tr-ctl"><button type="button" class="tr-pp" aria-label="Pause"><svg class="pa" viewBox="0 0 14 14"><rect x="2.5" y="1.5" width="3.2" height="11" rx="1"/><rect x="8.3" y="1.5" width="3.2" height="11" rx="1"/></svg><svg class="pl" viewBox="0 0 14 14"><path d="M3.5 1.8v10.4c0 .6.7 1 1.2.7l8-5.2a.8.8 0 0 0 0-1.4l-8-5.2c-.5-.3-1.2.1-1.2.7z"/></svg></button><span class="tr-bar" aria-hidden="true"><i></i></span><button type="button" class="tr-x">End tour</button></div>
-        <div class="tr-end"><p>Thanks for taking the tour.</p><div><button type="button" class="tr-again">Watch again</button><a class="go" href="mailto:hello@jameschugh.com">Say hi</a><button type="button" class="tr-own">Explore on my own</button></div></div>`;
+        <div class="tr-end"><span class="tr-k">The end</span><p>Thanks for taking the tour.</p><span class="tr-s">Let’s make something nobody rage quits.</span><div><button type="button" class="tr-again">Watch again</button><a class="go" href="mailto:hello@jameschugh.com">Say hi</a><button type="button" class="tr-own">Explore on my own</button></div></div>`;
       document.body.appendChild(root); cutEl = $('.tr-cut', root); dimEl = $('.tr-dim', root); spEl = $('.tr-spot', root); cv = $('.tr-sky', root); glInit(); sizeCv();
       $('.tr-pp', root).addEventListener('click', e => { e.stopPropagation(); pause(); });
       $('.tr-x', root).addEventListener('click', e => { e.stopPropagation(); end(); });
@@ -10087,7 +10103,7 @@ function emailOk(e) {
     }
     function reset() {
       srcs.forEach(s => { try { s.stop(); } catch (_) {} }); srcs = []; clearInterval(padT);
-      cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; inCase = false; closed4 = false; lock4 = false; nextScore = 0; csY = pgS = -1; posS = NaN; run++; stage.style.filter = ''; delete stage.dataset.tf; flew = false; puffs.forEach(P => spawn(P, false, false));
+      cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; endSky = false; inCase = false; closed4 = false; lock4 = false; nextScore = 0; csY = pgS = -1; posS = NaN; run++; stage.style.filter = ''; delete stage.dataset.tf; flew = false; puffs.forEach(P => spawn(P, false, false));
       $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       tour.e = null; tour.cam = null; tour.lit = false;
       if (root) { root.classList.remove('done', 'paused', 'low', 'lite'); root.style.opacity = ''; }
@@ -10138,8 +10154,11 @@ function emailOk(e) {
       // the valley comes up out of the mist: soft and bright at first, sharpening as the last clouds slide past
       if (T > 10 && T < 13.8) { const m = 1 - sm(10.6, 13.4, T); stage.style.filter = `blur(${(m * 14).toFixed(1)}px) brightness(${(1 + m * .22).toFixed(3)})`; stage.dataset.tf = 1; }
       else if (stage.dataset.tf) { stage.style.filter = ''; delete stage.dataset.tf; }
-      if (alpha > .001) { sizeCv(); drawSky(T, speed, dT, sky, alpha); }
-      if (alpha <= .001 && cv.style.display !== 'none') cv.style.display = 'none';
+      // the end: the sky we started in fades back in behind the last card, so the story closes where it began
+      const endA = sm(END - .2, END + 1.8, T);
+      if (endA > .001 && !endSky) { endSky = true; flew = true; puffs.forEach(P => spawn(P, false, false, true)); cv.style.display = ''; }
+      if (alpha > .001 || endA > .001) { sizeCv(); drawSky(T, endA > .001 ? .05 : speed, dT, Math.max(sky, endA), Math.max(alpha, endA)); }
+      else if (cv.style.display !== 'none') cv.style.display = 'none';
       root.style.setProperty('--veil', (1 - sm(11, 13, T)).toFixed(3));
       // the valley: we come out of the clouds still moving, glide a little way in, and settle back once she is done
       if (T < CUT) { const pu = sm(26, CUT, T); tour.e = T < 10.4 ? 0 : .5 * eo((T - 10.4) / 6.2) + 1.1 * pu * pu;
