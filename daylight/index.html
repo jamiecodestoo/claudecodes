@@ -10136,7 +10136,7 @@ function emailOk(e) {
       root = document.createElement('div'); root.className = 'tr'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-label', 'A guided tour of James’s portfolio');
       root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-mist" aria-hidden="true"></div><div class="tr-veil" aria-hidden="true"></div><div class="tr-vig" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div><div class="tr-spot" aria-hidden="true"></div><div class="tr-dim" aria-hidden="true"></div><div class="tr-haze" aria-hidden="true"></div><div class="tr-orb" aria-hidden="true"><u></u><b></b><b></b><i></i></div>
         <div class="tr-ctl"><button type="button" class="tr-pp" aria-label="Pause"><svg class="pa" viewBox="0 0 14 14"><rect x="2.5" y="1.5" width="3.2" height="11" rx="1"/><rect x="8.3" y="1.5" width="3.2" height="11" rx="1"/></svg><svg class="pl" viewBox="0 0 14 14"><path d="M3.5 1.8v10.4c0 .6.7 1 1.2.7l8-5.2a.8.8 0 0 0 0-1.4l-8-5.2c-.5-.3-1.2.1-1.2.7z"/></svg></button><button type="button" class="tr-rate" aria-label="Playback speed">1×</button><span class="tr-bar" role="slider" aria-label="Jump to a part of the tour" tabindex="-1"><i></i></span><button type="button" class="tr-skip" aria-label="Skip to the next part"><svg viewBox="0 0 14 14"><path d="M2 2.2v9.6c0 .5.6.8 1 .5L9 7.6a.7.7 0 0 0 0-1.2L3 1.7c-.4-.3-1 0-1 .5z"/><rect x="10" y="2" width="2.2" height="10" rx="1"/></svg></button><button type="button" class="tr-x">End tour</button></div>
-        <div class="tr-end"><span class="tr-k">The end</span><p>Thanks for taking the tour.</p><span class="tr-s">Let’s make something nobody rage quits.</span><div><button type="button" class="tr-again">Watch again</button><a class="go" href="mailto:hello@jameschugh.com">Say hi</a><button type="button" class="tr-own">Explore on my own</button></div></div>`;
+        <div class="tr-end"><span class="tr-k">The end</span><p>Thanks for taking the tour.</p><span class="tr-s">Let’s make something nobody rage quits.</span><div><a class="go" href="mailto:hello@jameschugh.com">Say hi</a><button type="button" class="tr-own">Back home</button></div></div>`;
       document.body.appendChild(root); cutEl = $('.tr-cut', root); mistEl = $('.tr-mist', root); dimEl = $('.tr-dim', root); spEl = $('.tr-spot', root); hazeEl = $('.tr-haze', root); orbEl = $('.tr-orb', root); rings = $$('b', orbEl); cv = $('.tr-sky', root); glInit(); sizeCv();
       $('.tr-pp', root).addEventListener('click', e => { e.stopPropagation(); pause(); });
       $('.tr-x', root).addEventListener('click', e => { e.stopPropagation(); end(); });
@@ -10144,8 +10144,8 @@ function emailOk(e) {
       $('.tr-skip', root).addEventListener('click', e => { e.stopPropagation(); const n = CHAPS.find(c => c > tNow + .5); seek(n == null ? END - .05 : n); });
       const bar = $('.tr-bar', root); bar.innerHTML += CHAPS.slice(1).map(c => `<b style="left:${(c / END * 100).toFixed(2)}%"></b>`).join('');
       bar.addEventListener('click', e => { e.stopPropagation(); const r = bar.getBoundingClientRect(); seek(clamp((e.clientX - r.left) / r.width) * END); });
-      $('.tr-own', root).addEventListener('click', e => { e.stopPropagation(); end(); });
-      $('.tr-again', root).addEventListener('click', e => { e.stopPropagation(); reset(); if (csE.classList.contains('open')) { closeCase(); setTimeout(begin, 900); } else begin(); });
+      // back home: the page returns to the top underneath the last card, then the card melts away
+      $('.tr-own', root).addEventListener('click', e => { e.stopPropagation(); end(); goTo(0); });
       root.addEventListener('click', () => { if (on && !root.classList.contains('done')) pause(); });
     }
     function pause() {
@@ -10227,7 +10227,7 @@ function emailOk(e) {
           const c = cards.filter(c => !c.out && c.C.pos !== 'mid').pop();
           if (c && c.ws.length) { const w = c.ws[0][0].getBoundingClientRect(), l = c.ws[0][0].parentNode.getBoundingClientRect(); orb.tx = w.left - 26; orb.ty = l.top + l.height * .52; }
           s = .16; op = sm(13.4, 14.4, T);
-        } else { orb.tx = W / 2; orb.ty = H / 2 - 140; s = .45; }   // the end: it waits above the last card
+        } else { orb.tx = W / 2; orb.ty = H / 2 - 178; s = .45; }   // the end: it waits above the last card
         if (orb.rest) { orb.x = orb.tx; orb.y = orb.ty; orb.s = s; orb.rest = false; }
         orb.x += (orb.tx - orb.x) * k(4.5); orb.y += (orb.ty - orb.y) * k(4.5); orb.s += (s - orb.s) * k(4); x = orb.x; y = orb.y; s = orb.s;
       }
