@@ -5750,7 +5750,9 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr.lite .tr-vig { background: radial-gradient(ellipse 80% 76% at 50% 46%, rgba(60, 40, 12, 0) 48%, rgba(60, 40, 12, .16) 76%, rgba(60, 40, 12, .38) 100%); }
 :root[data-theme="dark"] .tr.lite .tr-vig { background: radial-gradient(ellipse 88% 82% at 50% 48%, rgba(0, 0, 0, 0) 56%, rgba(0, 0, 0, .5) 100%); }
 .tr-vig::after { content: ""; position: absolute; inset: 0; opacity: .07; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-.tr-spot { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(circle at var(--sx, 50%) var(--sy, 50%), rgba(14, 10, 6, 0) var(--sr, 200px), rgba(14, 10, 6, .5) calc(var(--sr, 200px) + 280px)); }
+.tr-spot { position: absolute; left: 0; top: 0; width: 200px; height: 120px; border-radius: 22px; pointer-events: none; opacity: 0; box-shadow: 0 0 0 200vmax rgba(250, 246, 238, .8), 0 0 60px 30px rgba(250, 246, 238, .55); transition: transform .75s cubic-bezier(.22, .8, .2, 1), width .75s cubic-bezier(.22, .8, .2, 1), height .75s cubic-bezier(.22, .8, .2, 1), opacity .5s ease; }
+:root[data-theme="dark"] .tr-spot { box-shadow: 0 0 0 200vmax rgba(14, 14, 14, .76), 0 0 60px 30px rgba(14, 14, 14, .5); }
+.tr.lite:not(.done) .tr-vig { opacity: 0 !important; }   /* the pages stay clean: the spotlight does the focusing */
 .tr-end a { display: inline-flex; align-items: center; height: 48px; padding: 0 22px; border-radius: 999px; font: 700 15px/1 var(--sans); text-decoration: none; transition: transform .4s var(--spring); }
 .tr-end a:hover { transform: translateY(-2px); }
 .tr.done .tr-end a.go { background: #14213A; color: #fff; }
@@ -6429,7 +6431,7 @@ html.touring .bar, html.touring .nav, html.touring .logo, html.touring .wop-badg
   let SW = 0, SH = 0, baseX = 0, baseY = 0, ax = .5, vTop = 0, vRange = 1, pV = 0;
   const cur = { x: 0, y: 0, s: 1 }, ptr = { x: 0, y: 0, sx: 0, sy: 0 };   // the painting starts exactly where it rests: no intro zoom that would glide once loading ends
   let focusId = null, rate = 2;
-  const tour = { e: null, ev: 0, cam: null, rate: 1, lit: false, spot: null };   // the guided tour steers the valley through these
+  const tour = { llLit: null, e: null, ev: 0, cam: null, rate: 1, lit: false, spot: null };   // the guided tour steers the valley through these
   // "scroll to fly in" appears 4s after the page opens (or at once, if loading took longer); it hides once you scroll and returns if you settle back at the top
   let cueT = 0;
   const cueArm = (wait = 1500) => { clearTimeout(cueT);
@@ -9338,7 +9340,7 @@ void main() {
   const llRoles = $('#llRoles');
   function frameLL(y) {
     if (!llRoles.classList.contains('in') && llRoles.getBoundingClientRect().top < vh * .82) llRoles.classList.add('in');
-    const p = playIn(llRevEl, 'll', 2600), lit = p * llWords.length * 1.05;
+    const p = playIn(llRevEl, 'll', 2600), lit = tour.llLit != null ? tour.llLit : p * llWords.length * 1.05;
     if (Math.abs(lit - llLit) < .05) return; llLit = lit;
     const b1 = DIMW(); llWords.forEach((w, i) => { w.style.opacity = (b1 + (1 - b1) * clamp(lit - i)).toFixed(3); });
     llMarks.forEach(m => m.el.classList.toggle('on', lit >= m.last + 1));
@@ -9917,7 +9919,7 @@ function emailOk(e) {
     // from EazyDiner to the very end, every line she says is a shot: a framed view that drifts slowly while she speaks,
     // an optional spotlight on the thing she is talking about, and a soft dissolve whenever the next shot is somewhere else
     const S3 = jt + .2, SHOTS = [];
-    const shot = (where, file, d, text, key, o0, o1, spot, gap = 1.3) => { SHOTS.push({ where, t: jt, d, key, o0, o1, spot }); V.push(['v2/tour/' + file + '.mp3', jt]); say('csx', 'jm', jt, d, text); jt += d + gap; };
+    const shot = (where, file, d, text, key, o0, o1, spot, gap = 1.3) => { SHOTS.push({ where, file, t: jt, d, key, o0, o1, spot }); V.push(['v2/tour/' + file + '.mp3', jt]); say('csx', 'jm', jt, d, text); jt += d + gap; };
     jt = S3 + 1.6;
     // 3 · EazyDiner, told as her favourite story about him
     shot('cs', 'f0', 3.84, 'This is one of my favourite stories about him. EazyDiner.', 'The story', 0, 220);
@@ -9928,11 +9930,11 @@ function emailOk(e) {
     shot('cs', 'f5', 8.08, 'More people paid. And he still carries the lesson. Good design is about how people feel, not just what they see.', 'Results', -100, 380, null, 1.6);
     // 4 · LastLook, back out on the page
     const S4 = jt - .4; jt = S4 + 2.6;
-    shot('pg', 'l0', 3.6, 'And then, there’s the thing he built just for himself.', '#lastlook', -40, 10);
+    shot('pg', 'l0', 3.6, 'And then, there’s the thing he built just for himself.', '#lastlook', -40, 10, '#lastlook h2');
     shot('pg', 'l1', 8.88, 'He kept forgetting his things. So he made an app that gives you one last look, before you walk out the door. He called it LastLook.', '#lastlook', 10, 70, '#llRev');
-    shot('pg', 'l2', 8.24, 'He wore every hat. Founder, designer, brand, and even the iOS developer, writing it himself in Xcode.', '#llRoles', -330, -290, '#llRoles');
-    shot('pg', 'l3', 4.64, 'He built it in public, and more than half a million people watched along.', '.ll-stats', -380, -360, '.ll-stats > :last-child');
-    shot('pg', 'l4', 5.44, 'Today, over four hundred people have it on their phones, and ten of them pay for it.', '.ll-stats', -360, -340, '.ll-stats');
+    shot('pg', 'l2', 8.24, 'He wore every hat. Founder, designer, brand, and even the iOS developer, writing it himself in Xcode.', '#llRoles', -330, -300, [[0, '#llRoles ol'], [1.8, '#llRoles li:nth-child(1)'], [2.6, '#llRoles li:nth-child(2)'], [3.45, '#llRoles li:nth-child(3)'], [4.3, '#llRoles li:nth-child(4)']]);
+    shot('pg', 'l3', 4.64, 'He built it in public, and more than half a million people watched along.', '.ll-stats', -380, -360, [[0, '#llRoles li:nth-child(6)'], [2, '.ll-stats li:nth-child(3)']]);
+    shot('pg', 'l4', 5.44, 'Today, over four hundred people have it on their phones, and ten of them pay for it.', '.ll-stats', -360, -340, [[0, '.ll-stats li:nth-child(1)'], [3.45, '.ll-stats li:nth-child(2)']]);
     shot('pg', 'l5', 4.08, 'Not bad, for a mechanical engineer who Googled his way here.', '.ll-stats', -340, -330, null, 1.6);
     // 5 · off the clock: the James she knows
     shot('pg', 'o0', 4, 'But that’s the work. Let me tell you about the James I know.', '#life', -40, 0);
@@ -10036,33 +10038,33 @@ function emailOk(e) {
     function spawn(P, far, centre, wide) {
       const ang = rnd(0, Math.PI * 2), r = centre ? rnd(0, .4) : rnd(wide ? 1.35 : .95, 2.6);
       P.x = Math.cos(ang) * r * 1.7; P.y = Math.sin(ang) * r * .62 + .3; P.z = far ? rnd(6, 8) : rnd(.9, 8);
-      P.fog = !centre && Math.random() < .22; P.s = Math.floor(Math.random() * 4); P.k = P.fog ? rnd(2.2, 3.4) : rnd(.8, 1.6); P.d = rnd(-.025, .025); P.dead = false; return P;
+      P.fog = !centre && Math.random() < .1; P.s = Math.floor(Math.random() * 4); P.k = P.fog ? rnd(2.2, 3.4) : rnd(.8, 1.6); P.d = rnd(-.025, .025); P.dead = false; return P;
     }
     // a soft sheet of mist, for the air between the clouds
     const FOG = (() => { const c = document.createElement('canvas'); c.width = 512; c.height = 256; const x = c.getContext('2d'); x.setTransform(256, 0, 0, 128, 256, 128);
       const g = x.createRadialGradient(0, 0, 0, 0, 0, 1); g.addColorStop(0, 'rgba(255,255,255,.75)'); g.addColorStop(.5, 'rgba(255,255,255,.35)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(-1, -1, 2, 2); return c; })();
-    function glInit() { ctx = cv.getContext('2d'); puffs = Array.from({ length: 30 }, () => spawn({}, false, false, true)); flew = false;
+    function glInit() { ctx = cv.getContext('2d'); puffs = Array.from({ length: 20 }, () => spawn({}, false, false, true)); flew = false;
       if (CLOUD.complete && CLOUD.naturalWidth) cut(); else CLOUD.onload = cut; }
     function sizeCv() { dpr = Math.min(devicePixelRatio || 1, 1.5); const w = Math.round(innerWidth * dpr), h = Math.round(innerHeight * dpr); if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; } }
     function drawSky(T, speed, dT, sky, alpha) {
       const W = cv.width, H = cv.height; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, W, H);
       // a golden-hour sky, so the colours already match the valley we are about to land in
-      if (sky > .001) { const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#3A6CBF'); g.addColorStop(.5, '#8EB2E2'); g.addColorStop(.82, '#EED4BC'); g.addColorStop(1, '#F6BE8E');
+      if (sky > .001) { const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#3D70C4'); g.addColorStop(.28, '#6A98DA'); g.addColorStop(.56, '#A9C6EC'); g.addColorStop(.8, '#EBDCCB'); g.addColorStop(1, '#F4C9A0');
         ctx.globalAlpha = sky; ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-        const sg = ctx.createRadialGradient(W * .55, H * .92, 0, W * .55, H * .92, H * .8); sg.addColorStop(0, 'rgba(255,214,150,.55)'); sg.addColorStop(1, 'rgba(255,214,150,0)'); ctx.fillStyle = sg; ctx.fillRect(0, 0, W, H); }
+        const sg = ctx.createRadialGradient(W * .55, H * .92, 0, W * .55, H * .92, H * .8); sg.addColorStop(0, 'rgba(255,222,170,.38)'); sg.addColorStop(1, 'rgba(255,214,150,0)'); ctx.fillStyle = sg; ctx.fillRect(0, 0, W, H); }
       if (!shapes || alpha <= .001) return;
       // on "let's fly in", a line of clouds waits dead ahead, so we really go through them
       if (!flew && T > 7.7) { flew = true; puffs.filter(P => !P.fog && P.z > 5.5).slice(0, 6).forEach((P, i) => { spawn(P, false, true); P.fog = false; P.k = rnd(1.3, 1.8); P.z = 6.4 + i * .32; }); }   // once the welcome has faded: they start far off and faint, and grow as we speed up
-      const F = H * .95, cx = W / 2, cy = H * .5;
+      const F = H * .95, cx = W / 2 + Math.sin(T * .09) * W * .012, cy = H * .5 + Math.sin(T * .07 + 1) * H * .008;
       puffs.forEach(P => { if (P.dead) return; P.z -= speed * dT; P.x += P.d * dT; if (P.z < .22) { if (T < 11.8) spawn(P, true, false, true); else P.dead = true; } });
       puffs.filter(P => !P.dead).sort((p, q) => q.z - p.z).forEach(P => {
         const sh = P.fog ? FOG : shapes[P.s], w = P.k * F / P.z * 1.1, h = w * sh.height / sh.width;
-        const a = alpha * sm(8, 5.6, P.z) * sm(.22, .9, P.z) * (P.fog ? .55 : .97); if (a < .004 || w > W * 12) return;
+        const a = alpha * sm(8, 5.6, P.z) * sm(.22, .9, P.z) * (P.fog ? .32 : .97); if (a < .004 || w > W * 12) return;
         ctx.globalAlpha = a; ctx.drawImage(sh, cx + P.x / P.z * F - w / 2, cy + P.y / P.z * F - h * .6, w, h);
       });
       // low sun: the undersides of the clouds near the horizon pick up a little warmth
       ctx.globalCompositeOperation = 'source-atop'; ctx.globalAlpha = 1;
-      const wg = ctx.createLinearGradient(0, H * .35, 0, H); wg.addColorStop(0, 'rgba(255,190,130,0)'); wg.addColorStop(1, 'rgba(255,176,112,.3)'); ctx.fillStyle = wg; ctx.fillRect(0, 0, W, H);
+      const wg = ctx.createLinearGradient(0, H * .35, 0, H); wg.addColorStop(0, 'rgba(255,190,130,0)'); wg.addColorStop(1, 'rgba(255,190,130,.14)'); ctx.fillStyle = wg; ctx.fillRect(0, 0, W, H);
       ctx.globalCompositeOperation = 'source-over';
     }
 
@@ -10105,7 +10107,7 @@ function emailOk(e) {
       srcs.forEach(s => { try { s.stop(); } catch (_) {} }); srcs = []; clearInterval(padT);
       cards.forEach(c => c.el.remove()); cards = []; spotI = -1; spot = null; jumped = false; endSky = false; inCase = false; closed4 = false; lock4 = false; nextScore = 0; csY = pgS = -1; posS = NaN; run++; stage.style.filter = ''; delete stage.dataset.tf; flew = false; puffs.forEach(P => spawn(P, false, false));
       $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
-      tour.e = null; tour.cam = null; tour.lit = false;
+      tour.e = null; tour.cam = null; tour.lit = false; tour.llLit = null;
       if (root) { root.classList.remove('done', 'paused', 'low', 'lite'); root.style.opacity = ''; }
       paused = false;
     }
@@ -10136,7 +10138,7 @@ function emailOk(e) {
       if (ac) { ramp(mus.gain, 0, ac.currentTime, 1.2); ramp(wind.gain, 0, ac.currentTime, .6); }
       srcs.forEach(s => { try { s.stop(ac.currentTime + .05); } catch (_) {} });
       // the camera eases home on its own
-      stage.style.filter = ''; jPinEl.style.transform = jPinEl.style.filter = ''; if (jumped) uz = 1; btn.hidden = false; tour.cam = null; tour.lit = false; tour.e = null; tour.back = true; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
+      stage.style.filter = ''; jPinEl.style.transform = jPinEl.style.filter = ''; if (jumped) uz = 1; btn.hidden = false; tour.cam = null; tour.lit = false; tour.e = null; tour.back = true; tour.llLit = null; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       lockPage(false);
       setTimeout(() => { if (on) return; reset(); clearInterval(padT); root.remove(); root = null; ctx = null; ac && ac.suspend(); }, 1300);
       btn.focus({ preventScroll: true });
@@ -10150,7 +10152,7 @@ function emailOk(e) {
       raf = requestAnimationFrame(tick);
       const T = clock(), dT = Math.max(0, Math.min(.1, T - last)); last = T;
       // fly: a slow drift while she says hello, then we pick up speed on "let's fly in" and ease out over the valley
-      const speed = .06 + 2.5 * sm(8.8, 10.8, T) * (1 - sm(11.4, 15.4, T)) + .3 * sm(11.4, 15.4, T), sky = 1 - sm(10.4, 12.5, T), alpha = 1 - sm(12.4, 14.2, T);
+      const speed = .035 + 2.5 * sm(8.8, 10.8, T) * (1 - sm(11.4, 15.4, T)) + .3 * sm(11.4, 15.4, T), sky = 1 - sm(10.4, 12.5, T), alpha = 1 - sm(12.4, 14.2, T);
       // the valley comes up out of the mist: soft and bright at first, sharpening as the last clouds slide past
       if (T > 10 && T < 13.8) { const m = 1 - sm(10.6, 13.4, T); stage.style.filter = `blur(${(m * 14).toFixed(1)}px) brightness(${(1 + m * .22).toFixed(3)})`; stage.dataset.tf = 1; }
       else if (stage.dataset.tf) { stage.style.filter = ''; delete stage.dataset.tf; }
@@ -10177,9 +10179,12 @@ function emailOk(e) {
       if (T > S4 + .6 && !closed4) { closed4 = true; csE.style.transform = ''; if (csE.classList.contains('open') && typeof closeCase === 'function') closeCase(); }
       if (T > S4 + 1.4 && T < END + 1 && sh) { if (!lock4) { lock4 = true; lenis && lenis.stop(); document.documentElement.style.overflow = 'hidden'; }
         if (sh.A.where === 'pg') { goTo(pgY(sh.A.key, sh.o)); dip = sh.dip; } else { const F = SHOTS.find(x => x.where === 'pg'); goTo(pgY(F.key, F.o0)); } }
-      // a spotlight on whatever she is talking about
-      if (sh && sh.A.spot && sh.spot > .002) { const e = $(sh.A.spot); const el = e && (e.closest('figure') || e);
-        if (el) { const r = el.getBoundingClientRect(); spEl.style.setProperty('--sx', (r.left + r.width / 2).toFixed(0) + 'px'); spEl.style.setProperty('--sy', (r.top + r.height / 2).toFixed(0) + 'px'); spEl.style.setProperty('--sr', (Math.hypot(r.width, r.height) * .56).toFixed(0) + 'px'); so = sh.spot; } }
+      // a spotlight on whatever she is talking about: a soft window that glides from one thing to the next
+      if (sh && sh.A.spot && sh.spot > .002) { const sp = sh.A.spot, q = Array.isArray(sp) ? sp.filter(([dt]) => T >= sh.A.t + dt - .1).pop()[1] : sp;
+        const e = $(q), el = e && (e.closest('figure') || e);
+        if (el) { const r = el.getBoundingClientRect(), pad = 14, snap = +spEl.style.opacity < .02; if (snap) spEl.style.transition = 'none'; spEl.style.transform = `translate3d(${(r.left - pad).toFixed(0)}px, ${(r.top - pad).toFixed(0)}px, 0)`; spEl.style.width = (r.width + pad * 2).toFixed(0) + 'px'; spEl.style.height = (r.height + pad * 2).toFixed(0) + 'px'; if (snap) { void spEl.offsetWidth; spEl.style.transition = ''; } so = sh.spot; } }
+      // LastLook's own line reads itself out as she says it
+      if (sh && sh.A.file === 'l0') tour.llLit = 0; else if (sh && sh.A.file === 'l1') tour.llLit = llWords.length * 1.05 * clamp((T - sh.A.t - .1) / (sh.A.d - 1.4)); else if (tour.llLit != null && sh && /^l[2-5]$/.test(sh.A.file)) tour.llLit = 1e3;
       spEl.style.opacity = (so * (1 - dip)).toFixed(3);
       dimEl.style.opacity = (dip * .96).toFixed(3);
       // the score never runs out: before it ends, the next play fades in underneath
