@@ -5739,7 +5739,7 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr-end { gap: 0 !important; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 .tr-end .tr-k, .tr-end .tr-s { text-shadow: 0 1px 2px rgba(14, 34, 80, .3), 0 4px 18px rgba(14, 34, 80, .3); }
 .tr-end .tr-k { font: 600 12px/1 "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: .24em; text-transform: uppercase; color: rgba(255, 255, 255, .82); }
-.tr.done .tr-end p { margin: 18px 0 0; color: #fff !important; text-shadow: 0 1px 3px rgba(14, 34, 80, .22), 0 6px 22px rgba(14, 34, 80, .26), 0 14px 60px rgba(14, 34, 80, .3) !important; font-size: clamp(30px, 3.6vw, 54px) !important; letter-spacing: -.035em !important; }
+.tr.done .tr-end p { margin: 0; color: #fff !important; text-shadow: 0 1px 3px rgba(14, 34, 80, .22), 0 6px 22px rgba(14, 34, 80, .26), 0 14px 60px rgba(14, 34, 80, .3) !important; font-size: clamp(30px, 3.6vw, 54px) !important; letter-spacing: -.035em !important; }
 .tr-end .tr-s { margin-top: 14px; font: 500 clamp(16px, 1.4vw, 19px)/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgba(255, 255, 255, .9); white-space: nowrap; }
 .tr-end > div { margin-top: 34px; display: flex; gap: 10px; }
 .tr.done .tr-end button, .tr.done .tr-end a { height: 48px; padding: 0 22px; border-radius: 999px; font: 600 15px/1 "Helvetica Neue", Helvetica, Arial, sans-serif !important; letter-spacing: -.01em; }
@@ -5747,7 +5747,7 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr.done .tr-end button:not(.go):hover { background: rgba(255, 255, 255, .18) !important; }
 .tr.done .tr-end a.go, :root[data-theme="dark"] .tr.done .tr-end a.go { background: #fff !important; color: #11151F !important; }
 .tr.done .tr-end > * { animation: trUp .9s cubic-bezier(.2, .8, .2, 1) both; }
-.tr.done .tr-end > :nth-child(2) { animation-delay: .08s; } .tr.done .tr-end > :nth-child(3) { animation-delay: .16s; } .tr.done .tr-end > :nth-child(4) { animation-delay: .26s; }
+.tr.done .tr-end > :nth-child(1) { animation-delay: .35s; } .tr.done .tr-end > :nth-child(2) { animation-delay: .45s; } .tr.done .tr-end > :nth-child(3) { animation-delay: .58s; }
 @keyframes trUp { from { opacity: 0; transform: translateY(14px); } }
 .tr-vig { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 1.6s ease, background .8s; background: radial-gradient(ellipse 80% 76% at 50% 46%, rgba(6, 8, 20, 0) 46%, rgba(6, 8, 20, .34) 76%, rgba(6, 8, 20, .7) 100%); }
 .tr.in .tr-vig { opacity: 1; }
@@ -5773,8 +5773,8 @@ html:has(.cs.open) .np.tour { display: none !important; }
 .tr-orb i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(ellipse 34% 20% at 38% 17%, rgba(255, 255, 255, .95), rgba(255, 255, 255, 0) 100%), radial-gradient(ellipse 50% 22% at 52% 94%, rgba(159, 211, 255, .55), rgba(159, 211, 255, 0) 100%), radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0) 62%, rgba(255, 248, 236, .28) 72%, rgba(255, 255, 255, 0) 74%); }
 .tr-orb u { position: absolute; inset: -75%; border-radius: 50%; opacity: var(--glow, .5); background: radial-gradient(closest-side, rgba(255, 210, 63, .42), rgba(255, 140, 90, .18) 40%, rgba(47, 127, 216, .14) 62%, rgba(47, 127, 216, 0)); }
 .tr-orb b { position: absolute; inset: 0; border-radius: 50%; opacity: 0; box-shadow: 0 0 0 1.5px rgba(255, 248, 236, .75), 0 0 20px rgba(255, 210, 63, .3); }
-.tr.closing > :not(.tr-orb) { opacity: 0 !important; transition: opacity .75s cubic-bezier(.4, 0, .2, 1) !important; }
-.tr.closing::before { animation: trOut .75s forwards !important; }
+.tr.closing > :not(.tr-orb) { opacity: 0 !important; transition: opacity 1s cubic-bezier(.4, 0, .2, 1) !important; }
+.tr.closing::before { animation: trOut 1s forwards !important; }
 @keyframes trOut { to { opacity: 0; } }
 .np.tour.arrive { animation: npArrive .7s cubic-bezier(.2, .8, .2, 1) both; }
 @keyframes npArrive { from { opacity: 0; transform: scale(.94); } }
@@ -10140,7 +10140,7 @@ function emailOk(e) {
       root = document.createElement('div'); root.className = 'tr'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-label', 'A guided tour of James’s portfolio');
       root.innerHTML = `<canvas class="tr-sky" aria-hidden="true"></canvas><div class="tr-mist" aria-hidden="true"></div><div class="tr-veil" aria-hidden="true"></div><div class="tr-vig" aria-hidden="true"></div><div class="tr-low" aria-hidden="true"></div><div class="tr-cut" aria-hidden="true"></div><div class="tr-spot" aria-hidden="true"></div><div class="tr-dim" aria-hidden="true"></div><div class="tr-haze" aria-hidden="true"></div><div class="tr-orb" aria-hidden="true"><u></u><b></b><b></b><i></i></div>
         <div class="tr-ctl"><button type="button" class="tr-pp" aria-label="Pause"><svg class="pa" viewBox="0 0 14 14"><rect x="2.5" y="1.5" width="3.2" height="11" rx="1"/><rect x="8.3" y="1.5" width="3.2" height="11" rx="1"/></svg><svg class="pl" viewBox="0 0 14 14"><path d="M3.5 1.8v10.4c0 .6.7 1 1.2.7l8-5.2a.8.8 0 0 0 0-1.4l-8-5.2c-.5-.3-1.2.1-1.2.7z"/></svg></button><button type="button" class="tr-rate" aria-label="Playback speed">1×</button><span class="tr-bar" role="slider" aria-label="Jump to a part of the tour" tabindex="-1"><i></i></span><button type="button" class="tr-skip" aria-label="Skip to the next part"><svg viewBox="0 0 14 14"><path d="M2 2.2v9.6c0 .5.6.8 1 .5L9 7.6a.7.7 0 0 0 0-1.2L3 1.7c-.4-.3-1 0-1 .5z"/><rect x="10" y="2" width="2.2" height="10" rx="1"/></svg></button><button type="button" class="tr-x">End tour</button></div>
-        <div class="tr-end"><span class="tr-k">The end</span><p>Thanks for taking the tour.</p><span class="tr-s">Let’s make something nobody rage quits.</span><div><a class="go" href="mailto:hello@jameschugh.com">Say hi</a><button type="button" class="tr-own">Back home</button></div></div>`;
+        <div class="tr-end"><p>Thanks for taking the tour.</p><span class="tr-s">Let’s make something nobody rage quits.</span><div><a class="go" href="mailto:hello@jameschugh.com">Say hi</a><button type="button" class="tr-own">Back home</button></div></div>`;
       document.body.appendChild(root); cutEl = $('.tr-cut', root); mistEl = $('.tr-mist', root); dimEl = $('.tr-dim', root); spEl = $('.tr-spot', root); hazeEl = $('.tr-haze', root); orbEl = $('.tr-orb', root); rings = $$('b', orbEl); cv = $('.tr-sky', root); glInit(); sizeCv();
       $('.tr-pp', root).addEventListener('click', e => { e.stopPropagation(); pause(); });
       $('.tr-x', root).addEventListener('click', e => { e.stopPropagation(); end(); });
@@ -10201,14 +10201,13 @@ function emailOk(e) {
     function end() {
       if (!on) return; on = false; cancelAnimationFrame(raf);
       root.classList.remove('live'); root.classList.add('closing'); rings.forEach(r => { r.style.opacity = 0; });
-      const home = `translate3d(${org[0].toFixed(1)}px, ${org[1].toFixed(1)}px, 0) scale(${(34 / 120).toFixed(4)})`;
-      orbEl.style.filter = ''; orbEl.animate([{ transform: orbEl.style.transform || home, opacity: +orbEl.style.opacity || 0 }, { transform: home, opacity: 1, offset: .8 }, { transform: home, opacity: 0 }], { duration: 1150, easing: 'cubic-bezier(.65, 0, .25, 1)', fill: 'forwards' });
+      const tf = orbEl.style.transform; orbEl.animate([{ transform: tf, opacity: +orbEl.style.opacity || 0, filter: 'blur(0px)' }, { transform: tf + ' scale(.82)', opacity: 0, filter: 'blur(6px)' }], { duration: 900, easing: 'cubic-bezier(.4, 0, .2, 1)', fill: 'forwards' });
       if (ac) { ramp(mus.gain, 0, ac.currentTime, 1.2); ramp(wind.gain, 0, ac.currentTime, .6); }
       srcs.forEach(s => { try { s.stop(ac.currentTime + .05); } catch (_) {} }); stopVoices(); camOff();
       // the camera eases home on its own
       stage.style.filter = ''; jPinEl.style.transform = jPinEl.style.filter = ''; if (jumped) uz = 1; tour.cam = null; tour.lit = false; tour.e = null; tour.back = true; tour.llLit = null; $$('.pin.hov', scene).forEach(p => p.classList.remove('hov'));
       lockPage(false);
-      setTimeout(() => { if (on) return; btn.hidden = false; btn.classList.add('arrive'); btn.focus({ preventScroll: true }); setTimeout(() => btn.classList.remove('arrive'), 900); }, 860);   // the button comes back just as the orb lands in it
+      setTimeout(() => { if (on) return; btn.hidden = false; btn.classList.add('arrive'); btn.focus({ preventScroll: true }); setTimeout(() => btn.classList.remove('arrive'), 900); }, 500);   // the button comes back as the tour melts away
       setTimeout(() => { if (on) return; reset(); clearInterval(padT); root.remove(); root = null; orb = null; ctx = null; ac && ac.suspend(); }, 1250);
     }
     // the orb: her voice, made visible. It lifts out of the button, speaks in the middle of the screen,
@@ -10230,9 +10229,9 @@ function emailOk(e) {
         if (T < END - .3) {   // small, beside the line she is saying
           orb.tx = W / 2; orb.ty = H - (W < 860 ? 104 : 116);
           s = .16; op = sm(13.4, 14.4, T);
-        } else { orb.tx = W / 2; orb.ty = H / 2 - 178; s = .45; }   // the end: it waits above the last card
+        } else { const h = $('.tr-end p', root), r = h && h.getBoundingClientRect(); orb.tx = W / 2; orb.ty = r && r.height ? r.top - 44 : H / 2 - 120; s = .42; orb.slow = true; }   // the end: it floats up and rests just above the last words
         if (orb.rest) { orb.x = orb.tx; orb.y = orb.ty; orb.s = s; orb.rest = false; }
-        orb.x += (orb.tx - orb.x) * k(4.5); orb.y += (orb.ty - orb.y) * k(4.5); orb.s += (s - orb.s) * k(4); x = orb.x; y = orb.y; s = orb.s;
+        const kr = orb.slow ? 2.2 : 4.5; orb.slow = false; orb.x += (orb.tx - orb.x) * k(kr); orb.y += (orb.ty - orb.y) * k(kr); orb.s += (s - orb.s) * k(kr * .9); x = orb.x; y = orb.y; s = orb.s;
       }
       // she speaks: it swells a little, its light turns, and soft rings spread from it, all only while she talks
       orb.ph = (orb.ph + dt * (.35 + orb.amp * 1.1)) % 1; orb.rot += dt * orb.amp * 150;
